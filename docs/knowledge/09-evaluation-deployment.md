@@ -61,7 +61,7 @@ Tier 1 = minor UI fix (≤ 24 h) · Tier 2 = algorithm/content change (1 sprint,
 > Data the app must export for analysis: per-student pre/post item scores, BKT state history, sessions/responses, hint/heart events. Plan a CSV export from the admin portal.
 
 ## E. Deployment (§3.4.5)
-1. **Packaging**: signed release APK, distributed by local transfer / MediaFire (not the Play Store); installed on school and team devices.
+1. **Packaging**: Godot Android export (needs the Android SDK + JDK set in Editor Settings; release keystore kept out of git), signed release APK, distributed by local transfer / MediaFire (not the Play Store); installed on school and team devices.
 2. **Backend prep** (Laravel + PostgreSQL): deploy on an HTTPS host; run migrations + seeders; RBAC policies on; MATATAG content library seeded; accounts pre-registered; BKT records initialized with Table 3.5 defaults; Wi-Fi ≥ 3 Mbps; `/api/config` serving the current parameters; DB backups scheduled.
 3. **Pre-deployment verification** (all must pass):
    1. APK installs on all devices.

@@ -41,6 +41,11 @@ crashlytics-build.properties
 *.ipa
 .vs/
 
+# --- Godot 4 ---
+.godot/
+game/android/build/
+*.translation
+
 # --- Laravel / PHP / Node ---
 vendor/
 node_modules/

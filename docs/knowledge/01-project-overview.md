@@ -1,7 +1,7 @@
 # 01 — Project Overview
 
 ## One-line summary
-A Unity mobile game for **Grade 1 learners** that assesses reading comprehension through gameplay ("stealth assessment"), adapts difficulty in real time with **Bayesian Knowledge Tracing (BKT)**, uses an LLM to write **teacher diagnostic reports** and **raccoon-companion dialogue**, and gives teachers a dashboard and admins an oversight portal.
+A Godot 4 mobile game (the thesis says Unity; switched 2026-10-17, see open issue 19) for **Grade 1 learners** that assesses reading comprehension through gameplay ("stealth assessment"), adapts difficulty in real time with **Bayesian Knowledge Tracing (BKT)**, uses an LLM to write **teacher diagnostic reports** and **raccoon-companion dialogue**, and gives teachers a dashboard and admins an oversight portal.
 
 ## Setting and people
 - **School:** Ampayon Elementary School, Butuan City, Agusan del Norte, Philippines.

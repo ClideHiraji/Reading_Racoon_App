@@ -1,10 +1,12 @@
 # Reading Racoon App
 
-Capstone thesis project (Caraga State University, BSIT, due Nov 2026): a Unity mobile game that adaptively assesses Grade 1 reading comprehension with Bayesian Knowledge Tracing, an LLM-written teacher report, a raccoon companion, a teacher dashboard, and an admin portal.
+Capstone thesis project (Caraga State University, BSIT, due Nov 2026): a Godot 4 mobile game (`game/`, GDScript) that adaptively assesses Grade 1 reading comprehension with Bayesian Knowledge Tracing, an LLM-written teacher report, a raccoon companion, a teacher dashboard, and an admin portal.
 
 **Read `docs/knowledge/README.md` before designing or building anything.** It is the distilled spec from the thesis manuscript. Check `docs/knowledge/10-open-issues.md` first: the thesis contradicts itself in several places (e.g., the AI model and the BKT level progression). Don't silently pick one. Record decisions there.
 
 **Backend is decided: custom-coded Laravel (PHP 8.x) + PostgreSQL 16+ + Sanctum. No Firebase.** Custom-coded is required by the professor; PostgreSQL was the team's choice. Treat any "Firebase" or "MySQL" in the thesis as this API + DB. **The LLM is the Google Gemini API (Flash-class), called only from Laravel** (see `docs/knowledge/08-ai-integration.md`). Offline sync, remote config (`/api/config`), and the LLM proxy are built in Laravel. See `docs/knowledge/03-architecture.md`.
+
+**Game engine is decided: Godot 4.7 + GDScript** (the thesis says Unity; see open issue 19). Use the Godot MCP tools to create scenes, run the project and read debug output. Prefer editing `.tscn` text directly when a tool can't set a property (e.g., Vector2). Project root: `game/`.
 
 Reference requirement IDs (`FR-xx`, `NFR-xx`) from `docs/knowledge/02-requirements.md` in commits and code comments.
 

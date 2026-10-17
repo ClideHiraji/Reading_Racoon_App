@@ -11,7 +11,7 @@ Status key: 🔴 blocks coding · 🟡 decide during build · 📝 manuscript-on
 - The ERD text, all flowcharts, NFR-05, BKT persistence, AI log storage, Remote Config, the deployment chapter and the checklist all say **Firebase** (Realtime DB, Auth, Remote Config).
 - **Decision:** **Custom-coded backend: Laravel (PHP 8.x) + PostgreSQL 16+ + Sanctum. No Firebase anywhere.** "Custom-coded" is a required instruction from the adviser/professor ("hard code the backend" = build it yourselves instead of using a backend-as-a-service). **PostgreSQL instead of MySQL** was the team's choice (same day).
 - **Consequences:**
-  - Offline queue + sync must be built by hand in Unity (see [03-architecture.md](03-architecture.md#offline-and-sync-design)).
+  - Offline queue + sync must be built by hand in the Godot client (see [03-architecture.md](03-architecture.md#offline-and-sync-design)).
   - Firebase Remote Config is replaced by `GET /api/config`.
   - Firebase Auth is replaced by Sanctum tokens. Firebase security rules are replaced by Laravel policies/middleware.
   - "Firebase log node" is replaced by PostgreSQL `system_logs` / `ai_logs` tables.
@@ -105,3 +105,10 @@ Status key: 🔴 blocks coding · 🟡 decide during build · 📝 manuscript-on
 - A stray "2" before "Therefore" in §2.3.2. The Butler 2023 vs Buckley 2021 citation spelling ("Buckey") should be checked.
 - Several references (e.g., Abejuela 2023, Kumar 2026, Davis & Granić 2024) should be checked to make sure they exist exactly as cited.
 - Some references are unrelated to the topic (prenatal care, antenatal depression, nutrition). Remove the ones that are never cited.
+
+### 19. Game engine: Unity → Godot ✅ RESOLVED (2026-10-17)
+- The thesis specifies **Unity + C#** (Table 3.4, §3.4.3.1).
+- **Decision:** **Godot 4.7 + GDScript**, Compatibility renderer, Android APK first. The project is in `game/`. The team chose this independently of the thesis.
+- **Why:** the app is 2D and UI-heavy and targets low-end Android (2 GB RAM). Godot is lighter and has built-in drag-and-drop UI and TTS. Its text-based scenes and the existing Godot MCP connection let Claude build and run scenes directly.
+- **Trade-offs accepted:** a smaller asset store and fewer tutorials than Unity, and weaker 3D tools. The raccoon companion becomes a 2D animated character unless 3D is kept.
+- **Manuscript to update:** Table 3.4 (game engine, language, offline cache, API client, assets, build), §3.4.3.1 justification paragraph, §3.4.3.2 ("Unity-based C# implementation"), §3.4.3.3 Stage 5, Table 3.8 system requirements (re-check minimums for Godot), §3.4.5 Activity 1 ("Unity project was compiled"). **Tell the adviser about the switch.**

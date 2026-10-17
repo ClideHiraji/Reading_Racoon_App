@@ -27,7 +27,7 @@ Advisor note on the architecture figure: *"group those components that are the s
 ## Component overview
 
 ```
-┌──────────── Unity app (C#, Android APK) ────────────┐
+┌────────── Godot 4 app (GDScript, Android APK) ──────┐
 │ Student game │ Teacher dashboard │ Admin portal*     │
 │ BKT engine (client) · offline cache · sync queue    │
 └───────────────┬─────────────────────────────────────┘
@@ -44,22 +44,22 @@ Advisor note on the architecture figure: *"group those components that are the s
 │ 16+            │             │ (Flash-class model)  │
 └────────────────┘             └──────────────────────┘
 ```
-\*The admin portal could also be a Laravel web page (Blade). Decide during build. It's cheaper than building admin screens in Unity.
+\*The admin portal could also be a Laravel web page (Blade). Decide during build. It's cheaper than building admin screens in Godot.
 
 ## Technology stack
 
 | Layer | Choice | Notes |
 |---|---|---|
-| Game engine / client | **Unity**, **C#** | Android APK first. iOS only if devices exist. |
+| Game engine / client | **Godot 4.7**, **GDScript** | Compatibility renderer (best for low-end Android). Android APK first. iOS export needs a Mac, so only if iOS devices exist. Project lives in `game/`. |
 | Backend API | **Laravel (PHP 8.x)** | REST, MVC, Eloquent, migrations, queues/scheduler. |
 | Database | **PostgreSQL 16+** | All persistent data, including logs. Laravel `pgsql` driver. Use `jsonb` for event payloads and AI input/output logs. |
 | Auth / RBAC | **Laravel Sanctum** | Personal access tokens for all 3 roles. Role middleware + policies (a teacher sees only their own sections). |
-| Client ↔ API | REST JSON via `UnityWebRequest` | `Authorization: Bearer <token>`. |
-| Adaptive algorithm | BKT in C# (client, real time) + PHP validation (server) | Server recomputes/validates on sync. EM recalibration as a scheduled job. |
+| Client ↔ API | REST JSON via Godot `HTTPRequest` node + `JSON` | `Authorization: Bearer <token>`. |
+| Adaptive algorithm | BKT in GDScript (client, real time) + PHP validation (server) | Server recomputes/validates on sync. EM recalibration as a scheduled job. |
 | Remote config | `GET /api/config` | Replaces Firebase Remote Config: BKT params, thresholds, prompt versions, UI scaling. Cached on the device. |
 | LLM | **Google Gemini API** (Flash-class model), paid with the team's Google AI Pro Cloud credits, called **only from Laravel** | API key in `.env`, never in the APK. See [08-ai-integration.md](08-ai-integration.md). |
-| Offline cache | Local JSON files (`Application.persistentDataPath`) | PlayerPrefs only for small settings. Holds content, BKT states, queued events. |
-| 3D / audio | Blender, Unity Asset Store, Audio Mixer, WAV | |
+| Offline cache | JSON files under `user://` via `FileAccess` | `ConfigFile` for small settings. Holds content, BKT states, queued events. |
+| Art / audio | 2D animated raccoon (`AnimatedSprite2D` or Spine-like cut-out), Blender only if 3D is kept; Godot audio buses; WAV/OGG; built-in TTS via `DisplayServer.tts_speak` (check device support) | |
 | VCS | Git / GitHub | |
 
 ## API surface (draft — names marked ★ appear in the thesis)

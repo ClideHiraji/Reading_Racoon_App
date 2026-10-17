@@ -23,7 +23,7 @@ Each prompt template has a role definition, a BKT JSON data-injection block, and
 ## Model and hosting (decided 2026-10-17, open issue 2)
 - **Model:** Google **Gemini**, a cost-efficient **Flash / Flash-Lite** model. Pin the exact model ID from Google's current model list in `.env`, and don't rely on a "latest" alias, so outputs stay consistent during the study.
 - **Billing:** the **Google Cloud credits included in the team's Google AI Pro subscription** (~US$10/month), applied to a **billing-enabled** Google Cloud project. Create the API key in Google AI Studio under that project.
-- **Caller:** Laravel only. Unity calls our own API (`POST /api/companion/dialogue`), never Gemini. Thesis Stage 5 says Unity calls the LLM directly. Change that, because the key would ship inside the APK.
+- **Caller:** Laravel only. The Godot app calls our own API (`POST /api/companion/dialogue`), never Gemini. Thesis Stage 5 says the game client (Unity) calls the LLM directly. Change that, because the key would ship inside the APK.
 
 ### Laravel config
 Gemini offers an **OpenAI-compatible endpoint**, so the code stays provider-neutral:
@@ -37,7 +37,7 @@ Use Laravel's `Http` facade (or `openai-php/laravel` with a custom base URL). Al
 ### Call patterns
 | Task | How | Timeout | Fallback |
 |---|---|---|---|
-| Companion dialogue | Synchronous request from Unity → Laravel → Gemini | **~1.5 s** to the LLM, so the 2 s UI target holds | Random line from the bundled local library for that state + level |
+| Companion dialogue | Synchronous request from the Godot app → Laravel → Gemini | **~1.5 s** to the LLM, so the 2 s UI target holds | Random line from the bundled local library for that state + level |
 | Teacher report | **Queued job** after a session syncs. Store in `ai_reports` | 30 s, 2 retries | Template report built from the BKT numbers |
 
 ### Gemini gotchas

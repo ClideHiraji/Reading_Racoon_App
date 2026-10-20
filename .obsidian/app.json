@@ -6,7 +6,7 @@
   "attachmentFolderPath": "brain/attachments",
   "alwaysUpdateLinks": true,
   "userIgnoreFilters": [
-    "game/.godot/",
-    "game/android/"
+    "reading-racoon/.godot/",
+    "reading-racoon/android/"
   ]
 }

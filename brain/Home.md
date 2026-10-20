@@ -24,6 +24,7 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 - [[D-004 Heart Recovery rules]]
 - [[D-005 Game engine Godot]]
 - [[D-006 Project brain workflow]]
+- [[D-007 UI direction Duolingo-style path]]
 
 ## Still open (from [[10-open-issues]])
 - 🔴 Timeline: a 4-month evaluation doesn't fit before November. Re-plan with the adviser (issue 11).
@@ -34,7 +35,7 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 
 ## Devlog
 - [[2026-10-17]]: thesis analyzed, knowledge base, decisions D-001 to D-005, GitHub, Godot project.
-- [[2026-10-20]]: blueprint page, Obsidian + Graphify brain.
+- [[2026-10-20]]: blueprint page, Obsidian + Graphify brain, first playable game slice (D-007).
 
 ## Learnings
 - [[BKT passes 0.95 after 3 correct]]
@@ -42,6 +43,8 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 - [[Gitignore slash patterns are anchored]]
 - [[Gemini subscription vs API credits]]
 - [[Graphify does not index markdown]]
+- [[Newer emoji render as boxes on Windows 10]]
+- [[Godot headless tests need an import first]]
 
 ## Links
 - Visual blueprint (private page): https://claude.ai/artifact/TPcwMuVYMvR9gx8ypBMYB9

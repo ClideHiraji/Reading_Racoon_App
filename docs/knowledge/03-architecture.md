@@ -50,7 +50,7 @@ Advisor note on the architecture figure: *"group those components that are the s
 
 | Layer | Choice | Notes |
 |---|---|---|
-| Game engine / client | **Godot 4.7**, **GDScript** | Compatibility renderer (best for low-end Android). Android APK first. iOS export needs a Mac, so only if iOS devices exist. Project lives in `game/`. |
+| Game engine / client | **Godot 4.7**, **GDScript** | Compatibility renderer (best for low-end Android). Android APK first. iOS export needs a Mac, so only if iOS devices exist. Project lives in `reading-racoon/` (portrait 720×1280). |
 | Backend API | **Laravel (PHP 8.x)** | REST, MVC, Eloquent, migrations, queues/scheduler. |
 | Database | **PostgreSQL 16+** | All persistent data, including logs. Laravel `pgsql` driver. Use `jsonb` for event payloads and AI input/output logs. |
 | Auth / RBAC | **Laravel Sanctum** | Personal access tokens for all 3 roles. Role middleware + policies (a teacher sees only their own sections). |

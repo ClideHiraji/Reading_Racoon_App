@@ -93,6 +93,7 @@ Status key: 🔴 blocks coding · 🟡 decide during build · 📝 manuscript-on
 
 ### 15. Language policy 🟡
 - L1–2 are in "Mother Tongue" (Bisaya/Butuanon in Butuan), yet future work suggests "adding Bisaya passages", so it's unclear which Mother Tongue L1–2 actually use. Re-check against current DepEd language policy.
+- **Interim (2026-10-20):** the first game slice uses **English placeholder** items (`reading-racoon/content/levels.json`, `"language": "en-placeholder"`). Replace them once the language is decided and teachers review the content.
 
 ### 16. Latency claim 📝
 - §3.4.2.2 says difficulty uses accuracy **and latency**, but BKT only uses correctness. Either define how latency is used or remove it.
@@ -108,7 +109,13 @@ Status key: 🔴 blocks coding · 🟡 decide during build · 📝 manuscript-on
 
 ### 19. Game engine: Unity → Godot ✅ RESOLVED (2026-10-17)
 - The thesis specifies **Unity + C#** (Table 3.4, §3.4.3.1).
-- **Decision:** **Godot 4.7 + GDScript**, Compatibility renderer, Android APK first. The project is in `game/`. The team chose this independently of the thesis.
+- **Decision:** **Godot 4.7 + GDScript**, Compatibility renderer, Android APK first. The project is in `reading-racoon/` (portrait 720×1280 since 2026-10-20). The team chose this independently of the thesis.
 - **Why:** the app is 2D and UI-heavy and targets low-end Android (2 GB RAM). Godot is lighter and has built-in drag-and-drop UI and TTS. Its text-based scenes and the existing Godot MCP connection let Claude build and run scenes directly.
 - **Trade-offs accepted:** a smaller asset store and fewer tutorials than Unity, and weaker 3D tools. The raccoon companion becomes a 2D animated character unless 3D is kept.
 - **Manuscript to update:** Table 3.4 (game engine, language, offline cache, API client, assets, build), §3.4.3.1 justification paragraph, §3.4.3.2 ("Unity-based C# implementation"), §3.4.3.3 Stage 5, Table 3.8 system requirements (re-check minimums for Godot), §3.4.5 Activity 1 ("Unity project was compiled"). **Tell the adviser about the switch.**
+
+### 20. UI direction ✅ RESOLVED (2026-10-20)
+- The thesis shows low-fidelity Figma screens but no overall interaction model.
+- **Decision:** a Duolingo-style vertical learning path (worlds = map levels, lesson nodes, chest, trophy), mixed with kids'-app patterns (audio-first prompts, answer on tap, a reacting raccoon guide). **Portrait 720×1280.** No leaderboards, no streak guilt, no red ✗.
+- Full table of borrowed ideas: [D-007](../../brain/decisions/D-007%20UI%20direction%20Duolingo-style%20path.md).
+- **Manuscript to update:** §3.4.2.2 (mechanics) and the Figma screens in §3.4.2.4 should show the path, the lesson layout and Racoon's Rescue.

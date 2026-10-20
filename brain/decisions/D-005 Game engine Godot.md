@@ -9,7 +9,9 @@ tags: [decision, godot, client]
 
 # D-005 Game engine: Godot 4.7
 
-**Decision:** **Godot 4.7 + GDScript**, Compatibility renderer, landscape 1280×720, Android APK first. The project is in `game/` and the main scene is `game/scenes/main.tscn`.
+**Decision:** **Godot 4.7 + GDScript**, Compatibility renderer, **portrait 720×1280**, Android APK first. The project is in `reading-racoon/` and the main scene is `reading-racoon/scenes/main.tscn`.
+
+**Updated 2026-10-20:** moved from `game/` to `reading-racoon/`, and from landscape 1280×720 to portrait for the Duolingo-style vertical path ([[D-007 UI direction Duolingo-style path]]).
 
 **Why**
 - The app is 2D and UI-heavy, with drag-and-drop puzzles, audio and text. It targets cheap Android phones (2 GB RAM).

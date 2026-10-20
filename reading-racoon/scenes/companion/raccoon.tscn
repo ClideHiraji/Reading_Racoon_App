@@ -1,0 +1,11 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/companion/raccoon.gd" id="1_raccoon"]
+
+[node name="Raccoon" type="Control"]
+custom_minimum_size = Vector2(180, 180)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 180.0
+offset_bottom = 180.0
+script = ExtResource("1_raccoon")

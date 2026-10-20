@@ -14,21 +14,40 @@ config/name="Reading Racoon"
 config/description="Game-based adaptive reading comprehension assessment for Grade 1 learners."
 run/main_scene="res://scenes/main.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
+boot_splash/bg_color=Color(1, 0.964706, 0.878431, 1)
+config/icon="res://icon.svg"
+
+[audio]
+
+general/text_to_speech=true
+
+[autoload]
+
+GameState="*res://scripts/autoload/game_state.gd"
+Sfx="*res://scripts/autoload/sfx.gd"
+Speech="*res://scripts/autoload/speech.gd"
 
 [display]
 
-window/size/viewport_width=1280
-window/size/viewport_height=720
+window/size/viewport_width=720
+window/size/viewport_height=1280
+window/size/window_width_override=450
+window/size/window_height_override=800
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
-window/handheld/orientation=0
+window/handheld/orientation=1
 
-[input_devices]
+[gui]
 
-pointing/emulate_touch_from_mouse=true
+theme/custom="res://ui/theme.tres"
+
+[physics]
+
+3d/physics_engine="Jolt Physics"
 
 [rendering]
 
+rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
-textures/vram_compression/import_etc2_astc=true
+environment/defaults/default_clear_color=Color(1, 0.964706, 0.878431, 1)

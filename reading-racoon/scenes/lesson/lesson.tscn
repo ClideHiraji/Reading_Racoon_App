@@ -1,0 +1,279 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/lesson/lesson.gd" id="1_lesson"]
+[ext_resource type="Script" path="res://ui/chunky_button.gd" id="2_chunky"]
+[ext_resource type="Script" path="res://scenes/companion/raccoon.gd" id="3_raccoon"]
+[ext_resource type="Script" path="res://scenes/companion/speech_bubble.gd" id="4_bubble"]
+
+[sub_resource type="StyleBoxFlat" id="SheetStyle"]
+content_margin_left = 32.0
+content_margin_top = 28.0
+content_margin_right = 32.0
+content_margin_bottom = 40.0
+bg_color = Color(0.843, 0.961, 0.784, 1)
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+
+[sub_resource type="StyleBoxFlat" id="RescueStyle"]
+content_margin_left = 20.0
+content_margin_top = 10.0
+content_margin_right = 20.0
+content_margin_bottom = 12.0
+bg_color = Color(0.247, 0.655, 0.839, 1)
+border_width_bottom = 6
+border_color = Color(0.165, 0.498, 0.659, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[node name="Lesson" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lesson")
+
+[node name="Bg" type="ColorRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 0.9647, 0.8784, 1)
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 28
+theme_override_constants/margin_bottom = 24
+
+[node name="VBox" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 22
+
+[node name="TopRow" type="HBoxContainer" parent="Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="CloseButton" type="Button" parent="Margin/VBox/TopRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+tooltip_text = "Stop the lesson"
+theme_override_colors/font_color = Color(0.5098, 0.4471, 0.3725, 1)
+theme_override_font_sizes/font_size = 44
+text = "✕"
+flat = true
+
+[node name="Progress" type="ProgressBar" parent="Margin/VBox/TopRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.001
+show_percentage = false
+
+[node name="Hearts" type="HBoxContainer" parent="Margin/VBox/TopRow"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="RescueBanner" type="PanelContainer" parent="Margin/VBox"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("RescueStyle")
+
+[node name="RescueLabel" type="Label" parent="Margin/VBox/RescueBanner"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "💖 Racoon's Rescue: 0 / 3"
+horizontal_alignment = 1
+
+[node name="PromptRow" type="HBoxContainer" parent="Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="SpeakButton" type="Button" parent="Margin/VBox/PromptRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(104, 104)
+layout_mode = 2
+size_flags_vertical = 4
+tooltip_text = "Hear it again"
+theme_override_font_sizes/font_size = 44
+text = "🔊"
+script = ExtResource("2_chunky")
+face_color = Color(0.247, 0.655, 0.839, 1)
+radius = 52
+
+[node name="Prompt" type="Label" parent="Margin/VBox/PromptRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"TitleLabel"
+theme_override_font_sizes/font_size = 38
+text = "Which one rhymes with cat?"
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="TaskHolder" type="MarginContainer" parent="Margin/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CompanionRow" type="HBoxContainer" parent="Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Raccoon" type="Control" parent="Margin/VBox/CompanionRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 170)
+layout_mode = 2
+script = ExtResource("3_raccoon")
+
+[node name="Bubble" type="PanelContainer" parent="Margin/VBox/CompanionRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+script = ExtResource("4_bubble")
+
+[node name="Sheet" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -300.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("SheetStyle")
+
+[node name="VBox" type="VBoxContainer" parent="Sheet"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Row" type="HBoxContainer" parent="Sheet/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="SheetIcon" type="Label" parent="Sheet/VBox/Row"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "✓"
+
+[node name="Texts" type="VBoxContainer" parent="Sheet/VBox/Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="SheetTitle" type="Label" parent="Sheet/VBox/Row/Texts"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"TitleLabel"
+text = "Great job!"
+
+[node name="SheetDetail" type="Label" parent="Sheet/VBox/Row/Texts"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Answer: hat"
+autowrap_mode = 3
+
+[node name="ContinueButton" type="Button" parent="Sheet/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 104)
+layout_mode = 2
+text = "CONTINUE"
+script = ExtResource("2_chunky")
+
+[node name="Overlay" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dim" type="ColorRect" parent="Overlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.239, 0.18, 0.122, 0.55)
+
+[node name="Center" type="CenterContainer" parent="Overlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Card" type="PanelContainer" parent="Overlay/Center"]
+custom_minimum_size = Vector2(620, 0)
+layout_mode = 2
+theme_type_variation = &"CardPanel"
+
+[node name="VBox" type="VBoxContainer" parent="Overlay/Center/Card"]
+layout_mode = 2
+theme_override_constants/separation = 22
+
+[node name="OverlayIcon" type="Label" parent="Overlay/Center/Card/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 96
+text = "💖"
+horizontal_alignment = 1
+
+[node name="OverlayTitle" type="Label" parent="Overlay/Center/Card/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"TitleLabel"
+text = "Racoon's Rescue!"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="OverlayText" type="Label" parent="Overlay/Center/Card/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Answer 3 easy ones to get your hearts back."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="OverlayPrimary" type="Button" parent="Overlay/Center/Card/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+text = "OK!"
+script = ExtResource("2_chunky")
+
+[node name="OverlaySecondary" type="Button" parent="Overlay/Center/Card/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+text = "STOP"
+script = ExtResource("2_chunky")
+card_style = true

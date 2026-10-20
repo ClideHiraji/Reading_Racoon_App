@@ -1,0 +1,20 @@
+{
+  "note": "Bundled fallback library for the raccoon companion (docs/knowledge/08-ai-integration.md). Short, positive, on-task only (06-game-design.md companion guardrails). Placeholder English.",
+  "intro": ["Let's play!", "Ready? Let's go!", "I'm here with you!", "Let's read together!"],
+  "correct": ["Great job!", "You got it!", "Yay! Super!", "Wow, nice work!", "High five!", "You're a reading star!"],
+  "incorrect": ["Almost! Let's look again.", "Good try! You can do it.", "That's okay! Let's keep going.", "Nice try! Here's the answer."],
+  "hint_phonological_awareness": ["Listen to the end of the words. Cat... hat!", "Say the words slowly with me.", "Clap it out with me!"],
+  "hint_phonics": ["Say the sound the letter makes.", "Listen to the first sound.", "Sound it out slowly: c... a... t."],
+  "hint_vocabulary": ["Look at each picture carefully.", "Say the word out loud first.", "Point to each word and read it."],
+  "hint_fluency": ["Read it slowly, one word at a time."],
+  "hint_literal_comprehension": ["Think about the story again."],
+  "rescue_start": ["Oh no, no hearts! Let's do Racoon's Rescue together!", "Let's get your hearts back! Three easy ones!"],
+  "rescue_correct": ["A heart came back!", "Yay, one more heart!"],
+  "rescue_full": ["All your hearts are back!", "You did it! Hearts are full!"],
+  "rescue_partial": ["Good effort! Let's keep practicing.", "That's okay! We'll practice this more."],
+  "level_up": ["You unlocked a new world!", "Level up! You're amazing!"],
+  "lesson_done": ["You finished the lesson!", "What a reader you are!"],
+  "session_end": ["Let's rest and try again tomorrow!"],
+  "path_hello": ["Tap the bouncing circle to play!", "Ready for a lesson?", "Let's go on an adventure!"],
+  "chest": ["A treasure chest! Tap it!", "Ooh, coins inside!"]
+}

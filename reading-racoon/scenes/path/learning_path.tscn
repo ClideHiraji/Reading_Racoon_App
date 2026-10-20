@@ -1,0 +1,79 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/path/learning_path.gd" id="1_path"]
+
+[node name="LearningPath" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_path")
+
+[node name="Bg" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 0.9647, 0.8784, 1)
+
+[node name="Scroll" type="ScrollContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
+
+[node name="Content" type="VBoxContainer" parent="Scroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+
+[node name="TopBar" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 100.0
+grow_horizontal = 2
+theme_type_variation = &"TopBarPanel"
+
+[node name="Row" type="HBoxContainer" parent="TopBar"]
+layout_mode = 2
+theme_override_constants/separation = 28
+
+[node name="World" type="Label" parent="TopBar/Row"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "🌲 Level 1"
+vertical_alignment = 1
+
+[node name="Coins" type="Label" parent="TopBar/Row"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "💰 0"
+vertical_alignment = 1
+
+[node name="Xp" type="Label" parent="TopBar/Row"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "⚡ 0"
+vertical_alignment = 1
+
+[node name="Reset" type="Button" parent="TopBar/Row"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(72, 72)
+layout_mode = 2
+tooltip_text = "Debug: reset progress"
+theme_override_colors/font_color = Color(0.5098, 0.4471, 0.3725, 1)
+text = "↺"
+flat = true

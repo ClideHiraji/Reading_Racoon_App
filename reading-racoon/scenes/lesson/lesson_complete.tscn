@@ -1,0 +1,178 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/lesson/lesson_complete.gd" id="1_done"]
+[ext_resource type="Script" path="res://ui/chunky_button.gd" id="2_chunky"]
+[ext_resource type="Script" path="res://scenes/companion/raccoon.gd" id="3_raccoon"]
+[ext_resource type="Script" path="res://scenes/companion/speech_bubble.gd" id="4_bubble"]
+
+[node name="LessonComplete" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_done")
+
+[node name="Bg" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 0.9647, 0.8784, 1)
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_top = 60
+theme_override_constants/margin_right = 28
+theme_override_constants/margin_bottom = 36
+
+[node name="VBox" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 26
+alignment = 1
+
+[node name="RaccoonRow" type="HBoxContainer" parent="Margin/VBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="Raccoon" type="Control" parent="Margin/VBox/RaccoonRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(230, 230)
+layout_mode = 2
+script = ExtResource("3_raccoon")
+
+[node name="Bubble" type="PanelContainer" parent="Margin/VBox/RaccoonRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 0
+script = ExtResource("4_bubble")
+
+[node name="Title" type="Label" parent="Margin/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"TitleLabel"
+theme_override_colors/font_color = Color(0.878, 0.482, 0, 1)
+theme_override_font_sizes/font_size = 56
+text = "Lesson complete!"
+horizontal_alignment = 1
+
+[node name="Stars" type="HBoxContainer" parent="Margin/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="Stats" type="HBoxContainer" parent="Margin/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Answers" type="HBoxContainer" parent="Margin/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 6
+alignment = 1
+
+[node name="Spacer" type="Control" parent="Margin/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ContinueButton" type="Button" parent="Margin/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 104)
+layout_mode = 2
+text = "CONTINUE"
+script = ExtResource("2_chunky")
+
+[node name="Confetti" type="CPUParticles2D" parent="."]
+unique_name_in_owner = true
+emitting = false
+amount = 120
+lifetime = 3.0
+one_shot = true
+explosiveness = 0.85
+emission_shape = 3
+emission_rect_extents = Vector2(360, 10)
+direction = Vector2(0, 1)
+spread = 30.0
+gravity = Vector2(0, 420)
+initial_velocity_min = 80.0
+initial_velocity_max = 320.0
+angular_velocity_min = -360.0
+angular_velocity_max = 360.0
+scale_amount_min = 10.0
+scale_amount_max = 18.0
+
+[node name="Unlock" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dim" type="ColorRect" parent="Unlock"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.239, 0.18, 0.122, 0.55)
+
+[node name="Center" type="CenterContainer" parent="Unlock"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Card" type="PanelContainer" parent="Unlock/Center"]
+custom_minimum_size = Vector2(620, 0)
+layout_mode = 2
+theme_type_variation = &"CardPanel"
+
+[node name="VBox" type="VBoxContainer" parent="Unlock/Center/Card"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="UnlockIcon" type="Label" parent="Unlock/Center/Card/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 120
+text = "🌊"
+horizontal_alignment = 1
+
+[node name="UnlockTitle" type="Label" parent="Unlock/Center/Card/VBox"]
+layout_mode = 2
+theme_type_variation = &"TitleLabel"
+text = "New world unlocked!"
+horizontal_alignment = 1
+
+[node name="UnlockName" type="Label" parent="Unlock/Center/Card/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Level 2 · Word River"
+horizontal_alignment = 1
+
+[node name="GoButton" type="Button" parent="Unlock/Center/Card/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+text = "LET'S GO!"
+script = ExtResource("2_chunky")
+face_color = Color(0.247, 0.655, 0.839, 1)

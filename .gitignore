@@ -43,7 +43,7 @@ crashlytics-build.properties
 
 # --- Godot 4 ---
 .godot/
-game/android/build/
+reading-racoon/android/build/
 *.translation
 
 # --- Laravel / PHP / Node ---

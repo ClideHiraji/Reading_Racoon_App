@@ -2,24 +2,23 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Actions\EnrollStudent;
+use App\Models\Section;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
     /**
-     * Seed the application's database.
+     * Local demo data: one section with two students. Their login codes are
+     * printed once (only hashes are stored), so note them for the game client.
      */
-    public function run(): void
+    public function run(EnrollStudent $enroll): void
     {
-        // User::factory(10)->create();
+        $section = Section::create(['name' => 'Grade 1 - Demo']);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        foreach (['Ana', 'Ben'] as $name) {
+            $code = $enroll->handle($section, $name)['login_code'];
+            $this->command?->info("Student {$name}: login code {$code}");
+        }
     }
 }

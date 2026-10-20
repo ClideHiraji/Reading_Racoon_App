@@ -17,7 +17,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'sqlite'),
+    'default' => env('DB_CONNECTION', 'pgsql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -97,6 +97,9 @@ return [
             'prefix_indexes' => true,
             'search_path' => 'public',
             'sslmode' => env('DB_SSLMODE', 'prefer'),
+            // Columns are timestamptz. Eloquent writes times without an offset, so the
+            // session must read them as UTC (the app timezone), whatever the server's default.
+            'timezone' => 'UTC',
         ],
 
         'sqlsrv' => [

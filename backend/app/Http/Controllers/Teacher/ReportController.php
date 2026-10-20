@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * A learner's diagnostic report (FR-05) and its PDF export (FR-18). The text
  * comes from App\Reports\DiagnosticReportWriter: the numbers-only template
- * today, Gemini in a later slice (D-011).
+ * today, Gemini in a later slice (D-012).
  */
 class ReportController extends Controller
 {

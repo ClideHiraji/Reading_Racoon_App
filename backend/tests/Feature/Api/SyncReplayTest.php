@@ -14,7 +14,7 @@ use Tests\TestCase;
 
 /**
  * After POST /api/sync the server replays the student's events and stores the
- * official state (FR-03, FR-11, FR-17, D-008, D-010).
+ * official state (FR-03, FR-11, FR-17, D-008, D-011).
  */
 class SyncReplayTest extends TestCase
 {

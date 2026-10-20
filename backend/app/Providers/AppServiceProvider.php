@@ -16,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        // The report seam (FR-05, D-011): bind GeminiReportWriter here in the LLM slice.
+        // The report seam (FR-05, D-012): bind GeminiReportWriter here in the LLM slice.
         $this->app->bind(DiagnosticReportWriter::class, TemplateReportWriter::class);
     }
 

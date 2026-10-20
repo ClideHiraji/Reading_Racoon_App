@@ -1,5 +1,5 @@
 {{-- Shared styles for the teacher and admin pages. Inline on purpose: no build step,
-     and the admin portal loads nothing from other hosts (D-012). Paper palette from D-009. --}}
+     and the admin portal loads nothing from other hosts (D-013). Paper palette from D-009. --}}
 <style>
     :root {
         --paper: #fbf6ec; --card: #ffffff; --ink: #2b2a33; --muted: #6b6b78; --line: #e6dfd0;

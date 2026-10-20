@@ -17,7 +17,7 @@ use PragmaRX\Google2FA\Google2FA;
 use Throwable;
 
 /**
- * Admin sign-in (FR-01, FR-08, D-012): email + password + TOTP code in one form,
+ * Admin sign-in (FR-01, FR-08, D-013): email + password + TOTP code in one form,
  * one generic error for any wrong factor, a used code can't be replayed, and
  * after 5 failures per IP or per email the form answers 404 for 15 minutes.
  */

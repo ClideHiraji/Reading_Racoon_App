@@ -5,7 +5,7 @@ namespace App\Reports;
 /**
  * Writes a diagnostic report from App\Reports\StudentFacts (FR-05, FR-18).
  *
- * THE LLM SEAM (D-011): today the container binds TemplateReportWriter. The
+ * THE LLM SEAM (D-012): today the container binds TemplateReportWriter. The
  * Gemini slice adds a GeminiReportWriter (prompt: temperature 0.3,
  * max_tokens 250, facts injected as JSON, docs/knowledge/08-ai-integration.md)
  * that validates the output against the facts, logs the call in ai_logs

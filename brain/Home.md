@@ -27,10 +27,10 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 - [[D-007 UI direction Duolingo-style path]]
 - [[D-008 Offline sync contract]]
 - [[D-009 Art direction Butuan storybook]]
-- [[D-010 Server-side BKT replay]]
-- [[D-011 Teacher web dashboard]]
-- [[D-012 Hidden admin portal]]
-- [[D-013 Time-restricted access rules]]
+- [[D-011 Server-side BKT replay]]
+- [[D-012 Teacher web dashboard]]
+- [[D-013 Hidden admin portal]]
+- [[D-014 Time-restricted access rules]]
 
 ## Still open (from [[10-open-issues]])
 - 🔴 Timeline: a 4-month evaluation doesn't fit before November. Re-plan with the adviser (issue 11).
@@ -41,7 +41,7 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 
 ## Devlog
 - [[2026-10-17]]: thesis analyzed, knowledge base, decisions D-001 to D-005, GitHub, Godot project.
-- [[2026-10-20]]: blueprint page, Obsidian + Graphify brain, first playable game slice (D-007), first Laravel backend slice (D-008), server BKT replay, teacher dashboard and hidden admin portal (D-010 to D-013).
+- [[2026-10-20]]: blueprint page, Obsidian + Graphify brain, first playable game slice (D-007), first Laravel backend slice (D-008), server BKT replay, teacher dashboard and hidden admin portal (D-011 to D-014).
 
 ## Learnings
 - [[BKT passes 0.95 after 3 correct]]

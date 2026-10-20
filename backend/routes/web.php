@@ -10,7 +10,7 @@ use App\Http\Controllers\Teacher\StudentController;
 use Illuminate\Support\Facades\Route;
 
 // Teacher web pages (FR-06, FR-08, FR-12, FR-16, FR-17, FR-18). The admin
-// portal is NOT here: it lives under a secret path from .env (routes/admin.php, D-012).
+// portal is NOT here: it lives under a secret path from .env (routes/admin.php, D-013).
 
 Route::redirect('/', '/login');
 

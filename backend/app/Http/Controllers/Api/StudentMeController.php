@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 /**
  * GET /api/student/me: the official (server-replayed) state of the signed-in
- * student (FR-03, FR-07, FR-11, D-010). `model` has exactly the shape of the
+ * student (FR-03, FR-07, FR-11, D-011). `model` has exactly the shape of the
  * client's StudentModel.to_dict(), so the game adopts it with from_dict():
  * the server wins on conflict (D-008).
  */

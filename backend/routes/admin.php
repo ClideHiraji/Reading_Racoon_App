@@ -8,7 +8,7 @@ use App\Http\Controllers\Admin\PrivacyController;
 use App\Http\Controllers\Admin\RegistrationController;
 use Illuminate\Support\Facades\Route;
 
-// Hidden admin portal (FR-08, FR-22, D-012). Loaded by bootstrap/app.php under
+// Hidden admin portal (FR-08, FR-22, D-013). Loaded by bootstrap/app.php under
 // the secret ADMIN_PATH prefix with the `admin` middleware group, and only when
 // ADMIN_PATH is set and long enough. Never link to these routes.
 

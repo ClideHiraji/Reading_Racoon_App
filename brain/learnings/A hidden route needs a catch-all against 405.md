@@ -10,4 +10,4 @@ What happened: the admin portal turned every refusal into a 404, yet `PUT /<secr
 
 **So:** end the hidden route group with `Route::any('{any?}', fn () => abort(404))->where('any', '.*')` (optional segment, so the bare prefix is covered too), and have the first middleware replace every refusal with a freshly rendered 404 (`ExceptionHandler::render(new NotFoundHttpException(...))`) so no cookie leaks. A test compares the body and cookies with a real unknown URL.
 
-Related: [[D-012 Hidden admin portal]]
+Related: [[D-013 Hidden admin portal]]

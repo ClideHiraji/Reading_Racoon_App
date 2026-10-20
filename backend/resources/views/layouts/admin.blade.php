@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {{-- D-012: never indexed, never sends the secret path in a Referer, loads nothing from other hosts. --}}
+    {{-- D-013: never indexed, never sends the secret path in a Referer, loads nothing from other hosts. --}}
     <meta name="robots" content="noindex, nofollow, noarchive">
     <meta name="referrer" content="no-referrer">
     <title>@yield('title', 'Console') · RR</title>

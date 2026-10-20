@@ -7,7 +7,7 @@ graphify: submitted
 tags: [decision, backend, access, fr-12]
 ---
 
-# D-013 Time-restricted access rules
+# D-014 Time-restricted access rules
 
 **Decision:** `GET /api/access/student/status` decides, in the school's time zone (`SCHOOL_TIMEZONE`, default `Asia/Manila`), with one schedule per section (teacher-editable; defaults 07:30–08:30 class, 15:00–17:00 after school, 30 minutes, weekends closed):
 

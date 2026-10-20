@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Admin pages need an admin signed in on the `admin` guard with a TOTP code
  * verified in this session, active within the idle timeout. Anything else is
- * a plain 404 (never 403, never a redirect to the sign-in page, D-012).
+ * a plain 404 (never 403, never a redirect to the sign-in page, D-013).
  * Every page an admin opens is written to the audit log (FR-22).
  */
 class AuthenticateAdmin

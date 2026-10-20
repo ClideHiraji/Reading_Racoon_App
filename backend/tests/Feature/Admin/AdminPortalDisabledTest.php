@@ -5,7 +5,7 @@ namespace Tests\Feature\Admin;
 use Illuminate\Support\Facades\Route;
 
 /**
- * A missing or weak ADMIN_PATH turns the portal off entirely (D-012).
+ * A missing or weak ADMIN_PATH turns the portal off entirely (D-013).
  */
 class AdminPortalDisabledTest extends AdminTestCase
 {

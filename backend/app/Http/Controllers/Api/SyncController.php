@@ -19,7 +19,7 @@ use Throwable;
  * debugging) from its queue. Anything else stays queued and is retried.
  *
  * After storing, the server replays the student's events through BKT and
- * updates the official state (D-010); the client reads it from /api/student/me.
+ * updates the official state (D-011); the client reads it from /api/student/me.
  */
 class SyncController extends Controller
 {

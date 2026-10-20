@@ -8,7 +8,7 @@ use Illuminate\Console\Command;
 use PragmaRX\Google2FA\Google2FA;
 
 /**
- * TOTP enrolment for admins (D-012): RFC 6238, 30-second codes, works with
+ * TOTP enrolment for admins (D-013): RFC 6238, 30-second codes, works with
  * Google Authenticator, Microsoft Authenticator, Aegis, 2FAS, etc.
  * Enrolment happens only in the server terminal, never on a web page.
  */

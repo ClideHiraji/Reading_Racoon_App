@@ -7,7 +7,7 @@ graphify: submitted
 tags: [decision, backend, admin, security, privacy]
 ---
 
-# D-012 Hidden admin portal
+# D-013 Hidden admin portal
 
 **Decision:** the admin portal (FR-08, FR-22) is a Laravel web portal with **no public entrance**, as the user required.
 

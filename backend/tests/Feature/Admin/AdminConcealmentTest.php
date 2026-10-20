@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Str;
 
 /**
- * The admin portal is not public (FR-08, D-012): reachable only under the
+ * The admin portal is not public (FR-08, D-013): reachable only under the
  * secret ADMIN_PATH, from an allowed IP, with password AND TOTP. Everything
  * else is the site's ordinary 404.
  */

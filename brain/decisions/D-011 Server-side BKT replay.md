@@ -7,7 +7,7 @@ graphify: submitted
 tags: [decision, backend, bkt, sync]
 ---
 
-# D-010 Server-side BKT replay
+# D-011 Server-side BKT replay
 
 **Decision:** after every `POST /api/sync`, the server replays **all** of a student's stored events, in arrival order, through the same rules as the client and stores the result as the official state. The client adopts it from `GET /api/student/me` (server wins, [[D-008 Offline sync contract]]).
 

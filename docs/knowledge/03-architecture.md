@@ -44,7 +44,7 @@ Advisor note on the architecture figure: *"group those components that are the s
 │ 16+            │             │ (Flash-class model)  │
 └────────────────┘             └──────────────────────┘
 ```
-\*Decided 2026-10-20: the teacher dashboard and the admin portal are **Laravel Blade web pages** in `backend/`, not Godot screens ([D-011](../../brain/decisions/D-011%20Teacher%20web%20dashboard.md)). The admin portal is hidden behind a secret path with TOTP sign-in ([D-012](../../brain/decisions/D-012%20Hidden%20admin%20portal.md)). The Godot app is student-only. The `/api/teacher/*` and `/api/admin/*` rows below became those web pages.
+\*Decided 2026-10-20: the teacher dashboard and the admin portal are **Laravel Blade web pages** in `backend/`, not Godot screens ([D-012](../../brain/decisions/D-012%20Teacher%20web%20dashboard.md)). The admin portal is hidden behind a secret path with TOTP sign-in ([D-013](../../brain/decisions/D-013%20Hidden%20admin%20portal.md)). The Godot app is student-only. The `/api/teacher/*` and `/api/admin/*` rows below became those web pages.
 
 ## Technology stack
 

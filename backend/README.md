@@ -2,10 +2,10 @@
 
 The server for the Reading Racoon game: **Laravel 12 (PHP 8.2+) + PostgreSQL 16+ + Sanctum**, custom-coded as the professor requires ([D-001](../brain/decisions/D-001%20Backend%20Laravel%20+%20PostgreSQL.md)). It:
 
-- receives the events the Godot client in [`reading-racoon/`](../reading-racoon/) queues offline, **replays them through server-side BKT** and serves the official state back ([D-008](../brain/decisions/D-008%20Offline%20sync%20contract.md), [D-010](../brain/decisions/D-010%20Server-side%20BKT%20replay.md));
-- decides when a learner may play ([D-013](../brain/decisions/D-013%20Time-restricted%20access%20rules.md));
-- hosts the **teacher dashboard** as server-rendered web pages ([D-011](../brain/decisions/D-011%20Teacher%20web%20dashboard.md));
-- hosts a **hidden admin portal** that has no public entrance ([D-012](../brain/decisions/D-012%20Hidden%20admin%20portal.md)).
+- receives the events the Godot client in [`reading-racoon/`](../reading-racoon/) queues offline, **replays them through server-side BKT** and serves the official state back ([D-008](../brain/decisions/D-008%20Offline%20sync%20contract.md), [D-011](../brain/decisions/D-011%20Server-side%20BKT%20replay.md));
+- decides when a learner may play ([D-014](../brain/decisions/D-014%20Time-restricted%20access%20rules.md));
+- hosts the **teacher dashboard** as server-rendered web pages ([D-012](../brain/decisions/D-012%20Teacher%20web%20dashboard.md));
+- hosts a **hidden admin portal** that has no public entrance ([D-013](../brain/decisions/D-013%20Hidden%20admin%20portal.md)).
 
 Spec: [`docs/knowledge/03-architecture.md`](../docs/knowledge/03-architecture.md) (API, offline sync), [`04-data-model.md`](../docs/knowledge/04-data-model.md), [`05-bkt-engine.md`](../docs/knowledge/05-bkt-engine.md), [`06-game-design.md`](../docs/knowledge/06-game-design.md).
 
@@ -40,7 +40,7 @@ Spec: [`docs/knowledge/03-architecture.md`](../docs/knowledge/03-architecture.md
 
 ## Hidden admin portal: set up
 
-The admin portal is **not public** ([D-012](../brain/decisions/D-012%20Hidden%20admin%20portal.md)). It exists only under a secret URL prefix, refuses everything else with the site's ordinary 404, and needs a password **and** a 6-digit authenticator code.
+The admin portal is **not public** ([D-013](../brain/decisions/D-013%20Hidden%20admin%20portal.md)). It exists only under a secret URL prefix, refuses everything else with the site's ordinary 404, and needs a password **and** a 6-digit authenticator code.
 
 1. **Choose a secret path.** Generate a random value of at least 32 characters and put it in `.env` (never in code, docs, chats, issues or git):
    ```bash
@@ -87,7 +87,7 @@ Tests run on the `reading_racoon_test` PostgreSQL database (`phpunit.xml`), neve
 | `/teacher/sections/{id}` | Class dashboard: mastery per sub-skill, ARAL band counts (from each learner's highest unlocked map level), colour-coded open intervention flags (red: rescue limit, orange: failed Heart Recovery, amber: P(L) < 0.30 after 5+ answers), the roster with add/remove, new login code, parental consent. |
 | `/teacher/students/{id}` | BKT chart over time (one line per sub-skill and level), the 14 skill-levels, lessons and Racoon's Rescue history, flags, play time. |
 | `/teacher/sections/{id}/schedule` | Class window, after-school window, daily after-school minutes, weekends on/off. |
-| `/teacher/students/{id}/report` (+ `.pdf`) | Diagnostic summary built from the numbers, with PDF export (dompdf). The Gemini-written version plugs in later behind `App\Reports\DiagnosticReportWriter` ([D-011](../brain/decisions/D-011%20Teacher%20web%20dashboard.md)). |
+| `/teacher/students/{id}/report` (+ `.pdf`) | Diagnostic summary built from the numbers, with PDF export (dompdf). The Gemini-written version plugs in later behind `App\Reports\DiagnosticReportWriter` ([D-012](../brain/decisions/D-012%20Teacher%20web%20dashboard.md)). |
 
 Teachers only ever see their own sections: another teacher's section, learner or flag answers 404. Charts use Chart.js 4.4.1 from jsDelivr; without internet the tables under the charts still show every number. Every teacher action is written to the audit log.
 
@@ -180,7 +180,7 @@ Student token only. Send the lines of `user://event_queue.jsonl` in queue order,
 - A `422` means the envelope itself is wrong (no `events` list, or too many events): fix the request, don't drop events.
 - Then read `GET /api/student/me`: after every sync the server replays the student's events and **its state wins**.
 
-#### Event types and what the server replays ([D-010](../brain/decisions/D-010%20Server-side%20BKT%20replay.md))
+#### Event types and what the server replays ([D-011](../brain/decisions/D-011%20Server-side%20BKT%20replay.md))
 
 The server replays all of a student's stored events, oldest first, through the client's own rules (`student_model.gd`, `lesson_session.gd`, `assessment_session.gd`, `wardrobe.gd`) and stores the result in `bkt_states`, `path_progress`, `student_wallets`, `intervention_flags`, `student_items` and `daily_usage`. An event whose fields don't make sense is kept but skipped. An unknown **type** is rejected, so update the server before shipping a client with a new type.
 

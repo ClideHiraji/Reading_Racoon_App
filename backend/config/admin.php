@@ -2,7 +2,7 @@
 
 /*
 |--------------------------------------------------------------------------
-| Hidden admin portal (FR-08, FR-22, D-012)
+| Hidden admin portal (FR-08, FR-22, D-013)
 |--------------------------------------------------------------------------
 |
 | The portal has no public entrance. Its routes exist only under a secret

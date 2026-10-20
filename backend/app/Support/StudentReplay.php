@@ -14,7 +14,7 @@ use Ramsey\Uuid\Uuid;
  * official state: the 14 BKT states, highest unlocked map level, wallet,
  * flags, items and outfit, daily usage, path and pre/post-test scores.
  * The server is the BKT authority (docs/knowledge/03-architecture.md, D-008,
- * D-010). Pure PHP, no database: App\Actions\ReplayStudentEvents feeds it.
+ * D-011). Pure PHP, no database: App\Actions\ReplayStudentEvents feeds it.
  *
  * Fields read per event type (anything else is stored but ignored):
  * - response: skill, level, correct, num_choices, rescue. With assessment

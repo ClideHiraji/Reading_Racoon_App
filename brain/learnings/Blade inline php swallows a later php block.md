@@ -10,4 +10,4 @@ What happened: the student profile page threw `ParseError: unexpected token "end
 
 **So:** in one template, keep every `@php ... @endphp` block **above** any inline `@php(...)`, or move the logic to the controller. A comment in `teacher/student.blade.php` says so.
 
-Related: [[D-011 Teacher web dashboard]]
+Related: [[D-012 Teacher web dashboard]]

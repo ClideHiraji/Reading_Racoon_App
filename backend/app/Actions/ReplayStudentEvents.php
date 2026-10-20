@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use stdClass;
 
 /**
- * Server-side BKT authority (FR-03, FR-11, D-008, D-010): replays every stored
+ * Server-side BKT authority (FR-03, FR-11, D-008, D-011): replays every stored
  * event of one student through App\Support\StudentReplay and writes the result
  * over the projections: bkt_states, path_progress, student_wallets,
  * intervention_flags, student_items and daily_usage. The server wins on

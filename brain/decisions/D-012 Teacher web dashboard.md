@@ -7,7 +7,7 @@ graphify: submitted
 tags: [decision, backend, teacher, web]
 ---
 
-# D-011 Teacher web dashboard
+# D-012 Teacher web dashboard
 
 **Decision:** the teacher dashboard is a set of **server-rendered Laravel Blade pages** inside `backend/`, not screens in the Godot app.
 
@@ -18,7 +18,7 @@ tags: [decision, backend, teacher, web]
 | Dashboard | Per section: mastery per sub-skill, ARAL band counts from the highest unlocked map level ([[D-003 BKT level progression]]), colour-coded open flags (red rescue limit, orange failed Heart Recovery, amber low P(L)), roster (FR-06, FR-17). |
 | Roster | Add learners (first name or nickname only) with a one-time login code, new code, parental-consent record, remove = delete all their data (FR-16, RA 10173). |
 | Profile | Chart.js 4.4.1 from jsDelivr: one P(L) line per (sub-skill, level), plus skill-levels, lessons, rescues, flags, play time. Tables repeat every number for offline use. |
-| Schedule | Per section class window, after-school window, daily minutes, weekends ([[D-013 Time-restricted access rules]]). |
+| Schedule | Per section class window, after-school window, daily minutes, weekends ([[D-014 Time-restricted access rules]]). |
 | Report | A diagnostic summary built **only from the numbers** (`TemplateReportWriter`), PDF via barryvdh/laravel-dompdf (FR-18). The Gemini report plugs in behind `App\Reports\DiagnosticReportWriter` later, with the template as its fallback ([[D-002 AI model Gemini]]). |
 | Privacy | Learners get a pseudonymous `students.code` (`RR-XXXXXX`) used in reports, logs, exports and future AI prompts; the facts handed to a report writer never contain names. |
 

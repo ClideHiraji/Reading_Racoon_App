@@ -20,7 +20,7 @@ use Illuminate\View\View;
 /**
  * Teacher sign-in with email and password (FR-01). Only teachers whose
  * registration an admin approved get in (FR-08). Admin accounts can't sign in
- * here: they get the same "wrong credentials" answer as anyone else (D-012).
+ * here: they get the same "wrong credentials" answer as anyone else (D-013).
  */
 class LoginController extends Controller
 {

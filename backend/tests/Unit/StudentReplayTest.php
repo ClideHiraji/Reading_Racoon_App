@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 use Tests\TestCase;
 
 /**
- * Server-side BKT replay (FR-03, FR-04, FR-07, FR-12, FR-17, D-003, D-004, D-010):
+ * Server-side BKT replay (FR-03, FR-04, FR-07, FR-12, FR-17, D-003, D-004, D-011):
  * the same answers must give the same state as the client's StudentModel.
  * No database.
  */

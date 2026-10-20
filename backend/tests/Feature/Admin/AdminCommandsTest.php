@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use PragmaRX\Google2FA\Google2FA;
 
 /**
- * Admins exist only through artisan (D-012): admin:create and admin:reset-2fa.
+ * Admins exist only through artisan (D-013): admin:create and admin:reset-2fa.
  */
 class AdminCommandsTest extends AdminTestCase
 {

@@ -13,7 +13,7 @@ use Tests\TestCase;
 
 /**
  * GET /api/student/me: the server's official state, shaped for the client's
- * StudentModel.from_dict() (FR-03, FR-07, D-008, D-010).
+ * StudentModel.from_dict() (FR-03, FR-07, D-008, D-011).
  */
 class StudentMeTest extends TestCase
 {

@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * Helpers for the hidden admin portal (FR-08, FR-22, D-012).
+ * Helpers for the hidden admin portal (FR-08, FR-22, D-013).
  */
 final class AdminPortal
 {

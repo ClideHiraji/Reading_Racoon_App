@@ -25,7 +25,7 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
         // The hidden admin portal exists only under the secret ADMIN_PATH from
-        // .env, and not at all while it is unset or too short (D-012).
+        // .env, and not at all while it is unset or too short (D-013).
         then: function () {
             if ($path = AdminPortal::path()) {
                 Route::prefix($path)->middleware('admin')->name('admin.')->group(base_path('routes/admin.php'));

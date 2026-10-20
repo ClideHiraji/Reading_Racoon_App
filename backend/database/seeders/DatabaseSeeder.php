@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
      * Local demo data: an approved teacher who owns one section with two
      * students. The teacher's random password and the students' login codes
      * are printed once (only hashes are stored), so note them now.
-     * Admins are never seeded: use php artisan admin:create (D-012).
+     * Admins are never seeded: use php artisan admin:create (D-013).
      */
     public function run(EnrollStudent $enroll): void
     {

@@ -9,7 +9,7 @@ use App\Support\AdminTotp;
 use Illuminate\Console\Command;
 
 /**
- * New TOTP secret for an admin who lost their phone (D-012). The old
+ * New TOTP secret for an admin who lost their phone (D-013). The old
  * authenticator entry stops working at once.
  */
 class ResetAdminTwoFactor extends Command

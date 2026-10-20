@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * First middleware of every admin route (D-012):
+ * First middleware of every admin route (D-013):
  * 1. ADMIN_ALLOWED_IPS is checked before anything else (no session, no DB user lookup).
  * 2. Any refusal from further in (401, 403, 404, 405, 419, 429) is replaced by
  *    the site's ordinary 404, built fresh so no session cookie leaks out.

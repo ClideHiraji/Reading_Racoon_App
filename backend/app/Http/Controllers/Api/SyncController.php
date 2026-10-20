@@ -6,6 +6,7 @@ use App\Actions\RecordSyncEvents;
 use App\Actions\ReplayStudentEvents;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SyncRequest;
+use App\Jobs\WriteAiReport;
 use App\Models\SystemLog;
 use Carbon\CarbonImmutable;
 use Illuminate\Http\JsonResponse;
@@ -33,6 +34,10 @@ class SyncController extends Controller
 
         if ($result['acknowledged'] !== []) {
             $replay->handle($student);
+        }
+        if ($result['stored'] !== []) {
+            // The Gemini teacher report, a few minutes later (D-015).
+            WriteAiReport::queueFor($student, afterSync: true);
         }
         $this->logNewEvents($student->code, $result['stored'], $request->user()->id);
         $this->logAnomalies($student->code, $events, $result['rejected']);

@@ -103,6 +103,23 @@ return [
         5 => ['world' => 'Mount Mayapay', 'name' => 'Proficient', 'band' => 'Grade-Level Proficient'],
     ],
 
+    // The Gemini teacher report (FR-05, D-015, docs/knowledge/08-ai-integration.md).
+    // Only for learners with parental consent on file, and only while services.llm is set.
+    'ai_report' => [
+        // Thesis prompt design (MLDLC Stage 3): temperature 0.3, ~250 tokens of text.
+        'temperature' => 0.3,
+        // The prompt asks for at most max_words; the checks refuse replies 20% longer.
+        // max_tokens leaves headroom over the thesis's 250 for thinking tokens.
+        'max_words' => 150,
+        'max_tokens' => (int) env('LLM_REPORT_MAX_TOKENS', 600),
+        // Per call, and calls per report (1 + 2 retries); then the template is used.
+        'timeout_seconds' => 30,
+        'attempts' => 3,
+        // Wait this long after a sync before writing, so one play session
+        // (several syncs) gives one report.
+        'delay_minutes' => (int) env('LLM_REPORT_DELAY_MINUTES', 10),
+    ],
+
     // Teacher-facing sub-skill names (MATATAG competency areas, FR-09).
     'skill_labels' => [
         'phonological_awareness' => 'Phonological Awareness',

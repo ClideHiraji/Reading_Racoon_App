@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Reports\DiagnosticReportWriter;
-use App\Reports\TemplateReportWriter;
+use App\Reports\StoredReportWriter;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
@@ -16,8 +16,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        // The report seam (FR-05, D-012): bind GeminiReportWriter here in the LLM slice.
-        $this->app->bind(DiagnosticReportWriter::class, TemplateReportWriter::class);
+        // The report seam (FR-05, D-012, D-015): pages show the stored Gemini
+        // paragraphs; App\Jobs\WriteAiReport calls GeminiReportWriter.
+        $this->app->bind(DiagnosticReportWriter::class, StoredReportWriter::class);
     }
 
     /**

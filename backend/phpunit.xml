@@ -27,6 +27,8 @@
         <env name="DB_CONNECTION" value="pgsql" force="true"/>
         <env name="DB_DATABASE" value="reading_racoon_test" force="true"/>
         <env name="DB_URL" value=""/>
+        <!-- Tests never call the real Gemini API, even when .env has a key (D-015). -->
+        <env name="LLM_API_KEY" value="" force="true"/>
         <env name="MAIL_MAILER" value="array"/>
         <env name="QUEUE_CONNECTION" value="sync"/>
         <env name="SESSION_DRIVER" value="array"/>

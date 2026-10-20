@@ -19,4 +19,6 @@ tags: [decision, bkt, game-logic]
 
 **Why:** with the thesis parameters, 3 correct answers in a row already pass 0.95 for every skill ([[BKT passes 0.95 after 3 correct]]). P(L) moves too fast to use directly as a level score, which is what the thesis's Table 3.6 tried to do.
 
+**Update 2026-10-20 (pre-test placement):** placement replays the pre-test answers with the **Table 3.5 guess rates**, not 1 ÷ choices. With 3-choice guessing, 3 correct answers only reach about 0.90, so no child could ever be placed above Level 1. Gameplay still uses 1 ÷ choices. Placement marks the lowest level of each sub-skill mastered when the final posterior reaches 0.95 (no minimum attempts), then starts the child at the lowest map level with an unmastered skill. A perfect pre-test therefore starts at Level 2, as the spec intends ("placement is coarse; gameplay corrects it"). Code: `StudentModel.place()`.
+
 Details: [[05-bkt-engine]], [[10-open-issues]] issue 4. Related: [[D-004 Heart Recovery rules]].

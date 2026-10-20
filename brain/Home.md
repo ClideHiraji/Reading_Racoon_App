@@ -53,6 +53,7 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 - [[Laravel API guests need a null redirect]]
 - [[Reset a lost postgres password]]
 - [[Godot containers reset child rotation]]
+- [[GDScript helper names can override engine callbacks]]
 
 ## Links
 - Visual blueprint (private page): https://claude.ai/artifact/TPcwMuVYMvR9gx8ypBMYB9

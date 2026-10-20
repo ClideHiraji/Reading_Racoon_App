@@ -36,6 +36,7 @@ Status key: 🔴 blocks coding · 🟡 decide during build · 📝 manuscript-on
 - **Decision:** option **A**, refined: BKT per **(sub-skill, level)** (14 states per student); global adventure levels 1–5; a skill-level is mastered at **P(L) ≥ 0.95 with ≥ 5 attempts**; **Level Up** when all skills active at that level are mastered; hint only **after a wrong answer** when P(L) < 0.30; P(G) ≈ 1/number of choices for MCQ items; the ARAL band comes from the map level, not raw P(L).
 - **Why:** a simulation with the thesis parameters showed 3 correct answers in a row pass 0.95 for every sub-skill, so P(L) can't be used directly as a level score.
 - Full spec: [05-bkt-engine.md](05-bkt-engine.md#level-progression-model-decided-2026-10-17-open-issue-4).
+- **Update (2026-10-20):** pre-test placement uses the Table 3.5 guess rates (not 1/choices), or nobody could be placed above Level 1. See [D-003](../../brain/decisions/D-003%20BKT%20level%20progression.md).
 
 <details><summary>Original problem</summary>
 
@@ -72,10 +73,12 @@ Status key: 🔴 blocks coding · 🟡 decide during build · 📝 manuscript-on
 ### 9. Student login method 🟡
 - 6–7-year-olds can't reliably type passwords. **Decide:** picture password / PIN, a teacher-issued QR code, or tap-your-name on a teacher-managed device.
 - **Interim (2026-10-20):** the backend signs students in with an 8-character **login code** (`POST /api/auth/login`, e.g. `K7PM-3QXA`, no 0/O/1/I/L). Codes are random, shown once at enrolment and stored only as a SHA-256 hash. A QR card could carry the same code. Replace or wrap it once this issue is decided. Teacher/admin email + password login isn't built yet.
+- **Game side (2026-10-20):** a grown-up connects a device from the **Grown-ups** screen (behind a times-table gate): server address + the student's login code. One profile per device until this issue is decided.
 
 ### 10. Offline vs time-restricted access 🟡
 - The access check is server-side, so offline the app can't verify the schedule. **Decide:** cache the schedule + last server time and enforce it locally using the device clock, with tamper detection.
 - **Groundwork (2026-10-20):** `GET /api/config` and `POST /api/sync` return `server_time`, and every synced event keeps both `device_time` and `received_at`, so the client can track its clock offset and the server can spot clock jumps.
+- **Built in the game (2026-10-20):** `AccessPolicy` (class window open, other school hours locked, after-school 30-min daily cap with a countdown, weekends off unless opened, nights asleep). The schedule comes from `GET /api/access/student/status` and is cached; the device clock is corrected by the server offset; a clock that jumps backwards raises a `clock_jump` flag. With no schedule yet, the game stays open. Lock screens never close the app. Server endpoint: teacher dashboard session (in progress).
 
 ### 11. Timeline vs reality 🔴
 - The Gantt shows development May–Aug 2026 and testing Jun–Oct 2026 (4 months). As of 2026-10-17 **no code exists**, and the deadline is November 2026.
@@ -97,6 +100,7 @@ Status key: 🔴 blocks coding · 🟡 decide during build · 📝 manuscript-on
 ### 15. Language policy 🟡
 - L1–2 are in "Mother Tongue" (Bisaya/Butuanon in Butuan), yet future work suggests "adding Bisaya passages", so it's unclear which Mother Tongue L1–2 actually use. Re-check against current DepEd language policy.
 - **Interim (2026-10-20):** the first game slice uses **English placeholder** items (`reading-racoon/content/levels.json`, `"language": "en-placeholder"`). Replace them once the language is decided and teachers review the content.
+- **Levels 3-5 (2026-10-20):** placeholder content follows the bridge: **Filipino** for levels 3-4 and **English** for level 5, with 8 Butuan stories (60 / 100 / 130-word caps), plus 20-item pre- and post-tests in the thesis blueprint. All of it needs teacher review.
 
 ### 16. Latency claim 📝
 - §3.4.2.2 says difficulty uses accuracy **and latency**, but BKT only uses correctness. Either define how latency is used or remove it.

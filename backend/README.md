@@ -9,13 +9,16 @@ Spec: [`docs/knowledge/03-architecture.md`](../docs/knowledge/03-architecture.md
 ## Set up on Windows (XAMPP PHP + PostgreSQL)
 
 1. **Enable PostgreSQL in PHP.** In `C:\xampp\php\php.ini`, remove the `;` in front of `extension=pdo_pgsql` and `extension=pgsql`. Check with `php -m` (both should be listed). XAMPP already ships the DLLs and `libpq.dll`.
-2. **Install PostgreSQL** (16, 17 or 18; match the host once it's chosen). The installer asks for a password for the `postgres` superuser; keep it.
+2. **Install PostgreSQL** (16, 17 or 18; the dev PC runs 18.6). The installer asks for a password for the `postgres` superuser: write it down. Only *PostgreSQL Server* and *Command Line Tools* are needed; skip Stack Builder.
    ```bash
-   winget install --id PostgreSQL.PostgreSQL.17 -e --interactive
+   winget install --id PostgreSQL.PostgreSQL.18 -e --interactive
    ```
-3. **Create the app role and the two databases** (the test database is wiped by every test run):
+   Check it with `"/c/Program Files/PostgreSQL/18/bin/pg_isready.exe" -h 127.0.0.1` (should say `accepting connections`). Lost the `postgres` password? See [Reset a lost postgres password](../brain/learnings/Reset%20a%20lost%20postgres%20password.md).
+3. **Create the app role and the two databases** (the test database is wiped by every test run). `createuser -P` asks for the new role's password (it goes in `.env` next); every command then asks for the `postgres` password. Nothing ends up in your shell history.
    ```bash
-   "/c/Program Files/PostgreSQL/17/bin/psql.exe" -U postgres -c "CREATE ROLE reading_racoon LOGIN PASSWORD 'choose-a-password'" -c "CREATE DATABASE reading_racoon OWNER reading_racoon" -c "CREATE DATABASE reading_racoon_test OWNER reading_racoon"
+   "/c/Program Files/PostgreSQL/18/bin/createuser.exe" -h 127.0.0.1 -U postgres -P reading_racoon
+   "/c/Program Files/PostgreSQL/18/bin/createdb.exe" -h 127.0.0.1 -U postgres -O reading_racoon reading_racoon
+   "/c/Program Files/PostgreSQL/18/bin/createdb.exe" -h 127.0.0.1 -U postgres -O reading_racoon reading_racoon_test
    ```
 4. **Configure and migrate** (from `backend/`):
    ```bash
@@ -36,7 +39,9 @@ Spec: [`docs/knowledge/03-architecture.md`](../docs/knowledge/03-architecture.md
 php artisan test
 ```
 
-Tests run on the `reading_racoon_test` PostgreSQL database (`phpunit.xml`), never SQLite. `tests/Unit` and `tests/Feature/Api/ConfigTest.php` don't touch the database.
+Tests run on the `reading_racoon_test` PostgreSQL database (`phpunit.xml`), never SQLite. `tests/Unit` and `tests/Feature/Api/ConfigTest.php` don't touch the database. All 34 pass on PostgreSQL 18.6.
+
+`php artisan db:show` needs PHP's `intl` extension for its size column (`extension=intl` in `php.ini`); the app itself doesn't.
 
 ## API v1
 

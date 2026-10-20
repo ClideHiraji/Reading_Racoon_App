@@ -18,6 +18,12 @@ return Application::configure(basePath: dirname(__DIR__))
             'role' => EnsureUserHasRole::class,
         ]);
 
+        // API guests get a JSON 401, never a redirect to a "login" web page
+        // (which doesn't exist, so it was a 500 for clients without an Accept header).
+        $middleware->redirectGuestsTo(
+            fn (Request $request) => $request->is('api/*') ? null : route('login')
+        );
+
         // Synced payloads are research data: store them exactly as the device sent them.
         $isSync = fn (Request $request) => $request->is('api/sync');
         $middleware->trimStrings(except: [$isSync]);

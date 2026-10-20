@@ -10,6 +10,16 @@ Capstone thesis project (Caraga State University, BSIT, due Nov 2026): a Godot 4
 
 Reference requirement IDs (`FR-xx`, `NFR-xx`) from `docs/knowledge/02-requirements.md` in commits and code comments.
 
+## Project brain (Obsidian + Graphify)
+
+The repo root is an Obsidian vault. `docs/knowledge/` is the spec; `brain/` holds decisions, devlog and learnings (`brain/Home.md` indexes them). Graphify memory on `ClideHiraji/Reading_Racoon_App` holds one-fact copies for agents.
+
+- **Session start:** read `brain/Home.md` and the newest `brain/devlog/` note; run Graphify `recall` for the topic at hand.
+- **New decision:** add `brain/decisions/D-00X <name>.md` (template `brain/templates/Decision.md`), update `docs/knowledge/10-open-issues.md`, save a one-fact Graphify `remember`, then set `graphify: submitted`.
+- **Reusable lesson:** add `brain/learnings/<lesson>.md` and a Graphify `remember`.
+- **Session end:** write or append `brain/devlog/YYYY-MM-DD.md` (Done / Learned / Next), then offer to commit and push.
+- Link notes with `[[wikilinks]]` by file name; frontmatter has `type`, `date`, `status`, `tags`.
+
 <!-- graphify-rules-start (managed by `graphify init`) -->
 ## Use Graphify before grep
 

@@ -1,0 +1,26 @@
+filters:
+  and:
+    - file.inFolder("brain/decisions")
+properties:
+  file.name:
+    displayName: Decision
+  note.status:
+    displayName: Status
+  note.date:
+    displayName: Date
+  note.issue:
+    displayName: Open issue
+  note.graphify:
+    displayName: Graphify
+views:
+  - type: table
+    name: All decisions
+    order:
+      - file.name
+      - status
+      - date
+      - issue
+      - graphify
+    sort:
+      - property: file.name
+        direction: ASC

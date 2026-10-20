@@ -7,6 +7,8 @@ Source of truth for what the system must do, distilled from the capstone thesis 
 
 Extracted 2026-10-17 from the Google Docs HTML export (Chapters 1–3 + references). When the manuscript changes, update these files and note the date.
 
+Decisions, the progress log and lessons learned live in the Obsidian brain: [brain/Home.md](../../brain/Home.md).
+
 ## Files
 
 | File | What it covers |

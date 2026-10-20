@@ -1,0 +1,12 @@
+{
+  "newLinkFormat": "shortest",
+  "useMarkdownLinks": false,
+  "newFileLocation": "folder",
+  "newFileFolderPath": "brain/inbox",
+  "attachmentFolderPath": "brain/attachments",
+  "alwaysUpdateLinks": true,
+  "userIgnoreFilters": [
+    "game/.godot/",
+    "game/android/"
+  ]
+}

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\EnsureApprovedTeacher;
 use App\Http\Middleware\EnsureUserHasRole;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -16,6 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
             'role' => EnsureUserHasRole::class,
+            'teacher' => EnsureApprovedTeacher::class,
         ]);
 
         // API guests get a JSON 401, never a redirect to a "login" web page
@@ -23,6 +25,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->redirectGuestsTo(
             fn (Request $request) => $request->is('api/*') ? null : route('login')
         );
+        $middleware->redirectUsersTo(fn () => route('teacher.home'));
 
         // Synced payloads are research data: store them exactly as the device sent them.
         $isSync = fn (Request $request) => $request->is('api/sync');

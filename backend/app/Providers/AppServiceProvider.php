@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Reports\DiagnosticReportWriter;
+use App\Reports\TemplateReportWriter;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
@@ -14,7 +16,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // The report seam (FR-05, D-011): bind GeminiReportWriter here in the LLM slice.
+        $this->app->bind(DiagnosticReportWriter::class, TemplateReportWriter::class);
     }
 
     /**
@@ -30,5 +33,9 @@ class AppServiceProvider extends ServiceProvider
         RateLimiter::for('api', fn (Request $request) => Limit::perMinute(120)->by($request->user()?->id ?: $request->ip()));
 
         RateLimiter::for('sync', fn (Request $request) => Limit::perMinute(60)->by($request->user()?->id ?: $request->ip()));
+
+        // Teacher web forms. The login controller also locks an email after 5 misses.
+        RateLimiter::for('teacher-login', fn (Request $request) => Limit::perMinute(20)->by($request->ip()));
+        RateLimiter::for('teacher-register', fn (Request $request) => Limit::perHour(10)->by($request->ip()));
     }
 }

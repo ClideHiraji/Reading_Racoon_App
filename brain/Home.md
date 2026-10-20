@@ -27,6 +27,7 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 - [[D-007 UI direction Duolingo-style path]]
 - [[D-008 Offline sync contract]]
 - [[D-009 Art direction Butuan storybook]]
+- [[D-010 Student login and automatic sync]]
 - [[D-011 Server-side BKT replay]]
 - [[D-012 Teacher web dashboard]]
 - [[D-013 Hidden admin portal]]
@@ -35,7 +36,7 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 ## Still open (from [[10-open-issues]])
 - 🔴 Timeline: a 4-month evaluation doesn't fit before November. Re-plan with the adviser (issue 11).
 - 🔴 Finish the database design (issue 8, [[04-data-model]]). 14 tables are built in `backend/`; content, `bkt_parameters` and AI logs are left.
-- 🟡 How 6-year-olds log in: picture PIN, QR card or tap your name (issue 9).
+- 🟡 How 6-year-olds log in: interim login code on a kid keypad (D-010); picture PIN or QR card still possible (issue 9).
 - 🟡 Where the Laravel + PostgreSQL server is hosted.
 - 🟡 Re-check Grade 1 competencies with teachers (issue 13), and which Mother Tongue for levels 1–2 (issue 15).
 

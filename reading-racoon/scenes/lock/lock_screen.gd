@@ -13,8 +13,6 @@ const TEXTS := {
 
 func _ready() -> void:
 	%CheckButton.pressed.connect(_check)
-	%GrownupsButton.pressed.connect(func():
-		get_tree().change_scene_to_file("res://scenes/settings/grownups.tscn"))
 	_show(GameState.access_decision())
 
 

@@ -147,16 +147,29 @@ func _run() -> void:
 	await _frames(5)
 	check(current_scene.name == "LearningPath", "back from the shop")
 
-	# Grown-ups: the gate, then the settings page (FR-10 toggle, sync status).
-	change_scene_to_file("res://scenes/settings/grownups.tscn")
+	# Login (D-010): the keypad fills the code; LET'S GO waits for 8 characters.
+	change_scene_to_file("res://scenes/login/login.tscn")
 	await _frames(5)
-	var grown := current_scene
-	check(grown.name == "Grownups" and grown.has_method("_show_settings"), "grown-ups screen loads")
-	grown._on_gate(grown._answer)
-	await _frames(3)
-	check(grown.get_node("%Content").get_child_count() > 3, "settings shown after the gate")
-	grown._back()
-	await _frames(5)
+	var login := current_scene
+	check(login.name == "Login", "login screen loads")
+	check(login.get_node("%Keys").get_child_count() == LoginCode.ALPHABET.length() + 1,
+			"keypad has every code character and a delete key")
+	for ch in "K7PM3QX":
+		login._type(ch)
+	check(login.get_node("%GoButton").disabled, "LET'S GO waits for the 8th character")
+	login._type("A")
+	login._type("B")   # ignored: a code has 8 characters
+	check(login._code == "K7PM3QXA" and not login.get_node("%GoButton").disabled, "8 characters typed")
+	login._delete()
+	check(login._code == "K7PM3QX", "delete removes the last character")
+
+	# Switch student: never while answers are still waiting to upload.
+	gs.device = {"token": "t", "student_name": "Ana", "student_id": 999}
+	gs.store.queue_event("response", {"n": 1})
+	check(not gs.sign_out(), "can't switch student with unsent answers")
+	check(gs.signed_in(), "still signed in")
+	gs.store.wipe()
+	check(gs.sign_out() and not gs.signed_in(), "switches once everything is saved")
 
 	# Lock screen loads (FR-12).
 	change_scene_to_file("res://scenes/lock/lock_screen.tscn")

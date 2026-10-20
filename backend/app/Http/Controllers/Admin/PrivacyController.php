@@ -5,11 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Enums\RegistrationStatus;
 use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
+use App\Models\AiLog;
+use App\Models\AiReport;
 use App\Models\AuditLog;
 use App\Models\Section;
 use App\Models\Student;
 use App\Models\User;
 use App\Support\AdminPortal;
+use App\Support\LlmClient;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
@@ -33,6 +36,10 @@ class PrivacyController extends Controller
                 ->orWhere(fn ($w) => $w->whereNull('last_used_at')->where('created_at', '<', now()->subDays(90))))
             ->count();
         $trigger = DB::table('pg_trigger')->where('tgname', 'audit_logs_no_update_or_delete')->exists();
+        $aiCalls = AiLog::where('created_at', '>=', now()->subDays(30))->count();
+        // Consent cleared after a call: their earlier rows are listed here so the admin can review them.
+        $aiUnconsented = AiLog::where('created_at', '>=', now()->subDays(30))
+            ->whereHas('student', fn ($q) => $q->whereNull('consent_recorded_at'))->count();
 
         $checks = [
             ['Parental consent on file', $students === 0 ? 'ok' : ($consented === $students ? 'ok' : 'warn'),
@@ -47,9 +54,10 @@ class PrivacyController extends Controller
             ['Audit log is append-only', $trigger ? 'ok' : 'fail', 'PostgreSQL trigger refuses UPDATE and DELETE on audit_logs.'],
             ['Inactive learners', $inactive === 0 ? 'ok' : 'warn', "{$inactive} learner(s) with no sync for 180 days: candidates for deletion."],
             ['Unused game tokens', $staleTokens === 0 ? 'ok' : 'warn', "{$staleTokens} Sanctum token(s) unused for 90 days."],
-            ['Third-party AI processing', filled(config('services.llm.key')) ? 'warn' : 'ok', filled(config('services.llm.key'))
-                ? 'Gemini is configured: prompts must carry student codes only, on paid terms (docs/knowledge/08-ai-integration.md).'
-                : 'No LLM is configured yet; nothing leaves the server.'],
+            ['Third-party AI processing', LlmClient::enabled() ? 'warn' : 'ok', LlmClient::enabled()
+                ? 'Gemini ('.LlmClient::model().') is on. Only learners with parental consent are sent, as student code and scores (no names or dates); '
+                    .$aiCalls.' call(s) in the last 30 days, '.$aiUnconsented.' for learners without consent now. Use paid (billing-enabled) terms (docs/knowledge/08-ai-integration.md, D-015).'
+                : 'The AI is off (LLM_* not set in .env); reports use the template and nothing leaves the server.'],
         ];
 
         return view('admin.privacy', [
@@ -59,6 +67,8 @@ class PrivacyController extends Controller
                 ['Pseudonymous student code', 'students.code', $students, 'Used in exports, logs and AI prompts instead of names.'],
                 ['Login code', 'users.login_code_hash', $students, 'SHA-256 hash only; the code is shown once.'],
                 ['Gameplay events', 'sync_events', DB::table('sync_events')->count(), 'Answers, scores, play minutes; no free text, age or gender.'],
+                ['AI calls', 'ai_logs', AiLog::count(), 'Student code and scores sent to Gemini, with the reply (FR-21). Consented learners only; deleted with the learner.'],
+                ['AI report paragraphs', 'ai_reports', AiReport::count(), 'Gemini\'s summary text per set of numbers; deleted with the learner.'],
                 ['Teacher name and email', 'users (teachers)', User::where('role', UserRole::Teacher)->count(), 'Needed to sign in and approve accounts.'],
                 ['Admin name and email', 'users (admins)', $admins->count(), 'TOTP secret encrypted with APP_KEY.'],
             ],

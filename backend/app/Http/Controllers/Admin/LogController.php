@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AiLog;
 use App\Models\AuditLog;
 use App\Models\SystemLog;
 use Illuminate\Http\Request;
@@ -11,7 +12,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 
 /**
- * System and audit logs with filters and anomaly highlighting (FR-08, FR-22).
+ * System, audit and AI-call logs with filters and anomaly highlighting
+ * (FR-08, FR-21, FR-22).
  */
 class LogController extends Controller
 {
@@ -25,8 +27,9 @@ class LogController extends Controller
     {
         // Bad filter values are dropped, not answered with a redirect.
         $filters = Validator::make($request->query(), [
-            'kind' => ['nullable', 'in:system,audit'],
+            'kind' => ['nullable', 'in:system,audit,ai'],
             'level' => ['nullable', 'in:info,warning,error,critical'],
+            'status' => ['nullable', 'in:ok,invalid,blocked,error'],
             'event' => ['nullable', 'string', 'max:64'],
             'anomaly' => ['nullable', 'boolean'],
             'from' => ['nullable', 'date_format:Y-m-d'],
@@ -47,6 +50,16 @@ class LogController extends Controller
                     ->orWhere('subject_id', 'ilike', "%{$s}%")->orWhere('ip', $s)))
                 ->latest('id')->paginate(50)->withQueryString();
             $events = AuditLog::distinct()->orderBy('action')->pluck('action');
+        } elseif ($kind === 'ai') {
+            // Every LLM call with its input and reply (FR-21); failed calls are the anomalies.
+            $logs = $range(AiLog::query()->with('student:id,code'))
+                ->when($filters['event'] ?? null, fn ($q, $e) => $q->where('task', $e))
+                ->when($filters['status'] ?? null, fn ($q, $s) => $q->where('status', $s))
+                ->when($filters['anomaly'] ?? false, fn ($q) => $q->where('status', '<>', 'ok'))
+                ->when($filters['q'] ?? null, fn ($q, $s) => $q->where(fn ($w) => $w->where('model', 'ilike', "%{$s}%")
+                    ->orWhere('error', 'ilike', "%{$s}%")->orWhereHas('student', fn ($st) => $st->where('code', 'ilike', "%{$s}%"))))
+                ->latest('id')->paginate(50)->withQueryString();
+            $events = AiLog::distinct()->orderBy('task')->pluck('task');
         } else {
             $logs = $range(SystemLog::query())
                 ->when($filters['level'] ?? null, fn ($q, $l) => $q->where('level', $l))

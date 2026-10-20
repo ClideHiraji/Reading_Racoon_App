@@ -5,6 +5,7 @@ namespace Tests\Feature\Admin;
 use App\Actions\EnrollStudent;
 use App\Actions\ReplayStudentEvents;
 use App\Enums\RegistrationStatus;
+use App\Models\AiLog;
 use App\Models\AuditLog;
 use App\Models\Student;
 use App\Models\SystemLog;
@@ -71,6 +72,24 @@ class AdminFeaturesTest extends AdminTestCase
         $this->get($this->admin('logs?kind=nope&level=loud'))->assertOk()->assertSee('System log'); // bad filters are dropped
     }
 
+    public function test_ai_calls_are_listed_with_their_input_and_failures_highlighted(): void
+    {
+        $teacher = User::factory()->registered()->create();
+        $student = app(EnrollStudent::class)->handle($teacher->sections()->create(['name' => 'Grade 1 - Rosal']), 'Ana')['student'];
+        $base = ['task' => AiLog::TEACHER_REPORT, 'prompt_version' => 'report-v1', 'model' => 'gemini-test-flash',
+            'student_id' => $student->id, 'input' => ['learner_code' => $student->code], 'latency_ms' => 1234];
+        AiLog::create([...$base, 'status' => 'ok', 'output' => 'A fine summary.', 'prompt_tokens' => 900, 'completion_tokens' => 140]);
+        AiLog::create([...$base, 'status' => 'invalid', 'output' => 'Aim for 73%.', 'error' => 'number 73 is not in the facts']);
+
+        $this->get($this->admin('logs?kind=ai'))->assertOk()
+            ->assertSee('AI calls')->assertSee($student->code)->assertSee('1,234 ms')->assertSee('A fine summary.')
+            ->assertSee('number 73 is not in the facts')->assertSee('class="anomaly"', false)->assertDontSee('Ana');
+        $this->get($this->admin('logs?kind=ai&anomaly=1'))->assertOk()
+            ->assertSee('Aim for 73%.')->assertDontSee('A fine summary.');
+        $this->get($this->admin('logs?kind=ai&status=ok&q='.$student->code))->assertOk()
+            ->assertSee('A fine summary.')->assertDontSee('Aim for 73%.');
+    }
+
     public function test_the_privacy_audit_reports_consent_and_security_checks(): void
     {
         $teacher = User::factory()->registered()->create();
@@ -87,6 +106,13 @@ class AdminFeaturesTest extends AdminTestCase
         $this->assertSame('ok', $checks['Every admin has TOTP 2FA'][1]);
         $this->assertSame('ok', $checks['Audit log is append-only'][1]);
         $this->assertSame('ok', $checks['Admin portal path'][1]);
+        $this->assertSame('ok', $checks['Third-party AI processing'][1]);
+        $response->assertSee('ai_logs');
+
+        config(['services.llm' => ['base_url' => 'https://llm.test/', 'key' => 'test-key', 'model' => 'gemini-test-flash']]);
+        $checks = collect($this->get($this->admin('privacy'))->viewData('checks'))->keyBy(0);
+        $this->assertSame('warn', $checks['Third-party AI processing'][1]);
+        $this->assertStringContainsString('Only learners with parental consent are sent', $checks['Third-party AI processing'][2]);
     }
 
     public function test_research_exports_hold_consented_learners_by_code_only(): void

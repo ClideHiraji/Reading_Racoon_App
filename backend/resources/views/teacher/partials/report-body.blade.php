@@ -44,7 +44,11 @@
 </table>
 
 <p class="muted small" style="margin-top: 1rem;">
-    Generated {{ $report->generatedAt->setTimezone($timezone)->format('M j, Y g:i A') }} from the game's numbers
-    ({{ $report->generatedBy === 'template' ? 'template summary; the AI-written version comes in a later release' : 'AI model '.$report->generatedBy }}).
+    Generated {{ $report->generatedAt->setTimezone($timezone)->format('M j, Y g:i A') }} from the game's numbers.
+    @if ($report->generatedBy === 'template')
+        Summary written by the built-in template from the numbers.
+    @else
+        Summary paragraphs written by AI ({{ $report->generatedBy }}) from the numbers below and checked against them; the lists come from the numbers. It supports, not replaces, your own judgement.
+    @endif
     Mastery = P(L) of at least 0.95 after at least 5 answers at a level. ARAL band from the highest unlocked map level.
 </p>

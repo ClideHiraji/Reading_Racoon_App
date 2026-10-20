@@ -5,7 +5,7 @@
 <div class="page-head">
     <div>
         <h1>Logs</h1>
-        <p class="muted">Times are {{ $timezone }}. Red rows are anomalies (system) or sensitive actions (audit).</p>
+        <p class="muted">Times are {{ $timezone }}. Red rows are anomalies (system), sensitive actions (audit) or failed calls (AI).</p>
     </div>
     <div style="min-width: 260px;">
         <div class="small muted">Anomalies per day, last 14 days</div>
@@ -22,13 +22,14 @@
 <nav class="tabs" aria-label="Log type">
     <a href="{{ route('admin.logs', ['kind' => 'system']) }}" @class(['active' => $kind === 'system'])>System log</a>
     <a href="{{ route('admin.logs', ['kind' => 'audit']) }}" @class(['active' => $kind === 'audit'])>Audit log</a>
+    <a href="{{ route('admin.logs', ['kind' => 'ai']) }}" @class(['active' => $kind === 'ai'])>AI calls</a>
 </nav>
 
 <form method="GET" action="{{ route('admin.logs') }}" class="card">
     <input type="hidden" name="kind" value="{{ $kind }}">
     <div class="grid grid-4">
         <div>
-            <label for="event">{{ $kind === 'audit' ? 'Action' : 'Event' }}</label>
+            <label for="event">{{ ['audit' => 'Action', 'ai' => 'Task'][$kind] ?? 'Event' }}</label>
             <select id="event" name="event">
                 <option value="">All</option>
                 @foreach ($events as $event)
@@ -46,13 +47,23 @@
                     @endforeach
                 </select>
             </div>
+        @elseif ($kind === 'ai')
+            <div>
+                <label for="status">Status</label>
+                <select id="status" name="status">
+                    <option value="">All</option>
+                    @foreach (['ok', 'invalid', 'blocked', 'error'] as $status)
+                        <option value="{{ $status }}" @selected(($filters['status'] ?? '') === $status)>{{ $status }}</option>
+                    @endforeach
+                </select>
+            </div>
         @endif
         <div><label for="from">From</label><input id="from" type="date" name="from" value="{{ $filters['from'] ?? '' }}"></div>
         <div><label for="to">To</label><input id="to" type="date" name="to" value="{{ $filters['to'] ?? '' }}"></div>
-        <div><label for="q">Search</label><input id="q" type="text" name="q" value="{{ $filters['q'] ?? '' }}" placeholder="{{ $kind === 'audit' ? 'Actor, subject or IP' : 'IP or text' }}"></div>
+        <div><label for="q">Search</label><input id="q" type="text" name="q" value="{{ $filters['q'] ?? '' }}" placeholder="{{ ['audit' => 'Actor, subject or IP', 'ai' => 'Student code, model or error'][$kind] ?? 'IP or text' }}"></div>
     </div>
     <div class="row" style="margin-top: .75rem;">
-        <label class="check" style="margin: 0;"><input type="checkbox" name="anomaly" value="1" @checked($filters['anomaly'] ?? false)> {{ $kind === 'audit' ? 'Sensitive actions only' : 'Anomalies only' }}</label>
+        <label class="check" style="margin: 0;"><input type="checkbox" name="anomaly" value="1" @checked($filters['anomaly'] ?? false)> {{ ['audit' => 'Sensitive actions only', 'ai' => 'Failed calls only'][$kind] ?? 'Anomalies only' }}</label>
         <button class="btn" type="submit">Filter</button>
         <a class="btn btn-light" href="{{ route('admin.logs', ['kind' => $kind]) }}">Clear</a>
     </div>
@@ -75,6 +86,28 @@
                             <td>{{ $log->subject_type }} {{ $log->subject_id }}</td>
                             <td>@if ($log->details)<pre class="json">{{ json_encode($log->details, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) }}</pre>@endif</td>
                             <td>{{ $log->ip }}</td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                @elseif ($kind === 'ai')
+                    <thead><tr><th>When</th><th>Task</th><th>Learner</th><th>Model</th><th>Status</th><th>Latency</th><th>Tokens</th><th>Input and reply</th></tr></thead>
+                    <tbody>
+                    @foreach ($logs as $log)
+                        <tr @class(['anomaly' => $log->status !== 'ok'])>
+                            <td style="white-space: nowrap;">{{ $log->created_at->setTimezone($timezone)->format('M j, H:i:s') }}</td>
+                            <td>{{ $log->task }}<div class="muted">{{ $log->prompt_version }}</div></td>
+                            <td>{{ $log->student?->code ?? '-' }}</td>
+                            <td>{{ $log->model }}</td>
+                            <td>
+                                <span @class(['badge', 'badge-red' => in_array($log->status, ['error', 'blocked'], true), 'badge-amber' => $log->status === 'invalid'])>{{ $log->status }}</span>
+                                @if ($log->error)<div class="muted">{{ $log->error }}</div>@endif
+                            </td>
+                            <td style="white-space: nowrap;">{{ number_format($log->latency_ms) }} ms</td>
+                            <td>{{ $log->prompt_tokens ?? '-' }} / {{ $log->completion_tokens ?? '-' }}</td>
+                            <td>
+                                <details><summary>Input JSON</summary><pre class="json">{{ json_encode($log->input, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) }}</pre></details>
+                                @if ($log->output !== null)<details><summary>Reply</summary><pre class="json">{{ $log->output }}</pre></details>@endif
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>

@@ -40,6 +40,8 @@ Use Laravel's `Http` facade (or `openai-php/laravel` with a custom base URL). Al
 | Companion dialogue | Synchronous request from the Godot app → Laravel → Gemini | **~1.5 s** to the LLM, so the 2 s UI target holds | Random line from the bundled local library for that state + level |
 | Teacher report | **Queued job** after a session syncs. Store in `ai_reports` | 30 s, 2 retries | Template report built from the BKT numbers |
 
+**As built (2026-10-21):** the teacher report, [D-015](../../brain/decisions/D-015%20Gemini%20teacher%20report.md) and `backend/README.md` ("Gemini teacher report"). Companion dialogue (`POST /api/companion/dialogue`) isn't built yet; the game uses its local line library.
+
 ### Gemini gotchas
 - Some newer Gemini models **"think"** before answering. Thinking tokens add latency and can use up a small `max_tokens` budget (the thesis limits of 60 / 250). For dialogue, turn thinking off or to the minimum the model allows (on the OpenAI-compatible endpoint, `reasoning_effort: "low"`/`"none"` where supported). Leave `max_tokens` headroom, and enforce the visible length through the prompt plus server-side trimming. Keep the thesis temperatures (0.7 / 0.3).
 - **Safety filters** may block some outputs. Treat an empty or blocked response as a failure and use the fallback.

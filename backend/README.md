@@ -68,13 +68,43 @@ How the portal stays hidden:
 - Teachers and admins use separate session guards: a teacher account can't open the portal and an admin account can't use the teacher sign-in.
 - **On the server set `APP_DEBUG=false`**: debug pages would show internals.
 
+## Gemini teacher report: set up (FR-05, FR-21)
+
+The report's two summary paragraphs are written by Gemini; the lists and the table under them come from the numbers ([D-015](../brain/decisions/D-015%20Gemini%20teacher%20report.md)). It stays off, and every report uses the template, until all three `LLM_*` values are set.
+
+1. **API key** from Google AI Studio, created under the **billing-enabled** Google Cloud project that holds the AI Pro credits (paid terms only: free-tier prompts may be used by Google, [D-002](../brain/decisions/D-002%20AI%20model%20Gemini.md)). Set a budget alert on the billing account.
+2. **`.env`** (never commit it):
+   ```env
+   LLM_BASE_URL=https://generativelanguage.googleapis.com/v1beta/openai/
+   LLM_API_KEY=<your key>
+   LLM_MODEL=<exact Flash or Flash-Lite model id from Google's model list, not a "latest" alias>
+   # Optional:
+   LLM_REASONING_EFFORT=     # e.g. none or low to limit "thinking"; allowed values depend on the model
+   LLM_REPORT_MAX_TOKENS=600
+   LLM_REPORT_DELAY_MINUTES=10
+   ```
+   Then `php artisan config:clear` and `php artisan migrate`.
+3. **Run a queue worker** (reports are written in the background): `php artisan queue:work` on the server, or `composer dev` locally, which already runs one.
+4. **Check it** without playing: record parental consent for a learner who has played, then
+   ```bash
+   php artisan report:write RR-XXXXXX
+   ```
+   It prints the paragraphs, or why the replies were refused. Add `--force` to write again for the same numbers.
+
+How it behaves:
+- A sync that stores new events queues a report for **10 minutes later**; syncs in between don't queue another, so one play session gives one report. Opening a report that has no AI version for the current numbers also queues one.
+- **Only learners with parental consent on file** are sent, as student code and numbers (no names, ages or dates). Others always get the template.
+- Every reply is checked against the numbers before it's shown: two plain paragraphs of 40–180 words, no other learner's code, every number found in the facts, every sub-skill that needs support named. Up to 3 calls (timeouts, 429 and 5xx are retried; a bad key isn't), then the template, and an `ai.report_fallback` warning in the system log.
+- Every call is in `ai_logs` (the injected JSON, the reply, status, reason, latency, tokens) and in the admin portal under **Logs > AI calls**. Removing a learner deletes their AI rows.
+- The report footer says whether the paragraphs come from the template or from the AI model. While a new version is being written, the template shows.
+
 ## Test
 
 ```bash
 php artisan test
 ```
 
-Tests run on the `reading_racoon_test` PostgreSQL database (`phpunit.xml`), never SQLite. Admin tests boot the app with a random `ADMIN_PATH` that exists only for that test. **All 114 pass on PostgreSQL 18.6.**
+Tests run on the `reading_racoon_test` PostgreSQL database (`phpunit.xml`), never SQLite. Admin tests boot the app with a random `ADMIN_PATH` that exists only for that test. Gemini is always faked (`Http::fake`); `phpunit.xml` forces `LLM_API_KEY` empty so a real key in `.env` is never used. **All 139 pass on PostgreSQL 18.6.**
 
 `php artisan db:show` needs PHP's `intl` extension for its size column (`extension=intl` in `php.ini`); the app itself doesn't.
 
@@ -87,7 +117,7 @@ Tests run on the `reading_racoon_test` PostgreSQL database (`phpunit.xml`), neve
 | `/teacher/sections/{id}` | Class dashboard: mastery per sub-skill, ARAL band counts (from each learner's highest unlocked map level), colour-coded open intervention flags (red: rescue limit, orange: failed Heart Recovery, amber: P(L) < 0.30 after 5+ answers), the roster with add/remove, new login code, parental consent. |
 | `/teacher/students/{id}` | BKT chart over time (one line per sub-skill and level), the 14 skill-levels, lessons and Racoon's Rescue history, flags, play time. |
 | `/teacher/sections/{id}/schedule` | Class window, after-school window, daily after-school minutes, weekends on/off. |
-| `/teacher/students/{id}/report` (+ `.pdf`) | Diagnostic summary built from the numbers, with PDF export (dompdf). The Gemini-written version plugs in later behind `App\Reports\DiagnosticReportWriter` ([D-012](../brain/decisions/D-012%20Teacher%20web%20dashboard.md)). |
+| `/teacher/students/{id}/report` (+ `.pdf`) | Diagnostic summary with PDF export (dompdf): two paragraphs written by Gemini once a checked version exists for the current numbers, otherwise by the template; the lists and table always come from the numbers ([D-015](../brain/decisions/D-015%20Gemini%20teacher%20report.md)). |
 
 Teachers only ever see their own sections: another teacher's section, learner or flag answers 404. Charts use Chart.js 4.4.1 from jsDelivr; without internet the tables under the charts still show every number. Every teacher action is written to the audit log.
 
@@ -97,7 +127,7 @@ Teachers only ever see their own sections: another teacher's section, learner or
 |---|---|
 | Overview | Waiting registrations, anomalies, failed sign-ins and server errors in the last 24 h. |
 | Registrations | Approve, deny or revoke teachers, with an optional note. |
-| Logs | System log (sign-ins, access decisions, sync problems, device lock screens, clock jumps, server errors) and audit log (every admin and teacher action), filtered by event, level, date and text. Anomalies and sensitive actions are highlighted. |
+| Logs | System log (sign-ins, access decisions, sync problems, device lock screens, clock jumps, AI fallbacks, server errors), audit log (every admin and teacher action) and AI calls (every Gemini call with its input JSON, reply, status and latency, FR-21), filtered by event, level or status, date and text. Anomalies, sensitive actions and failed AI calls are highlighted. |
 | Privacy audit | RA 10173 checks: consent coverage, 2FA on every admin, portal path, IP allowlist, debug mode, HTTPS, append-only audit log, inactive learners, unused tokens, third-party AI; the personal data stored; who opened learner data in the last 30 days. |
 | Research export | `students.csv` (levels, accuracy, pre/post-test scores per sub-skill, final P(L) of the 14 skill-levels) and `bkt-history.csv` (every replayed answer). **Consented learners only, student codes only, never names.** |
 
@@ -265,6 +295,8 @@ Student token only. The section's schedule and today's decision, in the school's
 | `sync_events` | Raw client events: `uuid` (unique), `type`, `payload` jsonb, `device_time`, `received_at` | bigint `id` = arrival order |
 | `audit_logs` | Every admin and teacher action. **Append-only**: a trigger refuses UPDATE and DELETE | bigint |
 | `system_logs` | Sign-ins, access decisions, sync problems, server errors, with an `anomaly` flag | bigint |
+| `ai_logs` | Every LLM call: task, prompt version, model, input JSON, reply, `status` (`ok`/`invalid`/`blocked`/`error`), reason, latency, tokens | bigint |
+| `ai_reports` | Gemini's report paragraphs per set of numbers (`facts_hash`); `paragraphs` null = the AI failed and the template is used | unique `(student_id, facts_hash)` |
 
 All times are `timestamptz`; the connection runs in UTC. `App\Actions\EnrollStudent` creates a student with their login code, student code, 14 BKT states at P(L0), wallet, starter outfit and path. Removing a learner deletes all their rows.
 
@@ -277,10 +309,11 @@ All times are `timestamptz`; the connection runs in UTC. `App\Actions\EnrollStud
 | `app/Http/Controllers/Admin/` | Admin sign-in, overview, registrations, logs, privacy audit, export |
 | `app/Http/Middleware/` | `EnsureUserHasRole`, `EnsureApprovedTeacher`, `ConcealAdminPortal`, `AuthenticateAdmin` |
 | `app/Actions/` | `EnrollStudent`, `RecordSyncEvents`, `ReplayStudentEvents` |
-| `app/Support/` | `StudentReplay` (the BKT replay), `Bkt`, `SkillCatalog`, `AccessDecider`, `SectionStats`, `LoginCode`, `StudentCode`, `AdminPortal`, `AdminTotp` |
-| `app/Reports/` | `StudentFacts`, `DiagnosticReportWriter` (the LLM seam), `TemplateReportWriter` |
+| `app/Support/` | `StudentReplay` (the BKT replay), `Bkt`, `SkillCatalog`, `AccessDecider`, `SectionStats`, `LoginCode`, `StudentCode`, `AdminPortal`, `AdminTotp`, `LlmClient` |
+| `app/Reports/` | `StudentFacts`, `DiagnosticReportWriter` (the LLM seam), `TemplateReportWriter`, `StoredReportWriter` (pages), `GeminiReportWriter`, `ReportPrompt`, `AiReportCheck` |
+| `app/Jobs/` | `WriteAiReport` (the queued Gemini report) |
 | `app/Policies/` | Teachers see only their own sections, learners and flags |
-| `app/Console/Commands/` | `admin:create`, `admin:reset-2fa` |
+| `app/Console/Commands/` | `admin:create`, `admin:reset-2fa`, `report:write` |
 | `config/reading_racoon.php` | BKT parameters, rewards, shop catalogue, levels and ARAL bands, access defaults |
 | `config/admin.php` | Admin portal settings (path, IP allowlist, idle time, sign-in limits) |
 | `routes/web.php`, `routes/admin.php`, `routes/api.php` | Teacher pages, hidden admin portal, game API |

@@ -32,10 +32,11 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 - [[D-012 Teacher web dashboard]]
 - [[D-013 Hidden admin portal]]
 - [[D-014 Time-restricted access rules]]
+- [[D-015 Gemini teacher report]]
 
 ## Still open (from [[10-open-issues]])
 - 🔴 Timeline: a 4-month evaluation doesn't fit before November. Re-plan with the adviser (issue 11).
-- 🔴 Finish the database design (issue 8, [[04-data-model]]). 14 tables are built in `backend/`; content, `bkt_parameters` and AI logs are left.
+- 🔴 Finish the database design (issue 8, [[04-data-model]]). 16 tables are built in `backend/` (incl. `ai_logs`, `ai_reports`); content and `bkt_parameters` are left.
 - 🟡 How 6-year-olds log in: interim login code on a kid keypad (D-010); picture PIN or QR card still possible (issue 9).
 - 🟡 Where the Laravel + PostgreSQL server is hosted.
 - 🟡 Re-check Grade 1 competencies with teachers (issue 13), and which Mother Tongue for levels 1–2 (issue 15).
@@ -43,6 +44,7 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 ## Devlog
 - [[2026-10-17]]: thesis analyzed, knowledge base, decisions D-001 to D-005, GitHub, Godot project.
 - [[2026-10-20]]: blueprint page, Obsidian + Graphify brain, first playable game slice (D-007), first Laravel backend slice (D-008), server BKT replay, teacher dashboard and hidden admin portal (D-011 to D-014).
+- [[2026-10-21]]: Gemini teacher report with output checks and `ai_logs` (D-015).
 
 ## Learnings
 - [[BKT passes 0.95 after 3 correct]]
@@ -62,6 +64,7 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 - [[Blade inline php swallows a later php block]]
 - [[migrate fresh keeps PostgreSQL functions]]
 - [[A hidden route needs a catch-all against 405]]
+- [[A unique delayed job debounces syncs]]
 
 ## Links
 - Visual blueprint (private page): https://claude.ai/artifact/TPcwMuVYMvR9gx8ypBMYB9

@@ -30,20 +30,26 @@ const PARAMS := {
 	LIT_COMP: {"l0": 0.20, "t": 0.15, "g": 0.20, "s": 0.10},
 }
 
-## Kid-facing names and icons for the skill rings on the path.
+## Kid-facing names and icons (res://assets/icons) for the skill bars on the path.
 const NAMES := {PA: "Sounds", PHONICS: "Letters", VOCAB: "Words", FLUENCY: "Reading", LIT_COMP: "Stories"}
-const ICONS := {PA: "👂", PHONICS: "🔤", VOCAB: "📖", FLUENCY: "🗣", LIT_COMP: "📚"}
+const ICONS := {PA: "ear", PHONICS: "pencil", VOCAB: "book", FLUENCY: "talk", LIT_COMP: "stories"}
 
 const MAX_LEVEL := 5
 
-## Map levels are themed worlds on the learning path (D-007).
+## Map levels are worlds on the learning path, named after places in Butuan
+## City (D-007, D-009). `scene` picks the PaperScenery landscape.
 ## Band = ARAL band shown to teachers (docs/knowledge/05-bkt-engine.md).
 const WORLDS := [
-	{"name": "Sound Forest", "icon": "🌲", "color": Color("6bbf59"), "band": "ARAL Basic"},
-	{"name": "Word River", "icon": "🌊", "color": Color("3fa7d6"), "band": "ARAL Basic / Plus"},
-	{"name": "Sentence Hills", "icon": "⛰", "color": Color("f29e4c"), "band": "ARAL Plus"},
-	{"name": "Story Village", "icon": "🏡", "color": Color("b07cc6"), "band": "Approaching Proficient"},
-	{"name": "Reading Castle", "icon": "🏰", "color": Color("e5596b"), "band": "Grade-Level Proficient"},
+	{"name": "Agusan River", "icon": "waves", "scene": "river", "color": Color("2a9d8f"),
+			"band": "ARAL Basic"},
+	{"name": "Mango Grove", "icon": "tree", "scene": "grove", "color": Color("6aab4c"),
+			"band": "ARAL Basic / Plus"},
+	{"name": "Bahay Kubo Village", "icon": "hut", "scene": "village", "color": Color("b9875b"),
+			"band": "ARAL Plus"},
+	{"name": "Balangay Bay", "icon": "boat", "scene": "bay", "color": Color("3f80aa"),
+			"band": "Approaching Proficient"},
+	{"name": "Mount Mayapay", "icon": "mountain", "scene": "mountain", "color": Color("8e6aa0"),
+			"band": "Grade-Level Proficient"},
 ]
 
 

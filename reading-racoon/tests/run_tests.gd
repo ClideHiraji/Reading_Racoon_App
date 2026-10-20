@@ -33,6 +33,25 @@ func near(a: float, b: float, tol: float, msg: String) -> void:
 	check(absf(a - b) <= tol, "%s (got %.4f, want %.4f)" % [msg, a, b])
 
 
+## True if the text has emoji or pictographic symbols (U+2600-27BF, U+1F000+).
+func _has_emoji(text: String) -> bool:
+	for i in text.length():
+		var c := text.unicode_at(i)
+		if (c >= 0x2600 and c <= 0x27BF) or c >= 0x1F000:
+			return true
+	return false
+
+
+func test_companion_lines_have_no_emoji() -> void:
+	var text := FileAccess.get_file_as_string("res://content/companion_lines.json")
+	check(not text.is_empty(), "companion lines load")
+	check(not _has_emoji(text), "companion lines have no emoji (D-009)")
+	for world in SkillCatalog.WORLDS:
+		check(Icons.exists(world.icon), "world icon '%s' exists" % world.icon)
+	for skill in SkillCatalog.SKILLS:
+		check(Icons.exists(SkillCatalog.ICONS[skill]), "skill icon for %s exists" % skill)
+
+
 func bank() -> QuestionBank:
 	var b := QuestionBank.new()
 	b.load_file()
@@ -325,6 +344,14 @@ func test_content_is_well_formed() -> void:
 		check(it.choices.size() >= 2 and it.choices.size() <= 4, "%s has 2-4 choices" % it.id)
 		if it.task_type == "drag_letter":
 			check(it.pattern.count("_") == 1, "%s has one gap" % it.id)
+		var pictures: Array = it.choices.filter(func(c): return c.has("picture")) \
+				.map(func(c): return c.picture)
+		if it.has("picture"):
+			pictures.append(it.picture)
+		for p in pictures:
+			check(Icons.exists(p), "%s picture '%s' has an SVG in assets/icons" % [it.id, p])
+			check(Icons.PICTURE_COLORS.has(p), "%s picture '%s' has a paper color" % [it.id, p])
+		check(not _has_emoji(JSON.stringify(it)), "%s has no emoji (D-009)" % it.id)
 	for level in [1, 2]:
 		for skill in SkillCatalog.active_skills(level):
 			var normal := b.items.filter(func(it): return it.sub_skill == skill \

@@ -1,12 +1,11 @@
 extends VBoxContainer
 ## Drag-the-missing-letter task (Phonics). Dragging a tile into the gap answers;
 ## tapping a tile works too, for small hands that find dragging hard (D-007).
+## Letters are paper tiles in Andika, the font made for beginning readers (D-009).
 
 signal answered(answer: String, ms: int)
 
-const GREEN := Color("6bbf59")
-const SOFT_ORANGE := Color("ffa94d")
-const TILE_BLUE := Color("3fa7d6")
+const ANDIKA := preload("res://assets/fonts/Andika-Bold.ttf")
 
 var _slot: DropSlot
 var _tiles := {}
@@ -16,7 +15,10 @@ var _locked := false
 
 func setup(item: Dictionary) -> void:
 	_started = Time.get_ticks_msec()
-	%Picture.text = item.get("picture", "")
+	if item.has("picture"):
+		var card := PictureCard.new()
+		card.setup(item.picture, "", 160.0, 2.0)
+		%Stage.add_child(card)
 	for ch in item.pattern:
 		if ch == "_":
 			_slot = DropSlot.new()
@@ -28,10 +30,11 @@ func setup(item: Dictionary) -> void:
 		var tile := LetterTile.new()
 		tile.letter = str(c.id)
 		tile.text = c.get("label", c.id)
-		tile.face_color = TILE_BLUE
+		tile.face_color = Palette.TEAL
+		tile.lift = 9
 		tile.custom_minimum_size = Vector2(130, 140)
-		tile.add_theme_font_override("font", preload("res://assets/fonts/Andika-Bold.ttf"))
-		tile.add_theme_font_size_override("font_size", 72)
+		tile.add_theme_font_override("font", ANDIKA)
+		tile.add_theme_font_size_override("font_size", 76)
 		tile.pressed.connect(_answer.bind(tile.letter))
 		%Tiles.add_child(tile)
 		_tiles[tile.letter] = tile
@@ -47,23 +50,33 @@ func _answer(letter: String) -> void:
 
 func show_result(chosen: String, answer: String) -> void:
 	_slot.show_letter(answer)
-	_slot.set_color(GREEN)   # always show the right word in green
+	_slot.set_color(Palette.RIGHT)   # always show the right word in green
 	for l in _tiles:
 		var tile: ChunkyButton = _tiles[l]
 		tile.disabled = true
 		if l == answer:
-			tile.face_color = GREEN
+			tile.face_color = Palette.RIGHT
 		elif l == chosen:
-			tile.face_color = SOFT_ORANGE
+			tile.face_color = Palette.ALMOST
 		else:
 			tile.modulate.a = 0.4
 
 
+## A printed letter of the word, on its own paper square.
 func _letter_box(ch: String) -> Control:
+	var p := PanelContainer.new()
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = Palette.CARD
+	sb.set_corner_radius_all(20)
+	sb.shadow_color = Color(Palette.SHADOW, 0.16)
+	sb.shadow_offset = Vector2(0, 6)
+	sb.shadow_size = 1
+	p.add_theme_stylebox_override("panel", sb)
+	p.custom_minimum_size = Vector2(118, 140)
 	var l := Label.new()
 	l.text = ch
 	l.theme_type_variation = &"ReadWord"
-	l.custom_minimum_size = Vector2(110, 140)
 	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	return l
+	p.add_child(l)
+	return p

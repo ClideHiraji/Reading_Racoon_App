@@ -122,3 +122,8 @@ Status key: 🔴 blocks coding · 🟡 decide during build · 📝 manuscript-on
 - **Decision:** a Duolingo-style vertical learning path (worlds = map levels, lesson nodes, chest, trophy), mixed with kids'-app patterns (audio-first prompts, answer on tap, a reacting raccoon guide). **Portrait 720×1280.** No leaderboards, no streak guilt, no red ✗.
 - Full table of borrowed ideas: [D-007](../../brain/decisions/D-007%20UI%20direction%20Duolingo-style%20path.md).
 - **Manuscript to update:** §3.4.2.2 (mechanics) and the Figma screens in §3.4.2.4 should show the path, the lesson layout and Racoon's Rescue.
+
+### 21. Art direction ✅ RESOLVED (2026-10-20)
+- The first build looked generic and used emoji as pictures.
+- **Decision:** a paper-cut storybook look set in Butuan City (Agusan River, Mango Grove, Bahay Kubo Village, Balangay Bay, Mount Mayapay), built with Godot UI only; pictures are tinted SVG silhouettes from game-icons.net (CC BY 3.0); **no emoji**. Details: [D-009](../../brain/decisions/D-009%20Art%20direction%20Butuan%20storybook.md).
+- **Manuscript to update:** credit game-icons.net (CC BY 3.0) and its authors in the acknowledgments or an appendix; show the new screens in §3.4.2.4.

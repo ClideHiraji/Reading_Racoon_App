@@ -26,6 +26,7 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 - [[D-006 Project brain workflow]]
 - [[D-007 UI direction Duolingo-style path]]
 - [[D-008 Offline sync contract]]
+- [[D-009 Art direction Butuan storybook]]
 
 ## Still open (from [[10-open-issues]])
 - 🔴 Timeline: a 4-month evaluation doesn't fit before November. Re-plan with the adviser (issue 11).
@@ -51,6 +52,7 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 - [[Composer picks Laravel 12 on PHP 8.2]]
 - [[Laravel API guests need a null redirect]]
 - [[Reset a lost postgres password]]
+- [[Godot containers reset child rotation]]
 
 ## Links
 - Visual blueprint (private page): https://claude.ai/artifact/TPcwMuVYMvR9gx8ypBMYB9

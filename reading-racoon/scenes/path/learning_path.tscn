@@ -1,6 +1,44 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scenes/path/learning_path.gd" id="1_path"]
+[ext_resource type="Shader" path="res://ui/paper.gdshader" id="2_paper"]
+[ext_resource type="Texture2D" path="res://assets/icons/waves.svg" id="3_world"]
+[ext_resource type="Texture2D" path="res://assets/icons/coins.svg" id="4_coins"]
+[ext_resource type="Texture2D" path="res://assets/icons/bolt.svg" id="5_bolt"]
+[ext_resource type="Texture2D" path="res://assets/icons/repeat.svg" id="6_repeat"]
+
+[sub_resource type="ShaderMaterial" id="Paper"]
+shader = ExtResource("2_paper")
+
+[sub_resource type="StyleBoxFlat" id="Bar"]
+content_margin_left = 22.0
+content_margin_top = 14.0
+content_margin_right = 22.0
+content_margin_bottom = 14.0
+bg_color = Color(1, 0.98, 0.941, 1)
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+shadow_color = Color(0.23, 0.15, 0.08, 0.2)
+shadow_size = 1
+shadow_offset = Vector2(0, 6)
+
+[sub_resource type="StyleBoxFlat" id="Disc"]
+bg_color = Color(0.165, 0.616, 0.561, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id="Pill"]
+content_margin_left = 12.0
+content_margin_top = 6.0
+content_margin_right = 18.0
+content_margin_bottom = 6.0
+bg_color = Color(0.969, 0.933, 0.867, 1)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
 
 [node name="LearningPath" type="Control"]
 layout_mode = 3
@@ -12,6 +50,7 @@ grow_vertical = 2
 script = ExtResource("1_path")
 
 [node name="Bg" type="ColorRect" parent="."]
+material = SubResource("Paper")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -19,7 +58,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(1, 0.9647, 0.8784, 1)
 
 [node name="Scroll" type="ScrollContainer" parent="."]
 unique_name_in_owner = true
@@ -27,7 +65,7 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 100.0
+offset_top = 96.0
 grow_horizontal = 2
 grow_vertical = 2
 horizontal_scroll_mode = 0
@@ -44,36 +82,110 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 100.0
 grow_horizontal = 2
-theme_type_variation = &"TopBarPanel"
+theme_override_styles/panel = SubResource("Bar")
 
 [node name="Row" type="HBoxContainer" parent="TopBar"]
 layout_mode = 2
-theme_override_constants/separation = 28
+theme_override_constants/separation = 14
 
-[node name="World" type="Label" parent="TopBar/Row"]
+[node name="WorldDisc" type="PanelContainer" parent="TopBar/Row"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("Disc")
+
+[node name="WorldIcon" type="TextureRect" parent="TopBar/Row/WorldDisc"]
+unique_name_in_owner = true
+texture_filter = 4
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("3_world")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Names" type="VBoxContainer" parent="TopBar/Row"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "🌲 Level 1"
-vertical_alignment = 1
+theme_override_constants/separation = -6
+alignment = 1
 
-[node name="Coins" type="Label" parent="TopBar/Row"]
+[node name="WorldLevel" type="Label" parent="TopBar/Row/Names"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "💰 0"
-vertical_alignment = 1
+theme_override_colors/font_color = Color(0.49, 0.408, 0.341, 1)
+theme_override_font_sizes/font_size = 20
+text = "LEVEL 1"
 
-[node name="Xp" type="Label" parent="TopBar/Row"]
+[node name="WorldName" type="Label" parent="TopBar/Row/Names"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "⚡ 0"
-vertical_alignment = 1
+theme_type_variation = &"TitleLabel"
+theme_override_font_sizes/font_size = 30
+text = "Agusan River"
+text_overrun_behavior = 3
+
+[node name="CoinsPill" type="PanelContainer" parent="TopBar/Row"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("Pill")
+
+[node name="Row" type="HBoxContainer" parent="TopBar/Row/CoinsPill"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Icon" type="TextureRect" parent="TopBar/Row/CoinsPill/Row"]
+self_modulate = Color(0.812, 0.525, 0.067, 1)
+texture_filter = 4
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+texture = ExtResource("4_coins")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Coins" type="Label" parent="TopBar/Row/CoinsPill/Row"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"TitleLabel"
+theme_override_font_sizes/font_size = 28
+text = "0"
+
+[node name="XpPill" type="PanelContainer" parent="TopBar/Row"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("Pill")
+
+[node name="Row" type="HBoxContainer" parent="TopBar/Row/XpPill"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Icon" type="TextureRect" parent="TopBar/Row/XpPill/Row"]
+self_modulate = Color(0.949, 0.694, 0.204, 1)
+texture_filter = 4
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+texture = ExtResource("5_bolt")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Xp" type="Label" parent="TopBar/Row/XpPill/Row"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"TitleLabel"
+theme_override_font_sizes/font_size = 28
+text = "0"
 
 [node name="Reset" type="Button" parent="TopBar/Row"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(72, 72)
+custom_minimum_size = Vector2(56, 56)
 layout_mode = 2
+size_flags_vertical = 4
 tooltip_text = "Debug: reset progress"
-theme_override_colors/font_color = Color(0.5098, 0.4471, 0.3725, 1)
-text = "↺"
+theme_override_colors/icon_normal_color = Color(0.49, 0.408, 0.341, 0.7)
+theme_override_constants/icon_max_width = 30
+icon = ExtResource("6_repeat")
 flat = true
+icon_alignment = 1
+expand_icon = true

@@ -4,6 +4,12 @@
 [ext_resource type="Script" path="res://ui/chunky_button.gd" id="2_chunky"]
 [ext_resource type="Script" path="res://scenes/companion/raccoon.gd" id="3_raccoon"]
 [ext_resource type="Script" path="res://scenes/companion/speech_bubble.gd" id="4_bubble"]
+[ext_resource type="Shader" path="res://ui/paper.gdshader" id="5_paper"]
+[ext_resource type="Script" path="res://ui/paper_scenery.gd" id="6_scenery"]
+[ext_resource type="Script" path="res://ui/sunburst.gd" id="7_burst"]
+
+[sub_resource type="ShaderMaterial" id="Paper"]
+shader = ExtResource("5_paper")
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -15,6 +21,7 @@ grow_vertical = 2
 script = ExtResource("1_main")
 
 [node name="Bg" type="ColorRect" parent="."]
+material = SubResource("Paper")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -22,19 +29,32 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(1, 0.9647, 0.8784, 1)
 
-[node name="Hill" type="ColorRect" parent="."]
+[node name="Burst" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 40.0
+offset_bottom = 560.0
+grow_horizontal = 2
+mouse_filter = 2
+script = ExtResource("7_burst")
+color = Color(0.949, 0.694, 0.204, 0.16)
+speed = 0.06
+
+[node name="Scenery" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -420.0
+offset_top = -640.0
 grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2
-color = Color(0.557, 0.792, 0.902, 0.45)
+script = ExtResource("6_scenery")
+scene = "home"
+show_sky = false
 
 [node name="Margin" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -44,27 +64,36 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 40
-theme_override_constants/margin_top = 120
+theme_override_constants/margin_top = 110
 theme_override_constants/margin_right = 40
-theme_override_constants/margin_bottom = 80
+theme_override_constants/margin_bottom = 64
 
 [node name="VBox" type="VBoxContainer" parent="Margin"]
 layout_mode = 2
-theme_override_constants/separation = 24
+theme_override_constants/separation = 0
 
-[node name="Title" type="Label" parent="Margin/VBox"]
+[node name="Reading" type="Label" parent="Margin/VBox"]
 layout_mode = 2
 theme_type_variation = &"TitleLabel"
-theme_override_colors/font_color = Color(0.878, 0.482, 0, 1)
-theme_override_font_sizes/font_size = 72
-text = "Reading Racoon"
+theme_override_colors/font_color = Color(0.227, 0.165, 0.122, 1)
+theme_override_font_sizes/font_size = 92
+text = "Reading"
 horizontal_alignment = 1
 
-[node name="Subtitle" type="Label" parent="Margin/VBox"]
+[node name="Racoon" type="Label" parent="Margin/VBox"]
+layout_mode = 2
+theme_type_variation = &"TitleLabel"
+theme_override_colors/font_color = Color(0.165, 0.616, 0.561, 1)
+theme_override_constants/line_spacing = -20
+theme_override_font_sizes/font_size = 108
+text = "Racoon"
+horizontal_alignment = 1
+
+[node name="Tagline" type="Label" parent="Margin/VBox"]
 layout_mode = 2
 theme_type_variation = &"MutedLabel"
 theme_override_font_sizes/font_size = 30
-text = "Read, play and grow!"
+text = "Stories and sounds from the Agusan River"
 horizontal_alignment = 1
 
 [node name="Spacer" type="Control" parent="Margin/VBox"]
@@ -76,24 +105,35 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 script = ExtResource("4_bubble")
+tail = "down"
+
+[node name="Gap" type="Control" parent="Margin/VBox"]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
 
 [node name="RaccoonRow" type="CenterContainer" parent="Margin/VBox"]
 layout_mode = 2
 
 [node name="Raccoon" type="Control" parent="Margin/VBox/RaccoonRow"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(340, 340)
+custom_minimum_size = Vector2(320, 320)
 layout_mode = 2
 script = ExtResource("3_raccoon")
 
 [node name="Spacer2" type="Control" parent="Margin/VBox"]
+custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
-size_flags_vertical = 3
 
 [node name="PlayButton" type="Button" parent="Margin/VBox"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 120)
+custom_minimum_size = Vector2(0, 124)
 layout_mode = 2
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 42
 text = "LET'S READ!"
+icon_alignment = 0
 script = ExtResource("2_chunky")
+face_color = Color(0.902, 0.435, 0.333, 1)
+lift = 9
+radius = 30
+icon_name = "book"
+icon_px = 56

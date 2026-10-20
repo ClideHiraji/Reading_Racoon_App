@@ -4,6 +4,22 @@
 [ext_resource type="Script" path="res://ui/chunky_button.gd" id="2_chunky"]
 [ext_resource type="Script" path="res://scenes/companion/raccoon.gd" id="3_raccoon"]
 [ext_resource type="Script" path="res://scenes/companion/speech_bubble.gd" id="4_bubble"]
+[ext_resource type="Shader" path="res://ui/paper.gdshader" id="5_paper"]
+[ext_resource type="Script" path="res://ui/sunburst.gd" id="6_burst"]
+[ext_resource type="Script" path="res://ui/paper_scenery.gd" id="7_scenery"]
+
+[sub_resource type="ShaderMaterial" id="Paper"]
+shader = ExtResource("5_paper")
+
+[sub_resource type="StyleBoxFlat" id="UnlockCard"]
+bg_color = Color(1, 0.98, 0.941, 1)
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_radius_bottom_left = 32
+shadow_color = Color(0.23, 0.15, 0.08, 0.25)
+shadow_size = 1
+shadow_offset = Vector2(0, 10)
 
 [node name="LessonComplete" type="Control"]
 layout_mode = 3
@@ -15,6 +31,7 @@ grow_vertical = 2
 script = ExtResource("1_done")
 
 [node name="Bg" type="ColorRect" parent="."]
+material = SubResource("Paper")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -22,7 +39,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(1, 0.9647, 0.8784, 1)
+
+[node name="Burst" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -120.0
+offset_bottom = 560.0
+grow_horizontal = 2
+mouse_filter = 2
+script = ExtResource("6_burst")
 
 [node name="Margin" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -32,22 +59,22 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 28
-theme_override_constants/margin_top = 60
+theme_override_constants/margin_top = 70
 theme_override_constants/margin_right = 28
 theme_override_constants/margin_bottom = 36
 
 [node name="VBox" type="VBoxContainer" parent="Margin"]
 layout_mode = 2
 theme_override_constants/separation = 26
-alignment = 1
 
 [node name="RaccoonRow" type="HBoxContainer" parent="Margin/VBox"]
 layout_mode = 2
+theme_override_constants/separation = 20
 alignment = 1
 
 [node name="Raccoon" type="Control" parent="Margin/VBox/RaccoonRow"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(230, 230)
+custom_minimum_size = Vector2(250, 250)
 layout_mode = 2
 script = ExtResource("3_raccoon")
 
@@ -61,15 +88,15 @@ script = ExtResource("4_bubble")
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"TitleLabel"
-theme_override_colors/font_color = Color(0.878, 0.482, 0, 1)
-theme_override_font_sizes/font_size = 56
+theme_override_colors/font_color = Color(0.749, 0.31, 0.224, 1)
+theme_override_font_sizes/font_size = 58
 text = "Lesson complete!"
 horizontal_alignment = 1
 
 [node name="Stars" type="HBoxContainer" parent="Margin/VBox"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 6
 alignment = 1
 
 [node name="Stats" type="HBoxContainer" parent="Margin/VBox"]
@@ -81,7 +108,7 @@ alignment = 1
 [node name="Answers" type="HBoxContainer" parent="Margin/VBox"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/separation = 6
+theme_override_constants/separation = 10
 alignment = 1
 
 [node name="Spacer" type="Control" parent="Margin/VBox"]
@@ -90,7 +117,7 @@ size_flags_vertical = 3
 
 [node name="ContinueButton" type="Button" parent="Margin/VBox"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 104)
+custom_minimum_size = Vector2(0, 108)
 layout_mode = 2
 text = "CONTINUE"
 script = ExtResource("2_chunky")
@@ -98,21 +125,21 @@ script = ExtResource("2_chunky")
 [node name="Confetti" type="CPUParticles2D" parent="."]
 unique_name_in_owner = true
 emitting = false
-amount = 120
-lifetime = 3.0
+amount = 110
+lifetime = 3.2
 one_shot = true
 explosiveness = 0.85
 emission_shape = 3
 emission_rect_extents = Vector2(360, 10)
 direction = Vector2(0, 1)
 spread = 30.0
-gravity = Vector2(0, 420)
+gravity = Vector2(0, 380)
 initial_velocity_min = 80.0
-initial_velocity_max = 320.0
-angular_velocity_min = -360.0
-angular_velocity_max = 360.0
-scale_amount_min = 10.0
-scale_amount_max = 18.0
+initial_velocity_max = 300.0
+angular_velocity_min = -300.0
+angular_velocity_max = 300.0
+scale_amount_min = 9.0
+scale_amount_max = 16.0
 
 [node name="Unlock" type="Control" parent="."]
 unique_name_in_owner = true
@@ -131,7 +158,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.239, 0.18, 0.122, 0.55)
+color = Color(0.227, 0.165, 0.122, 0.55)
 
 [node name="Center" type="CenterContainer" parent="Unlock"]
 layout_mode = 1
@@ -142,37 +169,53 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Card" type="PanelContainer" parent="Unlock/Center"]
+clip_children = 2
 custom_minimum_size = Vector2(620, 0)
 layout_mode = 2
-theme_type_variation = &"CardPanel"
+theme_override_styles/panel = SubResource("UnlockCard")
 
 [node name="VBox" type="VBoxContainer" parent="Unlock/Center/Card"]
 layout_mode = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 0
 
-[node name="UnlockIcon" type="Label" parent="Unlock/Center/Card/VBox"]
+[node name="UnlockScenery" type="Control" parent="Unlock/Center/Card/VBox"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 280)
 layout_mode = 2
-theme_override_font_sizes/font_size = 120
-text = "🌊"
-horizontal_alignment = 1
+mouse_filter = 2
+script = ExtResource("7_scenery")
+scene = "grove"
 
-[node name="UnlockTitle" type="Label" parent="Unlock/Center/Card/VBox"]
+[node name="Margin" type="MarginContainer" parent="Unlock/Center/Card/VBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="Texts" type="VBoxContainer" parent="Unlock/Center/Card/VBox/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="UnlockTitle" type="Label" parent="Unlock/Center/Card/VBox/Margin/Texts"]
 layout_mode = 2
 theme_type_variation = &"TitleLabel"
+theme_override_font_sizes/font_size = 46
 text = "New world unlocked!"
 horizontal_alignment = 1
 
-[node name="UnlockName" type="Label" parent="Unlock/Center/Card/VBox"]
+[node name="UnlockName" type="Label" parent="Unlock/Center/Card/VBox/Margin/Texts"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Level 2 · Word River"
+theme_type_variation = &"MutedLabel"
+theme_override_font_sizes/font_size = 30
+text = "Level 2  ·  Mango Grove"
 horizontal_alignment = 1
 
-[node name="GoButton" type="Button" parent="Unlock/Center/Card/VBox"]
+[node name="GoButton" type="Button" parent="Unlock/Center/Card/VBox/Margin/Texts"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 100)
+custom_minimum_size = Vector2(0, 104)
 layout_mode = 2
 text = "LET'S GO!"
 script = ExtResource("2_chunky")
-face_color = Color(0.247, 0.655, 0.839, 1)
+face_color = Color(0.165, 0.616, 0.561, 1)

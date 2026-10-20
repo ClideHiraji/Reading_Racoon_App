@@ -4,28 +4,75 @@
 [ext_resource type="Script" path="res://ui/chunky_button.gd" id="2_chunky"]
 [ext_resource type="Script" path="res://scenes/companion/raccoon.gd" id="3_raccoon"]
 [ext_resource type="Script" path="res://scenes/companion/speech_bubble.gd" id="4_bubble"]
+[ext_resource type="Shader" path="res://ui/paper.gdshader" id="5_paper"]
+[ext_resource type="Script" path="res://ui/paper_scenery.gd" id="6_scenery"]
+[ext_resource type="Script" path="res://ui/close_button.gd" id="7_close"]
+[ext_resource type="Texture2D" path="res://assets/icons/heart_plus.svg" id="8_heart_plus"]
+[ext_resource type="Texture2D" path="res://assets/icons/check.svg" id="9_check"]
 
-[sub_resource type="StyleBoxFlat" id="SheetStyle"]
+[sub_resource type="ShaderMaterial" id="Paper"]
+resource_local_to_scene = true
+shader = ExtResource("5_paper")
+
+[sub_resource type="StyleBoxFlat" id="PromptCard"]
+content_margin_left = 16.0
+content_margin_top = 14.0
+content_margin_right = 22.0
+content_margin_bottom = 14.0
+bg_color = Color(1, 0.98, 0.941, 1)
+corner_radius_top_left = 26
+corner_radius_top_right = 26
+corner_radius_bottom_right = 26
+corner_radius_bottom_left = 26
+shadow_color = Color(0.23, 0.15, 0.08, 0.18)
+shadow_size = 1
+shadow_offset = Vector2(0, 7)
+
+[sub_resource type="StyleBoxFlat" id="Rescue"]
+content_margin_left = 18.0
+content_margin_top = 8.0
+content_margin_right = 22.0
+content_margin_bottom = 10.0
+bg_color = Color(0.247, 0.502, 0.667, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+shadow_color = Color(0.23, 0.15, 0.08, 0.2)
+shadow_size = 1
+shadow_offset = Vector2(0, 5)
+
+[sub_resource type="StyleBoxFlat" id="Sheet"]
 content_margin_left = 32.0
-content_margin_top = 28.0
+content_margin_top = 30.0
 content_margin_right = 32.0
 content_margin_bottom = 40.0
-bg_color = Color(0.843, 0.961, 0.784, 1)
-corner_radius_top_left = 32
-corner_radius_top_right = 32
+bg_color = Color(0.843, 0.92, 0.8, 1)
+corner_radius_top_left = 36
+corner_radius_top_right = 36
+shadow_color = Color(0.23, 0.15, 0.08, 0.18)
+shadow_size = 1
+shadow_offset = Vector2(0, -6)
 
-[sub_resource type="StyleBoxFlat" id="RescueStyle"]
-content_margin_left = 20.0
-content_margin_top = 10.0
-content_margin_right = 20.0
-content_margin_bottom = 12.0
-bg_color = Color(0.247, 0.655, 0.839, 1)
-border_width_bottom = 6
-border_color = Color(0.165, 0.498, 0.659, 1)
-corner_radius_top_left = 20
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
+[sub_resource type="StyleBoxFlat" id="Disc"]
+bg_color = Color(0.416, 0.671, 0.298, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+shadow_color = Color(0.23, 0.15, 0.08, 0.2)
+shadow_size = 1
+shadow_offset = Vector2(0, 5)
+
+[sub_resource type="StyleBoxFlat" id="BigDisc"]
+bg_color = Color(0.902, 0.435, 0.333, 1)
+corner_radius_top_left = 60
+corner_radius_top_right = 60
+corner_radius_bottom_right = 60
+corner_radius_bottom_left = 60
+shadow_color = Color(0.23, 0.15, 0.08, 0.2)
+shadow_size = 1
+shadow_offset = Vector2(0, 6)
 
 [node name="Lesson" type="Control"]
 layout_mode = 3
@@ -38,6 +85,7 @@ script = ExtResource("1_lesson")
 
 [node name="Bg" type="ColorRect" parent="."]
 unique_name_in_owner = true
+material = SubResource("Paper")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -45,7 +93,20 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(1, 0.9647, 0.8784, 1)
+
+[node name="Scenery" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -250.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+script = ExtResource("6_scenery")
+show_sky = false
 
 [node name="Margin" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -54,32 +115,29 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 28
-theme_override_constants/margin_top = 24
-theme_override_constants/margin_right = 28
-theme_override_constants/margin_bottom = 24
+theme_override_constants/margin_left = 26
+theme_override_constants/margin_top = 22
+theme_override_constants/margin_right = 26
+theme_override_constants/margin_bottom = 16
 
 [node name="VBox" type="VBoxContainer" parent="Margin"]
 layout_mode = 2
-theme_override_constants/separation = 22
+theme_override_constants/separation = 20
 
 [node name="TopRow" type="HBoxContainer" parent="Margin/VBox"]
 layout_mode = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 16
 
-[node name="CloseButton" type="Button" parent="Margin/VBox/TopRow"]
+[node name="CloseButton" type="BaseButton" parent="Margin/VBox/TopRow"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(80, 80)
+custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
 tooltip_text = "Stop the lesson"
-theme_override_colors/font_color = Color(0.5098, 0.4471, 0.3725, 1)
-theme_override_font_sizes/font_size = 44
-text = "✕"
-flat = true
+script = ExtResource("7_close")
 
 [node name="Progress" type="ProgressBar" parent="Margin/VBox/TopRow"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 30)
+custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -90,43 +148,64 @@ show_percentage = false
 [node name="Hearts" type="HBoxContainer" parent="Margin/VBox/TopRow"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/separation = 2
+theme_override_constants/separation = 4
 
 [node name="RescueBanner" type="PanelContainer" parent="Margin/VBox"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
-theme_override_styles/panel = SubResource("RescueStyle")
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("Rescue")
 
-[node name="RescueLabel" type="Label" parent="Margin/VBox/RescueBanner"]
+[node name="Row" type="HBoxContainer" parent="Margin/VBox/RescueBanner"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Icon" type="TextureRect" parent="Margin/VBox/RescueBanner/Row"]
+texture_filter = 4
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+texture = ExtResource("8_heart_plus")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="RescueLabel" type="Label" parent="Margin/VBox/RescueBanner/Row"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_type_variation = &"TitleLabel"
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-text = "💖 Racoon's Rescue: 0 / 3"
-horizontal_alignment = 1
+theme_override_font_sizes/font_size = 28
+text = "Racoon's Rescue  0 / 3"
 
-[node name="PromptRow" type="HBoxContainer" parent="Margin/VBox"]
+[node name="PromptCard" type="PanelContainer" parent="Margin/VBox"]
 layout_mode = 2
-theme_override_constants/separation = 20
+theme_override_styles/panel = SubResource("PromptCard")
 
-[node name="SpeakButton" type="Button" parent="Margin/VBox/PromptRow"]
+[node name="Row" type="HBoxContainer" parent="Margin/VBox/PromptCard"]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="SpeakButton" type="Button" parent="Margin/VBox/PromptCard/Row"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(104, 104)
+custom_minimum_size = Vector2(96, 96)
 layout_mode = 2
 size_flags_vertical = 4
 tooltip_text = "Hear it again"
-theme_override_font_sizes/font_size = 44
-text = "🔊"
+icon_alignment = 1
+expand_icon = true
 script = ExtResource("2_chunky")
-face_color = Color(0.247, 0.655, 0.839, 1)
-radius = 52
+face_color = Color(0.165, 0.616, 0.561, 1)
+lift = 6
+radius = 48
+icon_name = "speaker"
+icon_px = 50
 
-[node name="Prompt" type="Label" parent="Margin/VBox/PromptRow"]
+[node name="Prompt" type="Label" parent="Margin/VBox/PromptCard/Row"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"TitleLabel"
-theme_override_font_sizes/font_size = 38
+theme_override_font_sizes/font_size = 36
 text = "Which one rhymes with cat?"
 vertical_alignment = 1
 autowrap_mode = 3
@@ -138,11 +217,11 @@ size_flags_vertical = 3
 
 [node name="CompanionRow" type="HBoxContainer" parent="Margin/VBox"]
 layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 24
 
 [node name="Raccoon" type="Control" parent="Margin/VBox/CompanionRow"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(170, 170)
+custom_minimum_size = Vector2(180, 180)
 layout_mode = 2
 script = ExtResource("3_raccoon")
 
@@ -164,21 +243,33 @@ anchor_bottom = 1.0
 offset_top = -300.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_styles/panel = SubResource("SheetStyle")
+theme_override_styles/panel = SubResource("Sheet")
 
 [node name="VBox" type="VBoxContainer" parent="Sheet"]
 layout_mode = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 22
 
 [node name="Row" type="HBoxContainer" parent="Sheet/VBox"]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="SheetIcon" type="Label" parent="Sheet/VBox/Row"]
+[node name="SheetDisc" type="PanelContainer" parent="Sheet/VBox/Row"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
-theme_override_font_sizes/font_size = 64
-text = "✓"
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("Disc")
+
+[node name="SheetIcon" type="TextureRect" parent="Sheet/VBox/Row/SheetDisc"]
+unique_name_in_owner = true
+texture_filter = 4
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("9_check")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Texts" type="VBoxContainer" parent="Sheet/VBox/Row"]
 layout_mode = 2
@@ -195,7 +286,7 @@ text = "Great job!"
 [node name="SheetDetail" type="Label" parent="Sheet/VBox/Row/Texts"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Answer: hat"
+text = "The answer is: hat"
 autowrap_mode = 3
 
 [node name="ContinueButton" type="Button" parent="Sheet/VBox"]
@@ -222,7 +313,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.239, 0.18, 0.122, 0.55)
+color = Color(0.227, 0.165, 0.122, 0.55)
 
 [node name="Center" type="CenterContainer" parent="Overlay"]
 layout_mode = 1
@@ -232,23 +323,37 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Card" type="PanelContainer" parent="Overlay/Center"]
+[node name="OverlayCard" type="PanelContainer" parent="Overlay/Center"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(620, 0)
 layout_mode = 2
 theme_type_variation = &"CardPanel"
 
-[node name="VBox" type="VBoxContainer" parent="Overlay/Center/Card"]
+[node name="VBox" type="VBoxContainer" parent="Overlay/Center/OverlayCard"]
 layout_mode = 2
-theme_override_constants/separation = 22
+theme_override_constants/separation = 20
 
-[node name="OverlayIcon" type="Label" parent="Overlay/Center/Card/VBox"]
+[node name="DiscRow" type="CenterContainer" parent="Overlay/Center/OverlayCard/VBox"]
+layout_mode = 2
+
+[node name="OverlayDisc" type="PanelContainer" parent="Overlay/Center/OverlayCard/VBox/DiscRow"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 120)
 layout_mode = 2
-theme_override_font_sizes/font_size = 96
-text = "💖"
-horizontal_alignment = 1
+theme_override_styles/panel = SubResource("BigDisc")
 
-[node name="OverlayTitle" type="Label" parent="Overlay/Center/Card/VBox"]
+[node name="OverlayIcon" type="TextureRect" parent="Overlay/Center/OverlayCard/VBox/DiscRow/OverlayDisc"]
+unique_name_in_owner = true
+texture_filter = 4
+custom_minimum_size = Vector2(76, 76)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("8_heart_plus")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="OverlayTitle" type="Label" parent="Overlay/Center/OverlayCard/VBox"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"TitleLabel"
@@ -256,21 +361,23 @@ text = "Racoon's Rescue!"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="OverlayText" type="Label" parent="Overlay/Center/Card/VBox"]
+[node name="OverlayText" type="Label" parent="Overlay/Center/OverlayCard/VBox"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_type_variation = &"MutedLabel"
+theme_override_font_sizes/font_size = 30
 text = "Answer 3 easy ones to get your hearts back."
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="OverlayPrimary" type="Button" parent="Overlay/Center/Card/VBox"]
+[node name="OverlayPrimary" type="Button" parent="Overlay/Center/OverlayCard/VBox"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 text = "OK!"
 script = ExtResource("2_chunky")
 
-[node name="OverlaySecondary" type="Button" parent="Overlay/Center/Card/VBox"]
+[node name="OverlaySecondary" type="Button" parent="Overlay/Center/OverlayCard/VBox"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2

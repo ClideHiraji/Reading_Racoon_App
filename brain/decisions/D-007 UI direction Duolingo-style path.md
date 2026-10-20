@@ -37,4 +37,6 @@ tags: [decision, ui, game-design]
 
 **Rejected:** landscape layout (kept from D-005), a separate "Check" button.
 
+**Updated 2026-10-20:** the look (world names, emoji pictures, flat colors) is replaced by [[D-009 Art direction Butuan storybook]]. The structure above stays.
+
 Details: [[06-game-design]], [[10-open-issues]] issue 20.

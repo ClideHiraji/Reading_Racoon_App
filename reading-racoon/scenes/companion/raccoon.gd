@@ -1,15 +1,18 @@
 @tool
 class_name Raccoon
 extends Control
-## Placeholder raccoon companion drawn from shapes, with mood poses (D-007, FR-14).
-## Swap for real 2D art later; keep the set_mood() API.
+## Racoon, the companion (FR-14), drawn as layered paper cut-outs (D-009): each
+## piece casts a small shadow on the piece behind it. Wears a teal river scarf.
 ## Moods: idle, happy, thinking, encourage, celebrate, sleepy.
+## Swap for real art later; keep the set_mood() API.
 
-const FUR := Color("9a9aa8")
-const FUR_DARK := Color("6e6e7c")
-const MASK := Color("2e2e38")
-const LIGHT := Color("f4f1ea")
-const BLUSH := Color(1.0, 0.55, 0.6, 0.35)
+const FUR := Color("8e8899")
+const FUR_LIGHT := Color("b8b2c2")
+const FUR_DARK := Color("5d5766")
+const MASK := Color("37303d")
+const CREAM := Color("fbf3e4")
+const EAR_IN := Color("e7b9a8")
+const BLUSH := Color(0.93, 0.47, 0.4, 0.35)
 
 @export var mood := "idle":
 	set(v):
@@ -29,16 +32,23 @@ var squash := 1.0:
 	set(v):
 		squash = v
 		queue_redraw()
+var wag := 0.0:
+	set(v):
+		wag = v
+		queue_redraw()
 
 var _tween: Tween
-var _idle: Tween
 
 
 func _ready() -> void:
 	if custom_minimum_size == Vector2.ZERO:
 		custom_minimum_size = Vector2(180, 180)
 	if not Engine.is_editor_hint():
-		_breathe()
+		var idle := create_tween().set_loops()
+		idle.tween_property(self, "squash", 1.025, 1.3).set_trans(Tween.TRANS_SINE)
+		idle.parallel().tween_property(self, "wag", 1.0, 1.3).set_trans(Tween.TRANS_SINE)
+		idle.tween_property(self, "squash", 1.0, 1.3).set_trans(Tween.TRANS_SINE)
+		idle.parallel().tween_property(self, "wag", 0.0, 1.3).set_trans(Tween.TRANS_SINE)
 
 
 func set_mood(m: String) -> void:
@@ -48,16 +58,16 @@ func set_mood(m: String) -> void:
 	_tween = create_tween()
 	match m:
 		"happy":
-			_tween.tween_property(self, "hop", -22.0, 0.12).set_trans(Tween.TRANS_QUAD)
-			_tween.tween_property(self, "hop", 0.0, 0.18).set_trans(Tween.TRANS_BOUNCE)
+			_tween.tween_property(self, "hop", -24.0, 0.13).set_trans(Tween.TRANS_QUAD)
+			_tween.tween_property(self, "hop", 0.0, 0.22).set_trans(Tween.TRANS_BOUNCE)
 		"celebrate":
 			for i in 2:
-				_tween.tween_property(self, "hop", -40.0, 0.16).set_trans(Tween.TRANS_QUAD)
-				_tween.parallel().tween_property(self, "tilt", 0.15 * (1 - 2 * (i % 2)), 0.16)
-				_tween.tween_property(self, "hop", 0.0, 0.2).set_trans(Tween.TRANS_BOUNCE)
+				_tween.tween_property(self, "hop", -42.0, 0.16).set_trans(Tween.TRANS_QUAD)
+				_tween.parallel().tween_property(self, "tilt", 0.14 * (1 - 2 * (i % 2)), 0.16)
+				_tween.tween_property(self, "hop", 0.0, 0.22).set_trans(Tween.TRANS_BOUNCE)
 			_tween.tween_property(self, "tilt", 0.0, 0.1)
 		"thinking":
-			_tween.tween_property(self, "tilt", -0.14, 0.25).set_trans(Tween.TRANS_SINE)
+			_tween.tween_property(self, "tilt", -0.12, 0.25).set_trans(Tween.TRANS_SINE)
 			_tween.tween_interval(0.8)
 			_tween.tween_property(self, "tilt", 0.0, 0.25)
 		"encourage":
@@ -68,78 +78,127 @@ func set_mood(m: String) -> void:
 			_tween.tween_property(self, "hop", 0.0, 0.1)
 
 
-func _breathe() -> void:
-	_idle = create_tween().set_loops()
-	_idle.tween_property(self, "squash", 1.025, 1.2).set_trans(Tween.TRANS_SINE)
-	_idle.tween_property(self, "squash", 1.0, 1.2).set_trans(Tween.TRANS_SINE)
-
-
 func _draw() -> void:
-	var k := minf(size.x, size.y) / 200.0
-	var base := Vector2(size.x / 2.0, size.y)
-	# Squash around the feet, hop up, tilt around the feet.
+	var k := minf(size.x, size.y) / 210.0
+	var base := Vector2(size.x / 2.0, size.y - 4)
+	# Ground shadow stays on the floor while the body hops.
+	var gs := clampf(1.0 + hop / 120.0, 0.6, 1.0)
+	_ellipse_at(base, Vector2(58 * gs, 9 * gs) * k, Color(Palette.SHADOW, 0.25), false)
 	draw_set_transform(base + Vector2(0, hop * k), tilt, Vector2(1.0 / squash, squash) * k)
-	# Coordinates below are in a 200x200 box with the feet at (0, 0).
+	# Coordinates below: a 210x210 box with the feet at (0, 0).
 	_tail()
-	_ellipse(Vector2(0, -38), Vector2(56, 40), FUR)                 # body
-	_ellipse(Vector2(0, -32), Vector2(34, 28), LIGHT)               # belly
-	_ellipse(Vector2(-60, -122), Vector2(22, 24), FUR_DARK)         # ears
-	_ellipse(Vector2(60, -122), Vector2(22, 24), FUR_DARK)
-	_ellipse(Vector2(-60, -120), Vector2(11, 12), Color("d9a3a8"))
-	_ellipse(Vector2(60, -120), Vector2(11, 12), Color("d9a3a8"))
-	_ellipse(Vector2(0, -102), Vector2(74, 60), FUR)                # head
-	_ellipse(Vector2(-30, -126), Vector2(22, 9), LIGHT)             # brows
-	_ellipse(Vector2(30, -126), Vector2(22, 9), LIGHT)
-	_ellipse(Vector2(-30, -104), Vector2(31, 19), MASK)             # mask
-	_ellipse(Vector2(30, -104), Vector2(31, 19), MASK)
-	draw_rect(Rect2(-12, -112, 24, 14), MASK)
-	_ellipse(Vector2(0, -76), Vector2(40, 26), LIGHT)               # muzzle
-	_ellipse(Vector2(-46, -80), Vector2(9, 7), BLUSH)               # blush
-	_ellipse(Vector2(46, -80), Vector2(9, 7), BLUSH)
-	_eyes()
-	_ellipse(Vector2(0, -88), Vector2(10, 7), MASK)                 # nose
-	_mouth()
+	_piece(Vector2(-24, -6), Vector2(17, 9), FUR_DARK)             # feet
+	_piece(Vector2(24, -6), Vector2(17, 9), FUR_DARK)
+	_piece(Vector2(0, -46), Vector2(50, 44), FUR)                  # body
+	_piece(Vector2(0, -40), Vector2(31, 30), CREAM)                # belly
+	_scarf()
+	_piece(Vector2(-16, -60), Vector2(10, 8), FUR_DARK)            # paws
+	_piece(Vector2(16, -60), Vector2(10, 8), FUR_DARK)
+	_ear(-1)
+	_ear(1)
+	_head()
+	_face()
 
+
+# --- Parts ----------------------------------------------------------------------------
 
 func _tail() -> void:
-	var pts := [Vector2(52, -30), Vector2(70, -48), Vector2(82, -70), Vector2(88, -94),
-			Vector2(88, -116)]
-	for i in pts.size():
-		_ellipse(pts[i], Vector2(17, 17) * (1.0 - i * 0.06), MASK if i % 2 == 1 else FUR)
+	var sway := wag * 0.12
+	for i in 6:
+		var t := i / 5.0
+		var p := Vector2(46 + t * 36, -30 - t * 78).rotated(sway * t)
+		var r := 21.0 - i * 1.6
+		_piece(p, Vector2(r, r), MASK if i % 2 == 1 else FUR_LIGHT)
 
 
-func _eyes() -> void:
+func _scarf() -> void:
+	var pts := PackedVector2Array([Vector2(-42, -86), Vector2(42, -86), Vector2(30, -70),
+			Vector2(0, -64), Vector2(-30, -70)])
+	_poly(pts, Palette.TEAL)
+	_poly(PackedVector2Array([Vector2(14, -74), Vector2(34, -76), Vector2(28, -44),
+			Vector2(16, -52)]), Palette.TEAL_DEEP)
+	_piece(Vector2(18, -74), Vector2(8, 7), Palette.TEAL_DEEP)
+
+
+func _ear(side: int) -> void:
+	var s := float(side)
+	_poly(PackedVector2Array([Vector2(s * 30, -160), Vector2(s * 66, -196), Vector2(s * 72, -142)]), FUR_DARK)
+	_poly(PackedVector2Array([Vector2(s * 40, -160), Vector2(s * 63, -184), Vector2(s * 66, -150)]),
+			EAR_IN, false)
+
+
+## Head with cheek tufts: an ellipse whose sides are pushed out into points.
+func _head() -> void:
+	var pts := PackedVector2Array()
+	for i in 40:
+		var a := TAU * i / 40.0
+		var tuft := 1.0 + 0.16 * pow(maxf(0.0, absf(cos(a)) - 0.6) / 0.4, 2.0) * (1.0 if sin(a) > -0.1 else 0.0)
+		pts.append(Vector2(0, -120) + Vector2(cos(a) * 74 * tuft, sin(a) * 58))
+	_poly(pts, FUR)
+	_piece(Vector2(-28, -146), Vector2(22, 8), CREAM, false)       # brows
+	_piece(Vector2(28, -146), Vector2(22, 8), CREAM, false)
+	# Bandit mask.
+	var mask := PackedVector2Array()
+	for i in 24:
+		var a := TAU * i / 24.0
+		mask.append(Vector2(cos(a) * 66, sin(a) * 19 - 122 + (6 if absf(cos(a)) < 0.25 else 0)))
+	_poly(mask, MASK, false)
+	_piece(Vector2(0, -94), Vector2(40, 26), CREAM)                # muzzle
+
+
+func _face() -> void:
 	for side in [-1, 1]:
-		var c := Vector2(30 * side, -104)
-		if mood in ["happy", "celebrate"]:
-			draw_arc(c + Vector2(0, 4), 9, PI + 0.3, TAU - 0.3, 12, Color.WHITE, 4.0, true)
-		elif mood == "sleepy":
-			draw_line(c + Vector2(-8, 2), c + Vector2(8, 2), Color.WHITE, 3.0, true)
-		else:
-			var look := Vector2(3 * side, -5) if mood == "thinking" else Vector2(0, 0)
-			draw_circle(c, 11, Color.WHITE)
-			draw_circle(c + look, 7, Color("1b1b22"))
-			draw_circle(c + look + Vector2(-2.5, -2.5), 2.5, Color.WHITE)
-
-
-func _mouth() -> void:
-	var c := Vector2(0, -74)
+		var c := Vector2(30 * side, -122)
+		match mood:
+			"happy", "celebrate":
+				draw_arc(c + Vector2(0, 5), 10, PI + 0.35, TAU - 0.35, 12, CREAM, 4.5, true)
+			"sleepy":
+				draw_arc(c + Vector2(0, -3), 9, 0.35, PI - 0.35, 12, CREAM, 4.0, true)
+			_:
+				var look := Vector2(3 * side, -5) if mood == "thinking" else Vector2.ZERO
+				draw_circle(c, 12, CREAM)
+				draw_circle(c + look, 7.5, Palette.INK)
+				draw_circle(c + look + Vector2(-2.5, -3), 2.6, Color.WHITE)
+	_ellipse_at(Vector2(-48, -98), Vector2(10, 7), BLUSH, false)
+	_ellipse_at(Vector2(48, -98), Vector2(10, 7), BLUSH, false)
+	_ellipse_at(Vector2(0, -105), Vector2(11, 8), Palette.INK, false)   # nose
+	draw_circle(Vector2(-3, -108), 2.5, Color(1, 1, 1, 0.6))
+	var m := Vector2(0, -91)
 	match mood:
 		"celebrate":
-			_ellipse(c + Vector2(0, 4), Vector2(12, 10), Color("5a2a2a"))
-			_ellipse(c + Vector2(0, 9), Vector2(7, 4), Color("ff8a8a"))
+			_ellipse_at(m + Vector2(0, 4), Vector2(12, 10), Color("5a2b2b"), false)
+			_ellipse_at(m + Vector2(0, 9), Vector2(7, 4), Palette.CORAL, false)
 		"thinking":
-			draw_circle(c + Vector2(6, 4), 4, Color("5a2a2a"))
-		"encourage":
-			draw_arc(c, 10, 0.4, PI - 0.4, 12, MASK, 3.0, true)
+			draw_circle(m + Vector2(7, 3), 4, Color("5a2b2b"))
+		"sleepy":
+			draw_line(m + Vector2(-6, 2), m + Vector2(6, 2), Palette.INK, 3.0, true)
 		_:
-			draw_arc(c + Vector2(-7, 0), 7, 0.2, PI - 0.2, 10, MASK, 3.0, true)
-			draw_arc(c + Vector2(7, 0), 7, 0.2, PI - 0.2, 10, MASK, 3.0, true)
+			draw_arc(m + Vector2(-7, 0), 7, 0.2, PI - 0.2, 10, Palette.INK, 3.0, true)
+			draw_arc(m + Vector2(7, 0), 7, 0.2, PI - 0.2, 10, Palette.INK, 3.0, true)
 
 
-func _ellipse(center: Vector2, radii: Vector2, color: Color) -> void:
-	var pts := PackedVector2Array()
-	for i in 28:
-		var a := TAU * i / 28.0
-		pts.append(center + Vector2(cos(a) * radii.x, sin(a) * radii.y))
+# --- Paper helpers ---------------------------------------------------------------------
+
+func _piece(center: Vector2, radii: Vector2, color: Color, shadow: bool = true) -> void:
+	_poly(_ellipse_pts(center, radii), color, shadow)
+
+
+func _poly(pts: PackedVector2Array, color: Color, shadow: bool = true) -> void:
+	if shadow:
+		var sh := PackedVector2Array()
+		for p in pts:
+			sh.append(p + Vector2(0, 4))
+		draw_colored_polygon(sh, Color(Palette.SHADOW, 0.28))
 	draw_colored_polygon(pts, color)
+
+
+func _ellipse_at(center: Vector2, radii: Vector2, color: Color, shadow: bool) -> void:
+	_poly(_ellipse_pts(center, radii), color, shadow)
+
+
+func _ellipse_pts(center: Vector2, radii: Vector2) -> PackedVector2Array:
+	var pts := PackedVector2Array()
+	for i in 32:
+		var a := TAU * i / 32.0
+		pts.append(center + Vector2(cos(a) * radii.x, sin(a) * radii.y))
+	return pts

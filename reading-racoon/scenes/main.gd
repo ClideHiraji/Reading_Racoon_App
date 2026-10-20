@@ -1,6 +1,6 @@
 extends Control
-## Start screen: the raccoon says hello, one big button opens the learning path.
-## No reading needed: the button is read aloud too (D-007, FR-20).
+## Start screen: the raccoon waves from the riverbank, one big button opens the
+## learning path. No reading needed: the button is read aloud too (D-007, D-009).
 ## Student login (FR-01) replaces this once open issue 9 is decided.
 
 

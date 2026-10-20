@@ -1,6 +1,6 @@
 # Reading Racoon (Godot 4.7 game client)
 
-The student app: a Duolingo-style learning path for Grade 1 reading (D-007) in a Butuan paper-cut storybook style (D-009). It plays fully offline and syncs to the Laravel API in `backend/` when a grown-up connects the device.
+The student app: a Duolingo-style learning path for Grade 1 reading (D-007) in a Butuan paper-cut storybook style (D-009). It plays fully offline. A student signs in once with the login code from the teacher, and from then on it syncs to the Laravel API in `backend/` by itself whenever there is internet (D-010).
 
 ## What's in it
 - **Reading Adventure** pre-test on first launch places the child on the path (FR-02); **Big Reading Day** post-test when the teacher opens it (FR-10).
@@ -8,7 +8,8 @@ The student app: a Duolingo-style learning path for Grade 1 reading (D-007) in a
 - BKT per skill-level (D-003), hearts and Racoon's Rescue (D-004), stars, XP and coins.
 - **Racoon's Closet** shop: hats (salakot!), scarves, glasses, pins (FR-07).
 - **Play-time limits**: class window, after-school 30 min/day, weekends, friendly lock screens (FR-12).
-- **Grown-ups** screen behind a times-table gate: connect to the server with a student login code, sync now, open the post-test.
+- **Login** once per device with the student's code on a big keypad; "Switch student" on the start screen (only when everything is uploaded).
+- **Automatic sync**: after lessons, on start and resume, every 2 minutes; backs off when offline; never during a lesson; file and JSON work on a worker thread.
 
 Spec and decisions live in [`docs/knowledge/`](../docs/knowledge/README.md) and [`brain/`](../brain/Home.md).
 
@@ -28,9 +29,9 @@ From the repo root (run the import once after cloning or adding a `class_name`):
 ## Layout
 | Path | What |
 |---|---|
-| `scripts/core/` | Rules with no UI, all unit-tested: `bkt.gd`, `student_model.gd` (D-003, placement), `heart_system.gd` (D-004), `lesson_session.gd`, `assessment_session.gd` (pre/post-test), `path_progress.gd`, `question_bank.gd`, `wardrobe.gd` (shop), `access_policy.gd` (play time), `sync_protocol.gd` (D-008), `save_store.gd` |
-| `scripts/autoload/` | `GameState` (profile, wallet, outfit, tests, play time, saving), `Sync` (Laravel API), `Sfx` (synthesized sounds), `Speech` (device TTS, English + Filipino voices) |
-| `scenes/` | `main` start screen, `path/` learning path, `lesson/` lessons and tests, `tasks/` task types + story page, `shop/` closet, `lock/` play-time lock screen, `settings/` grown-ups, `companion/` the raccoon |
+| `scripts/core/` | Rules with no UI, all unit-tested: `bkt.gd`, `student_model.gd` (D-003, placement), `heart_system.gd` (D-004), `lesson_session.gd`, `assessment_session.gd` (pre/post-test), `path_progress.gd`, `question_bank.gd`, `wardrobe.gd` (shop), `access_policy.gd` (play time), `sync_protocol.gd` (D-008), `login_code.gd`, `save_store.gd` |
+| `scripts/autoload/` | `GameState` (profile, wallet, outfit, tests, play time, saving), `Sync` (automatic, threaded sync with the Laravel API), `Sfx` (synthesized sounds), `Speech` (device TTS, English + Filipino voices) |
+| `scenes/` | `main` start screen, `path/` learning path, `lesson/` lessons and tests, `tasks/` task types + story page, `login/` sign-in, `shop/` closet, `lock/` play-time lock screen, `companion/` the raccoon |
 | `content/` | `levels.json` (L1-2, English placeholders, open issue 15), `levels_3.json`/`levels_4.json` (Filipino), `levels_5.json` (English), `pretest.json`/`posttest.json`, `companion_lines.json` |
 | `ui/` | Storybook look (D-009): `palette.gd`, `icons.gd`, `theme.tres`, `ChunkyButton`, `PaperScenery` (Butuan landscapes), `PictureCard`, `Sunburst`, `paper.gdshader` |
 | `assets/fonts/` | Nunito (UI) and Andika (reading text), both SIL OFL |
@@ -42,6 +43,9 @@ Add an object to `content/levels.json` with `id, sub_skill, level, competency, l
 Stories live in a file's `passages` map; items point at them with `"passage": "<id>"`. Other task types: `order_tiles` (`variant` syllables / sentence / sequence, `tiles`, answer = tile keys joined by `|`) and `spin_words` (`rime` + `choices` of first sounds).
 
 Debug command-line flags (after `--`): `--profile=<name>`, `--fresh`, `--demo`, `--scene=res://...`, `--shot=<png path>`, `--shot-delay=<sec>`, `--schedule` (use the default school schedule), `--now=<weekday 0-6>:<HH>:<MM>` (fake the clock).
+
+## Server address
+Set `reading_racoon/server_url` in `project.godot` (Project Settings > Reading Racoon) before building the APK; it is `http://127.0.0.1:8000` for desktop development with `php artisan serve`. Use HTTPS for the real server. Debug builds also accept `--server=<url>`.
 
 ## Android export (to do)
 Add `*.json` to the export resource filter so `content/` ships, and enable the INTERNET permission for sync.

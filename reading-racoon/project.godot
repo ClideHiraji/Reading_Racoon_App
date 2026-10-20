@@ -46,6 +46,10 @@ theme/custom="res://ui/theme.tres"
 
 3d/physics_engine="Jolt Physics"
 
+[reading_racoon]
+
+server_url="http://127.0.0.1:8000"
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=2

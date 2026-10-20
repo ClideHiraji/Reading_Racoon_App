@@ -138,19 +138,14 @@ radius = 30
 icon_name = "book"
 icon_px = 56
 
-[node name="GrownupsButton" type="Button" parent="."]
+[node name="SwitchButton" type="Button" parent="Margin/VBox"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(170, 64)
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -190.0
-offset_top = 18.0
-offset_right = -20.0
-offset_bottom = 82.0
-grow_horizontal = 0
-theme_override_colors/font_color = Color(0.49, 0.408, 0.341, 0.85)
+visible = false
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.98, 0.941, 0.95)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 24
-text = "Grown-ups"
+text = "Switch student"
 flat = true

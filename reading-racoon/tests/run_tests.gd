@@ -244,6 +244,12 @@ func test_all_correct_play_reaches_level_up() -> void:
 		var sum := s.summary()
 		check(sum.stars == 3 and sum.accuracy == 1.0, "all correct = 3 stars")
 	check(m.highest_unlocked == 2, "level 2 unlocked by playing")
+	var probe := LessonSession.new(StudentModel.new(), b, 1, 3)
+	var item := probe.next_item()
+	probe.submit(item.answer)
+	var resp: Dictionary = probe.drain_events().filter(func(e): return e.type == "response")[0].payload
+	check(resp.num_choices == QuestionBank.num_choices(item),
+			"response events carry num_choices for the server's BKT replay")
 	check(lessons <= 2, "an all-correct learner clears world 1 in 2 lessons (took %d)" % lessons)
 	check(repeats == 0, "never the same item twice in a row")
 
@@ -357,6 +363,39 @@ func test_sync_protocol() -> void:
 			"vocabulary": {"l0": 0.3, "t": 0.2, "g": 0.95, "s": 0.1}}}})
 	check(is_equal_approx(p.phonics.l0, 0.3), "remote BKT parameters are used (FR-19)")
 	check(is_equal_approx(p.vocabulary.g, SkillCatalog.PARAMS.vocabulary.g), "1 - S > G is enforced")
+
+
+func test_login_code() -> void:
+	check(LoginCode.normalize("k7pm-3qxa") == "K7PM3QXA", "case and dash ignored")
+	check(LoginCode.is_valid("K7PM-3QXA") and LoginCode.is_valid("k7pm 3qxa"), "valid codes")
+	check(not LoginCode.is_valid("K7PM-3QX"), "too short")
+	check(not LoginCode.is_valid("K7PM-3QX0"), "0 is never in a code")
+	check(LoginCode.format("K7PM3QXA") == "K7PM-3QXA", "shown with a dash")
+	for ch in "01OIL":
+		check(not LoginCode.ALPHABET.contains(ch), "%s left out (looks like another character)" % ch)
+
+
+## The sync worker reads 100 events from the head and trims them without parsing
+## the whole queue, so even a week offline (thousands of answers) stays cheap.
+func test_queue_is_cheap_to_sync() -> void:
+	var store := SaveStore.new("unit_test")
+	store.wipe()
+	for i in 3000:
+		store.queue_event("response", {"item_id": "pa1-01", "correct": i % 2 == 0, "n": i})
+	check(store.queue_size() == 3000, "3000 events queued")
+	var t0 := Time.get_ticks_usec()
+	var head := store.read_head(100)
+	var read_ms := (Time.get_ticks_usec() - t0) / 1000.0
+	check(head.size() == 100 and head[0].payload.n == 0, "head = the oldest 100, in order")
+	t0 = Time.get_ticks_usec()
+	store.remove_events(head.map(func(e): return e.id))
+	var trim_ms := (Time.get_ticks_usec() - t0) / 1000.0
+	check(store.queue_size() == 2900, "100 removed")
+	check(store.read_head(1)[0].payload.n == 100, "the rest keeps its order")
+	check(read_ms < 50.0, "reading 100 of 3000 takes %.1f ms" % read_ms)
+	check(trim_ms < 250.0, "trimming takes %.1f ms (on the worker thread)" % trim_ms)
+	print("  queue: read_head(100) %.1f ms, trim 3000->2900 %.1f ms" % [read_ms, trim_ms])
+	store.wipe()
 
 
 func test_queue_removal() -> void:

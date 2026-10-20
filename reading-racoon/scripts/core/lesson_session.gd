@@ -91,8 +91,10 @@ func submit(answer, ms: int = 0) -> Dictionary:
 	var skill: String = item.sub_skill
 	var item_level: int = item.level
 	var rec := model.record(skill, item_level, correct, QuestionBank.num_choices(item))
+	# num_choices lets the server replay BKT with the same guess rate (D-003 rule 7).
 	_event("response", {"item_id": item.id, "skill": skill, "level": item_level,
-			"answer": str(answer), "correct": correct, "response_ms": ms, "rescue": in_rescue()})
+			"answer": str(answer), "correct": correct, "response_ms": ms, "rescue": in_rescue(),
+			"num_choices": QuestionBank.num_choices(item)})
 	_event("bkt_state", {"skill": skill, "level": item_level, "p": rec.p_next,
 			"posterior": rec.posterior, "attempts": rec.attempts,
 			"mastered": model.state(skill, item_level).mastered})

@@ -1,7 +1,8 @@
 extends Node
 ## Global game state (autoload "GameState"): the learner's model, path, wallet and
 ## content, loaded from and saved to the device after every answer (FR-11).
-## There is one local profile until the student login method is decided (open issue 9).
+## A student signs in once per device with their login code (D-010); each student
+## has their own profile and event queue, so a shared tablet never mixes data.
 
 signal wallet_changed
 signal outfit_changed
@@ -19,18 +20,21 @@ var lines := {}
 var wardrobe := Wardrobe.new()
 ## Pre/post-test records: {"pre": {date, correct, total, scores, placed_level}, "post": ...}
 var assessments := {}
-## Device settings a grown-up can change (and the server can override via /api/config).
+## Flags the teacher controls on the server (GET /api/config), e.g. post_test_open.
 var settings := {"post_test_open": false}
 ## Play-time limits (FR-12): the section schedule cached from the server, the
 ## server-minus-device clock offset (seconds), and the last time the device saw.
 var access := {"schedule": {}, "server_offset": 0, "last_seen": 0}
 ## Minutes played today that count against the after-school cap.
 var usage := {"date": "", "minutes": 0.0}
-## This device's sign-in with the Laravel API: {"token", "student_name"} (FR-01).
+## This device's sign-in with the Laravel API: {"token", "student_name", "student_id"}
+## (FR-01, D-010). Kept in its own file, outside any student's profile.
 var device := {}
 
 const PLAY_SCENES := ["LearningPath", "Lesson", "LessonComplete", "Shop"]
 var _usage_tick := 0.0
+var _decision := {}
+var _decision_age := 99.0
 var _debug_now := {}
 
 ## Set by the path before opening a lesson.
@@ -49,7 +53,8 @@ var _args := {}
 
 func _ready() -> void:
 	_args = _parse_args()
-	store = SaveStore.new(_args.get("profile", ""))
+	device = SaveStore.read_json(_device_path())
+	store = SaveStore.new(_args.get("profile", _profile_name()))
 	bank.load_file()
 	var data = JSON.parse_string(FileAccess.get_file_as_string(LINES_PATH))
 	lines = data if typeof(data) == TYPE_DICTIONARY else {}
@@ -70,8 +75,8 @@ func load_profile() -> void:
 	settings.merge(data.get("settings", {}), true)
 	wardrobe.from_dict(data.get("wardrobe", {}))
 	access.merge(data.get("access", {}), true)
+	usage = {"date": "", "minutes": 0.0}
 	usage.merge(data.get("usage", {}), true)
-	device = data.get("device", {})
 	if data.has("bkt_params"):
 		model.params = SyncProtocol.params_from_config({"bkt": {"skills": data.bkt_params}})
 	_check_clock()
@@ -89,9 +94,59 @@ func save_profile() -> void:
 		"wardrobe": wardrobe.to_dict(),
 		"access": access,
 		"usage": usage,
-		"device": device,
 		"bkt_params": model.params,
 	})
+
+
+# --- Sign-in (FR-01, D-010) -----------------------------------------------------------
+
+func signed_in() -> bool:
+	return str(device.get("token", "")) != ""
+
+
+func student_name() -> String:
+	return str(device.get("student_name", ""))
+
+
+## Called by Sync after a successful login: remember the device's student and
+## switch to that student's own profile and event queue.
+func sign_in(token: String, child_name: String, student_id: int) -> void:
+	device = {"token": token, "student_name": child_name, "student_id": student_id}
+	SaveStore.write_json(_device_path(), device)
+	if not _args.has("profile"):
+		store = SaveStore.new(_profile_name())
+		load_profile()
+	outfit_changed.emit()
+	wallet_changed.emit()
+
+
+## "Switch student": only when everything is saved to the server, so nothing
+## is lost. Returns false (and changes nothing) while answers are still waiting.
+func sign_out() -> bool:
+	if store.queue_size() > 0:
+		return false
+	device = {}
+	DirAccess.remove_absolute(_device_path())
+	if not _args.has("profile"):
+		store = SaveStore.new(_profile_name())
+		load_profile()
+	return true
+
+
+## The server no longer accepts the token (401): ask for the code again, but keep
+## the same student's profile and unsent answers; they upload after signing in.
+func forget_token() -> void:
+	device.token = ""
+	SaveStore.write_json(_device_path(), device)
+
+
+## user://device.json (tests and debug profiles get their own file).
+func _device_path() -> String:
+	return "user://device_%s.json" % _args.profile if _args.has("profile") else "user://device.json"
+
+
+func _profile_name() -> String:
+	return "s%d" % int(device.student_id) if device.has("student_id") else ""
 
 
 func reset_progress() -> void:
@@ -185,7 +240,13 @@ func finish_lesson(session: RefCounted) -> void:
 func _sync_soon() -> void:
 	var sync := get_node_or_null("/root/Sync")
 	if sync:
-		sync.sync_now.call_deferred()
+		sync.request_soon()
+
+
+## A lesson or test is on screen: Sync waits so nothing can stutter (NFR-01).
+func in_lesson() -> bool:
+	var scene := get_tree().current_scene
+	return scene != null and scene.name == "Lesson"
 
 
 func _finish_assessment(session: AssessmentSession) -> void:
@@ -243,11 +304,16 @@ func guard() -> bool:
 
 
 ## Counts after-school minutes while a play screen is open (not on lock screens).
+## The schedule decision is refreshed every few seconds, not every frame.
 func _process(delta: float) -> void:
 	var scene := get_tree().current_scene
 	if scene == null or not PLAY_SCENES.has(scene.name):
 		return
-	if not AccessPolicy.counts_minutes(access_decision()):
+	_decision_age += delta
+	if _decision_age >= 5.0:
+		_decision_age = 0.0
+		_decision = access_decision()
+	if not AccessPolicy.counts_minutes(_decision):
 		return
 	minutes_used_today()
 	usage.minutes = float(usage.minutes) + delta / 60.0

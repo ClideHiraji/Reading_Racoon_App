@@ -7,6 +7,9 @@
   "alwaysUpdateLinks": true,
   "userIgnoreFilters": [
     "reading-racoon/.godot/",
-    "reading-racoon/android/"
+    "reading-racoon/android/",
+    "backend/vendor/",
+    "backend/node_modules/",
+    "backend/storage/"
   ]
 }

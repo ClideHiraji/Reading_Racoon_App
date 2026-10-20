@@ -114,6 +114,39 @@ func target_for(skill: String, level: int) -> Dictionary:
 	return {"skill": skill, "level": level}
 
 
+## Pre-test placement (05-bkt-engine.md "Pre-test -> BKT initialization", FR-02):
+## replay each sub-skill's answers on its lowest-level state from P(L0), mark it
+## mastered when the final posterior reaches 0.95 (no minimum attempts for
+## placement), then start at the lowest map level that still has an unmastered
+## active skill. Uses the Table 3.5 guess rates, not 1/choices: with 3-choice
+## guessing, 3 correct answers top out near 0.90 and nobody could ever be placed
+## (D-003 update, 2026-10-20). Returns the starting map level.
+func place(results: Array) -> int:
+	reset()
+	var by_skill := {}
+	for r in results:
+		if not by_skill.has(r.skill):
+			by_skill[r.skill] = []
+		by_skill[r.skill].append(bool(r.correct))
+	for skill in by_skill:
+		var st := state(skill, SkillCatalog.min_level(skill))
+		var prm: Dictionary = params[skill]
+		var p: float = prm.l0
+		var post := p
+		for correct in by_skill[skill]:
+			post = BKT.posterior(p, correct, prm.g, prm.s)
+			p = BKT.transition(post, prm.t)
+		st.p = p
+		st.attempts = by_skill[skill].size()
+		st.mastered = post >= MASTERY_P
+	highest_unlocked = SkillCatalog.MAX_LEVEL
+	for level in range(1, SkillCatalog.MAX_LEVEL + 1):
+		if not is_level_complete(level):
+			highest_unlocked = level
+			break
+	return highest_unlocked
+
+
 ## Failed Heart Recovery: the skill-level loses mastery and must be shown again (D-004).
 func demote(skill: String, level: int) -> bool:
 	if not has_state(skill, level):

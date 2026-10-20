@@ -72,6 +72,97 @@ func _run() -> void:
 	await _frames(5)
 	check(current_scene.name == "LearningPath", "back on the path")
 
+	# Level 3: story pages and the new task types run through the real scenes.
+	gs.lesson_seed = 7   # repeatable picks
+	gs.model.highest_unlocked = 3
+	gs.start_lesson(3, 0, false)
+	await _frames(5)
+	lesson = current_scene
+	var seen := {}
+	for i in 40:
+		if current_scene != lesson:
+			break
+		var t = lesson._task
+		if t is StoryPage:
+			seen["story"] = true
+			t.done.emit()
+			await _frames(3)
+			continue
+		seen[lesson._item.task_type] = true
+		t.answered.emit(str(lesson._item.answer), 900)
+		await _frames(2)
+		lesson._on_continue()
+		await _frames(4)
+	check(current_scene.name == "LessonComplete", "level 3 lesson completes")
+	check(seen.has("story"), "a story page was shown (%s)" % str(seen.keys()))
+	check(seen.has("order_tiles") or seen.has("spin_words"),
+			"a new task type was played (%s)" % str(seen.keys()))
+	gs.lesson_seed = -1
+
+	# Reading Adventure (pre-test): intro card, 20 neutral items, placement card.
+	gs.reset_progress()
+	gs.start_assessment("pre")
+	await _frames(5)
+	lesson = current_scene
+	check(not lesson.get_node("%Hearts").visible, "no hearts in the test")
+	lesson.get_node("%OverlayPrimary").pressed.emit()
+	await _frames(3)
+	for i in 60:
+		if current_scene != lesson:
+			break
+		var t = lesson._task
+		if t is StoryPage:
+			t.done.emit()
+			await _frames(3)
+			continue
+		t.answered.emit(str(lesson._item.answer), 900)
+		await _frames(2)
+		check(lesson.get_node("%SheetTitle").text == "Thank you!", "test feedback is neutral")
+		lesson._on_continue()
+		await _frames(4)
+	check(current_scene.name == "LessonComplete", "test complete screen opens")
+	check(gs.assessments.has("pre") and gs.assessments.pre.total == 20, "pre-test stored")
+	check(gs.model.highest_unlocked == 2, "placed at level 2 after a perfect test")
+	current_scene.get_node("%ContinueButton").pressed.emit()
+	await _frames(3)
+	check(current_scene.get_node("%Unlock").visible, "placement card shown")
+	current_scene.get_node("%GoButton").pressed.emit()
+	await _frames(5)
+	check(current_scene.name == "LearningPath", "back on the path after the test")
+
+	# Racoon's Closet: try on, buy, wear (FR-07).
+	gs.wallet.coins = 100
+	current_scene.get_node("%ShopButton").pressed.emit()
+	await _frames(5)
+	var shop := current_scene
+	check(shop.name == "Shop", "shop opens from the path")
+	shop._show_slot("hat")
+	shop._select("salakot")
+	await _frames(2)
+	check(shop.raccoon.outfit.get("hat") == "salakot", "trying on shows the hat")
+	shop._on_action()
+	await _frames(2)
+	check(gs.wardrobe.is_worn("salakot") and gs.wallet.coins == 40, "bought and wearing the salakot")
+	shop.get_node("%BackButton").pressed.emit()
+	await _frames(5)
+	check(current_scene.name == "LearningPath", "back from the shop")
+
+	# Grown-ups: the gate, then the settings page (FR-10 toggle, sync status).
+	change_scene_to_file("res://scenes/settings/grownups.tscn")
+	await _frames(5)
+	var grown := current_scene
+	check(grown.name == "Grownups" and grown.has_method("_show_settings"), "grown-ups screen loads")
+	grown._on_gate(grown._answer)
+	await _frames(3)
+	check(grown.get_node("%Content").get_child_count() > 3, "settings shown after the gate")
+	grown._back()
+	await _frames(5)
+
+	# Lock screen loads (FR-12).
+	change_scene_to_file("res://scenes/lock/lock_screen.tscn")
+	await _frames(5)
+	check(current_scene.name == "LockScreen", "lock screen loads")
+
 	gs.store.wipe()
 	print("ui_smoke: %s" % ("OK" if _failures == 0 else "%d failed" % _failures))
 	quit(_failures)

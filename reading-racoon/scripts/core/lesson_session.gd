@@ -26,6 +26,7 @@ var results: Array = []          # normal items only: {id, skill, level, correct
 var used_ids: Array = []
 var last_id := ""
 var sticky_skill := ""           # after a wrong answer, stay on the same skill
+var story := ""                  # passage id of the story being read
 var level_up := false
 var ended_early := false
 var flags: Array = []            # intervention flags for the teacher (FR-17)
@@ -64,7 +65,9 @@ func next_item() -> Dictionary:
 		target = model.target_for(sticky_skill, level)
 	else:
 		target = model.pick_target(level, rng)
-	current = bank.pick(target.skill, target.level, recovery_items, used_ids, last_id, rng)
+	# Finish one story's questions before starting another, so the child
+	# reads each story once even when other skills come in between.
+	current = bank.pick(target.skill, target.level, recovery_items, used_ids, last_id, rng, story)
 	if current.is_empty():
 		# No content for that skill-level: fall back to any skill with items here.
 		for skill in SkillCatalog.active_skills(level):
@@ -74,6 +77,8 @@ func next_item() -> Dictionary:
 	if not current.is_empty():
 		used_ids.append(current.id)
 		last_id = current.id
+		if current.has("passage"):
+			story = current.passage
 	return current
 
 

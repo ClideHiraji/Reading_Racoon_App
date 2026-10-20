@@ -5,14 +5,22 @@ extends Control
 ## each answer. The rules live in LessonSession (scripts/core); this only shows them.
 ## FR-13 hearts and Racoon's Rescue, FR-14 hints, FR-20 read-aloud.
 
-const TAP_TASK := preload("res://scenes/tasks/tap_choice_task.tscn")
-const DRAG_TASK := preload("res://scenes/tasks/drag_letter_task.tscn")
+## One scene per task_type in content/levels*.json.
+const TASKS := {
+	"tap_choice": preload("res://scenes/tasks/tap_choice_task.tscn"),
+	"drag_letter": preload("res://scenes/tasks/drag_letter_task.tscn"),
+	"order_tiles": preload("res://scenes/tasks/order_tiles_task.tscn"),
+	"spin_words": preload("res://scenes/tasks/spin_words_task.tscn"),
+}
 const RESCUE_PAPER := Color("dcebf0")
 
-var session: LessonSession
+## A LessonSession, or an AssessmentSession for the pre/post-test (same interface).
+var session: RefCounted
+var _testing := false
 var _item := {}
 var _task: Control
 var _outcome := {}
+var _shown_passage := ""
 var _overlay_primary: Callable
 var _overlay_secondary: Callable
 
@@ -27,11 +35,22 @@ func _ready() -> void:
 	%Scenery.scene = world.scene
 	%CloseButton.pressed.connect(_on_close)
 	%SpeakButton.pressed.connect(_speak)
-	%SpeakButton.visible = Speech.available()
+	%StoryButton.pressed.connect(_peek_story)
 	%ContinueButton.pressed.connect(_on_continue)
 	%OverlayPrimary.pressed.connect(func(): _close_overlay(_overlay_primary))
 	%OverlaySecondary.pressed.connect(func(): _close_overlay(_overlay_secondary))
 	_update_hearts(HeartSystem.MAX_HEARTS)
+	_testing = session is AssessmentSession
+	if _testing:
+		# Reading Adventure (FR-02/FR-10): no hearts, no right/wrong, just do your best.
+		%Hearts.hide()
+		var pre: bool = session.kind == "pre"
+		_say(GameState.line("adventure_intro"), "happy")
+		_open_overlay("stories", Palette.TEAL, "Reading Adventure!" if pre else "Big Reading Day!",
+				"Show Racoon what you can do. No hearts today, just try your best!", "LET'S GO!",
+				_next)
+		Speech.say("Reading Adventure! Show Racoon what you can do. Just try your best!")
+		return
 	_say(GameState.line("intro"), "happy")
 	_next()
 
@@ -45,24 +64,65 @@ func _next() -> void:
 		return
 	if _task:
 		_task.queue_free()
-	_task = (DRAG_TASK if _item.task_type == "drag_letter" else TAP_TASK).instantiate()
+		_task = null
+	_update_progress()
+	%SpeakButton.visible = Speech.available(_item.get("language", "en"))
+	%StoryButton.visible = _item.has("passage")
+	var pid: String = _item.get("passage", "")
+	if pid != "" and pid != _shown_passage:
+		_show_story(pid)
+	else:
+		_start_task()
+
+
+func _start_task() -> void:
+	if _task:
+		_task.queue_free()
+	_task = TASKS.get(_item.task_type, TASKS.tap_choice).instantiate()
 	%TaskHolder.add_child(_task)
 	_task.setup(_item)
 	_task.answered.connect(_on_answered)
 	%Prompt.text = _item.prompt
-	_update_progress()
+	%StoryButton.visible = _item.has("passage")
 	_speak()
 
 
+## Story first: the child reads (or listens to) the passage, then answers.
+func _show_story(pid: String) -> void:
+	var p: Dictionary = session.bank.passage(pid)
+	_shown_passage = pid
+	var page := StoryPage.new()
+	page.setup(p)
+	page.done.connect(_start_task)
+	_task = page
+	%TaskHolder.add_child(page)
+	%StoryButton.visible = false
+	%Prompt.text = p.get("title", "Story")
+	Speech.say(p.get("text", ""), p.get("language", "en"))
+
+
+func _peek_story() -> void:
+	var p: Dictionary = session.bank.passage(_item.get("passage", ""))
+	Speech.say(p.get("text", ""), p.get("language", "en"))
+	_open_overlay("stories", Palette.TEAL, p.get("title", ""), p.get("text", ""), "OK", func(): pass)
+
+
 func _speak() -> void:
-	Speech.say(_item.get("tts_text", _item.get("prompt", "")))
+	Speech.say(_item.get("tts_text", _item.get("prompt", "")), _item.get("language", "en"))
 
 
 func _on_answered(answer: String, ms: int) -> void:
-	var was_rescue := session.in_rescue()
+	var was_rescue: bool = session.in_rescue()
 	_outcome = session.submit(answer, ms)
 	GameState.record(session)   # saved after every answer (FR-11)
 	var right := str(_outcome.answer)
+	if _outcome.get("neutral", false):
+		# Tests never reveal right or wrong; the child just moves on.
+		_update_progress()
+		Sfx.play("pop")
+		_say(GameState.line("adventure_next"), "happy")
+		_show_neutral_sheet()
+		return
 	_task.show_result(answer, right)
 	Sfx.play("correct" if _outcome.correct else "wrong")
 	_update_hearts(_outcome.hearts)
@@ -87,7 +147,8 @@ func _on_answered(answer: String, ms: int) -> void:
 		line = GameState.line("rescue_full" if _outcome.rescue_full else "rescue_partial")
 		mood = "celebrate" if _outcome.rescue_full else "encourage"
 	_say(line, mood)
-	_show_sheet(_outcome.correct, _choice_label(right))
+	var shown: String = _task.answer_text(right) if _task.has_method("answer_text") else _choice_label(right)
+	_show_sheet(_outcome.correct, shown)
 
 
 func _on_continue() -> void:
@@ -131,6 +192,20 @@ func _update_rescue_label() -> void:
 
 
 # --- Sheet, hearts, progress --------------------------------------------------------
+
+func _show_neutral_sheet() -> void:
+	_show_sheet(true, "")
+	var sb: StyleBoxFlat = sheet.get_theme_stylebox("panel").duplicate()
+	sb.bg_color = Palette.pale(Palette.TEAL, 0.8)
+	sheet.add_theme_stylebox_override("panel", sb)
+	var disc: StyleBoxFlat = %SheetDisc.get_theme_stylebox("panel").duplicate()
+	disc.bg_color = Palette.TEAL
+	%SheetDisc.add_theme_stylebox_override("panel", disc)
+	%SheetIcon.texture = Icons.tex("sparkles")
+	%SheetTitle.text = "Thank you!"
+	%SheetTitle.add_theme_color_override("font_color", Palette.TEAL_DEEP)
+	%ContinueButton.face_color = Palette.TEAL
+
 
 func _show_sheet(correct: bool, answer_text: String) -> void:
 	var color := Palette.RIGHT if correct else Palette.ALMOST

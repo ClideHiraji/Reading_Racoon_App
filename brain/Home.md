@@ -57,6 +57,7 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 - [[Laravel API guests need a null redirect]]
 - [[Reset a lost postgres password]]
 - [[Godot containers reset child rotation]]
+- [[GDScript helper names can override engine callbacks]]
 - [[Blade inline php swallows a later php block]]
 - [[migrate fresh keeps PostgreSQL functions]]
 - [[A hidden route needs a catch-all against 405]]

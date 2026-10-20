@@ -1,0 +1,21 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/tasks/order_tiles_task.gd" id="1_order"]
+
+[node name="OrderTilesTask" type="VBoxContainer"]
+size_flags_vertical = 3
+theme_override_constants/separation = 34
+alignment = 1
+script = ExtResource("1_order")
+
+[node name="Stage" type="CenterContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="SlotsHolder" type="MarginContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="TilesHolder" type="MarginContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2

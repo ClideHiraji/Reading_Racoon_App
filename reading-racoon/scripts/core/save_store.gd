@@ -69,8 +69,39 @@ func read_queue() -> Array:
 	return out
 
 
+func queue_size() -> int:
+	return read_queue().size()
+
+
+## Removes events the server acknowledged or rejected (D-008). Rejected ones are
+## kept in a side file for debugging. Everything else stays queued for a retry.
+func remove_events(ids: Array, rejected: Array = []) -> void:
+	if ids.is_empty() and rejected.is_empty():
+		return
+	var drop := {}
+	for id in ids:
+		drop[str(id)] = true
+	for r in rejected:
+		drop[str(r.get("id", ""))] = true
+	var keep := read_queue().filter(func(ev): return not drop.has(str(ev.id)))
+	var f := FileAccess.open(queue_path, FileAccess.WRITE)
+	if f == null:
+		return
+	for ev in keep:
+		f.store_line(JSON.stringify(ev))
+	f.close()
+	if not rejected.is_empty():
+		var rp := queue_path.get_basename() + "_rejected.jsonl"
+		var r := FileAccess.open(rp, FileAccess.READ_WRITE if FileAccess.file_exists(rp) else FileAccess.WRITE)
+		if r:
+			r.seek_end()
+			for item in rejected:
+				r.store_line(JSON.stringify(item))
+			r.close()
+
+
 func wipe() -> void:
-	for p in [profile_path, queue_path]:
+	for p in [profile_path, queue_path, queue_path.get_basename() + "_rejected.jsonl"]:
 		if FileAccess.file_exists(p):
 			DirAccess.remove_absolute(p)
 

@@ -32,6 +32,11 @@ extends Button
 		icon_px = v
 		add_theme_constant_override("icon_max_width", v)
 @export var tap_sound := true
+## Icon color; transparent = same as the text.
+@export var icon_tint := Color(0, 0, 0, 0):
+	set(v):
+		icon_tint = v
+		_restyle()
 
 
 func _ready() -> void:
@@ -58,10 +63,12 @@ func _restyle() -> void:
 	add_theme_stylebox_override("disabled", _box(face, lift, 0))
 	add_theme_stylebox_override("focus", StyleBoxEmpty.new())
 	for c in ["font_color", "font_hover_color", "font_pressed_color", "font_focus_color",
-			"font_hover_pressed_color", "font_disabled_color", "icon_normal_color",
-			"icon_hover_color", "icon_pressed_color", "icon_hover_pressed_color",
-			"icon_focus_color", "icon_disabled_color"]:
+			"font_hover_pressed_color", "font_disabled_color"]:
 		add_theme_color_override(c, ink)
+	var tint := icon_tint if icon_tint.a > 0.0 else ink
+	for c in ["icon_normal_color", "icon_hover_color", "icon_pressed_color",
+			"icon_hover_pressed_color", "icon_focus_color", "icon_disabled_color"]:
+		add_theme_color_override(c, tint)
 
 
 ## `sink` moves the whole face down (top expand margin in, bottom out) and the

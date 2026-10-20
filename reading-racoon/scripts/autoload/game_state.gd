@@ -4,6 +4,7 @@ extends Node
 ## There is one local profile until the student login method is decided (open issue 9).
 
 signal wallet_changed
+signal outfit_changed
 
 const LINES_PATH := "res://content/companion_lines.json"
 
@@ -14,11 +15,32 @@ var store: SaveStore
 var wallet := {"xp": 0, "coins": 0}
 var flags: Array = []
 var lines := {}
+## Racoon's outfit and the items bought in the shop (FR-07).
+var wardrobe := Wardrobe.new()
+## Pre/post-test records: {"pre": {date, correct, total, scores, placed_level}, "post": ...}
+var assessments := {}
+## Device settings a grown-up can change (and the server can override via /api/config).
+var settings := {"post_test_open": false}
+## Play-time limits (FR-12): the section schedule cached from the server, the
+## server-minus-device clock offset (seconds), and the last time the device saw.
+var access := {"schedule": {}, "server_offset": 0, "last_seen": 0}
+## Minutes played today that count against the after-school cap.
+var usage := {"date": "", "minutes": 0.0}
+## This device's sign-in with the Laravel API: {"token", "student_name"} (FR-01).
+var device := {}
+
+const PLAY_SCENES := ["LearningPath", "Lesson", "LessonComplete", "Shop"]
+var _usage_tick := 0.0
+var _debug_now := {}
 
 ## Set by the path before opening a lesson.
 var lesson_world := 1
 var lesson_node := 0
 var lesson_as_bonus := false
+## "lesson", or "pre" / "post" for the Reading Adventure tests (FR-02, FR-10).
+var lesson_mode := "lesson"
+## Tests set this to make item picks repeatable; -1 = random.
+var lesson_seed := -1
 ## Set by the lesson for the lesson-complete screen.
 var last_summary := {}
 
@@ -44,6 +66,15 @@ func load_profile() -> void:
 	var w: Dictionary = data.get("wallet", {})
 	wallet = {"xp": int(w.get("xp", 0)), "coins": int(w.get("coins", 0))}
 	flags = data.get("flags", [])
+	assessments = data.get("assessments", {})
+	settings.merge(data.get("settings", {}), true)
+	wardrobe.from_dict(data.get("wardrobe", {}))
+	access.merge(data.get("access", {}), true)
+	usage.merge(data.get("usage", {}), true)
+	device = data.get("device", {})
+	if data.has("bkt_params"):
+		model.params = SyncProtocol.params_from_config({"bkt": {"skills": data.bkt_params}})
+	_check_clock()
 
 
 func save_profile() -> void:
@@ -53,6 +84,13 @@ func save_profile() -> void:
 		"path": path.to_dict(),
 		"wallet": wallet,
 		"flags": flags,
+		"assessments": assessments,
+		"settings": settings,
+		"wardrobe": wardrobe.to_dict(),
+		"access": access,
+		"usage": usage,
+		"device": device,
+		"bkt_params": model.params,
 	})
 
 
@@ -61,7 +99,10 @@ func reset_progress() -> void:
 	path = PathProgress.new()
 	wallet = {"xp": 0, "coins": 0}
 	flags = []
+	assessments = {}
+	wardrobe = Wardrobe.new()
 	save_profile()
+	outfit_changed.emit()
 
 
 ## Highest map level with content; worlds above it show "coming soon".
@@ -78,24 +119,52 @@ func world_unlocked(level: int) -> bool:
 
 
 func start_lesson(world: int, node: int, as_bonus: bool) -> void:
+	if not guard():
+		return
+	lesson_mode = "lesson"
 	lesson_world = world
 	lesson_node = node
 	lesson_as_bonus = as_bonus
 	get_tree().change_scene_to_file("res://scenes/lesson/lesson.tscn")
 
 
-func new_session() -> LessonSession:
-	return LessonSession.new(model, bank, lesson_world)
+## The Reading Adventure: "pre" before the first lesson, "post" when the teacher
+## opens it at the end of the study (FR-02, FR-10).
+func start_assessment(kind: String) -> void:
+	if not guard():
+		return
+	lesson_mode = kind
+	lesson_world = 1
+	get_tree().change_scene_to_file("res://scenes/lesson/lesson.tscn")
+
+
+func needs_pretest() -> bool:
+	return not assessments.has("pre")
+
+
+func post_test_ready() -> bool:
+	return bool(settings.get("post_test_open", false)) and assessments.has("pre") \
+			and not assessments.has("post")
+
+
+## A LessonSession, or an AssessmentSession for the pre/post-test (same interface).
+func new_session() -> RefCounted:
+	if lesson_mode in ["pre", "post"]:
+		return AssessmentSession.new(model, lesson_mode)
+	return LessonSession.new(model, bank, lesson_world, lesson_seed)
 
 
 ## Called after every answer: queue the events for sync and save (FR-11).
-func record(session: LessonSession) -> void:
+func record(session: RefCounted) -> void:
 	for ev in session.drain_events():
 		store.queue_event(ev.type, ev.payload)
 	save_profile()
 
 
-func finish_lesson(session: LessonSession) -> void:
+func finish_lesson(session: RefCounted) -> void:
+	if session is AssessmentSession:
+		_finish_assessment(session)
+		return
 	record(session)
 	last_summary = session.summary()
 	if not session.ended_early:
@@ -109,6 +178,144 @@ func finish_lesson(session: LessonSession) -> void:
 			"stars": last_summary.stars})
 	save_profile()
 	wallet_changed.emit()
+	_sync_soon()
+
+
+## Upload right after a lesson or test while the Wi-Fi is likely still on (FR-11).
+func _sync_soon() -> void:
+	var sync := get_node_or_null("/root/Sync")
+	if sync:
+		sync.sync_now.call_deferred()
+
+
+func _finish_assessment(session: AssessmentSession) -> void:
+	record(session)   # also stores the placement (pre) made by the session
+	last_summary = session.summary()
+	assessments[session.kind] = {"date": last_summary.date, "correct": last_summary.correct,
+			"total": last_summary.total, "scores": last_summary.scores,
+			"placed_level": last_summary.placed_level}
+	if session.kind == "pre":
+		path = PathProgress.new()
+	wallet.xp += last_summary.xp
+	wallet.coins += last_summary.coins
+	lesson_mode = "lesson"
+	save_profile()
+	wallet_changed.emit()
+	_sync_soon()
+
+
+# --- Play-time limits (FR-12) --------------------------------------------------------
+
+## Local wall-clock time, corrected by the last known server offset so a wrong
+## device clock can't open the game early (open issue 10).
+func now_dict() -> Dictionary:
+	if not _debug_now.is_empty():
+		return _debug_now
+	var bias: int = Time.get_time_zone_from_system().get("bias", 0)
+	var unix := Time.get_unix_time_from_system() + float(access.server_offset) + bias * 60.0
+	return Time.get_datetime_dict_from_unix_time(int(unix))
+
+
+func today() -> String:
+	var n := now_dict()
+	return "%04d-%02d-%02d" % [n.year, n.month, n.day]
+
+
+func minutes_used_today() -> float:
+	if usage.date != today():
+		usage = {"date": today(), "minutes": 0.0}
+	return float(usage.minutes)
+
+
+func access_decision() -> Dictionary:
+	return AccessPolicy.decide(access.schedule, now_dict(), minutes_used_today())
+
+
+## Call at screen transitions: true if play is allowed now; otherwise opens the
+## friendly lock screen (never closes the app) and returns false.
+func guard() -> bool:
+	var d := access_decision()
+	if AccessPolicy.is_open(d):
+		return true
+	store.queue_event("access", {"status": d.status, "time": Time.get_datetime_string_from_system()})
+	get_tree().change_scene_to_file("res://scenes/lock/lock_screen.tscn")
+	return false
+
+
+## Counts after-school minutes while a play screen is open (not on lock screens).
+func _process(delta: float) -> void:
+	var scene := get_tree().current_scene
+	if scene == null or not PLAY_SCENES.has(scene.name):
+		return
+	if not AccessPolicy.counts_minutes(access_decision()):
+		return
+	minutes_used_today()
+	usage.minutes = float(usage.minutes) + delta / 60.0
+	_usage_tick += delta
+	if _usage_tick >= 60.0:
+		_usage_tick = 0.0
+		store.queue_event("usage", {"date": usage.date, "minutes": snappedf(usage.minutes, 0.1)})
+		save_profile()
+
+
+# --- Server data (Sync autoload) -------------------------------------------------------
+
+## GET /api/config (FR-19): BKT parameters and teacher-controlled flags.
+func apply_server_config(cfg: Dictionary) -> void:
+	model.params = SyncProtocol.params_from_config(cfg)
+	if cfg.has("post_test_open"):
+		settings.post_test_open = bool(cfg.post_test_open)
+	set_server_time(str(cfg.get("server_time", "")))
+	save_profile()
+
+
+## GET /api/access/student/status (FR-12): cache the schedule for offline use.
+func apply_access(body: Dictionary) -> void:
+	if typeof(body.get("schedule")) == TYPE_DICTIONARY:
+		access.schedule = body.schedule
+	set_server_time(str(body.get("server_time", "")))
+	save_profile()
+
+
+func set_server_time(server_time: String) -> void:
+	if server_time != "":
+		access.server_offset = SyncProtocol.clock_offset(server_time, Time.get_unix_time_from_system())
+
+
+## A device clock that jumped backwards is logged for the admin (03-architecture.md).
+func _check_clock() -> void:
+	var now := int(Time.get_unix_time_from_system())
+	var last := int(access.get("last_seen", 0))
+	if last > 0 and now < last - 300:
+		store.queue_event("flag", {"type": "clock_jump", "from": last, "to": now})
+	access.last_seen = maxi(now, last)
+
+
+## Shop (FR-07). Returns Wardrobe.buy's result: bought, owned, poor or unknown.
+func buy_item(id: String) -> String:
+	var result := wardrobe.buy(id, wallet)
+	if result == "bought":
+		store.queue_event("purchase", {"item": id, "price": Wardrobe.ITEMS[id].price,
+				"coins_left": wallet.coins})
+		_outfit_saved()
+		wallet_changed.emit()
+	return result
+
+
+func wear_item(id: String) -> void:
+	if wardrobe.wear(id):
+		_outfit_saved()
+
+
+func take_off(slot: String) -> void:
+	wardrobe.take_off(slot)
+	_outfit_saved()
+
+
+func _outfit_saved() -> void:
+	store.queue_event("outfit", {"equipped": wardrobe.equipped.duplicate()})
+	save_profile()
+	outfit_changed.emit()
 
 
 func open_chest(world: int) -> int:
@@ -147,6 +354,13 @@ func _debug_hooks() -> void:
 		return
 	if _args.has("demo"):
 		_seed_demo()
+	# --schedule  uses the default school schedule; --now=<weekday 0-6>:<HH>:<MM> fakes the clock.
+	if _args.has("schedule"):
+		access.schedule = AccessPolicy.DEFAULTS.duplicate()
+	if _args.has("now"):
+		var p: PackedStringArray = str(_args.now).split(":")
+		_debug_now = {"year": 2026, "month": 10, "day": 21, "weekday": int(p[0]),
+				"hour": int(p[1]), "minute": int(p[2]), "second": 0}
 	if _args.has("scene"):
 		get_tree().change_scene_to_file.call_deferred(_args.scene)
 	if _args.has("shot"):

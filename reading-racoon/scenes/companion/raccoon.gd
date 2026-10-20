@@ -37,12 +37,24 @@ var wag := 0.0:
 		wag = v
 		queue_redraw()
 
+## What Racoon wears, {slot: item id} (FR-07, Wardrobe). By default it follows the
+## child's saved outfit; the shop sets it directly to try things on.
+var outfit := {"neck": "scarf_teal"}:
+	set(v):
+		outfit = v
+		queue_redraw()
+@export var follow_saved_outfit := true
+
 var _tween: Tween
 
 
 func _ready() -> void:
 	if custom_minimum_size == Vector2.ZERO:
 		custom_minimum_size = Vector2(180, 180)
+	var gs := get_node_or_null("/root/GameState")
+	if follow_saved_outfit and gs and not Engine.is_editor_hint():
+		outfit = gs.wardrobe.equipped.duplicate()
+		gs.outfit_changed.connect(func(): outfit = gs.wardrobe.equipped.duplicate())
 	if not Engine.is_editor_hint():
 		var idle := create_tween().set_loops()
 		idle.tween_property(self, "squash", 1.025, 1.3).set_trans(Tween.TRANS_SINE)
@@ -91,13 +103,16 @@ func _draw() -> void:
 	_piece(Vector2(24, -6), Vector2(17, 9), FUR_DARK)
 	_piece(Vector2(0, -46), Vector2(50, 44), FUR)                  # body
 	_piece(Vector2(0, -40), Vector2(31, 30), CREAM)                # belly
-	_scarf()
+	_pin(outfit.get("badge", ""))
+	_neck(outfit.get("neck", ""))
 	_piece(Vector2(-16, -60), Vector2(10, 8), FUR_DARK)            # paws
 	_piece(Vector2(16, -60), Vector2(10, 8), FUR_DARK)
 	_ear(-1)
 	_ear(1)
 	_head()
 	_face()
+	_glasses(outfit.get("eyes", ""))
+	_hat(outfit.get("hat", ""))
 
 
 # --- Parts ----------------------------------------------------------------------------
@@ -111,13 +126,118 @@ func _tail() -> void:
 		_piece(p, Vector2(r, r), MASK if i % 2 == 1 else FUR_LIGHT)
 
 
-func _scarf() -> void:
+func _scarf(col: Color) -> void:
 	var pts := PackedVector2Array([Vector2(-42, -86), Vector2(42, -86), Vector2(30, -70),
 			Vector2(0, -64), Vector2(-30, -70)])
-	_poly(pts, Palette.TEAL)
+	_poly(pts, col)
 	_poly(PackedVector2Array([Vector2(14, -74), Vector2(34, -76), Vector2(28, -44),
-			Vector2(16, -52)]), Palette.TEAL_DEEP)
-	_piece(Vector2(18, -74), Vector2(8, 7), Palette.TEAL_DEEP)
+			Vector2(16, -52)]), col.darkened(0.25))
+	_piece(Vector2(18, -74), Vector2(8, 7), col.darkened(0.25))   # knot
+
+
+# --- Outfit (Wardrobe.ITEMS) ----------------------------------------------------------
+
+func _neck(id: String) -> void:
+	match id:
+		"scarf_teal":
+			_scarf(Palette.TEAL)
+		"scarf_coral":
+			_scarf(Palette.CORAL)
+		"scarf_mango":
+			_scarf(Palette.MANGO)
+		"bow_tie":
+			_poly(PackedVector2Array([Vector2(0, -78), Vector2(-28, -92), Vector2(-28, -64)]), Palette.PLUM)
+			_poly(PackedVector2Array([Vector2(0, -78), Vector2(28, -92), Vector2(28, -64)]), Palette.PLUM)
+			_piece(Vector2(0, -78), Vector2(9, 9), Palette.PLUM_DEEP)
+		"lei":
+			# Sampaguita garland: small white flowers with yellow centers.
+			for i in 11:
+				var a := PI * (0.08 + 0.84 * i / 10.0)
+				var p := Vector2(cos(a) * 44, -84 + sin(a) * 24)
+				_piece(p, Vector2(9, 9), Color("fbfaf3"))
+				draw_circle(p, 3.5, Palette.MANGO)
+
+
+func _hat(id: String) -> void:
+	match id:
+		"cap":
+			_poly(_arc_pts(Vector2(0, -164), Vector2(62, 34), PI, TAU), Palette.TEAL)
+			_piece(Vector2(-46, -164), Vector2(40, 9), Palette.TEAL_DEEP)
+			_piece(Vector2(0, -196), Vector2(7, 5), Palette.TEAL_DEEP, false)
+		"party_hat":
+			_poly(PackedVector2Array([Vector2(-28, -170), Vector2(4, -242), Vector2(30, -168)]), Palette.CORAL)
+			for k in 3:
+				var t := 0.25 + k * 0.22
+				draw_line(Vector2(-28 + 32 * t, -170 - 72 * t), Vector2(30 - 26 * t, -168 - 74 * t),
+						Palette.MANGO, 5.0, true)
+			_piece(Vector2(4, -244), Vector2(10, 10), Palette.MANGO)
+		"flower_crown":
+			for i in 9:
+				var a := PI * (1.12 + 0.76 * i / 8.0)
+				var p := Vector2(cos(a) * 64, -150 + sin(a) * 38)
+				var col: Color = [Color("fbfaf3"), Palette.CORAL.lightened(0.3), Palette.MANGO][i % 3]
+				_piece(p, Vector2(11, 11), col)
+				draw_circle(p, 4, Palette.MANGO_DEEP)
+		"salakot":
+			# Filipino woven hat: a wide, low cone with radiating weave lines and a knob.
+			_piece(Vector2(0, -166), Vector2(98, 20), Palette.NIPA_DEEP)
+			var cone := PackedVector2Array([Vector2(-94, -168), Vector2(0, -214), Vector2(94, -168)])
+			_poly(cone, Palette.NIPA)
+			for k in 7:
+				var x := -80.0 + k * 26.7
+				draw_line(Vector2(0, -212), Vector2(x, -170), Palette.NIPA_DEEP, 2.0, true)
+			_piece(Vector2(0, -216), Vector2(8, 7), Palette.NIPA_DEEP)
+		"gold_crown":
+			var pts := PackedVector2Array([Vector2(-44, -168), Vector2(-46, -210), Vector2(-24, -188),
+					Vector2(0, -220), Vector2(24, -188), Vector2(46, -210), Vector2(44, -168)])
+			_poly(pts, Palette.MANGO)
+			for x in [-26.0, 0.0, 26.0]:
+				draw_circle(Vector2(x, -180), 6, Palette.CORAL)
+
+
+func _glasses(id: String) -> void:
+	match id:
+		"round_glasses":
+			for s in [-1, 1]:
+				draw_arc(Vector2(30 * s, -122), 17, 0, TAU, 28, Palette.INK, 4.0, true)
+			draw_line(Vector2(-13, -124), Vector2(13, -124), Palette.INK, 4.0, true)
+		"sunglasses":
+			for s in [-1, 1]:
+				_piece(Vector2(30 * s, -121), Vector2(20, 14), Color(0.13, 0.11, 0.14, 0.92), false)
+				draw_line(Vector2(30 * s - 10, -127), Vector2(30 * s - 2, -130), Color(1, 1, 1, 0.5), 3.0)
+			draw_line(Vector2(-10, -124), Vector2(10, -124), Palette.INK, 4.0, true)
+		"star_glasses":
+			for s in [-1, 1]:
+				_poly(_star_pts(Vector2(30 * s, -122), 22, 11), Palette.MANGO, false)
+				_poly(_star_pts(Vector2(30 * s, -122), 13, 7), Color(0.2, 0.17, 0.2, 0.85), false)
+			draw_line(Vector2(-10, -124), Vector2(10, -124), Palette.MANGO_DEEP, 4.0, true)
+
+
+func _pin(id: String) -> void:
+	var icon: String = {"pin_star": "star", "pin_heart": "heart", "pin_book": "book"}.get(id, "")
+	if icon == "":
+		return
+	var c := Vector2(-20, -36)
+	_piece(c, Vector2(15, 15), Palette.CARD)
+	draw_arc(c, 15, 0, TAU, 24, Palette.MANGO_DEEP, 2.5, true)
+	var col: Color = {"star": Palette.MANGO_DEEP, "heart": Palette.CORAL, "book": Palette.BAY}[icon]
+	Icons.draw(self, icon, c, 20, col)
+
+
+func _star_pts(c: Vector2, r_out: float, r_in: float) -> PackedVector2Array:
+	var pts := PackedVector2Array()
+	for i in 10:
+		var a := -PI / 2 + TAU * i / 10.0
+		pts.append(c + Vector2(cos(a), sin(a)) * (r_out if i % 2 == 0 else r_in))
+	return pts
+
+
+func _arc_pts(c: Vector2, radii: Vector2, a0: float, a1: float) -> PackedVector2Array:
+	var pts := PackedVector2Array()
+	for i in 17:
+		var a := lerpf(a0, a1, i / 16.0)
+		pts.append(c + Vector2(cos(a) * radii.x, sin(a) * radii.y))
+	return pts
 
 
 func _ear(side: int) -> void:

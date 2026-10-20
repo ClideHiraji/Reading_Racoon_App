@@ -4,23 +4,13 @@
 
 [node name="TapChoiceTask" type="VBoxContainer"]
 size_flags_vertical = 3
-theme_override_constants/separation = 20
+theme_override_constants/separation = 40
 alignment = 1
 script = ExtResource("1_tap")
 
-[node name="Picture" type="Label" parent="."]
+[node name="Stage" type="CenterContainer" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 120
-text = "🐱"
-horizontal_alignment = 1
-
-[node name="Word" type="Label" parent="."]
-unique_name_in_owner = true
-layout_mode = 2
-theme_type_variation = &"ReadWord"
-text = "cat"
-horizontal_alignment = 1
 
 [node name="Choices" type="GridContainer" parent="."]
 unique_name_in_owner = true

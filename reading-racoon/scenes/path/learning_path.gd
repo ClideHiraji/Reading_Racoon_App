@@ -1,17 +1,16 @@
 extends Control
-## The learning path (D-007): each map level is a colored world with 5 lesson
+## The learning path (D-007, D-009): one storybook "page" per world, with a
+## paper-cut scene of a Butuan place, skill bars, then a winding trail of lesson
 ## nodes, a treasure chest and a trophy. BKT decides when a world is cleared and
 ## the next one unlocks (FR-04); this screen only shows it.
-
-const SWING := 150.0
-const LOCKED_COLOR := Color("c9c0b0")
 
 @onready var scroll: ScrollContainer = %Scroll
 @onready var content: VBoxContainer = %Content
 
 var _guide: Raccoon
 var _bubble: SpeechBubble
-var _focus_row: Control
+var _focus_trail: WorldTrail
+var _focus_idx := -1
 
 
 func _ready() -> void:
@@ -20,8 +19,7 @@ func _ready() -> void:
 	GameState.wallet_changed.connect(_update_top_bar)
 	_update_top_bar()
 	await _build()
-	if _focus_row:
-		scroll.scroll_vertical = int(_focus_row.position.y - 420)
+	_scroll_to_focus()
 	var chest_waiting := GameState.path.chest_ready(GameState.lesson_world)
 	_say(GameState.line("chest" if chest_waiting else "path_hello"), "happy")
 
@@ -29,12 +27,13 @@ func _ready() -> void:
 func _build() -> void:
 	for c in content.get_children():
 		c.queue_free()
-	_focus_row = null
 	_guide = null
-	content.add_child(_spacer(20))
+	_bubble = null
+	_focus_trail = null
+	content.add_child(_spacer(28))
 	for level in range(1, SkillCatalog.MAX_LEVEL + 1):
 		_add_world(level)
-	content.add_child(_spacer(160))
+	content.add_child(_spacer(140))
 	await get_tree().process_frame
 	await get_tree().process_frame
 
@@ -44,83 +43,118 @@ func _add_world(level: int) -> void:
 	var has_content := level <= GameState.content_max_level()
 	var unlocked := GameState.world_unlocked(level)
 	var cleared := unlocked and GameState.world_cleared(level)
-	content.add_child(_banner(level, info, has_content, unlocked))
-	var layout := GameState.path.layout(level, unlocked, cleared)
-	for i in layout.size():
-		var n: Dictionary = layout[i]
-		var row := Control.new()
-		row.custom_minimum_size = Vector2(0, 200)
-		row.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		content.add_child(row)
-		var node := PathNode.new()
-		node.mouse_filter = Control.MOUSE_FILTER_PASS
-		row.add_child(node)
-		node.setup(n.kind, n.state, info.color if unlocked else LOCKED_COLOR)
-		var offset := sin(i * 0.95 + 0.6) * SWING
-		row.resized.connect(func(): node.position = Vector2(row.size.x / 2 + offset - 100, 0))
-		node.pressed.connect(_on_node_pressed.bind(level, n, node))
-		if _guide == null and n.state in ["current", "practice", "ready"]:
-			_place_guide(row, offset)
-	if _guide == null and unlocked and (level == GameState.model.highest_unlocked \
-			or level == GameState.content_max_level()):
-		_place_guide(content.get_child(content.get_child_count() - 1), 0.0)
+	var color: Color = info.color if unlocked else Palette.PAPER_DEEP.darkened(0.15)
+	content.add_child(_margin(_banner(level, info, has_content, unlocked), 24, 0))
+	var trail := WorldTrail.new()
+	trail.setup(GameState.path.layout(level, unlocked, cleared), color, info.scene)
+	trail.node_pressed.connect(_on_node_pressed.bind(level))
+	content.add_child(trail)
+	if _guide == null and unlocked:
+		var idx := trail.focus_index()
+		if idx < 0 and (level == GameState.model.highest_unlocked or level == GameState.content_max_level()):
+			idx = trail.nodes.size() - 1
+		if idx >= 0:
+			_place_guide(trail, idx)
 
 
-## The raccoon stands beside the node to play, on the side with more room.
-func _place_guide(row: Control, offset: float) -> void:
-	_focus_row = row
+## The raccoon stands beside the node to play, on the side with more room,
+## with its speech bubble underneath.
+func _place_guide(trail: WorldTrail, idx: int) -> void:
+	_focus_trail = trail
+	_focus_idx = idx
 	_guide = Raccoon.new()
-	_guide.custom_minimum_size = Vector2(150, 150)
-	_guide.size = Vector2(150, 150)
+	_guide.custom_minimum_size = Vector2(160, 160)
+	_guide.size = Vector2(160, 160)
 	_bubble = SpeechBubble.new()
-	row.add_child(_guide)
-	row.add_child(_bubble)
-	var left_side := offset >= 0.0
-	row.resized.connect(func():
-		var x := 24.0 if left_side else row.size.x - 174.0
-		_guide.position = Vector2(x, 30)
-		_bubble.position = Vector2(clampf(x, 16, row.size.x - 316), 190))
+	_bubble.tail = "up"
+	trail.add_child(_guide)
+	trail.add_child(_bubble)
+	var left := trail.row_offset(idx) >= 0.0
+	trail.resized.connect(func():
+		var c := trail.node_center(idx)
+		var x := 20.0 if left else trail.size.x - 180.0
+		_guide.position = Vector2(x, c.y - 96)
+		_bubble.position = Vector2(clampf(x - 4, 16, trail.size.x - 320), c.y + 76))
 
+
+## Read positions now, after layout has settled (earlier values can be stale).
+func _scroll_to_focus() -> void:
+	if _focus_trail:
+		var y := _focus_trail.position.y + _focus_trail.node_center(_focus_idx).y
+		scroll.scroll_vertical = int(y - scroll.size.y * 0.45)
+
+
+# --- World banner: a storybook page header ---------------------------------------------
 
 func _banner(level: int, info: Dictionary, has_content: bool, unlocked: bool) -> Control:
-	var wrap := MarginContainer.new()
-	for side in ["left", "right"]:
-		wrap.add_theme_constant_override("margin_" + side, 24)
-	wrap.add_theme_constant_override("margin_top", 28)
-	wrap.add_theme_constant_override("margin_bottom", 8)
-	var panel := PanelContainer.new()
-	var color: Color = info.color if unlocked else LOCKED_COLOR
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = color
-	sb.border_color = color.darkened(0.22)
-	sb.border_width_bottom = 8
-	sb.set_corner_radius_all(28)
-	sb.set_content_margin_all(22)
-	panel.add_theme_stylebox_override("panel", sb)
-	wrap.add_child(panel)
+	var color: Color = info.color
+	var card := PanelContainer.new()
+	card.add_theme_stylebox_override("panel", _paper_box(Palette.CARD, 30, 8))
+	card.clip_children = CanvasItem.CLIP_CHILDREN_AND_DRAW
 	var v := VBoxContainer.new()
-	panel.add_child(v)
-	var small := _white_label("LEVEL %d" % level, 24)
-	small.modulate.a = 0.85
-	v.add_child(small)
-	v.add_child(_white_label("%s  %s" % [info.icon, info.name], 44))
-	if not has_content:
-		v.add_child(_white_label("Coming soon!", 28))
-		return wrap
+	v.add_theme_constant_override("separation", 0)
+	card.add_child(v)
+
+	var scenery := PaperScenery.new()
+	scenery.scene = info.scene
+	scenery.fade = 0.0 if unlocked else 0.85
+	scenery.custom_minimum_size = Vector2(0, 210)
+	v.add_child(scenery)
+	var ribbon := _pill("LEVEL %d" % level, color if unlocked else Palette.INK_SOFT, Color.WHITE, 22)
+	ribbon.position = Vector2(20, 18)
+	scenery.add_child(ribbon)
+
+	var body := VBoxContainer.new()
+	body.add_theme_constant_override("separation", 14)
+	v.add_child(_margin(body, 26, 20))
+	var head := HBoxContainer.new()
+	head.add_theme_constant_override("separation", 16)
+	head.add_child(_icon_disc(info.icon, color if unlocked else Palette.INK_SOFT, 64))
+	var titles := VBoxContainer.new()
+	titles.add_theme_constant_override("separation", -4)
+	titles.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	titles.add_child(_label(info.name, 40, Palette.INK, true))
+	var sub := "Coming soon" if not has_content else (
+			"Level %d" % level if unlocked else "Finish Level %d to open" % (level - 1))
+	titles.add_child(_label(sub, 24, Palette.INK_SOFT))
+	head.add_child(titles)
 	if not unlocked:
-		v.add_child(_white_label("🔒 Finish Level %d to open" % (level - 1), 28))
-	var rings := HBoxContainer.new()
-	rings.add_theme_constant_override("separation", 4)
-	for sp in GameState.model.skill_progress(level):
-		var ring := SkillRing.new()
-		ring.setup(SkillCatalog.ICONS[sp.skill], SkillCatalog.NAMES[sp.skill],
-				sp.progress if unlocked else 0.0, sp.mastered, sp.review)
-		rings.add_child(ring)
-	v.add_child(rings)
-	return wrap
+		head.add_child(Icons.rect("lock", 46, Palette.INK_SOFT))
+	body.add_child(head)
+	if has_content:
+		for sp in GameState.model.skill_progress(level):
+			body.add_child(_skill_bar(sp, color, unlocked))
+	return card
 
 
-func _on_node_pressed(level: int, n: Dictionary, node: PathNode) -> void:
+func _skill_bar(sp: Dictionary, color: Color, unlocked: bool) -> Control:
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 14)
+	row.add_child(Icons.rect(SkillCatalog.ICONS[sp.skill], 38, color if unlocked else Palette.INK_SOFT))
+	var name := _label(SkillCatalog.NAMES[sp.skill], 28, Palette.INK)
+	name.custom_minimum_size = Vector2(118, 0)
+	row.add_child(name)
+	var bar := ProgressBar.new()
+	bar.show_percentage = false
+	bar.max_value = 1.0
+	bar.step = 0.001
+	bar.value = sp.progress if unlocked else 0.0
+	bar.custom_minimum_size = Vector2(0, 22)
+	bar.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	bar.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	bar.add_theme_stylebox_override("background", _flat(Palette.PAPER_DEEP, 11))
+	bar.add_theme_stylebox_override("fill", _flat(Palette.MANGO if sp.mastered else color, 11))
+	row.add_child(bar)
+	if sp.mastered:
+		row.add_child(Icons.rect("crown", 38, Palette.MANGO_DEEP))
+	elif sp.review:
+		row.add_child(Icons.rect("repeat", 34, Palette.BAY))
+	return row
+
+
+# --- Taps --------------------------------------------------------------------------------
+
+func _on_node_pressed(n: Dictionary, node: PathNode, level: int) -> void:
 	var world_name: String = SkillCatalog.world(level).name
 	if level > GameState.content_max_level():
 		_say("%s is coming soon!" % world_name, "thinking")
@@ -138,7 +172,9 @@ func _on_node_pressed(level: int, n: Dictionary, node: PathNode) -> void:
 				"ready":
 					var coins := GameState.open_chest(level)
 					Sfx.play("coin")
-					await _rebuild_keep_scroll()
+					var at := scroll.scroll_vertical
+					await _build()
+					scroll.scroll_vertical = at
 					_say("Treasure! You found %d coins!" % coins, "celebrate")
 				"open":
 					_say("You already opened this chest!", "happy")
@@ -167,18 +203,15 @@ func _shake(node: Control) -> void:
 		t.tween_property(node, "position:x", x + d, 0.05)
 
 
-func _rebuild_keep_scroll() -> void:
-	var at := scroll.scroll_vertical
-	await _build()
-	scroll.scroll_vertical = at
-
-
 func _update_top_bar() -> void:
 	var top := mini(GameState.model.highest_unlocked, maxi(GameState.content_max_level(), 1))
 	var info := SkillCatalog.world(top)
-	%World.text = "%s Level %d" % [info.icon, top]
-	%Coins.text = "💰 %d" % GameState.wallet.coins
-	%Xp.text = "⚡ %d" % GameState.wallet.xp
+	%WorldIcon.texture = Icons.tex(info.icon)
+	%WorldDisc.add_theme_stylebox_override("panel", _flat(info.color, 30))
+	%WorldName.text = info.name
+	%WorldLevel.text = "LEVEL %d" % top
+	%Coins.text = str(GameState.wallet.coins)
+	%Xp.text = str(GameState.wallet.xp)
 
 
 func _on_reset() -> void:
@@ -189,13 +222,69 @@ func _on_reset() -> void:
 	_say("Fresh start!", "happy")
 
 
-func _white_label(text: String, font_size: int) -> Label:
+# --- Small builders ----------------------------------------------------------------------
+
+func _paper_box(col: Color, r: int, lift: int) -> StyleBoxFlat:
+	var sb := _flat(col, r)
+	sb.shadow_color = Color(Palette.SHADOW, 0.2)
+	sb.shadow_offset = Vector2(0, lift)
+	sb.shadow_size = 1
+	return sb
+
+
+func _flat(col: Color, r: int) -> StyleBoxFlat:
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = col
+	sb.set_corner_radius_all(r)
+	sb.anti_aliasing = true
+	return sb
+
+
+func _pill(text: String, bg: Color, fg: Color, fs: int) -> PanelContainer:
+	var p := PanelContainer.new()
+	var sb := _paper_box(bg, 16, 4)
+	sb.content_margin_left = 16
+	sb.content_margin_right = 16
+	sb.content_margin_top = 4
+	sb.content_margin_bottom = 6
+	p.add_theme_stylebox_override("panel", sb)
+	var l := _label(text, fs, fg, true)
+	l.autowrap_mode = TextServer.AUTOWRAP_OFF
+	p.add_child(l)
+	return p
+
+
+func _icon_disc(icon: String, color: Color, px: float) -> Control:
+	var p := PanelContainer.new()
+	var sb := _paper_box(color, int(px / 2), 4)
+	sb.set_content_margin_all(px * 0.18)
+	p.add_theme_stylebox_override("panel", sb)
+	p.custom_minimum_size = Vector2(px, px)
+	p.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	p.add_child(Icons.rect(icon, px * 0.64, Color.WHITE))
+	return p
+
+
+func _label(text: String, fs: int, col: Color, bold: bool = false) -> Label:
 	var l := Label.new()
 	l.text = text
-	l.add_theme_font_size_override("font_size", font_size)
-	l.add_theme_color_override("font_color", Color.WHITE)
+	l.add_theme_font_size_override("font_size", fs)
+	l.add_theme_color_override("font_color", col)
+	if bold:
+		l.theme_type_variation = &"TitleLabel"
+		l.add_theme_font_size_override("font_size", fs)
 	l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	return l
+
+
+func _margin(child: Control, h: int, v: int) -> MarginContainer:
+	var m := MarginContainer.new()
+	m.add_theme_constant_override("margin_left", h)
+	m.add_theme_constant_override("margin_right", h)
+	m.add_theme_constant_override("margin_top", v)
+	m.add_theme_constant_override("margin_bottom", v)
+	m.add_child(child)
+	return m
 
 
 func _spacer(h: float) -> Control:

@@ -1,15 +1,13 @@
 extends Control
-## One lesson (D-007 layout): close, progress bar and hearts on top, the task in the
-## middle, the raccoon below, and a feedback sheet that slides up after each answer.
-## The rules live in LessonSession (scripts/core); this script only shows them.
+## One lesson (D-007 layout, D-009 storybook look): close, progress bar and hearts
+## on top, the prompt on a paper card, the task in the middle, and the raccoon
+## standing on the world's paper-cut landscape. A paper sheet slides up after
+## each answer. The rules live in LessonSession (scripts/core); this only shows them.
 ## FR-13 hearts and Racoon's Rescue, FR-14 hints, FR-20 read-aloud.
 
 const TAP_TASK := preload("res://scenes/tasks/tap_choice_task.tscn")
 const DRAG_TASK := preload("res://scenes/tasks/drag_letter_task.tscn")
-const GREEN := Color("6bbf59")
-const SOFT_ORANGE := Color("ffa94d")
-const CREAM := Color("fff6e0")
-const RESCUE_BG := Color("dff1fb")
+const RESCUE_PAPER := Color("dcebf0")
 
 var session: LessonSession
 var _item := {}
@@ -25,6 +23,8 @@ var _overlay_secondary: Callable
 
 func _ready() -> void:
 	session = GameState.new_session()
+	var world := SkillCatalog.world(GameState.lesson_world)
+	%Scenery.scene = world.scene
 	%CloseButton.pressed.connect(_on_close)
 	%SpeakButton.pressed.connect(_speak)
 	%SpeakButton.visible = Speech.available()
@@ -77,7 +77,7 @@ func _on_answered(answer: String, ms: int) -> void:
 	else:
 		line = GameState.line("incorrect")
 	if _outcome.mastered_now and not _outcome.level_up:
-		line = "👑 You got the %s crown!" % SkillCatalog.NAMES[_outcome.skill]
+		line = "You won the %s crown!" % SkillCatalog.NAMES[_outcome.skill]
 		mood = "celebrate"
 	if _outcome.level_up:
 		line = GameState.line("level_up")
@@ -100,7 +100,8 @@ func _on_continue() -> void:
 		"end_session":
 			sheet.hide()
 			_say(GameState.line("session_end"), "sleepy")
-			_open_overlay("😴", "Let's rest!", GameState.line("session_end"), "OK", _finish)
+			_open_overlay("night", Palette.PLUM, "Let's rest!", GameState.line("session_end"), "OK",
+					_finish)
 		_:
 			_next()
 
@@ -109,38 +110,40 @@ func _on_continue() -> void:
 
 func _start_rescue_look() -> void:
 	sheet.hide()
-	%Bg.color = RESCUE_BG
+	%Bg.material.set_shader_parameter("paper", RESCUE_PAPER)
 	%RescueBanner.show()
 	_update_rescue_label()
 	var text := GameState.line("rescue_start")
 	_say(text, "encourage")
 	Speech.say(text)
-	_open_overlay("💖", "Racoon's Rescue!", "Answer 3 easy ones to get your hearts back.", "OK!",
-			_next)
+	_open_overlay("heart_plus", Palette.CORAL, "Racoon's Rescue!",
+			"Answer 3 easy ones to get your hearts back.", "OK!", _next)
 
 
 func _end_rescue_look() -> void:
-	%Bg.color = CREAM
+	%Bg.material.set_shader_parameter("paper", Palette.PAPER)
 	%RescueBanner.hide()
 
 
 func _update_rescue_label() -> void:
-	%RescueLabel.text = "💖 Racoon's Rescue: %d / %d" % [session.rescue.get("answered", 0),
+	%RescueLabel.text = "Racoon's Rescue  %d / %d" % [session.rescue.get("answered", 0),
 			HeartSystem.RECOVERY_ITEMS]
 
 
 # --- Sheet, hearts, progress --------------------------------------------------------
 
 func _show_sheet(correct: bool, answer_text: String) -> void:
-	var color := GREEN if correct else SOFT_ORANGE
+	var color := Palette.RIGHT if correct else Palette.ALMOST
 	var sb: StyleBoxFlat = sheet.get_theme_stylebox("panel").duplicate()
-	sb.bg_color = color.lightened(0.72)
+	sb.bg_color = Palette.pale(color, 0.78)
 	sheet.add_theme_stylebox_override("panel", sb)
-	%SheetIcon.text = "✓" if correct else "💡"
-	%SheetIcon.add_theme_color_override("font_color", color.darkened(0.2))
+	var disc: StyleBoxFlat = %SheetDisc.get_theme_stylebox("panel").duplicate()
+	disc.bg_color = color
+	%SheetDisc.add_theme_stylebox_override("panel", disc)
+	%SheetIcon.texture = Icons.tex("check" if correct else "bulb")
 	%SheetTitle.text = ["Great job!", "Awesome!", "You got it!"].pick_random() if correct \
 			else "Almost!"
-	%SheetTitle.add_theme_color_override("font_color", color.darkened(0.3))
+	%SheetTitle.add_theme_color_override("font_color", Palette.deep(color))
 	%SheetDetail.text = "" if correct else "The answer is: %s" % answer_text
 	%SheetDetail.visible = not correct
 	%ContinueButton.face_color = color
@@ -148,8 +151,8 @@ func _show_sheet(correct: bool, answer_text: String) -> void:
 	await get_tree().process_frame
 	var target := size.y - sheet.size.y
 	sheet.position.y = size.y
-	create_tween().tween_property(sheet, "position:y", target, 0.22) \
-			.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	create_tween().tween_property(sheet, "position:y", target, 0.24) \
+			.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 
 func _choice_label(id: String) -> String:
@@ -164,10 +167,9 @@ func _update_hearts(count: int) -> void:
 	for c in box.get_children():
 		c.queue_free()
 	for i in HeartSystem.MAX_HEARTS:
-		var l := Label.new()
-		l.text = "❤️" if i < count else "🤍"
-		l.add_theme_font_size_override("font_size", 40)
-		box.add_child(l)
+		var full := i < count
+		var heart := Icons.rect("heart", 46, Palette.CORAL if full else Palette.PAPER_DEEP.darkened(0.1))
+		box.add_child(heart)
 	if session.in_rescue():
 		_update_rescue_label()
 
@@ -184,8 +186,9 @@ func _say(text: String, mood: String) -> void:
 # --- Leaving -------------------------------------------------------------------------
 
 func _on_close() -> void:
-	_open_overlay("🤔", "Stop the lesson?", "Your answers are saved, but you won't get stars.",
-			"KEEP PLAYING", func(): pass, "STOP", _leave)
+	_open_overlay("raccoon", Palette.NIPA, "Stop the lesson?",
+			"Your answers are saved, but you won't get stars.", "KEEP PLAYING", func(): pass,
+			"STOP", _leave)
 
 
 func _leave() -> void:
@@ -199,9 +202,12 @@ func _finish() -> void:
 	get_tree().change_scene_to_file("res://scenes/lesson/lesson_complete.tscn")
 
 
-func _open_overlay(icon: String, title: String, text: String, primary: String,
+func _open_overlay(icon: String, icon_bg: Color, title: String, text: String, primary: String,
 		on_primary: Callable, secondary: String = "", on_secondary: Callable = Callable()) -> void:
-	%OverlayIcon.text = icon
+	%OverlayIcon.texture = Icons.tex(icon)
+	var disc: StyleBoxFlat = %OverlayDisc.get_theme_stylebox("panel").duplicate()
+	disc.bg_color = icon_bg
+	%OverlayDisc.add_theme_stylebox_override("panel", disc)
 	%OverlayTitle.text = title
 	%OverlayText.text = text
 	%OverlayPrimary.text = primary
@@ -210,6 +216,11 @@ func _open_overlay(icon: String, title: String, text: String, primary: String,
 	_overlay_primary = on_primary
 	_overlay_secondary = on_secondary
 	%Overlay.show()
+	var card: Control = %OverlayCard
+	card.pivot_offset = card.size / 2
+	card.scale = Vector2(0.9, 0.9)
+	create_tween().tween_property(card, "scale", Vector2.ONE, 0.22).set_trans(Tween.TRANS_BACK) \
+			.set_ease(Tween.EASE_OUT)
 
 
 func _close_overlay(action: Callable) -> void:

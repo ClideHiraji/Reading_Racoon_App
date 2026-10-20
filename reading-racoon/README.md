@@ -24,10 +24,11 @@ From the repo root (run the import once after cloning or adding a `class_name`):
 | `scripts/autoload/` | `GameState` (profile, wallet, saving), `Sfx` (synthesized sounds), `Speech` (device TTS) |
 | `scenes/` | `main` start screen, `path/` learning path, `lesson/` lesson + lesson complete, `tasks/` task types, `companion/` the raccoon |
 | `content/` | `levels.json` task items (**English placeholders**, open issue 15) and `companion_lines.json` |
-| `ui/` | `theme.tres` and `ChunkyButton` |
+| `ui/` | Storybook look (D-009): `palette.gd`, `icons.gd`, `theme.tres`, `ChunkyButton`, `PaperScenery` (Butuan landscapes), `PictureCard`, `Sunburst`, `paper.gdshader` |
 | `assets/fonts/` | Nunito (UI) and Andika (reading text), both SIL OFL |
+| `assets/icons/` | SVG silhouettes from game-icons.net, CC BY 3.0, see `assets/icons/CREDITS.md`. No emoji anywhere (tests check it) |
 
 ## Adding a task item
-Add an object to `content/levels.json` with `id, sub_skill, level, competency, language, task_type, prompt, tts_text, choices, answer, recovery`. `tests/run_tests.gd` checks that every item is well-formed.
+Add an object to `content/levels.json` with `id, sub_skill, level, competency, language, task_type, prompt, tts_text, choices, answer, recovery`. Pictures are icon names (`"picture": "cat"`) from `assets/icons/`; add a color for new ones in `ui/icons.gd`. `tests/run_tests.gd` checks that every item is well-formed.
 
 Debug command-line flags (after `--`): `--profile=<name>`, `--fresh`, `--demo`, `--scene=res://...`, `--shot=<png path>`, `--shot-delay=<sec>`.

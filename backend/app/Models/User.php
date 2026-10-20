@@ -100,7 +100,8 @@ class User extends Authenticatable
     /** A teacher whose registration an admin approved; only they may sign in (FR-08). */
     public function isApprovedTeacher(): bool
     {
+        // Asked fresh every time: an admin may have revoked the teacher since the model was loaded.
         return $this->role === UserRole::Teacher
-            && $this->registration?->status === RegistrationStatus::Approved;
+            && $this->registration()->where('status', RegistrationStatus::Approved)->exists();
     }
 }

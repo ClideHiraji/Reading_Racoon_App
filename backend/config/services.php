@@ -28,6 +28,14 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    // Gemini through its OpenAI-compatible endpoint, called only from Laravel
+    // (docs/knowledge/08-ai-integration.md, D-002). Used by the LLM slice; empty for now.
+    'llm' => [
+        'base_url' => env('LLM_BASE_URL'),
+        'key' => env('LLM_API_KEY'),
+        'model' => env('LLM_MODEL'),
+    ],
+
     'slack' => [
         'notifications' => [
             'bot_user_oauth_token' => env('SLACK_BOT_USER_OAUTH_TOKEN'),

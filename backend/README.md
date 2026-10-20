@@ -1,59 +1,144 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Reading Racoon backend (Laravel API)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+The server for the Reading Racoon game: **Laravel 12 (PHP 8.2+) + PostgreSQL 16+ + Sanctum**, custom-coded as the professor requires ([D-001](../brain/decisions/D-001%20Backend%20Laravel%20+%20PostgreSQL.md)). It receives the events the Godot client in [`reading-racoon/`](../reading-racoon/) queues offline, and serves remote config.
 
-## About Laravel
+Spec: [`docs/knowledge/03-architecture.md`](../docs/knowledge/03-architecture.md) (API, offline sync) and [`04-data-model.md`](../docs/knowledge/04-data-model.md). Sync contract decision: [D-008](../brain/decisions/D-008%20Offline%20sync%20contract.md).
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+> Composer picked Laravel 12 because XAMPP ships PHP 8.2; Laravel 13 needs PHP 8.3+.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Set up on Windows (XAMPP PHP + PostgreSQL)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. **Enable PostgreSQL in PHP.** In `C:\xampp\php\php.ini`, remove the `;` in front of `extension=pdo_pgsql` and `extension=pgsql`. Check with `php -m` (both should be listed). XAMPP already ships the DLLs and `libpq.dll`.
+2. **Install PostgreSQL** (16, 17 or 18; match the host once it's chosen). The installer asks for a password for the `postgres` superuser; keep it.
+   ```bash
+   winget install --id PostgreSQL.PostgreSQL.17 -e --interactive
+   ```
+3. **Create the app role and the two databases** (the test database is wiped by every test run):
+   ```bash
+   "/c/Program Files/PostgreSQL/17/bin/psql.exe" -U postgres -c "CREATE ROLE reading_racoon LOGIN PASSWORD 'choose-a-password'" -c "CREATE DATABASE reading_racoon OWNER reading_racoon" -c "CREATE DATABASE reading_racoon_test OWNER reading_racoon"
+   ```
+4. **Configure and migrate** (from `backend/`):
+   ```bash
+   composer install
+   cp .env.example .env
+   php artisan key:generate
+   ```
+   Put the role's password in `.env` as `DB_PASSWORD=...` (never commit `.env`), then:
+   ```bash
+   php artisan migrate --seed
+   ```
+   The seeder creates the section "Grade 1 - Demo" with students Ana and Ben and **prints their login codes once** (only hashes are stored).
+5. **Run it:** `php artisan serve` (http://127.0.0.1:8000). An Android phone on the same Wi-Fi needs `php artisan serve --host=0.0.0.0` and the PC's LAN address.
 
-## Learning Laravel
+## Test
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+```bash
+php artisan test
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Tests run on the `reading_racoon_test` PostgreSQL database (`phpunit.xml`), never SQLite. `tests/Unit` and `tests/Feature/Api/ConfigTest.php` don't touch the database.
 
-## Laravel Sponsors
+## API v1
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+All bodies are JSON. Errors are JSON too, even without an `Accept: application/json` header: `401` no/bad token, `403` wrong role, `422` validation (`{"message", "errors": {field: [...]}}`), `429` rate limit.
 
-### Premium Partners
+### `POST /api/auth/login` (FR-01)
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+**Temporary student login by code** until open issue 9 picks the real method. Codes look like `K7PM-3QXA`: 8 characters without 0/O/1/I/L; case, spaces and dashes are ignored. Limit: 60 attempts per minute per IP (a whole class shares the school's address).
 
-## Contributing
+```json
+{"login_code": "K7PM-3QXA", "device_name": "Tablet 3"}
+```
+`200`:
+```json
+{
+  "token": "1|Xy...",
+  "token_type": "Bearer",
+  "user": {"id": 1, "role": "student", "name": "Ana"},
+  "student": {"id": 1, "section_id": 1}
+}
+```
+Wrong or malformed code: `422` with `errors.login_code`. Send the token as `Authorization: Bearer <token>`. Tokens don't expire yet.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### `GET /api/config` (FR-19)
 
-## Code of Conduct
+Public. The client caches it and re-downloads content when `content_version` is newer than its own.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```json
+{
+  "content_version": 1,
+  "server_time": "2026-10-20T04:35:00Z",
+  "bkt": {
+    "version": 1,
+    "mastery_p": 0.95,
+    "mastery_min_attempts": 5,
+    "hint_p": 0.3,
+    "demote_cap": 0.7,
+    "skills": {
+      "phonological_awareness": {"levels": [1, 2], "l0": 0.2, "t": 0.15, "g": 0.2, "s": 0.1},
+      "phonics": {"levels": [1, 3], "l0": 0.25, "t": 0.18, "g": 0.2, "s": 0.1},
+      "vocabulary": {"levels": [2, 4], "l0": 0.3, "t": 0.2, "g": 0.25, "s": 0.12},
+      "fluency": {"levels": [3, 5], "l0": 0.15, "t": 0.12, "g": 0.15, "s": 0.08},
+      "literal_comprehension": {"levels": [3, 5], "l0": 0.2, "t": 0.15, "g": 0.2, "s": 0.1}
+    }
+  },
+  "sync": {"max_batch": 500}
+}
+```
+Values live in [`config/reading_racoon.php`](config/reading_racoon.php) (`CONTENT_VERSION` in `.env`). They mirror `reading-racoon/scripts/core/skill_catalog.gd` and `student_model.gd`.
 
-## Security Vulnerabilities
+### `POST /api/sync` (FR-11)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Student token only. Send the lines of `user://event_queue.jsonl` in queue order, at most `max_batch` per request:
 
-## License
+```json
+{"events": [
+  {"id": "6f1c3d5e-6a2b-4c8d-9e0f-112233445566", "type": "response",
+   "payload": {"item_id": "pa1-01", "skill": "phonological_awareness", "level": 1, "answer": "hat",
+               "correct": true, "response_ms": 2350, "rescue": false},
+   "device_time": "2026-10-20T04:34:56Z"}
+]}
+```
+- `id`: the client's UUID, the idempotency key. `type`: `response`, `bkt_state`, `hearts`, `rescue_start`, `rescue_end`, `level_up`, `flag`, `lesson_end` or `chest`. `payload`: a JSON object, stored as-is (max 8 KB). `device_time`: ISO 8601 with `Z` or an offset.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+`200`:
+```json
+{
+  "acknowledged": ["6f1c3d5e-6a2b-4c8d-9e0f-112233445566"],
+  "rejected": [{"index": 3, "id": "not-a-uuid", "reason": "invalid", "errors": {"id": ["The id field must be a valid UUID."]}}],
+  "server_time": "2026-10-20T04:35:00Z"
+}
+```
+**What the client does with it:**
+- Delete every `acknowledged` id from the queue. An event the server already had is acknowledged again, so resending a whole batch after a lost response is safe and never duplicates.
+- Delete every `rejected` id too (it will never be accepted); keep a local copy for debugging. `reason` is `invalid` (see `errors`) or `id_conflict` (that UUID belongs to another student).
+- Keep anything in neither list and retry later.
+- A `422` means the envelope itself is wrong (no `events` list, or too many events): fix the request, don't drop events.
+
+The server stores the raw events only. Replaying them through server-side BKT and filling `bkt_states`, `intervention_flags`, `student_wallets` and `path_progress` is the next slice.
+
+## Database
+
+| Table | Holds | Keys |
+|---|---|---|
+| `users` | All roles (`role`), email + password for staff, `login_code_hash` for students | bigint |
+| `sections`, `students` | Class sections and their learners | bigint |
+| `bkt_states` | 14 per student: `(sub_skill, level)`, `p_mastery`, `attempts`, `mastered_at`, `review` | unique per student |
+| `path_progress` | `highest_unlocked` map level and the path's `worlds` (jsonb) | `student_id` |
+| `student_wallets` | `xp`, `coins` | `student_id` |
+| `intervention_flags` | Teacher alerts with `open`/`resolved` status | uuid (raised offline) |
+| `sync_events` | Raw client events: `uuid` (unique), `type`, `payload` jsonb, `device_time`, `received_at` | bigint `id` = arrival order |
+
+All times are `timestamptz`; the connection runs in UTC. `App\Actions\EnrollStudent` creates a student with their login code, 14 BKT states at P(L0), wallet and path.
+
+## Layout
+
+| Path | What |
+|---|---|
+| `app/Http/Controllers/Api/` | `LoginController`, `ConfigController`, `SyncController` |
+| `app/Actions/` | `EnrollStudent`, `RecordSyncEvents` |
+| `app/Support/` | `LoginCode`, `SkillCatalog` |
+| `app/Enums/` | `UserRole`, `SyncEventType` |
+| `config/reading_racoon.php` | BKT parameters, thresholds, content version, sync limits |
+| `database/migrations/` | Schema (PostgreSQL only) |
+| `tests/` | PHPUnit feature and unit tests |

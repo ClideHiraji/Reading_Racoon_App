@@ -25,17 +25,19 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 - [[D-005 Game engine Godot]]
 - [[D-006 Project brain workflow]]
 - [[D-007 UI direction Duolingo-style path]]
+- [[D-008 Offline sync contract]]
 
 ## Still open (from [[10-open-issues]])
 - 🔴 Timeline: a 4-month evaluation doesn't fit before November. Re-plan with the adviser (issue 11).
-- 🔴 Finish the database design (issue 8, [[04-data-model]]).
+- 🔴 Finish the database design (issue 8, [[04-data-model]]). The first 8 tables are built in `backend/`.
+- 🔴 Install PostgreSQL locally so the backend tests can run (steps in `backend/README.md`).
 - 🟡 How 6-year-olds log in: picture PIN, QR card or tap your name (issue 9).
 - 🟡 Where the Laravel + PostgreSQL server is hosted.
 - 🟡 Re-check Grade 1 competencies with teachers (issue 13), and which Mother Tongue for levels 1–2 (issue 15).
 
 ## Devlog
 - [[2026-10-17]]: thesis analyzed, knowledge base, decisions D-001 to D-005, GitHub, Godot project.
-- [[2026-10-20]]: blueprint page, Obsidian + Graphify brain, first playable game slice (D-007).
+- [[2026-10-20]]: blueprint page, Obsidian + Graphify brain, first playable game slice (D-007), first Laravel backend slice (D-008).
 
 ## Learnings
 - [[BKT passes 0.95 after 3 correct]]
@@ -45,6 +47,9 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 - [[Graphify does not index markdown]]
 - [[Newer emoji render as boxes on Windows 10]]
 - [[Godot headless tests need an import first]]
+- [[Laravel timestamptz needs a UTC session]]
+- [[Laravel rewrites JSON strings by default]]
+- [[Composer picks Laravel 12 on PHP 8.2]]
 
 ## Links
 - Visual blueprint (private page): https://claude.ai/artifact/TPcwMuVYMvR9gx8ypBMYB9

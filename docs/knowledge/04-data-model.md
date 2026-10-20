@@ -1,5 +1,7 @@
 # 04 — Data Model
 
+> **Built so far (2026-10-20):** `users` (role), `sections`, `students`, `bkt_states`, `path_progress`, `student_wallets`, `intervention_flags` and `sync_events`, in `backend/database/migrations/`. Summary table in `backend/README.md`; sync rules in [D-008](../../brain/decisions/D-008%20Offline%20sync%20contract.md). Everything else below is still to design (open issue 8).
+
 Target: **PostgreSQL 16+ via Laravel migrations** (backend decision, open issue 1). Use `uuid` keys for anything created offline on the device (sessions, responses, sync events), `jsonb` for payloads and AI logs, and `timestamptz` for all times. The thesis ERD text says "Firebase Realtime Database… hierarchical JSON". Rewrite it as relational tables.
 
 ## ERD as drawn in the thesis (Figure 3.16)

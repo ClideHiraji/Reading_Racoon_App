@@ -15,6 +15,9 @@ func _ready() -> void:
 	if _sum.is_empty():
 		_to_path.call_deferred()
 		return
+	if _sum.has("kind"):
+		_show_test_done()
+		return
 	var early: bool = _sum.ended_early
 	%Title.text = "Let's rest!" if early else "Lesson complete!"
 	%Burst.visible = not early
@@ -28,6 +31,34 @@ func _ready() -> void:
 	Speech.say(line)
 	if not early:
 		_confetti()
+
+
+## End of the Reading Adventure (pre/post-test): no stars or scores for the
+## child (those go to the teacher); just effort, coins and, after the pre-test,
+## where the journey starts.
+func _show_test_done() -> void:
+	var pre: bool = _sum.kind == "pre"
+	%Title.text = "Adventure complete!" if pre else "Big Reading Day done!"
+	%Stars.hide()
+	%Answers.hide()
+	_stat("ANSWERED", "check", str(_sum.total), Palette.TEAL)
+	_stat("COINS", "coins", "+%d" % _sum.coins, Palette.CORAL)
+	%Raccoon.set_mood("celebrate")
+	Sfx.play("fanfare")
+	var line := GameState.line("adventure_done")
+	%Bubble.say(line)
+	Speech.say(line)
+	_confetti()
+
+
+func _show_placement() -> void:
+	var lvl: int = maxi(int(_sum.placed_level), 1)
+	var info := SkillCatalog.world(lvl)
+	%UnlockScenery.scene = info.scene
+	%UnlockTitle.text = "Your journey starts here!"
+	%UnlockName.text = "Level %d  ·  %s" % [lvl, info.name]
+	%Unlock.show()
+	Speech.say(GameState.line("placed") + " " + info.name)
 
 
 func _build_stats() -> void:
@@ -134,6 +165,9 @@ func _confetti() -> void:
 
 
 func _on_continue() -> void:
+	if _sum.get("kind", "") == "pre" and not %Unlock.visible:
+		_show_placement()
+		return
 	if _sum.get("level_up", false):
 		var to := mini(GameState.model.highest_unlocked, SkillCatalog.MAX_LEVEL)
 		var info := SkillCatalog.world(to)

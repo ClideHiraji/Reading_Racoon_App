@@ -14,10 +14,20 @@ var _focus_idx := -1
 
 
 func _ready() -> void:
+	if not GameState.guard():   # FR-12: play-time limits
+		return
 	%Reset.visible = OS.is_debug_build()
 	%Reset.pressed.connect(_on_reset)
+	%ShopButton.pressed.connect(func(): get_tree().change_scene_to_file("res://scenes/shop/shop.tscn"))
 	GameState.wallet_changed.connect(_update_top_bar)
 	_update_top_bar()
+	var timer := Timer.new()
+	timer.wait_time = 20.0
+	timer.autostart = true
+	timer.timeout.connect(func():
+		if GameState.guard():
+			_update_top_bar())
+	add_child(timer)
 	await _build()
 	_scroll_to_focus()
 	var chest_waiting := GameState.path.chest_ready(GameState.lesson_world)
@@ -31,6 +41,9 @@ func _build() -> void:
 	_bubble = null
 	_focus_trail = null
 	content.add_child(_spacer(28))
+	if GameState.post_test_ready():
+		content.add_child(_margin(_post_test_card(), 24, 0))
+		content.add_child(_spacer(20))
 	for level in range(1, SkillCatalog.MAX_LEVEL + 1):
 		_add_world(level)
 	content.add_child(_spacer(140))
@@ -127,6 +140,33 @@ func _banner(level: int, info: Dictionary, has_content: bool, unlocked: bool) ->
 	return card
 
 
+## "Big Reading Day": the post-test, shown once the teacher opens it (FR-10).
+func _post_test_card() -> Control:
+	var card := PanelContainer.new()
+	var sb := _paper_box(Palette.PLUM, 28, 8)
+	sb.set_content_margin_all(24)
+	card.add_theme_stylebox_override("panel", sb)
+	var v := VBoxContainer.new()
+	v.add_theme_constant_override("separation", 14)
+	card.add_child(v)
+	var head := HBoxContainer.new()
+	head.add_theme_constant_override("separation", 16)
+	head.add_child(_icon_disc("stories", Palette.PLUM_DEEP, 64))
+	var titles := VBoxContainer.new()
+	titles.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	titles.add_child(_label("Big Reading Day!", 38, Color.WHITE, true))
+	titles.add_child(_label("Show your teacher how much you've grown.", 24, Palette.pale(Palette.PLUM, 0.75)))
+	head.add_child(titles)
+	v.add_child(head)
+	var go := ChunkyButton.new()
+	go.text = "START"
+	go.face_color = Palette.MANGO_DEEP
+	go.custom_minimum_size = Vector2(0, 96)
+	go.pressed.connect(func(): GameState.start_assessment("post"))
+	v.add_child(go)
+	return card
+
+
 func _skill_bar(sp: Dictionary, color: Color, unlocked: bool) -> Control:
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 14)
@@ -210,6 +250,10 @@ func _update_top_bar() -> void:
 	%WorldDisc.add_theme_stylebox_override("panel", _flat(info.color, 30))
 	%WorldName.text = info.name
 	%WorldLevel.text = "LEVEL %d" % top
+	var d := GameState.access_decision()
+	if d.status == "after_school":
+		# After-school play has a daily cap with a visible countdown (FR-12).
+		%WorldLevel.text += "  ·  %d MIN LEFT" % d.minutes_left
 	%Coins.text = str(GameState.wallet.coins)
 	%Xp.text = str(GameState.wallet.xp)
 

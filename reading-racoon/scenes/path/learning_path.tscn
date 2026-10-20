@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" path="res://assets/icons/coins.svg" id="4_coins"]
 [ext_resource type="Texture2D" path="res://assets/icons/bolt.svg" id="5_bolt"]
 [ext_resource type="Texture2D" path="res://assets/icons/repeat.svg" id="6_repeat"]
+[ext_resource type="Script" path="res://ui/chunky_button.gd" id="7_chunky"]
 
 [sub_resource type="ShaderMaterial" id="Paper"]
 shader = ExtResource("2_paper")
@@ -176,6 +177,21 @@ layout_mode = 2
 theme_type_variation = &"TitleLabel"
 theme_override_font_sizes/font_size = 28
 text = "0"
+
+[node name="ShopButton" type="Button" parent="TopBar/Row"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(68, 68)
+layout_mode = 2
+size_flags_vertical = 4
+tooltip_text = "Racoon's Closet"
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("7_chunky")
+face_color = Color(0.902, 0.435, 0.333, 1)
+lift = 5
+radius = 34
+icon_name = "raccoon"
+icon_px = 44
 
 [node name="Reset" type="Button" parent="TopBar/Row"]
 unique_name_in_owner = true

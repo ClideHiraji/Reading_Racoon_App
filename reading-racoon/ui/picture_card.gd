@@ -40,7 +40,12 @@ func setup(picture: String, word: String, px: float = 190.0, tilt: float = -2.5)
 		l.text = word
 		l.theme_type_variation = &"ReadWord"
 		l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		if picture != "":
+		if word.contains(" ") or word.length() > 12:
+			# A sentence (fluency completion, vocabulary in context).
+			l.add_theme_font_size_override("font_size", 44)
+			l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+			l.custom_minimum_size = Vector2(540, 0)
+		elif picture != "":
 			l.add_theme_font_size_override("font_size", 64)
 		v.add_child(l)
 	_card.minimum_size_changed.connect(_fit)

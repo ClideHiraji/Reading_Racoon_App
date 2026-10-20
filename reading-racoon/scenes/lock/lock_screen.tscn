@@ -1,0 +1,144 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/lock/lock_screen.gd" id="1_lock"]
+[ext_resource type="Shader" path="res://ui/paper.gdshader" id="2_paper"]
+[ext_resource type="Script" path="res://ui/chunky_button.gd" id="3_chunky"]
+[ext_resource type="Script" path="res://scenes/companion/raccoon.gd" id="4_raccoon"]
+[ext_resource type="Script" path="res://ui/paper_scenery.gd" id="5_scenery"]
+[ext_resource type="Texture2D" path="res://assets/icons/night.svg" id="6_night"]
+
+[sub_resource type="ShaderMaterial" id="Paper"]
+resource_local_to_scene = true
+shader = ExtResource("2_paper")
+
+[sub_resource type="StyleBoxFlat" id="Disc"]
+bg_color = Color(0.949, 0.694, 0.204, 1)
+corner_radius_top_left = 70
+corner_radius_top_right = 70
+corner_radius_bottom_right = 70
+corner_radius_bottom_left = 70
+shadow_color = Color(0.23, 0.15, 0.08, 0.25)
+shadow_size = 1
+shadow_offset = Vector2(0, 8)
+
+[node name="LockScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lock")
+
+[node name="Bg" type="ColorRect" parent="."]
+unique_name_in_owner = true
+material = SubResource("Paper")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Scenery" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -460.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+script = ExtResource("5_scenery")
+scene = "village"
+show_sky = false
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 130
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 70
+
+[node name="VBox" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 22
+
+[node name="DiscRow" type="CenterContainer" parent="Margin/VBox"]
+layout_mode = 2
+
+[node name="Disc" type="PanelContainer" parent="Margin/VBox/DiscRow"]
+custom_minimum_size = Vector2(140, 140)
+layout_mode = 2
+theme_override_styles/panel = SubResource("Disc")
+
+[node name="Icon" type="TextureRect" parent="Margin/VBox/DiscRow/Disc"]
+unique_name_in_owner = true
+texture_filter = 4
+custom_minimum_size = Vector2(84, 84)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("6_night")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="Margin/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"TitleLabel"
+theme_override_font_sizes/font_size = 54
+text = "The game is sleeping"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Text" type="Label" parent="Margin/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Shh... come back tomorrow!"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="RaccoonRow" type="CenterContainer" parent="Margin/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Raccoon" type="Control" parent="Margin/VBox/RaccoonRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 2
+script = ExtResource("4_raccoon")
+mood = "sleepy"
+
+[node name="CheckButton" type="Button" parent="Margin/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 104)
+layout_mode = 2
+text = "CHECK AGAIN"
+script = ExtResource("3_chunky")
+face_color = Color(0.165, 0.616, 0.561, 1)
+
+[node name="GrownupsButton" type="Button" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 64)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -190.0
+offset_top = 18.0
+offset_right = -20.0
+offset_bottom = 82.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0.49, 0.408, 0.341, 0.85)
+theme_override_font_sizes/font_size = 24
+text = "Grown-ups"
+flat = true

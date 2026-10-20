@@ -210,6 +210,22 @@ text = "Which one rhymes with cat?"
 vertical_alignment = 1
 autowrap_mode = 3
 
+[node name="StoryButton" type="Button" parent="Margin/VBox/PromptCard/Row"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(96, 96)
+layout_mode = 2
+size_flags_vertical = 4
+tooltip_text = "Read the story again"
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("2_chunky")
+face_color = Color(0.722, 0.529, 0.357, 1)
+lift = 6
+radius = 48
+icon_name = "stories"
+icon_px = 50
+
 [node name="TaskHolder" type="MarginContainer" parent="Margin/VBox"]
 unique_name_in_owner = true
 layout_mode = 2

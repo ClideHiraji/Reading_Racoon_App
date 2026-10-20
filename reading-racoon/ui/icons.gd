@@ -18,6 +18,8 @@ const PICTURE_COLORS := {
 	"book": Palette.BAY, "pencil": Palette.MANGO_DEEP, "bag": Palette.TEAL,
 	"scissors": Palette.PLUM, "apple": Palette.CORAL_DEEP, "grapes": Palette.PLUM,
 	"elephant": Palette.INK_SOFT, "ant": Palette.INK, "hand": Palette.NIPA,
+	"lock": Palette.MANGO_DEEP, "night": Palette.PLUM, "waves": Palette.TEAL, "mountain": Palette.PLUM,
+	"stories": Palette.BAY, "cloud": Palette.INK_SOFT,
 }
 
 static var _cache := {}

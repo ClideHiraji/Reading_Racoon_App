@@ -70,10 +70,10 @@ Status key: 🔴 blocks coding · 🟡 decide during build · 📝 manuscript-on
 - See [04-data-model.md](04-data-model.md).
 - **Progress (2026-10-20):** the first tables are built in `backend/database/migrations/` for the data the game already produces: `users` (role), `sections`, `students`, `bkt_states` (14 per student), `path_progress`, `student_wallets`, `intervention_flags`, `sync_events`. `students.session_id` is dropped; age and gender are left out until the study justifies them (RA 10173). Sync rules: [D-008](../../brain/decisions/D-008%20Offline%20sync%20contract.md). Still to design: content/questions/choices, competencies, `bkt_parameters`, sessions/responses, assessments, shop, schedules, usage, registrations, logs, consent.
 
-### 9. Student login method 🟡
+### 9. Student login method 🟡 (interim decided: D-010)
 - 6–7-year-olds can't reliably type passwords. **Decide:** picture password / PIN, a teacher-issued QR code, or tap-your-name on a teacher-managed device.
 - **Interim (2026-10-20):** the backend signs students in with an 8-character **login code** (`POST /api/auth/login`, e.g. `K7PM-3QXA`, no 0/O/1/I/L). Codes are random, shown once at enrolment and stored only as a SHA-256 hash. A QR card could carry the same code. Replace or wrap it once this issue is decided. Teacher/admin email + password login isn't built yet.
-- **Game side (2026-10-20):** a grown-up connects a device from the **Grown-ups** screen (behind a times-table gate): server address + the student's login code. One profile per device until this issue is decided.
+- **Game side (2026-10-20, [D-010](../../brain/decisions/D-010%20Student%20login%20and%20automatic%20sync.md)):** a normal login screen asks once per device for the student's code on a big keypad of valid characters only; the server address is built into the app and sync is automatic. No settings screen. Picture passwords or QR cards could still feed the same code later.
 
 ### 10. Offline vs time-restricted access 🟡
 - The access check is server-side, so offline the app can't verify the schedule. **Decide:** cache the schedule + last server time and enforce it locally using the device clock, with tamper detection.

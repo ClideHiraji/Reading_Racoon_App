@@ -49,6 +49,53 @@ return [
 
         // Largest JSON payload accepted for one event. Real payloads are under 300 bytes.
         'max_payload_bytes' => 8192,
+
+        // A device clock this far ahead of the server is logged as an anomaly
+        // (someone may be moving the clock to get round the schedule, open issue 10).
+        'clock_ahead_minutes' => 5,
+    ],
+
+    // Rewards the server recomputes when it replays lesson_end and chest events
+    // (FR-07, FR-15). Mirror LessonSession and PathProgress in the client.
+    'rewards' => [
+        'xp_per_correct' => 10,
+        'coins_per_star' => 5,
+        'level_up_coins' => 20,
+        'chest_coins' => 15,
+        'lessons_per_world' => 5,
+    ],
+
+    // Map levels: world name (D-009), level name and the ARAL band teachers see
+    // (docs/knowledge/05-bkt-engine.md, replaces thesis Table 3.6).
+    'levels' => [
+        1 => ['world' => 'Agusan River', 'name' => 'Foundational', 'band' => 'ARAL Basic'],
+        2 => ['world' => 'Mango Grove', 'name' => 'Emerging', 'band' => 'ARAL Basic / Plus'],
+        3 => ['world' => 'Bahay Kubo Village', 'name' => 'Developing', 'band' => 'ARAL Plus'],
+        4 => ['world' => 'Balangay Bay', 'name' => 'Approaching', 'band' => 'Approaching Proficient'],
+        5 => ['world' => 'Mount Mayapay', 'name' => 'Proficient', 'band' => 'Grade-Level Proficient'],
+    ],
+
+    // Teacher-facing sub-skill names (MATATAG competency areas, FR-09).
+    'skill_labels' => [
+        'phonological_awareness' => 'Phonological Awareness',
+        'phonics' => 'Phonics',
+        'vocabulary' => 'Vocabulary',
+        'fluency' => 'Reading Fluency',
+        'literal_comprehension' => 'Literal Comprehension',
+    ],
+
+    // Time-restricted access (FR-12, docs/knowledge/06-game-design.md). A section
+    // without its own schedule uses these defaults.
+    'access' => [
+        'timezone' => env('SCHOOL_TIMEZONE', 'Asia/Manila'),
+        'defaults' => [
+            'class_start' => '07:30',
+            'class_end' => '08:30',
+            'after_school_start' => '15:00',
+            'after_school_end' => '17:00',
+            'daily_minutes' => 30,
+            'weekends_open' => false,
+        ],
     ],
 
 ];

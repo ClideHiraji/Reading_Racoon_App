@@ -64,18 +64,6 @@ class AccessSchedule extends Model
             $local->setTimeFromTimeString($this->hm("{$name}_end"))];
     }
 
-    /** True when $time falls inside the class window on a school day. */
-    public function inClassWindow(CarbonImmutable $time): bool
-    {
-        $local = $time->setTimezone(config('reading_racoon.access.timezone'));
-        if ($local->isWeekend()) {
-            return false;
-        }
-        [$start, $end] = $this->window('class', $local);
-
-        return $local->greaterThanOrEqualTo($start) && $local->lessThan($end);
-    }
-
     /**
      * The schedule as the game receives it in GET /api/access/student/status.
      *

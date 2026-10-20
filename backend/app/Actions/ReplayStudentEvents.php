@@ -2,10 +2,8 @@
 
 namespace App\Actions;
 
-use App\Models\AccessSchedule;
 use App\Models\Student;
 use App\Support\StudentReplay;
-use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\DB;
 use stdClass;
 
@@ -39,10 +37,7 @@ final class ReplayStudentEvents
     /** Replays without writing anything (profile chart, reports, research export). */
     public function replay(Student $student): StudentReplay
     {
-        $schedule = AccessSchedule::forSection($student->section_id);
-        $replay = new StudentReplay(fn (CarbonImmutable $time) => $schedule->inClassWindow($time));
-
-        return $replay->run(
+        return (new StudentReplay)->run(
             DB::table('sync_events')
                 ->where('student_id', $student->id)
                 ->select(['id', 'uuid', 'type', 'payload', 'device_time'])
@@ -112,14 +107,11 @@ final class ReplayStudentEvents
         }
 
         $usage = [];
-        foreach ($replay->usage as $date => $day) {
-            $usage[] = [
-                'student_id' => $id, 'date' => $date, 'minutes' => $day['minutes'],
-                'class_minutes' => $day['class_minutes'], 'created_at' => $now, 'updated_at' => $now,
-            ];
+        foreach ($replay->usage as $date => $minutes) {
+            $usage[] = ['student_id' => $id, 'date' => $date, 'minutes' => $minutes, 'created_at' => $now, 'updated_at' => $now];
         }
         if ($usage !== []) {
-            DB::table('daily_usage')->upsert($usage, ['student_id', 'date'], ['minutes', 'class_minutes', 'updated_at']);
+            DB::table('daily_usage')->upsert($usage, ['student_id', 'date'], ['minutes', 'updated_at']);
         }
     }
 }

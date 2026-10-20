@@ -27,13 +27,13 @@ return new class extends Migration
             $table->timestampsTz();
         });
 
-        // Projection of the synced "usage" events. `minutes` counts toward the
-        // daily cap; minutes played inside the class window don't.
+        // Projection of the synced "usage" events: after-school (or open-weekend)
+        // minutes per local date, which count toward the daily cap. The game
+        // doesn't count minutes in the class window.
         Schema::create('daily_usage', function (Blueprint $table) {
             $table->foreignId('student_id')->constrained()->cascadeOnDelete();
             $table->date('date');
             $table->integer('minutes')->default(0);
-            $table->integer('class_minutes')->default(0);
             $table->timestampsTz();
 
             $table->primary(['student_id', 'date']);
@@ -41,7 +41,7 @@ return new class extends Migration
 
         DB::statement('ALTER TABLE access_schedules ADD CONSTRAINT access_schedules_windows_check CHECK (class_start < class_end AND after_school_start < after_school_end)');
         DB::statement('ALTER TABLE access_schedules ADD CONSTRAINT access_schedules_daily_minutes_check CHECK (daily_minutes BETWEEN 0 AND 240)');
-        DB::statement('ALTER TABLE daily_usage ADD CONSTRAINT daily_usage_minutes_check CHECK (minutes >= 0 AND class_minutes >= 0)');
+        DB::statement('ALTER TABLE daily_usage ADD CONSTRAINT daily_usage_minutes_check CHECK (minutes >= 0)');
     }
 
     /**

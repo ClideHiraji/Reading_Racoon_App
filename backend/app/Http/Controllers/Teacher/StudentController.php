@@ -25,11 +25,10 @@ class StudentController extends Controller
         $replay = $replayer->replay($student);
         AuditLog::record($request->user(), 'student.view', ['student', $student->code]);
 
-        // One dataset per sub-skill: P(L) of the state each answer updated, by answer number.
+        // One line per (sub-skill, level) state: P(L) after each answer, by answer number.
         $series = [];
         foreach ($replay->history as $i => $h) {
-            $series[$h['skill']][] = ['x' => $i + 1, 'y' => round($h['p'], 4), 'level' => $h['level'],
-                'correct' => $h['correct'], 'pre' => $h['assessment'] === 'pre'];
+            $series["{$h['skill']}:{$h['level']}"][] = ['x' => $i + 1, 'y' => round($h['p'], 4), 'level' => $h['level'], 'correct' => $h['correct']];
         }
 
         return view('teacher.student', [

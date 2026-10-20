@@ -17,6 +17,10 @@ return [
     // content when this is newer than its cached copy (FR-11).
     'content_version' => (int) env('CONTENT_VERSION', 1),
 
+    // The game offers the post-test (FR-10) only while this is true. Turn it on
+    // at the end of the evaluation period.
+    'post_test_open' => (bool) env('POST_TEST_OPEN', false),
+
     'bkt' => [
         // Bump when any value below changes, e.g. after EM recalibration
         // (the versioned bkt_parameters table replaces this file later).
@@ -63,6 +67,30 @@ return [
         'level_up_coins' => 20,
         'chest_coins' => 15,
         'lessons_per_world' => 5,
+    ],
+
+    // Raccoon shop (FR-07), mirroring reading-racoon/scripts/core/wardrobe.gd:
+    // id => slot and price. Starter items are owned and worn from the start.
+    'shop' => [
+        'starter' => ['scarf_teal'],
+        'items' => [
+            'cap' => ['slot' => 'hat', 'price' => 30],
+            'party_hat' => ['slot' => 'hat', 'price' => 40],
+            'flower_crown' => ['slot' => 'hat', 'price' => 50],
+            'salakot' => ['slot' => 'hat', 'price' => 60],
+            'gold_crown' => ['slot' => 'hat', 'price' => 120],
+            'scarf_teal' => ['slot' => 'neck', 'price' => 0],
+            'scarf_coral' => ['slot' => 'neck', 'price' => 25],
+            'scarf_mango' => ['slot' => 'neck', 'price' => 25],
+            'bow_tie' => ['slot' => 'neck', 'price' => 35],
+            'lei' => ['slot' => 'neck', 'price' => 45],
+            'round_glasses' => ['slot' => 'eyes', 'price' => 40],
+            'sunglasses' => ['slot' => 'eyes', 'price' => 50],
+            'star_glasses' => ['slot' => 'eyes', 'price' => 60],
+            'pin_star' => ['slot' => 'badge', 'price' => 20],
+            'pin_heart' => ['slot' => 'badge', 'price' => 20],
+            'pin_book' => ['slot' => 'badge', 'price' => 30],
+        ],
     ],
 
     // Map levels: world name (D-009), level name and the ARAL band teachers see

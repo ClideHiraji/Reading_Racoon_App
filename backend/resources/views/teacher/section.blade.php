@@ -131,13 +131,13 @@
                             @endif
                         </td>
                         <td>{{ SectionStats::band($student) }}</td>
-                        <td style="min-width: 210px;">
+                        <td style="min-width: 250px;">
                             @foreach (SkillCatalog::skills() as $skill)
                                 @php($state = SectionStats::currentState($student, $skill))
-                                <div class="row small" title="{{ SkillCatalog::label($skill) }}">
-                                    <span style="width: 92px;">{{ Str::limit(SkillCatalog::label($skill), 13, '.') }}</span>
+                                <div class="skill-row small" title="{{ SkillCatalog::label($skill) }}">
+                                    <span class="skill-name">{{ SkillCatalog::label($skill) }}</span>
                                     @if ($state)
-                                        <span class="bar" style="flex: 1;"><span style="width: {{ $state->mastered_at ? 100 : round($state->p_mastery * 100) }}%; background: {{ $state->mastered_at ? 'var(--green)' : ($state->p_mastery < 0.3 && $state->attempts >= 5 ? 'var(--amber)' : 'var(--teal)') }}"></span></span>
+                                        <span class="bar"><span style="width: {{ $state->mastered_at ? 100 : round($state->p_mastery * 100) }}%; background: {{ $state->mastered_at ? 'var(--green)' : ($state->p_mastery < 0.3 && $state->attempts >= 5 ? 'var(--amber)' : 'var(--teal)') }}"></span></span>
                                         <span class="muted">L{{ $state->level }}</span>
                                     @else
                                         <span class="muted">not yet</span>

@@ -99,20 +99,67 @@ class SyncReplayTest extends TestCase
         $this->assertSame(['low_mastery', 'vocabulary', 2], [$flag->type, $flag->sub_skill, $flag->level]);
     }
 
-    public function test_purchases_equips_and_usage_are_projected(): void
+    public function test_purchases_outfit_and_usage_are_projected(): void
     {
         $this->postJson('/api/sync', ['events' => [
             $this->event('chest', ['level' => 1, 'coins' => 15]),
-            $this->event('purchase', ['item_id' => 'straw_hat', 'cost' => 12, 'slot' => 'hat']),
-            $this->event('equip', ['item_id' => 'straw_hat', 'slot' => 'hat']),
-            $this->event('usage', ['date' => '2026-10-20', 'minutes' => 6, 'window' => 'after_school']),
-            $this->event('usage', ['date' => '2026-10-20', 'minutes' => 4, 'window' => 'after_school']),
+            $this->event('chest', ['level' => 2, 'coins' => 15]),
+            $this->event('purchase', ['item' => 'cap', 'price' => 30, 'coins_left' => 0]),
+            $this->event('outfit', ['equipped' => ['hat' => 'cap', 'neck' => 'scarf_teal']]),
+            $this->event('usage', ['date' => '2026-10-20', 'minutes' => 6.2]),
+            $this->event('usage', ['date' => '2026-10-20', 'minutes' => 10.4]),
         ]])->assertOk();
 
-        $item = $this->student->items()->sole();
-        $this->assertSame(['straw_hat', 'hat', true, 12], [$item->item_id, $item->slot, $item->equipped, $item->cost]);
-        $this->assertSame(3, $this->student->wallet()->first()->coins);
+        $items = $this->student->items()->orderBy('item_id')->get()
+            ->map(fn ($i) => [$i->item_id, $i->slot, $i->equipped, $i->cost])->all();
+        $this->assertSame([['cap', 'hat', true, 30], ['scarf_teal', 'neck', true, 0]], $items);
+        $this->assertSame(0, $this->student->wallet()->first()->coins);
         $this->assertSame(10, $this->student->dailyUsage()->sole()->minutes);
+    }
+
+    public function test_the_pre_test_places_the_learner_and_its_scores_are_kept(): void
+    {
+        $pre = fn (string $skill, int $level) => $this->event('response', ['item_id' => 'pre-1', 'skill' => $skill, 'level' => $level,
+            'answer' => 'a', 'correct' => true, 'response_ms' => 900, 'assessment' => 'pre']);
+        $this->postJson('/api/sync', ['events' => [
+            $pre('phonological_awareness', 1), $pre('phonological_awareness', 1), $pre('phonological_awareness', 1),
+            $pre('phonics', 1), $pre('phonics', 1), $pre('phonics', 1),
+            $this->event('placement', ['start_level' => 2]),
+            $this->event('assessment', ['kind' => 'pre', 'scores' => ['phonological_awareness' => ['correct' => 3, 'total' => 3],
+                'phonics' => ['correct' => 3, 'total' => 3]], 'correct' => 6, 'total' => 6]),
+        ]])->assertOk()->assertJsonCount(0, 'rejected');
+
+        $this->assertSame(2, $this->student->pathProgress()->first()->highest_unlocked);
+        $this->assertNotNull($this->student->bktStates()->where('sub_skill', 'phonics')->where('level', 1)->value('mastered_at'));
+        $this->assertSame(0, InterventionFlag::count());
+    }
+
+    public function test_lock_screens_and_clock_jumps_reach_the_admin_logs_once(): void
+    {
+        $batch = [
+            $this->event('access', ['status' => 'class_lock', 'time' => '2026-10-20T10:00:00']),
+            $this->event('flag', ['type' => 'clock_jump', 'from' => 1760954400, 'to' => 1760868000]),
+        ];
+
+        $this->postJson('/api/sync', ['events' => $batch])->assertOk()->assertJsonCount(2, 'acknowledged');
+        $this->postJson('/api/sync', ['events' => $batch])->assertOk(); // a retry logs nothing new
+
+        $access = SystemLog::where('event', 'access.device')->sole();
+        $this->assertSame(['class_lock', $this->student->code], [$access->context['status'], $access->context['student']]);
+        $this->assertFalse($access->anomaly);
+        $jump = SystemLog::where('event', 'sync.clock_jump')->sole();
+        $this->assertTrue($jump->anomaly);
+        $this->assertSame(0, InterventionFlag::count(), 'a clock jump is not a reading flag for the teacher');
+    }
+
+    public function test_every_event_type_the_game_sends_is_accepted(): void
+    {
+        $types = ['response', 'bkt_state', 'hearts', 'rescue_start', 'rescue_end', 'level_up', 'flag', 'lesson_end', 'chest',
+            'placement', 'assessment', 'usage', 'purchase', 'outfit', 'access'];
+
+        $this->postJson('/api/sync', ['events' => array_map(fn ($t) => $this->event($t, []), $types)])
+            ->assertOk()->assertJsonCount(count($types), 'acknowledged')->assertJsonCount(0, 'rejected');
+        $this->postJson('/api/sync', ['events' => [$this->event('equip', [])]])->assertJsonPath('rejected.0.reason', 'invalid');
     }
 
     public function test_a_device_clock_ahead_of_the_server_is_logged_as_an_anomaly(): void

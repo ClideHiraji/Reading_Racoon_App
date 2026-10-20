@@ -4,24 +4,29 @@ namespace App\Support;
 
 use App\Enums\SyncEventType;
 use Carbon\CarbonImmutable;
-use Closure;
 use DateTimeInterface;
 use Ramsey\Uuid\Uuid;
 
 /**
  * Replays one student's synced events, in arrival order, through the same
- * rules as the client (reading-racoon/scripts/core/student_model.gd and
- * lesson_session.gd) and produces the official state: the 14 BKT states,
- * highest unlocked map level, wallet, flags, items, daily usage and path.
+ * rules as the client (reading-racoon/scripts/core/student_model.gd,
+ * lesson_session.gd, assessment_session.gd, wardrobe.gd) and produces the
+ * official state: the 14 BKT states, highest unlocked map level, wallet,
+ * flags, items and outfit, daily usage, path and pre/post-test scores.
  * The server is the BKT authority (docs/knowledge/03-architecture.md, D-008,
  * D-010). Pure PHP, no database: App\Actions\ReplayStudentEvents feeds it.
  *
  * Fields read per event type (anything else is stored but ignored):
- * - response: skill, level, correct, num_choices, rescue, assessment ("pre"|"post")
+ * - response: skill, level, correct, num_choices, rescue. With assessment
+ *   "pre"/"post" it is a test item: scored, never a BKT observation.
+ * - placement: start_level (BKT placed from the pre-test answers, like StudentModel.place())
+ * - assessment: kind, scores {skill: {correct, total}} (raw test scores, FR-02/FR-10)
  * - rescue_start: skill, level · rescue_end: (none, the server counts the answers)
- * - flag: type, skill, level (+ details) · lesson_end: level, node, correct, total, ended_early
- * - chest: level · usage: date, minutes, window · purchase: item_id, cost, slot · equip: item_id, slot
- * - bkt_state, level_up, hearts: ignored (the server computes them itself)
+ * - flag: type, skill, level (+ details); type clock_jump is an admin anomaly, not a teacher flag
+ * - lesson_end: level, node, correct, total, ended_early · chest: level
+ * - usage: date, minutes (cumulative after-school minutes that day; the largest wins)
+ * - purchase: item, price · outfit: equipped {slot: item}
+ * - bkt_state, level_up, hearts, access: stored only (the server computes the rest itself)
  *
  * An event whose fields don't make sense (unknown skill, level out of range,
  * missing "correct") is skipped, never fatal: the raw event stays stored.
@@ -46,19 +51,19 @@ final class StudentReplay
     /** @var array<string, array{type: string, sub_skill: ?string, level: ?int, details: array<string, mixed>, raised_at: CarbonImmutable}> keyed by flag uuid */
     public array $flags = [];
 
-    /** @var array<string, array{slot: ?string, cost: int, acquired_at: CarbonImmutable}> keyed by item id */
+    /** @var array<string, array{slot: ?string, cost: int, acquired_at: ?CarbonImmutable}> keyed by item id */
     public array $items = [];
 
     /** @var array<string, string> slot => item id */
     public array $equipped = [];
 
-    /** @var array<string, array{minutes: int, class_minutes: int}> "YYYY-MM-DD" => minutes */
+    /** @var array<string, int> "YYYY-MM-DD" => after-school minutes played that day */
     public array $usage = [];
 
     /** @var array<string, array{done: int, chest: bool, bonus: list<int>}> PathProgress.worlds shape */
     public array $worlds = [];
 
-    /** @var list<array{uuid: string, time: CarbonImmutable, skill: string, level: int, correct: bool, assessment: ?string, posterior: float, p: float, attempts: int, mastered_now: bool, level_up: bool}> one row per BKT observation */
+    /** @var list<array{uuid: string, time: CarbonImmutable, skill: string, level: int, correct: bool, posterior: float, p: float, attempts: int, mastered_now: bool, level_up: bool}> one row per gameplay answer */
     public array $history = [];
 
     /** @var list<array{time: CarbonImmutable, level: int, node: int, correct: int, total: int, stars: int, xp: int, coins: int, level_up: bool}> */
@@ -67,8 +72,17 @@ final class StudentReplay
     /** @var list<array{time: CarbonImmutable, skill: string, from_level: int, correct: int, full: bool, demoted_level: ?int}> */
     public array $rescues = [];
 
-    /** @var array{pre: array<string, array{correct: int, total: int}>, post: array<string, array{correct: int, total: int}>} */
+    /** @var array{pre: array<string, array{correct: int, total: int}>, post: array<string, array{correct: int, total: int}>} per sub-skill */
     public array $assessments = ['pre' => [], 'post' => []];
+
+    /** @var array{pre: ?CarbonImmutable, post: ?CarbonImmutable} when each test was finished */
+    public array $assessedAt = ['pre' => null, 'post' => null];
+
+    /** Map level the pre-test placed the learner on (null before the pre-test). */
+    public ?int $placedLevel = null;
+
+    /** @var list<array{time: CarbonImmutable, from: mixed, to: mixed}> device clock moved backwards */
+    public array $clockJumps = [];
 
     public int $responses = 0;
 
@@ -87,6 +101,9 @@ final class StudentReplay
     /** @var array{xp_per_correct: int, coins_per_star: int, level_up_coins: int, chest_coins: int, lessons_per_world: int} */
     private array $rewards;
 
+    /** @var array<string, array{slot: string, price: int}> */
+    private array $shop;
+
     /** @var array{skill: string, from_level: int, answered: int, correct: int}|null */
     private ?array $rescue = null;
 
@@ -95,11 +112,10 @@ final class StudentReplay
     /** @var array<string, true> state keys with a low-mastery flag raised and not yet recovered */
     private array $lowFlagged = [];
 
-    /**
-     * @param  (Closure(CarbonImmutable): bool)|null  $inClassWindow  classifies usage
-     *                                                                events that don't say which window they were played in
-     */
-    public function __construct(private readonly ?Closure $inClassWindow = null)
+    /** @var list<array{skill: string, correct: bool}> pre-test answers waiting for the placement event */
+    private array $preAnswers = [];
+
+    public function __construct()
     {
         $bkt = config('reading_racoon.bkt');
         $this->masteryP = (float) $bkt['mastery_p'];
@@ -107,15 +123,16 @@ final class StudentReplay
         $this->hintP = (float) $bkt['hint_p'];
         $this->demoteCap = (float) $bkt['demote_cap'];
         $this->rewards = config('reading_racoon.rewards');
+        $this->shop = config('reading_racoon.shop.items');
 
-        foreach (SkillCatalog::states() as ['skill' => $skill, 'level' => $level]) {
-            $this->states[self::key($skill, $level)] = [
-                'p' => (float) SkillCatalog::params($skill)['l0'],
-                'attempts' => 0,
-                'mastered' => false,
-                'review' => false,
-                'mastered_at' => null,
-            ];
+        $this->resetStates();
+        // Wardrobe: every learner starts owning and wearing the starter items.
+        foreach (config('reading_racoon.shop.starter') as $item) {
+            $slot = $this->shop[$item]['slot'] ?? null;
+            $this->items[$item] = ['slot' => $slot, 'cost' => 0, 'acquired_at' => null];
+            if ($slot !== null) {
+                $this->equipped[$slot] = $item;
+            }
         }
     }
 
@@ -125,8 +142,8 @@ final class StudentReplay
     }
 
     /**
-     * @param  iterable<array<string, mixed>|object>  $events  rows with uuid, type, payload
-     *                                                         (array or JSON string) and device_time, oldest first (sync_events.id order)
+     * @param  iterable<array<string, mixed>|object>  $events  rows with uuid, type, payload (array or
+     *                                                         JSON string) and device_time, oldest first (sync_events.id order)
      */
     public function run(iterable $events): self
     {
@@ -153,14 +170,16 @@ final class StudentReplay
 
         match ($type) {
             'response' => $this->response($p, $time, $uuid),
+            'placement' => $this->placement($p, $time),
+            'assessment' => $this->assessment($p, $time),
             'rescue_start' => $this->rescueStart($p),
             'rescue_end' => $this->rescueEnd($time),
             'flag' => $this->flag($p, $time, $uuid),
             'lesson_end' => $this->lessonEnd($p, $time),
             'chest' => $this->chest($p),
-            'usage' => $this->usage($p, $time),
+            'usage' => $this->usage($p),
             'purchase' => $this->purchase($p, $time),
-            'equip' => $this->equip($p),
+            'outfit' => $this->outfit($p),
             default => null,
         };
     }
@@ -214,17 +233,19 @@ final class StudentReplay
         if (! SkillCatalog::isSkill($skill) || $level === null || ! is_bool($correct)) {
             return;
         }
-        $choices = self::int($p['num_choices'] ?? null) ?? 0;
-        $assessment = $p['assessment'] ?? null;
 
+        $assessment = $p['assessment'] ?? null;
         if ($assessment === 'pre' || $assessment === 'post') {
-            $score = $this->assessments[$assessment][$skill] ?? ['correct' => 0, 'total' => 0];
-            $score['total']++;
-            $score['correct'] += $correct ? 1 : 0;
-            $this->assessments[$assessment][$skill] = $score;
-            // The post-test measures the outcome (FR-10); it doesn't move BKT.
+            // Test items are scored only (AssessmentSession.submit); BKT gets the
+            // pre-test once, through the placement event.
+            if ($this->assessedAt[$assessment] === null) {
+                $score = $this->assessments[$assessment][$skill] ?? ['correct' => 0, 'total' => 0];
+                $score['total']++;
+                $score['correct'] += $correct ? 1 : 0;
+                $this->assessments[$assessment][$skill] = $score;
+            }
             if ($assessment === 'pre') {
-                $this->place($skill, $correct, $choices, $time, $uuid);
+                $this->preAnswers[] = ['skill' => $skill, 'correct' => $correct];
             }
 
             return;
@@ -235,7 +256,7 @@ final class StudentReplay
         }
         $this->responses++;
         $this->correctResponses += $correct ? 1 : 0;
-        $this->record($skill, $level, $correct, $choices, $time, $uuid);
+        $this->record($skill, $level, $correct, self::int($p['num_choices'] ?? null) ?? 0, $time, $uuid);
 
         if ($this->rescue !== null && ($p['rescue'] ?? false) === true && $this->rescue['skill'] === $skill) {
             $this->rescue['answered']++;
@@ -272,65 +293,104 @@ final class StudentReplay
         $this->checkLowMastery($key, $skill, $level, $time, $uuid);
         $this->history[] = [
             'uuid' => $uuid, 'time' => $time, 'skill' => $skill, 'level' => $level, 'correct' => $correct,
-            'assessment' => null, 'posterior' => $post, 'p' => $st['p'], 'attempts' => $st['attempts'],
+            'posterior' => $post, 'p' => $st['p'], 'attempts' => $st['attempts'],
             'mastered_now' => $masteredNow, 'level_up' => $levelUp,
         ];
     }
 
     /**
-     * Pre-test placement (docs/knowledge/05-bkt-engine.md): the item updates the
-     * sub-skill's lowest-level state, mastery needs no minimum attempts, and the
-     * learner starts on the lowest map level that still has an unmastered skill.
+     * Pre-test placement, exactly as StudentModel.place() (05-bkt-engine.md,
+     * FR-02): fresh states; each sub-skill's pre-test answers replayed on its
+     * lowest-level state from P(L0) with the Table 3.5 guess rate; mastered when
+     * the final posterior reaches 0.95 (no minimum attempts); start on the lowest
+     * map level that still has an unmastered skill. The server recomputes it from
+     * the answers it holds and only falls back to start_level without them.
+     *
+     * @param  array<string, mixed>  $p
      */
-    private function place(string $skill, bool $correct, int $choices, CarbonImmutable $time, string $uuid): void
+    private function placement(array $p, CarbonImmutable $time): void
     {
-        $level = SkillCatalog::minLevel($skill);
-        $key = self::key($skill, $level);
-        $st = $this->states[$key];
-        $prm = SkillCatalog::params($skill);
-        $post = Bkt::posterior($st['p'], $correct, Bkt::guessFor($prm['g'], $prm['s'], $choices), $prm['s']);
-        $st['attempts']++;
-        $masteredNow = false;
-        if (! $st['mastered'] && $post >= $this->masteryP) {
-            $st['mastered'] = true;
-            $st['review'] = false;
-            $st['mastered_at'] = $time;
-            $masteredNow = true;
-        }
-        $st['p'] = Bkt::transition($post, $prm['t']);
-        $this->states[$key] = $st;
+        if ($this->preAnswers === []) {
+            $start = self::int($p['start_level'] ?? null);
+            if ($start !== null && $start >= 1 && $start <= SkillCatalog::MAX_LEVEL) {
+                $this->highestUnlocked = max($this->highestUnlocked, $start);
+                $this->placedLevel = $start;
+            }
 
-        $placed = SkillCatalog::MAX_LEVEL;
-        for ($l = 1; $l <= SkillCatalog::MAX_LEVEL; $l++) {
-            if (! $this->isLevelComplete($l)) {
-                $placed = $l;
+            return;
+        }
+
+        $this->resetStates();
+        $bySkill = [];
+        foreach ($this->preAnswers as $answer) {
+            $bySkill[$answer['skill']][] = $answer['correct'];
+        }
+        foreach ($bySkill as $skill => $answers) {
+            $prm = SkillCatalog::params($skill);
+            $key = self::key($skill, SkillCatalog::minLevel($skill));
+            $pl = (float) $prm['l0'];
+            $post = $pl;
+            foreach ($answers as $correct) {
+                $post = Bkt::posterior($pl, $correct, $prm['g'], $prm['s']);
+                $pl = Bkt::transition($post, $prm['t']);
+            }
+            $mastered = $post >= $this->masteryP;
+            $this->states[$key] = ['p' => $pl, 'attempts' => count($answers), 'mastered' => $mastered,
+                'review' => false, 'mastered_at' => $mastered ? $time : null];
+        }
+
+        $this->highestUnlocked = SkillCatalog::MAX_LEVEL;
+        for ($level = 1; $level <= SkillCatalog::MAX_LEVEL; $level++) {
+            if (! $this->isLevelComplete($level)) {
+                $this->highestUnlocked = $level;
                 break;
             }
         }
-        $levelUp = $placed > $this->highestUnlocked;
-        $this->highestUnlocked = max($this->highestUnlocked, $placed);
+        $this->placedLevel = $this->highestUnlocked;
+        $this->preAnswers = [];
+    }
 
-        $this->history[] = [
-            'uuid' => $uuid, 'time' => $time, 'skill' => $skill, 'level' => $level, 'correct' => $correct,
-            'assessment' => 'pre', 'posterior' => $post, 'p' => $st['p'], 'attempts' => $st['attempts'],
-            'mastered_now' => $masteredNow, 'level_up' => $levelUp,
-        ];
+    /**
+     * Raw pre/post-test scores per sub-skill (FR-02, FR-10, RQ1). The first
+     * report of each test counts; they replace the server's own tally.
+     *
+     * @param  array<string, mixed>  $p
+     */
+    private function assessment(array $p, CarbonImmutable $time): void
+    {
+        $kind = $p['kind'] ?? null;
+        if (($kind !== 'pre' && $kind !== 'post') || $this->assessedAt[$kind] !== null) {
+            return;
+        }
+        if (is_array($p['scores'] ?? null)) {
+            $scores = [];
+            foreach ($p['scores'] as $skill => $score) {
+                $total = self::int(is_array($score) ? ($score['total'] ?? null) : null);
+                $correct = self::int(is_array($score) ? ($score['correct'] ?? null) : null);
+                if (SkillCatalog::isSkill($skill) && $total !== null && $correct !== null && $total >= 0 && $correct >= 0 && $correct <= $total) {
+                    $scores[$skill] = ['correct' => $correct, 'total' => $total];
+                }
+            }
+            $this->assessments[$kind] = $scores;
+        }
+        $this->assessedAt[$kind] = $time;
     }
 
     /**
      * Server-raised flag (FR-17): P(L) < 0.30 after >= 5 attempts at a level. One
-     * flag per episode; a new one only after P(L) climbs back over 0.30. The id is
-     * derived from the triggering answer, so replaying again gives the same id.
+     * flag per skill-level until it is mastered, however often P(L) bounces
+     * around 0.30, so the teacher isn't flooded. The id is derived from the
+     * triggering answer, so replaying again gives the same id.
      */
     private function checkLowMastery(string $key, string $skill, int $level, CarbonImmutable $time, string $uuid): void
     {
         $st = $this->states[$key];
-        if ($st['p'] >= $this->hintP || $st['mastered']) {
+        if ($st['mastered']) {
             unset($this->lowFlagged[$key]);
 
             return;
         }
-        if ($st['attempts'] < $this->masteryMinAttempts || isset($this->lowFlagged[$key])) {
+        if ($st['p'] >= $this->hintP || $st['attempts'] < $this->masteryMinAttempts || isset($this->lowFlagged[$key])) {
             return;
         }
         $this->lowFlagged[$key] = true;
@@ -381,13 +441,19 @@ final class StudentReplay
     }
 
     /**
-     * Client-raised teacher flag (FR-17); its id is the event's UUID.
+     * Client-raised teacher flag (FR-17); its id is the event's UUID. A
+     * clock_jump is kept for the admin logs instead (open issue 10).
      *
      * @param  array<string, mixed>  $p
      */
     private function flag(array $p, CarbonImmutable $time, string $uuid): void
     {
         $type = $p['type'] ?? null;
+        if ($type === 'clock_jump') {
+            $this->clockJumps[] = ['time' => $time, 'from' => $p['from'] ?? null, 'to' => $p['to'] ?? null];
+
+            return;
+        }
         $level = self::int($p['level'] ?? null);
         $this->flags[$uuid] = [
             'type' => is_string($type) && $type !== '' && strlen($type) <= 32 ? $type : 'flag',
@@ -452,73 +518,86 @@ final class StudentReplay
     }
 
     /**
-     * Minutes played since the previous usage event (FR-12). Class-window minutes
-     * don't count toward the daily after-school cap.
+     * After-school minutes played on a local date (FR-12). The client sends its
+     * running total for the day, so the largest value wins.
      *
      * @param  array<string, mixed>  $p
      */
-    private function usage(array $p, CarbonImmutable $time): void
+    private function usage(array $p): void
     {
         $date = $p['date'] ?? null;
-        $minutes = self::int($p['minutes'] ?? null);
+        $minutes = $p['minutes'] ?? null;
         if (! is_string($date) || ! preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $date, $m)
-            || ! checkdate((int) $m[2], (int) $m[3], (int) $m[1]) || $minutes === null || $minutes < 0 || $minutes > 600) {
+            || ! checkdate((int) $m[2], (int) $m[3], (int) $m[1])
+            || ! (is_int($minutes) || is_float($minutes)) || $minutes < 0 || $minutes > 1440) {
             return;
         }
-        $window = $p['window'] ?? null;
-        $inClass = $window === 'class'
-            || ($window === null && $this->inClassWindow !== null && ($this->inClassWindow)($time));
-
-        $day = $this->usage[$date] ?? ['minutes' => 0, 'class_minutes' => 0];
-        $day[$inClass ? 'class_minutes' : 'minutes'] += $minutes;
-        $this->usage[$date] = $day;
+        $this->usage[$date] = max($this->usage[$date] ?? 0, (int) floor($minutes));
     }
 
     /**
-     * A shop purchase (FR-07). Ignored when the item is already owned or the
-     * replayed wallet can't pay for it: the server wins (D-008).
+     * A shop purchase (FR-07), as Wardrobe.buy(). Catalogue items cost the
+     * server's price; an unknown item costs what the client paid. Ignored when
+     * already owned or the replayed wallet can't pay: the server wins (D-008).
      *
      * @param  array<string, mixed>  $p
      */
     private function purchase(array $p, CarbonImmutable $time): void
     {
-        $item = $p['item_id'] ?? null;
-        $cost = self::int($p['cost'] ?? null);
-        if (! self::isId($item, 64) || $cost === null || $cost < 0 || $cost > 100000
-            || isset($this->items[$item]) || $this->coins < $cost) {
+        $item = $p['item'] ?? $p['item_id'] ?? null;
+        if (! self::isId($item, 64) || isset($this->items[$item])) {
             return;
         }
-        $this->coins -= $cost;
-        $slot = $p['slot'] ?? null;
-        $this->items[$item] = ['slot' => self::isId($slot, 32) ? $slot : null, 'cost' => $cost, 'acquired_at' => $time];
+        $price = isset($this->shop[$item]) ? $this->shop[$item]['price'] : self::int($p['price'] ?? $p['cost'] ?? null);
+        if ($price === null || $price < 0 || $price > 100000 || $this->coins < $price) {
+            return;
+        }
+        $this->coins -= $price;
+        $this->items[$item] = ['slot' => $this->shop[$item]['slot'] ?? null, 'cost' => $price, 'acquired_at' => $time];
     }
 
     /**
-     * Put an owned item in a slot, or clear the slot with item_id null (FR-07).
+     * What the raccoon wears, {slot: item}, replacing the previous outfit.
+     * Only owned items, in their own slot.
      *
      * @param  array<string, mixed>  $p
      */
-    private function equip(array $p): void
+    private function outfit(array $p): void
     {
-        $slot = $p['slot'] ?? null;
-        if (! self::isId($slot, 32) || ! array_key_exists('item_id', $p)) {
+        if (! is_array($p['equipped'] ?? null)) {
             return;
         }
-        $item = $p['item_id'];
-        if ($item === null) {
-            unset($this->equipped[$slot]);
-
-            return;
+        $equipped = [];
+        foreach ($p['equipped'] as $slot => $item) {
+            if (! self::isId((string) $slot, 32) || ! is_string($item) || ! isset($this->items[$item])) {
+                continue;
+            }
+            $catalogSlot = $this->shop[$item]['slot'] ?? null;
+            if ($catalogSlot !== null && $catalogSlot !== $slot) {
+                continue;
+            }
+            $equipped[$slot] = $item;
+            $this->items[$item]['slot'] ??= $slot;
         }
-        if (! is_string($item) || ! isset($this->items[$item])) {
-            return;
-        }
-        $this->equipped = array_filter($this->equipped, fn (string $equipped) => $equipped !== $item);
-        $this->equipped[$slot] = $item;
-        $this->items[$item]['slot'] ??= $slot;
+        $this->equipped = $equipped;
     }
 
     // --- Helpers -----------------------------------------------------------------
+
+    private function resetStates(): void
+    {
+        foreach (SkillCatalog::states() as ['skill' => $skill, 'level' => $level]) {
+            $this->states[self::key($skill, $level)] = [
+                'p' => (float) SkillCatalog::params($skill)['l0'],
+                'attempts' => 0,
+                'mastered' => false,
+                'review' => false,
+                'mastered_at' => null,
+            ];
+        }
+        $this->highestUnlocked = 1;
+        $this->lowFlagged = [];
+    }
 
     /**
      * @return array{done: int, chest: bool, bonus: list<int>}

@@ -24,7 +24,7 @@
     @foreach ($facts['skills'] as $skill)
         <tr>
             <td>{{ $skill['label'] }}</td>
-            <td>{{ $skill['unlocked'] ? 'L'.$skill['current_level'] : 'not unlocked yet' }}{{ $skill['review'] ? ' (review)' : '' }}</td>
+            <td>{{ $skill['unlocked'] ? 'L'.$skill['current_level'] : 'not unlocked yet' }}{{ $skill['current_mastered'] ? ' (mastered)' : '' }}{{ $skill['review'] ? ' (review)' : '' }}</td>
             <td>
                 @if ($skill['p'] !== null)
                     <table class="pbar" style="width: 120px; border-collapse: collapse;"><tr>

@@ -34,12 +34,37 @@ class SyncController extends Controller
         if ($result['acknowledged'] !== []) {
             $replay->handle($student);
         }
+        $this->logNewEvents($student->code, $result['stored'], $request->user()->id);
         $this->logAnomalies($student->code, $events, $result['rejected']);
 
         return response()->json([
-            ...$result,
+            'acknowledged' => $result['acknowledged'],
+            'rejected' => $result['rejected'],
             'server_time' => now()->utc()->toIso8601ZuluString(),
         ]);
+    }
+
+    /**
+     * Events meant for the admin logs, written once when first stored (FR-08, FR-12):
+     * lock screens the device showed while offline, and device clocks that
+     * jumped backwards (open issue 10).
+     *
+     * @param  list<array{uuid: string, type: string, payload: string}>  $stored
+     */
+    private function logNewEvents(?string $code, array $stored, int $userId): void
+    {
+        foreach ($stored as $event) {
+            $payload = json_decode($event['payload'], true) ?: [];
+            if ($event['type'] === 'access') {
+                SystemLog::record('access.device', 'info', [
+                    'student' => $code, 'status' => $payload['status'] ?? null, 'device_time' => $payload['time'] ?? null,
+                ], userId: $userId);
+            } elseif ($event['type'] === 'flag' && ($payload['type'] ?? null) === 'clock_jump') {
+                SystemLog::record('sync.clock_jump', 'warning', [
+                    'student' => $code, 'from' => $payload['from'] ?? null, 'to' => $payload['to'] ?? null,
+                ], anomaly: true, userId: $userId);
+            }
+        }
     }
 
     /**

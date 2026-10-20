@@ -30,8 +30,9 @@ final class RecordSyncEvents
      * @param  array<int, mixed>  $events  [{id, type, payload, device_time}, ...] in queue order
      * @return array{
      *     acknowledged: list<string>,
-     *     rejected: list<array{index: int, id: string|null, reason: string, errors?: array<string, list<string>>}>
-     * }
+     *     rejected: list<array{index: int, id: string|null, reason: string, errors?: array<string, list<string>>}>,
+     *     stored: list<array{uuid: string, type: string, payload: string}>
+     * }  `stored` = events this call inserted (not in the JSON reply; used for logging once)
      */
     public function handle(Student $student, array $events): array
     {
@@ -63,6 +64,7 @@ final class RecordSyncEvents
             $accepted[$index] = [$uuid, $event['id']];
         }
 
+        $existing = $rows === [] ? [] : DB::table('sync_events')->whereIn('uuid', array_keys($rows))->pluck('uuid')->all();
         foreach (array_chunk(array_values($rows), 500) as $chunk) {
             DB::table('sync_events')->insertOrIgnore($chunk);
         }
@@ -88,7 +90,11 @@ final class RecordSyncEvents
 
         usort($rejected, fn (array $a, array $b) => $a['index'] <=> $b['index']);
 
-        return ['acknowledged' => $acknowledged, 'rejected' => $rejected];
+        return [
+            'acknowledged' => $acknowledged,
+            'rejected' => $rejected,
+            'stored' => array_values(array_diff_key($rows, array_flip($existing))),
+        ];
     }
 
     /**

@@ -41,13 +41,13 @@ class StudentMeTest extends TestCase
             ->assertJsonPath('model.states.phonics:1', ['p' => 0.25, 'attempts' => 0, 'mastered' => false, 'review' => false])
             ->assertJsonPath('aral_band', 'ARAL Basic')
             ->assertJsonPath('wallet', ['xp' => 0, 'coins' => 0])
-            ->assertJsonPath('items', [])
+            ->assertJsonPath('items', [['item_id' => 'scarf_teal', 'slot' => 'neck', 'equipped' => true]])
+            ->assertJsonPath('equipped', ['neck' => 'scarf_teal'])
             ->assertJsonStructure(['server_time', 'bkt_version', 'path' => ['worlds'], 'equipped']);
 
         $this->assertCount(14, $response->json('model.states'));
         // Objects, not [] arrays, so Godot's JSON gives Dictionaries.
         $this->assertStringContainsString('"worlds":{}', $response->getContent());
-        $this->assertStringContainsString('"equipped":{}', $response->getContent());
     }
 
     public function test_it_returns_the_replayed_state_after_a_sync(): void
@@ -61,8 +61,10 @@ class StudentMeTest extends TestCase
             }
         }
         $events[] = ['id' => (string) Str::uuid(), 'type' => 'chest', 'payload' => ['level' => 1], 'device_time' => '2026-10-20T01:00:01Z'];
-        $events[] = ['id' => (string) Str::uuid(), 'type' => 'purchase', 'payload' => ['item_id' => 'bow', 'cost' => 10, 'slot' => 'hat'], 'device_time' => '2026-10-20T01:00:02Z'];
-        $events[] = ['id' => (string) Str::uuid(), 'type' => 'equip', 'payload' => ['item_id' => 'bow', 'slot' => 'hat'], 'device_time' => '2026-10-20T01:00:03Z'];
+        // 15 (chest) + 15 (3 stars) + 20 (Level Up bonus) = 50 coins, then a 20-coin pin.
+        $events[] = ['id' => (string) Str::uuid(), 'type' => 'lesson_end', 'payload' => ['level' => 1, 'node' => 0, 'correct' => 8, 'total' => 8], 'device_time' => '2026-10-20T01:00:01Z'];
+        $events[] = ['id' => (string) Str::uuid(), 'type' => 'purchase', 'payload' => ['item' => 'pin_star', 'price' => 20, 'coins_left' => 0], 'device_time' => '2026-10-20T01:00:02Z'];
+        $events[] = ['id' => (string) Str::uuid(), 'type' => 'outfit', 'payload' => ['equipped' => ['badge' => 'pin_star']], 'device_time' => '2026-10-20T01:00:03Z'];
         $this->postJson('/api/sync', ['events' => $events])->assertOk();
 
         $this->getJson('/api/student/me')->assertOk()
@@ -70,9 +72,12 @@ class StudentMeTest extends TestCase
             ->assertJsonPath('model.states.phonics:1.mastered', true)
             ->assertJsonPath('model.states.phonics:1.attempts', 5)
             ->assertJsonPath('aral_band', 'ARAL Basic / Plus')
-            ->assertJsonPath('wallet.coins', 5)
-            ->assertJsonPath('items', [['item_id' => 'bow', 'slot' => 'hat', 'equipped' => true]])
-            ->assertJsonPath('equipped', ['hat' => 'bow'])
+            ->assertJsonPath('wallet.coins', 30)
+            ->assertJsonPath('items', [
+                ['item_id' => 'scarf_teal', 'slot' => 'neck', 'equipped' => false],
+                ['item_id' => 'pin_star', 'slot' => 'badge', 'equipped' => true],
+            ])
+            ->assertJsonPath('equipped', ['badge' => 'pin_star'])
             ->assertJsonPath('path.worlds.1.chest', true);
     }
 

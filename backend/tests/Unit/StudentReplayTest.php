@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Support\Bkt;
+use App\Support\SkillCatalog;
 use App\Support\StudentReplay;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Str;
@@ -24,7 +25,7 @@ class StudentReplayTest extends TestCase
     }
 
     /** @param list<array{0: string, 1: array<string, mixed>}> $events */
-    private function replay(array $events, ?\Closure $inClass = null): StudentReplay
+    private function replay(array $events): StudentReplay
     {
         $rows = [];
         foreach ($events as $i => [$type, $payload]) {
@@ -32,7 +33,7 @@ class StudentReplayTest extends TestCase
                 'device_time' => $this->time->addSeconds($i)->toIso8601ZuluString()];
         }
 
-        return (new StudentReplay($inClass))->run($rows);
+        return (new StudentReplay)->run($rows);
     }
 
     private function answer(string $skill, int $level, bool $correct, array $extra = []): array
@@ -186,6 +187,12 @@ class StudentReplayTest extends TestCase
         $again = (new StudentReplay)->run($rows);
 
         $this->assertCount(1, $first->flags, 'five wrong answers: one flag, not one per answer');
+        $bouncing = $this->replay([
+            ...array_fill(0, 5, $this->answer('phonics', 1, false)),
+            $this->answer('phonics', 1, true), $this->answer('phonics', 1, true),   // back above 0.30
+            ...array_fill(0, 3, $this->answer('phonics', 1, false)),              // and below again
+        ]);
+        $this->assertCount(1, $bouncing->flags, 'one flag per skill-level until it is mastered');
         $flag = array_values($first->flags)[0];
         $this->assertSame(['low_mastery', 'phonics', 1, 5], [$flag['type'], $flag['sub_skill'], $flag['level'], $flag['details']['attempts']]);
         $this->assertSame(array_keys($first->flags), array_keys($again->flags));
@@ -223,62 +230,87 @@ class StudentReplayTest extends TestCase
         $this->assertSame([15, 35, 15], array_column($replay->lessons, 'coins'));
     }
 
-    public function test_purchases_need_enough_coins_and_only_owned_items_can_be_equipped(): void
+    public function test_purchases_use_the_server_price_and_need_enough_coins(): void
     {
         $replay = $this->replay([
-            ['lesson_end', ['level' => 1, 'node' => 0, 'correct' => 8, 'total' => 8]], // 15 coins
-            ['purchase', ['item_id' => 'crown', 'cost' => 100, 'slot' => 'hat']],
-            ['purchase', ['item_id' => 'straw_hat', 'cost' => 10, 'slot' => 'hat']],
-            ['purchase', ['item_id' => 'straw_hat', 'cost' => 10, 'slot' => 'hat']],
-            ['equip', ['item_id' => 'crown', 'slot' => 'hat']],
-            ['equip', ['item_id' => 'straw_hat', 'slot' => 'hat']],
+            ['lesson_end', ['level' => 1, 'node' => 0, 'correct' => 8, 'total' => 8]],    // 15 coins
+            ['chest', ['level' => 1]],                                                   // +15 = 30
+            ['purchase', ['item' => 'gold_crown', 'price' => 120, 'coins_left' => 0]],     // can't pay
+            ['purchase', ['item' => 'cap', 'price' => 1, 'coins_left' => 29]],             // costs 30, not 1
+            ['purchase', ['item' => 'cap', 'price' => 30, 'coins_left' => 0]],             // already owned
+            ['purchase', ['item' => 'mystery_hat', 'price' => 0]],                         // unknown: client price
         ]);
 
-        $this->assertSame(['straw_hat'], array_keys($replay->items));
-        $this->assertSame(5, $replay->coins);
-        $this->assertSame(['hat' => 'straw_hat'], $replay->equipped);
+        $this->assertSame(['scarf_teal', 'cap', 'mystery_hat'], array_keys($replay->items));
+        $this->assertSame(['hat', 30], [$replay->items['cap']['slot'], $replay->items['cap']['cost']]);
+        $this->assertNull($replay->items['mystery_hat']['slot']);
+        $this->assertSame(0, $replay->coins);
+    }
 
-        $cleared = $this->replay([
+    public function test_the_outfit_holds_owned_items_in_their_own_slot(): void
+    {
+        $this->assertSame(['neck' => 'scarf_teal'], $this->replay([])->equipped, 'starter scarf, as Wardrobe');
+
+        $replay = $this->replay([
             ['chest', ['level' => 1]],
-            ['purchase', ['item_id' => 'scarf', 'cost' => 15]],
-            ['equip', ['item_id' => 'scarf', 'slot' => 'neck']],
-            ['equip', ['item_id' => null, 'slot' => 'neck']],
+            ['chest', ['level' => 2]],                                                   // 30 coins
+            ['purchase', ['item' => 'cap', 'price' => 30, 'coins_left' => 0]],
+            ['outfit', ['equipped' => ['hat' => 'cap', 'neck' => 'scarf_teal', 'eyes' => 'sunglasses', 'badge' => 'cap']]],
         ]);
-        $this->assertSame([], $cleared->equipped);
-        $this->assertSame('neck', $cleared->items['scarf']['slot']);
+        $this->assertSame(['hat' => 'cap', 'neck' => 'scarf_teal'], $replay->equipped, 'not owned and wrong slot are dropped');
+
+        $bare = $this->replay([['outfit', ['equipped' => []]]]);
+        $this->assertSame([], $bare->equipped);
     }
 
-    public function test_usage_minutes_add_up_and_class_minutes_are_kept_apart(): void
+    public function test_usage_keeps_the_largest_running_total_per_day(): void
     {
-        $inClass = fn (CarbonImmutable $t) => $t->equalTo($this->time->addSeconds(2));
         $replay = $this->replay([
-            ['usage', ['date' => '2026-10-20', 'minutes' => 10]],
-            ['usage', ['date' => '2026-10-20', 'minutes' => 5, 'window' => 'class']],
-            ['usage', ['date' => '2026-10-20', 'minutes' => 7]],               // device_time inside class
-            ['usage', ['date' => '2026-10-20', 'minutes' => 4, 'window' => 'after_school']],
+            ['usage', ['date' => '2026-10-20', 'minutes' => 1.0]],
+            ['usage', ['date' => '2026-10-20', 'minutes' => 12.7]],
+            ['usage', ['date' => '2026-10-20', 'minutes' => 4]],      // an older total arriving late
+            ['usage', ['date' => '2026-10-21', 'minutes' => 3]],
             ['usage', ['date' => '2026-02-30', 'minutes' => 4]],
-            ['usage', ['date' => '2026-10-21', 'minutes' => -3]],
-        ], $inClass);
-
-        $this->assertSame(['2026-10-20' => ['minutes' => 14, 'class_minutes' => 12]], $replay->usage);
-    }
-
-    public function test_pre_test_places_on_the_lowest_level_without_the_attempt_minimum(): void
-    {
-        $replay = $this->replay([
-            ...$this->correct('phonological_awareness', 2, 3, ['assessment' => 'pre', 'num_choices' => 4]),
-            ...$this->correct('phonics', 3, 3, ['assessment' => 'pre', 'num_choices' => 4]),
-            ['response', ['skill' => 'vocabulary', 'level' => 2, 'correct' => false, 'assessment' => 'pre']],
+            ['usage', ['date' => '2026-10-22', 'minutes' => -3]],
+            ['usage', ['date' => '2026-10-22', 'minutes' => '9']],
         ]);
 
-        // Items update each skill's LOWEST level (PA 1, phonics 1), mastered after 3.
+        $this->assertSame(['2026-10-20' => 12, '2026-10-21' => 3], $replay->usage);
+    }
+
+    public function test_placement_replays_the_pre_test_like_the_client(): void
+    {
+        $pre = fn (string $skill, bool $correct) => ['response', ['skill' => $skill, 'level' => SkillCatalog::minLevel($skill), 'correct' => $correct,
+            'num_choices' => 3, 'assessment' => 'pre']];
+        $replay = $this->replay([
+            $pre('phonological_awareness', true), $pre('phonological_awareness', true), $pre('phonological_awareness', true),
+            $pre('phonics', true), $pre('phonics', true), $pre('phonics', true),
+            $pre('vocabulary', true), $pre('vocabulary', true), $pre('vocabulary', true), $pre('vocabulary', false),
+            ['placement', ['start_level' => 5]],       // the server recomputes; it doesn't trust this number
+            ['assessment', ['kind' => 'pre', 'scores' => ['phonics' => ['correct' => 3, 'total' => 3], 'spelling' => ['correct' => 1, 'total' => 1]],
+                'correct' => 9, 'total' => 10]],
+        ]);
+
+        // Table 3.5 guess rates (not 1/choices) and the FINAL posterior decide mastery.
         $this->assertTrue($replay->states['phonological_awareness:1']['mastered']);
         $this->assertTrue($replay->states['phonics:1']['mastered']);
-        $this->assertSame(0, $replay->states['phonics:3']['attempts']);
-        $this->assertSame(2, $replay->highestUnlocked, 'starts on the lowest level with an unmastered skill');
-        $this->assertSame(['correct' => 3, 'total' => 3], $replay->assessments['pre']['phonics']);
-        $this->assertSame(['correct' => 0, 'total' => 1], $replay->assessments['pre']['vocabulary']);
-        $this->assertSame(0, $replay->responses, 'pre-test items are not gameplay responses');
+        $this->assertFalse($replay->states['vocabulary:2']['mastered'], 'the last answer was wrong');
+        $this->assertSame(3, $replay->states['phonics:1']['attempts']);
+        $this->assertSame(4, $replay->states['vocabulary:2']['attempts']);
+        $this->assertSame(2, $replay->highestUnlocked);
+        $this->assertSame(2, $replay->placedLevel);
+        $this->assertSame([], $replay->history, 'test items are not gameplay answers');
+        $this->assertSame(0, $replay->responses);
+        $this->assertSame(['phonics' => ['correct' => 3, 'total' => 3]], $replay->assessments['pre'], 'the reported scores, unknown skills dropped');
+        $this->assertNotNull($replay->assessedAt['pre']);
+    }
+
+    public function test_placement_without_pre_test_answers_falls_back_to_the_start_level(): void
+    {
+        $replay = $this->replay([['placement', ['start_level' => 3]]]);
+
+        $this->assertSame(3, $replay->highestUnlocked);
+        $this->assertSame(0.2, $replay->states['phonological_awareness:1']['p']);
     }
 
     public function test_post_test_answers_are_scored_but_do_not_move_bkt(): void
@@ -288,6 +320,15 @@ class StudentReplayTest extends TestCase
         $this->assertSame(['correct' => 4, 'total' => 4], $replay->assessments['post']['fluency']);
         $this->assertSame(0.15, $replay->states['fluency:3']['p']);
         $this->assertSame([], $replay->history);
+        $this->assertNull($replay->assessedAt['post'], 'no assessment event yet: the server\'s own tally');
+    }
+
+    public function test_a_clock_jump_is_not_a_teacher_flag(): void
+    {
+        $replay = $this->replay([['flag', ['type' => 'clock_jump', 'from' => 1760000000, 'to' => 1759990000]]]);
+
+        $this->assertSame([], $replay->flags);
+        $this->assertSame([1760000000, 1759990000], [$replay->clockJumps[0]['from'], $replay->clockJumps[0]['to']]);
     }
 
     public function test_the_model_has_the_shape_of_the_clients_student_model(): void

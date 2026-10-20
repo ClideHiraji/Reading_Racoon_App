@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * Minutes a student played on one local date (FR-12). Projection of the synced
- * "usage" events, rebuilt by App\Actions\ReplayStudentEvents. `minutes` counts
- * toward the daily cap; `class_minutes` were played in the class window.
+ * After-school minutes a student played on one local date (FR-12): the daily
+ * cap counts these. Projection of the synced "usage" events, rebuilt by
+ * App\Actions\ReplayStudentEvents.
  */
 class DailyUsage extends Model
 {
@@ -18,14 +18,13 @@ class DailyUsage extends Model
 
     protected $primaryKey = null;
 
-    protected $fillable = ['date', 'minutes', 'class_minutes'];
+    protected $fillable = ['date', 'minutes'];
 
     protected function casts(): array
     {
         return [
             'date' => 'date:Y-m-d',
             'minutes' => 'integer',
-            'class_minutes' => 'integer',
         ];
     }
 

@@ -8,8 +8,8 @@ return new class extends Migration
 {
     /**
      * Raccoon customisations a student bought, and which are equipped (FR-07).
-     * Projection of the synced "purchase" and "equip" events. Item ids come from
-     * the game's shop catalogue.
+     * Projection of the synced "purchase" and "outfit" events. Item ids come from
+     * the game's shop catalogue (config reading_racoon.shop).
      */
     public function up(): void
     {
@@ -19,7 +19,8 @@ return new class extends Migration
             $table->string('slot', 32)->nullable();
             $table->boolean('equipped')->default(false);
             $table->integer('cost')->default(0);
-            $table->timestampTz('acquired_at');
+            // Null for starter items, which every learner owns from the start.
+            $table->timestampTz('acquired_at')->nullable();
             $table->timestampsTz();
 
             $table->primary(['student_id', 'item_id']);

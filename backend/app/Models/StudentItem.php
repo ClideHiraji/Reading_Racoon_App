@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * A raccoon customisation the student owns (FR-07). Projection of the synced
- * "purchase" and "equip" events, rebuilt by App\Actions\ReplayStudentEvents.
+ * "purchase" and "outfit" events, rebuilt by App\Actions\ReplayStudentEvents.
  */
 class StudentItem extends Model
 {

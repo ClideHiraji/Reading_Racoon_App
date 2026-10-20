@@ -39,7 +39,7 @@ final class TemplateReportWriter implements DiagnosticReportWriter
             $isStrong = $s['mastered_levels'] !== [] || ($s['p'] !== null && $s['p'] >= 0.7 && ($s['recent_accuracy'] ?? 0) >= 80);
             $isNeed = $s['review']
                 || in_array($skill, $flagged, true)
-                || ($s['p'] !== null && $s['p'] < 0.3 && $s['attempts'] >= 5)
+                || (! $s['current_mastered'] && $s['p'] !== null && $s['p'] < 0.3 && $s['attempts'] >= 5)
                 || ($s['recent_accuracy'] !== null && $s['recent_accuracy'] < 60 && $s['recent_answers'] >= 5);
 
             if ($isNeed) {
@@ -81,7 +81,7 @@ final class TemplateReportWriter implements DiagnosticReportWriter
                 $mastered[] = "{$s['label']} L{$level}";
             }
         }
-        $stars = $facts['average_stars'] === null ? '' : " (average {$facts['average_stars']} stars)";
+        $stars = $facts['average_stars'] === null ? '' : ' (average '.number_format($facts['average_stars'], 1).' stars)';
         $text = "{$where} Across {$facts['lessons']} lessons{$stars} they gave {$facts['responses']} answers, {$facts['accuracy']}% of them correct. "
             .($mastered === [] ? 'No skill-level is mastered yet.' : 'Mastered '.count($mastered)." of {$total} skill-levels: ".implode(', ', $mastered).'.');
 
@@ -91,6 +91,9 @@ final class TemplateReportWriter implements DiagnosticReportWriter
                 $items = array_sum(array_column($facts[$key], 'total'));
                 $text .= " {$label}: {$correct}/{$items} correct.";
             }
+        }
+        if ($facts['placed_level'] !== null) {
+            $text .= " The pre-test placed them on Map Level {$facts['placed_level']}.";
         }
 
         return $text;

@@ -162,7 +162,7 @@ class TeacherDashboardTest extends TestCase
         $response = $this->get(route('teacher.students.show', $student))->assertOk();
         $response->assertSee('Mastery over time')->assertSee('bktChart', false);
         $response->assertSee('7/8 correct')->assertSee("Racoon's Rescue", false)->assertSee('12 min');
-        $this->assertCount(3, $response->viewData('series')['phonics']);
+        $this->assertCount(3, $response->viewData('series')['phonics:1']);
         $this->assertSame(1, AuditLog::where('action', 'student.view')->count());
     }
 

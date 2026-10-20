@@ -35,7 +35,7 @@
 
 <section class="card" aria-labelledby="chart-title">
     <h2 id="chart-title">Mastery over time</h2>
-    <p class="muted small">P(L) after each answer, per sub-skill. The dashed line is mastery (0.95, after at least 5 answers at that level). Hover a point for its level.</p>
+    <p class="muted small">P(L) after each answer: one line per sub-skill and level (solid L1, dashed for higher levels). The grey line is mastery (0.95, after at least 5 answers at that level).</p>
     @if ($replay->history === [])
         <p class="muted">No answers synced yet.</p>
     @else
@@ -103,10 +103,10 @@
             <p class="muted">No play time synced yet.</p>
         @else
             <table class="small">
-                <thead><tr><th>Date</th><th>After school / weekend</th><th>In class</th></tr></thead>
+                <thead><tr><th>Date</th><th>After school / weekend</th></tr></thead>
                 <tbody>
                 @foreach ($usage as $day)
-                    <tr><td>{{ $day->date->format('D, M j') }}</td><td>{{ $day->minutes }} min</td><td>{{ $day->class_minutes }} min</td></tr>
+                    <tr><td>{{ $day->date->format('D, M j') }}</td><td>{{ $day->minutes }} min</td></tr>
                 @endforeach
                 </tbody>
             </table>
@@ -161,10 +161,14 @@
         const series = @json($series);
         const labels = @json(collect(SkillCatalog::skills())->mapWithKeys(fn ($s) => [$s => SkillCatalog::label($s)]));
         const colors = @json($colors);
-        const datasets = Object.keys(series).map(skill => ({
-            label: labels[skill], data: series[skill], borderColor: colors[skill], backgroundColor: colors[skill],
-            pointRadius: 3, tension: 0.15, spanGaps: true,
-        }));
+        const dashes = {1: [], 2: [6, 3], 3: [2, 3], 4: [8, 3, 2, 3], 5: [1, 2]};
+        const datasets = Object.keys(series).map(key => {
+            const [skill, level] = key.split(':');
+            return {
+                label: `${labels[skill]} L${level}`, data: series[key], borderColor: colors[skill], backgroundColor: colors[skill],
+                borderDash: dashes[level], pointRadius: 3, tension: 0.15, spanGaps: true,
+            };
+        });
         const last = Math.max(...Object.values(series).flat().map(p => p.x));
         datasets.push({label: 'Mastery 0.95', data: [{x: 1, y: 0.95}, {x: last, y: 0.95}], borderColor: '#999',
             borderDash: [6, 4], pointRadius: 0, borderWidth: 1});
@@ -176,7 +180,7 @@
                 scales: {x: {type: 'linear', title: {display: true, text: 'Answer number'}, ticks: {precision: 0}},
                     y: {min: 0, max: 1, title: {display: true, text: 'P(L)'}}},
                 plugins: {tooltip: {callbacks: {label: c => c.raw.level
-                    ? `${c.dataset.label} L${c.raw.level}: ${Math.round(c.raw.y * 100)}% (${c.raw.correct ? 'correct' : 'wrong'}${c.raw.pre ? ', pre-test' : ''})`
+                    ? `${c.dataset.label}: ${Math.round(c.raw.y * 100)}% (${c.raw.correct ? 'correct' : 'wrong'})`
                     : c.dataset.label}}},
             },
         });

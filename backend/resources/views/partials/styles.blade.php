@@ -69,6 +69,10 @@
     .flag-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: .35rem; vertical-align: middle; }
     .bar { background: var(--soft); border-radius: 999px; height: 10px; overflow: hidden; min-width: 80px; }
     .bar > span { display: block; height: 100%; background: var(--teal); }
+    .skill-row { display: flex; gap: .45rem; align-items: center; flex-wrap: nowrap; line-height: 1.7; }
+    .skill-row .skill-name { width: 118px; flex: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .skill-row .bar { flex: 1; min-width: 60px; }
+    .skill-row .muted { flex: none; }
     .code-card { font-family: ui-monospace, Consolas, monospace; font-size: 1.6rem; font-weight: 800; letter-spacing: .12em; background: #fff; border: 2px dashed var(--teal); border-radius: 10px; padding: .6rem 1rem; display: inline-block; }
     .chart-box { position: relative; height: 280px; }
     .tabs { display: flex; gap: .25rem; margin-bottom: 1rem; flex-wrap: wrap; }

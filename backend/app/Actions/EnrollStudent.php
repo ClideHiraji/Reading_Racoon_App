@@ -13,8 +13,8 @@ use Illuminate\Support\Facades\DB;
 
 /**
  * Adds a learner to a section (FR-16): a student user with a fresh login code,
- * a pseudonymous student code for exports (RA 10173), the 14 BKT states at each sub-skill's P(L0) (FR-03, D-003), an empty wallet
- * and path progress at map level 1.
+ * a pseudonymous student code for exports (RA 10173), the 14 BKT states at each sub-skill's P(L0) (FR-03, D-003), an empty wallet,
+ * the starter outfit and path progress at map level 1.
  */
 final class EnrollStudent
 {
@@ -44,6 +44,11 @@ final class EnrollStudent
             ], SkillCatalog::states()));
             $student->wallet()->create();
             $student->pathProgress()->create();
+            // Starter outfit, as Wardrobe in the client (FR-07).
+            foreach (config('reading_racoon.shop.starter') as $item) {
+                $student->items()->make(['item_id' => $item, 'slot' => config("reading_racoon.shop.items.$item.slot"),
+                    'equipped' => true, 'cost' => 0])->save();
+            }
 
             return ['student' => $student, 'login_code' => LoginCode::format($code)];
         });

@@ -48,9 +48,9 @@ class AccessStatusTest extends TestCase
         return $this->getJson('/api/access/student/status')->assertOk();
     }
 
-    private function played(string $date, int $minutes, int $classMinutes = 0): void
+    private function played(string $date, int $minutes): void
     {
-        $this->student->dailyUsage()->create(['date' => $date, 'minutes' => $minutes, 'class_minutes' => $classMinutes]);
+        $this->student->dailyUsage()->create(['date' => $date, 'minutes' => $minutes]);
     }
 
     public function test_the_class_window_allows_everything_and_counts_down_to_its_end(): void
@@ -87,7 +87,7 @@ class AccessStatusTest extends TestCase
             ->assertJsonPath('window', 'after_school')
             ->assertJsonPath('minutes_left', 30);
 
-        $this->played('2026-10-20', 22, classMinutes: 40);
+        $this->played('2026-10-20', 22);
         $this->at('2026-10-20 15:10')
             ->assertJsonPath('minutes_left', 8)
             ->assertJsonPath('used_minutes', 22);

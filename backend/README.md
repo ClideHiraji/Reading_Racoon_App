@@ -70,7 +70,7 @@ How the portal stays hidden:
 
 ## Gemini teacher report: set up (FR-05, FR-21)
 
-The report's two summary paragraphs are written by Gemini; the lists and the table under them come from the numbers ([D-015](../brain/decisions/D-015%20Gemini%20teacher%20report.md)). It stays off, and every report uses the template, until all three `LLM_*` values are set.
+The report's two summary paragraphs are written by Gemini; the lists and the table under them come from the numbers ([D-018](../brain/decisions/D-018%20Gemini%20teacher%20report.md)). It stays off, and every report uses the template, until all three `LLM_*` values are set.
 
 1. **API key** from Google AI Studio, created under the **billing-enabled** Google Cloud project that holds the AI Pro credits (paid terms only: free-tier prompts may be used by Google, [D-002](../brain/decisions/D-002%20AI%20model%20Gemini.md)). Set a budget alert on the billing account.
 2. **`.env`** (never commit it):
@@ -117,7 +117,7 @@ Tests run on the `reading_racoon_test` PostgreSQL database (`phpunit.xml`), neve
 | `/teacher/sections/{id}` | Class dashboard: mastery per sub-skill, ARAL band counts (from each learner's highest unlocked map level), colour-coded open intervention flags (red: rescue limit, orange: failed Heart Recovery, amber: P(L) < 0.30 after 5+ answers), the roster with add/remove, new login code, parental consent. |
 | `/teacher/students/{id}` | BKT chart over time (one line per sub-skill and level), the 14 skill-levels, lessons and Racoon's Rescue history, flags, play time. |
 | `/teacher/sections/{id}/schedule` | Class window, after-school window, daily after-school minutes, weekends on/off. |
-| `/teacher/students/{id}/report` (+ `.pdf`) | Diagnostic summary with PDF export (dompdf): two paragraphs written by Gemini once a checked version exists for the current numbers, otherwise by the template; the lists and table always come from the numbers ([D-015](../brain/decisions/D-015%20Gemini%20teacher%20report.md)). |
+| `/teacher/students/{id}/report` (+ `.pdf`) | Diagnostic summary with PDF export (dompdf): two paragraphs written by Gemini once a checked version exists for the current numbers, otherwise by the template; the lists and table always come from the numbers ([D-018](../brain/decisions/D-018%20Gemini%20teacher%20report.md)). |
 
 Teachers only ever see their own sections: another teacher's section, learner or flag answers 404. Charts use Chart.js 4.4.1 from jsDelivr; without internet the tables under the charts still show every number. Every teacher action is written to the audit log.
 

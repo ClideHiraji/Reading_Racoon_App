@@ -56,7 +56,7 @@ class PrivacyController extends Controller
             ['Unused game tokens', $staleTokens === 0 ? 'ok' : 'warn', "{$staleTokens} Sanctum token(s) unused for 90 days."],
             ['Third-party AI processing', LlmClient::enabled() ? 'warn' : 'ok', LlmClient::enabled()
                 ? 'Gemini ('.LlmClient::model().') is on. Only learners with parental consent are sent, as student code and scores (no names or dates); '
-                    .$aiCalls.' call(s) in the last 30 days, '.$aiUnconsented.' for learners without consent now. Use paid (billing-enabled) terms (docs/knowledge/08-ai-integration.md, D-015).'
+                    .$aiCalls.' call(s) in the last 30 days, '.$aiUnconsented.' for learners without consent now. Use paid (billing-enabled) terms (docs/knowledge/08-ai-integration.md, D-018).'
                 : 'The AI is off (LLM_* not set in .env); reports use the template and nothing leaves the server.'],
         ];
 

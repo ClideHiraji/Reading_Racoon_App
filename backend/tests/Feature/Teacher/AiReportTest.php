@@ -25,7 +25,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 /**
- * The Gemini teacher report (FR-05, FR-21, D-015): only checked replies are
+ * The Gemini teacher report (FR-05, FR-21, D-018): only checked replies are
  * shown, every call is logged, failures fall back to the template, and only
  * learners with parental consent are ever sent. Gemini is faked throughout.
  */

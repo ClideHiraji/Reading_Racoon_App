@@ -7,7 +7,7 @@ graphify: submitted
 tags: [decision, ai, backend, teacher]
 ---
 
-# D-015 Gemini teacher report
+# D-018 Gemini teacher report
 
 **Decision:** Gemini writes the **two summary paragraphs** of the teacher report; the lists under them (strengths, needs support, classroom activities) and the sub-skill table stay rule-based. A queued job writes the report and stores it; the report page only ever shows a stored, checked AI version or the template.
 

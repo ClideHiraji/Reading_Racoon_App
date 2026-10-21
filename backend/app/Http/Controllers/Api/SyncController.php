@@ -36,7 +36,7 @@ class SyncController extends Controller
             $replay->handle($student);
         }
         if ($result['stored'] !== []) {
-            // The Gemini teacher report, a few minutes later (D-015).
+            // The Gemini teacher report, a few minutes later (D-018).
             WriteAiReport::queueFor($student, afterSync: true);
         }
         $this->logNewEvents($student->code, $result['stored'], $request->user()->id);

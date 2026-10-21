@@ -12,7 +12,7 @@ use Illuminate\Support\Sleep;
 use UnexpectedValueException;
 
 /**
- * The Gemini teacher report (FR-05, FR-21, D-015): the template's lists with
+ * The Gemini teacher report (FR-05, FR-21, D-018): the template's lists with
  * two AI-written paragraphs. Each call is logged in ai_logs; a reply is used
  * only if it passes AiReportCheck. After `attempts` failed calls (or one that
  * can't succeed on retry, such as a bad key) the template's own paragraphs

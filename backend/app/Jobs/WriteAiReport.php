@@ -14,7 +14,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 
 /**
- * Writes the Gemini teacher report for one learner (FR-05, FR-21, D-015).
+ * Writes the Gemini teacher report for one learner (FR-05, FR-21, D-018).
  * Queued delay_minutes after a sync (syncs meanwhile don't queue another, so
  * one play session gives one report), or when a teacher opens a report that
  * has no AI version for the current numbers. Facts that already have a

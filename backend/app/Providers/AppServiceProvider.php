@@ -16,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        // The report seam (FR-05, D-012, D-015): pages show the stored Gemini
+        // The report seam (FR-05, D-012, D-018): pages show the stored Gemini
         // paragraphs; App\Jobs\WriteAiReport calls GeminiReportWriter.
         $this->app->bind(DiagnosticReportWriter::class, StoredReportWriter::class);
     }

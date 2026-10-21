@@ -8,7 +8,7 @@ use App\Support\LlmClient;
 use Illuminate\Console\Command;
 
 /**
- * Writes the Gemini teacher report now, without the queue (D-015): to check
+ * Writes the Gemini teacher report now, without the queue (D-018): to check
  * the LLM settings in .env, or to produce reports for the teachers' rating
  * (MLDLC Stage 4). Each call is in ai_logs like any other.
  */

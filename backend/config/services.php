@@ -29,7 +29,7 @@ return [
     ],
 
     // Gemini through its OpenAI-compatible endpoint, called only from Laravel
-    // (docs/knowledge/08-ai-integration.md, D-002, D-015). Off until all three are set.
+    // (docs/knowledge/08-ai-integration.md, D-002, D-018). Off until all three are set.
     'llm' => [
         'base_url' => env('LLM_BASE_URL'),
         'key' => env('LLM_API_KEY'),

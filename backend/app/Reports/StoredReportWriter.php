@@ -7,7 +7,7 @@ use App\Models\AiReport;
 use App\Models\Student;
 
 /**
- * What the teacher's report page and PDF use (FR-05, FR-18, D-015): the
+ * What the teacher's report page and PDF use (FR-05, FR-18, D-018): the
  * template's lists with the stored Gemini paragraphs written for exactly
  * these numbers. Without one, the template's own paragraphs are shown and an
  * AI version is queued (if AI is on and consent is on file), so a reload a

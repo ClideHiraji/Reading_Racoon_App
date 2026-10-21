@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * The Gemini teacher report (FR-05, FR-21, D-015).
+     * The Gemini teacher report (FR-05, FR-21, D-018).
      *
      * - ai_logs: every LLM call, failed ones too: task, prompt version, model,
      *   the JSON injected into the prompt (student code and scores, never a

@@ -10,4 +10,4 @@ What happened: the game syncs after every lesson and every 2 minutes, but the Ge
 
 **So:** for "do this once after a burst of events", dispatch a unique job with a delay and load the data inside `handle()`, not in the constructor. Set `$uniqueFor` (here 1 hour): without a running queue worker the lock would otherwise never be released. Under `Queue::fake()` the lock is still taken, so a test can assert one push for two syncs.
 
-Related: [[D-015 Gemini teacher report]], [[D-008 Offline sync contract]]
+Related: [[D-018 Gemini teacher report]], [[D-008 Offline sync contract]]

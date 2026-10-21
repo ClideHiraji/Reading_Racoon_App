@@ -7,7 +7,7 @@ use UnexpectedValueException;
 
 /**
  * Checks Gemini's report text against the facts it was given before anyone
- * sees it (FR-05, D-015, docs/knowledge/08-ai-integration.md "Validate output"):
+ * sees it (FR-05, D-018, docs/knowledge/08-ai-integration.md "Validate output"):
  *
  * - two plain paragraphs, not too short or long, no list or heading formatting;
  * - no learner code other than this learner's;

@@ -103,7 +103,7 @@ return [
         5 => ['world' => 'Mount Mayapay', 'name' => 'Proficient', 'band' => 'Grade-Level Proficient'],
     ],
 
-    // The Gemini teacher report (FR-05, D-015, docs/knowledge/08-ai-integration.md).
+    // The Gemini teacher report (FR-05, D-018, docs/knowledge/08-ai-integration.md).
     // Only for learners with parental consent on file, and only while services.llm is set.
     'ai_report' => [
         // Thesis prompt design (MLDLC Stage 3): temperature 0.3, ~250 tokens of text.

@@ -8,7 +8,7 @@ use Carbon\CarbonImmutable;
  * Diagnostic summary built only from the numbers (FR-05, FR-18). Its lists
  * (strengths, needs, activities) are always shown; its two paragraphs are
  * replaced by Gemini's once a checked AI version exists, and stay as the
- * fallback when the LLM is off, fails or its output doesn't validate (D-015).
+ * fallback when the LLM is off, fails or its output doesn't validate (D-018).
  * Every sentence quotes the facts, so it can't invent anything.
  */
 final class TemplateReportWriter implements DiagnosticReportWriter
@@ -56,7 +56,7 @@ final class TemplateReportWriter implements DiagnosticReportWriter
 
     /**
      * Which unlocked sub-skills are strengths and which need support, from the
-     * numbers alone. The Gemini prompt is given the same split (D-015), so the
+     * numbers alone. The Gemini prompt is given the same split (D-018), so the
      * AI paragraphs and the lists under them agree.
      *
      * @param  array<string, mixed>  $facts

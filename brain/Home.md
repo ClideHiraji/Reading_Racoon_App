@@ -32,7 +32,7 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 - [[D-012 Teacher web dashboard]]
 - [[D-013 Hidden admin portal]]
 - [[D-014 Time-restricted access rules]]
-- [[D-015 Gemini teacher report]]
+- [[D-018 Gemini teacher report]]
 
 ## Still open (from [[10-open-issues]])
 - 🔴 Timeline: a 4-month evaluation doesn't fit before November. Re-plan with the adviser (issue 11).
@@ -44,7 +44,7 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 ## Devlog
 - [[2026-10-17]]: thesis analyzed, knowledge base, decisions D-001 to D-005, GitHub, Godot project.
 - [[2026-10-20]]: blueprint page, Obsidian + Graphify brain, first playable game slice (D-007), first Laravel backend slice (D-008), server BKT replay, teacher dashboard and hidden admin portal (D-011 to D-014).
-- [[2026-10-21]]: Gemini teacher report with output checks and `ai_logs` (D-015).
+- [[2026-10-21]]: Gemini teacher report with output checks and `ai_logs` (D-018).
 
 ## Learnings
 - [[BKT passes 0.95 after 3 correct]]

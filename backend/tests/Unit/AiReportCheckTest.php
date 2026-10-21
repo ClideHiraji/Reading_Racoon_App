@@ -7,7 +7,7 @@ use Tests\TestCase;
 use UnexpectedValueException;
 
 /**
- * The checks a Gemini report must pass before a teacher sees it (FR-05, D-015).
+ * The checks a Gemini report must pass before a teacher sees it (FR-05, D-018).
  */
 class AiReportCheckTest extends TestCase
 {

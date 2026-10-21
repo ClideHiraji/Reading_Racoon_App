@@ -8,16 +8,9 @@
 *.pem
 google-services.json
 
-# --- Unity ---
-[Ll]ibrary/
-[Tt]emp/
-[Oo]bj/
-[Bb]uild/
-[Bb]uilds/
-[Ll]ogs/
-[Uu]ser[Ss]ettings/
-[Mm]emoryCaptures/
-[Rr]ecordings/
+# --- Build outputs and IDE files ---
+# The old Unity folder patterns ([Ll]ibrary/, [Tt]emp/, [Bb]uild/, [Ll]ogs/...)
+# were removed: they matched at any depth and hid reading-racoon/scenes/library/.
 *.csproj
 *.unityproj
 *.sln

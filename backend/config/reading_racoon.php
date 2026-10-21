@@ -103,6 +103,28 @@ return [
         5 => ['world' => 'Mount Mayapay', 'name' => 'Proficient', 'band' => 'Grade-Level Proficient'],
     ],
 
+    // Teacher-picked Library books and Watch & Listen videos (game D-017,
+    // D-019). The game shows them as "From your teacher". Only openly licensed
+    // material; files are private and reached only through the API.
+    'content' => [
+        'languages' => ['en' => 'English', 'fil' => 'Filipino', 'bis' => 'Bisaya'],
+        'levels' => ['easy', 'medium', 'hard'],
+        // Paper-cut scenes the game can draw (D-009).
+        'scenes' => ['river', 'grove', 'village', 'bay', 'mountain', 'home'],
+        'licences' => ['CC BY 4.0', 'CC BY-SA 4.0', 'CC BY-NC 4.0', 'CC BY-NC-SA 4.0', 'CC BY 3.0', 'CC0 1.0', 'Public domain'],
+        // Picture names the game has icons for (reading-racoon/assets/icons).
+        'pictures' => ['ant', 'apple', 'bag', 'ball', 'banana', 'bear', 'bee', 'boat', 'bolt', 'book', 'box', 'bulb', 'bus',
+            'butterfly', 'cake', 'car', 'cat', 'check', 'chest', 'chest_open', 'cloud', 'coins', 'crown', 'dog', 'ear',
+            'elephant', 'fish', 'fox', 'frog', 'gift', 'goat', 'grapes', 'hand', 'hat', 'heart', 'heart_plus', 'hen',
+            'house', 'hut', 'lock', 'moon', 'mountain', 'mouse', 'night', 'palm', 'pear', 'pencil', 'rabbit', 'raccoon',
+            'repeat', 'scissors', 'snake', 'sparkles', 'speaker', 'star', 'stories', 'sun', 'talk', 'tree', 'trophy', 'waves'],
+        'max_pages' => 12,
+        'max_video_mb' => (int) env('CONTENT_MAX_VIDEO_MB', 50),
+        'max_image_kb' => 2048,
+        // Laravel's private "local" disk (storage/app/private): never web-served.
+        'disk' => 'local',
+    ],
+
     // Teacher-facing sub-skill names (MATATAG competency areas, FR-09).
     'skill_labels' => [
         'phonological_awareness' => 'Phonological Awareness',

@@ -12,6 +12,8 @@ use Tests\TestCase;
  * Boots the app with a random ADMIN_PATH (routes are registered at boot, so
  * it must be in the environment before the app is created). The value exists
  * only for the length of one test; no real secret is ever written down.
+ * phpunit.xml pins ADMIN_PATH to "" so the developer's .env value is never
+ * loaded (Dotenv would then overwrite ours in later tests).
  */
 abstract class AdminTestCase extends TestCase
 {
@@ -36,8 +38,9 @@ abstract class AdminTestCase extends TestCase
     protected function tearDown(): void
     {
         parent::tearDown();
-        unset($_ENV['ADMIN_PATH'], $_SERVER['ADMIN_PATH']);
-        putenv('ADMIN_PATH');
+        // Back to phpunit.xml's empty value, not unset: unset would let .env's value in.
+        $_ENV['ADMIN_PATH'] = $_SERVER['ADMIN_PATH'] = '';
+        putenv('ADMIN_PATH=');
     }
 
     protected function admin(string $path = ''): string

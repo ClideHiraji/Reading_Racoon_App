@@ -18,7 +18,7 @@ class LogController extends Controller
     /** Audit actions that change or move learner data: highlighted for review. */
     public const SENSITIVE_ACTIONS = [
         'student.remove', 'student.new_code', 'student.consent_cleared', 'registration.approve',
-        'registration.deny', 'export.students', 'export.bkt_history', 'admin.session_expired',
+        'registration.deny', 'export.students', 'export.bkt_history', 'admin.session_expired', 'content.unpublish',
     ];
 
     public function index(Request $request): View

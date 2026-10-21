@@ -6,6 +6,7 @@ use Database\Factories\SectionFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -43,5 +44,15 @@ class Section extends Model
     public function schedule(): HasOne
     {
         return $this->hasOne(AccessSchedule::class);
+    }
+
+    /**
+     * Library books and videos assigned to this section (D-019).
+     *
+     * @return BelongsToMany<ContentItem, $this>
+     */
+    public function contentItems(): BelongsToMany
+    {
+        return $this->belongsToMany(ContentItem::class, 'content_item_section');
     }
 }

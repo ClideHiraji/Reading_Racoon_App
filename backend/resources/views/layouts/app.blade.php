@@ -18,6 +18,7 @@
         <nav class="nav" aria-label="Main">
             @auth
                 <a href="{{ route('teacher.home') }}" @class(['active' => request()->routeIs('teacher.home')])>My sections</a>
+                <a href="{{ route('teacher.content.index') }}" @class(['active' => request()->routeIs('teacher.content.*')])>Library &amp; Videos</a>
                 <span class="muted small">{{ auth()->user()->name }}</span>
                 <form method="POST" action="{{ route('logout') }}" class="inline">
                     @csrf

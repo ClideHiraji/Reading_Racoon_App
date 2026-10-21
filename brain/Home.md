@@ -32,6 +32,7 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 - [[D-012 Teacher web dashboard]]
 - [[D-013 Hidden admin portal]]
 - [[D-014 Time-restricted access rules]]
+- [[D-019 Teacher content manifest]]
 
 ## Still open (from [[10-open-issues]])
 - 🔴 Timeline: a 4-month evaluation doesn't fit before November. Re-plan with the adviser (issue 11).
@@ -62,6 +63,7 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 - [[Blade inline php swallows a later php block]]
 - [[migrate fresh keeps PostgreSQL functions]]
 - [[A hidden route needs a catch-all against 405]]
+- [[Dotenv overwrites what it loaded itself]]
 
 ## Links
 - Visual blueprint (private page): https://claude.ai/artifact/TPcwMuVYMvR9gx8ypBMYB9

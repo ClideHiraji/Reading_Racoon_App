@@ -36,7 +36,8 @@ Spec: [`docs/knowledge/03-architecture.md`](../docs/knowledge/03-architecture.md
    php artisan migrate --seed
    ```
    The seeder creates an approved demo teacher `teacher@demo.test` who owns the section "Grade 1 - Demo" with students Ana and Ben, and **prints the teacher's random password and the students' login codes once** (only hashes are stored). It never creates an admin.
-5. **Run it:** `php artisan serve` (http://127.0.0.1:8000). Teachers sign in at `/login`. An Android phone on the same Wi-Fi needs `php artisan serve --host=0.0.0.0` and the PC's LAN address.
+5. **Video uploads:** XAMPP's PHP allows 40 MB uploads by default. For 50 MB videos set `upload_max_filesize = 64M` and `post_max_size = 64M` in `C:\xampp\php\php.ini` (or lower `CONTENT_MAX_VIDEO_MB` in `.env`).
+6. **Run it:** `php artisan serve` (http://127.0.0.1:8000). Teachers sign in at `/login`. An Android phone on the same Wi-Fi needs `php artisan serve --host=0.0.0.0` and the PC's LAN address.
 
 ## Hidden admin portal: set up
 
@@ -74,7 +75,7 @@ How the portal stays hidden:
 php artisan test
 ```
 
-Tests run on the `reading_racoon_test` PostgreSQL database (`phpunit.xml`), never SQLite. Admin tests boot the app with a random `ADMIN_PATH` that exists only for that test. **All 114 pass on PostgreSQL 18.6.**
+Tests run on the `reading_racoon_test` PostgreSQL database (`phpunit.xml`), never SQLite. Admin tests boot the app with a random `ADMIN_PATH` that exists only for that test. **All 125 pass on PostgreSQL 18.6.**
 
 `php artisan db:show` needs PHP's `intl` extension for its size column (`extension=intl` in `php.ini`); the app itself doesn't.
 
@@ -87,6 +88,7 @@ Tests run on the `reading_racoon_test` PostgreSQL database (`phpunit.xml`), neve
 | `/teacher/sections/{id}` | Class dashboard: mastery per sub-skill, ARAL band counts (from each learner's highest unlocked map level), colour-coded open intervention flags (red: rescue limit, orange: failed Heart Recovery, amber: P(L) < 0.30 after 5+ answers), the roster with add/remove, new login code, parental consent. |
 | `/teacher/students/{id}` | BKT chart over time (one line per sub-skill and level), the 14 skill-levels, lessons and Racoon's Rescue history, flags, play time. |
 | `/teacher/sections/{id}/schedule` | Class window, after-school window, daily after-school minutes, weekends on/off. |
+| `/teacher/content` | **Library & Videos** (D-019): add an openly licensed book page by page (text, scene, pictures, optional page picture, key words, two picture questions) or upload an Ogg video (`.ogv`, up to `CONTENT_MAX_VIDEO_MB`, default 50) with an optional check question; licence and source link are required. Assign to your sections, then publish; tablets download it at their next sync. |
 | `/teacher/students/{id}/report` (+ `.pdf`) | Diagnostic summary built from the numbers, with PDF export (dompdf). The Gemini-written version plugs in later behind `App\Reports\DiagnosticReportWriter` ([D-012](../brain/decisions/D-012%20Teacher%20web%20dashboard.md)). |
 
 Teachers only ever see their own sections: another teacher's section, learner or flag answers 404. Charts use Chart.js 4.4.1 from jsDelivr; without internet the tables under the charts still show every number. Every teacher action is written to the audit log.
@@ -99,6 +101,7 @@ Teachers only ever see their own sections: another teacher's section, learner or
 | Registrations | Approve, deny or revoke teachers, with an optional note. |
 | Logs | System log (sign-ins, access decisions, sync problems, device lock screens, clock jumps, server errors) and audit log (every admin and teacher action), filtered by event, level, date and text. Anomalies and sensitive actions are highlighted. |
 | Privacy audit | RA 10173 checks: consent coverage, 2FA on every admin, portal path, IP allowlist, debug mode, HTTPS, append-only audit log, inactive learners, unused tokens, third-party AI; the personal data stored; who opened learner data in the last 30 days. |
+| Content | Every teacher's Library books and videos with their licence and source; open the files and unpublish anything unsuitable (audit-logged). |
 | Research export | `students.csv` (levels, accuracy, pre/post-test scores per sub-skill, final P(L) of the 14 skill-levels) and `bkt-history.csv` (every replayed answer). **Consented learners only, student codes only, never names.** |
 
 ## API v1
@@ -250,6 +253,42 @@ Student token only. The section's schedule and today's decision, in the school's
 
 `status` covers **Adventure** (lessons and the pre/post-test). Practice, Library and Watch & Listen stay open from `day_start` to `day_end` and share `free_play_minutes` a day outside the class window; the game enforces that with the same `schedule` (game D-015). `window` is `class`, `after_school`, `weekend` or `null`; `opens_at` is when play opens next (UTC), or `null` while open. `used_minutes` comes from the synced `usage` events. Sections without their own schedule use the defaults above. Holidays aren't modelled yet.
 
+### `GET /api/content/manifest` (D-019, game D-017)
+
+Student token only. The teacher-picked Library books and Watch & Listen videos for the learner's section: only **published** items the teacher **assigned to that section**. `books` and `watch` have exactly the shapes of the game's `content/library.json` (`books`) and `content/watch.json` (`items`), so the game can save them as `user://content/library.json` and `user://content/watch.json` (they show as "From your teacher").
+
+```json
+{
+  "version": "3f9a1c2b7d4e5f60",
+  "books": [{
+    "id": "tb-k2m9q7xa", "title": "Ang Bangka ni Lolo", "language": "fil", "level": "easy", "cover": "river",
+    "credit": "Ang Bangka ni Lolo by A. Writer, Pratham Books, CC BY 4.0", "licence": "CC BY 4.0",
+    "source_url": "https://storyweaver.org.in/stories/1234",
+    "words": [{"word": "bangka", "picture": "boat"}],
+    "pages": [
+      {"text": "May bangka si Lolo.", "scene": "river", "pictures": ["boat", "raccoon"]},
+      {"text": "Nakakita siya ng isda.", "scene": "bay", "pictures": ["fish"],
+       "image_url": "/api/content/files/7b0c...", "image": "user://content/7b0c....png", "image_sha256": "..."}
+    ],
+    "questions": [{"prompt": "Ano ang mayroon si Lolo?", "choices": [{"id": "bangka", "label": "bangka", "picture": "boat"}, {"id": "bus", "label": "bus", "picture": "bus"}], "answer": "bangka"}]
+  }],
+  "watch": [{
+    "id": "tv-p4r8s2dz", "kind": "video", "title": "Mga Hayop sa Bukid", "language": "fil", "scene": "grove", "minutes": 3,
+    "credit": "...", "licence": "CC BY 4.0", "source_url": "https://...",
+    "file": "user://content/tv-p4r8s2dz.ogv", "file_url": "/api/content/files/1e5d...", "size_bytes": 18350080, "sha256": "...",
+    "check": {"prompt": "Alin ang aso?", "choices": [{"id": "aso", "label": "aso", "picture": "dog"}], "answer": "aso"}
+  }],
+  "server_time": "2026-10-21T04:35:00Z"
+}
+```
+- `version` changes whenever an item is added, removed, edited, published/unpublished or gets a new file. The reply has `ETag: "<version>"`; send `If-None-Match: "<version>"` to get `304 Not Modified` with no body.
+- `language` is `en`, `fil` or `bis`; `level` `easy|medium|hard`; `cover`/`scene` one of the game's scenes (`river, grove, village, bay, mountain, home`); pictures are names from the game's icon set. `check` is optional; a page `image_*` appears only when the teacher uploaded a page picture.
+- `file_url`/`image_url` are paths relative to the server URL. `file`/`image` are where the game should keep the download (`MediaLibrary.video_ready()` looks for `file`).
+
+### `GET /api/content/files/{id}` (D-019)
+
+Student token only. Streams a video (`video/ogg`) or page picture (`image/png`, `image/jpeg`) with `X-Content-SHA256` (compare it, or the manifest's `sha256`, after saving). Range requests work, so an interrupted download can resume. Anything not published and assigned to the learner's section, or an unknown id, is `404`. Files live on Laravel's private disk as `content/<uuid>.<ext>`: no public URL, no learner or teacher data in names (RA 10173).
+
 ## Database
 
 | Table | Holds | Keys |
@@ -266,6 +305,7 @@ Student token only. The section's schedule and today's decision, in the school's
 | `access_schedules` | Per section: class and after-school windows, daily minutes, weekends | `section_id` |
 | `daily_usage` | After-school minutes per student per local date | `(student_id, date)` |
 | `sync_events` | Raw client events: `uuid` (unique), `type`, `payload` jsonb, `device_time`, `received_at` | bigint `id` = arrival order |
+| `content_items`, `content_item_section`, `content_files` | Teacher-picked books and videos (game JSON shapes in `body`), their sections, and their files (path, size, SHA-256) on the private disk | `tb-`/`tv-` string ids; files by uuid |
 | `audit_logs` | Every admin and teacher action. **Append-only**: a trigger refuses UPDATE and DELETE | bigint |
 | `system_logs` | Sign-ins, access decisions, sync problems, server errors, with an `anomaly` flag | bigint |
 

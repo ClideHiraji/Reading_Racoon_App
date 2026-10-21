@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AccessStatusController;
 use App\Http\Controllers\Api\ConfigController;
+use App\Http\Controllers\Api\ContentController;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\StudentMeController;
 use App\Http\Controllers\Api\SyncController;
@@ -17,5 +18,7 @@ Route::middleware(['auth:sanctum', 'role:student'])->group(function () {
     Route::middleware('throttle:api')->group(function () {
         Route::get('/student/me', StudentMeController::class);                       // FR-03, FR-07
         Route::get('/access/student/status', AccessStatusController::class);         // FR-12
+        Route::get('/content/manifest', [ContentController::class, 'manifest']);      // D-019
+        Route::get('/content/files/{file}', [ContentController::class, 'file'])->whereUuid('file'); // D-019
     });
 });

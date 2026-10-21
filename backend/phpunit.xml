@@ -27,6 +27,9 @@
         <env name="DB_CONNECTION" value="pgsql" force="true"/>
         <env name="DB_DATABASE" value="reading_racoon_test" force="true"/>
         <env name="DB_URL" value=""/>
+        <!-- Never the real admin path from .env: admin tests set their own random one (D-013). -->
+        <env name="ADMIN_PATH" value="" force="true"/>
+        <env name="ADMIN_ALLOWED_IPS" value="" force="true"/>
         <env name="MAIL_MAILER" value="array"/>
         <env name="QUEUE_CONNECTION" value="sync"/>
         <env name="SESSION_DRIVER" value="array"/>

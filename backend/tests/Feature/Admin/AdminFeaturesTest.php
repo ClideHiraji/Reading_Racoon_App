@@ -6,6 +6,7 @@ use App\Actions\EnrollStudent;
 use App\Actions\ReplayStudentEvents;
 use App\Enums\RegistrationStatus;
 use App\Models\AuditLog;
+use App\Models\ContentItem;
 use App\Models\Student;
 use App\Models\SystemLog;
 use App\Models\User;
@@ -125,6 +126,24 @@ class AdminFeaturesTest extends AdminTestCase
         $audit = AuditLog::where('action', 'export.students')->sole();
         $this->assertSame(1, $audit->details['learners']);
         $this->assertSame(1, AuditLog::where('action', 'export.bkt_history')->count());
+    }
+
+    public function test_the_admin_sees_every_teachers_content_and_can_unpublish_it(): void
+    {
+        $teacher = User::factory()->registered()->create(['email' => 'maria@school.test']);
+        $section = $teacher->sections()->create(['name' => 'Grade 1 - Rosal']);
+        $item = new ContentItem(['title' => 'Ang Bangka', 'language' => 'fil', 'level' => 'easy', 'scene' => 'river',
+            'credit' => 'Ang Bangka, CC BY 4.0', 'licence' => 'CC BY 4.0', 'source_url' => 'https://storyweaver.org.in/stories/1', 'body' => []]);
+        $item->forceFill(['id' => 'tb-abcdefgh', 'kind' => 'book', 'owner_id' => $teacher->id, 'published' => true])->save();
+        $item->sections()->attach($section);
+
+        $this->get($this->admin('content'))->assertOk()
+            ->assertSee('Ang Bangka')->assertSee('maria@school.test')->assertSee('Grade 1 - Rosal')->assertSee('rel="noopener noreferrer"', false);
+
+        $this->post($this->admin('content/tb-abcdefgh/unpublish'))->assertRedirect();
+        $this->assertFalse($item->fresh()->published);
+        $this->assertSame('maria@school.test', AuditLog::where('action', 'content.unpublish')->sole()->details['owner']);
+        $this->post($this->admin('content/tb-missing0/unpublish'))->assertNotFound();
     }
 
     public function test_the_audit_log_cannot_be_rewritten(): void

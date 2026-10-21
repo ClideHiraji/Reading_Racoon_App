@@ -18,6 +18,7 @@
     </div>
     <div class="row">
         <a class="btn btn-light" href="{{ route('teacher.schedule.edit', $section) }}">Play schedule</a>
+        <a class="btn btn-light" href="{{ route('teacher.content.index') }}">Library &amp; Videos</a>
         @if ($otherSections->isNotEmpty())
             <a class="btn btn-light" href="{{ route('teacher.home', ['all' => 1]) }}">All sections</a>
         @endif

@@ -30,6 +30,7 @@
                 <a href="{{ route('admin.dashboard') }}" @class(['active' => request()->routeIs('admin.dashboard')])>Overview</a>
                 <a href="{{ route('admin.registrations') }}" @class(['active' => request()->routeIs('admin.registrations')])>Registrations</a>
                 <a href="{{ route('admin.logs') }}" @class(['active' => request()->routeIs('admin.logs')])>Logs</a>
+                <a href="{{ route('admin.content') }}" @class(['active' => request()->routeIs('admin.content')])>Content</a>
                 <a href="{{ route('admin.privacy') }}" @class(['active' => request()->routeIs('admin.privacy')])>Privacy audit</a>
                 <a href="{{ route('admin.export') }}" @class(['active' => request()->routeIs('admin.export')])>Research export</a>
                 <form method="POST" action="{{ route('admin.logout') }}" class="inline">

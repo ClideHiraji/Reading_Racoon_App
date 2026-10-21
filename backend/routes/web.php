@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Teacher\ContentController;
 use App\Http\Controllers\Teacher\LoginController;
 use App\Http\Controllers\Teacher\RegisterController;
 use App\Http\Controllers\Teacher\ReportController;
@@ -46,4 +47,19 @@ Route::middleware(['auth', 'teacher'])->prefix('teacher')->name('teacher.')->gro
 
     Route::post('/flags/{flag}/resolve', [StudentController::class, 'resolveFlag'])
         ->middleware('can:update,flag')->name('flags.resolve');
+
+    // Library & Videos (D-019): openly licensed books and Ogg videos for the game.
+    Route::get('/content', [ContentController::class, 'index'])->name('content.index');
+    Route::get('/content/books/new', [ContentController::class, 'createBook'])->name('content.books.create');
+    Route::post('/content/books', [ContentController::class, 'storeBook'])->name('content.books.store');
+    Route::get('/content/videos/new', [ContentController::class, 'createVideo'])->name('content.videos.create');
+    Route::post('/content/videos', [ContentController::class, 'storeVideo'])->name('content.videos.store');
+    Route::middleware('can:update,item')->group(function () {
+        Route::get('/content/{item}/edit', [ContentController::class, 'edit'])->name('content.edit');
+        Route::put('/content/{item}', [ContentController::class, 'update'])->name('content.update');
+        Route::put('/content/{item}/sections', [ContentController::class, 'assign'])->name('content.assign');
+        Route::post('/content/{item}/publish', [ContentController::class, 'publish'])->name('content.publish');
+        Route::delete('/content/{item}', [ContentController::class, 'destroy'])->name('content.destroy');
+        Route::get('/content/{item}/files/{file}', [ContentController::class, 'file'])->whereUuid('file')->name('content.file');
+    });
 });

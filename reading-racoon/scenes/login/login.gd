@@ -98,7 +98,7 @@ func _refresh() -> void:
 		_boxes[i].text = _code[i] if i < _code.length() else ""
 		var box: PanelContainer = _boxes[i].get_parent()
 		var sb: StyleBoxFlat = box.get_theme_stylebox("panel")
-		sb.border_color = Palette.TEAL
+		sb.border_color = Palette.ORANGE
 		sb.set_border_width_all(4 if i == _code.length() else 0)
 	%GoButton.disabled = _code.length() != LoginCode.LENGTH
 	%GoButton.modulate.a = 1.0 if not %GoButton.disabled else 0.5
@@ -125,14 +125,14 @@ func _submit() -> void:
 	_refresh()
 
 
-## After signing in: the Reading Adventure the first time, then the path.
+## After signing in: the Reading Adventure the first time, then the home hub.
 func _continue() -> void:
-	if not GameState.guard():
+	if not GameState.guard_hub():
 		return
 	if GameState.needs_pretest():
 		GameState.start_assessment("pre")
 	else:
-		get_tree().change_scene_to_file("res://scenes/path/learning_path.tscn")
+		get_tree().change_scene_to_file(GameState.HUB_SCENE)
 
 
 ## Debug builds only: play without a server (classroom demos, tests).

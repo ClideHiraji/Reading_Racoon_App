@@ -83,7 +83,7 @@ func _tile_text(t) -> String:
 
 func _tile_button(t) -> ChunkyButton:
 	var b := ChunkyButton.new()
-	b.face_color = Palette.TEAL if _variant != "sequence" else Palette.CARD
+	b.face_color = Palette.BLUE if _variant != "sequence" else Palette.CARD
 	b.card_style = _variant == "sequence"
 	b.lift = 8
 	b.text = _tile_text(t)

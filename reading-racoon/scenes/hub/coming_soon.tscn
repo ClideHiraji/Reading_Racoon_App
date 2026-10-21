@@ -1,0 +1,134 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/hub/coming_soon.gd" id="1_soon"]
+[ext_resource type="Shader" path="res://ui/paper.gdshader" id="2_paper"]
+[ext_resource type="Script" path="res://ui/paper_scenery.gd" id="3_scenery"]
+[ext_resource type="Script" path="res://scenes/companion/raccoon.gd" id="4_raccoon"]
+[ext_resource type="Script" path="res://scenes/companion/speech_bubble.gd" id="5_bubble"]
+[ext_resource type="Script" path="res://ui/chunky_button.gd" id="6_chunky"]
+
+[sub_resource type="ShaderMaterial" id="Paper"]
+shader = ExtResource("2_paper")
+
+[node name="ComingSoon" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_soon")
+
+[node name="Bg" type="ColorRect" parent="."]
+material = SubResource("Paper")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Scenery" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -520.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+script = ExtResource("3_scenery")
+scene = "village"
+show_sky = false
+
+[node name="HomeButton" type="Button" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(96, 96)
+layout_mode = 0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 120.0
+offset_bottom = 120.0
+tooltip_text = "Home"
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("6_chunky")
+card_style = true
+lift = 6
+radius = 48
+icon_name = "house"
+icon_px = 50
+icon_tint = Color(0.29, 0.494, 0.651, 1)
+
+[node name="Center" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 48.0
+offset_top = 170.0
+offset_right = -48.0
+offset_bottom = -120.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Disc" type="PanelContainer" parent="Center"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Icon" type="TextureRect" parent="Center/Disc"]
+unique_name_in_owner = true
+texture_filter = 4
+custom_minimum_size = Vector2(90, 90)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="Center"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"TitleLabel"
+theme_override_font_sizes/font_size = 54
+text = "Library"
+horizontal_alignment = 1
+
+[node name="Note" type="Label" parent="Center"]
+layout_mode = 2
+theme_type_variation = &"MutedLabel"
+text = "Coming soon"
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="Center"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="Bubble" type="PanelContainer" parent="Center"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(420, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+script = ExtResource("5_bubble")
+tail = "down"
+
+[node name="Gap" type="Control" parent="Center"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="RaccoonRow" type="CenterContainer" parent="Center"]
+layout_mode = 2
+
+[node name="Raccoon" type="Control" parent="Center/RaccoonRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("4_raccoon")

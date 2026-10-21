@@ -55,7 +55,8 @@ func _on_down() -> void:
 
 func _restyle() -> void:
 	var face := Palette.CARD if card_style else face_color
-	var ink := Palette.INK if card_style else Color.WHITE
+	# Dark ink on colored paper (D-016); cream only on faces too dark for ink.
+	var ink := Palette.INK if card_style else Palette.text_on(face_color)
 	add_theme_stylebox_override("normal", _box(face, lift, 0))
 	add_theme_stylebox_override("hover", _box(face.lightened(0.04), lift, 0))
 	add_theme_stylebox_override("pressed", _box(face.darkened(0.06), 2, lift - 2))

@@ -114,7 +114,7 @@ func show_result(chosen: String, answer: String) -> void:
 		if id == answer or id == chosen:
 			card.card_style = false
 			card.face_color = Palette.RIGHT if id == answer else Palette.ALMOST
-			_whiten(card)
+			_ink(card, Palette.text_on(card.face_color))
 		else:
 			card.modulate.a = 0.45
 	if _cards.has(answer):
@@ -125,10 +125,11 @@ func show_result(chosen: String, answer: String) -> void:
 		t.tween_property(c, "scale", Vector2.ONE, 0.15)
 
 
-func _whiten(node: Node) -> void:
+## Recolors the card's picture and words so they read on its new face (D-016).
+func _ink(node: Node, col: Color) -> void:
 	for child in node.get_children():
 		if child is TextureRect:
-			child.self_modulate = Color.WHITE
+			child.self_modulate = col
 		elif child is Label:
-			child.add_theme_color_override("font_color", Color.WHITE)
-		_whiten(child)
+			child.add_theme_color_override("font_color", col)
+		_ink(child, col)

@@ -56,6 +56,14 @@ func passage(id: String) -> Dictionary:
 	return passages.get(id, {})
 
 
+## An item by id ({} if unknown), e.g. to find the words a lesson practiced.
+func item(id: String) -> Dictionary:
+	for it in items:
+		if it.id == id:
+			return it
+	return {}
+
+
 ## Highest map level that has any content (worlds above show "coming soon").
 func max_level() -> int:
 	var top := 0

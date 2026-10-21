@@ -46,7 +46,7 @@ func _ready() -> void:
 		%Hearts.hide()
 		var pre: bool = session.kind == "pre"
 		_say(GameState.line("adventure_intro"), "happy")
-		_open_overlay("stories", Palette.TEAL, "Reading Adventure!" if pre else "Big Reading Day!",
+		_open_overlay("stories", Palette.BLUE, "Reading Adventure!" if pre else "Big Reading Day!",
 				"Show Racoon what you can do. No hearts today, just try your best!", "LET'S GO!",
 				_next)
 		Speech.say("Reading Adventure! Show Racoon what you can do. Just try your best!")
@@ -104,7 +104,7 @@ func _show_story(pid: String) -> void:
 func _peek_story() -> void:
 	var p: Dictionary = session.bank.passage(_item.get("passage", ""))
 	Speech.say(p.get("text", ""), p.get("language", "en"))
-	_open_overlay("stories", Palette.TEAL, p.get("title", ""), p.get("text", ""), "OK", func(): pass)
+	_open_overlay("stories", Palette.BLUE, p.get("title", ""), p.get("text", ""), "OK", func(): pass)
 
 
 func _speak() -> void:
@@ -161,7 +161,7 @@ func _on_continue() -> void:
 		"end_session":
 			sheet.hide()
 			_say(GameState.line("session_end"), "sleepy")
-			_open_overlay("night", Palette.PLUM, "Let's rest!", GameState.line("session_end"), "OK",
+			_open_overlay("night", Palette.PLUM_LIGHT, "Let's rest!", GameState.line("session_end"), "OK",
 					_finish)
 		_:
 			_next()
@@ -196,15 +196,16 @@ func _update_rescue_label() -> void:
 func _show_neutral_sheet() -> void:
 	_show_sheet(true, "")
 	var sb: StyleBoxFlat = sheet.get_theme_stylebox("panel").duplicate()
-	sb.bg_color = Palette.pale(Palette.TEAL, 0.8)
+	sb.bg_color = Palette.pale(Palette.BLUE, 0.7)
 	sheet.add_theme_stylebox_override("panel", sb)
 	var disc: StyleBoxFlat = %SheetDisc.get_theme_stylebox("panel").duplicate()
-	disc.bg_color = Palette.TEAL
+	disc.bg_color = Palette.BLUE
 	%SheetDisc.add_theme_stylebox_override("panel", disc)
 	%SheetIcon.texture = Icons.tex("sparkles")
 	%SheetTitle.text = "Thank you!"
-	%SheetTitle.add_theme_color_override("font_color", Palette.TEAL_DEEP)
-	%ContinueButton.face_color = Palette.TEAL
+	%SheetTitle.add_theme_color_override("font_color",
+			Palette.readable(Palette.deep(Palette.BLUE), sb.bg_color))
+	%ContinueButton.face_color = Palette.BLUE
 
 
 func _show_sheet(correct: bool, answer_text: String) -> void:
@@ -218,7 +219,8 @@ func _show_sheet(correct: bool, answer_text: String) -> void:
 	%SheetIcon.texture = Icons.tex("check" if correct else "bulb")
 	%SheetTitle.text = ["Great job!", "Awesome!", "You got it!"].pick_random() if correct \
 			else "Almost!"
-	%SheetTitle.add_theme_color_override("font_color", Palette.deep(color))
+	%SheetTitle.add_theme_color_override("font_color",
+			Palette.readable(Palette.deep(color), sb.bg_color))
 	%SheetDetail.text = "" if correct else "The answer is: %s" % answer_text
 	%SheetDetail.visible = not correct
 	%ContinueButton.face_color = color

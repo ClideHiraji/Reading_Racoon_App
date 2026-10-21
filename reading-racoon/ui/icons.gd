@@ -20,6 +20,7 @@ const PICTURE_COLORS := {
 	"elephant": Palette.INK_SOFT, "ant": Palette.INK, "hand": Palette.NIPA,
 	"lock": Palette.MANGO_DEEP, "night": Palette.PLUM, "waves": Palette.TEAL, "mountain": Palette.PLUM,
 	"stories": Palette.BAY, "cloud": Palette.INK_SOFT,
+	"raccoon": Palette.INK_SOFT, "hut": Palette.NIPA, "heart": Palette.CORAL,
 }
 
 static var _cache := {}

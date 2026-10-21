@@ -10,7 +10,10 @@ extends Node
 ##   queue trimming run on a worker thread, with HTTP on its own thread, so play
 ##   never stutters (NFR-01, 2 GB phones).
 ## Calls: POST /api/auth/login (the login screen), GET /api/config, GET
-## /api/access/student/status, POST /api/sync (SyncProtocol, D-008).
+## /api/access/student/status, POST /api/sync (SyncProtocol, D-008), and for
+## teacher-picked books and videos GET /api/content/manifest and
+## /api/content/files/{id} (D-020, server D-019): only on Wi-Fi, never during a
+## lesson, every file checked against its SHA-256 before it's used.
 
 signal status_changed(text: String)
 signal synced(remaining: int)
@@ -21,6 +24,11 @@ const FIRST_DELAY := 4.0
 const MIN_BACKOFF := 30.0
 const MAX_BACKOFF := 600.0
 const BATCH := 100           # small batches: short requests on slow school Wi-Fi
+## Teacher content (D-020): look for changes every 15 minutes, first after 20 s.
+const CONTENT_INTERVAL := 900.0
+const CONTENT_FIRST := 20.0
+## A download stuck this long (s) is dropped and tried again later.
+const DOWNLOAD_TIMEOUT := 900.0
 
 var busy := false
 var online := false
@@ -28,6 +36,8 @@ var last_status := "Waiting"
 
 var _wait := FIRST_DELAY
 var _failures := 0
+var _content_wait := CONTENT_FIRST
+var _content_busy := false
 
 
 func _ready() -> void:
@@ -41,6 +51,11 @@ func _notification(what: int) -> void:
 
 
 func _process(delta: float) -> void:
+	_content_wait -= delta
+	if _content_wait <= 0.0 and online and not busy and not _content_busy:
+		_content_wait = CONTENT_INTERVAL
+		if GameState.signed_in() and not GameState.in_lesson() and unmetered():
+			sync_content()
 	if busy:
 		return
 	_wait -= delta
@@ -148,6 +163,116 @@ func _upload(max_batch: int) -> void:
 	_wait = 5.0
 
 
+# --- Teacher-picked books and videos (D-020, server D-019) --------------------------
+
+## Fetches the manifest only when it changed (ETag), saves the books and videos as
+## user://content/library.json and watch.json, deletes the files of removed items,
+## then downloads what's missing one file at a time. Each file lands as
+## <name>.part, is checked against its SHA-256 on a worker thread and only then
+## moved into place, so the Library and Watch never see half a file.
+func sync_content() -> void:
+	if _content_busy or server() == "" or not GameState.signed_in():
+		return
+	_content_busy = true
+	var state := SaveStore.read_json(ContentPlan.STATE)
+	var student := int(GameState.device.get("student_id", 0))
+	var headers := PackedStringArray()
+	if int(state.get("student", -1)) == student and str(state.get("version", "")) != "":
+		headers.append('If-None-Match: "%s"' % state.version)
+	var res := await _request("/api/content/manifest", HTTPClient.METHOD_GET, "", true, headers)
+	var have: Dictionary = state.get("files", {})
+	var needed: Array = state.get("needed", [])
+	if res.code == 200 and typeof(res.body) == TYPE_DICTIONARY:
+		var cleaned := ContentPlan.clean(res.body)
+		needed = ContentPlan.files(cleaned)
+		var gone := ContentPlan.to_delete(needed, have)
+		await _on_worker(func():
+			DirAccess.make_dir_recursive_absolute(ContentPlan.DIR)
+			SaveStore.write_json(ContentPlan.DIR + "library.json", {"books": cleaned.books})
+			SaveStore.write_json(ContentPlan.DIR + "watch.json", {"items": cleaned.watch})
+			for path in gone:
+				DirAccess.remove_absolute(path)
+			return {})
+		for path in gone:
+			have.erase(path)
+		state = {"student": student, "version": str(res.body.get("version", "")), "files": have,
+				"needed": needed}
+		SaveStore.write_json(ContentPlan.STATE, state)
+		GameState.media.load_all()
+	elif res.code != 304:
+		_content_busy = false
+		return
+	for f in ContentPlan.to_download(needed, have):
+		if GameState.in_lesson() or not unmetered():
+			break
+		if await _download(f):
+			have[f.local] = f.sha256
+			state["files"] = have
+			SaveStore.write_json(ContentPlan.STATE, state)
+	_content_busy = false
+
+
+## One file to <local>.part, checked, then moved into place. A lesson starting
+## cancels it (and deletes the part). True if the file was saved.
+func _download(f: Dictionary) -> bool:
+	var part: String = f.local + ".part"
+	var http := HTTPRequest.new()
+	http.use_threads = true
+	http.timeout = DOWNLOAD_TIMEOUT
+	http.download_file = part
+	http.download_chunk_size = 65536
+	if int(f.size) > 0:
+		http.body_size_limit = int(f.size) + 4096
+	add_child(http)
+	var done := [false, 0, 0]
+	http.request_completed.connect(func(result: int, code: int, _h: PackedStringArray, _b: PackedByteArray):
+		done[0] = true
+		done[1] = result
+		done[2] = code)
+	var headers := PackedStringArray(["Authorization: Bearer %s" % GameState.device.get("token", "")])
+	if http.request(server() + str(f.url), headers) != OK:
+		http.queue_free()
+		return false
+	while not done[0]:
+		if GameState.in_lesson():
+			http.cancel_request()
+			http.queue_free()
+			DirAccess.remove_absolute(part)
+			return false
+		await get_tree().process_frame
+	http.queue_free()
+	var ok: bool = done[1] == HTTPRequest.RESULT_SUCCESS and done[2] == 200
+	if ok:
+		ok = await _on_worker(func(): return ContentPlan.file_sha256(part) == str(f.sha256))
+	if not ok:
+		DirAccess.remove_absolute(part)
+		return false
+	if FileAccess.file_exists(f.local):
+		DirAccess.remove_absolute(f.local)   # the teacher replaced it
+	return DirAccess.rename_absolute(part, f.local) == OK
+
+
+
+## Big downloads only on Wi-Fi (D-020). On Android that means any network the
+## phone doesn't count as metered (export needs ACCESS_NETWORK_STATE); if the phone
+## can't tell, assume mobile data and wait. Desktop and editor: always true.
+## Debug builds can pretend with --metered.
+func unmetered() -> bool:
+	if OS.is_debug_build() and GameState._args.has("metered"):
+		return false
+	if OS.get_name() != "Android":
+		return true
+	if not Engine.has_singleton("AndroidRuntime"):
+		return false
+	var activity = Engine.get_singleton("AndroidRuntime").call("getActivity")
+	if activity == null:
+		return false
+	var cm = activity.call("getSystemService", "connectivity")
+	if cm == null:
+		return false
+	return not bool(cm.call("isActiveNetworkMetered"))
+
+
 func _offline() -> void:
 	online = false
 	_failures += 1
@@ -181,7 +306,8 @@ func _on_worker(work: Callable) -> Variant:
 
 
 ## Returns {code, body}; code 0 = no connection. HTTP runs on its own thread.
-func _request(path: String, method: int, data: String, auth: bool) -> Dictionary:
+func _request(path: String, method: int, data: String, auth: bool,
+		extra := PackedStringArray()) -> Dictionary:
 	var http := HTTPRequest.new()
 	http.timeout = 20.0
 	http.use_threads = true
@@ -189,6 +315,7 @@ func _request(path: String, method: int, data: String, auth: bool) -> Dictionary
 	var headers := PackedStringArray(["Accept: application/json", "Content-Type: application/json"])
 	if auth:
 		headers.append("Authorization: Bearer %s" % GameState.device.get("token", ""))
+	headers.append_array(extra)
 	var err := http.request(server() + path, headers, method, data)
 	if err != OK:
 		http.queue_free()

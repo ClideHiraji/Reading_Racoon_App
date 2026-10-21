@@ -1,0 +1,75 @@
+{
+  "_note": "Watch & Listen (D-017). Songs and chants are sung line by line with Racoon and the device voice; read-alongs play a Library book aloud. Placeholders written for Reading Racoon, for teacher review. Teacher-picked videos arrive later in user://content/watch.json as {id, kind: video, title, language, file: user://content/<id>.ogv, minutes, check?}.",
+  "items": [
+    {
+      "id": "abc-chant",
+      "kind": "song",
+      "title": "The ABC Sound Chant",
+      "language": "en-placeholder",
+      "scene": "home",
+      "minutes": 2,
+      "lines": [
+        {"text": "A, a, apple! A says a.", "pictures": ["apple"]},
+        {"text": "B, b, ball! B says b.", "pictures": ["ball"]},
+        {"text": "C, c, cat! C says c.", "pictures": ["cat"]},
+        {"text": "D, d, dog! D says d.", "pictures": ["dog"]},
+        {"text": "F, f, fish! F says f.", "pictures": ["fish"]},
+        {"text": "S, s, sun! S says s.", "pictures": ["sun"]},
+        {"text": "Sing it again, sing it with me!", "pictures": ["star"]}
+      ],
+      "check": {"prompt": "Which one starts with b?", "choices": [{"id": "ball", "label": "ball", "picture": "ball"}, {"id": "cat", "label": "cat", "picture": "cat"}], "answer": "ball"}
+    },
+    {
+      "id": "rhyme-chant",
+      "kind": "song",
+      "title": "Rhyme Time Chant",
+      "language": "en-placeholder",
+      "scene": "river",
+      "minutes": 2,
+      "lines": [
+        {"text": "Cat and hat, they rhyme like that!", "pictures": ["cat", "hat"]},
+        {"text": "Cake and snake, they rhyme, no mistake!", "pictures": ["cake", "snake"]},
+        {"text": "Bee and tree, they rhyme with me!", "pictures": ["bee", "tree"]},
+        {"text": "Goat and boat, they rhyme and float!", "pictures": ["goat", "boat"]},
+        {"text": "Mouse and house, quiet as a mouse.", "pictures": ["mouse", "house"]}
+      ],
+      "check": {"prompt": "Which one rhymes with cat?", "choices": [{"id": "dog", "label": "dog", "picture": "dog"}, {"id": "hat", "label": "hat", "picture": "hat"}], "answer": "hat"}
+    },
+    {
+      "id": "titik-chant",
+      "kind": "song",
+      "title": "Mga Tunog ng Titik",
+      "language": "fil-placeholder",
+      "scene": "village",
+      "minutes": 2,
+      "lines": [
+        {"text": "A, a, aso! Aso, aso, aso.", "pictures": ["dog"]},
+        {"text": "B, b, bola! Bola, bola, bola.", "pictures": ["ball"]},
+        {"text": "I, i, isda! Isda, isda, isda.", "pictures": ["fish"]},
+        {"text": "K, k, kuneho! Kuneho, kuneho.", "pictures": ["rabbit"]},
+        {"text": "O, o, oso! Oso, oso, oso.", "pictures": ["bear"]},
+        {"text": "S, s, saging! Saging, saging.", "pictures": ["banana"]}
+      ],
+      "check": {"prompt": "Alin ang nagsisimula sa tunog na i?", "choices": [{"id": "isda", "label": "isda", "picture": "fish"}, {"id": "bola", "label": "bola", "picture": "ball"}], "answer": "isda"}
+    },
+    {
+      "id": "bilang-chant",
+      "kind": "song",
+      "title": "Isa, Dalawa, Tatlo",
+      "language": "fil-placeholder",
+      "scene": "grove",
+      "minutes": 1,
+      "lines": [
+        {"text": "Isa, isang araw.", "pictures": ["sun"]},
+        {"text": "Dalawa, dalawang isda.", "pictures": ["fish", "fish"]},
+        {"text": "Tatlo, tatlong bola.", "pictures": ["ball", "ball", "ball"]},
+        {"text": "Apat, apat na saging.", "pictures": ["banana", "banana", "banana", "banana"]},
+        {"text": "Lima, limang bubuyog!", "pictures": ["bee", "bee", "bee", "bee", "bee"]}
+      ],
+      "check": {"prompt": "Alin ang may dalawa?", "choices": [{"id": "isda", "label": "dalawang isda", "picture": "fish"}, {"id": "araw", "label": "isang araw", "picture": "sun"}], "answer": "isda"}
+    },
+    {"id": "read-boat", "kind": "read_along", "title": "Racoon's Little Boat", "language": "en-placeholder", "scene": "river", "minutes": 2, "book": "racoon-boat"},
+    {"id": "read-bangka", "kind": "read_along", "title": "Ang Bangka ni Lolo", "language": "fil-placeholder", "scene": "river", "minutes": 2, "book": "bangka-ni-lolo"},
+    {"id": "read-pagong", "kind": "read_along", "title": "Si Pagong ug si Matsing", "language": "bis-placeholder", "scene": "river", "minutes": 2, "book": "pagong-matsing"}
+  ]
+}

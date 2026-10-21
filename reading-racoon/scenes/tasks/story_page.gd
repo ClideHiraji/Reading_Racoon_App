@@ -51,7 +51,7 @@ func setup(passage: Dictionary, button_text: String = "I READ IT!") -> void:
 	title.text = passage.get("title", "")
 	title.add_theme_font_override("font", ANDIKA_BOLD)
 	title.add_theme_font_size_override("font_size", 40)
-	title.add_theme_color_override("font_color", Palette.CORAL_DEEP)
+	title.add_theme_color_override("font_color", Palette.readable(Palette.CORAL_DEEP))
 	title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	body.add_child(title)
 	var text := Label.new()

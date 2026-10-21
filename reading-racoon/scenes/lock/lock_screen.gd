@@ -1,6 +1,7 @@
 extends Control
 ## Friendly lock screen for time-restricted access (FR-12, 06-game-design.md):
-## "Come back during Reading time", "Game is sleeping", "Great work today!".
+## "The game is sleeping" at night. In the day only Adventure locks and the hub
+## explains it (D-015), so this screen is for night time.
 ## It never closes the app, and "Check again" re-asks the schedule.
 
 const TEXTS := {
@@ -13,7 +14,8 @@ const TEXTS := {
 
 func _ready() -> void:
 	%CheckButton.pressed.connect(_check)
-	_show(GameState.access_decision())
+	var d := GameState.hub_decision()
+	_show(d if not AccessPolicy.is_open(d) else GameState.access_decision())
 
 
 func _show(d: Dictionary) -> void:
@@ -30,9 +32,9 @@ func _show(d: Dictionary) -> void:
 
 
 func _check() -> void:
-	var d := GameState.access_decision()
+	var d := GameState.hub_decision()
 	if AccessPolicy.is_open(d):
-		get_tree().change_scene_to_file("res://scenes/path/learning_path.tscn")
+		get_tree().change_scene_to_file(GameState.HUB_SCENE)
 	else:
 		_show(d)
 		%Raccoon.set_mood("thinking")

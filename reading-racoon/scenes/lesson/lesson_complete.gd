@@ -31,6 +31,12 @@ func _ready() -> void:
 	Speech.say(line)
 	if not early:
 		_confetti()
+	# D-017: a sticker (once a day) and today's goal, shown after the stars.
+	var rewards: Dictionary = _sum.get("rewards", {})
+	if not rewards.get("stickers", []).is_empty() or rewards.get("goals_done", false):
+		await get_tree().create_timer(2.2).timeout
+		if is_inside_tree():
+			Kit.reward(self, "Sticker time!", rewards, func(): pass)
 
 
 ## End of the Reading Adventure (pre/post-test): no stars or scores for the
@@ -41,7 +47,7 @@ func _show_test_done() -> void:
 	%Title.text = "Adventure complete!" if pre else "Big Reading Day done!"
 	%Stars.hide()
 	%Answers.hide()
-	_stat("ANSWERED", "check", str(_sum.total), Palette.TEAL)
+	_stat("ANSWERED", "check", str(_sum.total), Palette.BLUE)
 	_stat("COINS", "coins", "+%d" % _sum.coins, Palette.CORAL)
 	%Raccoon.set_mood("celebrate")
 	Sfx.play("fanfare")
@@ -87,7 +93,7 @@ func _stat(title: String, icon: String, value: String, color: Color) -> void:
 	head.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	head.theme_type_variation = &"TitleLabel"
 	head.add_theme_font_size_override("font_size", 22)
-	head.add_theme_color_override("font_color", Color.WHITE)
+	head.add_theme_color_override("font_color", Palette.text_on(color))
 	v.add_child(head)
 	var body := PanelContainer.new()
 	var bsb := StyleBoxFlat.new()
@@ -98,12 +104,12 @@ func _stat(title: String, icon: String, value: String, color: Color) -> void:
 	var row := HBoxContainer.new()
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
 	row.add_theme_constant_override("separation", 8)
-	row.add_child(Icons.rect(icon, 40, Palette.deep(color)))
+	row.add_child(Icons.rect(icon, 40, Palette.readable(Palette.deep(color))))
 	var val := Label.new()
 	val.text = value
 	val.theme_type_variation = &"TitleLabel"
 	val.add_theme_font_size_override("font_size", 38)
-	val.add_theme_color_override("font_color", Palette.deep(color))
+	val.add_theme_color_override("font_color", Palette.readable(Palette.deep(color)))
 	row.add_child(val)
 	body.add_child(row)
 	v.add_child(body)
@@ -126,7 +132,7 @@ func _build_answers() -> void:
 		stamp.add_theme_stylebox_override("panel", sb)
 		stamp.custom_minimum_size = Vector2(44, 44)
 		if r.correct:
-			stamp.add_child(Icons.rect("check", 26, Color.WHITE))
+			stamp.add_child(Icons.rect("check", 26, Palette.text_on(Palette.LEAF)))
 		%Answers.add_child(stamp)
 
 
@@ -157,8 +163,8 @@ func _confetti() -> void:
 	p.emission_rect_extents = Vector2(size.x / 2, 10)
 	var g := Gradient.new()
 	g.offsets = PackedFloat32Array([0.0, 0.2, 0.4, 0.6, 0.8])
-	g.colors = PackedColorArray([Palette.MANGO, Palette.TEAL, Palette.CORAL, Palette.LEAF,
-			Palette.PLUM])
+	g.colors = PackedColorArray([Palette.YELLOW, Palette.BLUE, Palette.ORANGE, Palette.LEAF,
+			Palette.CREAM])
 	g.interpolation_mode = Gradient.GRADIENT_INTERPOLATE_CONSTANT
 	p.color_initial_ramp = g
 	p.restart()
@@ -181,6 +187,10 @@ func _on_continue() -> void:
 	_to_path()
 
 
+## After a lesson: back to the path. After the pre/post-test: the home hub (D-015).
 func _to_path() -> void:
 	Speech.stop()
+	if _sum.get("kind", "") in ["pre", "post"]:
+		GameState.go_home()
+		return
 	get_tree().change_scene_to_file("res://scenes/path/learning_path.tscn")

@@ -71,7 +71,7 @@ alignment = 1
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.749, 0.31, 0.224, 1)
+theme_override_colors/font_color = Color(0.741, 0.384, 0.071, 1)
 theme_override_font_sizes/font_size = 26
 horizontal_alignment = 1
 autowrap_mode = 3
@@ -95,7 +95,7 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "LET'S GO!"
 script = ExtResource("3_chunky")
-face_color = Color(0.902, 0.435, 0.333, 1)
+face_color = Color(0.914, 0.502, 0.122, 1)
 lift = 9
 radius = 30
 

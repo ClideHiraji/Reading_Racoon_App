@@ -25,17 +25,40 @@ var settings := {"post_test_open": false}
 ## Play-time limits (FR-12): the section schedule cached from the server, the
 ## server-minus-device clock offset (seconds), and the last time the device saw.
 var access := {"schedule": {}, "server_offset": 0, "last_seen": 0}
-## Minutes played today that count against the after-school cap.
-var usage := {"date": "", "minutes": 0.0}
+## Minutes played today: Adventure after school (`minutes`, its daily cap) and
+## Practice, Library and Watch outside Reading time (`free_minutes`, D-015).
+var usage := {"date": "", "minutes": 0.0, "free_minutes": 0.0}
 ## This device's sign-in with the Laravel API: {"token", "student_name", "student_id"}
 ## (FR-01, D-010). Kept in its own file, outside any student's profile.
 var device := {}
+## Stickers, My Word Book, days played, today's goals, finished books (D-017).
+var collection := Collection.new()
+## Library books and Watch & Listen items (bundled + teacher-picked, D-017).
+var media := MediaLibrary.new()
+## Set before opening a screen inside a section: which game, book or song.
+var practice_game := ""
+## Memory Match with the child's own words from My Word Book (empty = game words).
+var practice_words: Array = []
+var open_book := ""
+var open_media := ""
 
-const PLAY_SCENES := ["LearningPath", "Lesson", "LessonComplete", "Shop"]
+## Scenes whose time counts against Adventure's after-school cap and the
+## free-play timer (FR-12, D-015). Root node names.
+const ADVENTURE_SCENES := ["LearningPath", "Lesson", "LessonComplete"]
+const FREE_PLAY_SCENES := ["Practice", "MemoryMatch", "RhymePop", "WordCatch", "PracticeRound",
+		"Library", "Reader", "Watch", "Player"]
+const HUB_SCENE := "res://scenes/hub/hub.tscn"
 var _usage_tick := 0.0
 var _decision := {}
+var _free_decision := {}
 var _decision_age := 99.0
 var _debug_now := {}
+
+## Why the hub was opened instead of a section ("adventure_closed",
+## "free_limit"), so Racoon can explain. Read once by the hub.
+var notice := ""
+## The unbuilt section the "coming soon" page shows (HubSections id).
+var soon_section := ""
 
 ## Set by the path before opening a lesson.
 var lesson_world := 1
@@ -56,6 +79,7 @@ func _ready() -> void:
 	device = SaveStore.read_json(_device_path())
 	store = SaveStore.new(_args.get("profile", _profile_name()))
 	bank.load_file()
+	media.load_all()
 	var data = JSON.parse_string(FileAccess.get_file_as_string(LINES_PATH))
 	lines = data if typeof(data) == TYPE_DICTIONARY else {}
 	load_profile()
@@ -74,8 +98,9 @@ func load_profile() -> void:
 	assessments = data.get("assessments", {})
 	settings.merge(data.get("settings", {}), true)
 	wardrobe.from_dict(data.get("wardrobe", {}))
+	collection.from_dict(data.get("collection", {}))
 	access.merge(data.get("access", {}), true)
-	usage = {"date": "", "minutes": 0.0}
+	usage = {"date": "", "minutes": 0.0, "free_minutes": 0.0}
 	usage.merge(data.get("usage", {}), true)
 	if data.has("bkt_params"):
 		model.params = SyncProtocol.params_from_config({"bkt": {"skills": data.bkt_params}})
@@ -92,6 +117,7 @@ func save_profile() -> void:
 		"assessments": assessments,
 		"settings": settings,
 		"wardrobe": wardrobe.to_dict(),
+		"collection": collection.to_dict(),
 		"access": access,
 		"usage": usage,
 		"bkt_params": model.params,
@@ -156,6 +182,7 @@ func reset_progress() -> void:
 	flags = []
 	assessments = {}
 	wardrobe = Wardrobe.new()
+	collection = Collection.new()
 	save_profile()
 	outfit_changed.emit()
 
@@ -231,6 +258,18 @@ func finish_lesson(session: RefCounted) -> void:
 	store.queue_event("lesson_end", {"level": lesson_world, "node": lesson_node,
 			"correct": last_summary.correct, "total": last_summary.total,
 			"stars": last_summary.stars})
+	# D-017: the words practiced go to My Word Book; a sticker a day; today's goal.
+	var practiced := []
+	for r in session.results:
+		if r.correct:
+			practiced.append_array(Collection.words_from_item(bank.item(r.id)))
+	learn_words(practiced, "lesson")
+	var rewards := {"coins": 0, "stickers": []}
+	if not session.ended_early:
+		_add_sticker(rewards, "adventure", true)
+		_add_goal(rewards, "lesson")
+	last_summary["rewards"] = rewards
+	wallet.coins += int(rewards.coins)
 	save_profile()
 	wallet_changed.emit()
 	_sync_soon()
@@ -265,6 +304,100 @@ func _finish_assessment(session: AssessmentSession) -> void:
 	_sync_soon()
 
 
+# --- Practice, Library, Watch & Listen rewards (D-017) -------------------------------
+# Each finish_* returns {coins, stickers: [ids], goals_done} for Kit.reward().
+# Practice never changes BKT: its results are logged for the teacher only.
+
+## A Practice game finished: coins for the right answers, a games sticker once a
+## day, and today's "play a game" goal.
+func finish_practice(game: String, correct: int, total: int, seconds: float) -> Dictionary:
+	var r := {"coins": PracticePool.coins_for(correct), "stickers": []}
+	_add_sticker(r, "games", true)
+	_add_goal(r, "game")
+	store.queue_event("practice", {"game": game, "correct": correct, "total": total,
+			"seconds": roundi(seconds)})
+	return _pay(r)
+
+
+## A Library book read to the end: a books sticker and its words the first time,
+## and today's "read a story" goal.
+func finish_book(id: String, questions_right: int, questions_total: int, seconds: float) -> Dictionary:
+	var first := collection.finish(id, today())
+	var book := media.book(id)
+	var r := {"coins": 5 if first else 2, "stickers": []}
+	if first:
+		_add_sticker(r, "books", false)
+	var lang := Collection.lang_of(str(book.get("language", "en")))
+	learn_words(book.get("words", []).map(func(w): return {"word": w.word, "picture": w.picture,
+			"lang": lang}), "book")
+	_add_goal(r, "story")
+	store.queue_event("book", {"id": id, "first": first, "questions_right": questions_right,
+			"questions_total": questions_total, "seconds": roundi(seconds)})
+	return _pay(r)
+
+
+## A song, read-along or video played to the end: a watch sticker the first
+## time, and today's "lesson or song" goal.
+func finish_media(id: String, check_right: bool, seconds: float) -> Dictionary:
+	var first := collection.finish(id, today())
+	var r := {"coins": 3 if first else 1, "stickers": []}
+	if first:
+		_add_sticker(r, "watch", false)
+	_add_goal(r, "lesson")
+	store.queue_event("media", {"id": id, "first": first, "check_right": check_right,
+			"seconds": roundi(seconds)})
+	return _pay(r)
+
+
+## The first visit of a day earns a days sticker ("" if not new or all collected).
+func new_day() -> String:
+	if not collection.mark_day(today()):
+		return ""
+	var r := {"stickers": []}
+	_add_sticker(r, "days", false)
+	save_profile()
+	return r.stickers[0] if not r.stickers.is_empty() else ""
+
+
+## Adds words to My Word Book ([{word, picture, lang}]); returns how many were new.
+func learn_words(list: Array, from: String) -> int:
+	var added := 0
+	for w in list:
+		if collection.add_word(str(w.word), str(w.get("picture", "")), str(w.get("lang", "en")),
+				from, today()):
+			added += 1
+			store.queue_event("word", {"word": Collection.clean_word(str(w.word)), "lang": w.get("lang", "en"),
+					"from": from})
+	return added
+
+
+func _add_sticker(r: Dictionary, group: String, once_a_day: bool) -> void:
+	var id := collection.earn_once_a_day(group, today()) if once_a_day else collection.earn(group, today())
+	if id != "":
+		r.stickers.append(id)
+		store.queue_event("sticker", {"id": id, "group": group})
+
+
+## Marks a goal; finishing all three gives a goals sticker and 10 coins.
+func _add_goal(r: Dictionary, goal: String) -> void:
+	var g := collection.complete_goal(goal, today())
+	if not g.new:
+		return
+	store.queue_event("goal", {"date": today(), "goal": goal, "all_done": g.all})
+	if g.all:
+		r["goals_done"] = true
+		r.coins = int(r.get("coins", 0)) + 10
+		_add_sticker(r, "goals", false)
+
+
+func _pay(r: Dictionary) -> Dictionary:
+	wallet.coins += int(r.coins)
+	save_profile()
+	wallet_changed.emit()
+	_sync_soon()
+	return r
+
+
 # --- Play-time limits (FR-12) --------------------------------------------------------
 
 ## Local wall-clock time, corrected by the last known server offset so a wrong
@@ -284,43 +417,138 @@ func today() -> String:
 
 func minutes_used_today() -> float:
 	if usage.date != today():
-		usage = {"date": today(), "minutes": 0.0}
+		usage = {"date": today(), "minutes": 0.0, "free_minutes": 0.0}
 	return float(usage.minutes)
 
 
+func free_minutes_today() -> float:
+	minutes_used_today()
+	return float(usage.get("free_minutes", 0.0))
+
+
+## Adventure: lessons and the pre/post-test follow the school schedule.
 func access_decision() -> Dictionary:
 	return AccessPolicy.decide(access.schedule, now_dict(), minutes_used_today())
 
 
-## Call at screen transitions: true if play is allowed now; otherwise opens the
-## friendly lock screen (never closes the app) and returns false.
+## The hub and its collections: open unless it's night (D-015).
+func hub_decision() -> Dictionary:
+	return AccessPolicy.hub(access.schedule, now_dict())
+
+
+## Practice, Library and Watch & Listen: the shared free-play timer (D-015).
+func free_play_decision() -> Dictionary:
+	return AccessPolicy.free_play(access.schedule, now_dict(), free_minutes_today())
+
+
+## "7:30 AM", when Adventure opens next ("" before the first sync).
+func adventure_opens_text() -> String:
+	var at := AccessPolicy.adventure_opens(access.schedule, now_dict(), minutes_used_today())
+	return AccessPolicy.clock_text(at) if at != "" else ""
+
+
+## Call before opening Adventure: true if it's open now. Otherwise Racoon explains
+## on the hub (other sections stay open, D-015), or the lock screen shows at night.
+## Never closes the app.
 func guard() -> bool:
 	var d := access_decision()
 	if AccessPolicy.is_open(d):
 		return true
 	store.queue_event("access", {"status": d.status, "time": Time.get_datetime_string_from_system()})
+	_bounce("adventure_closed")
+	return false
+
+
+## Call when the hub or a collection opens: false (and the lock screen) at night.
+func guard_hub() -> bool:
+	if AccessPolicy.is_open(hub_decision()):
+		return true
 	get_tree().change_scene_to_file("res://scenes/lock/lock_screen.tscn")
 	return false
 
 
-## Counts after-school minutes while a play screen is open (not on lock screens).
-## The schedule decision is refreshed every few seconds, not every frame.
+## Call before opening Practice, Library or Watch & Listen.
+func guard_free_play() -> bool:
+	var d := free_play_decision()
+	if AccessPolicy.is_open(d):
+		return true
+	store.queue_event("access", {"status": d.status, "time": Time.get_datetime_string_from_system()})
+	_bounce("free_limit")
+	return false
+
+
+## Back to the hub with a reason, or the lock screen when the hub is asleep too.
+func _bounce(reason: String) -> void:
+	if not AccessPolicy.is_open(hub_decision()):
+		get_tree().change_scene_to_file("res://scenes/lock/lock_screen.tscn")
+		return
+	notice = reason
+	var scene := get_tree().current_scene
+	if scene != null and scene.name == "Hub":
+		scene.call("show_notice")
+	else:
+		get_tree().change_scene_to_file(HUB_SCENE)
+
+
+## Opens a hub section by HubSections id, applying its time rule. Adventure opens
+## the pre-test first if the child hasn't taken it (FR-02). Unbuilt sections show
+## the "coming soon" page.
+func open_section(id: String) -> void:
+	var info := HubSections.get_info(id)
+	match str(info.get("kind", "")):
+		"adventure":
+			if not guard():
+				return
+			if needs_pretest():
+				start_assessment("pre")
+				return
+		"free":
+			if not guard_free_play():
+				return
+		_:
+			if not guard_hub():
+				return
+	if HubSections.is_built(id):
+		get_tree().change_scene_to_file(info.scene)
+	else:
+		soon_section = id
+		get_tree().change_scene_to_file("res://scenes/hub/coming_soon.tscn")
+
+
+func go_home() -> void:
+	Speech.stop()
+	if guard_hub():
+		get_tree().change_scene_to_file(HUB_SCENE)
+
+
+## Counts Adventure's after-school minutes and the free-play minutes while those
+## screens are open (not on the hub or lock screens). The decisions refresh every
+## few seconds, not every frame.
 func _process(delta: float) -> void:
 	var scene := get_tree().current_scene
-	if scene == null or not PLAY_SCENES.has(scene.name):
+	if scene == null:
+		return
+	var adventure := ADVENTURE_SCENES.has(scene.name)
+	var free := FREE_PLAY_SCENES.has(scene.name)
+	if not adventure and not free:
 		return
 	_decision_age += delta
 	if _decision_age >= 5.0:
 		_decision_age = 0.0
 		_decision = access_decision()
-	if not AccessPolicy.counts_minutes(_decision):
+		_free_decision = free_play_decision()
+	if adventure and AccessPolicy.counts_minutes(_decision):
+		minutes_used_today()
+		usage.minutes = float(usage.minutes) + delta / 60.0
+	elif free and AccessPolicy.counts_minutes(_free_decision):
+		usage.free_minutes = free_minutes_today() + delta / 60.0
+	else:
 		return
-	minutes_used_today()
-	usage.minutes = float(usage.minutes) + delta / 60.0
 	_usage_tick += delta
 	if _usage_tick >= 60.0:
 		_usage_tick = 0.0
-		store.queue_event("usage", {"date": usage.date, "minutes": snappedf(usage.minutes, 0.1)})
+		store.queue_event("usage", {"date": usage.date, "minutes": snappedf(usage.minutes, 0.1),
+				"free_minutes": snappedf(free_minutes_today(), 0.1)})
 		save_profile()
 
 

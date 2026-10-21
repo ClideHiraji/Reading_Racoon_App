@@ -98,7 +98,7 @@ func _icon_color() -> Color:
 			return Palette.MANGO_DEEP
 		"open":
 			return Palette.NIPA
-	return Color.WHITE
+	return Palette.text_on(_face())
 
 
 func _draw() -> void:

@@ -86,7 +86,7 @@ func show_result(chosen: String, answer: String) -> void:
 			right = c.get("label", c.id)
 	_onset.text = right
 	var ok := chosen == answer
-	_onset.add_theme_color_override("font_color", Palette.deep(Palette.RIGHT))
+	_onset.add_theme_color_override("font_color", Palette.readable(Palette.deep(Palette.RIGHT)))
 	var card: PanelContainer = _onset.get_parent()
 	var sb: StyleBoxFlat = card.get_theme_stylebox("panel").duplicate()
 	sb.bg_color = Palette.pale(Palette.RIGHT if ok else Palette.ALMOST, 0.7)

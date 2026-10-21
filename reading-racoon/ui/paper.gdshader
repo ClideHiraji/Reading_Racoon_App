@@ -1,7 +1,7 @@
 // Paper background: a flat color with fine grain and a soft vignette (D-009).
 shader_type canvas_item;
 
-uniform vec4 paper : source_color = vec4(0.969, 0.933, 0.867, 1.0);
+uniform vec4 paper : source_color = vec4(0.996, 0.992, 0.878, 1.0);
 uniform float grain = 0.035;
 uniform float vignette = 0.10;
 

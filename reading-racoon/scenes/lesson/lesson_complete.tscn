@@ -12,7 +12,7 @@
 shader = ExtResource("5_paper")
 
 [sub_resource type="StyleBoxFlat" id="UnlockCard"]
-bg_color = Color(1, 0.98, 0.941, 1)
+bg_color = Color(1, 0.996, 0.957, 1)
 corner_radius_top_left = 32
 corner_radius_top_right = 32
 corner_radius_bottom_right = 32
@@ -88,7 +88,7 @@ script = ExtResource("4_bubble")
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"TitleLabel"
-theme_override_colors/font_color = Color(0.749, 0.31, 0.224, 1)
+theme_override_colors/font_color = Color(0.741, 0.384, 0.071, 1)
 theme_override_font_sizes/font_size = 58
 text = "Lesson complete!"
 horizontal_alignment = 1
@@ -219,4 +219,4 @@ custom_minimum_size = Vector2(0, 104)
 layout_mode = 2
 text = "LET'S GO!"
 script = ExtResource("2_chunky")
-face_color = Color(0.165, 0.616, 0.561, 1)
+face_color = Color(0.914, 0.502, 0.122, 1)

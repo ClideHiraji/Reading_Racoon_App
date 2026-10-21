@@ -38,7 +38,7 @@ func _show_slot(slot: String) -> void:
 	for tab in %Tabs.get_children():
 		var on: bool = tab.get_meta("slot") == slot
 		tab.card_style = not on
-		tab.face_color = Palette.TEAL
+		tab.face_color = Palette.BLUE
 	for c in %Grid.get_children():
 		c.queue_free()
 	for id in GameState.wardrobe.items_in(slot):
@@ -90,14 +90,14 @@ func _price_row(id: String) -> Control:
 	if w.is_worn(id):
 		row.add_child(Icons.rect("check", 24, Palette.LEAF_DEEP))
 		l.text = "Wearing"
-		l.add_theme_color_override("font_color", Palette.LEAF_DEEP)
+		l.add_theme_color_override("font_color", Palette.readable(Palette.LEAF_DEEP))
 	elif w.owns(id):
 		l.text = "Yours"
-		l.add_theme_color_override("font_color", Palette.TEAL_DEEP)
+		l.add_theme_color_override("font_color", Palette.readable(Palette.BAY_DEEP))
 	else:
 		row.add_child(Icons.rect("coins", 26, Palette.MANGO_DEEP))
 		l.text = str(Wardrobe.ITEMS[id].price)
-		l.add_theme_color_override("font_color", Palette.MANGO_DEEP)
+		l.add_theme_color_override("font_color", Palette.readable(Palette.MANGO_DEEP))
 	row.add_child(l)
 	return row
 
@@ -113,7 +113,7 @@ func _select(id: String) -> void:
 	for c in %Grid.get_children():
 		if c is ChunkyButton:
 			c.card_style = c.get_meta("id") != id
-			c.face_color = Palette.pale(Palette.TEAL, 0.7)
+			c.face_color = Palette.pale(Palette.BLUE, 0.55)
 	var button: ChunkyButton = %ActionButton
 	button.icon_name = ""
 	if id == "":
@@ -128,7 +128,7 @@ func _select(id: String) -> void:
 		button.face_color = Palette.INK_SOFT
 	elif w.owns(id):
 		button.text = "WEAR"
-		button.face_color = Palette.TEAL
+		button.face_color = Palette.BLUE
 	else:
 		button.text = "BUY  %d" % Wardrobe.ITEMS[id].price
 		button.icon_name = "coins"
@@ -166,5 +166,6 @@ func _update_coins() -> void:
 	%Coins.text = str(GameState.wallet.coins)
 
 
+## The Closet opens from the hub (Shop, Closet tab), so Back goes home (D-015).
 func _back() -> void:
-	get_tree().change_scene_to_file("res://scenes/path/learning_path.tscn")
+	GameState.go_home()

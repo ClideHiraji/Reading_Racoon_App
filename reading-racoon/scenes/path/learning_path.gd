@@ -14,11 +14,11 @@ var _focus_idx := -1
 
 
 func _ready() -> void:
-	if not GameState.guard():   # FR-12: play-time limits
+	if not GameState.guard():   # FR-12: Adventure's hours; otherwise back to the hub
 		return
 	%Reset.visible = OS.is_debug_build()
 	%Reset.pressed.connect(_on_reset)
-	%ShopButton.pressed.connect(func(): get_tree().change_scene_to_file("res://scenes/shop/shop.tscn"))
+	%HomeButton.pressed.connect(GameState.go_home)   # D-015: the hub holds the Closet
 	GameState.wallet_changed.connect(_update_top_bar)
 	_update_top_bar()
 	var timer := Timer.new()
@@ -113,7 +113,8 @@ func _banner(level: int, info: Dictionary, has_content: bool, unlocked: bool) ->
 	scenery.fade = 0.0 if unlocked else 0.85
 	scenery.custom_minimum_size = Vector2(0, 210)
 	v.add_child(scenery)
-	var ribbon := _pill("LEVEL %d" % level, color if unlocked else Palette.INK_SOFT, Color.WHITE, 22)
+	var ribbon_bg: Color = color if unlocked else Palette.INK_SOFT
+	var ribbon := _pill("LEVEL %d" % level, ribbon_bg, Palette.text_on(ribbon_bg), 22)
 	ribbon.position = Vector2(20, 18)
 	scenery.add_child(ribbon)
 
@@ -143,7 +144,7 @@ func _banner(level: int, info: Dictionary, has_content: bool, unlocked: bool) ->
 ## "Big Reading Day": the post-test, shown once the teacher opens it (FR-10).
 func _post_test_card() -> Control:
 	var card := PanelContainer.new()
-	var sb := _paper_box(Palette.PLUM, 28, 8)
+	var sb := _paper_box(Palette.PLUM_LIGHT, 28, 8)
 	sb.set_content_margin_all(24)
 	card.add_theme_stylebox_override("panel", sb)
 	var v := VBoxContainer.new()
@@ -151,16 +152,16 @@ func _post_test_card() -> Control:
 	card.add_child(v)
 	var head := HBoxContainer.new()
 	head.add_theme_constant_override("separation", 16)
-	head.add_child(_icon_disc("stories", Palette.PLUM_DEEP, 64))
+	head.add_child(_icon_disc("stories", Palette.CARD, 64))
 	var titles := VBoxContainer.new()
 	titles.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	titles.add_child(_label("Big Reading Day!", 38, Color.WHITE, true))
-	titles.add_child(_label("Show your teacher how much you've grown.", 24, Palette.pale(Palette.PLUM, 0.75)))
+	titles.add_child(_label("Big Reading Day!", 38, Palette.INK, true))
+	titles.add_child(_label("Show your teacher how much you've grown.", 24, Palette.INK))
 	head.add_child(titles)
 	v.add_child(head)
 	var go := ChunkyButton.new()
 	go.text = "START"
-	go.face_color = Palette.MANGO_DEEP
+	go.face_color = Palette.ORANGE
 	go.custom_minimum_size = Vector2(0, 96)
 	go.pressed.connect(func(): GameState.start_assessment("post"))
 	v.add_child(go)
@@ -305,7 +306,7 @@ func _icon_disc(icon: String, color: Color, px: float) -> Control:
 	p.add_theme_stylebox_override("panel", sb)
 	p.custom_minimum_size = Vector2(px, px)
 	p.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	p.add_child(Icons.rect(icon, px * 0.64, Color.WHITE))
+	p.add_child(Icons.rect(icon, px * 0.64, Palette.text_on(color)))
 	return p
 
 

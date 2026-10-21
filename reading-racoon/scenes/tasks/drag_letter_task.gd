@@ -30,7 +30,7 @@ func setup(item: Dictionary) -> void:
 		var tile := LetterTile.new()
 		tile.letter = str(c.id)
 		tile.text = c.get("label", c.id)
-		tile.face_color = Palette.TEAL
+		tile.face_color = Palette.BLUE
 		tile.lift = 9
 		tile.custom_minimum_size = Vector2(130, 140)
 		tile.add_theme_font_override("font", ANDIKA)

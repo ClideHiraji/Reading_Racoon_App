@@ -436,6 +436,58 @@ func test_access_policy() -> void:
 	check(not AccessPolicy.is_open(AccessPolicy.decide(s, _at(0, "10:00"), 30.0)), "weekend cap reached")
 
 
+## D-016: everything the child taps on the core palette takes dark ink text that
+## passes WCAG AA (4.5:1).
+func test_palette_text_contrast() -> void:
+	var faces := {"blue": Palette.BLUE, "cream": Palette.CREAM, "yellow": Palette.YELLOW,
+			"orange": Palette.ORANGE, "leaf": Palette.LEAF, "light plum": Palette.PLUM_LIGHT,
+			"locked": DiamondTile.LOCKED, "card": Palette.CARD}
+	for name in faces:
+		var c: Color = faces[name]
+		check(Palette.text_on(c) == Palette.INK, "%s takes dark text" % name)
+		check(Palette.contrast(c, Palette.INK) >= 4.5, "%s with ink passes 4.5:1 (%.1f)" % [
+				name, Palette.contrast(c, Palette.INK)])
+	check(Palette.text_on(Palette.PLUM_DEEP) == Palette.CARD, "dark faces still get light text")
+	for c in [Palette.YELLOW, Palette.MANGO_DEEP, Palette.ORANGE, Palette.BLUE, Palette.LEAF]:
+		check(Palette.contrast(Palette.readable(c), Palette.CARD) >= 4.5, "readable(%s) reads on cream" % c.to_html(false))
+	near(Palette.contrast(Color.WHITE, Color.BLACK), 21.0, 0.01, "contrast of white on black")
+
+
+## D-015: only Adventure follows the school schedule; the hub sleeps at night and
+## Practice, Library and Watch share a free-play timer outside Reading time.
+func test_hub_and_free_play_access() -> void:
+	var s := AccessPolicy.DEFAULTS.duplicate()
+	check(AccessPolicy.hub({}, _at(3, "23:00")).status == "allowed", "no schedule yet = hub open")
+	check(AccessPolicy.hub(s, _at(1, "10:00")).status == "allowed", "hub open in other class hours")
+	check(AccessPolicy.hub(s, _at(6, "10:00")).status == "allowed", "hub open on Saturday")
+	check(AccessPolicy.hub(s, _at(2, "21:00")).status == "sleeping", "hub asleep from 9 PM")
+	check(AccessPolicy.hub(s, _at(2, "05:59")).status == "sleeping", "hub asleep before 6 AM")
+
+	check(AccessPolicy.free_play(s, _at(1, "07:45"), 99).status == "allowed", "Reading time: free play has no timer")
+	var day := AccessPolicy.free_play(s, _at(1, "10:00"), 15.0)
+	check(day.status == "free_play" and day.minutes_left == 30, "other class hours: 30 of 45 min left")
+	check(AccessPolicy.counts_minutes(day), "free-play minutes count outside Reading time")
+	check(AccessPolicy.free_play(s, _at(3, "18:00"), 45.0).status == "free_limit", "free-play timer used up")
+	check(AccessPolicy.is_open(AccessPolicy.free_play(s, _at(0, "10:00"), 0)), "free play open on Sunday")
+	check(AccessPolicy.free_play(s, _at(3, "22:00"), 0).status == "sleeping", "free play asleep at night")
+	s.free_play_minutes = 20
+	check(AccessPolicy.free_play(s, _at(3, "18:00"), 20.0).status == "free_limit", "teacher sets the timer")
+
+	check(AccessPolicy.adventure_opens(s, _at(1, "06:30"), 0) == "07:30", "opens at class time")
+	check(AccessPolicy.adventure_opens(s, _at(1, "10:00"), 0) == "15:00", "opens after school")
+	check(AccessPolicy.adventure_opens(s, _at(1, "10:00"), 30.0) == "07:30", "cap used: tomorrow's class")
+	check(AccessPolicy.adventure_opens(s, _at(1, "18:00"), 0) == "07:30", "evening: tomorrow's class")
+	check(AccessPolicy.adventure_opens({}, _at(1, "18:00"), 0) == "", "no schedule: no time")
+	check(AccessPolicy.clock_text("07:30") == "7:30 AM" and AccessPolicy.clock_text("15:00") == "3:00 PM"
+			and AccessPolicy.clock_text("00:05") == "12:05 AM", "clock text")
+
+	for id in HubSections.ALL:
+		var info: Dictionary = HubSections.ALL[id]
+		check(Icons.exists(info.icon), "hub section icon '%s' exists" % info.icon)
+		check(info.kind in ["adventure", "free", "collection"], "%s has a time rule" % id)
+		check(info.scene == "" or ResourceLoader.exists(info.scene), "%s scene exists" % id)
+
+
 # --- Shop (FR-07) ----------------------------------------------------------------------------
 
 func test_wardrobe() -> void:
@@ -634,3 +686,200 @@ func test_content_is_well_formed() -> void:
 				var easy := b.items.filter(func(it): return it.sub_skill == skill \
 						and it.level == level and it.recovery)
 				check(easy.size() >= 3, "%s L%d has >= 3 recovery items" % [skill, level])
+
+
+# --- Practice, Library, Watch & Listen, collections (D-017) ---------------------------------
+
+func test_collection_stickers_and_goals() -> void:
+	var c := Collection.new()
+	var ids := {}
+	for id in Collection.STICKERS:
+		var s: Dictionary = Collection.STICKERS[id]
+		check(Collection.GROUPS.has(s.group), "sticker %s has a group" % id)
+		check(Icons.exists(id), "sticker %s has an SVG" % id)
+		ids[id] = true
+	check(ids.size() == 40, "40 stickers in the album (got %d)" % ids.size())
+	check(c.earn("games", "2026-10-21") == "ball", "games stickers come in album order")
+	check(c.earn_once_a_day("games", "2026-10-21") == "bee", "a games sticker once a day")
+	check(c.earn_once_a_day("games", "2026-10-21") == "", "no second one the same day")
+	check(c.earn_once_a_day("games", "2026-10-22") == "frog", "another one the next day")
+	for i in 10:
+		c.earn("goals", "2026-10-21")
+	check(c.count("goals") == 6 and c.earn("goals", "2026-10-21") == "", "a full group gives no more")
+	check(c.mark_day("2026-10-21") and not c.mark_day("2026-10-21"), "a day counts once")
+	var a := c.complete_goal("story", "2026-10-21")
+	check(a.new and not a.all, "first goal done")
+	check(not c.complete_goal("story", "2026-10-21").new, "a goal counts once a day")
+	c.complete_goal("game", "2026-10-21")
+	var last := c.complete_goal("lesson", "2026-10-21")
+	check(last.new and last.all, "all three goals done")
+	check(c.goals_left("2026-10-21") == 0 and c.goals_left("2026-10-22") == 3, "goals start fresh each day")
+	check(not c.complete_goal("nap", "2026-10-22").new, "unknown goals are ignored")
+	check(c.finish("racoon-boat", "2026-10-21") and not c.finish("racoon-boat", "2026-10-22"),
+			"a book is finished once")
+	var back := Collection.new()
+	back.from_dict(JSON.parse_string(JSON.stringify(c.to_dict())))
+	check(back.count() == c.count() and back.is_finished("racoon-boat") and back.days.size() == 1,
+			"collection survives saving")
+
+
+func test_collection_words() -> void:
+	var c := Collection.new()
+	check(c.add_word("Isda.", "fish", "fil", "book", "2026-10-21"), "a new word is added")
+	check(not c.add_word("isda", "fish", "fil", "game", "2026-10-21"), "a word is added once")
+	check(not c.add_word("Si Lito", "", "fil", "book", "2026-10-21"), "two words are not a word")
+	check(not c.add_word("2", "hand", "en", "lesson", "2026-10-21"), "numbers are not words")
+	check(c.add_word("niño", "", "fil", "book", "2026-10-21"), "ñ is a letter")
+	check(c.word_list("fil") == ["isda", "niño"] and c.word_list("en").is_empty(), "words by language")
+	var b := bank()
+	var got := {}
+	for id in ["pa1-01", "ph1-04", "ph2-09", "ph3-01", "vo2-01"]:
+		for w in Collection.words_from_item(b.item(id)):
+			got[w.word] = w
+	check(got.has("hat") and got.has("cat"), "rhyme item gives the answer and the word")
+	check(got.has("cat") and got.cat.picture == "cat", "drag-the-letter gives the built word")
+	check(got.has("hat"), "word wheel gives the spun word")
+	check(got.has("isda") and got.isda.lang == "fil", "syllables give the Filipino word")
+	check(got.has("book"), "picture vocabulary gives the word")
+	check(Collection.words_from_item(b.item("ph1-01")).is_empty(), "letter items give no word")
+
+
+func test_practice_pool() -> void:
+	var b := bank()
+	var words := PracticePool.picture_words(b, 1)
+	check(words.size() >= 6, "level 1 has words with pictures for Memory Match (%d)" % words.size())
+	for w in words:
+		check(Icons.exists(w.picture), "practice word %s has a picture" % w.word)
+	check(PracticePool.rhymes(b, 1).size() >= 2, "level 1 has rhyme rounds")
+	check(PracticePool.unlocked("rhyme_pop", b, 1), "Rhyme Pop opens at level 1")
+	check(PracticePool.unlocked("memory_match", b, 1), "Memory Match opens at level 1")
+	check(not PracticePool.unlocked("word_catch", b, 1), "Word Catch waits for level 2")
+	check(PracticePool.lock_text("word_catch", b, 1) == "Finish Level 1", "Word Catch says what opens it")
+	check(PracticePool.unlocked("word_catch", b, 2), "Word Catch opens at level 2")
+	check(not PracticePool.unlocked("spin_words", b, 1) and PracticePool.unlocked("spin_words", b, 2),
+			"Spin the Words opens with its first items")
+	check(PracticePool.unlocked("syllable_train", b, 2), "Syllable Train opens at level 2")
+	check(not PracticePool.unlocked("story_shuffle", b, 2) and PracticePool.unlocked("story_shuffle", b, 3),
+			"Story Shuffle opens with the first stories")
+	check(PracticePool.lock_text("story_shuffle", b, 2) == "Reach Level 3", "Story Shuffle lock text")
+	check(PracticePool.coins_for(0) == 2 and PracticePool.coins_for(9) == 5, "practice coins 2 to 5")
+	for g in PracticePool.GAMES:
+		check(ResourceLoader.exists(g.scene), "%s scene exists" % g.id)
+		check(Icons.exists(g.icon), "%s icon exists" % g.id)
+		check(g.skill in PracticePool.SKILLS, "%s has a skill" % g.id)
+
+
+func test_media_library_content() -> void:
+	var m := MediaLibrary.new()
+	m.load_all()
+	check(m.books.size() >= 8, "8 Library books (%d)" % m.books.size())
+	var langs := {}
+	var ids := {}
+	for b in m.books:
+		check(not ids.has(b.id), "unique book id %s" % b.id)
+		ids[b.id] = true
+		langs[Collection.lang_of(b.language)] = true
+		check(b.pages.size() >= 5, "%s has at least 5 pages" % b.id)
+		check(b.questions.size() == 2, "%s has 2 questions" % b.id)
+		check(str(b.get("credit", "")) != "", "%s has a credit" % b.id)
+		for p in b.pages:
+			check(str(p.text) != "" and p.text.split(" ").size() <= 12, "%s page is short" % b.id)
+			for pic in p.get("pictures", []):
+				check(Icons.exists(pic), "%s picture %s exists" % [b.id, pic])
+		for q in b.questions:
+			check(q.choices.map(func(c): return c.id).has(q.answer), "%s question answer is a choice" % b.id)
+		for w in b.words:
+			check(Collection.clean_word(w.word) != "" and Icons.exists(w.picture), "%s word %s" % [b.id, w.word])
+	check(langs.has("en") and langs.has("fil") and langs.has("bis"), "books in English, Filipino, Bisaya")
+	check(m.books_in("bis").size() >= 2, "Bisaya filter finds the Bisaya books")
+	check(m.books_in("").front().level == "easy", "easiest books first")
+	check(m.watch.size() >= 6, "Watch & Listen items (%d)" % m.watch.size())
+	for w in m.watch:
+		check(MediaLibrary.KINDS.has(w.kind), "%s has a known kind" % w.id)
+		var lines := m.lines_of(w)
+		check(not lines.is_empty(), "%s has lines to play" % w.id)
+		for l in lines:
+			for pic in l.get("pictures", []):
+				check(Icons.exists(pic), "%s picture %s exists" % [w.id, pic])
+		if w.has("check"):
+			check(w.check.choices.map(func(c): return c.id).has(w.check.answer), "%s check answer" % w.id)
+	check(MediaLibrary.video_ready({"kind": "song"}), "songs need no download")
+	check(not MediaLibrary.video_ready({"kind": "video", "file": "user://content/none.ogv"}),
+			"videos wait for their download")
+	for f in ["res://content/library.json", "res://content/watch.json"]:
+		check(not _has_emoji(FileAccess.get_file_as_string(f)), "%s has no emoji (D-009)" % f)
+
+
+func test_read_along_word_starts() -> void:
+	var speech := preload("res://scripts/autoload/speech.gd")
+	check(speech.base_lang("bis-placeholder") == "bis" and speech.base_lang("fil") == "fil"
+			and speech.base_lang("en-placeholder") == "en", "voices for English, Filipino, Bisaya")
+	var starts := Array(speech.word_starts("May bangka  si Lolo."))
+	check(starts == [0, 4, 12, 15], "word starts for read-along (%s)" % str(starts))
+
+
+# --- Teacher content download (D-020, server D-019) ---------------------------------------
+
+const SHA_A := "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+const SHA_B := "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+
+
+func _manifest() -> Dictionary:
+	return {"version": "v1", "books": [
+		{"id": "tb-one", "title": "T", "language": "fil", "pages": [
+			{"text": "May bangka.", "scene": "river", "pictures": ["boat"],
+				"image": "user://content/7b0c.png", "image_url": "/api/content/files/7b0c", "image_sha256": SHA_A},
+			{"text": "Masama.", "scene": "river", "image": "user://content/../profile.json",
+				"image_url": "/api/content/files/x", "image_sha256": SHA_A},
+			{"text": "Ibang host.", "scene": "river", "image": "user://content/x.png",
+				"image_url": "https://evil.example/x.png", "image_sha256": SHA_A}]},
+		{"id": "", "title": "no id", "pages": [{"text": "x"}]},
+		{"id": "tb-empty", "title": "no pages", "pages": []}],
+		"watch": [
+		{"id": "tv-good", "kind": "video", "title": "V", "file": "user://content/tv-good.ogv",
+			"file_url": "/api/content/files/1e5d", "size_bytes": 1000, "sha256": SHA_B},
+		{"id": "tv-bad", "kind": "video", "title": "V", "file": "user://profile.json",
+			"file_url": "/api/content/files/1e5e", "sha256": SHA_B},
+		{"id": "tv-nosha", "kind": "video", "title": "V", "file": "user://content/tv-nosha.ogv",
+			"file_url": "/api/content/files/1e5f", "sha256": "not-a-hash"},
+		{"id": "tv-song", "kind": "song", "title": "S", "lines": []}]}
+
+
+func test_content_paths_are_safe() -> void:
+	check(ContentPlan.safe_local("user://content/tv-p4r8s2dz.ogv"), "a video in user://content/ is safe")
+	check(ContentPlan.safe_local("user://content/7b0c-11.PNG"), "a page picture is safe")
+	for bad in ["user://content/../profile.json", "user://profile.json", "user://content/sub/x.png",
+			"res://content/x.png", "user://content/x.gd", "user://content/.hidden.png",
+			"user://content/a b.png", "user://content/x\\y.png", "user://content/"]:
+		check(not ContentPlan.safe_local(bad), "unsafe path refused: %s" % bad)
+	check(ContentPlan.safe_url("/api/content/files/1e5d"), "a server file path is fine")
+	check(not ContentPlan.safe_url("https://evil.example/x") and not ContentPlan.safe_url("/api/../x"),
+			"other hosts and climbing paths are refused")
+
+
+func test_content_plan() -> void:
+	var cleaned := ContentPlan.clean(_manifest())
+	check(cleaned.books.size() == 1 and cleaned.books[0].id == "tb-one", "only well-formed books stay")
+	var pages: Array = cleaned.books[0].pages
+	check(pages[0].has("image") and not pages[1].has("image") and not pages[2].has("image"),
+			"unsafe page pictures are dropped, the pages stay")
+	check(cleaned.watch.size() == 1 and cleaned.watch[0].id == "tv-good", "only safe videos with a hash stay")
+	var needed := ContentPlan.files(cleaned)
+	check(needed.size() == 2, "a video and a page picture to fetch")
+	var have := {"user://content/7b0c.png": SHA_A, "user://content/tv-good.ogv": SHA_A,
+			"user://content/old.ogv": SHA_B}
+	var get := ContentPlan.to_download(needed, have)
+	check(get.size() == 1 and get[0].local == "user://content/tv-good.ogv", "a replaced video is fetched again")
+	check(ContentPlan.to_delete(needed, have) == ["user://content/old.ogv"], "a removed item's file is deleted")
+	check(ContentPlan.to_download(needed, {}).size() == 2, "nothing on the tablet: fetch both")
+
+
+func test_file_sha256() -> void:
+	var path := "user://test_sha.bin"
+	var f := FileAccess.open(path, FileAccess.WRITE)
+	f.store_string("abc")
+	f.close()
+	check(ContentPlan.file_sha256(path) == "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+			"SHA-256 of a saved file")
+	check(ContentPlan.file_sha256("user://missing.bin") == "", "a missing file has no hash")
+	DirAccess.remove_absolute(path)

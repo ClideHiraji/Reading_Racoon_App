@@ -6,7 +6,7 @@ extends Control
 
 signal picked(index: int)
 
-const COLORS := [Palette.MANGO, Palette.TEAL, Palette.CORAL, Palette.LEAF, Palette.PLUM, Palette.BAY]
+const COLORS := [Palette.YELLOW, Palette.BLUE, Palette.ORANGE, Palette.LEAF, Palette.PLUM_LIGHT, Palette.SAND]
 const ANDIKA := preload("res://assets/fonts/Andika-Bold.ttf")
 
 var labels: Array = []
@@ -80,7 +80,7 @@ func _draw() -> void:
 		var fs := 58 if str(labels[i]).length() <= 1 else 46
 		var tw := ANDIKA.get_string_size(str(labels[i]), HORIZONTAL_ALIGNMENT_LEFT, -1, fs)
 		draw_string(ANDIKA, p + Vector2(-tw.x / 2, fs * 0.33), str(labels[i]),
-				HORIZONTAL_ALIGNMENT_LEFT, -1, fs, Color.WHITE)
+				HORIZONTAL_ALIGNMENT_LEFT, -1, fs, Palette.text_on(COLORS[i % COLORS.size()]))
 	# Stitched rim and center pin.
 	for i in 36:
 		var a := TAU * i / 36.0

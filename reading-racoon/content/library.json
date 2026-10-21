@@ -1,0 +1,202 @@
+{
+  "_note": "Library books (D-017). Placeholders written for Reading Racoon; teachers review or replace them (open issue 15). Teacher-picked books from openly licensed libraries arrive later in user://content/library.json with the same shape. Pictures are icon names from assets/icons; scenes are PaperScenery scenes.",
+  "books": [
+    {
+      "id": "racoon-boat",
+      "title": "Racoon's Little Boat",
+      "language": "en-placeholder",
+      "level": "easy",
+      "cover": "river",
+      "credit": "Written for Reading Racoon. Placeholder for teacher review.",
+      "words": [
+        {"word": "boat", "picture": "boat"},
+        {"word": "fish", "picture": "fish"},
+        {"word": "sun", "picture": "sun"}
+      ],
+      "pages": [
+        {"text": "Racoon has a little boat.", "scene": "river", "pictures": ["raccoon", "boat"]},
+        {"text": "The boat is on the river.", "scene": "river", "pictures": ["boat", "waves"]},
+        {"text": "Racoon sees a fish.", "scene": "river", "pictures": ["fish"]},
+        {"text": "The fish jumps up, up, up!", "scene": "river", "pictures": ["fish", "sun"]},
+        {"text": "Splash! Racoon is wet.", "scene": "river", "pictures": ["waves", "raccoon"]},
+        {"text": "Racoon laughs. What a fun day!", "scene": "river", "pictures": ["sun", "raccoon"]}
+      ],
+      "questions": [
+        {"prompt": "What does Racoon see?", "choices": [{"id": "fish", "label": "fish", "picture": "fish"}, {"id": "cat", "label": "cat", "picture": "cat"}], "answer": "fish"},
+        {"prompt": "Where is the boat?", "choices": [{"id": "house", "label": "house", "picture": "house"}, {"id": "river", "label": "river", "picture": "waves"}], "answer": "river"}
+      ]
+    },
+    {
+      "id": "under-the-tree",
+      "title": "Under the Tree",
+      "language": "en-placeholder",
+      "level": "easy",
+      "cover": "grove",
+      "credit": "Written for Reading Racoon. Placeholder for teacher review.",
+      "words": [
+        {"word": "tree", "picture": "tree"},
+        {"word": "bee", "picture": "bee"},
+        {"word": "banana", "picture": "banana"},
+        {"word": "dog", "picture": "dog"}
+      ],
+      "pages": [
+        {"text": "Ana sits under a big tree.", "scene": "grove", "pictures": ["tree"]},
+        {"text": "A bee buzzes. Bzz, bzz!", "scene": "grove", "pictures": ["bee"]},
+        {"text": "A butterfly flies by.", "scene": "grove", "pictures": ["butterfly"]},
+        {"text": "Ana eats a banana.", "scene": "grove", "pictures": ["banana"]},
+        {"text": "She gives some to her dog.", "scene": "grove", "pictures": ["dog", "banana"]},
+        {"text": "The dog wags its tail. Thank you, Ana!", "scene": "grove", "pictures": ["dog", "heart"]}
+      ],
+      "questions": [
+        {"prompt": "What does Ana eat?", "choices": [{"id": "banana", "label": "banana", "picture": "banana"}, {"id": "apple", "label": "apple", "picture": "apple"}], "answer": "banana"},
+        {"prompt": "Who gets some too?", "choices": [{"id": "cat", "label": "cat", "picture": "cat"}, {"id": "dog", "label": "dog", "picture": "dog"}], "answer": "dog"}
+      ]
+    },
+    {
+      "id": "rain-kubo",
+      "title": "Rain on the Bahay Kubo",
+      "language": "en-placeholder",
+      "level": "medium",
+      "cover": "village",
+      "credit": "Written for Reading Racoon. Placeholder for teacher review.",
+      "words": [
+        {"word": "cloud", "picture": "cloud"},
+        {"word": "hen", "picture": "hen"},
+        {"word": "ball", "picture": "ball"}
+      ],
+      "pages": [
+        {"text": "Look at the dark cloud.", "scene": "village", "pictures": ["cloud"]},
+        {"text": "Drip, drop! The rain falls.", "scene": "village", "pictures": ["cloud", "waves"]},
+        {"text": "Lolo and Ana stay in the bahay kubo.", "scene": "village", "pictures": ["hut"]},
+        {"text": "The hen runs under the house.", "scene": "village", "pictures": ["hen", "hut"]},
+        {"text": "Then the sun comes out.", "scene": "village", "pictures": ["sun"]},
+        {"text": "Everyone goes out to play!", "scene": "village", "pictures": ["ball", "sun"]}
+      ],
+      "questions": [
+        {"prompt": "Where does the hen go?", "choices": [{"id": "house", "label": "under the house", "picture": "hut"}, {"id": "tree", "label": "up a tree", "picture": "tree"}], "answer": "house"},
+        {"prompt": "What comes out at the end?", "choices": [{"id": "moon", "label": "the moon", "picture": "moon"}, {"id": "sun", "label": "the sun", "picture": "sun"}], "answer": "sun"}
+      ]
+    },
+    {
+      "id": "bangka-ni-lolo",
+      "title": "Ang Bangka ni Lolo",
+      "language": "fil-placeholder",
+      "level": "easy",
+      "cover": "river",
+      "credit": "Isinulat para sa Reading Racoon. Pansamantala, para suriin ng guro.",
+      "words": [
+        {"word": "bangka", "picture": "boat"},
+        {"word": "isda", "picture": "fish"},
+        {"word": "bahay", "picture": "house"}
+      ],
+      "pages": [
+        {"text": "May bangka si Lolo.", "scene": "river", "pictures": ["boat"]},
+        {"text": "Sumakay si Lolo sa bangka.", "scene": "river", "pictures": ["boat", "waves"]},
+        {"text": "Dala niya ang lambat at baon.", "scene": "river", "pictures": ["bag"]},
+        {"text": "Maraming isda sa ilog.", "scene": "river", "pictures": ["fish", "waves"]},
+        {"text": "Nakahuli si Lolo ng isda!", "scene": "river", "pictures": ["fish"]},
+        {"text": "Masaya si Lolo pag-uwi sa bahay.", "scene": "village", "pictures": ["house", "sun"]}
+      ],
+      "questions": [
+        {"prompt": "Ano ang sinakyan ni Lolo?", "choices": [{"id": "bangka", "label": "bangka", "picture": "boat"}, {"id": "bus", "label": "bus", "picture": "bus"}], "answer": "bangka"},
+        {"prompt": "Ano ang nahuli ni Lolo?", "choices": [{"id": "pusa", "label": "pusa", "picture": "cat"}, {"id": "isda", "label": "isda", "picture": "fish"}], "answer": "isda"}
+      ]
+    },
+    {
+      "id": "muning-isda",
+      "title": "Si Muning at ang Isda",
+      "language": "fil-placeholder",
+      "level": "easy",
+      "cover": "home",
+      "credit": "Isinulat para sa Reading Racoon. Pansamantala, para suriin ng guro.",
+      "words": [
+        {"word": "pusa", "picture": "cat"},
+        {"word": "isda", "picture": "fish"}
+      ],
+      "pages": [
+        {"text": "Si Muning ay isang pusa.", "scene": "home", "pictures": ["cat"]},
+        {"text": "Gutom na si Muning.", "scene": "home", "pictures": ["cat"]},
+        {"text": "Nakita niya ang isda sa mesa.", "scene": "village", "pictures": ["fish"]},
+        {"text": "Pero isda iyon ni Nanay!", "scene": "village", "pictures": ["fish", "house"]},
+        {"text": "Binigyan ni Nanay si Muning ng gatas.", "scene": "village", "pictures": ["cat", "heart"]},
+        {"text": "Salamat, Nanay! Meow!", "scene": "home", "pictures": ["cat", "heart"]}
+      ],
+      "questions": [
+        {"prompt": "Sino si Muning?", "choices": [{"id": "pusa", "label": "pusa", "picture": "cat"}, {"id": "aso", "label": "aso", "picture": "dog"}], "answer": "pusa"},
+        {"prompt": "Ano ang nakita ni Muning sa mesa?", "choices": [{"id": "saging", "label": "saging", "picture": "banana"}, {"id": "isda", "label": "isda", "picture": "fish"}], "answer": "isda"}
+      ]
+    },
+    {
+      "id": "hardin-ni-ana",
+      "title": "Ang Hardin ni Ana",
+      "language": "fil-placeholder",
+      "level": "medium",
+      "cover": "grove",
+      "credit": "Isinulat para sa Reading Racoon. Pansamantala, para suriin ng guro.",
+      "words": [
+        {"word": "saging", "picture": "banana"},
+        {"word": "puno", "picture": "tree"},
+        {"word": "bubuyog", "picture": "bee"}
+      ],
+      "pages": [
+        {"text": "May hardin si Ana.", "scene": "grove", "pictures": ["tree"]},
+        {"text": "Nagtanim siya ng saging.", "scene": "grove", "pictures": ["banana"]},
+        {"text": "Dinidiligan niya ito araw-araw.", "scene": "grove", "pictures": ["sun", "waves"]},
+        {"text": "Lumaki ang puno ng saging.", "scene": "grove", "pictures": ["tree", "banana"]},
+        {"text": "May bubuyog sa hardin.", "scene": "grove", "pictures": ["bee"]},
+        {"text": "Hinog na ang saging! Kain tayo!", "scene": "grove", "pictures": ["banana", "heart"]}
+      ],
+      "questions": [
+        {"prompt": "Ano ang itinanim ni Ana?", "choices": [{"id": "saging", "label": "saging", "picture": "banana"}, {"id": "mansanas", "label": "mansanas", "picture": "apple"}], "answer": "saging"},
+        {"prompt": "Ano ang nasa hardin?", "choices": [{"id": "elepante", "label": "elepante", "picture": "elephant"}, {"id": "bubuyog", "label": "bubuyog", "picture": "bee"}], "answer": "bubuyog"}
+      ]
+    },
+    {
+      "id": "pagong-matsing",
+      "title": "Si Pagong ug si Matsing",
+      "language": "bis-placeholder",
+      "level": "medium",
+      "cover": "river",
+      "credit": "A Philippine folk tale, retold for Reading Racoon. Placeholder for teacher review (Bisaya).",
+      "words": [
+        {"word": "saging", "picture": "banana"},
+        {"word": "suba", "picture": "waves"}
+      ],
+      "pages": [
+        {"text": "Si Pagong ug si Matsing managhigala.", "scene": "river", "pictures": []},
+        {"text": "Nakakita sila ug saging sa suba.", "scene": "river", "pictures": ["banana", "waves"]},
+        {"text": "Gibahin nila ang saging.", "scene": "river", "pictures": ["banana"]},
+        {"text": "Gitanom ni Pagong ang iyang tunga.", "scene": "grove", "pictures": ["banana", "tree"]},
+        {"text": "Gikaon ni Matsing ang iyang tunga.", "scene": "grove", "pictures": ["banana"]},
+        {"text": "Mitubo ang saging ni Pagong. Daghan na ang bunga!", "scene": "grove", "pictures": ["tree", "banana"]}
+      ],
+      "questions": [
+        {"prompt": "Unsa ang nakit-an nila sa suba?", "choices": [{"id": "saging", "label": "saging", "picture": "banana"}, {"id": "isda", "label": "isda", "picture": "fish"}], "answer": "saging"},
+        {"prompt": "Kang kinsa ang saging nga mitubo?", "choices": [{"id": "pagong", "label": "Pagong"}, {"id": "matsing", "label": "Matsing"}], "answer": "pagong"}
+      ]
+    },
+    {
+      "id": "isda-sa-suba",
+      "title": "Ang Isda sa Suba",
+      "language": "bis-placeholder",
+      "level": "easy",
+      "cover": "bay",
+      "credit": "Written for Reading Racoon. Placeholder for teacher review (Bisaya).",
+      "words": [
+        {"word": "isda", "picture": "fish"},
+        {"word": "bangka", "picture": "boat"}
+      ],
+      "pages": [
+        {"text": "Daghan ang isda sa suba.", "scene": "bay", "pictures": ["fish", "waves"]},
+        {"text": "Ang usa ka isda gamay.", "scene": "bay", "pictures": ["fish"]},
+        {"text": "Ang usa ka isda dako.", "scene": "bay", "pictures": ["fish"]},
+        {"text": "Molangoy sila ilalom sa bangka.", "scene": "bay", "pictures": ["fish", "boat"]},
+        {"text": "Nalipay ang mga isda!", "scene": "bay", "pictures": ["fish", "sun"]}
+      ],
+      "questions": [
+        {"prompt": "Asa ang mga isda?", "choices": [{"id": "suba", "label": "suba", "picture": "waves"}, {"id": "balay", "label": "balay", "picture": "house"}], "answer": "suba"},
+        {"prompt": "Unsa ang naa sa ibabaw sa mga isda?", "choices": [{"id": "bangka", "label": "bangka", "picture": "boat"}, {"id": "iring", "label": "iring", "picture": "cat"}], "answer": "bangka"}
+      ]
+    }
+  ]
+}

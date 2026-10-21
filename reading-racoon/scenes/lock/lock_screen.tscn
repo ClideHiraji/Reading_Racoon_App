@@ -12,7 +12,7 @@ resource_local_to_scene = true
 shader = ExtResource("2_paper")
 
 [sub_resource type="StyleBoxFlat" id="Disc"]
-bg_color = Color(0.949, 0.694, 0.204, 1)
+bg_color = Color(1, 0.788, 0.094, 1)
 corner_radius_top_left = 70
 corner_radius_top_right = 70
 corner_radius_bottom_right = 70
@@ -124,4 +124,4 @@ custom_minimum_size = Vector2(0, 104)
 layout_mode = 2
 text = "CHECK AGAIN"
 script = ExtResource("3_chunky")
-face_color = Color(0.165, 0.616, 0.561, 1)
+face_color = Color(0.914, 0.502, 0.122, 1)

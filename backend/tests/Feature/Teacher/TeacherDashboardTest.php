@@ -168,16 +168,24 @@ class TeacherDashboardTest extends TestCase
 
     public function test_the_schedule_editor_validates_and_the_game_sees_the_new_schedule(): void
     {
+        $day = ['free_play_minutes' => 45, 'day_start' => '06:00', 'day_end' => '21:00'];
         $this->put(route('teacher.schedule.update', $this->section), [
-            'class_start' => '08:00', 'class_end' => '09:00', 'after_school_start' => '08:30', 'after_school_end' => '10:00', 'daily_minutes' => 30,
+            'class_start' => '08:00', 'class_end' => '09:00', 'after_school_start' => '08:30', 'after_school_end' => '10:00', 'daily_minutes' => 30, ...$day,
         ])->assertSessionHasErrors('after_school_start');
         $this->put(route('teacher.schedule.update', $this->section), [
-            'class_start' => '09:00', 'class_end' => '08:00', 'after_school_start' => '15:00', 'after_school_end' => '17:00', 'daily_minutes' => 300,
+            'class_start' => '09:00', 'class_end' => '08:00', 'after_school_start' => '15:00', 'after_school_end' => '17:00', 'daily_minutes' => 300, ...$day,
         ])->assertSessionHasErrors(['class_end', 'daily_minutes']);
+        $this->put(route('teacher.schedule.update', $this->section), [
+            'class_start' => '08:00', 'class_end' => '09:00', 'after_school_start' => '16:00', 'after_school_end' => '22:00', 'daily_minutes' => 30, ...$day,
+        ])->assertSessionHasErrors('after_school_start'); // ends after bedtime
+        $this->put(route('teacher.schedule.update', $this->section), [
+            'class_start' => '08:00', 'class_end' => '09:00', 'after_school_start' => '16:00', 'after_school_end' => '18:00', 'daily_minutes' => 30,
+            'free_play_minutes' => 45, 'day_start' => '21:00', 'day_end' => '06:00',
+        ])->assertSessionHasErrors('day_end');
 
         $this->put(route('teacher.schedule.update', $this->section), [
             'class_start' => '08:00', 'class_end' => '09:00', 'after_school_start' => '16:00', 'after_school_end' => '18:00',
-            'daily_minutes' => 45, 'weekends_open' => '1',
+            'daily_minutes' => 45, 'weekends_open' => '1', 'free_play_minutes' => 60, 'day_start' => '06:30', 'day_end' => '20:00',
         ])->assertRedirect(route('teacher.sections.show', $this->section));
 
         $schedule = AccessSchedule::findOrFail($this->section->id);
@@ -186,7 +194,10 @@ class TeacherDashboardTest extends TestCase
         $student = $this->enroll('Ana');
         Sanctum::actingAs($student->user);
         $this->getJson('/api/access/student/status')->assertJsonPath('schedule.after_school_start', '16:00')
-            ->assertJsonPath('schedule.daily_minutes', 45);
+            ->assertJsonPath('schedule.daily_minutes', 45)
+            ->assertJsonPath('schedule.free_play_minutes', 60)
+            ->assertJsonPath('schedule.day_start', '06:30')
+            ->assertJsonPath('schedule.day_end', '20:00');
     }
 
     public function test_the_report_is_built_from_the_numbers_and_exports_as_pdf(): void

@@ -40,4 +40,19 @@ enum SyncEventType: string
     case Outfit = 'outfit';
     // {status, time}: the device showed a lock screen (FR-12), for the admin logs
     case Access = 'access';
+
+    // Hub sections (game D-017). Stored only for now: the replay ignores them
+    // and Practice never changes BKT.
+    // {game, correct, total, seconds}: a Practice game finished
+    case Practice = 'practice';
+    // {id, first, questions_right, questions_total, seconds}: a Library book read to the end
+    case Book = 'book';
+    // {id, first, check_right, seconds}: a song, read-along or video finished
+    case Media = 'media';
+    // {id, group}: a sticker earned (adventure, books, games, watch, days, goals)
+    case Sticker = 'sticker';
+    // {word, lang, from}: a word added to My Word Book (lang en|fil|bis, from lesson|book|game)
+    case Word = 'word';
+    // {date, goal, all_done}: one of today's goals done (goal story|game|lesson)
+    case Goal = 'goal';
 }

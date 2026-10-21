@@ -23,6 +23,12 @@ return new class extends Migration
             $table->time('after_school_end');
             $table->smallInteger('daily_minutes')->default(30);
             $table->boolean('weekends_open')->default(false);
+            // Game D-015: Practice, Library and Watch & Listen share this many
+            // minutes a day outside the class window; the game sleeps outside
+            // day_start..day_end.
+            $table->smallInteger('free_play_minutes')->default(45);
+            $table->time('day_start')->default('06:00');
+            $table->time('day_end')->default('21:00');
             $table->foreignId('updated_by')->nullable()->constrained('users')->nullOnDelete();
             $table->timestampsTz();
         });
@@ -40,7 +46,8 @@ return new class extends Migration
         });
 
         DB::statement('ALTER TABLE access_schedules ADD CONSTRAINT access_schedules_windows_check CHECK (class_start < class_end AND after_school_start < after_school_end)');
-        DB::statement('ALTER TABLE access_schedules ADD CONSTRAINT access_schedules_daily_minutes_check CHECK (daily_minutes BETWEEN 0 AND 240)');
+        DB::statement('ALTER TABLE access_schedules ADD CONSTRAINT access_schedules_daily_minutes_check CHECK (daily_minutes BETWEEN 0 AND 240 AND free_play_minutes BETWEEN 0 AND 240)');
+        DB::statement('ALTER TABLE access_schedules ADD CONSTRAINT access_schedules_day_check CHECK (day_start < day_end)');
         DB::statement('ALTER TABLE daily_usage ADD CONSTRAINT daily_usage_minutes_check CHECK (minutes >= 0)');
     }
 

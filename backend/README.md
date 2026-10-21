@@ -196,9 +196,10 @@ The server replays all of a student's stored events, oldest first, through the c
 | `chest` | `level` | +15 coins, once per world. |
 | `purchase` | `item, price` | Spends the catalogue price (a copy of `wardrobe.gd` in `config/reading_racoon.php`; the client's price only for unknown items). Ignored if already owned or not enough coins. |
 | `outfit` | `equipped {slot: item}` | What the raccoon wears: owned items in their own slot. Everyone starts owning and wearing `scarf_teal`. |
-| `usage` | `date, minutes` | After-school minutes played that local day so far; the largest value per date wins. |
+| `usage` | `date, minutes` (+ `free_minutes`, ignored for now) | After-school Adventure minutes played that local day so far; the largest value per date wins. |
 | `access` | `status, time` | A lock screen the device showed; logged once in the admin system log. |
 | `bkt_state`, `level_up`, `hearts` | | Stored only: the server computes these itself. |
+| `practice`, `book`, `media`, `sticker`, `word`, `goal` | hub sections (game D-017): `practice {game, correct, total, seconds}`, `book {id, first, questions_right, questions_total, seconds}`, `media {id, first, check_right, seconds}`, `sticker {id, group}`, `word {word, lang, from}`, `goal {date, goal, all_done}` | Stored only. Practice and reading never change BKT, coins or the level. |
 
 The server also logs to the admin portal: rejected events, `id_conflict`s, device clocks more than 5 minutes ahead (anomalies).
 
@@ -233,7 +234,8 @@ Student token only. The section's schedule and today's decision, in the school's
   "opens_at": null,
   "used_minutes": 12,
   "schedule": {"class_start": "07:30", "class_end": "08:30", "after_school_start": "15:00", "after_school_end": "17:00",
-               "daily_minutes": 30, "weekends_open": false, "timezone": "Asia/Manila"}
+               "daily_minutes": 30, "weekends_open": false,
+               "free_play_minutes": 45, "day_start": "06:00", "day_end": "21:00", "timezone": "Asia/Manila"}
 }
 ```
 
@@ -244,8 +246,9 @@ Student token only. The section's schedule and today's decision, in the school's
 | `class_lock` | Any other weekday time ("Come back during Reading time") | 0 |
 | `daily_limit` | The daily after-school minutes are used up ("Great work today!") | 0 |
 | `weekend_lock` | Saturday/Sunday while weekends are closed ("Game is sleeping") | 0 |
+| `sleeping` | Night: before `day_start` or from `day_end` (not on a closed weekend, which stays `weekend_lock`) | 0 |
 
-`window` is `class`, `after_school`, `weekend` or `null`; `opens_at` is when play opens next (UTC), or `null` while open. `used_minutes` comes from the synced `usage` events. Sections without their own schedule use the defaults above. Holidays aren't modelled yet.
+`status` covers **Adventure** (lessons and the pre/post-test). Practice, Library and Watch & Listen stay open from `day_start` to `day_end` and share `free_play_minutes` a day outside the class window; the game enforces that with the same `schedule` (game D-015). `window` is `class`, `after_school`, `weekend` or `null`; `opens_at` is when play opens next (UTC), or `null` while open. `used_minutes` comes from the synced `usage` events. Sections without their own schedule use the defaults above. Holidays aren't modelled yet.
 
 ## Database
 

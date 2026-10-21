@@ -30,6 +30,8 @@ The reply also has `window`, `opens_at` (next opening, UTC), `used_minutes` and 
 - DepEd holidays aren't modelled yet (a holiday list for the admin is a follow-up).
 - `post_test_open` is global (`POST_TEST_OPEN` in `.env`) for now; a per-section switch would need the teacher page and an authenticated config.
 
+**Update 2026-10-21 (game [[D-015 Home hub and Adventure-only time locks]]):** the schedule now also has `free_play_minutes` (45, the shared daily timer for Practice, Library and Watch & Listen outside the class window) and `day_start`/`day_end` (06:00/21:00). Teachers set all three on the schedule page; each class and after-school window must fit inside the day. The status above now covers Adventure only, and the server answers `sleeping` at night (outside the day window, except on a closed weekend, which stays `weekend_lock`), like the game. `usage` events carry `free_minutes` too, which the server doesn't count yet.
+
 **Rejected:** counting class minutes toward the cap (the cap is for after-school play); per-student schedules (sections share a timetable).
 
 Details: `backend/README.md` ("GET /api/access/student/status"), [[10-open-issues]] issue 10.

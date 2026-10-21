@@ -16,6 +16,7 @@ use Carbon\CarbonImmutable;
  * - Any other weekday time: class_lock.
  * - Weekend: weekend_lock, unless the teacher opened weekends; then the same
  *   daily cap applies all day.
+ * - Night (before day_start or from day_end, game D-015): sleeping.
  * Minutes played in the class window never count toward the cap.
  */
 final class AccessDecider
@@ -28,15 +29,23 @@ final class AccessDecider
         $local = $now->setTimezone(config('reading_racoon.access.timezone'));
         $capLeft = max(0, $schedule->daily_minutes - $usedMinutes);
 
+        $closedWeekend = $local->isWeekend() && ! $schedule->weekends_open;
+        if (! $closedWeekend) {
+            [$dayStart, $dayEnd] = $schedule->window('day', $local);
+            if ($local->lessThan($dayStart) || $local->greaterThanOrEqualTo($dayEnd)) {
+                return $this->locked(AccessStatus::Sleeping, $schedule, $local);
+            }
+        }
+
         if ($local->isWeekend()) {
-            if (! $schedule->weekends_open) {
+            if ($closedWeekend) {
                 return $this->locked(AccessStatus::WeekendLock, $schedule, $local);
             }
             if ($capLeft === 0) {
                 return $this->locked(AccessStatus::DailyLimit, $schedule, $local, skipToday: true);
             }
 
-            return $this->open(AccessStatus::AfterSchool, min($capLeft, self::minutesUntil($local, $local->addDay()->startOfDay())), 'weekend');
+            return $this->open(AccessStatus::AfterSchool, min($capLeft, self::minutesUntil($local, $schedule->window('day', $local)[1])), 'weekend');
         }
 
         [$classStart, $classEnd] = $schedule->window('class', $local);
@@ -86,7 +95,7 @@ final class AccessDecider
             }
             $day = $local->startOfDay()->addDays($i);
             if ($day->isWeekend()) {
-                $starts = $schedule->weekends_open ? [$day] : [];
+                $starts = $schedule->weekends_open ? [$schedule->window('day', $day)[0]] : [];
             } else {
                 $starts = [$schedule->window('class', $day)[0]];
                 if (! ($i === 0 && $skipAfterSchoolToday)) {

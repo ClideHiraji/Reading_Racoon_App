@@ -36,7 +36,11 @@ class ScheduleController extends Controller
             'after_school_start' => $time,
             'after_school_end' => [...$time, 'after:after_school_start'],
             'daily_minutes' => ['required', 'integer', 'between:0,240'],
+            'free_play_minutes' => ['required', 'integer', 'between:0,240'],
+            'day_start' => $time,
+            'day_end' => [...$time, 'after:day_start'],
         ], [
+            'day_end.after' => 'The game must go to sleep after it wakes up.',
             'class_end.after' => 'The class must end after it starts.',
             'after_school_end.after' => 'The after-school window must end after it starts.',
         ]);
@@ -48,6 +52,11 @@ class ScheduleController extends Controller
                 && $request->input('after_school_start') < $request->input('class_end');
             if ($overlap) {
                 $v->errors()->add('after_school_start', 'The class and after-school windows must not overlap.');
+            }
+            foreach (['class', 'after_school'] as $window) {
+                if ($request->input("{$window}_start") < $request->input('day_start') || $request->input("{$window}_end") > $request->input('day_end')) {
+                    $v->errors()->add("{$window}_start", 'Each window must fit between the wake-up and sleep times.');
+                }
             }
         });
         $data = $validator->validate();

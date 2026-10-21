@@ -17,13 +17,15 @@ class AccessSchedule extends Model
 
     public $incrementing = false;
 
-    protected $fillable = ['class_start', 'class_end', 'after_school_start', 'after_school_end', 'daily_minutes', 'weekends_open'];
+    protected $fillable = ['class_start', 'class_end', 'after_school_start', 'after_school_end', 'daily_minutes', 'weekends_open',
+        'free_play_minutes', 'day_start', 'day_end'];
 
     protected function casts(): array
     {
         return [
             'daily_minutes' => 'integer',
             'weekends_open' => 'boolean',
+            'free_play_minutes' => 'integer',
         ];
     }
 
@@ -67,7 +69,7 @@ class AccessSchedule extends Model
     /**
      * The schedule as the game receives it in GET /api/access/student/status.
      *
-     * @return array{class_start: string, class_end: string, after_school_start: string, after_school_end: string, daily_minutes: int, weekends_open: bool, timezone: string}
+     * @return array{class_start: string, class_end: string, after_school_start: string, after_school_end: string, daily_minutes: int, weekends_open: bool, free_play_minutes: int, day_start: string, day_end: string, timezone: string}
      */
     public function toApi(): array
     {
@@ -78,6 +80,9 @@ class AccessSchedule extends Model
             'after_school_end' => $this->hm('after_school_end'),
             'daily_minutes' => $this->daily_minutes,
             'weekends_open' => $this->weekends_open,
+            'free_play_minutes' => $this->free_play_minutes,
+            'day_start' => $this->hm('day_start'),
+            'day_end' => $this->hm('day_end'),
             'timezone' => config('reading_racoon.access.timezone'),
         ];
     }

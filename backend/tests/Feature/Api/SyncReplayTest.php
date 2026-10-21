@@ -8,6 +8,7 @@ use App\Models\Section;
 use App\Models\Student;
 use App\Models\SystemLog;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
@@ -155,11 +156,38 @@ class SyncReplayTest extends TestCase
     public function test_every_event_type_the_game_sends_is_accepted(): void
     {
         $types = ['response', 'bkt_state', 'hearts', 'rescue_start', 'rescue_end', 'level_up', 'flag', 'lesson_end', 'chest',
-            'placement', 'assessment', 'usage', 'purchase', 'outfit', 'access'];
+            'placement', 'assessment', 'usage', 'purchase', 'outfit', 'access',
+            'practice', 'book', 'media', 'sticker', 'word', 'goal'];
 
         $this->postJson('/api/sync', ['events' => array_map(fn ($t) => $this->event($t, []), $types)])
             ->assertOk()->assertJsonCount(count($types), 'acknowledged')->assertJsonCount(0, 'rejected');
         $this->postJson('/api/sync', ['events' => [$this->event('equip', [])]])->assertJsonPath('rejected.0.reason', 'invalid');
+    }
+
+    public function test_hub_section_events_are_stored_and_change_no_learning_state(): void
+    {
+        $events = [
+            $this->event('practice', ['game' => 'rhyme_pop', 'correct' => 4, 'total' => 5, 'seconds' => 95]),
+            $this->event('book', ['id' => 'bk-balangay', 'first' => true, 'questions_right' => 2, 'questions_total' => 2, 'seconds' => 240]),
+            $this->event('media', ['id' => 'song-abc', 'first' => true, 'check_right' => true, 'seconds' => 120]),
+            $this->event('sticker', ['id' => 'books-1', 'group' => 'books']),
+            $this->event('word', ['word' => 'bangka', 'lang' => 'fil', 'from' => 'book']),
+            $this->event('goal', ['date' => '2026-10-21', 'goal' => 'story', 'all_done' => false]),
+        ];
+        $before = $this->student->bktStates()->orderBy('id')->pluck('p_mastery')->all();
+
+        $this->postJson('/api/sync', ['events' => $events])
+            ->assertOk()
+            ->assertJsonPath('acknowledged', array_column($events, 'id'))
+            ->assertJsonPath('rejected', []);
+
+        $this->assertSame(['practice', 'book', 'media', 'sticker', 'word', 'goal'],
+            DB::table('sync_events')->orderBy('id')->pluck('type')->all());
+        $this->assertSame('bangka', DB::table('sync_events')->where('type', 'word')->value(DB::raw("payload->>'word'")));
+        // Practice and reading never change BKT, the wallet or the level (game D-017).
+        $this->assertSame($before, $this->student->bktStates()->orderBy('id')->pluck('p_mastery')->all());
+        $this->assertSame([0, 0], [$this->student->wallet()->first()->xp, $this->student->wallet()->first()->coins]);
+        $this->assertSame(1, $this->student->pathProgress()->first()->highest_unlocked);
     }
 
     public function test_a_device_clock_ahead_of_the_server_is_logged_as_an_anomaly(): void

@@ -64,7 +64,8 @@ class AccessStatusTest extends TestCase
             ->assertJsonPath('schedule', [
                 'class_start' => '07:30', 'class_end' => '08:30',
                 'after_school_start' => '15:00', 'after_school_end' => '17:00',
-                'daily_minutes' => 30, 'weekends_open' => false, 'timezone' => 'Asia/Manila',
+                'daily_minutes' => 30, 'weekends_open' => false,
+                'free_play_minutes' => 45, 'day_start' => '06:00', 'day_end' => '21:00', 'timezone' => 'Asia/Manila',
             ]);
     }
 
@@ -78,6 +79,21 @@ class AccessStatusTest extends TestCase
         $this->at('2026-10-20 19:00')
             ->assertJsonPath('status', 'class_lock')
             ->assertJsonPath('opens_at', '2026-10-20T23:30:00Z'); // tomorrow 07:30 Manila
+    }
+
+    public function test_the_game_sleeps_at_night(): void
+    {
+        $this->at('2026-10-20 05:30')
+            ->assertJsonPath('status', 'sleeping')
+            ->assertJsonPath('minutes_left', 0)
+            ->assertJsonPath('opens_at', '2026-10-19T23:30:00Z'); // 07:30 Manila the same day
+
+        $this->at('2026-10-20 21:00')
+            ->assertJsonPath('status', 'sleeping')
+            ->assertJsonPath('opens_at', '2026-10-20T23:30:00Z'); // tomorrow 07:30
+
+        // A closed weekend stays weekend_lock, night or day.
+        $this->at('2026-10-24 22:00')->assertJsonPath('status', 'weekend_lock');
     }
 
     public function test_after_school_play_is_capped_at_30_minutes_a_day(): void
@@ -126,7 +142,7 @@ class AccessStatusTest extends TestCase
         $this->played('2026-10-24', 20);
         $this->at('2026-10-24 10:00')
             ->assertJsonPath('status', 'daily_limit')
-            ->assertJsonPath('opens_at', '2026-10-24T16:00:00Z'); // Sunday 00:00 Manila
+            ->assertJsonPath('opens_at', '2026-10-24T22:00:00Z'); // Sunday 06:00 Manila (wake-up)
     }
 
     public function test_the_sections_own_schedule_is_used(): void

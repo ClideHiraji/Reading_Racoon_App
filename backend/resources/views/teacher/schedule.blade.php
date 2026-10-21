@@ -25,6 +25,16 @@
             <label for="daily_minutes">Daily after-school limit (minutes)</label>
             <input id="daily_minutes" type="number" name="daily_minutes" min="0" max="240" value="{{ old('daily_minutes', $schedule->daily_minutes) }}" required>
             <label class="check"><input type="checkbox" name="weekends_open" value="1" @checked(old('weekends_open', $schedule->weekends_open))> Open on weekends (same daily limit)</label>
+            <h2 style="margin-top: 1.25rem;">Free play</h2>
+            <p class="muted small">Practice games, the Library and Watch &amp; Listen stay open all day. Outside Reading class they share this many minutes a day.</p>
+            <label for="free_play_minutes">Daily free-play limit (minutes)</label>
+            <input id="free_play_minutes" type="number" name="free_play_minutes" min="0" max="240" value="{{ old('free_play_minutes', $schedule->free_play_minutes) }}" required>
+            <h2 style="margin-top: 1.25rem;">Bedtime</h2>
+            <p class="muted small">Outside these hours the whole game sleeps.</p>
+            <div class="grid grid-2">
+                <div><label for="day_start">Wakes up at</label><input id="day_start" type="time" name="day_start" value="{{ old('day_start', $schedule->hm('day_start')) }}" required></div>
+                <div><label for="day_end">Sleeps at</label><input id="day_end" type="time" name="day_end" value="{{ old('day_end', $schedule->hm('day_end')) }}" required></div>
+            </div>
             <p><button class="btn" type="submit">Save schedule</button></p>
         </form>
     </div>

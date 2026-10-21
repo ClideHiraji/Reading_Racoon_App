@@ -123,6 +123,11 @@ return [
             'after_school_end' => '17:00',
             'daily_minutes' => 30,
             'weekends_open' => false,
+            // Game D-015: free-play minutes for Practice, Library and Watch &
+            // Listen outside the class window, and the hours the game is awake.
+            'free_play_minutes' => 45,
+            'day_start' => '06:00',
+            'day_end' => '21:00',
         ],
     ],
 

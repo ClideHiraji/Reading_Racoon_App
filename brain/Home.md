@@ -28,6 +28,12 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 - [[D-008 Offline sync contract]]
 - [[D-009 Art direction Butuan storybook]]
 - [[D-010 Student login and automatic sync]]
+- D-011 to D-014: teacher dashboard and admin portal (branch `claude/cranky-dhawan-dfb068`, PR #2)
+- [[D-015 Home hub and Adventure-only time locks]]
+- [[D-016 Thesis color palette]]
+- [[D-017 Practice Library Watch and collections]]
+- D-018: Gemini teacher report (renumbered on its branch); D-019: teacher content manifest (dashboard branch)
+- [[D-020 Teacher content download in the game]]
 
 ## Still open (from [[10-open-issues]])
 - 🔴 Timeline: a 4-month evaluation doesn't fit before November. Re-plan with the adviser (issue 11).
@@ -39,6 +45,7 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 ## Devlog
 - [[2026-10-17]]: thesis analyzed, knowledge base, decisions D-001 to D-005, GitHub, Godot project.
 - [[2026-10-20]]: blueprint page, Obsidian + Graphify brain, first playable game slice (D-007), first Laravel backend slice (D-008).
+- [[2026-10-21]]: hub wireframes approved; game-lobby home hub, diamond Play picker, Adventure-only time locks (D-015); thesis color palette with dark text (D-016); Practice, Library, Watch & Listen, stickers, word book and daily goals (D-017); teacher books and videos downloaded on Wi-Fi (D-020).
 
 ## Learnings
 - [[BKT passes 0.95 after 3 correct]]
@@ -55,6 +62,9 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 - [[Reset a lost postgres password]]
 - [[Godot containers reset child rotation]]
 - [[GDScript helper names can override engine callbacks]]
+- [[Godot clip_text labels collapse in boxes]]
+- [[Autoload names fail in static helpers under -s tests]]
+- [[Python write_text makes CRLF on Windows]]
 
 ## Links
 - Visual blueprint (private page): https://claude.ai/artifact/TPcwMuVYMvR9gx8ypBMYB9

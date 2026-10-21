@@ -5,6 +5,7 @@ namespace App\Actions;
 use App\Enums\SyncEventType;
 use App\Models\Student;
 use Carbon\CarbonImmutable;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -64,9 +65,13 @@ final class RecordSyncEvents
             $accepted[$index] = [$uuid, $event['id']];
         }
 
-        $existing = $rows === [] ? [] : DB::table('sync_events')->whereIn('uuid', array_keys($rows))->pluck('uuid')->all();
+        // INSERT ... ON CONFLICT DO NOTHING RETURNING uuid: exactly the rows this
+        // call stored, even when two syncs from one device race.
+        $inserted = [];
         foreach (array_chunk(array_values($rows), 500) as $chunk) {
-            DB::table('sync_events')->insertOrIgnore($chunk);
+            $query = DB::table('sync_events');
+            $sql = $query->getGrammar()->compileInsertOrIgnore($query, $chunk).' returning uuid';
+            $inserted = [...$inserted, ...array_column(DB::select($sql, $query->cleanBindings(Arr::flatten($chunk, 1))), 'uuid')];
         }
 
         $owners = $rows === [] ? collect() : DB::table('sync_events')
@@ -93,7 +98,7 @@ final class RecordSyncEvents
         return [
             'acknowledged' => $acknowledged,
             'rejected' => $rejected,
-            'stored' => array_values(array_diff_key($rows, array_flip($existing))),
+            'stored' => array_values(array_intersect_key($rows, array_flip($inserted))),
         ];
     }
 

@@ -18,6 +18,8 @@ class ConfigController extends Controller
 
         return response()->json([
             'content_version' => config('reading_racoon.content_version'),
+            // The game shows the post-test only while this is true (FR-10).
+            'post_test_open' => config('reading_racoon.post_test_open'),
             // Lets the client measure its clock offset (open issue 10).
             'server_time' => now()->utc()->toIso8601ZuluString(),
             'bkt' => [

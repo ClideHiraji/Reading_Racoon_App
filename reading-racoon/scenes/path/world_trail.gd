@@ -68,8 +68,8 @@ func _draw() -> void:
 			continue
 		var off := row_offset(i)
 		var x := size.x * (0.14 if off > 0 else 0.86)
-		var name: String = decor[i % decor.size()]
-		Icons.draw(self, name, Vector2(x, node_center(i).y + 10), 84, Palette.pale(_color, 0.8))
+		var icon: String = decor[i % decor.size()]
+		Icons.draw(self, icon, Vector2(x, node_center(i).y + 10), 84, Palette.pale(_color, 0.8))
 	for i in range(1, _layout.size()):
 		var done: bool = _layout[i - 1].state in ["done", "open", "bonus_done"]
 		_dots(node_center(i - 1), node_center(i), Palette.MANGO if done else Palette.PAPER_DEEP.darkened(0.08))

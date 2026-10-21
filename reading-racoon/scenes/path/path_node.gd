@@ -104,8 +104,8 @@ func _icon_color() -> Color:
 func _draw() -> void:
 	var r := radius()
 	var c := disc_center() + Vector2(0, bob)
-	var pressed := get_draw_mode() == DRAW_PRESSED
-	var sink := LIFT - 2.0 if pressed else 0.0
+	var is_down := get_draw_mode() == DRAW_PRESSED
+	var sink := LIFT - 2.0 if is_down else 0.0
 	var face := _face()
 	if state in ["current", "practice"]:
 		draw_circle(c + Vector2(0, LIFT * 0.5), r + 16 + pulse * 6, Color(face, 0.16 + pulse * 0.08))

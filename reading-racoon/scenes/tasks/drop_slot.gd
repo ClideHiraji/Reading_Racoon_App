@@ -65,13 +65,13 @@ func _draw() -> void:
 	for e in ends:
 		var a: Vector2 = e[0]
 		var b: Vector2 = e[1]
-		var len := a.distance_to(b)
-		if len < 1.0:
+		var length := a.distance_to(b)
+		if length < 1.0:
 			continue
-		var dir := (b - a) / len
+		var dir := (b - a) / length
 		var t := 0.0
-		while t < len:
-			draw_line(a + dir * t, a + dir * minf(t + dash, len), col, 4.0, true)
+		while t < length:
+			draw_line(a + dir * t, a + dir * minf(t + dash, length), col, 4.0, true)
 			t += dash + gap
 	var corners := [r.position + Vector2(20, 20), Vector2(r.end.x - 20, r.position.y + 20),
 			r.end - Vector2(20, 20), Vector2(r.position.x + 20, r.end.y - 20)]

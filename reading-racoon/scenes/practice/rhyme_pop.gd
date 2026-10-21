@@ -104,9 +104,9 @@ func _tap(b: Balloon, o: Dictionary, right: bool) -> void:
 		Sfx.play("wrong")
 		Speech.say(o.word)
 		var x := b.position.x
-		var t := create_tween()
+		var wobble := create_tween()
 		for d in [14.0, -14.0, 8.0, 0.0]:
-			t.tween_property(b, "position:x", x + d, 0.05)
+			wobble.tween_property(b, "position:x", x + d, 0.05)
 		return
 	if not _missed:
 		_first_try += 1

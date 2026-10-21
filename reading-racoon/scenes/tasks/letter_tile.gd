@@ -1,3 +1,4 @@
+@tool
 class_name LetterTile
 extends ChunkyButton
 ## A letter tile that can be dragged into a DropSlot (or tapped).

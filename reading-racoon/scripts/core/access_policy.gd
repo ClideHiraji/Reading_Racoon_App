@@ -102,7 +102,7 @@ static func adventure_opens(schedule: Dictionary, now: Dictionary, minutes_used:
 ## "15:00" -> "3:00 PM"
 static func clock_text(hhmm: String) -> String:
 	var m := _min(hhmm)
-	var h := (m / 60) % 12
+	var h := floori(m / 60.0) % 12
 	return "%d:%02d %s" % [12 if h == 0 else h, m % 60, "AM" if m < 720 else "PM"]
 
 

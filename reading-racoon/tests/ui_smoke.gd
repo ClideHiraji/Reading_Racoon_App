@@ -231,12 +231,12 @@ func _run() -> void:
 	await _frames(8)
 	var rp := current_scene
 	check(rp._balloons.size() >= 2, "Rhyme Pop balloons float up")
-	var round: Dictionary = rp._rounds[rp._round]
-	var right_b: Balloon = rp._balloons.filter(func(b): return b.word == round.rhyme.word)[0]
-	var wrong_b: Balloon = rp._balloons.filter(func(b): return b.word != round.rhyme.word)[0]
+	var first: Dictionary = rp._rounds[rp._round]
+	var right_b: Balloon = rp._balloons.filter(func(b): return b.word == first.rhyme.word)[0]
+	var wrong_b: Balloon = rp._balloons.filter(func(b): return b.word != first.rhyme.word)[0]
 	rp._tap(wrong_b, {"word": wrong_b.word}, false)
 	check(rp._missed and rp._round == 0, "a wrong balloon only wobbles")
-	rp._tap(right_b, round.rhyme, true)
+	rp._tap(right_b, first.rhyme, true)
 	await create_timer(1.8).timeout
 	check(rp._round == 1, "the next round comes after a pop")
 

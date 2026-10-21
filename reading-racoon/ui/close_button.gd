@@ -14,8 +14,8 @@ func _ready() -> void:
 
 func _draw() -> void:
 	var c := size / 2
-	var pressed := get_draw_mode() == DRAW_PRESSED
-	draw_circle(c, 30, Color(Palette.PAPER_DEEP, 0.9 if pressed else 0.6))
+	var is_down := get_draw_mode() == DRAW_PRESSED
+	draw_circle(c, 30, Color(Palette.PAPER_DEEP, 0.9 if is_down else 0.6))
 	var d := 11.0
 	for s in [1.0, -1.0]:
 		draw_line(c + Vector2(-d, -d * s), c + Vector2(d, d * s), Palette.INK_SOFT, 6.0, true)

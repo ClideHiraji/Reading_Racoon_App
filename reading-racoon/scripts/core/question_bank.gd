@@ -99,8 +99,8 @@ func pick(skill: String, level: int, recovery: bool, avoid: Array = [], last_id:
 
 ## Number of choices used for the guess rate (0 = not a choice-style item;
 ## ordering tasks keep the table guess rate, D-003 rule 7).
-static func num_choices(item: Dictionary) -> int:
-	return item.get("choices", []).size()
+static func num_choices(entry: Dictionary) -> int:
+	return entry.get("choices", []).size()
 
 
 ## The key that identifies a tile in an ordering task: its id, or its text.

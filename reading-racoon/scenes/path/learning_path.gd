@@ -172,9 +172,9 @@ func _skill_bar(sp: Dictionary, color: Color, unlocked: bool) -> Control:
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 14)
 	row.add_child(Icons.rect(SkillCatalog.ICONS[sp.skill], 38, color if unlocked else Palette.INK_SOFT))
-	var name := _label(SkillCatalog.NAMES[sp.skill], 28, Palette.INK)
-	name.custom_minimum_size = Vector2(118, 0)
-	row.add_child(name)
+	var skill_name := _label(SkillCatalog.NAMES[sp.skill], 28, Palette.INK)
+	skill_name.custom_minimum_size = Vector2(118, 0)
+	row.add_child(skill_name)
 	var bar := ProgressBar.new()
 	bar.show_percentage = false
 	bar.max_value = 1.0

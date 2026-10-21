@@ -234,11 +234,11 @@ func test_all_correct_play_reaches_level_up() -> void:
 		var s := LessonSession.new(m, b, 1, lessons)
 		var last := ""
 		while true:
-			var item := s.next_item()
-			if item.id == last:
+			var next := s.next_item()
+			if next.id == last:
 				repeats += 1
-			last = item.id
-			var out := s.submit(item.answer, 1200)
+			last = next.id
+			var out := s.submit(next.answer, 1200)
 			if out.next == "done":
 				break
 		var sum := s.summary()
@@ -598,7 +598,7 @@ func test_assessment_session() -> void:
 			"responses, placement and scores queued for sync")
 	var post := AssessmentSession.new(StudentModel.new(), "post")
 	for i in 20:
-		var it := post.next_item()
+		post.next_item()
 		post.submit("__wrong__")
 	check(post.summary().placed_level == 0, "the post-test never re-places the child")
 
@@ -868,8 +868,8 @@ func test_content_plan() -> void:
 	check(needed.size() == 2, "a video and a page picture to fetch")
 	var have := {"user://content/7b0c.png": SHA_A, "user://content/tv-good.ogv": SHA_A,
 			"user://content/old.ogv": SHA_B}
-	var get := ContentPlan.to_download(needed, have)
-	check(get.size() == 1 and get[0].local == "user://content/tv-good.ogv", "a replaced video is fetched again")
+	var fetch := ContentPlan.to_download(needed, have)
+	check(fetch.size() == 1 and fetch[0].local == "user://content/tv-good.ogv", "a replaced video is fetched again")
 	check(ContentPlan.to_delete(needed, have) == ["user://content/old.ogv"], "a removed item's file is deleted")
 	check(ContentPlan.to_download(needed, {}).size() == 2, "nothing on the tablet: fetch both")
 

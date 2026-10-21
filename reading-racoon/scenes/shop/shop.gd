@@ -61,19 +61,19 @@ func _card(id: String) -> Control:
 	v.offset_bottom = -12
 	v.add_theme_constant_override("separation", 2)
 	card.add_child(v)
-	var mini := Raccoon.new()
-	mini.follow_saved_outfit = false
-	mini.outfit = {item.slot: id}
-	mini.custom_minimum_size = Vector2(0, 150)
-	mini.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	v.add_child(mini)
-	var name := Label.new()
-	name.text = item.name
-	name.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	name.theme_type_variation = &"TitleLabel"
-	name.add_theme_font_size_override("font_size", 22)
-	name.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	v.add_child(name)
+	var preview := Raccoon.new()
+	preview.follow_saved_outfit = false
+	preview.outfit = {item.slot: id}
+	preview.custom_minimum_size = Vector2(0, 150)
+	preview.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	v.add_child(preview)
+	var title := Label.new()
+	title.text = item.name
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.theme_type_variation = &"TitleLabel"
+	title.add_theme_font_size_override("font_size", 22)
+	title.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	v.add_child(title)
 	v.add_child(_price_row(id))
 	return card
 

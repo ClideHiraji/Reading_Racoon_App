@@ -79,6 +79,18 @@ func _on_picked(i: int) -> void:
 	answered.emit(str(c.id), Time.get_ticks_msec() - _started)
 
 
+## Second try (D-021): the sound tried is greyed out and the wheel turns again.
+func try_again(chosen: String) -> void:
+	for i in _item.choices.size():
+		if str(_item.choices[i].id) == chosen:
+			_wheel.grey_out(i)
+	_onset.text = "?"
+	_onset.add_theme_color_override("font_color", Color(Palette.MANGO_DEEP, 0.45))
+	_started = Time.get_ticks_msec()
+	_locked = false
+	_wheel.locked = false
+
+
 func show_result(chosen: String, answer: String) -> void:
 	var right := answer
 	for c in _item.choices:

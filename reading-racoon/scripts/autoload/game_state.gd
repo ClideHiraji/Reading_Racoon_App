@@ -230,14 +230,18 @@ func post_test_ready() -> bool:
 
 
 ## A LessonSession, or an AssessmentSession for the pre/post-test (same interface).
+## Both work on a copy of the model: a lesson or test stopped halfway leaves no
+## trace, and the child plays it again from the start (D-021).
 func new_session() -> RefCounted:
 	if lesson_mode in ["pre", "post"]:
-		return AssessmentSession.new(model, lesson_mode)
-	return LessonSession.new(model, bank, lesson_world, lesson_seed)
+		return AssessmentSession.new(model.copy(), lesson_mode)
+	return LessonSession.new(model.copy(), bank, lesson_world, lesson_seed)
 
 
-## Called after every answer: queue the events for sync and save (FR-11).
+## A finished lesson or test: keep its BKT states and queue its events for sync
+## (FR-11). The model's parameters stay ours, in case /api/config changed them.
 func record(session: RefCounted) -> void:
+	model.from_dict(session.model.to_dict())
 	for ev in session.drain_events():
 		store.queue_event(ev.type, ev.payload)
 	save_profile()
@@ -257,11 +261,11 @@ func finish_lesson(session: RefCounted) -> void:
 		flags.append(f)
 	store.queue_event("lesson_end", {"level": lesson_world, "node": lesson_node,
 			"correct": last_summary.correct, "total": last_summary.total,
-			"stars": last_summary.stars})
+			"stars": last_summary.stars, "second_try": last_summary.second_try})
 	# D-017: the words practiced go to My Word Book; a sticker a day; today's goal.
 	var practiced := []
 	for r in session.results:
-		if r.correct:
+		if r.solved:
 			practiced.append_array(Collection.words_from_item(bank.item(r.id)))
 	learn_words(practiced, "lesson")
 	var rewards := {"coins": 0, "stickers": []}
@@ -293,7 +297,7 @@ func _finish_assessment(session: AssessmentSession) -> void:
 	last_summary = session.summary()
 	assessments[session.kind] = {"date": last_summary.date, "correct": last_summary.correct,
 			"total": last_summary.total, "scores": last_summary.scores,
-			"placed_level": last_summary.placed_level}
+			"passed": last_summary.passed, "placed_level": last_summary.placed_level}
 	if session.kind == "pre":
 		path = PathProgress.new()
 	wallet.xp += last_summary.xp
@@ -490,17 +494,14 @@ func _bounce(reason: String) -> void:
 		get_tree().change_scene_to_file(HUB_SCENE)
 
 
-## Opens a hub section by HubSections id, applying its time rule. Adventure opens
-## the pre-test first if the child hasn't taken it (FR-02). Unbuilt sections show
-## the "coming soon" page.
+## Opens a hub section by HubSections id, applying its time rule. Adventure always
+## opens the map; before the pre-test the map offers it at the top and keeps the
+## lessons closed (FR-02, D-021). Unbuilt sections show the "coming soon" page.
 func open_section(id: String) -> void:
 	var info := HubSections.get_info(id)
 	match str(info.get("kind", "")):
 		"adventure":
 			if not guard():
-				return
-			if needs_pretest():
-				start_assessment("pre")
 				return
 		"free":
 			if not guard_free_play():

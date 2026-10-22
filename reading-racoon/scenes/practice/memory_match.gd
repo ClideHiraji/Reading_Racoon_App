@@ -2,7 +2,8 @@ extends Control
 ## Memory Match (D-017, wireframe "Practice game: Memory Match"): find the word
 ## that goes with each picture. Every card says its word when it flips. No timer
 ## and no losing; matched words go to My Word Book. From My Word Book it plays
-## with the child's own words (GameState.practice_words).
+## with the child's own words (GameState.practice_words). One dot per pair in
+## the header (D-022).
 
 const PAIRS := 6
 const BACK_COLOR := Palette.BLUE
@@ -13,7 +14,7 @@ var _matched := 0
 var _pairs := 0
 var _busy := false
 var _started := 0
-var _count: Label
+var _dots: HBoxContainer
 var _bubble: SpeechBubble
 var _raccoon: Raccoon
 var _from_words := false
@@ -25,11 +26,7 @@ func _ready() -> void:
 	_started = Time.get_ticks_msec()
 	_from_words = not GameState.practice_words.is_empty()
 	var column := Kit.page(self)
-	var head := Kit.header(column, "Memory Match", _back, true)
-	_count = Kit.label("", 28, Palette.INK, true)
-	_count.autowrap_mode = TextServer.AUTOWRAP_OFF
-	head.row.add_child(_count)
-	head.row.move_child(_count, 2)
+	_dots = Kit.game_header(column, "Memory Match", _back).dots
 
 	var talk := HBoxContainer.new()
 	talk.add_theme_constant_override("separation", 12)
@@ -77,6 +74,7 @@ func _card(d: Dictionary) -> Control:
 	b.icon_px = 80
 	b.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	b.expand_icon = true
+	b.radius = 24
 	b.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	holder.add_child(b)
 	var face := VBoxContainer.new()
@@ -89,7 +87,7 @@ func _card(d: Dictionary) -> Control:
 		pic.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 		face.add_child(pic)
 	else:
-		face.add_child(Kit.word_label(d.word.word, 44))
+		face.add_child(Kit.word_label(d.word.word, 50))
 	b.add_child(face)
 	var c := {"holder": holder, "button": b, "face": face, "pair": d.pair, "word": d.word,
 			"open": false, "done": false}
@@ -145,7 +143,10 @@ func _flip(c: Dictionary, up: bool) -> void:
 
 
 func _update_count() -> void:
-	_count.text = "Pairs %d / %d" % [_matched, _pairs]
+	var found := []
+	found.resize(_matched)
+	found.fill("right")
+	Kit.show_rounds(_dots, _pairs, found)
 
 
 func _say(text: String, mood: String) -> void:

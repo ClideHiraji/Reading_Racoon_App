@@ -15,10 +15,14 @@
     "You're a reading star!"
   ],
   "incorrect": [
-    "Almost! Let's look again.",
-    "Good try! You can do it.",
-    "That's okay! Let's keep going.",
+    "Good try! Here's how it works.",
+    "That's okay! Let's learn it together.",
     "Nice try! Here's the answer."
+  ],
+  "correct_retry": [
+    "Yes! You figured it out!",
+    "You did it!",
+    "That's it! Good thinking!"
   ],
   "hint_phonological_awareness": [
     "Listen to the end of the words. Cat... hat!",
@@ -89,6 +93,15 @@
   ],
   "adventure_done": [
     "What an adventure! You did it!"
+  ],
+  "results_all_strong": [
+    "Wow! You did great in everything!"
+  ],
+  "results_mixed": [
+    "You did great! Let's practice the orange ones together."
+  ],
+  "results_all_practice": [
+    "Good job trying! Let's learn together, one step at a time."
   ],
   "placed": [
     "I found the best place for you to start!"

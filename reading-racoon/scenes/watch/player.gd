@@ -3,7 +3,8 @@ extends Control
 ## read-alongs play line by line: the scene and pictures on the stage, the words
 ## lighting up as Racoon sings them. Teacher videos (Ogg Theora, downloaded on
 ## Wi-Fi) play in the same frame. Then a quick check with two pictures, and no
-## autoplay of anything else.
+## autoplay of anything else. The stage sits on the words card, and the controls
+## are listening blue: a round Again and a big Pause (D-022).
 
 var _item := {}
 var _lines: Array = []
@@ -30,11 +31,18 @@ func _ready() -> void:
 	_lang = str(_item.get("language", "en"))
 	var column := Kit.page(self)
 	Kit.header(column, str(_item.get("title", "Watch")), _back, true)
+	var sheet := VBoxContainer.new()
+	sheet.add_theme_constant_override("separation", 0)
+	sheet.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	column.add_child(sheet)
 	_stage = PanelContainer.new()
-	_stage.add_theme_stylebox_override("panel", Kit.box(Palette.SKY, 26, 6))
+	var stage_box := Kit.box(Palette.SKY, 28)
+	stage_box.corner_radius_bottom_left = 0
+	stage_box.corner_radius_bottom_right = 0
+	_stage.add_theme_stylebox_override("panel", stage_box)
 	_stage.clip_children = CanvasItem.CLIP_CHILDREN_AND_DRAW
-	_stage.custom_minimum_size = Vector2(0, 460)
-	column.add_child(_stage)
+	_stage.custom_minimum_size = Vector2(0, 430)
+	sheet.add_child(_stage)
 	_scene = PaperScenery.new()
 	_scene.scene = str(_item.get("scene", "home"))
 	_scene.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -46,36 +54,51 @@ func _ready() -> void:
 	_pictures.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_stage.add_child(_pictures)
 
-	var card := Kit.card(24)
+	var card := Kit.card(30)
+	var card_box: StyleBoxFlat = card.get_theme_stylebox("panel").duplicate()
+	card_box.corner_radius_top_left = 0
+	card_box.corner_radius_top_right = 0
+	card.add_theme_stylebox_override("panel", card_box)
 	card.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	column.add_child(card)
+	sheet.add_child(card)
+	var words := VBoxContainer.new()
+	words.alignment = BoxContainer.ALIGNMENT_CENTER
+	words.add_theme_constant_override("separation", 30)
+	card.add_child(words)
 	_text = ReadAlong.new()
 	_text.language = _lang
-	_text.font_size = 48
-	_text.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	_text.font_size = 52
 	_text.done.connect(_on_line_done)
-	card.add_child(_text)
-
+	words.add_child(_text)
 	_bar = ProgressBar.new()
 	_bar.show_percentage = false
-	_bar.custom_minimum_size = Vector2(0, 16)
-	_bar.add_theme_stylebox_override("background", Kit.box(Palette.PAPER_DEEP, 8))
-	_bar.add_theme_stylebox_override("fill", Kit.box(Palette.ORANGE, 8))
-	column.add_child(_bar)
+	_bar.custom_minimum_size = Vector2(0, 14)
+	_bar.add_theme_stylebox_override("background", Kit.box(Palette.PAPER_DEEP, 7))
+	_bar.add_theme_stylebox_override("fill", Kit.box(Palette.BLUE, 7))
+	words.add_child(_bar)
 
 	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 16)
+	row.add_theme_constant_override("separation", 20)
 	column.add_child(row)
 	_raccoon = Raccoon.new()
 	_raccoon.custom_minimum_size = Vector2(130, 130)
 	row.add_child(_raccoon)
-	var again := Kit.button("Again", Palette.CREAM, "repeat", 104)
+	var again := ChunkyButton.new()
 	again.card_style = true
-	again.custom_minimum_size.x = 190
+	again.icon_name = "repeat"
+	again.icon_px = 54
+	again.icon_tint = Palette.BAY_DEEP
+	again.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	again.expand_icon = true
+	again.radius = 56
+	again.tooltip_text = "Play again from the start"
+	again.custom_minimum_size = Vector2(112, 112)
 	again.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	again.pressed.connect(_restart)
 	row.add_child(again)
-	_play_btn = Kit.button("Pause", Palette.YELLOW, "", 104)
+	_play_btn = Kit.button("Pause", Palette.BLUE, "pause", 128)
+	_play_btn.icon_px = 48
+	_play_btn.add_theme_font_size_override("font_size", 38)
 	_play_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_play_btn.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	_play_btn.pressed.connect(_toggle)
@@ -132,6 +155,7 @@ func _on_line_done() -> void:
 func _toggle() -> void:
 	_paused = not _paused
 	_play_btn.text = "Play" if _paused else "Pause"
+	_play_btn.icon_name = "play" if _paused else "pause"
 	if _video:
 		_video.paused = _paused
 		return
@@ -144,6 +168,7 @@ func _toggle() -> void:
 func _restart() -> void:
 	_paused = false
 	_play_btn.text = "Pause"
+	_play_btn.icon_name = "pause"
 	if _video:
 		_video.stop()
 		_video.play()

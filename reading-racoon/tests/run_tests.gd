@@ -137,34 +137,40 @@ func test_demote_caps_and_resets() -> void:
 	check(st.attempts == 0 and not st.mastered and st.review, "attempts reset, unmastered, review")
 
 
-# --- Hearts (D-004) -------------------------------------------------------------------
+# --- Hearts (D-004, counting from D-021) -------------------------------------------
 
-func test_hearts_refill_and_recovery_limit() -> void:
+func test_hearts_lose_and_gain_one() -> void:
 	var h := HeartSystem.new()
-	h.on_answer(PA, false)
-	h.on_answer(PA, false)
-	check(h.hearts == 1, "two wrong answers cost two hearts")
-	h.on_answer(PA, true)
-	check(h.hearts == 3, "a correct answer refills hearts")
+	h.on_answer(false)
+	h.on_answer(false)
+	check(h.hearts == 1, "two wrong tries cost two hearts")
+	h.on_answer(true)
+	check(h.hearts == 2, "a right answer gives one heart back")
+	h.on_answer(true)
+	h.on_answer(true)
+	check(h.hearts == 3, "never more than three hearts")
 	for attempt in 2:
-		h.on_answer(PA, false)
-		h.on_answer(PA, false)
-		check(h.on_answer(PA, false) == HeartSystem.Result.RECOVERY, "3rd wrong starts recovery")
+		h.on_answer(false)
+		h.on_answer(false)
+		check(h.on_answer(false) == HeartSystem.Result.RECOVERY, "no hearts left starts recovery")
 		check(h.finish_recovery(3), "3/3 is a full recovery")
 		check(h.hearts == 3, "full hearts after recovery")
-	h.on_answer(PA, false)
-	h.on_answer(PA, false)
-	check(h.on_answer(PA, false) == HeartSystem.Result.END_SESSION, "3rd trigger ends the session")
-
-
-func test_hearts_streak_is_per_skill() -> void:
-	var h := HeartSystem.new()
-	h.on_answer(PA, false)
-	h.on_answer(PHONICS, false)
-	check(h.streak == 1 and h.hearts == 2, "a new sub-skill starts a new streak")
+	h.on_answer(false)
+	h.on_answer(true)
+	h.on_answer(false)
+	h.on_answer(false)
+	check(h.on_answer(false) == HeartSystem.Result.END_SESSION, "3rd trigger ends the session")
 
 
 # --- Lesson session ---------------------------------------------------------------------
+
+## Answers the current question wrong on every try it allows (D-021: two tries).
+func miss(s: LessonSession) -> Dictionary:
+	var out := s.submit(WRONG)
+	while out.next == "retry":
+		out = s.submit(WRONG)
+	return out
+
 
 func test_partial_rescue_demotes_lower_level() -> void:
 	var m := StudentModel.new()
@@ -172,11 +178,11 @@ func test_partial_rescue_demotes_lower_level() -> void:
 	master(m, PHONICS, 1)
 	var s := LessonSession.new(m, bank(), 2, 7)
 	var out := {}
-	for i in 3:
+	for i in 2:
 		var item := s.next_item()
 		check(item.sub_skill == PA and item.level == 2, "stays on PA L2 after wrong answers")
-		out = s.submit(WRONG)
-	check(out.next == "rescue_start" and out.hearts == 0, "rescue after 3 wrong")
+		out = miss(s)
+	check(out.next == "rescue_start" and out.hearts == 0, "rescue after 3 wrong tries")
 	for i in 3:
 		var item := s.next_item()
 		check(item.sub_skill == PA and item.level == 1, "rescue items come from PA L1")
@@ -192,9 +198,9 @@ func test_partial_rescue_demotes_lower_level() -> void:
 
 func test_rescue_at_lowest_level_uses_easy_items() -> void:
 	var s := LessonSession.new(StudentModel.new(), bank(), 1, 3)
-	for i in 3:
+	for i in 2:
 		s.next_item()
-		s.submit(WRONG)
+		miss(s)
 	check(s.in_rescue() and not s.rescue.has_lower, "rescue with no lower level")
 	var item := s.next_item()
 	check(item.recovery and item.level == 1, "easier recovery-tagged items at the same level")
@@ -215,13 +221,92 @@ func test_third_rescue_ends_session() -> void:
 	var nexts := []
 	for i in 40:
 		var item := s.next_item()
-		var out := s.submit(item.answer if s.in_rescue() else WRONG)
+		var out := s.submit(item.answer) if s.in_rescue() else miss(s)
 		nexts.append(out.next)
 		if out.next == "end_session":
 			break
 	check(nexts.count("rescue_start") == 2, "two rescues allowed")
 	check(nexts.back() == "end_session" and s.ended_early, "3rd trigger ends the session")
 	check(s.flags.back().type == "rescue_limit", "teacher flagged")
+
+
+## D-021: two tries per question; only the first is BKT evidence.
+func test_second_try_and_hint() -> void:
+	var m := StudentModel.new()
+	var s := LessonSession.new(m, bank(), 1, 5)
+	var item := s.next_item()
+	var skill: String = item.sub_skill
+	var out := s.submit(WRONG, 900)
+	check(out.next == "retry" and out.try == 1 and out.hearts == 2, "a wrong first try: same item, one heart less")
+	check(out.hint, "every wrong first try brings Racoon's hint")
+	check(m.state(skill, 1).attempts == 1, "the first try is BKT evidence")
+	var p_after_first: float = m.state(skill, 1).p
+	check(s.progress() == 0.0, "the item isn't over yet")
+	out = s.submit(item.answer, 700)
+	check(out.correct and out.next == "continue" and out.hearts == 3, "a right second try gives a heart back")
+	check(m.state(skill, 1).attempts == 1 and m.state(skill, 1).p == p_after_first,
+			"the second try leaves BKT alone")
+	var r: Dictionary = s.results[0]
+	check(not r.correct and r.solved and r.tries == 2, "recorded as solved on the second try")
+	var resp: Array = s.events.filter(func(e): return e.type == "response")
+	check(resp.size() == 1 and resp[0].payload.retry_correct and resp[0].payload.hint
+			and resp[0].payload.low_pl, "one response event, carrying the second try and the hint")
+	var sum := s.summary()
+	check(sum.correct == 0 and sum.second_try == 1 and sum.accuracy == 0.5 and sum.xp == 5,
+			"a second-try answer earns half")
+
+	var strong := StudentModel.new()
+	master(strong, PA, 1)
+	strong.states[StudentModel.key(PHONICS, 1)].p = 0.9
+	var s2 := LessonSession.new(strong, bank(), 1, 5)
+	var it2 := s2.next_item()
+	check(it2.sub_skill == PHONICS, "the unmastered skill comes up")
+	var slip := s2.submit(WRONG)
+	check(slip.hint and not s2.events[0].payload.low_pl, "a hint after a slip too, logged as high P(L)")
+	slip = s2.submit(WRONG)
+	check(slip.next == "continue" and not slip.correct and slip.hearts == 1,
+			"a wrong second try ends the question with one heart left")
+
+
+## D-021: a lesson plays on a copy; nothing reaches the child's model until it's kept.
+func test_lesson_works_on_a_copy() -> void:
+	var m := StudentModel.new()
+	m.params = SkillCatalog.PARAMS.duplicate(true)
+	m.params[PA].l0 = 0.5
+	var c := m.copy()
+	check(c != m and c.params[PA].l0 == 0.5, "the copy keeps the parameters")
+	c.record(PA, 1, true, 3)
+	check(m.state(PA, 1).attempts == 0 and c.state(PA, 1).attempts == 1, "the copy changes alone")
+
+
+## D-021: every lesson question has its own hint and explanation, in its language.
+func test_hint_text() -> void:
+	var generic := ["Look again carefully. You can do it!", "Tingnan muli nang mabuti. Kaya mo 'yan!"]
+	var b := bank()
+	var fallback_hints := []
+	var fallback_explains := []
+	for it in b.items:
+		var h := HintText.hint(it)
+		var e := HintText.explain(it)
+		check(h != "" and e != "" and not _has_emoji(h + e), "%s has a hint and an explanation" % it.id)
+		if generic.has(h):
+			fallback_hints.append(it.id)
+		if e.begins_with("The answer is") or e.begins_with("Ang sagot ay"):
+			fallback_explains.append(it.id)
+	check(fallback_hints.is_empty(), "no question falls back to a generic hint %s" % str(fallback_hints))
+	check(fallback_explains.is_empty(), "no question falls back to a bare answer %s" % str(fallback_explains))
+	check(HintText.rime("cat") == "at" and HintText.rime("cake") == "ake", "rhyme endings")
+	var by_id := {}
+	for it in b.items:
+		by_id[it.id] = it
+	check(HintText.hint(by_id["pa1-01"]).contains("at"), "a rhyme hint names the ending")
+	check(HintText.explain(by_id["pa1-01"]) == "Cat and hat rhyme. They both end with at.", "rhyme explained")
+	check(HintText.explain(by_id["ph1-04"]) == "C-a-t spells cat.", "a word built letter by letter")
+	check(HintText.explain(by_id["ph3-07"]) == "Ang a at so ay aso.", "Filipino word wheel explained")
+	check(HintText.explain(by_id["fl3-01"]) == "Ang tamang ayos: Si Lito ay masaya.", "sentence order explained")
+	check(HintText.explain(by_id["fl3-06"]) == "Ang buo: Ang pusa ay ngumiyaw.", "missing word explained")
+	check(HintText.explain(by_id["lc3-04"]).begins_with("Una: Nawala ang bola ni Lito."), "story order explained")
+	check(HintText.explain(by_id["lc3-03"]).contains("ilalim ng puno"), "a story answer quotes the story")
 
 
 func test_all_correct_play_reaches_level_up() -> void:
@@ -596,11 +681,14 @@ func test_assessment_session() -> void:
 	var types := s.drain_events().map(func(e): return e.type)
 	check(types.count("response") == 20 and types.has("placement") and types.has("assessment"),
 			"responses, placement and scores queued for sync")
+	check(sum.passed.size() == 5 and sum.passed.values().all(func(v): return v),
+			"every skill passed on a perfect test (D-021)")
 	var post := AssessmentSession.new(StudentModel.new(), "post")
 	for i in 20:
 		post.next_item()
 		post.submit("__wrong__")
 	check(post.summary().placed_level == 0, "the post-test never re-places the child")
+	check(post.summary().passed.values().count(true) == 0, "nothing passed on an all-wrong test")
 
 
 ## Stories follow the word caps in 07-curriculum-content.md and have questions.

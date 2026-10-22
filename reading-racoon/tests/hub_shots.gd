@@ -1,7 +1,8 @@
 extends SceneTree
-## Screenshots of the home hub and Play picker in each time state (D-015), for
-## visual review (needs a window, not headless):
-##   "C:\Program Files\Godot\Godot.exe" --path reading-racoon --resolution 720x1280
+## Screenshots of Home in each time state (D-015, D-022: the Play picker is part
+## of Home now), for visual review (needs a window, not headless). 576x1024 keeps
+## the 720x1280 layout on screens shorter than 1280 px:
+##   "C:\Program Files\Godot\Godot.exe" --path reading-racoon --resolution 576x1024
 ##       -s res://tests/hub_shots.gd -- --profile=shots --fresh --out=C:/some/folder
 
 var _out := "user://shots"
@@ -43,15 +44,15 @@ func _run() -> void:
 	gs._debug_now = _at(1, 7, 45)   # Monday, Reading time
 	change_scene_to_file("res://scenes/hub/hub.tscn")
 	await _shot("hub_reading_time")
-	change_scene_to_file("res://scenes/hub/play_picker.tscn")
-	await _shot("picker_reading_time")
+	gs.settings["post_test_open"] = true
+	change_scene_to_file("res://scenes/hub/hub.tscn")
+	await _shot("hub_big_reading_day")
+	gs.settings["post_test_open"] = false
 
 	gs._debug_now = _at(2, 18, 0)   # Tuesday evening: Adventure closed, free play on
 	gs.usage = {"date": gs.today(), "minutes": 0.0, "free_minutes": 20.0}
 	change_scene_to_file("res://scenes/hub/hub.tscn")
 	await _shot("hub_after_hours")
-	change_scene_to_file("res://scenes/hub/play_picker.tscn")
-	await _shot("picker_after_hours")
 
 	gs.soon_section = "library"
 	change_scene_to_file("res://scenes/hub/coming_soon.tscn")

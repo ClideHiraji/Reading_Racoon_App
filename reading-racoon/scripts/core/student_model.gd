@@ -123,28 +123,50 @@ func target_for(skill: String, level: int) -> Dictionary:
 ## (D-003 update, 2026-10-20). Returns the starting map level.
 func place(results: Array) -> int:
 	reset()
-	var by_skill := {}
-	for r in results:
-		if not by_skill.has(r.skill):
-			by_skill[r.skill] = []
-		by_skill[r.skill].append(bool(r.correct))
+	var by_skill := answers_by_skill(results)
 	for skill in by_skill:
 		var st := state(skill, SkillCatalog.min_level(skill))
-		var prm: Dictionary = params[skill]
-		var p: float = prm.l0
-		var post := p
-		for correct in by_skill[skill]:
-			post = BKT.posterior(p, correct, prm.g, prm.s)
-			p = BKT.transition(post, prm.t)
-		st.p = p
+		var r := replay(params[skill], by_skill[skill])
+		st.p = r.p
 		st.attempts = by_skill[skill].size()
-		st.mastered = post >= MASTERY_P
+		st.mastered = r.mastered
 	highest_unlocked = SkillCatalog.MAX_LEVEL
 	for level in range(1, SkillCatalog.MAX_LEVEL + 1):
 		if not is_level_complete(level):
 			highest_unlocked = level
 			break
 	return highest_unlocked
+
+
+## Test answers grouped by sub-skill: {skill: [true, false, ...]} in the order given.
+static func answers_by_skill(results: Array) -> Dictionary:
+	var by_skill := {}
+	for r in results:
+		if not by_skill.has(r.skill):
+			by_skill[r.skill] = []
+		by_skill[r.skill].append(bool(r.correct))
+	return by_skill
+
+
+## BKT replay of one sub-skill's test answers from P(L0) with the table guess rate:
+## {p, posterior, mastered}. Placement uses it, and the test results screen calls a
+## sub-skill "passed" when it would be placed as mastered (D-021).
+static func replay(prm: Dictionary, answers: Array) -> Dictionary:
+	var p: float = prm.l0
+	var post := p
+	for correct in answers:
+		post = BKT.posterior(p, correct, prm.g, prm.s)
+		p = BKT.transition(post, prm.t)
+	return {"p": p, "posterior": post, "mastered": post >= MASTERY_P}
+
+
+## A separate model with the same states and parameters. Lessons and tests work on
+## a copy; only a finished one is copied back (D-021).
+func copy() -> StudentModel:
+	var m := StudentModel.new()
+	m.params = params
+	m.from_dict(to_dict())
+	return m
 
 
 ## Failed Heart Recovery: the skill-level loses mastery and must be shown again (D-004).

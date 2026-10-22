@@ -82,6 +82,16 @@ func _finish() -> void:
 			"correct": _correct(), "total": results.size()}})
 
 
+## Per sub-skill, for the results screen (D-021): passed when the BKT replay of
+## its answers reaches mastery, the same rule the pre-test placement uses.
+func passed() -> Dictionary:
+	var out := {}
+	var by_skill := StudentModel.answers_by_skill(results)
+	for skill in by_skill:
+		out[skill] = StudentModel.replay(model.params[skill], by_skill[skill]).mastered
+	return out
+
+
 ## Raw scores per sub-skill: {skill: {"correct": n, "total": n}}.
 func scores() -> Dictionary:
 	var out := {}
@@ -103,7 +113,8 @@ func summary() -> Dictionary:
 	return {
 		"kind": kind, "level": level, "correct": _correct(), "total": total,
 		"accuracy": float(_correct()) / total if total > 0 else 0.0,
-		"scores": scores(), "placed_level": placed_level, "stars": 0, "xp": total * 5,
+		"scores": scores(), "passed": passed(), "placed_level": placed_level, "stars": 0,
+		"xp": total * 5,
 		"coins": COMPLETE_COINS, "level_up": false, "ended_early": false,
 		"results": results.duplicate(true),
 		"date": Time.get_date_string_from_system(),

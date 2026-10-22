@@ -130,7 +130,7 @@ theme_override_constants/separation = 16
 
 [node name="CloseButton" type="BaseButton" parent="Margin/VBox/TopRow"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(72, 72)
+custom_minimum_size = Vector2(96, 96)
 layout_mode = 2
 tooltip_text = "Stop the lesson"
 script = ExtResource("7_close")
@@ -307,7 +307,7 @@ autowrap_mode = 3
 
 [node name="ContinueButton" type="Button" parent="Sheet/VBox"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 104)
+custom_minimum_size = Vector2(0, 120)
 layout_mode = 2
 text = "CONTINUE"
 script = ExtResource("2_chunky")
@@ -388,14 +388,16 @@ autowrap_mode = 3
 
 [node name="OverlayPrimary" type="Button" parent="Overlay/Center/OverlayCard/VBox"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 100)
+custom_minimum_size = Vector2(0, 120)
 layout_mode = 2
 text = "OK!"
 script = ExtResource("2_chunky")
+face_color = Color(0.914, 0.502, 0.122, 1)
+radius = 28
 
 [node name="OverlaySecondary" type="Button" parent="Overlay/Center/OverlayCard/VBox"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 100)
+custom_minimum_size = Vector2(0, 104)
 layout_mode = 2
 text = "STOP"
 script = ExtResource("2_chunky")

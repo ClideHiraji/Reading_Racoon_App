@@ -2,6 +2,9 @@ extends Control
 ## Racoon's Closet, the reward shop (FR-07): spend coins on hats, scarves, glasses
 ## and pins. Tap an item to try it on, then buy or wear it with the big button.
 ## Rewards are personal: no leaderboards (06-game-design.md reward cautions).
+## Home button like every section, picture tabs and a big Buy/Wear button (D-022).
+
+const SLOT_ICONS := {"hat": "hat", "neck": "scarf", "eyes": "glasses", "badge": "star"}
 
 var _slot := "hat"
 var _selected := ""
@@ -19,11 +22,14 @@ func _ready() -> void:
 	for slot in Wardrobe.SLOTS:
 		var tab := ChunkyButton.new()
 		tab.text = Wardrobe.SLOT_NAMES[slot]
-		tab.custom_minimum_size = Vector2(0, 80)
+		tab.icon_name = SLOT_ICONS.get(slot, "")
+		tab.icon_px = 38
+		tab.custom_minimum_size = Vector2(0, 96)
 		tab.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		tab.lift = 5
-		tab.radius = 18
-		tab.add_theme_font_size_override("font_size", 26)
+		tab.radius = 24
+		tab.add_theme_font_size_override("font_size", 24)
+		tab.add_theme_constant_override("h_separation", 6)
 		tab.pressed.connect(_show_slot.bind(slot))
 		tab.set_meta("slot", slot)
 		%Tabs.add_child(tab)
@@ -39,6 +45,7 @@ func _show_slot(slot: String) -> void:
 		var on: bool = tab.get_meta("slot") == slot
 		tab.card_style = not on
 		tab.face_color = Palette.BLUE
+		tab.icon_tint = Palette.INK if on else Palette.BAY_DEEP
 	for c in %Grid.get_children():
 		c.queue_free()
 	for id in GameState.wardrobe.items_in(slot):
@@ -71,7 +78,7 @@ func _card(id: String) -> Control:
 	title.text = item.name
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	title.theme_type_variation = &"TitleLabel"
-	title.add_theme_font_size_override("font_size", 22)
+	title.add_theme_font_size_override("font_size", 24)
 	title.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	v.add_child(title)
 	v.add_child(_price_row(id))
@@ -125,7 +132,7 @@ func _select(id: String) -> void:
 	var w := GameState.wardrobe
 	if w.is_worn(id):
 		button.text = "TAKE OFF"
-		button.face_color = Palette.INK_SOFT
+		button.face_color = Palette.PAPER_DEEP
 	elif w.owns(id):
 		button.text = "WEAR"
 		button.face_color = Palette.BLUE
@@ -133,7 +140,7 @@ func _select(id: String) -> void:
 		button.text = "BUY  %d" % Wardrobe.ITEMS[id].price
 		button.icon_name = "coins"
 		var can := int(GameState.wallet.coins) >= int(Wardrobe.ITEMS[id].price)
-		button.face_color = Palette.CORAL if can else Palette.PAPER_DEEP.darkened(0.2)
+		button.face_color = Palette.ORANGE if can else Palette.PAPER_DEEP.darkened(0.2)
 
 
 func _on_action() -> void:

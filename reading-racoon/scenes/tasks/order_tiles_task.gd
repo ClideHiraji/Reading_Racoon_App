@@ -146,6 +146,17 @@ func _on_slot_input(event: InputEvent, i: int) -> void:
 		_slots[i].clear()
 
 
+## Second try (D-021): every tile goes back so the child can build it again.
+func try_again(_chosen: String) -> void:
+	for i in _slots.size():
+		_placed[i] = ""
+		_slots[i].clear()
+	for b in _tiles.values():
+		b.visible = true
+	_started = Time.get_ticks_msec()
+	_locked = false
+
+
 ## Shows the right order in the slots: green where the child was right,
 ## mango where the tile was out of place.
 func show_result(chosen: String, answer: String) -> void:

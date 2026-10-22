@@ -34,6 +34,8 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 - [[D-017 Practice Library Watch and collections]]
 - D-018: Gemini teacher report (renumbered on its branch); D-019: teacher content manifest (dashboard branch)
 - [[D-020 Teacher content download in the game]]
+- [[D-021 Second try hints and finished-only progress]]
+- [[D-022 Full UI redesign]]
 
 ## Still open (from [[10-open-issues]])
 - 🔴 Timeline: a 4-month evaluation doesn't fit before November. Re-plan with the adviser (issue 11).
@@ -46,6 +48,7 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 - [[2026-10-17]]: thesis analyzed, knowledge base, decisions D-001 to D-005, GitHub, Godot project.
 - [[2026-10-20]]: blueprint page, Obsidian + Graphify brain, first playable game slice (D-007), first Laravel backend slice (D-008).
 - [[2026-10-21]]: hub wireframes approved; game-lobby home hub, diamond Play picker, Adventure-only time locks (D-015); thesis color palette with dark text (D-016); Practice, Library, Watch & Listen, stickers, word book and daily goals (D-017); teacher books and videos downloaded on Wi-Fi (D-020).
+- [[2026-10-22]]: play-test fixes (D-021): two tries with a hint for every question, answer and explanation after the second, -1/+1 hearts, no CONTINUE taps, nothing saved from a stopped lesson, Adventure opens the map, pre/post-test results by skill then home. Then the full UI redesign from the canvas, except Racoon (D-022): Home with PLAY built in, one meaning per color, 96/120 px sizes, the animated earned star.
 
 ## Learnings
 - [[BKT passes 0.95 after 3 correct]]
@@ -65,6 +68,10 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 - [[Godot clip_text labels collapse in boxes]]
 - [[Autoload names fail in static helpers under -s tests]]
 - [[Python write_text makes CRLF on Windows]]
+- [[Headless test runs hide GDScript warnings]]
+- [[Godot cannot play animated SVG]]
+- [[Code-built unique nodes need an owner]]
+- [[Godot buttons pin the icon to the edge]]
 
 ## Links
 - Visual blueprint (private page): https://claude.ai/artifact/TPcwMuVYMvR9gx8ypBMYB9

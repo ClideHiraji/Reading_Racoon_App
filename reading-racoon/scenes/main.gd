@@ -12,9 +12,9 @@ func _ready() -> void:
 	%SwitchButton.pressed.connect(_on_switch)
 	%Raccoon.set_mood("happy")
 	var child := GameState.student_name()
+	# For grown-ups, in the corner and out of the child's way (D-022).
 	%SwitchButton.visible = GameState.signed_in()
 	if GameState.signed_in():
-		%SwitchButton.text = "Not %s? Switch student" % child
 		%Bubble.say("Hi, %s! Let's read together!" % child)
 	else:
 		%Bubble.say("Hi! I'm Racoon. Let's read together!")
@@ -27,11 +27,8 @@ func _on_play() -> void:
 	if not GameState.signed_in():
 		get_tree().change_scene_to_file("res://scenes/login/login.tscn")
 		return
-	# First time: the Reading Adventure (pre-test) places the child on the path
-	# (FR-02). Outside Adventure's hours this lands on the hub instead.
-	if GameState.needs_pretest():
-		GameState.start_assessment("pre")
-		return
+	# Always the home hub; the Reading Adventure (pre-test, FR-02) waits on the
+	# Adventure map until the child starts it (D-021).
 	get_tree().change_scene_to_file(GameState.HUB_SCENE)
 
 
@@ -39,13 +36,13 @@ func _on_play() -> void:
 func _on_switch() -> void:
 	if not _confirm_switch:
 		_confirm_switch = true
-		%SwitchButton.text = "Tap again to switch student"
+		%SwitchButton.text = "Tap again"
 		return
 	if GameState.sign_out():
 		get_tree().change_scene_to_file("res://scenes/login/login.tscn")
 		return
 	_confirm_switch = false
-	%SwitchButton.text = "Not %s? Switch student" % GameState.student_name()
+	%SwitchButton.text = "Switch student"
 	%Raccoon.set_mood("thinking")
 	%Bubble.say("Wait! I'm still saving your stars. Let's connect to Wi-Fi first.")
 	Sync.request_soon()

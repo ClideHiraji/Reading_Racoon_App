@@ -33,9 +33,7 @@ func _ready() -> void:
 	for g in Collection.GOALS:
 		v.add_child(_goal_row(g, g.id in done))
 	var left := GameState.collection.goals_left(today)
-	var line := "All done! Great job today!" if left == 0 \
-			else "Finish all three for a sticker and 10 coins!"
-	v.add_child(Kit.label(line, 26, Palette.readable(Palette.LEAF) if left == 0 else Palette.INK_SOFT, true))
+	v.add_child(_prize_row(Collection.GOALS.size() - left, left == 0))
 
 	var week := Kit.card(24)
 	column.add_child(week)
@@ -52,29 +50,51 @@ func _ready() -> void:
 	Speech.say(say)
 
 
+## A goal: its picture, its words, and a Go button; a done goal earns the gold
+## star instead (D-022).
 func _goal_row(g: Dictionary, done: bool) -> Control:
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 16)
-	row.add_child(Kit.disc("check" if done else g.icon, Palette.LEAF if done else Palette.YELLOW, 76))
+	row.custom_minimum_size = Vector2(0, 112)
+	row.add_child(Kit.disc(g.icon, Palette.YELLOW, 84))
 	var t := Kit.label(g.text, 30, Palette.INK, true)
 	t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	t.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	row.add_child(t)
-	if not done:
-		var go := Kit.button("Go!", Palette.ORANGE, "", 80)
-		go.custom_minimum_size.x = 130
+	if done:
+		var star := AnimatedStar.make(140)
+		star.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		row.add_child(star)
+	else:
+		var go := Kit.button("Go!", Palette.ORANGE, "", 96)
+		go.custom_minimum_size.x = 140
 		go.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		go.pressed.connect(_go.bind(g.section))
 		row.add_child(go)
 	return row
 
 
+## Three star slots, then what all three earn.
+func _prize_row(done: int, all_done: bool) -> Control:
+	var panel := PanelContainer.new()
+	panel.add_theme_stylebox_override("panel", Kit.box(Palette.pale(Palette.YELLOW, 0.75), 20, 0,
+			Vector4(18, 12, 18, 12)))
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 8)
+	panel.add_child(row)
+	for i in Collection.GOALS.size():
+		row.add_child(Icons.rect("star", 44, Palette.MANGO if i < done else Palette.PAPER_DEEP.darkened(0.08)))
+	var line := "All done! Great job today!" if all_done else "All three: a sticker and 10 coins"
+	var l := Kit.label(line, 26, Palette.readable(Palette.LEAF) if all_done else Palette.INK, true)
+	l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	l.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	row.add_child(l)
+	return panel
+
+
 func _go(section: String) -> void:
 	Speech.stop()
-	if section == "adventure":
-		get_tree().change_scene_to_file("res://scenes/hub/play_picker.tscn")
-	else:
-		GameState.open_section(section)
+	GameState.open_section(section)
 
 
 ## Monday to Sunday of this week; played days get a sun, today gets a ring.
@@ -92,7 +112,7 @@ func _week_row() -> Control:
 		col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		col.add_theme_constant_override("separation", 4)
 		var disc := PanelContainer.new()
-		var sb := Kit.box(Palette.YELLOW if played else Palette.CARD, 34)
+		var sb := Kit.box(Palette.YELLOW if played else Palette.CARD, 38)
 		if i == from_monday:
 			sb.set_border_width_all(4)
 			sb.border_color = Palette.ORANGE
@@ -100,15 +120,15 @@ func _week_row() -> Control:
 			sb.set_border_width_all(3)
 			sb.border_color = Palette.PAPER_DEEP
 		disc.add_theme_stylebox_override("panel", sb)
-		disc.custom_minimum_size = Vector2(68, 68)
+		disc.custom_minimum_size = Vector2(76, 76)
 		disc.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 		if played:
-			var icon := Icons.rect("sun", 42, Palette.text_on(Palette.YELLOW))
+			var icon := Icons.rect("sun", 48, Palette.text_on(Palette.YELLOW))
 			icon.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 			icon.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 			disc.add_child(icon)
 		col.add_child(disc)
-		var n := Kit.label(DAY_NAMES[i], 20, Palette.INK_SOFT, true)
+		var n := Kit.label(DAY_NAMES[i], 24, Palette.INK_SOFT, true)
 		n.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		n.autowrap_mode = TextServer.AUTOWRAP_OFF
 		col.add_child(n)

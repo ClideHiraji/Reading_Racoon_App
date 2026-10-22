@@ -2,10 +2,14 @@ extends Control
 ## The Sticker Album (D-017, wireframe "Sticker Album"): a page per kind of
 ## sticker, the empty spots waiting with a "?", and how to earn them. Stickers
 ## are a personal collection: no leaderboards, and none is ever taken away (D-007).
+## A row of picture tabs (Racoon says each name) and big round stickers (D-022).
+
+const GROUP_ICONS := {"adventure": "waves", "books": "book", "games": "bulb", "watch": "speaker",
+		"days": "sun", "goals": "star"}
 
 var _group := "adventure"
 var _column: VBoxContainer
-var _chips: Control
+var _tabs: GridContainer
 var _page: VBoxContainer
 
 
@@ -13,12 +17,7 @@ func _ready() -> void:
 	if not GameState.guard_hub():
 		return
 	_column = Kit.page(self)
-	var head := Kit.header(_column, "Sticker Album", GameState.go_home)
-	var total := Kit.label("%d / %d" % [GameState.collection.count(), Collection.STICKERS.size()], 28,
-			Palette.INK, true)
-	total.autowrap_mode = TextServer.AUTOWRAP_OFF
-	head.row.add_child(total)
-	head.row.move_child(total, 2)
+	Kit.header(_column, "Stickers", GameState.go_home)
 	_page = VBoxContainer.new()
 	_page.add_theme_constant_override("separation", 16)
 	_page.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -31,14 +30,15 @@ func _ready() -> void:
 
 
 func _build() -> void:
-	if _chips:
-		_chips.queue_free()
-	var options := []
+	if _tabs:
+		_tabs.queue_free()
+	_tabs = GridContainer.new()
+	_tabs.columns = Collection.GROUPS.size()
+	_tabs.add_theme_constant_override("h_separation", 12)
 	for g in Collection.GROUPS:
-		options.append([g, Collection.GROUPS[g].name])
-	_chips = Kit.chips(options, _group, _pick)
-	_column.add_child(_chips)
-	_column.move_child(_chips, 1)
+		_tabs.add_child(_tab(g))
+	_column.add_child(_tabs)
+	_column.move_child(_tabs, 1)
 	for c in _page.get_children():
 		c.queue_free()
 	var info: Dictionary = Collection.GROUPS[_group]
@@ -52,7 +52,7 @@ func _build() -> void:
 	var group_title := Kit.label(info.name, 36, Palette.INK, true)
 	group_title.autowrap_mode = TextServer.AUTOWRAP_OFF
 	title.add_child(group_title)
-	var got := Kit.label("%d / %d" % [GameState.collection.count(_group), Collection.in_group(_group).size()],
+	var got := Kit.label("%d of %d" % [GameState.collection.count(_group), Collection.in_group(_group).size()],
 			28, Palette.INK_SOFT, true)
 	got.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	got.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
@@ -60,7 +60,7 @@ func _build() -> void:
 	v.add_child(title)
 	var grid := GridContainer.new()
 	grid.columns = 4
-	grid.add_theme_constant_override("h_separation", 14)
+	grid.add_theme_constant_override("h_separation", 12)
 	grid.add_theme_constant_override("v_separation", 18)
 	v.add_child(grid)
 	for id in Collection.in_group(_group):
@@ -75,37 +75,61 @@ func _build() -> void:
 	v.add_child(how)
 
 
+## A picture tab for a sticker group; the open one is blue.
+func _tab(g: String) -> ChunkyButton:
+	var info: Dictionary = Collection.GROUPS[g]
+	var on := g == _group
+	var b := ChunkyButton.new()
+	b.card_style = not on
+	b.face_color = Palette.BLUE
+	b.icon_name = GROUP_ICONS.get(g, "star")
+	b.icon_px = 54
+	b.icon_tint = Palette.INK if on else Palette.readable(Color(info.color).darkened(0.2))
+	b.expand_icon = true
+	b.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	b.radius = 24
+	b.lift = 5
+	b.tooltip_text = info.name
+	b.custom_minimum_size = Vector2(0, 100)
+	b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	b.pressed.connect(_pick.bind(g))
+	return b
+
+
 func _pick(group: String) -> void:
 	_group = group
+	Speech.say(Collection.GROUPS[group].name)
 	_build()
 
 
 func _slot(id: String) -> Control:
 	var v := VBoxContainer.new()
-	v.custom_minimum_size = Vector2(140, 0)
+	v.custom_minimum_size = Vector2(138, 0)
 	v.add_theme_constant_override("separation", 6)
 	if GameState.collection.has_sticker(id):
 		var b := Button.new()
 		b.flat = true
-		b.custom_minimum_size = Vector2(130, 130)
+		b.custom_minimum_size = Vector2(132, 132)
 		b.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
 		b.tooltip_text = Collection.sticker(id).name
-		var s := Kit.sticker(id, 120)
-		s.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
-		b.add_child(s)
+		var center := CenterContainer.new()
+		center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		center.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		center.add_child(Kit.sticker(id, 124))
+		b.add_child(center)
 		b.pressed.connect(_say.bind(id, b))
 		b.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 		v.add_child(b)
-		var n := Kit.label(Collection.sticker(id).name, 20, Palette.INK, true)
+		var n := Kit.label(Collection.sticker(id).name, 22, Palette.INK, true)
 		n.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		v.add_child(n)
 	else:
 		var empty := PanelContainer.new()
-		var sb := Kit.box(Palette.CARD, 60)
+		var sb := Kit.box(Palette.CARD, 62)
 		sb.set_border_width_all(4)
 		sb.border_color = Palette.PAPER_DEEP
 		empty.add_theme_stylebox_override("panel", sb)
-		empty.custom_minimum_size = Vector2(120, 120)
+		empty.custom_minimum_size = Vector2(124, 124)
 		empty.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 		var q := Kit.label("?", 48, Palette.PAPER_DEEP.darkened(0.25), true)
 		q.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -118,7 +142,4 @@ func _slot(id: String) -> Control:
 func _say(id: String, b: Control) -> void:
 	Speech.say(Collection.sticker(id).name)
 	Sfx.play("pop")
-	b.pivot_offset = b.size / 2
-	var t := create_tween()
-	t.tween_property(b, "scale", Vector2(1.12, 1.12), 0.1)
-	t.tween_property(b, "scale", Vector2.ONE, 0.15)
+	Kit.pop(b)

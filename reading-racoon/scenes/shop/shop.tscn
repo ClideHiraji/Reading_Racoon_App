@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" path="res://scenes/shop/shop.gd" id="1_shop"]
 [ext_resource type="Shader" path="res://ui/paper.gdshader" id="2_paper"]
-[ext_resource type="Script" path="res://ui/close_button.gd" id="3_close"]
 [ext_resource type="Script" path="res://ui/chunky_button.gd" id="4_chunky"]
 [ext_resource type="Script" path="res://scenes/companion/raccoon.gd" id="5_raccoon"]
 [ext_resource type="Script" path="res://scenes/companion/speech_bubble.gd" id="6_bubble"]
@@ -13,28 +12,25 @@
 shader = ExtResource("2_paper")
 
 [sub_resource type="StyleBoxFlat" id="Pill"]
-content_margin_left = 12.0
-content_margin_top = 6.0
-content_margin_right = 18.0
-content_margin_bottom = 6.0
+content_margin_left = 14.0
+content_margin_top = 12.0
+content_margin_right = 22.0
+content_margin_bottom = 12.0
 bg_color = Color(1, 0.996, 0.957, 1)
-corner_radius_top_left = 24
-corner_radius_top_right = 24
-corner_radius_bottom_right = 24
-corner_radius_bottom_left = 24
+corner_radius_top_left = 36
+corner_radius_top_right = 36
+corner_radius_bottom_right = 36
+corner_radius_bottom_left = 36
 shadow_color = Color(0.23, 0.15, 0.08, 0.16)
 shadow_size = 1
-shadow_offset = Vector2(0, 4)
+shadow_offset = Vector2(0, 5)
 
 [sub_resource type="StyleBoxFlat" id="Stage"]
-bg_color = Color(1, 0.996, 0.957, 1)
-corner_radius_top_left = 30
-corner_radius_top_right = 30
-corner_radius_bottom_right = 30
-corner_radius_bottom_left = 30
-shadow_color = Color(0.23, 0.15, 0.08, 0.2)
-shadow_size = 1
-shadow_offset = Vector2(0, 8)
+bg_color = Color(0.831, 0.902, 0.949, 1)
+corner_radius_top_left = 28
+corner_radius_top_right = 28
+corner_radius_bottom_right = 28
+corner_radius_bottom_left = 28
 
 [node name="Shop" type="Control"]
 layout_mode = 3
@@ -75,12 +71,21 @@ theme_override_constants/separation = 18
 layout_mode = 2
 theme_override_constants/separation = 14
 
-[node name="BackButton" type="BaseButton" parent="Margin/VBox/TopRow"]
+[node name="BackButton" type="Button" parent="Margin/VBox/TopRow"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(72, 72)
+custom_minimum_size = Vector2(96, 96)
 layout_mode = 2
-tooltip_text = "Back to the path"
-script = ExtResource("3_close")
+size_flags_vertical = 4
+tooltip_text = "Home"
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_chunky")
+card_style = true
+lift = 6
+radius = 48
+icon_name = "house"
+icon_px = 50
+icon_tint = Color(0.290196, 0.494118, 0.65098, 1)
 
 [node name="Title" type="Label" parent="Margin/VBox/TopRow"]
 layout_mode = 2
@@ -102,7 +107,7 @@ theme_override_constants/separation = 8
 [node name="Icon" type="TextureRect" parent="Margin/VBox/TopRow/CoinsPill/Row"]
 self_modulate = Color(0.8, 0.541, 0, 1)
 texture_filter = 4
-custom_minimum_size = Vector2(36, 36)
+custom_minimum_size = Vector2(42, 42)
 layout_mode = 2
 texture = ExtResource("8_coins")
 expand_mode = 1
@@ -170,7 +175,7 @@ theme_override_constants/v_separation = 18
 columns = 3
 
 [node name="ActionRow" type="HBoxContainer" parent="Margin/VBox"]
-custom_minimum_size = Vector2(0, 100)
+custom_minimum_size = Vector2(0, 120)
 layout_mode = 2
 theme_override_constants/separation = 16
 
@@ -187,8 +192,10 @@ autowrap_mode = 3
 [node name="ActionButton" type="Button" parent="Margin/VBox/ActionRow"]
 unique_name_in_owner = true
 visible = false
-custom_minimum_size = Vector2(260, 100)
+custom_minimum_size = Vector2(280, 120)
 layout_mode = 2
+theme_override_font_sizes/font_size = 36
 text = "BUY"
 script = ExtResource("4_chunky")
 face_color = Color(0.914, 0.502, 0.122, 1)
+radius = 28

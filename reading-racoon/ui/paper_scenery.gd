@@ -209,9 +209,10 @@ func _peaks(base: float, height: float, col: Color, count: int) -> void:
 		draw_colored_polygon(cap, col.lightened(0.25))
 
 
+## A pale sun: strong yellow is kept for Adventure and PLAY (D-022).
 func _sun(at: Vector2, r: float) -> void:
-	draw_circle(at, r * 1.45, _c(Palette.MANGO.lightened(0.6)))
-	draw_circle(at, r, _c(Palette.MANGO.lightened(0.15)))
+	draw_circle(at, r * 1.45, _c(Palette.MANGO.lightened(0.82)))
+	draw_circle(at, r, _c(Palette.MANGO.lightened(0.62)))
 
 
 func _cloud(at: Vector2, r: float) -> void:

@@ -15,10 +15,11 @@ var angle := 0.0:
 		angle = v
 		queue_redraw()
 var locked := false
+var greyed: Array = []             # segments tried already (second try, D-021)
 
 
 func _init() -> void:
-	custom_minimum_size = Vector2(300, 300)
+	custom_minimum_size = Vector2(380, 380)   # D-022: bigger, with a spin arrow in the middle
 	mouse_filter = Control.MOUSE_FILTER_STOP
 
 
@@ -53,8 +54,15 @@ func _gui_input(event: InputEvent) -> void:
 		if d.length() > _radius() or d.length() < _radius() * 0.22:
 			return
 		var a := fposmod(d.angle() - angle + PI / labels.size(), TAU)
-		picked.emit(int(a / (TAU / labels.size())) % labels.size())
+		var i := int(a / (TAU / labels.size())) % labels.size()
 		accept_event()
+		if not greyed.has(i):
+			picked.emit(i)
+
+
+func grey_out(i: int) -> void:
+	greyed.append(i)
+	queue_redraw()
 
 
 func _radius() -> float:
@@ -74,17 +82,23 @@ func _draw() -> void:
 		for k in 13:
 			var a := a0 + TAU / n * k / 12.0
 			pts.append(c + Vector2(cos(a), sin(a)) * r)
-		draw_colored_polygon(pts, COLORS[i % COLORS.size()])
+		var face: Color = Palette.PAPER_DEEP if greyed.has(i) else COLORS[i % COLORS.size()]
+		draw_colored_polygon(pts, face)
 		var mid := angle + TAU * i / n
 		var p := c + Vector2(cos(mid), sin(mid)) * r * 0.64
 		var fs := 58 if str(labels[i]).length() <= 1 else 46
 		var tw := ANDIKA.get_string_size(str(labels[i]), HORIZONTAL_ALIGNMENT_LEFT, -1, fs)
+		var ink := Color(Palette.INK_SOFT, 0.5) if greyed.has(i) else Palette.text_on(face)
 		draw_string(ANDIKA, p + Vector2(-tw.x / 2, fs * 0.33), str(labels[i]),
-				HORIZONTAL_ALIGNMENT_LEFT, -1, fs, Palette.text_on(COLORS[i % COLORS.size()]))
+				HORIZONTAL_ALIGNMENT_LEFT, -1, fs, ink)
 	# Stitched rim and center pin.
 	for i in 36:
 		var a := TAU * i / 36.0
 		draw_arc(c, r - 8, a, a + TAU / 72.0, 3, Color(1, 1, 1, 0.5), 3.0, true)
-	draw_circle(c + Vector2(0, 4), r * 0.2, Palette.SHADOW)
-	draw_circle(c, r * 0.2, Palette.CARD)
-	draw_circle(c, r * 0.08, Palette.NIPA)
+	draw_circle(c + Vector2(0, 4), r * 0.22, Palette.SHADOW)
+	draw_circle(c, r * 0.22, Palette.CARD)
+	# A curved arrow says "spin me" (D-022).
+	var spin := Icons.tex("repeat")
+	if spin:
+		var px := r * 0.3
+		draw_texture_rect(spin, Rect2(c - Vector2(px, px) / 2, Vector2(px, px)), false, Palette.INK)

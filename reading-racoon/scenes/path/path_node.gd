@@ -5,7 +5,7 @@ extends BaseButton
 ## current node pulses under a paper "START" tag.
 
 const LIFT := 9.0
-const SIZE := Vector2(200, 190)
+const SIZE := Vector2(220, 210)
 
 var kind := "lesson"        # lesson | chest | trophy
 var state := "locked"
@@ -49,7 +49,7 @@ func _ready() -> void:
 
 
 func radius() -> float:
-	return 70.0 if kind == "trophy" else 60.0
+	return 78.0 if kind == "trophy" else 70.0
 
 
 ## Center of the disc in local coordinates (used to draw the trail).

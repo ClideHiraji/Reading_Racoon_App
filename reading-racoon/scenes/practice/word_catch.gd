@@ -2,6 +2,8 @@ extends Control
 ## Word Catch (D-017): word leaves drift down; Racoon says a word and the child
 ## catches it. Missed leaves float back up to the top, so nobody loses. Opens
 ## after Level 1 (wireframe), with words from the child's unlocked worlds.
+## Big word cards that fall slowly, a big Hear the word button and round dots
+## (D-022).
 
 const ROUNDS := 6
 const LEAVES := 4
@@ -13,7 +15,8 @@ var _first_try := 0
 var _missed := false
 var _started := 0
 var _field: Control
-var _count: Label
+var _dots: HBoxContainer
+var _results: Array = []
 var _leaves: Array = []
 var _rng := RandomNumberGenerator.new()
 
@@ -24,12 +27,10 @@ func _ready() -> void:
 	_started = Time.get_ticks_msec()
 	_rng.randomize()
 	var column := Kit.page(self, "grove", 260)
-	var head := Kit.header(column, "Word Catch", _back, true)
-	_count = Kit.label("", 28, Palette.INK, true)
-	_count.autowrap_mode = TextServer.AUTOWRAP_OFF
-	head.row.add_child(_count)
-	head.row.move_child(_count, 2)
-	var hear := Kit.button("Hear the word", Palette.BLUE, "speaker", 88)
+	_dots = Kit.game_header(column, "Word Catch", _back).dots
+	var hear := Kit.button("Hear the word", Palette.BLUE, "speaker", 112)
+	hear.add_theme_font_size_override("font_size", 34)
+	hear.custom_minimum_size.x = 400
 	hear.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	hear.pressed.connect(_say_round)
 	column.add_child(hear)
@@ -50,7 +51,7 @@ func _next() -> void:
 		_finish()
 		return
 	_missed = false
-	_count.text = "%d / %d" % [_round + 1, _targets.size()]
+	Kit.show_rounds(_dots, _targets.size(), _results)
 	for l in _leaves:
 		l.queue_free()
 	_leaves.clear()
@@ -74,17 +75,18 @@ func _add_leaf(w: Dictionary, i: int, n: int, right: bool) -> void:
 	b.card_style = true
 	b.text = w.word
 	b.add_theme_font_override("font", Kit.ANDIKA)
-	b.add_theme_font_size_override("font_size", 40)
-	b.custom_minimum_size = Vector2(150, 96)
+	b.add_theme_font_size_override("font_size", 56)
+	b.radius = 24
+	b.custom_minimum_size = Vector2(220, 110)
 	b.size = b.custom_minimum_size
 	b.tooltip_text = w.word
 	_field.add_child(b)
 	# Room for the widest word, so no leaf drifts off the edge.
-	var lane := (_field.size.x - 220.0) / maxf(n - 1, 1)
+	var lane := (_field.size.x - 280.0) / maxf(n - 1, 1)
 	b.position.x = lane * i
-	var top := -110.0 - i * 90.0
+	var top := -130.0 - i * 110.0
 	var t := b.create_tween().set_loops()
-	t.tween_property(b, "position:y", _field.size.y + 20.0, 6.0 + i * 1.1).from(top)
+	t.tween_property(b, "position:y", _field.size.y + 20.0, 9.0 + i * 1.4).from(top)
 	b.pressed.connect(_catch.bind(b, w, right))
 	_leaves.append(b)
 
@@ -99,6 +101,8 @@ func _catch(b: ChunkyButton, w: Dictionary, right: bool) -> void:
 		return
 	if not _missed:
 		_first_try += 1
+	_results.append("almost" if _missed else "right")
+	Kit.show_rounds(_dots, _targets.size(), _results)
 	Sfx.play("correct")
 	b.card_style = false
 	b.face_color = Palette.LEAF

@@ -80,6 +80,11 @@ static func word_starts(text: String) -> PackedInt32Array:
 	return out
 
 
+## Racoon is still talking (the lesson waits before moving on, D-021).
+func speaking() -> bool:
+	return not _voices.is_empty() and DisplayServer.tts_is_speaking()
+
+
 func stop() -> void:
 	if not _voices.is_empty():
 		DisplayServer.tts_stop()

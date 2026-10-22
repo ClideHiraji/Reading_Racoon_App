@@ -7,8 +7,9 @@ extends VBoxContainer
 
 signal done
 
-const ANDIKA := preload("res://assets/fonts/Andika-Regular.ttf")
 const ANDIKA_BOLD := preload("res://assets/fonts/Andika-Bold.ttf")
+
+var _text: ReadAlong
 
 
 func setup(passage: Dictionary, button_text: String = "I READ IT!") -> void:
@@ -54,19 +55,42 @@ func setup(passage: Dictionary, button_text: String = "I READ IT!") -> void:
 	title.add_theme_color_override("font_color", Palette.readable(Palette.CORAL_DEEP))
 	title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	body.add_child(title)
-	var text := Label.new()
-	text.text = passage.get("text", "")
-	text.add_theme_font_override("font", ANDIKA)
+	# The words light up as Racoon reads them, like the Library reader (FR-20, D-022).
 	var words := str(passage.get("text", "")).split(" ", false).size()
-	text.add_theme_font_size_override("font_size", 36 if words <= 60 else 31)
-	text.add_theme_constant_override("line_spacing", 6)
-	text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	body.add_child(text)
+	_text = ReadAlong.new()
+	_text.language = str(passage.get("language", "en"))
+	_text.font_size = 36 if words <= 60 else 31
+	_text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	body.add_child(_text)
+	_text.ready.connect(func():
+		_text.alignment = FlowContainer.ALIGNMENT_BEGIN
+		_text.set_text(str(passage.get("text", "")))
+		_text.play())
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 16)
+	add_child(row)
+	var again := ChunkyButton.new()
+	again.icon_name = "speaker"
+	again.icon_px = 52
+	again.face_color = Palette.BLUE
+	again.radius = 28
+	again.tooltip_text = "Read to me"
+	again.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	again.custom_minimum_size = Vector2(160, 120)
+	again.pressed.connect(func():
+		if _text.playing():
+			_text.stop()
+		else:
+			_text.play())
+	row.add_child(again)
 	var go := ChunkyButton.new()
 	go.text = button_text
 	go.icon_name = "check"
-	go.face_color = Palette.LEAF
-	go.custom_minimum_size = Vector2(0, 100)
-	go.pressed.connect(func(): done.emit())
-	add_child(go)
+	go.face_color = Palette.ORANGE   # green only means a right answer (D-022)
+	go.radius = 28
+	go.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	go.custom_minimum_size = Vector2(0, 120)
+	go.pressed.connect(func():
+		_text.stop()
+		done.emit())
+	row.add_child(go)

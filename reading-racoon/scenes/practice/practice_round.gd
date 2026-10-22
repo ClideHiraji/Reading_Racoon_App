@@ -2,7 +2,7 @@ extends Control
 ## Spin the Words, Syllable Train and Story Shuffle (D-017): five rounds with the
 ## same task screens as the lessons, but just for fun. No hearts, no BKT; a
 ## right answer glows green, an "almost" shows the answer, and the next round
-## comes by itself.
+## comes by itself. Round dots in the header (D-022).
 
 const ROUNDS := 5
 const TASKS := {
@@ -20,7 +20,8 @@ var _started := 0
 var _shown_passage := ""
 var _holder: VBoxContainer
 var _prompt: Label
-var _count: Label
+var _dots: HBoxContainer
+var _results: Array = []
 var _raccoon: Raccoon
 var _bubble: SpeechBubble
 var _task: Node
@@ -32,11 +33,7 @@ func _ready() -> void:
 	_started = Time.get_ticks_msec()
 	_game = PracticePool.game(GameState.practice_game)
 	var column := Kit.page(self)
-	var head := Kit.header(column, str(_game.get("name", "Practice")), _back, true)
-	_count = Kit.label("", 28, Palette.INK, true)
-	_count.autowrap_mode = TextServer.AUTOWRAP_OFF
-	head.row.add_child(_count)
-	head.row.move_child(_count, 2)
+	_dots = Kit.game_header(column, str(_game.get("name", "Practice")), _back).dots
 	var prompt_card := Kit.card(16)
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 14)
@@ -47,9 +44,9 @@ func _ready() -> void:
 	speak.icon_px = 40
 	speak.expand_icon = true
 	speak.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	speak.radius = 40
+	speak.radius = 48
 	speak.lift = 5
-	speak.custom_minimum_size = Vector2(80, 80)
+	speak.custom_minimum_size = Vector2(96, 96)
 	speak.pressed.connect(_speak)
 	row.add_child(speak)
 	_prompt = Kit.label("", 30, Palette.INK, true)
@@ -89,7 +86,7 @@ func _next() -> void:
 	if _i >= _items.size():
 		_finish()
 		return
-	_count.text = "%d / %d" % [_i + 1, _items.size()]
+	Kit.show_rounds(_dots, _items.size(), _results)
 	var item: Dictionary = _items[_i]
 	var pid := str(item.get("passage", ""))
 	if pid != "" and pid != _shown_passage:
@@ -100,8 +97,7 @@ func _next() -> void:
 		_task = page
 		_holder.add_child(page)
 		var p := GameState.bank.passage(pid)
-		_prompt.text = str(p.get("title", "Story"))
-		Speech.say(str(p.get("text", "")), str(p.get("language", "en")))
+		_prompt.text = str(p.get("title", "Story"))   # the page reads itself aloud (D-022)
 		return
 	_start()
 
@@ -129,6 +125,8 @@ func _on_answered(answer: String, _ms: int) -> void:
 	var right := str(item.answer)
 	var ok := answer == right
 	_task.show_result(answer, right)
+	_results.append("right" if ok else "almost")
+	Kit.show_rounds(_dots, _items.size(), _results)
 	if ok:
 		_right += 1
 		Sfx.play("correct")

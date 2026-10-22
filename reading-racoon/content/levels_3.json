@@ -1,60 +1,1139 @@
 {
-  "version": 1,
-  "note": "PLACEHOLDER CONTENT in Filipino for Level 3 (MATATAG bridge: L3-4 Filipino, 07-curriculum-content.md). Stories are at most 60 words and set in Butuan. Every item needs review by the Grade 1 teachers before the study.",
-  "passages": {
-    "p3-aso": {"level": 3, "language": "fil-placeholder", "scene": "village", "title": "Ang Aso ni Lito",
-      "text": "Si Lito ay may aso. Bantay ang pangalan ng aso. Maliit at puti si Bantay. Tuwing umaga, naglalaro sila sa bakuran ng bahay kubo. Isang araw, nawala ang bola ni Lito. Hinanap ito ni Bantay. Nakita ni Bantay ang bola sa ilalim ng puno. Masaya si Lito!"},
-    "p3-ilog": {"level": 3, "language": "fil-placeholder", "scene": "river", "title": "Sa Ilog Agusan",
-      "text": "Sumakay si Ana at si Tatay sa bangka. Pumunta sila sa ilog Agusan. Mainit ang araw. Nakakita si Ana ng maraming isda. Naghulog si Tatay ng lambat. Nakahuli sila ng tatlong isda. Umuwi sila bago gumabi."},
-    "p3-manok": {"level": 3, "language": "fil-placeholder", "scene": "village", "title": "Ang Manok ni Lola",
-      "text": "May pulang manok si Lola. Tuwing umaga, tumitilaok ang manok. Nagigising si Ben. Kumakain ang manok ng mais. Isang araw, nangitlog ang manok. Kinuha ni Ben ang itlog. Ibinigay niya ito kay Lola."}
-  },
-  "items": [
-    {"id": "ph3-01", "sub_skill": "phonics", "level": 3, "competency": "RL1PWS-I-5", "language": "fil-placeholder", "task_type": "order_tiles", "variant": "syllables", "prompt": "Buuin ang salitang isda.", "tts_text": "Is. Da. Buuin ang salitang isda.", "picture": "fish", "tiles": ["is", "da"], "answer": "is|da", "recovery": false},
-    {"id": "ph3-02", "sub_skill": "phonics", "level": 3, "competency": "RL1PWS-I-5", "language": "fil-placeholder", "task_type": "order_tiles", "variant": "syllables", "prompt": "Buuin ang salitang bahay.", "tts_text": "Ba. Hay. Buuin ang salitang bahay.", "picture": "house", "tiles": ["ba", "hay"], "answer": "ba|hay", "recovery": false},
-    {"id": "ph3-03", "sub_skill": "phonics", "level": 3, "competency": "RL1PWS-I-5", "language": "fil-placeholder", "task_type": "order_tiles", "variant": "syllables", "prompt": "Buuin ang salitang saging.", "tts_text": "Sa. Ging. Buuin ang salitang saging.", "picture": "banana", "tiles": ["sa", "ging"], "answer": "sa|ging", "recovery": false},
-    {"id": "ph3-04", "sub_skill": "phonics", "level": 3, "competency": "RL1PWS-I-5", "language": "fil-placeholder", "task_type": "order_tiles", "variant": "syllables", "prompt": "Buuin ang salitang bangka.", "tts_text": "Bang. Ka. Buuin ang salitang bangka.", "picture": "boat", "tiles": ["bang", "ka"], "answer": "bang|ka", "recovery": false},
-    {"id": "ph3-05", "sub_skill": "phonics", "level": 3, "competency": "RL1PWS-I-5", "language": "fil-placeholder", "task_type": "order_tiles", "variant": "syllables", "prompt": "Buuin ang salitang mansanas.", "tts_text": "Man. Sa. Nas. Buuin ang salitang mansanas.", "picture": "apple", "tiles": ["man", "sa", "nas"], "answer": "man|sa|nas", "recovery": false},
-    {"id": "ph3-06", "sub_skill": "phonics", "level": 3, "competency": "RL1PWS-I-5", "language": "fil-placeholder", "task_type": "order_tiles", "variant": "syllables", "prompt": "Buuin ang salitang kuneho.", "tts_text": "Ku. Ne. Ho. Buuin ang salitang kuneho.", "picture": "rabbit", "tiles": ["ku", "ne", "ho"], "answer": "ku|ne|ho", "recovery": false},
-    {"id": "ph3-07", "sub_skill": "phonics", "level": 3, "competency": "RL1PWS-I-4", "language": "fil-placeholder", "task_type": "spin_words", "prompt": "Paikutin para mabuo ang aso.", "tts_text": "Aso. Paikutin ang gulong para mabuo ang salitang aso.", "picture": "dog", "rime": "so", "choices": [{"id": "a", "label": "a"}, {"id": "o", "label": "o"}, {"id": "i", "label": "i"}, {"id": "u", "label": "u"}], "answer": "a", "recovery": false},
-    {"id": "ph3-08", "sub_skill": "phonics", "level": 3, "competency": "RL1PWS-I-4", "language": "fil-placeholder", "task_type": "spin_words", "prompt": "Paikutin para mabuo ang oso.", "tts_text": "Oso. Paikutin ang gulong para mabuo ang salitang oso.", "picture": "bear", "rime": "so", "choices": [{"id": "a", "label": "a"}, {"id": "o", "label": "o"}, {"id": "i", "label": "i"}, {"id": "u", "label": "u"}], "answer": "o", "recovery": false},
-    {"id": "ph3-09", "sub_skill": "phonics", "level": 3, "competency": "RL1PWS-I-4", "language": "fil-placeholder", "task_type": "spin_words", "prompt": "Paikutin para mabuo ang pusa.", "tts_text": "Pusa. Paikutin ang gulong para mabuo ang salitang pusa.", "picture": "cat", "rime": "sa", "choices": [{"id": "pa", "label": "pa"}, {"id": "pu", "label": "pu"}, {"id": "pi", "label": "pi"}, {"id": "po", "label": "po"}], "answer": "pu", "recovery": false},
-
-    {"id": "vo3-01", "sub_skill": "vocabulary", "level": 3, "competency": "RL1VWK-I-1", "language": "fil-placeholder", "task_type": "tap_choice", "prompt": "Pindutin ang bahay.", "tts_text": "Pindutin ang bahay.", "choices": [{"id": "boat", "picture": "boat"}, {"id": "house", "picture": "house"}, {"id": "tree", "picture": "tree"}], "answer": "house", "recovery": false},
-    {"id": "vo3-02", "sub_skill": "vocabulary", "level": 3, "competency": "RL1VWK-I-1", "language": "fil-placeholder", "task_type": "tap_choice", "prompt": "Pindutin ang isda.", "tts_text": "Pindutin ang isda.", "choices": [{"id": "hen", "picture": "hen"}, {"id": "dog", "picture": "dog"}, {"id": "fish", "picture": "fish"}], "answer": "fish", "recovery": false},
-    {"id": "vo3-03", "sub_skill": "vocabulary", "level": 3, "competency": "RL1VWK-I-2a", "language": "fil-placeholder", "task_type": "tap_choice", "prompt": "Basahin ang salita. Pindutin ang larawan.", "tts_text": "Basahin ang salita. Pindutin ang larawan.", "word": "aso", "choices": [{"id": "cat", "picture": "cat"}, {"id": "dog", "picture": "dog"}, {"id": "bear", "picture": "bear"}], "answer": "dog", "recovery": false},
-    {"id": "vo3-04", "sub_skill": "vocabulary", "level": 3, "competency": "RL1VWK-I-2a", "language": "fil-placeholder", "task_type": "tap_choice", "prompt": "Basahin ang salita. Pindutin ang larawan.", "tts_text": "Basahin ang salita. Pindutin ang larawan.", "word": "saging", "choices": [{"id": "apple", "picture": "apple"}, {"id": "grapes", "picture": "grapes"}, {"id": "banana", "picture": "banana"}], "answer": "banana", "recovery": false},
-    {"id": "vo3-05", "sub_skill": "vocabulary", "level": 3, "competency": "RL1VWK-I-2b", "language": "fil-placeholder", "task_type": "tap_choice", "prompt": "Alin ang malaki?", "tts_text": "Alin ang malaki?", "choices": [{"id": "ant", "picture": "ant"}, {"id": "elephant", "picture": "elephant"}, {"id": "mouse", "picture": "mouse"}], "answer": "elephant", "recovery": false},
-    {"id": "vo3-06", "sub_skill": "vocabulary", "level": 3, "competency": "RL1VWK-I-2b", "language": "fil-placeholder", "task_type": "tap_choice", "prompt": "Alin ang maliit?", "tts_text": "Alin ang maliit?", "choices": [{"id": "bear", "picture": "bear"}, {"id": "elephant", "picture": "elephant"}, {"id": "ant", "picture": "ant"}], "answer": "ant", "recovery": false},
-    {"id": "vo3-07", "sub_skill": "vocabulary", "level": 3, "competency": "RL1VWK-I-3", "language": "fil-placeholder", "task_type": "tap_choice", "prompt": "Pindutin ang salitang ang.", "tts_text": "Pindutin ang salitang, ang.", "choices": [{"id": "ng", "label": "ng"}, {"id": "ang", "label": "ang"}, {"id": "mga", "label": "mga"}, {"id": "sa", "label": "sa"}], "answer": "ang", "recovery": false},
-    {"id": "vo3-08", "sub_skill": "vocabulary", "level": 3, "competency": "RL1VWK-I-3", "language": "fil-placeholder", "task_type": "tap_choice", "prompt": "Pindutin ang salitang mga.", "tts_text": "Pindutin ang salitang, mga.", "choices": [{"id": "mga", "label": "mga"}, {"id": "ang", "label": "ang"}, {"id": "ay", "label": "ay"}], "answer": "mga", "recovery": false},
-
-    {"id": "fl3-01", "sub_skill": "fluency", "level": 3, "competency": "RL1BPK-I-3a", "language": "fil-placeholder", "task_type": "order_tiles", "variant": "sentence", "prompt": "Ayusin ang mga salita.", "tts_text": "Si Lito ay masaya. Ayusin ang mga salita.", "tiles": ["Si", "Lito", "ay", "masaya."], "answer": "Si|Lito|ay|masaya.", "recovery": false},
-    {"id": "fl3-02", "sub_skill": "fluency", "level": 3, "competency": "RL1BPK-I-3a", "language": "fil-placeholder", "task_type": "order_tiles", "variant": "sentence", "prompt": "Ayusin ang mga salita.", "tts_text": "Ang aso ay maliit. Ayusin ang mga salita.", "picture": "dog", "tiles": ["Ang", "aso", "ay", "maliit."], "answer": "Ang|aso|ay|maliit.", "recovery": false},
-    {"id": "fl3-03", "sub_skill": "fluency", "level": 3, "competency": "RL1BPK-I-3a", "language": "fil-placeholder", "task_type": "order_tiles", "variant": "sentence", "prompt": "Ayusin ang mga salita.", "tts_text": "Kumain ako ng saging. Ayusin ang mga salita.", "picture": "banana", "tiles": ["Kumain", "ako", "ng", "saging."], "answer": "Kumain|ako|ng|saging.", "recovery": false},
-    {"id": "fl3-04", "sub_skill": "fluency", "level": 3, "competency": "RL1BPK-I-3a", "language": "fil-placeholder", "task_type": "order_tiles", "variant": "sentence", "prompt": "Ayusin ang mga salita.", "tts_text": "Malaki ang bahay. Ayusin ang mga salita.", "picture": "house", "tiles": ["Malaki", "ang", "bahay."], "answer": "Malaki|ang|bahay.", "recovery": false},
-    {"id": "fl3-05", "sub_skill": "fluency", "level": 3, "competency": "RL1BPK-I-3a", "language": "fil-placeholder", "task_type": "order_tiles", "variant": "sentence", "prompt": "Ayusin ang mga salita.", "tts_text": "Lumalangoy ang isda. Ayusin ang mga salita.", "picture": "fish", "tiles": ["Lumalangoy", "ang", "isda."], "answer": "Lumalangoy|ang|isda.", "recovery": false},
-    {"id": "fl3-06", "sub_skill": "fluency", "level": 3, "competency": "RL1PWS-I-5", "language": "fil-placeholder", "task_type": "tap_choice", "prompt": "Ano ang kulang?", "tts_text": "Ang pusa ay ano? Piliin ang tamang salita.", "picture": "cat", "sentence": "Ang pusa ay ___.", "choices": [{"id": "ngumiyaw", "label": "ngumiyaw"}, {"id": "tumahol", "label": "tumahol"}, {"id": "tumilaok", "label": "tumilaok"}], "answer": "ngumiyaw", "recovery": false},
-    {"id": "fl3-07", "sub_skill": "fluency", "level": 3, "competency": "RL1PWS-I-5", "language": "fil-placeholder", "task_type": "tap_choice", "prompt": "Ano ang kulang?", "tts_text": "Ang manok ay ano? Piliin ang tamang salita.", "picture": "hen", "sentence": "Ang manok ay ___.", "choices": [{"id": "tumahol", "label": "tumahol"}, {"id": "tumilaok", "label": "tumilaok"}, {"id": "ngumiyaw", "label": "ngumiyaw"}], "answer": "tumilaok", "recovery": false},
-    {"id": "fl3-08", "sub_skill": "fluency", "level": 3, "competency": "RL1PWS-I-5", "language": "fil-placeholder", "task_type": "tap_choice", "prompt": "Ano ang kulang?", "tts_text": "Ang aso ay ano? Piliin ang tamang salita.", "picture": "dog", "sentence": "Ang aso ay ___.", "choices": [{"id": "tumilaok", "label": "tumilaok"}, {"id": "ngumiyaw", "label": "ngumiyaw"}, {"id": "tumahol", "label": "tumahol"}], "answer": "tumahol", "recovery": false},
-    {"id": "fl3-r1", "sub_skill": "fluency", "level": 3, "competency": "RL1BPK-I-3a", "language": "fil-placeholder", "task_type": "order_tiles", "variant": "sentence", "prompt": "Ayusin ang mga salita.", "tts_text": "Isda ito. Ayusin ang mga salita.", "picture": "fish", "tiles": ["Isda", "ito."], "answer": "Isda|ito.", "recovery": true},
-    {"id": "fl3-r2", "sub_skill": "fluency", "level": 3, "competency": "RL1BPK-I-3a", "language": "fil-placeholder", "task_type": "order_tiles", "variant": "sentence", "prompt": "Ayusin ang mga salita.", "tts_text": "Bahay ito. Ayusin ang mga salita.", "picture": "house", "tiles": ["Bahay", "ito."], "answer": "Bahay|ito.", "recovery": true},
-    {"id": "fl3-r3", "sub_skill": "fluency", "level": 3, "competency": "RL1BPK-I-3a", "language": "fil-placeholder", "task_type": "order_tiles", "variant": "sentence", "prompt": "Ayusin ang mga salita.", "tts_text": "Aso ito. Ayusin ang mga salita.", "picture": "dog", "tiles": ["Aso", "ito."], "answer": "Aso|ito.", "recovery": true},
-
-    {"id": "lc3-01", "sub_skill": "literal_comprehension", "level": 3, "competency": "RL1CAT-I-2a", "language": "fil-placeholder", "task_type": "tap_choice", "passage": "p3-aso", "prompt": "Sino ang may aso?", "tts_text": "Sino ang may aso?", "choices": [{"id": "lito", "label": "Si Lito"}, {"id": "bantay", "label": "Si Bantay"}, {"id": "ana", "label": "Si Ana"}], "answer": "lito", "recovery": false},
-    {"id": "lc3-02", "sub_skill": "literal_comprehension", "level": 3, "competency": "RL1CAT-I-2a", "language": "fil-placeholder", "task_type": "tap_choice", "passage": "p3-aso", "prompt": "Ano ang nawala?", "tts_text": "Ano ang nawala?", "choices": [{"id": "bola", "label": "bola", "picture": "ball"}, {"id": "sumbrero", "label": "sumbrero", "picture": "hat"}, {"id": "libro", "label": "libro", "picture": "book"}], "answer": "bola", "recovery": false},
-    {"id": "lc3-03", "sub_skill": "literal_comprehension", "level": 3, "competency": "RL1CAT-I-2a", "language": "fil-placeholder", "task_type": "tap_choice", "passage": "p3-aso", "prompt": "Saan nakita ang bola?", "tts_text": "Saan nakita ang bola?", "choices": [{"id": "puno", "label": "sa ilalim ng puno", "picture": "tree"}, {"id": "bahay", "label": "sa loob ng bahay", "picture": "house"}, {"id": "ilog", "label": "sa tabi ng ilog", "picture": "waves"}], "answer": "puno", "recovery": false},
-    {"id": "lc3-04", "sub_skill": "literal_comprehension", "level": 3, "competency": "RL1CAT-I-2b", "language": "fil-placeholder", "task_type": "order_tiles", "variant": "sequence", "passage": "p3-aso", "prompt": "Ayusin ang kuwento.", "tts_text": "Ano ang unang nangyari? Ayusin ang kuwento.", "tiles": [{"id": "a", "text": "Nawala ang bola ni Lito.", "picture": "ball"}, {"id": "b", "text": "Hinanap ni Bantay ang bola.", "picture": "dog"}, {"id": "c", "text": "Masaya si Lito!", "picture": "star"}], "answer": "a|b|c", "recovery": false},
-    {"id": "lc3-05", "sub_skill": "literal_comprehension", "level": 3, "competency": "RL1CAT-I-2a", "language": "fil-placeholder", "task_type": "tap_choice", "passage": "p3-ilog", "prompt": "Sino ang kasama ni Ana?", "tts_text": "Sino ang kasama ni Ana?", "choices": [{"id": "nanay", "label": "Si Nanay"}, {"id": "tatay", "label": "Si Tatay"}, {"id": "lito", "label": "Si Lito"}], "answer": "tatay", "recovery": false},
-    {"id": "lc3-06", "sub_skill": "literal_comprehension", "level": 3, "competency": "RL1CAT-I-2a", "language": "fil-placeholder", "task_type": "tap_choice", "passage": "p3-ilog", "prompt": "Saan sila pumunta?", "tts_text": "Saan sila pumunta?", "choices": [{"id": "ilog", "label": "sa ilog", "picture": "waves"}, {"id": "bundok", "label": "sa bundok", "picture": "mountain"}, {"id": "bahay", "label": "sa bahay", "picture": "house"}], "answer": "ilog", "recovery": false},
-    {"id": "lc3-07", "sub_skill": "literal_comprehension", "level": 3, "competency": "RL1CAT-I-2a", "language": "fil-placeholder", "task_type": "tap_choice", "passage": "p3-ilog", "prompt": "Ilang isda ang nahuli nila?", "tts_text": "Ilang isda ang nahuli nila?", "choices": [{"id": "1", "label": "isa", "picture": "fish", "repeat": 1}, {"id": "3", "label": "tatlo", "picture": "fish", "repeat": 3}, {"id": "2", "label": "dalawa", "picture": "fish", "repeat": 2}], "answer": "3", "recovery": false},
-    {"id": "lc3-08", "sub_skill": "literal_comprehension", "level": 3, "competency": "RL1CAT-I-2a", "language": "fil-placeholder", "task_type": "tap_choice", "passage": "p3-ilog", "prompt": "Kailan sila umuwi?", "tts_text": "Kailan sila umuwi?", "choices": [{"id": "gabi", "label": "bago gumabi", "picture": "sun"}, {"id": "hatinggabi", "label": "sa hatinggabi", "picture": "night"}, {"id": "bukas", "label": "bukas ng umaga", "picture": "star"}], "answer": "gabi", "recovery": false},
-    {"id": "lc3-09", "sub_skill": "literal_comprehension", "level": 3, "competency": "RL1CAT-I-2a", "language": "fil-placeholder", "task_type": "tap_choice", "passage": "p3-manok", "prompt": "Ano ang kulay ng manok?", "tts_text": "Ano ang kulay ng manok?", "choices": [{"id": "pula", "label": "pula"}, {"id": "puti", "label": "puti"}, {"id": "itim", "label": "itim"}], "answer": "pula", "recovery": false},
-    {"id": "lc3-10", "sub_skill": "literal_comprehension", "level": 3, "competency": "RL1CAT-I-2a", "language": "fil-placeholder", "task_type": "tap_choice", "passage": "p3-manok", "prompt": "Ano ang kinakain ng manok?", "tts_text": "Ano ang kinakain ng manok?", "choices": [{"id": "isda", "label": "isda", "picture": "fish"}, {"id": "mais", "label": "mais"}, {"id": "saging", "label": "saging", "picture": "banana"}], "answer": "mais", "recovery": false},
-    {"id": "lc3-11", "sub_skill": "literal_comprehension", "level": 3, "competency": "RL1CAT-I-2a", "language": "fil-placeholder", "task_type": "tap_choice", "passage": "p3-manok", "prompt": "Kanino ibinigay ni Ben ang itlog?", "tts_text": "Kanino ibinigay ni Ben ang itlog?", "choices": [{"id": "nanay", "label": "kay Nanay"}, {"id": "ana", "label": "kay Ana"}, {"id": "lola", "label": "kay Lola"}], "answer": "lola", "recovery": false},
-    {"id": "lc3-12", "sub_skill": "literal_comprehension", "level": 3, "competency": "RL1CAT-I-2b", "language": "fil-placeholder", "task_type": "order_tiles", "variant": "sequence", "passage": "p3-manok", "prompt": "Ayusin ang kuwento.", "tts_text": "Ano ang unang nangyari? Ayusin ang kuwento.", "tiles": [{"id": "a", "text": "Tumilaok ang manok.", "picture": "hen"}, {"id": "b", "text": "Nangitlog ang manok.", "picture": "hen"}, {"id": "c", "text": "Ibinigay ni Ben ang itlog kay Lola.", "picture": "hand"}], "answer": "a|b|c", "recovery": false},
-    {"id": "lc3-r1", "sub_skill": "literal_comprehension", "level": 3, "competency": "RL1CAT-I-2a", "language": "fil-placeholder", "task_type": "tap_choice", "passage": "p3-aso", "prompt": "Sino ang may aso?", "tts_text": "Si Lito ay may aso. Sino ang may aso?", "choices": [{"id": "lito", "label": "Si Lito"}, {"id": "ana", "label": "Si Ana"}], "answer": "lito", "recovery": true},
-    {"id": "lc3-r2", "sub_skill": "literal_comprehension", "level": 3, "competency": "RL1CAT-I-2a", "language": "fil-placeholder", "task_type": "tap_choice", "passage": "p3-ilog", "prompt": "Ano ang sinakyan nila?", "tts_text": "Sumakay sila sa bangka. Ano ang sinakyan nila?", "choices": [{"id": "bangka", "label": "bangka", "picture": "boat"}, {"id": "bus", "label": "bus", "picture": "bus"}], "answer": "bangka", "recovery": true},
-    {"id": "lc3-r3", "sub_skill": "literal_comprehension", "level": 3, "competency": "RL1CAT-I-2a", "language": "fil-placeholder", "task_type": "tap_choice", "passage": "p3-aso", "prompt": "Ano ang hinanap ni Bantay?", "tts_text": "Hinanap ni Bantay ang bola. Ano ang hinanap ni Bantay?", "choices": [{"id": "isda", "label": "isda", "picture": "fish"}, {"id": "bola", "label": "bola", "picture": "ball"}], "answer": "bola", "recovery": true}
-  ]
+	"version": 1.0,
+	"note": "PLACEHOLDER CONTENT in Filipino for Level 3 (MATATAG bridge: L3-4 Filipino, 07-curriculum-content.md). Stories are at most 60 words and set in Butuan. Every item needs review by the Grade 1 teachers before the study.",
+	"passages": {
+		"p3-aso": {
+			"level": 3.0,
+			"language": "fil-placeholder",
+			"scene": "village",
+			"title": "Ang Aso ni Lito",
+			"text": "Si Lito ay may aso. Bantay ang pangalan ng aso. Maliit at puti si Bantay. Tuwing umaga, naglalaro sila sa bakuran ng bahay kubo. Isang araw, nawala ang bola ni Lito. Hinanap ito ni Bantay. Nakita ni Bantay ang bola sa ilalim ng puno. Masaya si Lito!"
+		},
+		"p3-ilog": {
+			"level": 3.0,
+			"language": "fil-placeholder",
+			"scene": "river",
+			"title": "Sa Ilog Agusan",
+			"text": "Sumakay si Ana at si Tatay sa bangka. Pumunta sila sa ilog Agusan. Mainit ang araw. Nakakita si Ana ng maraming isda. Naghulog si Tatay ng lambat. Nakahuli sila ng tatlong isda. Umuwi sila bago gumabi."
+		},
+		"p3-manok": {
+			"level": 3.0,
+			"language": "fil-placeholder",
+			"scene": "village",
+			"title": "Ang Manok ni Lola",
+			"text": "May pulang manok si Lola. Tuwing umaga, tumitilaok ang manok. Nagigising si Ben. Kumakain ang manok ng mais. Isang araw, nangitlog ang manok. Kinuha ni Ben ang itlog. Ibinigay niya ito kay Lola."
+		}
+	},
+	"items": [
+		{
+			"id": "ph3-01",
+			"sub_skill": "phonics",
+			"level": 3.0,
+			"competency": "RL1PWS-I-5",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"variant": "syllables",
+			"prompt": "Buuin ang salitang isda.",
+			"tts_text": "Is. Da. Buuin ang salitang isda.",
+			"picture": "fish",
+			"tiles": [
+				"is",
+				"da"
+			],
+			"answer": "is|da",
+			"recovery": false
+		},
+		{
+			"id": "ph3-02",
+			"sub_skill": "phonics",
+			"level": 3.0,
+			"competency": "RL1PWS-I-5",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"variant": "syllables",
+			"prompt": "Buuin ang salitang bahay.",
+			"tts_text": "Ba. Hay. Buuin ang salitang bahay.",
+			"picture": "house",
+			"tiles": [
+				"ba",
+				"hay"
+			],
+			"answer": "ba|hay",
+			"recovery": false
+		},
+		{
+			"id": "ph3-03",
+			"sub_skill": "phonics",
+			"level": 3.0,
+			"competency": "RL1PWS-I-5",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"variant": "syllables",
+			"prompt": "Buuin ang salitang saging.",
+			"tts_text": "Sa. Ging. Buuin ang salitang saging.",
+			"picture": "banana",
+			"tiles": [
+				"sa",
+				"ging"
+			],
+			"answer": "sa|ging",
+			"recovery": false
+		},
+		{
+			"id": "ph3-04",
+			"sub_skill": "phonics",
+			"level": 3.0,
+			"competency": "RL1PWS-I-5",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"variant": "syllables",
+			"prompt": "Buuin ang salitang bangka.",
+			"tts_text": "Bang. Ka. Buuin ang salitang bangka.",
+			"picture": "boat",
+			"tiles": [
+				"bang",
+				"ka"
+			],
+			"answer": "bang|ka",
+			"recovery": false
+		},
+		{
+			"id": "ph3-05",
+			"sub_skill": "phonics",
+			"level": 3.0,
+			"competency": "RL1PWS-I-5",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"variant": "syllables",
+			"prompt": "Buuin ang salitang mansanas.",
+			"tts_text": "Man. Sa. Nas. Buuin ang salitang mansanas.",
+			"picture": "apple",
+			"tiles": [
+				"man",
+				"sa",
+				"nas"
+			],
+			"answer": "man|sa|nas",
+			"recovery": false
+		},
+		{
+			"id": "ph3-06",
+			"sub_skill": "phonics",
+			"level": 3.0,
+			"competency": "RL1PWS-I-5",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"variant": "syllables",
+			"prompt": "Buuin ang salitang kuneho.",
+			"tts_text": "Ku. Ne. Ho. Buuin ang salitang kuneho.",
+			"picture": "rabbit",
+			"tiles": [
+				"ku",
+				"ne",
+				"ho"
+			],
+			"answer": "ku|ne|ho",
+			"recovery": false
+		},
+		{
+			"id": "ph3-07",
+			"sub_skill": "phonics",
+			"level": 3.0,
+			"competency": "RL1PWS-I-4",
+			"language": "fil-placeholder",
+			"task_type": "spin_words",
+			"prompt": "Paikutin para mabuo ang aso.",
+			"tts_text": "Aso. Paikutin ang gulong para mabuo ang salitang aso.",
+			"picture": "dog",
+			"rime": "so",
+			"choices": [
+				{
+					"id": "a",
+					"label": "a"
+				},
+				{
+					"id": "o",
+					"label": "o"
+				},
+				{
+					"id": "i",
+					"label": "i"
+				},
+				{
+					"id": "u",
+					"label": "u"
+				}
+			],
+			"answer": "a",
+			"recovery": false
+		},
+		{
+			"id": "ph3-08",
+			"sub_skill": "phonics",
+			"level": 3.0,
+			"competency": "RL1PWS-I-4",
+			"language": "fil-placeholder",
+			"task_type": "spin_words",
+			"prompt": "Paikutin para mabuo ang oso.",
+			"tts_text": "Oso. Paikutin ang gulong para mabuo ang salitang oso.",
+			"picture": "bear",
+			"rime": "so",
+			"choices": [
+				{
+					"id": "a",
+					"label": "a"
+				},
+				{
+					"id": "o",
+					"label": "o"
+				},
+				{
+					"id": "i",
+					"label": "i"
+				},
+				{
+					"id": "u",
+					"label": "u"
+				}
+			],
+			"answer": "o",
+			"recovery": false
+		},
+		{
+			"id": "ph3-09",
+			"sub_skill": "phonics",
+			"level": 3.0,
+			"competency": "RL1PWS-I-4",
+			"language": "fil-placeholder",
+			"task_type": "spin_words",
+			"prompt": "Paikutin para mabuo ang pusa.",
+			"tts_text": "Pusa. Paikutin ang gulong para mabuo ang salitang pusa.",
+			"picture": "cat",
+			"rime": "sa",
+			"choices": [
+				{
+					"id": "pa",
+					"label": "pa"
+				},
+				{
+					"id": "pu",
+					"label": "pu"
+				},
+				{
+					"id": "pi",
+					"label": "pi"
+				},
+				{
+					"id": "po",
+					"label": "po"
+				}
+			],
+			"answer": "pu",
+			"recovery": false
+		},
+		{
+			"id": "vo3-01",
+			"sub_skill": "vocabulary",
+			"level": 3.0,
+			"competency": "RL1VWK-I-1",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pindutin ang bahay.",
+			"tts_text": "Pindutin ang bahay.",
+			"choices": [
+				{
+					"id": "boat",
+					"picture": "boat"
+				},
+				{
+					"id": "house",
+					"picture": "house"
+				},
+				{
+					"id": "tree",
+					"picture": "tree"
+				}
+			],
+			"answer": "house",
+			"recovery": false
+		},
+		{
+			"id": "vo3-02",
+			"sub_skill": "vocabulary",
+			"level": 3.0,
+			"competency": "RL1VWK-I-1",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pindutin ang isda.",
+			"tts_text": "Pindutin ang isda.",
+			"choices": [
+				{
+					"id": "hen",
+					"picture": "hen"
+				},
+				{
+					"id": "dog",
+					"picture": "dog"
+				},
+				{
+					"id": "fish",
+					"picture": "fish"
+				}
+			],
+			"answer": "fish",
+			"recovery": false
+		},
+		{
+			"id": "vo3-03",
+			"sub_skill": "vocabulary",
+			"level": 3.0,
+			"competency": "RL1VWK-I-2a",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Basahin ang salita. Pindutin ang larawan.",
+			"tts_text": "Basahin ang salita. Pindutin ang larawan.",
+			"word": "aso",
+			"choices": [
+				{
+					"id": "cat",
+					"picture": "cat"
+				},
+				{
+					"id": "dog",
+					"picture": "dog"
+				},
+				{
+					"id": "bear",
+					"picture": "bear"
+				}
+			],
+			"answer": "dog",
+			"recovery": false
+		},
+		{
+			"id": "vo3-04",
+			"sub_skill": "vocabulary",
+			"level": 3.0,
+			"competency": "RL1VWK-I-2a",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Basahin ang salita. Pindutin ang larawan.",
+			"tts_text": "Basahin ang salita. Pindutin ang larawan.",
+			"word": "saging",
+			"choices": [
+				{
+					"id": "apple",
+					"picture": "apple"
+				},
+				{
+					"id": "grapes",
+					"picture": "grapes"
+				},
+				{
+					"id": "banana",
+					"picture": "banana"
+				}
+			],
+			"answer": "banana",
+			"recovery": false
+		},
+		{
+			"id": "vo3-05",
+			"sub_skill": "vocabulary",
+			"level": 3.0,
+			"competency": "RL1VWK-I-2b",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Alin ang malaki?",
+			"tts_text": "Alin ang malaki?",
+			"choices": [
+				{
+					"id": "ant",
+					"picture": "ant"
+				},
+				{
+					"id": "elephant",
+					"picture": "elephant"
+				},
+				{
+					"id": "mouse",
+					"picture": "mouse"
+				}
+			],
+			"answer": "elephant",
+			"recovery": false,
+			"hint": "Isipin ang bawat hayop. Alin ang pinakamalaki?",
+			"explain": "Malaki ang elepante. Maliit ang langgam at daga."
+		},
+		{
+			"id": "vo3-06",
+			"sub_skill": "vocabulary",
+			"level": 3.0,
+			"competency": "RL1VWK-I-2b",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Alin ang maliit?",
+			"tts_text": "Alin ang maliit?",
+			"choices": [
+				{
+					"id": "bear",
+					"picture": "bear"
+				},
+				{
+					"id": "elephant",
+					"picture": "elephant"
+				},
+				{
+					"id": "ant",
+					"picture": "ant"
+				}
+			],
+			"answer": "ant",
+			"recovery": false,
+			"hint": "Isipin ang bawat hayop. Alin ang pinakamaliit?",
+			"explain": "Maliit ang langgam. Malaki ang oso at elepante."
+		},
+		{
+			"id": "vo3-07",
+			"sub_skill": "vocabulary",
+			"level": 3.0,
+			"competency": "RL1VWK-I-3",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pindutin ang salitang ang.",
+			"tts_text": "Pindutin ang salitang, ang.",
+			"choices": [
+				{
+					"id": "ng",
+					"label": "ng"
+				},
+				{
+					"id": "ang",
+					"label": "ang"
+				},
+				{
+					"id": "mga",
+					"label": "mga"
+				},
+				{
+					"id": "sa",
+					"label": "sa"
+				}
+			],
+			"answer": "ang",
+			"recovery": false
+		},
+		{
+			"id": "vo3-08",
+			"sub_skill": "vocabulary",
+			"level": 3.0,
+			"competency": "RL1VWK-I-3",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pindutin ang salitang mga.",
+			"tts_text": "Pindutin ang salitang, mga.",
+			"choices": [
+				{
+					"id": "mga",
+					"label": "mga"
+				},
+				{
+					"id": "ang",
+					"label": "ang"
+				},
+				{
+					"id": "ay",
+					"label": "ay"
+				}
+			],
+			"answer": "mga",
+			"recovery": false
+		},
+		{
+			"id": "fl3-01",
+			"sub_skill": "fluency",
+			"level": 3.0,
+			"competency": "RL1BPK-I-3a",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"variant": "sentence",
+			"prompt": "Ayusin ang mga salita.",
+			"tts_text": "Si Lito ay masaya. Ayusin ang mga salita.",
+			"tiles": [
+				"Si",
+				"Lito",
+				"ay",
+				"masaya."
+			],
+			"answer": "Si|Lito|ay|masaya.",
+			"recovery": false
+		},
+		{
+			"id": "fl3-02",
+			"sub_skill": "fluency",
+			"level": 3.0,
+			"competency": "RL1BPK-I-3a",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"variant": "sentence",
+			"prompt": "Ayusin ang mga salita.",
+			"tts_text": "Ang aso ay maliit. Ayusin ang mga salita.",
+			"picture": "dog",
+			"tiles": [
+				"Ang",
+				"aso",
+				"ay",
+				"maliit."
+			],
+			"answer": "Ang|aso|ay|maliit.",
+			"recovery": false
+		},
+		{
+			"id": "fl3-03",
+			"sub_skill": "fluency",
+			"level": 3.0,
+			"competency": "RL1BPK-I-3a",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"variant": "sentence",
+			"prompt": "Ayusin ang mga salita.",
+			"tts_text": "Kumain ako ng saging. Ayusin ang mga salita.",
+			"picture": "banana",
+			"tiles": [
+				"Kumain",
+				"ako",
+				"ng",
+				"saging."
+			],
+			"answer": "Kumain|ako|ng|saging.",
+			"recovery": false
+		},
+		{
+			"id": "fl3-04",
+			"sub_skill": "fluency",
+			"level": 3.0,
+			"competency": "RL1BPK-I-3a",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"variant": "sentence",
+			"prompt": "Ayusin ang mga salita.",
+			"tts_text": "Malaki ang bahay. Ayusin ang mga salita.",
+			"picture": "house",
+			"tiles": [
+				"Malaki",
+				"ang",
+				"bahay."
+			],
+			"answer": "Malaki|ang|bahay.",
+			"recovery": false
+		},
+		{
+			"id": "fl3-05",
+			"sub_skill": "fluency",
+			"level": 3.0,
+			"competency": "RL1BPK-I-3a",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"variant": "sentence",
+			"prompt": "Ayusin ang mga salita.",
+			"tts_text": "Lumalangoy ang isda. Ayusin ang mga salita.",
+			"picture": "fish",
+			"tiles": [
+				"Lumalangoy",
+				"ang",
+				"isda."
+			],
+			"answer": "Lumalangoy|ang|isda.",
+			"recovery": false
+		},
+		{
+			"id": "fl3-06",
+			"sub_skill": "fluency",
+			"level": 3.0,
+			"competency": "RL1PWS-I-5",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Ano ang kulang?",
+			"tts_text": "Ang pusa ay ano? Piliin ang tamang salita.",
+			"picture": "cat",
+			"sentence": "Ang pusa ay ___.",
+			"choices": [
+				{
+					"id": "ngumiyaw",
+					"label": "ngumiyaw"
+				},
+				{
+					"id": "tumahol",
+					"label": "tumahol"
+				},
+				{
+					"id": "tumilaok",
+					"label": "tumilaok"
+				}
+			],
+			"answer": "ngumiyaw",
+			"recovery": false
+		},
+		{
+			"id": "fl3-07",
+			"sub_skill": "fluency",
+			"level": 3.0,
+			"competency": "RL1PWS-I-5",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Ano ang kulang?",
+			"tts_text": "Ang manok ay ano? Piliin ang tamang salita.",
+			"picture": "hen",
+			"sentence": "Ang manok ay ___.",
+			"choices": [
+				{
+					"id": "tumahol",
+					"label": "tumahol"
+				},
+				{
+					"id": "tumilaok",
+					"label": "tumilaok"
+				},
+				{
+					"id": "ngumiyaw",
+					"label": "ngumiyaw"
+				}
+			],
+			"answer": "tumilaok",
+			"recovery": false
+		},
+		{
+			"id": "fl3-08",
+			"sub_skill": "fluency",
+			"level": 3.0,
+			"competency": "RL1PWS-I-5",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Ano ang kulang?",
+			"tts_text": "Ang aso ay ano? Piliin ang tamang salita.",
+			"picture": "dog",
+			"sentence": "Ang aso ay ___.",
+			"choices": [
+				{
+					"id": "tumilaok",
+					"label": "tumilaok"
+				},
+				{
+					"id": "ngumiyaw",
+					"label": "ngumiyaw"
+				},
+				{
+					"id": "tumahol",
+					"label": "tumahol"
+				}
+			],
+			"answer": "tumahol",
+			"recovery": false
+		},
+		{
+			"id": "fl3-r1",
+			"sub_skill": "fluency",
+			"level": 3.0,
+			"competency": "RL1BPK-I-3a",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"variant": "sentence",
+			"prompt": "Ayusin ang mga salita.",
+			"tts_text": "Isda ito. Ayusin ang mga salita.",
+			"picture": "fish",
+			"tiles": [
+				"Isda",
+				"ito."
+			],
+			"answer": "Isda|ito.",
+			"recovery": true
+		},
+		{
+			"id": "fl3-r2",
+			"sub_skill": "fluency",
+			"level": 3.0,
+			"competency": "RL1BPK-I-3a",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"variant": "sentence",
+			"prompt": "Ayusin ang mga salita.",
+			"tts_text": "Bahay ito. Ayusin ang mga salita.",
+			"picture": "house",
+			"tiles": [
+				"Bahay",
+				"ito."
+			],
+			"answer": "Bahay|ito.",
+			"recovery": true
+		},
+		{
+			"id": "fl3-r3",
+			"sub_skill": "fluency",
+			"level": 3.0,
+			"competency": "RL1BPK-I-3a",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"variant": "sentence",
+			"prompt": "Ayusin ang mga salita.",
+			"tts_text": "Aso ito. Ayusin ang mga salita.",
+			"picture": "dog",
+			"tiles": [
+				"Aso",
+				"ito."
+			],
+			"answer": "Aso|ito.",
+			"recovery": true
+		},
+		{
+			"id": "lc3-01",
+			"sub_skill": "literal_comprehension",
+			"level": 3.0,
+			"competency": "RL1CAT-I-2a",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"passage": "p3-aso",
+			"prompt": "Sino ang may aso?",
+			"tts_text": "Sino ang may aso?",
+			"choices": [
+				{
+					"id": "lito",
+					"label": "Si Lito"
+				},
+				{
+					"id": "bantay",
+					"label": "Si Bantay"
+				},
+				{
+					"id": "ana",
+					"label": "Si Ana"
+				}
+			],
+			"answer": "lito",
+			"recovery": false,
+			"hint": "Pakinggan ang simula ng kuwento. Kanino ang aso?",
+			"explain": "Sabi sa kuwento: Si Lito ay may aso. Si Bantay ang aso."
+		},
+		{
+			"id": "lc3-02",
+			"sub_skill": "literal_comprehension",
+			"level": 3.0,
+			"competency": "RL1CAT-I-2a",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"passage": "p3-aso",
+			"prompt": "Ano ang nawala?",
+			"tts_text": "Ano ang nawala?",
+			"choices": [
+				{
+					"id": "bola",
+					"label": "bola",
+					"picture": "ball"
+				},
+				{
+					"id": "sumbrero",
+					"label": "sumbrero",
+					"picture": "hat"
+				},
+				{
+					"id": "libro",
+					"label": "libro",
+					"picture": "book"
+				}
+			],
+			"answer": "bola",
+			"recovery": false,
+			"hint": "Ano ang hinanap ni Bantay para kay Lito?",
+			"explain": "Sabi sa kuwento: Isang araw, nawala ang bola ni Lito."
+		},
+		{
+			"id": "lc3-03",
+			"sub_skill": "literal_comprehension",
+			"level": 3.0,
+			"competency": "RL1CAT-I-2a",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"passage": "p3-aso",
+			"prompt": "Saan nakita ang bola?",
+			"tts_text": "Saan nakita ang bola?",
+			"choices": [
+				{
+					"id": "puno",
+					"label": "sa ilalim ng puno",
+					"picture": "tree"
+				},
+				{
+					"id": "bahay",
+					"label": "sa loob ng bahay",
+					"picture": "house"
+				},
+				{
+					"id": "ilog",
+					"label": "sa tabi ng ilog",
+					"picture": "waves"
+				}
+			],
+			"answer": "puno",
+			"recovery": false,
+			"hint": "Saan nakita ni Bantay ang bola? Isipin ang malaking halaman.",
+			"explain": "Sabi sa kuwento: Nakita ni Bantay ang bola sa ilalim ng puno."
+		},
+		{
+			"id": "lc3-04",
+			"sub_skill": "literal_comprehension",
+			"level": 3.0,
+			"competency": "RL1CAT-I-2b",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"variant": "sequence",
+			"passage": "p3-aso",
+			"prompt": "Ayusin ang kuwento.",
+			"tts_text": "Ano ang unang nangyari? Ayusin ang kuwento.",
+			"tiles": [
+				{
+					"id": "a",
+					"text": "Nawala ang bola ni Lito.",
+					"picture": "ball"
+				},
+				{
+					"id": "b",
+					"text": "Hinanap ni Bantay ang bola.",
+					"picture": "dog"
+				},
+				{
+					"id": "c",
+					"text": "Masaya si Lito!",
+					"picture": "star"
+				}
+			],
+			"answer": "a|b|c",
+			"recovery": false
+		},
+		{
+			"id": "lc3-05",
+			"sub_skill": "literal_comprehension",
+			"level": 3.0,
+			"competency": "RL1CAT-I-2a",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"passage": "p3-ilog",
+			"prompt": "Sino ang kasama ni Ana?",
+			"tts_text": "Sino ang kasama ni Ana?",
+			"choices": [
+				{
+					"id": "nanay",
+					"label": "Si Nanay"
+				},
+				{
+					"id": "tatay",
+					"label": "Si Tatay"
+				},
+				{
+					"id": "lito",
+					"label": "Si Lito"
+				}
+			],
+			"answer": "tatay",
+			"recovery": false,
+			"hint": "Sino ang sumakay sa bangka kasama ni Ana?",
+			"explain": "Sabi sa kuwento: Sumakay si Ana at si Tatay sa bangka."
+		},
+		{
+			"id": "lc3-06",
+			"sub_skill": "literal_comprehension",
+			"level": 3.0,
+			"competency": "RL1CAT-I-2a",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"passage": "p3-ilog",
+			"prompt": "Saan sila pumunta?",
+			"tts_text": "Saan sila pumunta?",
+			"choices": [
+				{
+					"id": "ilog",
+					"label": "sa ilog",
+					"picture": "waves"
+				},
+				{
+					"id": "bundok",
+					"label": "sa bundok",
+					"picture": "mountain"
+				},
+				{
+					"id": "bahay",
+					"label": "sa bahay",
+					"picture": "house"
+				}
+			],
+			"answer": "ilog",
+			"recovery": false,
+			"hint": "Nakasakay sila sa bangka. Saan dumadaan ang bangka?",
+			"explain": "Sabi sa kuwento: Pumunta sila sa ilog Agusan."
+		},
+		{
+			"id": "lc3-07",
+			"sub_skill": "literal_comprehension",
+			"level": 3.0,
+			"competency": "RL1CAT-I-2a",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"passage": "p3-ilog",
+			"prompt": "Ilang isda ang nahuli nila?",
+			"tts_text": "Ilang isda ang nahuli nila?",
+			"choices": [
+				{
+					"id": "1",
+					"label": "isa",
+					"picture": "fish",
+					"repeat": 1.0
+				},
+				{
+					"id": "3",
+					"label": "tatlo",
+					"picture": "fish",
+					"repeat": 3.0
+				},
+				{
+					"id": "2",
+					"label": "dalawa",
+					"picture": "fish",
+					"repeat": 2.0
+				}
+			],
+			"answer": "3",
+			"recovery": false,
+			"hint": "Ilan ang isda sa lambat ni Tatay? Bilangin mo.",
+			"explain": "Sabi sa kuwento: Nakahuli sila ng tatlong isda."
+		},
+		{
+			"id": "lc3-08",
+			"sub_skill": "literal_comprehension",
+			"level": 3.0,
+			"competency": "RL1CAT-I-2a",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"passage": "p3-ilog",
+			"prompt": "Kailan sila umuwi?",
+			"tts_text": "Kailan sila umuwi?",
+			"choices": [
+				{
+					"id": "gabi",
+					"label": "bago gumabi",
+					"picture": "sun"
+				},
+				{
+					"id": "hatinggabi",
+					"label": "sa hatinggabi",
+					"picture": "night"
+				},
+				{
+					"id": "bukas",
+					"label": "bukas ng umaga",
+					"picture": "star"
+				}
+			],
+			"answer": "gabi",
+			"recovery": false,
+			"hint": "Umuwi ba sila bago dumilim o pagkatapos?",
+			"explain": "Sabi sa kuwento: Umuwi sila bago gumabi."
+		},
+		{
+			"id": "lc3-09",
+			"sub_skill": "literal_comprehension",
+			"level": 3.0,
+			"competency": "RL1CAT-I-2a",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"passage": "p3-manok",
+			"prompt": "Ano ang kulay ng manok?",
+			"tts_text": "Ano ang kulay ng manok?",
+			"choices": [
+				{
+					"id": "pula",
+					"label": "pula"
+				},
+				{
+					"id": "puti",
+					"label": "puti"
+				},
+				{
+					"id": "itim",
+					"label": "itim"
+				}
+			],
+			"answer": "pula",
+			"recovery": false,
+			"hint": "Ang kulay ng manok ay parang kulay ng kamatis.",
+			"explain": "Sabi sa kuwento: May pulang manok si Lola."
+		},
+		{
+			"id": "lc3-10",
+			"sub_skill": "literal_comprehension",
+			"level": 3.0,
+			"competency": "RL1CAT-I-2a",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"passage": "p3-manok",
+			"prompt": "Ano ang kinakain ng manok?",
+			"tts_text": "Ano ang kinakain ng manok?",
+			"choices": [
+				{
+					"id": "isda",
+					"label": "isda",
+					"picture": "fish"
+				},
+				{
+					"id": "mais",
+					"label": "mais"
+				},
+				{
+					"id": "saging",
+					"label": "saging",
+					"picture": "banana"
+				}
+			],
+			"answer": "mais",
+			"recovery": false,
+			"hint": "Kumakain ang manok ng maliliit na dilaw na butil.",
+			"explain": "Sabi sa kuwento: Kumakain ang manok ng mais."
+		},
+		{
+			"id": "lc3-11",
+			"sub_skill": "literal_comprehension",
+			"level": 3.0,
+			"competency": "RL1CAT-I-2a",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"passage": "p3-manok",
+			"prompt": "Kanino ibinigay ni Ben ang itlog?",
+			"tts_text": "Kanino ibinigay ni Ben ang itlog?",
+			"choices": [
+				{
+					"id": "nanay",
+					"label": "kay Nanay"
+				},
+				{
+					"id": "ana",
+					"label": "kay Ana"
+				},
+				{
+					"id": "lola",
+					"label": "kay Lola"
+				}
+			],
+			"answer": "lola",
+			"recovery": false,
+			"hint": "Sino ang may-ari ng manok?",
+			"explain": "Sabi sa kuwento: Ibinigay ni Ben ang itlog kay Lola."
+		},
+		{
+			"id": "lc3-12",
+			"sub_skill": "literal_comprehension",
+			"level": 3.0,
+			"competency": "RL1CAT-I-2b",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"variant": "sequence",
+			"passage": "p3-manok",
+			"prompt": "Ayusin ang kuwento.",
+			"tts_text": "Ano ang unang nangyari? Ayusin ang kuwento.",
+			"tiles": [
+				{
+					"id": "a",
+					"text": "Tumilaok ang manok.",
+					"picture": "hen"
+				},
+				{
+					"id": "b",
+					"text": "Nangitlog ang manok.",
+					"picture": "hen"
+				},
+				{
+					"id": "c",
+					"text": "Ibinigay ni Ben ang itlog kay Lola.",
+					"picture": "hand"
+				}
+			],
+			"answer": "a|b|c",
+			"recovery": false
+		},
+		{
+			"id": "lc3-r1",
+			"sub_skill": "literal_comprehension",
+			"level": 3.0,
+			"competency": "RL1CAT-I-2a",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"passage": "p3-aso",
+			"prompt": "Sino ang may aso?",
+			"tts_text": "Si Lito ay may aso. Sino ang may aso?",
+			"choices": [
+				{
+					"id": "lito",
+					"label": "Si Lito"
+				},
+				{
+					"id": "ana",
+					"label": "Si Ana"
+				}
+			],
+			"answer": "lito",
+			"recovery": true,
+			"hint": "Pakinggan muli: Si Lito ay may aso.",
+			"explain": "Sabi sa kuwento: Si Lito ay may aso."
+		},
+		{
+			"id": "lc3-r2",
+			"sub_skill": "literal_comprehension",
+			"level": 3.0,
+			"competency": "RL1CAT-I-2a",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"passage": "p3-ilog",
+			"prompt": "Ano ang sinakyan nila?",
+			"tts_text": "Sumakay sila sa bangka. Ano ang sinakyan nila?",
+			"choices": [
+				{
+					"id": "bangka",
+					"label": "bangka",
+					"picture": "boat"
+				},
+				{
+					"id": "bus",
+					"label": "bus",
+					"picture": "bus"
+				}
+			],
+			"answer": "bangka",
+			"recovery": true,
+			"hint": "Sumakay sila sa tubig. Ano ang sasakyang pantubig?",
+			"explain": "Sabi sa kuwento: Sumakay sila sa bangka."
+		},
+		{
+			"id": "lc3-r3",
+			"sub_skill": "literal_comprehension",
+			"level": 3.0,
+			"competency": "RL1CAT-I-2a",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"passage": "p3-aso",
+			"prompt": "Ano ang hinanap ni Bantay?",
+			"tts_text": "Hinanap ni Bantay ang bola. Ano ang hinanap ni Bantay?",
+			"choices": [
+				{
+					"id": "isda",
+					"label": "isda",
+					"picture": "fish"
+				},
+				{
+					"id": "bola",
+					"label": "bola",
+					"picture": "ball"
+				}
+			],
+			"answer": "bola",
+			"recovery": true,
+			"hint": "Naglalaro sina Lito at Bantay ng bilog na laruan.",
+			"explain": "Sabi sa kuwento: Hinanap ni Bantay ang bola."
+		}
+	]
 }

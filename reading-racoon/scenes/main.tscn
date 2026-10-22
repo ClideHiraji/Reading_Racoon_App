@@ -138,14 +138,23 @@ radius = 30
 icon_name = "book"
 icon_px = 56
 
-[node name="SwitchButton" type="Button" parent="Margin/VBox"]
+[node name="SwitchButton" type="Button" parent="."]
 unique_name_in_owner = true
 visible = false
-custom_minimum_size = Vector2(0, 64)
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.996, 0.957, 0.95)
-theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
-theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -276.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 116.0
+grow_horizontal = 0
 theme_override_font_sizes/font_size = 24
 text = "Switch student"
-flat = true
+script = ExtResource("2_chunky")
+card_style = true
+lift = 4
+radius = 48
+tap_sound = false

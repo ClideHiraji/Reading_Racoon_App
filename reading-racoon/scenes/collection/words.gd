@@ -2,8 +2,10 @@ extends Control
 ## My Word Book (D-017, wireframe "My Word Book"): every word the child learns in
 ## Adventure, games and books lands here with its picture. Tap a word to hear it;
 ## "Practice my words" plays Memory Match with the child's own words.
+## Picture-and-word cards with a small speaker, language chips with color dots
+## like the Library (D-022).
 
-const FROM := {"lesson": "from Adventure", "book": "from a book", "game": "from a game"}
+const LANG_COLORS := {"en": Palette.BAY_DEEP, "fil": Palette.ORANGE, "bis": Palette.TEAL}
 
 var _lang := ""
 var _column: VBoxContainer
@@ -16,13 +18,8 @@ func _ready() -> void:
 	if not GameState.guard_hub():
 		return
 	_column = Kit.page(self)
-	var head := Kit.header(_column, "My Word Book", GameState.go_home)
-	var n := GameState.collection.words.size()
-	var count := Kit.label("%d %s" % [n, "word" if n == 1 else "words"], 26, Palette.INK, true)
-	count.autowrap_mode = TextServer.AUTOWRAP_OFF
-	head.row.add_child(count)
-	head.row.move_child(count, 2)
-	_practice = Kit.button("Practice my words", Palette.ORANGE, "cat", 96)
+	Kit.header(_column, "My Word Book", GameState.go_home)
+	_practice = Kit.button("Practice my words", Palette.ORANGE, "cat", 120)
 	_practice.pressed.connect(_play)
 	var scroll := ScrollContainer.new()
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -42,9 +39,9 @@ func _ready() -> void:
 func _build() -> void:
 	if _chips:
 		_chips.queue_free()
-	var options := [["", "All"]]
+	var options := [["", "All", "book"]]
 	for l in MediaLibrary.LANGUAGES:
-		options.append([l, MediaLibrary.LANGUAGES[l]])
+		options.append([l, MediaLibrary.LANGUAGES[l], "dot", LANG_COLORS.get(l, Palette.BAY_DEEP)])
 	_chips = Kit.chips(options, _lang, _pick)
 	_column.add_child(_chips)
 	_column.move_child(_chips, 1)
@@ -70,25 +67,31 @@ func _pick(lang: String) -> void:
 func _card(word: String, info: Dictionary) -> Control:
 	var b := ChunkyButton.new()
 	b.card_style = true
-	b.custom_minimum_size = Vector2(320, 250)
+	b.radius = 28
+	b.custom_minimum_size = Vector2(320, 196)
 	b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	b.tooltip_text = word
+	b.tooltip_text = "Hear " + word
 	b.pressed.connect(func(): Speech.say(word, str(info.get("lang", "en"))))
-	var v := VBoxContainer.new()
-	v.alignment = BoxContainer.ALIGNMENT_CENTER
-	v.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	v.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	v.add_theme_constant_override("separation", 6)
-	b.add_child(v)
+	var h := HBoxContainer.new()
+	h.alignment = BoxContainer.ALIGNMENT_CENTER
+	h.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	h.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	h.offset_left = 12
+	h.offset_right = -12
+	h.add_theme_constant_override("separation", 16)
+	b.add_child(h)
 	var pic := str(info.get("picture", ""))
 	if Icons.exists(pic):
-		var p := Kit.picture(pic, 110)
-		p.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-		v.add_child(p)
-	v.add_child(Kit.word_label(word, 42))
-	var from := Kit.label(FROM.get(str(info.get("from", "")), ""), 20, Palette.INK_SOFT)
-	from.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	v.add_child(from)
+		var p := Kit.picture(pic, 104)
+		p.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		h.add_child(p)
+	var w := Kit.word_label(word, 56 if word.length() <= 4 else (46 if word.length() <= 6 else 36))
+	w.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	h.add_child(w)
+	# A small speaker in the corner says "tap to hear it" (D-022).
+	var speaker := Icons.rect("speaker", 34, Palette.BAY_DEEP)
+	b.add_child(speaker)
+	b.resized.connect(func(): speaker.position = Vector2(b.size.x - 50, 16))
 	return b
 
 

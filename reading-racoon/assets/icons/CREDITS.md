@@ -15,3 +15,6 @@ files renamed, and the four "badges" icons cropped.
 | fox | caro-asercion/fox | Caro Asercion |
 | heart_plus | zeromancer/heart-plus | Zeromancer |
 | star, heart, bolt, mountain | badges/star, heart, bolt, mountain | game-icons.net "badges" set |
+| play, pause, dot, arrow_left, arrow_right, glasses, scarf | drawn for this project: rounded play and pause signs, a plain dot, two arrows, glasses, a scarf | Reading Racoon team |
+
+`Animated - Star.svg` (the earned-star animation) was provided by the team; `assets/anim/star/` holds its frames, rendered by Godot from the SVG (D-022). Confirm its source and license before release.

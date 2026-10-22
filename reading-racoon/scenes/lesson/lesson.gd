@@ -1,9 +1,13 @@
 extends Control
 ## One lesson (D-007 layout, D-009 storybook look): close, progress bar and hearts
 ## on top, the prompt on a paper card, the task in the middle, and the raccoon
-## standing on the world's paper-cut landscape. A paper sheet slides up after
-## each answer. The rules live in LessonSession (scripts/core); this only shows them.
+## standing on the world's paper-cut landscape. The rules live in LessonSession
+## (scripts/core); this only shows them.
 ## FR-13 hearts and Racoon's Rescue, FR-14 hints, FR-20 read-aloud.
+## D-021: a wrong first try greys out that choice and Racoon gives the question's
+## hint (HintText); a wrong second try shows the answer and why on a paper sheet.
+## No CONTINUE taps: Racoon says a short line and the lesson moves on by itself.
+## Stopping halfway keeps nothing.
 
 ## One scene per task_type in content/levels*.json.
 const TASKS := {
@@ -13,6 +17,12 @@ const TASKS := {
 	"spin_words": preload("res://scenes/tasks/spin_words_task.tscn"),
 }
 const RESCUE_PAPER := Color("dcebf0")
+## How long each kind of feedback stays before the lesson moves on (seconds; it
+## also waits for Racoon to finish talking).
+const PAUSE_TEST := 0.7
+const PAUSE_RIGHT := 1.1
+const PAUSE_BIG := 2.0
+const PAUSE_SPEECH_CAP := 8.0
 
 ## A LessonSession, or an AssessmentSession for the pre/post-test (same interface).
 var session: RefCounted
@@ -23,6 +33,8 @@ var _outcome := {}
 var _shown_passage := ""
 var _overlay_primary: Callable
 var _overlay_secondary: Callable
+var _waiting := false     # feedback is showing; the lesson moves on by itself
+var _wait_id := 0
 
 @onready var raccoon: Raccoon = %Raccoon
 @onready var bubble: SpeechBubble = %Bubble
@@ -36,7 +48,7 @@ func _ready() -> void:
 	%CloseButton.pressed.connect(_on_close)
 	%SpeakButton.pressed.connect(_speak)
 	%StoryButton.pressed.connect(_peek_story)
-	%ContinueButton.pressed.connect(_on_continue)
+	%ContinueButton.hide()
 	%OverlayPrimary.pressed.connect(func(): _close_overlay(_overlay_primary))
 	%OverlaySecondary.pressed.connect(func(): _close_overlay(_overlay_secondary))
 	_update_hearts(HeartSystem.MAX_HEARTS)
@@ -44,14 +56,9 @@ func _ready() -> void:
 	if _testing:
 		# Reading Adventure (FR-02/FR-10): no hearts, no right/wrong, just do your best.
 		%Hearts.hide()
-		var pre: bool = session.kind == "pre"
-		_say(GameState.line("adventure_intro"), "happy")
-		_open_overlay("stories", Palette.BLUE, "Reading Adventure!" if pre else "Big Reading Day!",
-				"Show Racoon what you can do. No hearts today, just try your best!", "LET'S GO!",
-				_next)
-		Speech.say("Reading Adventure! Show Racoon what you can do. Just try your best!")
-		return
-	_say(GameState.line("intro"), "happy")
+		_say("Show Racoon what you can do. No hearts today, just try your best!", "happy")
+	else:
+		_say(GameState.line("intro"), "happy")
 	_next()
 
 
@@ -65,8 +72,10 @@ func _next() -> void:
 	if _task:
 		_task.queue_free()
 		_task = null
+	if not _testing and not session.in_rescue():
+		_update_hearts(session.hearts.hearts)
 	_update_progress()
-	%SpeakButton.visible = Speech.available(_item.get("language", "en"))
+	%SpeakButton.visible = Speech.available(_lang())
 	%StoryButton.visible = _item.has("passage")
 	var pid: String = _item.get("passage", "")
 	if pid != "" and pid != _shown_passage:
@@ -97,8 +106,7 @@ func _show_story(pid: String) -> void:
 	_task = page
 	%TaskHolder.add_child(page)
 	%StoryButton.visible = false
-	%Prompt.text = p.get("title", "Story")
-	Speech.say(p.get("text", ""), p.get("language", "en"))
+	%Prompt.text = p.get("title", "Story")   # the page reads itself aloud (D-022)
 
 
 func _peek_story() -> void:
@@ -108,51 +116,96 @@ func _peek_story() -> void:
 
 
 func _speak() -> void:
-	Speech.say(_item.get("tts_text", _item.get("prompt", "")), _item.get("language", "en"))
+	Speech.say(_item.get("tts_text", _item.get("prompt", "")), _lang())
+
+
+func _lang() -> String:
+	return _item.get("language", "en")
 
 
 func _on_answered(answer: String, ms: int) -> void:
 	var was_rescue: bool = session.in_rescue()
+	# Nothing is saved until the lesson ends (D-021): GameState.finish_lesson().
 	_outcome = session.submit(answer, ms)
-	GameState.record(session)   # saved after every answer (FR-11)
 	var right := str(_outcome.answer)
 	if _outcome.get("neutral", false):
-		# Tests never reveal right or wrong; the child just moves on.
+		# Tests never reveal right or wrong: a word from Racoon, then the next one.
 		_update_progress()
 		Sfx.play("pop")
 		_say(GameState.line("adventure_next"), "happy")
-		_show_neutral_sheet()
+		_advance_after(PAUSE_TEST)
+		return
+	if _outcome.next == "retry":
+		_try_again(answer)
 		return
 	_task.show_result(answer, right)
 	Sfx.play("correct" if _outcome.correct else "wrong")
 	_update_hearts(_outcome.hearts)
 	_update_progress()
 
-	var line := ""
+	if not _outcome.correct:
+		# Out of tries (or out of hearts): the answer and why, then on we go.
+		if _outcome.has("rescue_full"):
+			_end_rescue_look()
+		_show_answer(right)
+		return
+	var line := GameState.line("rescue_correct" if was_rescue else (
+			"correct" if _outcome.try == 1 else "correct_retry"))
 	var mood: String = _outcome.mood
-	if _outcome.correct:
-		line = GameState.line("rescue_correct" if was_rescue else "correct")
-	elif _outcome.hint:
-		line = GameState.line("hint_" + _outcome.skill)
-	else:
-		line = GameState.line("incorrect")
+	var pause := PAUSE_RIGHT
 	if _outcome.mastered_now and not _outcome.level_up:
 		line = "You won the %s crown!" % SkillCatalog.NAMES[_outcome.skill]
 		mood = "celebrate"
+		pause = PAUSE_BIG
 	if _outcome.level_up:
 		line = GameState.line("level_up")
 		Sfx.play("fanfare")
+		pause = PAUSE_BIG
 	if _outcome.has("rescue_full"):
 		_end_rescue_look()
 		line = GameState.line("rescue_full" if _outcome.rescue_full else "rescue_partial")
 		mood = "celebrate" if _outcome.rescue_full else "encourage"
+		pause = PAUSE_BIG
 	_say(line, mood)
-	var shown: String = _task.answer_text(right) if _task.has_method("answer_text") else _choice_label(right)
-	_show_sheet(_outcome.correct, shown)
+	Speech.say(line)
+	_advance_after(pause)
+
+
+## A wrong first try: no answer yet. The choice greys out, a heart goes, and
+## Racoon gives this question's hint so the child can work it out (D-021, FR-14).
+func _try_again(answer: String) -> void:
+	Sfx.play("wrong")
+	_update_hearts(_outcome.hearts)
+	var hint := HintText.hint(_item)
+	_say(hint, "thinking")
+	Speech.say(hint, _lang())
+	if _task.has_method("try_again"):
+		_task.try_again(answer)
+	else:
+		_start_task()
+
+
+## Moves on by itself after `seconds` and after Racoon stops talking (D-021).
+## It waits while a card (the stop dialog, a story) is open. Calling
+## _on_continue() first, as the tests do, cancels it.
+func _advance_after(seconds: float) -> void:
+	_waiting = true
+	_wait_id += 1
+	var id := _wait_id
+	await get_tree().create_timer(seconds).timeout
+	var cap := PAUSE_SPEECH_CAP
+	while is_inside_tree() and id == _wait_id and (%Overlay.visible or (Speech.speaking() and cap > 0.0)):
+		await get_tree().create_timer(0.15).timeout
+		cap -= 0.15
+	if is_inside_tree() and id == _wait_id and _waiting:
+		_on_continue()
 
 
 func _on_continue() -> void:
-	Sfx.play("pop")
+	if not _waiting:
+		return
+	_waiting = false
+	_wait_id += 1
 	match _outcome.get("next", "continue"):
 		"rescue_start":
 			_start_rescue_look()
@@ -191,40 +244,30 @@ func _update_rescue_label() -> void:
 			HeartSystem.RECOVERY_ITEMS]
 
 
-# --- Sheet, hearts, progress --------------------------------------------------------
+# --- Answer sheet, hearts, progress -----------------------------------------------------
 
-func _show_neutral_sheet() -> void:
-	_show_sheet(true, "")
-	var sb: StyleBoxFlat = sheet.get_theme_stylebox("panel").duplicate()
-	sb.bg_color = Palette.pale(Palette.BLUE, 0.7)
-	sheet.add_theme_stylebox_override("panel", sb)
-	var disc: StyleBoxFlat = %SheetDisc.get_theme_stylebox("panel").duplicate()
-	disc.bg_color = Palette.BLUE
-	%SheetDisc.add_theme_stylebox_override("panel", disc)
-	%SheetIcon.texture = Icons.tex("sparkles")
-	%SheetTitle.text = "Thank you!"
-	%SheetTitle.add_theme_color_override("font_color",
-			Palette.readable(Palette.deep(Palette.BLUE), sb.bg_color))
-	%ContinueButton.face_color = Palette.BLUE
-
-
-func _show_sheet(correct: bool, answer_text: String) -> void:
-	var color := Palette.RIGHT if correct else Palette.ALMOST
+## The paper sheet after a wrong second try: the answer, and why (HintText.explain),
+## read aloud. It has no button; the lesson moves on once Racoon has explained.
+func _show_answer(right: String) -> void:
+	var shown: String = _task.answer_text(right) if _task.has_method("answer_text") else _choice_label(right)
+	var why := HintText.explain(_item)
+	var color := Palette.ALMOST
 	var sb: StyleBoxFlat = sheet.get_theme_stylebox("panel").duplicate()
 	sb.bg_color = Palette.pale(color, 0.78)
 	sheet.add_theme_stylebox_override("panel", sb)
 	var disc: StyleBoxFlat = %SheetDisc.get_theme_stylebox("panel").duplicate()
 	disc.bg_color = color
 	%SheetDisc.add_theme_stylebox_override("panel", disc)
-	%SheetIcon.texture = Icons.tex("check" if correct else "bulb")
-	%SheetTitle.text = ["Great job!", "Awesome!", "You got it!"].pick_random() if correct \
-			else "Almost!"
+	%SheetIcon.texture = Icons.tex("bulb")
+	%SheetTitle.text = "The answer is: %s" % shown
 	%SheetTitle.add_theme_color_override("font_color",
 			Palette.readable(Palette.deep(color), sb.bg_color))
-	%SheetDetail.text = "" if correct else "The answer is: %s" % answer_text
-	%SheetDetail.visible = not correct
-	%ContinueButton.face_color = color
+	%SheetDetail.text = why
+	%SheetDetail.visible = true
+	_say(GameState.line("incorrect"), "encourage")
+	Speech.say(why, _lang())
 	sheet.show()
+	_advance_after(clampf(1.2 + why.split(" ").size() * 0.32, 2.5, 6.0))
 	await get_tree().process_frame
 	var target := size.y - sheet.size.y
 	sheet.position.y = size.y
@@ -262,14 +305,21 @@ func _say(text: String, mood: String) -> void:
 
 # --- Leaving -------------------------------------------------------------------------
 
+## Stopping halfway keeps nothing (D-021): the session's copy of the model and its
+## events are simply dropped, and the lesson or test starts over next time.
 func _on_close() -> void:
-	_open_overlay("raccoon", Palette.NIPA, "Stop the lesson?",
-			"Your answers are saved, but you won't get stars.", "KEEP PLAYING", func(): pass,
+	var what := "this Reading Adventure" if _testing else "this lesson"
+	_open_overlay("raccoon", Palette.NIPA, "Stop now?",
+			"If you stop, you will start %s again next time." % what, "KEEP PLAYING", func(): pass,
 			"STOP", _leave)
 
 
 func _leave() -> void:
 	Speech.stop()
+	_waiting = false
+	_wait_id += 1
+	if _testing:
+		GameState.lesson_mode = "lesson"
 	get_tree().change_scene_to_file("res://scenes/path/learning_path.tscn")
 
 

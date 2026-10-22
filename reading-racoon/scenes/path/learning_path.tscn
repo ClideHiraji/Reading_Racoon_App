@@ -31,15 +31,15 @@ corner_radius_bottom_right = 30
 corner_radius_bottom_left = 30
 
 [sub_resource type="StyleBoxFlat" id="Pill"]
-content_margin_left = 12.0
-content_margin_top = 6.0
-content_margin_right = 18.0
-content_margin_bottom = 6.0
+content_margin_left = 14.0
+content_margin_top = 12.0
+content_margin_right = 22.0
+content_margin_bottom = 12.0
 bg_color = Color(0.996, 0.992, 0.878, 1)
-corner_radius_top_left = 24
-corner_radius_top_right = 24
-corner_radius_bottom_right = 24
-corner_radius_bottom_left = 24
+corner_radius_top_left = 36
+corner_radius_top_right = 36
+corner_radius_bottom_right = 36
+corner_radius_bottom_left = 36
 
 [node name="LearningPath" type="Control"]
 layout_mode = 3
@@ -66,7 +66,7 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 96.0
+offset_top = 128.0
 grow_horizontal = 2
 grow_vertical = 2
 horizontal_scroll_mode = 0
@@ -81,7 +81,7 @@ theme_override_constants/separation = 0
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 100.0
+offset_bottom = 132.0
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("Bar")
 
@@ -91,7 +91,7 @@ theme_override_constants/separation = 14
 
 [node name="HomeButton" type="Button" parent="TopBar/Row"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(68, 68)
+custom_minimum_size = Vector2(96, 96)
 layout_mode = 2
 size_flags_vertical = 4
 tooltip_text = "Home"
@@ -100,14 +100,14 @@ expand_icon = true
 script = ExtResource("7_chunky")
 card_style = true
 lift = 5
-radius = 34
+radius = 48
 icon_name = "house"
-icon_px = 40
+icon_px = 50
 icon_tint = Color(0.29, 0.494, 0.651, 1)
 
 [node name="WorldDisc" type="PanelContainer" parent="TopBar/Row"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(60, 60)
+custom_minimum_size = Vector2(76, 76)
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_styles/panel = SubResource("Disc")
@@ -115,7 +115,7 @@ theme_override_styles/panel = SubResource("Disc")
 [node name="WorldIcon" type="TextureRect" parent="TopBar/Row/WorldDisc"]
 unique_name_in_owner = true
 texture_filter = 4
-custom_minimum_size = Vector2(40, 40)
+custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -133,14 +133,14 @@ alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.49, 0.408, 0.341, 1)
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 24
 text = "LEVEL 1"
 
 [node name="WorldName" type="Label" parent="TopBar/Row/Names"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"TitleLabel"
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 38
 text = "Agusan River"
 text_overrun_behavior = 3
 
@@ -156,7 +156,7 @@ theme_override_constants/separation = 8
 [node name="Icon" type="TextureRect" parent="TopBar/Row/CoinsPill/Row"]
 self_modulate = Color(0.8, 0.541, 0, 1)
 texture_filter = 4
-custom_minimum_size = Vector2(36, 36)
+custom_minimum_size = Vector2(42, 42)
 layout_mode = 2
 texture = ExtResource("4_coins")
 expand_mode = 1
@@ -166,10 +166,11 @@ stretch_mode = 5
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"TitleLabel"
-theme_override_font_sizes/font_size = 28
+theme_override_font_sizes/font_size = 30
 text = "0"
 
 [node name="XpPill" type="PanelContainer" parent="TopBar/Row"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_styles/panel = SubResource("Pill")

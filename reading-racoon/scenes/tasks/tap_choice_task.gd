@@ -31,7 +31,8 @@ func setup(item: Dictionary) -> void:
 		var card := ChunkyButton.new()
 		card.card_style = true
 		card.lift = 8
-		card.custom_minimum_size = Vector2(300 if wide else 200, 220 if has_pictures else 170)
+		card.radius = 28
+		card.custom_minimum_size = Vector2(310 if wide else 210, 250 if has_pictures else 180)
 		if long:
 			card.custom_minimum_size = Vector2(640, 110 if not has_pictures else 130)
 		card.pressed.connect(_on_card.bind(str(c.id)))
@@ -53,7 +54,7 @@ func _card_content(c: Dictionary, has_pictures: bool) -> Control:
 		row.alignment = BoxContainer.ALIGNMENT_CENTER
 		row.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		row.add_theme_constant_override("separation", -6)
-		var px := (110.0 if not c.has("label") else 96.0) / (1.0 if count == 1 else 1.7)
+		var px := (130.0 if not c.has("label") else 116.0) / (1.0 if count == 1 else 1.7)
 		for i in count:
 			var icon := Icons.rect(c.picture, px, Icons.picture_color(c.picture))
 			icon.name = "Icon%d" % i
@@ -104,6 +105,21 @@ func _on_card(id: String) -> void:
 		return
 	_locked = true
 	answered.emit(id, Time.get_ticks_msec() - _started)
+
+
+## Second try (D-021): the wrong card fades, gets an orange "almost" edge
+## (D-022) and can't be tapped again.
+func try_again(chosen: String) -> void:
+	if _cards.has(chosen):
+		var card: ChunkyButton = _cards[chosen]
+		card.disabled = true
+		var sb: StyleBoxFlat = card.get_theme_stylebox("disabled").duplicate()
+		sb.border_color = Palette.ALMOST
+		sb.set_border_width_all(5)
+		card.add_theme_stylebox_override("disabled", sb)
+		create_tween().tween_property(card, "modulate:a", 0.5, 0.2)
+	_started = Time.get_ticks_msec()
+	_locked = false
 
 
 ## Colors the tapped card and always shows the right one in green.

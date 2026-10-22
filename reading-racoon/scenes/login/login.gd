@@ -26,7 +26,7 @@ func _ready() -> void:
 	var del := ChunkyButton.new()
 	del.card_style = true
 	del.lift = 6
-	del.custom_minimum_size = Vector2(82, 82)
+	del.custom_minimum_size = Vector2(100, 100)
 	del.tooltip_text = "Delete"
 	var icon := BackspaceIcon.new()
 	icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -55,7 +55,7 @@ func _box() -> Control:
 	sb.shadow_offset = Vector2(0, 5)
 	sb.shadow_size = 1
 	p.add_theme_stylebox_override("panel", sb)
-	p.custom_minimum_size = Vector2(68, 88)
+	p.custom_minimum_size = Vector2(72, 96)
 	var l := Label.new()
 	l.add_theme_font_override("font", ANDIKA)
 	l.add_theme_font_size_override("font_size", 50)
@@ -72,10 +72,10 @@ func _key(ch: String) -> ChunkyButton:
 	b.text = ch
 	b.card_style = true
 	b.lift = 6
-	b.radius = 16
-	b.custom_minimum_size = Vector2(82, 82)
+	b.radius = 20
+	b.custom_minimum_size = Vector2(100, 100)   # six columns of 100 px keys (D-022)
 	b.add_theme_font_override("font", ANDIKA)
-	b.add_theme_font_size_override("font_size", 42)
+	b.add_theme_font_size_override("font_size", 48)
 	b.pressed.connect(_type.bind(ch))
 	return b
 
@@ -125,14 +125,11 @@ func _submit() -> void:
 	_refresh()
 
 
-## After signing in: the Reading Adventure the first time, then the home hub.
+## After signing in: the home hub (the pre-test waits on the Adventure map, D-021).
 func _continue() -> void:
 	if not GameState.guard_hub():
 		return
-	if GameState.needs_pretest():
-		GameState.start_assessment("pre")
-	else:
-		get_tree().change_scene_to_file(GameState.HUB_SCENE)
+	get_tree().change_scene_to_file(GameState.HUB_SCENE)
 
 
 ## Debug builds only: play without a server (classroom demos, tests).

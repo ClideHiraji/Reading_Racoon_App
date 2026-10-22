@@ -2,6 +2,7 @@ extends Control
 ## Rhyme Pop (D-017): balloons float up; pop the one that rhymes with the word
 ## on the card. A wrong balloon just wobbles and says its word, no penalty.
 ## Rounds come from Adventure's rhyme items in the child's unlocked worlds.
+## The word card holds its own round speaker; dots show the rounds (D-022).
 
 const ROUNDS := 4
 const COLORS := [Palette.BLUE, Palette.ORANGE, Palette.YELLOW, Palette.LEAF]
@@ -13,7 +14,8 @@ var _missed := false
 var _started := 0
 var _sky: Control
 var _target: HBoxContainer
-var _count: Label
+var _dots: HBoxContainer
+var _results: Array = []
 var _balloons: Array = []
 
 
@@ -22,21 +24,31 @@ func _ready() -> void:
 		return
 	_started = Time.get_ticks_msec()
 	var column := Kit.page(self, "river", 300)
-	var head := Kit.header(column, "Rhyme Pop", _back, true)
-	_count = Kit.label("", 28, Palette.INK, true)
-	_count.autowrap_mode = TextServer.AUTOWRAP_OFF
-	head.row.add_child(_count)
-	head.row.move_child(_count, 2)
-	var card := Kit.card(18)
+	_dots = Kit.game_header(column, "Rhyme Pop", _back).dots
+	var card := Kit.card(14)
 	card.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	card.custom_minimum_size.x = 500
+	column.add_child(card)
+	var card_row := HBoxContainer.new()
+	card_row.add_theme_constant_override("separation", 18)
+	card.add_child(card_row)
 	_target = HBoxContainer.new()
 	_target.add_theme_constant_override("separation", 18)
-	card.add_child(_target)
-	column.add_child(card)
-	var hear := Kit.button("Hear it again", Palette.BLUE, "speaker", 80)
-	hear.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	_target.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	card_row.add_child(_target)
+	var hear := ChunkyButton.new()
+	hear.face_color = Palette.BLUE
+	hear.icon_name = "speaker"
+	hear.icon_px = 50
+	hear.expand_icon = true
+	hear.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	hear.radius = 48
+	hear.lift = 5
+	hear.tooltip_text = "Hear it again"
+	hear.custom_minimum_size = Vector2(96, 96)
+	hear.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	hear.pressed.connect(_say_round)
-	column.add_child(hear)
+	card_row.add_child(hear)
 	_sky = Control.new()
 	_sky.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_sky.clip_contents = true
@@ -57,12 +69,12 @@ func _next() -> void:
 		_finish()
 		return
 	_missed = false
-	_count.text = "%d / %d" % [_round + 1, _rounds.size()]
+	Kit.show_rounds(_dots, _rounds.size(), _results)
 	var r: Dictionary = _rounds[_round]
 	for c in _target.get_children():
 		c.queue_free()
-	_target.add_child(Kit.picture(r.picture, 110))
-	var w := Kit.word_label(r.word, 60)
+	_target.add_child(Kit.picture(r.picture, 130, 12))   # card corner 26 - padding 14
+	var w := Kit.word_label(r.word, 72)
 	w.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	_target.add_child(w)
 	for b in _balloons:
@@ -103,13 +115,12 @@ func _tap(b: Balloon, o: Dictionary, right: bool) -> void:
 		_missed = true
 		Sfx.play("wrong")
 		Speech.say(o.word)
-		var x := b.position.x
-		var wobble := create_tween()
-		for d in [14.0, -14.0, 8.0, 0.0]:
-			wobble.tween_property(b, "position:x", x + d, 0.05)
+		Kit.shake(b, 14.0)
 		return
 	if not _missed:
 		_first_try += 1
+	_results.append("almost" if _missed else "right")
+	Kit.show_rounds(_dots, _rounds.size(), _results)
 	Sfx.play("pop")
 	var r: Dictionary = _rounds[_round]
 	Speech.say("%s and %s. They rhyme!" % [r.word, o.word])

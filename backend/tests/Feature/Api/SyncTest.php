@@ -36,12 +36,22 @@ class SyncTest extends TestCase
         return ['id' => $id ?? (string) Str::uuid(), 'type' => $type, 'payload' => $payload, 'device_time' => $deviceTime];
     }
 
-    /** One of each event type, with payloads as lesson_session.gd and game_state.gd build them. */
+    /**
+     * One of each event type, with payloads as lesson_session.gd, assessment_session.gd
+     * and game_state.gd build them.
+     */
     private function clientQueue(): array
     {
         return [
+            // Pre-test (assessment_session.gd)
+            $this->event('response', ['item_id' => 'ph1-02', 'skill' => 'phonics', 'level' => 1, 'answer' => 'm',
+                'correct' => true, 'response_ms' => 4100, 'assessment' => 'pre']),
+            $this->event('placement', ['start_level' => 2]),
+            $this->event('assessment', ['kind' => 'pre', 'scores' => ['phonics' => ['correct' => 4, 'total' => 5]],
+                'correct' => 4, 'total' => 5]),
+            // Lesson (lesson_session.gd)
             $this->event('response', ['item_id' => 'ph2-03', 'skill' => 'phonics', 'level' => 2, 'answer' => 'b',
-                'correct' => false, 'response_ms' => 2350, 'rescue' => false]),
+                'correct' => false, 'response_ms' => 2350, 'rescue' => false, 'num_choices' => 3, 'low_pl' => true]),
             $this->event('bkt_state', ['skill' => 'phonics', 'level' => 2, 'p' => 0.2132075471698113,
                 'posterior' => 0.0402930402930403, 'attempts' => 4, 'mastered' => false]),
             $this->event('hearts', ['hearts' => 0]),
@@ -50,9 +60,26 @@ class SyncTest extends TestCase
             $this->event('flag', ['type' => 'rescue_partial', 'skill' => 'phonics', 'level' => 2,
                 'correct' => 2, 'demoted_level' => 1]),
             $this->event('level_up', ['to_level' => 2], deviceTime: '2026-10-20T04:35:10Z'),
-            $this->event('lesson_end', ['level' => 1, 'node' => 0, 'correct' => 7, 'total' => 8, 'stars' => 2],
-                deviceTime: '2026-10-20T04:35:10Z'),
+            $this->event('lesson_end', ['level' => 1, 'node' => 0, 'correct' => 7, 'total' => 8, 'stars' => 2,
+                'second_try' => 1], deviceTime: '2026-10-20T04:35:10Z'),
+            // Rewards and the Closet (game_state.gd)
             $this->event('chest', ['level' => 1, 'coins' => 15], deviceTime: '2026-10-20T04:36:00Z'),
+            $this->event('item_earned', ['item' => 'cap', 'tier' => 'copper']),
+            $this->event('purchase', ['item' => 'party_hat', 'price' => 30, 'coins_left' => 12]),
+            $this->event('outfit', ['equipped' => ['hat' => 'party_hat']]),
+            $this->event('sticker', ['id' => 'boat', 'group' => 'adventure']),
+            $this->event('goal', ['date' => '2026-10-20', 'goal' => 'lesson', 'all_done' => false]),
+            // Free play (game_state.gd)
+            $this->event('practice', ['game' => 'rhyme_pop', 'correct' => 5, 'total' => 6, 'seconds' => 74]),
+            $this->event('word', ['word' => 'bahay', 'lang' => 'fil', 'from' => 'game']),
+            $this->event('book', ['id' => 'the-red-hen', 'first' => true, 'questions_right' => 2,
+                'questions_total' => 3, 'seconds' => 185]),
+            $this->event('media', ['id' => 'bahay-kubo-song', 'first' => false, 'check_right' => true,
+                'seconds' => 96]),
+            // Access and screen time (game_state.gd)
+            $this->event('access', ['status' => 'class_lock', 'time' => '2026-10-20T09:15:00']),
+            $this->event('usage', ['date' => '2026-10-20', 'minutes' => 12.5, 'free_minutes' => 4.0]),
+            $this->event('flag', ['type' => 'clock_jump', 'from' => 1792470000, 'to' => 1792383600]),
         ];
     }
 
@@ -101,6 +128,56 @@ class SyncTest extends TestCase
 
         // jsonb is queryable, e.g. for the teacher dashboard and the BKT replay.
         $this->assertSame(1, DB::table('sync_events')->where('payload->type', 'rescue_partial')->count());
+    }
+
+    public function test_every_event_type_the_game_queues_is_accepted(): void
+    {
+        // The client queue above holds one of every type, so a new SyncEventType case
+        // needs a sample event there too.
+        $this->assertEqualsCanonicalizing(
+            array_column(SyncEventType::cases(), 'value'),
+            array_values(array_unique(array_column($this->clientQueue(), 'type'))),
+        );
+    }
+
+    public function test_closet_and_free_play_events_are_acknowledged(): void
+    {
+        $earned = $this->event('item_earned', ['item' => 'salakot', 'tier' => 'silver']);
+        $bought = $this->event('purchase', ['item' => 'party_hat', 'price' => 30, 'coins_left' => 0]);
+        $read = $this->event('book', ['id' => 'the-red-hen', 'first' => true, 'questions_right' => 3,
+            'questions_total' => 3, 'seconds' => 210]);
+
+        $this->sync([$earned, $bought, $read])
+            ->assertOk()
+            ->assertJsonPath('acknowledged', [$earned['id'], $bought['id'], $read['id']])
+            ->assertJsonPath('rejected', []);
+
+        $this->assertSame(SyncEventType::ItemEarned, SyncEvent::where('uuid', $earned['id'])->sole()->type);
+        $this->assertSame(1, DB::table('sync_events')->where('payload->tier', 'silver')->count());
+    }
+
+    public function test_unknown_event_types_are_still_rejected(): void
+    {
+        $good = $this->event('item_earned', ['item' => 'cap', 'tier' => 'copper']);
+        $batch = [
+            $this->event('dance_party', []),
+            $this->event('Purchase', ['item' => 'party_hat']),  // types are case-sensitive
+            $this->event('item-earned', ['item' => 'cap']),
+            $this->event('', []),
+            $good,
+        ];
+
+        $response = $this->sync($batch)
+            ->assertOk()
+            ->assertJsonPath('acknowledged', [$good['id']]);
+
+        $rejected = $response->json('rejected');
+        $this->assertSame([0, 1, 2, 3], array_column($rejected, 'index'));
+        foreach ($rejected as $r) {
+            $this->assertSame('invalid', $r['reason']);
+            $this->assertArrayHasKey('type', $r['errors']);
+        }
+        $this->assertDatabaseCount('sync_events', 1);
     }
 
     public function test_device_time_is_stored_as_the_same_instant(): void

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racoon's Closet: Filipiniana dress (gold, tops). FR-07, D-026.
+     Drawn to fit Racoon at rest: the bottom layer links ../../parts/racoon_C_inkscape.svg (locked).
+     Draw on the "Item" layer. The file's name is the item's id; its name, tier, price and how it's
+     earned are in reading-racoon/content/closet.json. motion-demo/build_racoon.py reads this file
+     and never writes it. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-filipiniana"
+   sodipodi:docname="filipiniana.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>Filipiniana dress</title>
+  <sodipodi:namedview
+     id="namedview-filipiniana"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="2"
+     inkscape:cx="200"
+     inkscape:cy="200"
+     inkscape:current-layer="layer-item" />
+  <defs id="defs-filipiniana">
+    <linearGradient id="gr-filipiniana-1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" style="stop-color:#d290a1" /><stop offset="0.3" style="stop-color:#f3a6b8" /><stop offset="0.55" style="stop-color:#f4b1c1" /><stop offset="1" style="stop-color:#d290a1" /></linearGradient>
+    <linearGradient id="gr-filipiniana-2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" style="stop-color:#e0aab9" /><stop offset="0.3" style="stop-color:#ffc2d1" /><stop offset="0.55" style="stop-color:#ffc9d7" /><stop offset="1" style="stop-color:#e0aab9" /></linearGradient>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="../../parts/racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-item" inkscape:label="Item">
+   <g id="item-filipiniana" inkscape:label="filipiniana">
+     <title>Filipiniana dress: a rose terno with a lace panuelo and gold hem (gold)</title>
+     <path id="filipiniana-1" inkscape:label="Saya" d="M 112 234 L 289 234 L 289 374 Q 277.94 383 266.88 374 Q 255.81 383 244.75 374 Q 233.69 383 222.62 374 Q 211.56 383 200.5 374 Q 189.44 383 178.38 374 Q 167.31 383 156.25 374 Q 145.19 383 134.12 374 Q 123.06 383 112 374 Z" style="fill:url(#gr-filipiniana-1);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="filipiniana-2" inkscape:label="Saya stripe" d="M 124 300 L 124 372" style="fill:none;stroke:#e98aa2;stroke-width:3;stroke-linejoin:round;stroke-linecap:round;opacity:0.9" />
+     <path id="filipiniana-3" inkscape:label="Saya stripe" d="M 138 300 L 138 372" style="fill:none;stroke:#e98aa2;stroke-width:3;stroke-linejoin:round;stroke-linecap:round;opacity:0.9" />
+     <path id="filipiniana-4" inkscape:label="Saya stripe" d="M 152 300 L 152 372" style="fill:none;stroke:#e98aa2;stroke-width:3;stroke-linejoin:round;stroke-linecap:round;opacity:0.9" />
+     <path id="filipiniana-5" inkscape:label="Saya stripe" d="M 166 300 L 166 372" style="fill:none;stroke:#e98aa2;stroke-width:3;stroke-linejoin:round;stroke-linecap:round;opacity:0.9" />
+     <path id="filipiniana-6" inkscape:label="Saya stripe" d="M 180 300 L 180 372" style="fill:none;stroke:#e98aa2;stroke-width:3;stroke-linejoin:round;stroke-linecap:round;opacity:0.9" />
+     <path id="filipiniana-7" inkscape:label="Saya stripe" d="M 194 300 L 194 372" style="fill:none;stroke:#e98aa2;stroke-width:3;stroke-linejoin:round;stroke-linecap:round;opacity:0.9" />
+     <path id="filipiniana-8" inkscape:label="Saya stripe" d="M 208 300 L 208 372" style="fill:none;stroke:#e98aa2;stroke-width:3;stroke-linejoin:round;stroke-linecap:round;opacity:0.9" />
+     <path id="filipiniana-9" inkscape:label="Saya stripe" d="M 222 300 L 222 372" style="fill:none;stroke:#e98aa2;stroke-width:3;stroke-linejoin:round;stroke-linecap:round;opacity:0.9" />
+     <path id="filipiniana-10" inkscape:label="Saya stripe" d="M 236 300 L 236 372" style="fill:none;stroke:#e98aa2;stroke-width:3;stroke-linejoin:round;stroke-linecap:round;opacity:0.9" />
+     <path id="filipiniana-11" inkscape:label="Saya stripe" d="M 250 300 L 250 372" style="fill:none;stroke:#e98aa2;stroke-width:3;stroke-linejoin:round;stroke-linecap:round;opacity:0.9" />
+     <path id="filipiniana-12" inkscape:label="Saya stripe" d="M 264 300 L 264 372" style="fill:none;stroke:#e98aa2;stroke-width:3;stroke-linejoin:round;stroke-linecap:round;opacity:0.9" />
+     <path id="filipiniana-13" inkscape:label="Saya stripe" d="M 278 300 L 278 372" style="fill:none;stroke:#e98aa2;stroke-width:3;stroke-linejoin:round;stroke-linecap:round;opacity:0.9" />
+     <path id="filipiniana-14" inkscape:label="Gold hem" d="M 112 360 L 289 360 L 289 374 Q 277.94 383 266.88 374 Q 255.81 383 244.75 374 Q 233.69 383 222.62 374 Q 211.56 383 200.5 374 Q 189.44 383 178.38 374 Q 167.31 383 156.25 374 Q 145.19 383 134.12 374 Q 123.06 383 112 374 Z" style="fill:#f2c94c;stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="filipiniana-15" inkscape:label="Bodice" d="M 112 234 L 289 234 L 289 302 L 112 302 Z" style="fill:url(#gr-filipiniana-2)" />
+     <path id="filipiniana-16" inkscape:label="Panuelo" d="M 132 244 L 269 244 L 200.5 304 Z" style="fill:#fff6ea;stroke:#3b2d3a;stroke-width:3;stroke-linejoin:round;stroke-linecap:round;fill-opacity:0.92" />
+     <path id="filipiniana-17" inkscape:label="Panuelo lace" d="M 140 250 L 200.5 298 L 261 250" style="fill:none;stroke:#f2c94c;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="filipiniana-18" inkscape:label="Flower" d="M 169.79 257.94 Q 170 257.5 170.21 257.94 L 171.09 259.78 Q 171.29 260.22 171.77 260.28 L 173.8 260.55 Q 174.28 260.61 173.93 260.94 L 172.44 262.35 Q 172.09 262.68 172.18 263.15 L 172.56 265.17 Q 172.65 265.64 172.22 265.41 L 170.42 264.43 Q 170 264.2 169.58 264.43 L 167.78 265.41 Q 167.35 265.64 167.44 265.17 L 167.82 263.15 Q 167.91 262.68 167.56 262.35 L 166.07 260.94 Q 165.72 260.61 166.2 260.55 L 168.23 260.28 Q 168.71 260.22 168.91 259.78 Z" style="fill:#f2c94c" />
+     <path id="filipiniana-19" inkscape:label="Flower" d="M 230.79 257.94 Q 231 257.5 231.21 257.94 L 232.09 259.78 Q 232.29 260.22 232.77 260.28 L 234.8 260.55 Q 235.28 260.61 234.93 260.94 L 233.44 262.35 Q 233.09 262.68 233.18 263.15 L 233.56 265.17 Q 233.65 265.64 233.22 265.41 L 231.42 264.43 Q 231 264.2 230.58 264.43 L 228.78 265.41 Q 228.35 265.64 228.44 265.17 L 228.82 263.15 Q 228.91 262.68 228.56 262.35 L 227.07 260.94 Q 226.72 260.61 227.2 260.55 L 229.23 260.28 Q 229.71 260.22 229.91 259.78 Z" style="fill:#f2c94c" />
+     <path id="filipiniana-20" inkscape:label="Flower" d="M 200.29 273.94 Q 200.5 273.5 200.71 273.94 L 201.59 275.78 Q 201.79 276.22 202.27 276.28 L 204.3 276.55 Q 204.78 276.61 204.43 276.94 L 202.94 278.35 Q 202.59 278.68 202.68 279.15 L 203.06 281.17 Q 203.15 281.64 202.72 281.41 L 200.92 280.43 Q 200.5 280.2 200.08 280.43 L 198.28 281.41 Q 197.85 281.64 197.94 281.17 L 198.32 279.15 Q 198.41 278.68 198.06 278.35 L 196.57 276.94 Q 196.22 276.61 196.7 276.55 L 198.73 276.28 Q 199.21 276.22 199.41 275.78 Z" style="fill:#f2c94c" />
+     <circle id="filipiniana-21" inkscape:label="Brooch" cx="200.5" cy="302" r="5" style="fill:#f2c94c;stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="filipiniana-22" inkscape:label="Brooch gem" cx="200.5" cy="302" r="2.4" style="fill:#ff6f86" />
+     <path id="filipiniana-23" inkscape:label="Collar" d="M 170 251 C 184 270 217 270 231 251" style="fill:none;stroke:#3b2d3a;stroke-width:9;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="filipiniana-24" inkscape:label="Collar" d="M 170 251 C 184 270 217 270 231 251" style="fill:none;stroke:#fff6ea;stroke-width:5;stroke-linejoin:round;stroke-linecap:round" />
+   </g>
+  </g>
+</svg>

@@ -48,6 +48,17 @@ func _answer(letter: String) -> void:
 	answered.emit(letter, Time.get_ticks_msec() - _started)
 
 
+## Second try (D-021): the gap empties and the letter tried fades out.
+func try_again(chosen: String) -> void:
+	_slot.clear()
+	if _tiles.has(chosen):
+		var tile: ChunkyButton = _tiles[chosen]
+		tile.disabled = true
+		create_tween().tween_property(tile, "modulate:a", 0.35, 0.2)
+	_started = Time.get_ticks_msec()
+	_locked = false
+
+
 func show_result(chosen: String, answer: String) -> void:
 	_slot.show_letter(answer)
 	_slot.set_color(Palette.RIGHT)   # always show the right word in green
@@ -65,7 +76,7 @@ func show_result(chosen: String, answer: String) -> void:
 ## A printed letter of the word, on its own paper square.
 func _letter_box(ch: String) -> Control:
 	var p := PanelContainer.new()
-	var sb := StyleBoxFlat.new()
+	var sb := PaperBox.new()
 	sb.bg_color = Palette.CARD
 	sb.set_corner_radius_all(20)
 	sb.shadow_color = Color(Palette.SHADOW, 0.16)

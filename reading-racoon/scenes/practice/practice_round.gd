@@ -2,7 +2,7 @@ extends Control
 ## Spin the Words, Syllable Train and Story Shuffle (D-017): five rounds with the
 ## same task screens as the lessons, but just for fun. No hearts, no BKT; a
 ## right answer glows green, an "almost" shows the answer, and the next round
-## comes by itself.
+## comes by itself. Round dots in the header (D-022).
 
 const ROUNDS := 5
 const TASKS := {
@@ -18,9 +18,10 @@ var _i := -1
 var _right := 0
 var _started := 0
 var _shown_passage := ""
-var _holder: VBoxContainer
+var _holder: FitBox
 var _prompt: Label
-var _count: Label
+var _dots: HBoxContainer
+var _results: Array = []
 var _raccoon: Raccoon
 var _bubble: SpeechBubble
 var _task: Node
@@ -32,11 +33,26 @@ func _ready() -> void:
 	_started = Time.get_ticks_msec()
 	_game = PracticePool.game(GameState.practice_game)
 	var column := Kit.page(self)
-	var head := Kit.header(column, str(_game.get("name", "Practice")), _back, true)
-	_count = Kit.label("", 28, Palette.INK, true)
-	_count.autowrap_mode = TextServer.AUTOWRAP_OFF
-	head.row.add_child(_count)
-	head.row.move_child(_count, 2)
+	_dots = Kit.game_header(column, str(_game.get("name", "Practice")), _back).dots
+	# On a laptop Racoon stands in a column beside the prompt and the task, as in
+	# a lesson (D-023).
+	var wide := Kit.landscape()
+	var main: Control = column
+	var side: Control = column
+	if wide:
+		var body := HBoxContainer.new()
+		body.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		body.add_theme_constant_override("separation", 24)
+		column.add_child(body)
+		side = VBoxContainer.new()
+		side.custom_minimum_size = Vector2(280, 0)
+		side.alignment = BoxContainer.ALIGNMENT_END
+		side.add_theme_constant_override("separation", 30)
+		body.add_child(side)
+		main = VBoxContainer.new()
+		main.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		main.add_theme_constant_override("separation", 18)
+		body.add_child(main)
 	var prompt_card := Kit.card(16)
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 14)
@@ -47,29 +63,37 @@ func _ready() -> void:
 	speak.icon_px = 40
 	speak.expand_icon = true
 	speak.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	speak.radius = 40
+	speak.radius = 48
 	speak.lift = 5
-	speak.custom_minimum_size = Vector2(80, 80)
+	speak.custom_minimum_size = Vector2(96, 96)
 	speak.pressed.connect(_speak)
 	row.add_child(speak)
 	_prompt = Kit.label("", 30, Palette.INK, true)
 	_prompt.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_prompt.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	row.add_child(_prompt)
-	column.add_child(prompt_card)
-	_holder = VBoxContainer.new()
+	main.add_child(prompt_card)
+	_holder = FitBox.new()   # a big task shrinks to fit instead of falling off (D-023)
 	_holder.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	column.add_child(_holder)
-	var talk := HBoxContainer.new()
-	talk.add_theme_constant_override("separation", 12)
+	main.add_child(_holder)
 	_raccoon = Raccoon.new()
-	_raccoon.custom_minimum_size = Vector2(120, 120)
-	talk.add_child(_raccoon)
 	_bubble = SpeechBubble.new()
 	_bubble.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	_bubble.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	talk.add_child(_bubble)
-	column.add_child(talk)
+	if wide:
+		_bubble.tail = "down"
+		_bubble.tail_x = 100.0
+		side.add_child(_bubble)
+		_raccoon.custom_minimum_size = Vector2(180, 180)
+		_raccoon.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+		side.add_child(_raccoon)
+	else:
+		var talk := HBoxContainer.new()
+		talk.add_theme_constant_override("separation", 12)
+		_raccoon.custom_minimum_size = Vector2(120, 120)
+		talk.add_child(_raccoon)
+		_bubble.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		talk.add_child(_bubble)
+		column.add_child(talk)
 	var rng := RandomNumberGenerator.new()
 	rng.randomize()
 	var pool := PracticePool.task_items(GameState.bank, GameState.model.highest_unlocked,
@@ -89,7 +113,7 @@ func _next() -> void:
 	if _i >= _items.size():
 		_finish()
 		return
-	_count.text = "%d / %d" % [_i + 1, _items.size()]
+	Kit.show_rounds(_dots, _items.size(), _results)
 	var item: Dictionary = _items[_i]
 	var pid := str(item.get("passage", ""))
 	if pid != "" and pid != _shown_passage:
@@ -100,8 +124,7 @@ func _next() -> void:
 		_task = page
 		_holder.add_child(page)
 		var p := GameState.bank.passage(pid)
-		_prompt.text = str(p.get("title", "Story"))
-		Speech.say(str(p.get("text", "")), str(p.get("language", "en")))
+		_prompt.text = str(p.get("title", "Story"))   # the page reads itself aloud (D-022)
 		return
 	_start()
 
@@ -115,6 +138,7 @@ func _start() -> void:
 	_task.setup(item)
 	_task.answered.connect(_on_answered)
 	_prompt.text = item.prompt
+	Speech.new_question()   # (D-032)
 	_speak()
 
 
@@ -129,6 +153,8 @@ func _on_answered(answer: String, _ms: int) -> void:
 	var right := str(item.answer)
 	var ok := answer == right
 	_task.show_result(answer, right)
+	_results.append("right" if ok else "almost")
+	Kit.show_rounds(_dots, _items.size(), _results)
 	if ok:
 		_right += 1
 		Sfx.play("correct")
@@ -136,7 +162,7 @@ func _on_answered(answer: String, _ms: int) -> void:
 		_say(GameState.line("correct"), "happy")
 	else:
 		Sfx.play("wrong")
-		_say("Almost! Here's the answer.", "encourage")
+		_say(GameState.talk("practice_almost"), "encourage")
 	await get_tree().create_timer(1.6 if ok else 2.4).timeout
 	if is_inside_tree():
 		_next()
@@ -151,7 +177,7 @@ func _finish() -> void:
 	_prompt.text = "All done!"
 	var seconds := (Time.get_ticks_msec() - _started) / 1000.0
 	var result := GameState.finish_practice(str(_game.get("id", "")), _right, _items.size(), seconds)
-	Kit.reward(self, "%d of %d right!" % [_right, _items.size()], result, _back)
+	Kit.reward(self, GameState.talk("reward_round", [_right, _items.size()]), result, _back)
 
 
 func _back() -> void:

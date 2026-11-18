@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racoon's Closet: Pilot goggles (violet, glasses). FR-07, D-026.
+     Drawn to fit Racoon at rest: the bottom layer links ../../parts/racoon_C_inkscape.svg (locked).
+     Draw on the "Item" layer. The file's name is the item's id; its name, tier, price and how it's
+     earned are in reading-racoon/content/closet.json. motion-demo/build_racoon.py reads this file
+     and never writes it. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-pilot-goggles"
+   sodipodi:docname="pilot_goggles.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>Pilot goggles</title>
+  <sodipodi:namedview
+     id="namedview-pilot-goggles"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="2"
+     inkscape:cx="200"
+     inkscape:cy="200"
+     inkscape:current-layer="layer-item" />
+  <defs id="defs-pilot-goggles">
+    <linearGradient id="gr-pilot-goggles-1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#a8693f" /><stop offset="1" style="stop-color:#7a4a2a" /></linearGradient>
+    <linearGradient id="gr-pilot-goggles-2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#f2cf6b" /><stop offset="1" style="stop-color:#b8801e" /></linearGradient>
+    <linearGradient id="gr-pilot-goggles-3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#f2cf6b" /><stop offset="1" style="stop-color:#b8801e" /></linearGradient>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="../../parts/racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-item" inkscape:label="Item">
+   <g id="item-pilot-goggles" inkscape:label="pilot_goggles">
+     <title>Pilot goggles: brass flying goggles on a leather strap (violet)</title>
+     <path id="pilot-goggles-1" inkscape:label="Strap" d="M 134 158 L 100 152 L 100 176 L 134 176 Z" style="fill:url(#gr-pilot-goggles-1);stroke:#3b2d3a;stroke-width:3.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pilot-goggles-2" inkscape:label="Strap" d="M 267 158 L 301 152 L 301 176 L 267 176 Z" style="fill:url(#gr-pilot-goggles-1);stroke:#3b2d3a;stroke-width:3.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pilot-goggles-3" inkscape:label="Bridge" d="M 180 160 Q 200.5 149 221 160 L 221 171 Q 200.5 161 180 171 Z" style="fill:url(#gr-pilot-goggles-1);stroke:#3b2d3a;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="pilot-goggles-4" inkscape:label="Lens" cx="158.3" cy="169.1" r="19" style="fill:#a9dcf2;stroke:#3b2d3a;stroke-width:2.8;stroke-linejoin:round;stroke-linecap:round;fill-opacity:0.45" />
+     <path id="pilot-goggles-5" inkscape:label="Rim" d="M 183.3 169.1 C 183.3 182.91 172.11 194.1 158.3 194.1 C 144.49 194.1 133.3 182.91 133.3 169.1 C 133.3 155.29 144.49 144.1 158.3 144.1 C 172.11 144.1 183.3 155.29 183.3 169.1 Z M 177.3 169.1 C 177.3 158.61 168.79 150.1 158.3 150.1 C 147.81 150.1 139.3 158.61 139.3 169.1 C 139.3 179.59 147.81 188.1 158.3 188.1 C 168.79 188.1 177.3 179.59 177.3 169.1 Z" style="fill:url(#gr-pilot-goggles-2);stroke:#3b2d3a;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pilot-goggles-6" inkscape:label="Glint" d="M 150.3 160 L 157.3 168" style="fill:none;stroke:#ffffff;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round;opacity:0.85" />
+     <circle id="pilot-goggles-7" inkscape:label="Lens" cx="242.9" cy="169.1" r="19" style="fill:#a9dcf2;stroke:#3b2d3a;stroke-width:2.8;stroke-linejoin:round;stroke-linecap:round;fill-opacity:0.45" />
+     <path id="pilot-goggles-8" inkscape:label="Rim" d="M 267.9 169.1 C 267.9 182.91 256.71 194.1 242.9 194.1 C 229.09 194.1 217.9 182.91 217.9 169.1 C 217.9 155.29 229.09 144.1 242.9 144.1 C 256.71 144.1 267.9 155.29 267.9 169.1 Z M 261.9 169.1 C 261.9 158.61 253.39 150.1 242.9 150.1 C 232.41 150.1 223.9 158.61 223.9 169.1 C 223.9 179.59 232.41 188.1 242.9 188.1 C 253.39 188.1 261.9 179.59 261.9 169.1 Z" style="fill:url(#gr-pilot-goggles-3);stroke:#3b2d3a;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pilot-goggles-9" inkscape:label="Glint" d="M 234.9 160 L 241.9 168" style="fill:none;stroke:#ffffff;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round;opacity:0.85" />
+     <circle id="pilot-goggles-10" inkscape:label="Rivet" cx="110" cy="164" r="2.6" style="fill:#f2cf6b;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="pilot-goggles-11" inkscape:label="Rivet" cx="122" cy="164" r="2.6" style="fill:#f2cf6b;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="pilot-goggles-12" inkscape:label="Rivet" cx="279" cy="164" r="2.6" style="fill:#f2cf6b;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="pilot-goggles-13" inkscape:label="Rivet" cx="291" cy="164" r="2.6" style="fill:#f2cf6b;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+   </g>
+  </g>
+</svg>

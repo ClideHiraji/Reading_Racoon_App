@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A new Closet item (FR-07, D-026). Copy this file into its slot's folder (hats, glasses, neck,
+     pins or paws), rename it to the item's id (sun_hat.svg), draw on the "Item" layer, add its line
+     to reading-racoon/content/closet.json, and run motion-demo/build_racoon.py. See README.md here.
+     Racoon at rest (locked layer below): head top y 74, eyes (158, 169) and (243, 169), neck (200, 264),
+     chest pin (174, 312), paws hold the book's place 142-260 across at y 323. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-new-item"
+   sodipodi:docname="_template.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>New Closet item</title>
+  <sodipodi:namedview
+     id="namedview-new-item"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="1.5"
+     inkscape:cx="200"
+     inkscape:cy="200"
+     inkscape:current-layer="layer-item">
+    <sodipodi:guide position="0,326" orientation="0,1" id="guide-head-top" inkscape:label="head top (y 74)" />
+    <sodipodi:guide position="0,231" orientation="0,1" id="guide-eyes" inkscape:label="eyes (y 169)" />
+    <sodipodi:guide position="0,136" orientation="0,1" id="guide-neck" inkscape:label="neck (y 264)" />
+    <sodipodi:guide position="0,88" orientation="0,1" id="guide-pin" inkscape:label="chest pin (y 312)" />
+    <sodipodi:guide position="200,0" orientation="1,0" id="guide-middle" inkscape:label="his middle (x 200)" />
+  </sodipodi:namedview>
+  <defs id="defs-new-item" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="../../parts/racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-item" inkscape:label="Item" />
+</svg>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racoon's Closet: Party hat (silver, hats). FR-07, D-026.
+     Drawn to fit Racoon at rest: the bottom layer links ../../parts/racoon_C_inkscape.svg (locked).
+     Draw on the "Item" layer. The file's name is the item's id; its name, tier, price and how it's
+     earned are in reading-racoon/content/closet.json. motion-demo/build_racoon.py reads this file
+     and never writes it. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-party_hat"
+   sodipodi:docname="party_hat.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>Party hat</title>
+  <sodipodi:namedview
+     id="namedview-party_hat"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="2"
+     inkscape:cx="200"
+     inkscape:cy="80"
+     inkscape:current-layer="layer-item" />
+  <defs id="defs-party_hat">
+    <linearGradient id="gr-party-cone" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:#ffb48f" /><stop offset="0.55" style="stop-color:#f0805c" /><stop offset="1" style="stop-color:#d95f3d" /></linearGradient>
+    <radialGradient id="gr-party-pom" cx="0.4" cy="0.35" r="0.65"><stop offset="0" style="stop-color:#fff3b0" /><stop offset="0.6" style="stop-color:#ffd84d" /><stop offset="1" style="stop-color:#f2a516" /></radialGradient>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="../../parts/racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-item" inkscape:label="Item">
+   <g id="item-party-hat" inkscape:label="party_hat">
+     <title>Party hat: a coral cone with mango dots and a pom-pom (silver)</title>
+     <path id="party-hat-1" inkscape:label="Cone" d="M 150 110 L 206 12 L 254 108 C 224 118 180 119 150 110 Z" style="fill:url(#gr-party-cone);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="party-hat-2" inkscape:label="Dot" cx="203" cy="38" r="6" style="fill:#ffd84d;stroke:#cc8a00;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="party-hat-3" inkscape:label="Dot" cx="188" cy="66" r="7" style="fill:#ffd84d;stroke:#cc8a00;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="party-hat-4" inkscape:label="Dot" cx="220" cy="62" r="6.5" style="fill:#ffd84d;stroke:#cc8a00;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="party-hat-5" inkscape:label="Dot" cx="174" cy="94" r="7" style="fill:#ffd84d;stroke:#cc8a00;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="party-hat-6" inkscape:label="Dot" cx="204" cy="92" r="7.5" style="fill:#ffd84d;stroke:#cc8a00;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="party-hat-7" inkscape:label="Dot" cx="232" cy="92" r="6.5" style="fill:#ffd84d;stroke:#cc8a00;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="party-hat-8" inkscape:label="Trim" d="M 152 106 L 160 96 L 168 108 L 176 98 L 184 110 L 192 100 L 200 111 L 208 101 L 216 111 L 224 101 L 232 110 L 240 99 L 248 107 L 253 103" style="fill:none;stroke:#ffffff;stroke-width:4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="party-hat-9" inkscape:label="Pom-pom" cx="206" cy="12" r="12.5" style="fill:url(#gr-party-pom);stroke:#3b2d3a;stroke-width:3.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="party-hat-10" inkscape:label="Pom shine" d="M 200 7 Q 202 3 207 3" style="fill:none;stroke:#ffffff;stroke-width:3;stroke-linejoin:round;stroke-linecap:round;opacity:0.8" />
+     <path id="party-hat-11" inkscape:label="Shine" d="M 180 66 L 199 30" style="fill:none;stroke:#ffffff;stroke-width:4;stroke-linejoin:round;stroke-linecap:round;opacity:0.45" />
+   </g>
+  </g>
+</svg>

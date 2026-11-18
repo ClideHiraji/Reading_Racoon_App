@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racoon's Closet: Star crown (diamond, hats). FR-07, D-026.
+     Drawn to fit Racoon at rest: the bottom layer links ../../parts/racoon_C_inkscape.svg (locked).
+     Draw on the "Item" layer. The file's name is the item's id; its name, tier, price and how it's
+     earned are in reading-racoon/content/closet.json. motion-demo/build_racoon.py reads this file
+     and never writes it. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-star_crown"
+   sodipodi:docname="star_crown.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>Star crown</title>
+  <sodipodi:namedview
+     id="namedview-star_crown"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="2"
+     inkscape:cx="200"
+     inkscape:cy="80"
+     inkscape:current-layer="layer-item" />
+  <defs id="defs-star_crown">
+    <linearGradient id="gr-tiara-band" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ffffff" /><stop offset="0.5" style="stop-color:#d6f3ff" /><stop offset="1" style="stop-color:#9fc6e0" /></linearGradient>
+    <linearGradient id="gr-tiara-gem-1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:#ffffff" /><stop offset="0.5" style="stop-color:#c9b3ff" /><stop offset="1" style="stop-color:#7fd3f0" /></linearGradient>
+    <linearGradient id="gr-tiara-gem1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:#ffffff" /><stop offset="0.5" style="stop-color:#ffc2e6" /><stop offset="1" style="stop-color:#7fd3f0" /></linearGradient>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="../../parts/racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-item" inkscape:label="Item">
+   <g id="item-star-crown" inkscape:label="star_crown">
+     <title>Star crown: a crystal tiara with a faceted star gem (diamond)</title>
+     <path id="star-crown-1" inkscape:label="Band" d="M 122 118 C 147 94 173 85 200.5 85 C 228 85 254 94 279 118 C 276 124 270 126 265 124 C 245 106 223 99 200.5 99 C 178 99 156 106 136 124 C 131 126 125 124 122 118 Z" style="fill:url(#gr-tiara-band);stroke:#3b2d3a;stroke-width:3.8;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="star-crown-2" inkscape:label="Side gem" d="M 154.5 64 L 165.5 81 L 154.5 98 L 143.5 81 Z" style="fill:url(#gr-tiara-gem-1);stroke:#3b2d3a;stroke-width:2.8;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="star-crown-3" inkscape:label="Side gem facet" d="M 143.5 81 L 165.5 81 M 154.5 64 L 154.5 98" style="fill:none;stroke:#ffffff;stroke-width:1.4;stroke-linejoin:round;stroke-linecap:round;opacity:0.7" />
+     <circle id="star-crown-4" inkscape:label="Bead" cx="171.5" cy="93" r="4" style="fill:#e9fbff;stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="star-crown-5" inkscape:label="Bead" cx="158.5" cy="96" r="4" style="fill:#e9fbff;stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="star-crown-6" inkscape:label="Bead" cx="134.5" cy="104" r="4" style="fill:#e9fbff;stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="star-crown-7" inkscape:label="Side gem" d="M 246.5 64 L 257.5 81 L 246.5 98 L 235.5 81 Z" style="fill:url(#gr-tiara-gem1);stroke:#3b2d3a;stroke-width:2.8;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="star-crown-8" inkscape:label="Side gem facet" d="M 235.5 81 L 257.5 81 M 246.5 64 L 246.5 98" style="fill:none;stroke:#ffffff;stroke-width:1.4;stroke-linejoin:round;stroke-linecap:round;opacity:0.7" />
+     <circle id="star-crown-9" inkscape:label="Bead" cx="229.5" cy="93" r="4" style="fill:#e9fbff;stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="star-crown-10" inkscape:label="Bead" cx="242.5" cy="96" r="4" style="fill:#e9fbff;stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="star-crown-11" inkscape:label="Bead" cx="266.5" cy="104" r="4" style="fill:#e9fbff;stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <g id="star-crown-12" inkscape:label="Star gem">
+     <path id="star-crown-13" inkscape:label="Facet" d="M 200.5 50 L 190.21 35.84 L 200.5 10 Z" style="fill:#ffffff" />
+     <path id="star-crown-14" inkscape:label="Facet" d="M 200.5 50 L 200.5 10 L 210.79 35.84 Z" style="fill:#a8e6fa" />
+     <path id="star-crown-15" inkscape:label="Facet" d="M 200.5 50 L 210.79 35.84 L 238.54 37.64 Z" style="fill:#e8dcff" />
+     <path id="star-crown-16" inkscape:label="Facet" d="M 200.5 50 L 238.54 37.64 L 217.14 55.41 Z" style="fill:#b49bff" />
+     <path id="star-crown-17" inkscape:label="Facet" d="M 200.5 50 L 217.14 55.41 L 224.01 82.36 Z" style="fill:#ffe3f3" />
+     <path id="star-crown-18" inkscape:label="Facet" d="M 200.5 50 L 224.01 82.36 L 200.5 67.5 Z" style="fill:#ff9fd4" />
+     <path id="star-crown-19" inkscape:label="Facet" d="M 200.5 50 L 200.5 67.5 L 176.99 82.36 Z" style="fill:#e5fff4" />
+     <path id="star-crown-20" inkscape:label="Facet" d="M 200.5 50 L 176.99 82.36 L 183.86 55.41 Z" style="fill:#8ee8c7" />
+     <path id="star-crown-21" inkscape:label="Facet" d="M 200.5 50 L 183.86 55.41 L 162.46 37.64 Z" style="fill:#fff6d6" />
+     <path id="star-crown-22" inkscape:label="Facet" d="M 200.5 50 L 162.46 37.64 L 190.21 35.84 Z" style="fill:#ffd27a" />
+     <path id="star-crown-23" inkscape:label="Outline" d="M 200.5 10 L 210.79 35.84 L 238.54 37.64 L 217.14 55.41 L 224.01 82.36 L 200.5 67.5 L 176.99 82.36 L 183.86 55.41 L 162.46 37.64 L 190.21 35.84 Z" style="fill:none;stroke:#3b2d3a;stroke-width:3.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="star-crown-24" inkscape:label="Edge" d="M 200.5 50 L 200.5 10" style="fill:none;stroke:#ffffff;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round;opacity:0.7" />
+     <path id="star-crown-25" inkscape:label="Edge" d="M 200.5 50 L 238.54 37.64" style="fill:none;stroke:#ffffff;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round;opacity:0.7" />
+     <path id="star-crown-26" inkscape:label="Edge" d="M 200.5 50 L 224.01 82.36" style="fill:none;stroke:#ffffff;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round;opacity:0.7" />
+     <path id="star-crown-27" inkscape:label="Edge" d="M 200.5 50 L 176.99 82.36" style="fill:none;stroke:#ffffff;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round;opacity:0.7" />
+     <path id="star-crown-28" inkscape:label="Edge" d="M 200.5 50 L 162.46 37.64" style="fill:none;stroke:#ffffff;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round;opacity:0.7" />
+     </g>
+     <path id="star-crown-29" inkscape:label="Twinkle" d="M 136 55 Q 138.52 61.48 145 64 Q 138.52 66.52 136 73 Q 133.48 66.52 127 64 Q 133.48 61.48 136 55 Z" style="fill:#ffffff;stroke:#6fc7e8;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="star-crown-30" inkscape:label="Twinkle" d="M 266 50 Q 268.24 55.76 274 58 Q 268.24 60.24 266 66 Q 263.76 60.24 258 58 Q 263.76 55.76 266 50 Z" style="fill:#ffffff;stroke:#6fc7e8;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="star-crown-31" inkscape:label="Twinkle" d="M 170 11.5 Q 171.82 16.18 176.5 18 Q 171.82 19.82 170 24.5 Q 168.18 19.82 163.5 18 Q 168.18 16.18 170 11.5 Z" style="fill:#ffffff;stroke:#6fc7e8;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="star-crown-32" inkscape:label="Twinkle" d="M 234 16 Q 235.68 20.32 240 22 Q 235.68 23.68 234 28 Q 232.32 23.68 228 22 Q 232.32 20.32 234 16 Z" style="fill:#ffffff;stroke:#6fc7e8;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+     <g id="star-crown-back" inkscape:label="Back view" style="display:none">
+      <path id="star-crown-back-1" inkscape:label="Band" d="M 122 118 C 147 94 173 85 200.5 85 C 228 85 254 94 279 118 C 276 124 270 126 265 124 C 245 106 223 99 200.5 99 C 178 99 156 106 136 124 C 131 126 125 124 122 118 Z" style="fill:url(#gr-tiara-band);stroke:#3b2d3a;stroke-width:3.8;stroke-linejoin:round;stroke-linecap:round" />
+      <path id="star-crown-back-2" inkscape:label="Star from behind" d="M 200.5 10 L 210.79 35.84 L 238.54 37.64 L 217.14 55.41 L 224.01 82.36 L 200.5 67.5 L 176.99 82.36 L 183.86 55.41 L 162.46 37.64 L 190.21 35.84 Z" style="fill:url(#gr-tiara-band);stroke:#3b2d3a;stroke-width:3.6;stroke-linejoin:round;stroke-linecap:round;opacity:0.95" />
+      <path id="star-crown-back-3" inkscape:label="Star glint" d="M 186 46 L 200.5 30 L 215 46" style="fill:none;stroke:#ffffff;stroke-width:2;stroke-linejoin:round;stroke-linecap:round;opacity:0.8" />
+      <path id="star-crown-back-4" inkscape:label="Side gem" d="M 154.5 64 L 165.5 81 L 154.5 98 L 143.5 81 Z" style="fill:url(#gr-tiara-band);stroke:#3b2d3a;stroke-width:2.8;stroke-linejoin:round;stroke-linecap:round" />
+      <path id="star-crown-back-5" inkscape:label="Side gem" d="M 246.5 64 L 257.5 81 L 246.5 98 L 235.5 81 Z" style="fill:url(#gr-tiara-band);stroke:#3b2d3a;stroke-width:2.8;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+   </g>
+  </g>
+</svg>

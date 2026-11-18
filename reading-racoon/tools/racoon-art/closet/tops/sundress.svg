@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racoon's Closet: Sundress (silver, tops). FR-07, D-026.
+     Drawn to fit Racoon at rest: the bottom layer links ../../parts/racoon_C_inkscape.svg (locked).
+     Draw on the "Item" layer. The file's name is the item's id; its name, tier, price and how it's
+     earned are in reading-racoon/content/closet.json. motion-demo/build_racoon.py reads this file
+     and never writes it. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-sundress"
+   sodipodi:docname="sundress.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>Sundress</title>
+  <sodipodi:namedview
+     id="namedview-sundress"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="2"
+     inkscape:cx="200"
+     inkscape:cy="200"
+     inkscape:current-layer="layer-item" />
+  <defs id="defs-sundress">
+    <linearGradient id="gr-sundress-1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" style="stop-color:#dcb94a" /><stop offset="0.3" style="stop-color:#ffd84d" /><stop offset="0.55" style="stop-color:#ffdd62" /><stop offset="1" style="stop-color:#dcb94a" /></linearGradient>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="../../parts/racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-item" inkscape:label="Item">
+   <g id="item-sundress" inkscape:label="sundress">
+     <title>Sundress: a yellow dress with white flowers and a bow (silver)</title>
+     <path id="sundress-1" inkscape:label="Dress" d="M 112 234 L 289 234 L 289 372 Q 276.36 381 263.71 372 Q 251.07 381 238.43 372 Q 225.79 381 213.14 372 Q 200.5 381 187.86 372 Q 175.21 381 162.57 372 Q 149.93 381 137.29 372 Q 124.64 381 112 372 Z" style="fill:url(#gr-sundress-1);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-2" inkscape:label="Petal" cx="164" cy="319.8" r="3.15" style="fill:#ffffff;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-3" inkscape:label="Petal" cx="167.99" cy="322.7" r="3.15" style="fill:#ffffff;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-4" inkscape:label="Petal" cx="166.47" cy="327.4" r="3.15" style="fill:#ffffff;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-5" inkscape:label="Petal" cx="161.53" cy="327.4" r="3.15" style="fill:#ffffff;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-6" inkscape:label="Petal" cx="160.01" cy="322.7" r="3.15" style="fill:#ffffff;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-7" inkscape:label="Centre" cx="164" cy="324" r="2.31" style="fill:#ffd23f;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-8" inkscape:label="Petal" cx="226" cy="325.8" r="3.15" style="fill:#ffffff;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-9" inkscape:label="Petal" cx="229.99" cy="328.7" r="3.15" style="fill:#ffffff;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-10" inkscape:label="Petal" cx="228.47" cy="333.4" r="3.15" style="fill:#ffffff;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-11" inkscape:label="Petal" cx="223.53" cy="333.4" r="3.15" style="fill:#ffffff;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-12" inkscape:label="Petal" cx="222.01" cy="328.7" r="3.15" style="fill:#ffffff;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-13" inkscape:label="Centre" cx="226" cy="330" r="2.31" style="fill:#ffd23f;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-14" inkscape:label="Petal" cx="190" cy="347.8" r="3.15" style="fill:#ffffff;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-15" inkscape:label="Petal" cx="193.99" cy="350.7" r="3.15" style="fill:#ffffff;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-16" inkscape:label="Petal" cx="192.47" cy="355.4" r="3.15" style="fill:#ffffff;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-17" inkscape:label="Petal" cx="187.53" cy="355.4" r="3.15" style="fill:#ffffff;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-18" inkscape:label="Petal" cx="186.01" cy="350.7" r="3.15" style="fill:#ffffff;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-19" inkscape:label="Centre" cx="190" cy="352" r="2.31" style="fill:#ffd23f;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-20" inkscape:label="Petal" cx="240" cy="351.8" r="3.15" style="fill:#ffffff;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-21" inkscape:label="Petal" cx="243.99" cy="354.7" r="3.15" style="fill:#ffffff;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-22" inkscape:label="Petal" cx="242.47" cy="359.4" r="3.15" style="fill:#ffffff;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-23" inkscape:label="Petal" cx="237.53" cy="359.4" r="3.15" style="fill:#ffffff;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-24" inkscape:label="Petal" cx="236.01" cy="354.7" r="3.15" style="fill:#ffffff;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-25" inkscape:label="Centre" cx="240" cy="356" r="2.31" style="fill:#ffd23f;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-26" inkscape:label="Petal" cx="160" cy="355.8" r="3.15" style="fill:#ffffff;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-27" inkscape:label="Petal" cx="163.99" cy="358.7" r="3.15" style="fill:#ffffff;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-28" inkscape:label="Petal" cx="162.47" cy="363.4" r="3.15" style="fill:#ffffff;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-29" inkscape:label="Petal" cx="157.53" cy="363.4" r="3.15" style="fill:#ffffff;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-30" inkscape:label="Petal" cx="156.01" cy="358.7" r="3.15" style="fill:#ffffff;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-31" inkscape:label="Centre" cx="160" cy="360" r="2.31" style="fill:#ffd23f;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-32" inkscape:label="Petal" cx="212" cy="271.8" r="3.15" style="fill:#ffffff;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-33" inkscape:label="Petal" cx="215.99" cy="274.7" r="3.15" style="fill:#ffffff;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-34" inkscape:label="Petal" cx="214.47" cy="279.4" r="3.15" style="fill:#ffffff;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-35" inkscape:label="Petal" cx="209.53" cy="279.4" r="3.15" style="fill:#ffffff;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-36" inkscape:label="Petal" cx="208.01" cy="274.7" r="3.15" style="fill:#ffffff;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-37" inkscape:label="Centre" cx="212" cy="276" r="2.31" style="fill:#ffd23f;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-38" inkscape:label="Petal" cx="176" cy="265.8" r="3.15" style="fill:#ffffff;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-39" inkscape:label="Petal" cx="179.99" cy="268.7" r="3.15" style="fill:#ffffff;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-40" inkscape:label="Petal" cx="178.47" cy="273.4" r="3.15" style="fill:#ffffff;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-41" inkscape:label="Petal" cx="173.53" cy="273.4" r="3.15" style="fill:#ffffff;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-42" inkscape:label="Petal" cx="172.01" cy="268.7" r="3.15" style="fill:#ffffff;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-43" inkscape:label="Centre" cx="176" cy="270" r="2.31" style="fill:#ffd23f;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="sundress-44" inkscape:label="Ribbon" d="M 112 300 L 289 300 L 289 309 L 112 309 Z" style="fill:#ffffff;stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="sundress-45" inkscape:label="Bow" d="M 200.5 304 C 192 296 182 298 184 305 C 186 311 194 309 200.5 304 C 207 309 215 311 217 305 C 219 298 209 296 200.5 304 Z" style="fill:#ffffff;stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sundress-46" inkscape:label="Knot" cx="200.5" cy="304" r="3.2" style="fill:#ffd84d;stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="sundress-47" inkscape:label="Collar" d="M 170 251 C 184 270 217 270 231 251" style="fill:none;stroke:#3b2d3a;stroke-width:10;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="sundress-48" inkscape:label="Collar" d="M 170 251 C 184 270 217 270 231 251" style="fill:none;stroke:#ffffff;stroke-width:6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="sundress-49" inkscape:label="Shine" d="M 150 262 C 148 290 148 320 152 350" style="fill:none;stroke:#ffffff;stroke-width:5;stroke-linejoin:round;stroke-linecap:round;opacity:0.35" />
+   </g>
+  </g>
+</svg>

@@ -47,9 +47,9 @@ func test_companion_lines_have_no_emoji() -> void:
 	check(not text.is_empty(), "companion lines load")
 	check(not _has_emoji(text), "companion lines have no emoji (D-009)")
 	for world in SkillCatalog.WORLDS:
-		check(Icons.exists(world.icon), "world icon '%s' exists" % world.icon)
+		check(Icons.has_glyph(world.icon), "world icon '%s' has a glyph" % world.icon)
 	for skill in SkillCatalog.SKILLS:
-		check(Icons.exists(SkillCatalog.ICONS[skill]), "skill icon for %s exists" % skill)
+		check(Icons.has_glyph(SkillCatalog.ICONS[skill]), "skill icon for %s has a glyph" % skill)
 
 
 func bank() -> QuestionBank:
@@ -137,34 +137,40 @@ func test_demote_caps_and_resets() -> void:
 	check(st.attempts == 0 and not st.mastered and st.review, "attempts reset, unmastered, review")
 
 
-# --- Hearts (D-004) -------------------------------------------------------------------
+# --- Hearts (D-004, counting from D-021) -------------------------------------------
 
-func test_hearts_refill_and_recovery_limit() -> void:
+func test_hearts_lose_and_gain_one() -> void:
 	var h := HeartSystem.new()
-	h.on_answer(PA, false)
-	h.on_answer(PA, false)
-	check(h.hearts == 1, "two wrong answers cost two hearts")
-	h.on_answer(PA, true)
-	check(h.hearts == 3, "a correct answer refills hearts")
+	h.on_answer(false)
+	h.on_answer(false)
+	check(h.hearts == 1, "two wrong tries cost two hearts")
+	h.on_answer(true)
+	check(h.hearts == 2, "a right answer gives one heart back")
+	h.on_answer(true)
+	h.on_answer(true)
+	check(h.hearts == 3, "never more than three hearts")
 	for attempt in 2:
-		h.on_answer(PA, false)
-		h.on_answer(PA, false)
-		check(h.on_answer(PA, false) == HeartSystem.Result.RECOVERY, "3rd wrong starts recovery")
+		h.on_answer(false)
+		h.on_answer(false)
+		check(h.on_answer(false) == HeartSystem.Result.RECOVERY, "no hearts left starts recovery")
 		check(h.finish_recovery(3), "3/3 is a full recovery")
 		check(h.hearts == 3, "full hearts after recovery")
-	h.on_answer(PA, false)
-	h.on_answer(PA, false)
-	check(h.on_answer(PA, false) == HeartSystem.Result.END_SESSION, "3rd trigger ends the session")
-
-
-func test_hearts_streak_is_per_skill() -> void:
-	var h := HeartSystem.new()
-	h.on_answer(PA, false)
-	h.on_answer(PHONICS, false)
-	check(h.streak == 1 and h.hearts == 2, "a new sub-skill starts a new streak")
+	h.on_answer(false)
+	h.on_answer(true)
+	h.on_answer(false)
+	h.on_answer(false)
+	check(h.on_answer(false) == HeartSystem.Result.END_SESSION, "3rd trigger ends the session")
 
 
 # --- Lesson session ---------------------------------------------------------------------
+
+## Answers the current question wrong on every try it allows (D-021: two tries).
+func miss(s: LessonSession) -> Dictionary:
+	var out := s.submit(WRONG)
+	while out.next == "retry":
+		out = s.submit(WRONG)
+	return out
+
 
 func test_partial_rescue_demotes_lower_level() -> void:
 	var m := StudentModel.new()
@@ -172,11 +178,11 @@ func test_partial_rescue_demotes_lower_level() -> void:
 	master(m, PHONICS, 1)
 	var s := LessonSession.new(m, bank(), 2, 7)
 	var out := {}
-	for i in 3:
+	for i in 2:
 		var item := s.next_item()
 		check(item.sub_skill == PA and item.level == 2, "stays on PA L2 after wrong answers")
-		out = s.submit(WRONG)
-	check(out.next == "rescue_start" and out.hearts == 0, "rescue after 3 wrong")
+		out = miss(s)
+	check(out.next == "rescue_start" and out.hearts == 0, "rescue after 3 wrong tries")
 	for i in 3:
 		var item := s.next_item()
 		check(item.sub_skill == PA and item.level == 1, "rescue items come from PA L1")
@@ -192,9 +198,9 @@ func test_partial_rescue_demotes_lower_level() -> void:
 
 func test_rescue_at_lowest_level_uses_easy_items() -> void:
 	var s := LessonSession.new(StudentModel.new(), bank(), 1, 3)
-	for i in 3:
+	for i in 2:
 		s.next_item()
-		s.submit(WRONG)
+		miss(s)
 	check(s.in_rescue() and not s.rescue.has_lower, "rescue with no lower level")
 	var item := s.next_item()
 	check(item.recovery and item.level == 1, "easier recovery-tagged items at the same level")
@@ -215,13 +221,92 @@ func test_third_rescue_ends_session() -> void:
 	var nexts := []
 	for i in 40:
 		var item := s.next_item()
-		var out := s.submit(item.answer if s.in_rescue() else WRONG)
+		var out := s.submit(item.answer) if s.in_rescue() else miss(s)
 		nexts.append(out.next)
 		if out.next == "end_session":
 			break
 	check(nexts.count("rescue_start") == 2, "two rescues allowed")
 	check(nexts.back() == "end_session" and s.ended_early, "3rd trigger ends the session")
 	check(s.flags.back().type == "rescue_limit", "teacher flagged")
+
+
+## D-021: two tries per question; only the first is BKT evidence.
+func test_second_try_and_hint() -> void:
+	var m := StudentModel.new()
+	var s := LessonSession.new(m, bank(), 1, 5)
+	var item := s.next_item()
+	var skill: String = item.sub_skill
+	var out := s.submit(WRONG, 900)
+	check(out.next == "retry" and out.try == 1 and out.hearts == 2, "a wrong first try: same item, one heart less")
+	check(out.hint, "every wrong first try brings Racoon's hint")
+	check(m.state(skill, 1).attempts == 1, "the first try is BKT evidence")
+	var p_after_first: float = m.state(skill, 1).p
+	check(s.progress() == 0.0, "the item isn't over yet")
+	out = s.submit(item.answer, 700)
+	check(out.correct and out.next == "continue" and out.hearts == 3, "a right second try gives a heart back")
+	check(m.state(skill, 1).attempts == 1 and m.state(skill, 1).p == p_after_first,
+			"the second try leaves BKT alone")
+	var r: Dictionary = s.results[0]
+	check(not r.correct and r.solved and r.tries == 2, "recorded as solved on the second try")
+	var resp: Array = s.events.filter(func(e): return e.type == "response")
+	check(resp.size() == 1 and resp[0].payload.retry_correct and resp[0].payload.hint
+			and resp[0].payload.low_pl, "one response event, carrying the second try and the hint")
+	var sum := s.summary()
+	check(sum.correct == 0 and sum.second_try == 1 and sum.accuracy == 0.5 and sum.xp == 5,
+			"a second-try answer earns half")
+
+	var strong := StudentModel.new()
+	master(strong, PA, 1)
+	strong.states[StudentModel.key(PHONICS, 1)].p = 0.9
+	var s2 := LessonSession.new(strong, bank(), 1, 5)
+	var it2 := s2.next_item()
+	check(it2.sub_skill == PHONICS, "the unmastered skill comes up")
+	var slip := s2.submit(WRONG)
+	check(slip.hint and not s2.events[0].payload.low_pl, "a hint after a slip too, logged as high P(L)")
+	slip = s2.submit(WRONG)
+	check(slip.next == "continue" and not slip.correct and slip.hearts == 1,
+			"a wrong second try ends the question with one heart left")
+
+
+## D-021: a lesson plays on a copy; nothing reaches the child's model until it's kept.
+func test_lesson_works_on_a_copy() -> void:
+	var m := StudentModel.new()
+	m.params = SkillCatalog.PARAMS.duplicate(true)
+	m.params[PA].l0 = 0.5
+	var c := m.copy()
+	check(c != m and c.params[PA].l0 == 0.5, "the copy keeps the parameters")
+	c.record(PA, 1, true, 3)
+	check(m.state(PA, 1).attempts == 0 and c.state(PA, 1).attempts == 1, "the copy changes alone")
+
+
+## D-021: every lesson question has its own hint and explanation, in its language.
+func test_hint_text() -> void:
+	var generic := ["Look again carefully. You can do it!", "Tingnan muli nang mabuti. Kaya mo 'yan!"]
+	var b := bank()
+	var fallback_hints := []
+	var fallback_explains := []
+	for it in b.items:
+		var h := HintText.hint(it)
+		var e := HintText.explain(it)
+		check(h != "" and e != "" and not _has_emoji(h + e), "%s has a hint and an explanation" % it.id)
+		if generic.has(h):
+			fallback_hints.append(it.id)
+		if e.begins_with("The answer is") or e.begins_with("Ang sagot ay"):
+			fallback_explains.append(it.id)
+	check(fallback_hints.is_empty(), "no question falls back to a generic hint %s" % str(fallback_hints))
+	check(fallback_explains.is_empty(), "no question falls back to a bare answer %s" % str(fallback_explains))
+	check(HintText.rime("cat") == "at" and HintText.rime("cake") == "ake", "rhyme endings")
+	var by_id := {}
+	for it in b.items:
+		by_id[it.id] = it
+	check(HintText.hint(by_id["pa1-01"]).contains("at"), "a rhyme hint names the ending")
+	check(HintText.explain(by_id["pa1-01"]) == "Cat and hat rhyme. They both end with at.", "rhyme explained")
+	check(HintText.explain(by_id["ph1-04"]) == "C-a-t spells cat.", "a word built letter by letter")
+	check(HintText.explain(by_id["ph3-07"]) == "Ang a at so ay aso.", "Filipino word wheel explained")
+	check(HintText.explain(by_id["fl3-01"]) == "Ang tamang ayos: Si Lito ay masaya.", "sentence order explained")
+	check(HintText.explain(by_id["fl3-06"]) == "Ang buo: Ang pusa ay ngumiyaw.", "missing word explained")
+	check(HintText.explain(by_id["lc3-04"]).begins_with("Una: Nawala ang bola ni Lito."), "story order explained")
+	check(HintText.explain(by_id["lc3-03"]).contains("ilalim ng puno"), "a story answer quotes the story")
 
 
 func test_all_correct_play_reaches_level_up() -> void:
@@ -441,7 +526,7 @@ func test_access_policy() -> void:
 func test_palette_text_contrast() -> void:
 	var faces := {"blue": Palette.BLUE, "cream": Palette.CREAM, "yellow": Palette.YELLOW,
 			"orange": Palette.ORANGE, "leaf": Palette.LEAF, "light plum": Palette.PLUM_LIGHT,
-			"locked": DiamondTile.LOCKED, "card": Palette.CARD}
+			"locked": Color("efe9d2"), "card": Palette.CARD}   # locked: Practice's LOCKED face
 	for name in faces:
 		var c: Color = faces[name]
 		check(Palette.text_on(c) == Palette.INK, "%s takes dark text" % name)
@@ -483,7 +568,8 @@ func test_hub_and_free_play_access() -> void:
 
 	for id in HubSections.ALL:
 		var info: Dictionary = HubSections.ALL[id]
-		check(Icons.exists(info.icon), "hub section icon '%s' exists" % info.icon)
+		check(Icons.has_glyph(info.icon), "hub section icon '%s' has a glyph" % info.icon)
+		check(Icons.has_picture(info.icon), "hub section icon '%s' has a full-colour drawing (D-027)" % info.icon)
 		check(info.kind in ["adventure", "free", "collection"], "%s has a time rule" % id)
 		check(info.scene == "" or ResourceLoader.exists(info.scene), "%s scene exists" % id)
 
@@ -492,26 +578,138 @@ func test_hub_and_free_play_access() -> void:
 
 func test_wardrobe() -> void:
 	var w := Wardrobe.new()
-	check(w.owns("scarf_teal") and w.is_worn("scarf_teal"), "starts with the river scarf on")
+	check(w.owns("scarf_teal") and not w.is_worn("scarf_teal"), "owns the river scarf but starts without it (D-024)")
+	check(w.owns("open_book") and w.equipped.is_empty(), "owns the open book; wears nothing at first")
+	check(w.wear("open_book") and w.equipped.get("paws", "") == "open_book", "the book goes in his paws")
+	w.take_off("paws")
 	var wallet := {"coins": 10, "xp": 0}
-	check(w.buy("salakot", wallet) == "poor" and wallet.coins == 10, "can't buy without coins")
+	check(w.buy("party_hat", wallet) == "poor" and wallet.coins == 10, "can't buy without coins")
 	wallet.coins = 100
-	check(w.buy("salakot", wallet) == "bought", "buys with enough coins")
-	check(wallet.coins == 40 and w.is_worn("salakot"), "coins spent and the hat is worn")
-	check(w.buy("salakot", wallet) == "owned" and wallet.coins == 40, "never pays twice")
+	check(w.buy("party_hat", wallet) == "bought", "buys with enough coins")
+	check(wallet.coins == 70 and w.is_worn("party_hat"), "coins spent and the hat is worn")
+	check(w.buy("party_hat", wallet) == "owned" and wallet.coins == 70, "never pays twice")
 	check(not w.wear("lei"), "can't wear what you don't own")
-	w.buy("party_hat", wallet)
-	check(w.is_worn("party_hat") and not w.is_worn("salakot"), "one item per slot")
+	wallet.coins = 150
+	w.buy("flower_crown", wallet)
+	check(w.is_worn("flower_crown") and not w.is_worn("party_hat"), "one item per slot")
 	w.take_off("hat")
 	check(not w.equipped.has("hat"), "take off a hat")
 	var w2 := Wardrobe.new()
 	var saved := w.to_dict()
 	saved.owned.append("not_an_item")
 	w2.from_dict(saved)
-	check(w2.owns("salakot") and w2.owns("party_hat") and not w2.owns("not_an_item"),
+	check(w2.owns("flower_crown") and w2.owns("party_hat") and not w2.owns("not_an_item"),
 			"owned items survive a save/load; unknown ids are dropped")
+	var old := Wardrobe.new()
+	old.from_dict({"owned": ["scarf_teal"], "equipped": {"neck": "scarf_teal"}})
+	check(old.is_worn("scarf_teal") and old.owns("open_book"), "an older save keeps its scarf on and gets the free book")
 	for id in Wardrobe.ITEMS:
 		check(Wardrobe.SLOTS.has(Wardrobe.ITEMS[id].slot), "%s has a real slot" % id)
+
+
+## His head and its outline are meshes the game builds when the scene loads (fine round the cheek
+## fur); a scene saved with them as plain quads must still get every triangle back (2026-11-17).
+func test_racoon_scene_draws_his_head() -> void:
+	var pp: RacoonPuppet = load("res://scenes/companion/racoon_puppet.tscn").instantiate()
+	pp._ensure_nodes()
+	for path in ["Body/Head/Skull", "Body/Head/HeadLine"]:
+		var part: Polygon2D = pp.get_node(path)
+		check(part.polygons.size() > 100 and part.polygon.size() > 100, "%s is a full mesh (%d triangles)" % [path, part.polygons.size()])
+	pp.free()
+
+
+## D-030: what he holds in his paws is stiff. An arm that points, waves or goes to his chin never
+## stretches it; it rides in his other paw instead.
+func test_paws_item_is_stiff() -> void:
+	var pp: RacoonPuppet = load("res://scenes/companion/racoon_puppet.tscn").instantiate()
+	pp._ensure_nodes()
+	# [pose, which paw holds it: "both", "left" or "right"]
+	var cases := {"held in both paws": [{}, "both"],
+		"right arm points up": [{"armR": 1.0, "tRx": 330.0, "tRy": 120.0}, "left"],
+		"left paw at his chin": [{"armL": 1.0, "tLx": 185.0, "tLy": 255.0}, "right"],
+		"right paw lifted a little (it tilts, still in both)": [{"liftR": 1.2}, "both"],
+		"right paw let go (right_paw_free)": [{"freeR": 1.0}, "left"]}
+	for label in cases:
+		pp.p = pp.pose.duplicate()
+		pp.p.merge({"bookS": 1.0, "hold": 1.0}, true)
+		pp.p.merge(cases[label][0], true)
+		var f: Dictionary = pp._rig_frame()
+		var xf: Transform2D = f.book.xf
+		check(absf(xf.x.length() - 1.0) < 0.01 and absf(xf.y.length() - 1.0) < 0.01 and absf(xf.x.dot(xf.y)) < 0.01,
+				"the item in his paws keeps its shape: %s" % label)
+		var holds := "both" if f.book.grip < 0.5 else ("right" if f.book.byRight > 0.5 else "left")
+		check(holds == cases[label][1], "%s: held in %s paw(s), got %s" % [label, cases[label][1], holds])
+	pp.free()
+
+
+## D-026: five tiers, prices that rise with them, items earned (never bought) by real goals, and
+## every item drawn on the Closet's sheet.
+func test_closet_tiers() -> void:
+	var bands := {"silver": [20, 40], "violet": [60, 90], "gold": [150, 250], "diamond": [400, 500]}
+	var per_tier := {}
+	var earned_diamonds := 0
+	var rig = JSON.parse_string(FileAccess.get_file_as_string("res://assets/racoon/racoon_rig.json"))
+	for id in Wardrobe.ITEMS:
+		var it: Dictionary = Wardrobe.ITEMS[id]
+		check(Wardrobe.TIERS.has(it.tier), "%s has a real tier" % id)
+		per_tier[it.tier] = int(per_tier.get(it.tier, 0)) + 1
+		if Wardrobe.is_earned_item(id):
+			check(int(it.price) == 0 and Wardrobe.earn_text(id) != "", "%s is earned, not sold, and says how" % id)
+			if it.tier == "diamond":
+				earned_diamonds += 1
+		elif int(it.price) > 0:
+			var b: Array = bands.get(it.tier, [0, 0])
+			check(int(it.price) >= b[0] and int(it.price) <= b[1], "%s costs what a %s item costs" % [id, it.tier])
+		else:
+			check(it.tier == "copper", "%s is free, so it's copper" % id)
+		if Wardrobe.is_code_drawn(id):
+			check((it.slot == "pet" and Pet.has_kind(id)) or (it.slot == "hat" and Halo.has_kind(id)),
+					"%s is drawn in code: a pet (D-029) or a halo (D-031)" % id)
+			continue
+		if Wardrobe.wind_of(id) != "":
+			check(Wardrobe.is_scarf(id) and WindScarf.has_style(Wardrobe.wind_of(id)),
+					"%s is a scarf whose tails WindScarf draws (D-031)" % id)
+		var tex: String = id + ".band" if Wardrobe.is_scarf(id) else id
+		check(rig.textures.has(tex) and rig.textures[tex].sheet == "closet_" + str(it.slot),
+				"%s is drawn on its slot's sheet (closet/%s)" % [id, it.slot])
+	for t in Wardrobe.TIER_ORDER:
+		check(int(per_tier.get(t, 0)) >= 3, "the %s tier has at least 3 items" % t)
+	# D-031: windblown diamond scarves and a halo
+	var windy := 0
+	for id in Wardrobe.new().items_in("neck"):
+		if Wardrobe.wind_of(id) != "" and Wardrobe.ITEMS[id].tier == "diamond":
+			windy += 1
+	check(windy >= 3, "three diamond scarves blow in the wind (D-031)")
+	check(Wardrobe.ITEMS.has("star_halo") and Wardrobe.ITEMS.star_halo.slot == "hat", "the Star halo is a hat (D-031)")
+	# D-029: clothes instead of pins, and pets
+	check(not Wardrobe.SLOTS.has("badge") and Wardrobe.SLOTS.has("top") and Wardrobe.SLOTS.has("pet"), "tops and pets, no pins")
+	check(Wardrobe.new().items_in("top").size() >= 10, "at least 10 tops and dresses")
+	for kind in Pet.KINDS:
+		check(Wardrobe.ITEMS.has(kind) and Wardrobe.ITEMS[kind].slot == "pet", "pet %s is in the Closet" % kind)
+	var w2 := Wardrobe.new()
+	w2.from_dict({"owned": ["pin_star", "cap"], "equipped": {"badge": "pin_star", "hat": "cap"}})
+	check(not w2.owns("pin_star") and not w2.equipped.has("badge"), "an old save's pins are dropped")
+	check(earned_diamonds >= 1 and earned_diamonds <= 2, "one or two diamond items are earned with a big goal")
+	check(int(Wardrobe.ITEMS.scarf_rainbow.earn[1]) == Collection.STICKERS.size(), "the Rainbow scarf needs every sticker")
+	check(int(Wardrobe.ITEMS.crystal_book.earn[1]) == SkillCatalog.MAX_LEVEL, "the Crystal storybook needs every world")
+	var w := Wardrobe.new()
+	check(w.buy("cap", {"coins": 999}) == "earn" and not w.owns("cap"), "an earned item can't be bought")
+	check(w.grant_earned({"lessons": 0}).is_empty(), "nothing earned before the first lesson")
+	var got := w.grant_earned({"lessons": 1, "books": 1})
+	check(got.has("cap") and got.has("round_glasses") and not got.has("book_tee") and w.owns("cap"),
+			"a first lesson and a first book earn the River cap and reading glasses")
+	check(w.grant_earned({"lessons": 1, "books": 1}).is_empty(), "an item is earned once")
+	var order: Array = w.items_in("hat").map(func(i): return Wardrobe.tier_of(i).rank)
+	var sorted := order.duplicate()
+	sorted.sort()
+	check(order == sorted, "the Closet lists copper first, diamond last")
+
+	check(Wardrobe.ITEMS.size() >= 27, "the catalogue (content/closet.json) loads every item")
+	for id in Wardrobe.ITEMS:
+		var rc: Dictionary = Wardrobe.ITEMS[id].get("recolor", {})
+		if not rc.is_empty():
+			check(Wardrobe.ITEMS.has(rc.of) and Wardrobe.ITEMS[rc.of].slot == Wardrobe.ITEMS[id].slot,
+					"%s recolours an item in the same slot" % id)
 
 
 # --- Pre/post-test (FR-02, FR-10) -------------------------------------------------------------
@@ -596,11 +794,14 @@ func test_assessment_session() -> void:
 	var types := s.drain_events().map(func(e): return e.type)
 	check(types.count("response") == 20 and types.has("placement") and types.has("assessment"),
 			"responses, placement and scores queued for sync")
+	check(sum.passed.size() == 5 and sum.passed.values().all(func(v): return v),
+			"every skill passed on a perfect test (D-021)")
 	var post := AssessmentSession.new(StudentModel.new(), "post")
 	for i in 20:
 		post.next_item()
 		post.submit("__wrong__")
 	check(post.summary().placed_level == 0, "the post-test never re-places the child")
+	check(post.summary().passed.values().count(true) == 0, "nothing passed on an all-wrong test")
 
 
 ## Stories follow the word caps in 07-curriculum-content.md and have questions.
@@ -674,8 +875,9 @@ func test_content_is_well_formed() -> void:
 		if it.has("picture"):
 			pictures.append(it.picture)
 		for p in pictures:
-			check(Icons.exists(p), "%s picture '%s' has an SVG in assets/icons" % [it.id, p])
+			check(Icons.exists(p), "%s picture '%s' can be shown" % [it.id, p])
 			check(Icons.PICTURE_COLORS.has(p), "%s picture '%s' has a paper color" % [it.id, p])
+			check(Icons.has_picture(p), "%s picture '%s' has a full-colour drawing (D-027)" % [it.id, p])
 		check(not _has_emoji(JSON.stringify(it)), "%s has no emoji (D-009)" % it.id)
 	for level in range(1, SkillCatalog.MAX_LEVEL + 1):
 		for skill in SkillCatalog.active_skills(level):
@@ -697,6 +899,7 @@ func test_collection_stickers_and_goals() -> void:
 		var s: Dictionary = Collection.STICKERS[id]
 		check(Collection.GROUPS.has(s.group), "sticker %s has a group" % id)
 		check(Icons.exists(id), "sticker %s has an SVG" % id)
+		check(Icons.has_picture(id), "sticker %s has a full-colour drawing (D-027)" % id)
 		ids[id] = true
 	check(ids.size() == 40, "40 stickers in the album (got %d)" % ids.size())
 	check(c.earn("games", "2026-10-21") == "ball", "games stickers come in album order")
@@ -742,6 +945,45 @@ func test_collection_words() -> void:
 	check(got.has("isda") and got.isda.lang == "fil", "syllables give the Filipino word")
 	check(got.has("book"), "picture vocabulary gives the word")
 	check(Collection.words_from_item(b.item("ph1-01")).is_empty(), "letter items give no word")
+
+
+## D-027: the redrawn pictures load, are drawn in their own colours, and fall back to the tinted
+## silhouette where there's no drawing.
+func test_full_colour_pictures() -> void:
+	var names := []
+	for f in DirAccess.get_files_at("res://assets/pictures"):
+		if f.ends_with(".svg"):
+			names.append(f.get_basename())
+	check(names.size() >= 63, "63 full-colour pictures (got %d)" % names.size())
+	for ui in ["coin", "sticker", "wordbook", "hat", "scarf", "glasses", "star", "book"]:
+		check(Icons.has_picture(ui), "the UI picture %s is drawn (D-027)" % ui)
+	check(Icons.exists("cat") and not Icons.has_glyph("ant") and Icons.exists("ant"),
+			"a picture with no glyph can still be shown (D-027)")
+	for g2 in PracticePool.GAMES:
+		check(Icons.has_picture(g2.icon), "practice game %s has a full-colour picture" % g2.id)
+	for n in names:
+		var t := Icons.picture_tex(n)
+		check(t != null and t.get_width() >= 256, "picture %s loads at 256 px or more" % n)
+	var r := Icons.picture_rect("cat", 100)
+	check(r.texture == Icons.picture_tex("cat") and r.self_modulate == Color.WHITE, "a picture is drawn untinted")
+	r.free()
+	var g := Icons.picture_rect("play", 100, Palette.TEAL)
+	check(g.texture == Icons.tex("play") and g.self_modulate == Palette.TEAL, "no drawing: the tinted glyph")
+	g.free()
+	var s := Kit.sticker("sun", 124)
+	var pic := s.get_child(0) as TextureRect
+	check(pic != null and pic.texture == Icons.picture_tex("sun"), "a sticker shows its full-colour picture")
+	s.free()
+	var b := ChunkyButton.new()
+	b.full_color = true
+	b.icon_name = "bulb"
+	check(b.icon == Icons.picture_tex("bulb"), "a full-colour button shows the picture")
+	b.icon_name = "play"
+	check(b.icon == Icons.tex("play"), "a full-colour button without a picture shows the glyph")
+	b.full_color = false
+	b.icon_name = "bulb"
+	check(b.icon == Icons.tex("bulb"), "a plain button keeps the tinted glyph")
+	b.free()
 
 
 func test_practice_pool() -> void:
@@ -883,3 +1125,146 @@ func test_file_sha256() -> void:
 			"SHA-256 of a saved file")
 	check(ContentPlan.file_sha256("user://missing.bin") == "", "a missing file has no hash")
 	DirAccess.remove_absolute(path)
+
+
+## The team's Lottie animations play as vector shapes (D-022): every half-frame
+## builds, and the start and end look like the design, in the hearts' colors.
+func test_lottie_animations() -> void:
+	var star := _lottie(AnimatedStar.FILE, {})
+	check(star.duration() > 1.5 and star.duration() < 2.0, "the star plays for about 1.85 s")
+	check(_every_frame_builds(star), "every half-frame of the star builds")
+	check(star._build(0.0).is_empty(), "the star starts at nothing (it pops in)")
+	check(_count(star._build(55.0), 1, Color(0, 0, 0, 0)) > 0, "the settled star has its gradient facets")
+	star.free()
+	var regain_kind: Dictionary = AnimatedHeart.KINDS.regain
+	var regain := _lottie(regain_kind.file, regain_kind.colors)
+	check(regain.duration() > 3.0 and regain.duration() < 3.5, "Regain Heart plays for 3.25 s, like the team's video")
+	check(_every_frame_builds(regain), "every half-frame of Regain Heart builds")
+	var start := regain._build(0.0)
+	check(start.size() > 0 and _count(start, 0, Color("d9cfa2")) + _count(start, 2, Color("d9cfa2")) == start.size(),
+			"Regain Heart starts as the pale empty heart (the one Broken Heart ends on)")
+	check(_count(regain._build(77.5), 0, Palette.CORAL) > 0, "and ends as a coral heart")
+	regain.free()
+	var break_kind: Dictionary = AnimatedHeart.KINDS["break"]
+	var broken := _lottie(break_kind.file, break_kind.colors)
+	check(_every_frame_builds(broken), "every half-frame of Broken Heart builds")
+	check(_count(broken._build(0.0), 0, Palette.CORAL) > 0, "Broken Heart starts as a coral heart")
+	var empty := broken._build(44.5)
+	check(empty.size() > 0 and _count(empty, 0, Palette.CORAL) == 0, "and ends with only the pale empty heart")
+	broken.free()
+
+
+## The star plays from its bake (tools/lottie-bake): every half-frame is there
+## already, it was baked from today's star.json, and it matches what the player
+## builds from the .json.
+func test_star_bake() -> void:
+	var path := AnimatedStar.FILE
+	var bake := load(LottieBake.path_for(path)) as LottieBake
+	check(bake != null, "the star has a bake (run tools/lottie-bake/bake.gd)")
+	if bake == null:
+		return
+	check(bake.source_sha256 == FileAccess.get_sha256(path),
+			"the bake matches star.json (bake it again after changing the star)")
+	var live := _lottie(path, {})
+	var half_frames := 0
+	var f := live._ip
+	while f < live._op:
+		half_frames += 1
+		f += 0.5
+	check(bake.frames.size() == half_frames, "every half-frame is baked (%d)" % half_frames)
+	for at in [0.0, 20.0, 27.5, 40.0, 55.0]:
+		check(_same_commands(bake.frames.get(at, []), live._build(at)), "baked frame %s matches the live one" % at)
+	var baked := LottiePlayer.new()
+	baked.load_lottie(path)
+	check(baked._data.get("baked", false) and is_equal_approx(baked.duration(), live.duration()),
+			"the game loads the bake, with the star's timing")
+	baked.free()
+	live.free()
+
+
+## Draw commands match: same points, triangles and colors; gradients by their colors.
+func _same_commands(a: Array, b: Array) -> bool:
+	if a.size() != b.size():
+		return false
+	for i in a.size():
+		for k in ["t", "pts", "idx", "col", "uvs", "w", "round", "soft", "ring"]:
+			if a[i].has(k) != b[i].has(k) or (a[i].has(k) and a[i][k] != b[i][k]):
+				return false
+		if a[i].has("tex") and (a[i].tex as GradientTexture1D).gradient.colors \
+				!= (b[i].tex as GradientTexture1D).gradient.colors:
+			return false
+	return true
+
+
+## A player that reads the .json itself (not a bake), to check how it builds frames.
+func _lottie(path: String, colors: Dictionary) -> LottiePlayer:
+	var p := LottiePlayer.new()
+	p.load_lottie(path, colors, false)
+	return p
+
+
+func _every_frame_builds(p: LottiePlayer) -> bool:
+	var f := p._ip
+	while f < p._op:
+		if typeof(p._build(f)) != TYPE_ARRAY:
+			return false
+		f += 0.5
+	return true
+
+
+## How many draw commands are of a kind (0 fill, 1 gradient, 2 stroke) and, if
+## `color` isn't transparent, of that color.
+func _count(commands: Array, kind: int, color: Color) -> int:
+	var n := 0
+	for c in commands:
+		if int(c.t) == kind and (color.a == 0.0 or (c.col as Color).is_equal_approx(color)):
+			n += 1
+	return n
+
+
+# --- D-033: the buddies Roco and Rina, and the talk language -------------------------------------
+
+## Every menu line is in all three languages, with the same %s / %d slots as the English, no emoji.
+func test_talk_table_is_complete() -> void:
+	var talk = JSON.parse_string(FileAccess.get_file_as_string("res://content/talk.json"))
+	check(typeof(talk) == TYPE_DICTIONARY, "talk.json loads")
+	var en: Dictionary = talk.en
+	var slots := RegEx.new()
+	slots.compile("%[sd]")
+	for lang in ["fil", "bis"]:
+		var t: Dictionary = talk[lang]
+		check(t.keys().size() == en.keys().size(), "%s has as many lines as English" % lang)
+		for key in en:
+			check(t.has(key) and str(t[key]).strip_edges() != "", "%s has '%s'" % [lang, key])
+			var want := slots.search_all(str(en[key])).map(func(m): return m.get_string())
+			var got := slots.search_all(str(t.get(key, ""))).map(func(m): return m.get_string())
+			check(want == got, "%s '%s' keeps the slots %s" % [lang, key, want])
+			check(not _has_emoji(str(t.get(key, ""))), "%s '%s' has no emoji" % [lang, key])
+
+
+## The buddy's Filipino and Bisaya lines cover every state but the hints (those follow the lesson).
+func test_buddy_lines_cover_every_state() -> void:
+	var en: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://content/companion_lines.json"))
+	for path in ["res://content/companion_lines.fil.json", "res://content/companion_lines.bis.json"]:
+		var text := FileAccess.get_file_as_string(path)
+		var d = JSON.parse_string(text)
+		check(typeof(d) == TYPE_DICTIONARY, "%s loads" % path)
+		check(not _has_emoji(text), "%s has no emoji" % path)
+		for state in en:
+			if state == "note" or str(state).begins_with("hint_"):
+				continue
+			check(d.has(state) and d[state] is Array and not d[state].is_empty(), "%s has '%s'" % [path, state])
+
+
+## Rina's inner ears are pink; Roco's keep the drawing's own color.
+func test_rina_has_her_details() -> void:
+	var pp: RacoonPuppet = load("res://scenes/companion/racoon_puppet.tscn").instantiate()
+	pp._ensure_nodes()
+	check(pp._ear_tint(0.5) == Color(1, 1, 1, 0.5), "Roco's inner ears: the drawing's color")
+	pp.girl = true
+	check(pp._ear_tint(0.5) == Color(RacoonPuppet.GIRL_EAR, 0.5), "Rina's inner ears: pink")
+	check(pp._bow_n != null and pp._bow_n.get_parent() == pp._head_items, "Rina's bow sits with the head items")
+	var front: Dictionary = RacoonPuppet._head_decal(-44.0, -82.0, 0.0, 1.0, 0.0)
+	var back: Dictionary = RacoonPuppet._head_decal(-44.0, -82.0, PI, 1.0, 0.0)
+	check(front.v > 0.3 and back.v < 0.0, "the bow faces you from the front and hides from behind")
+	pp.free()

@@ -1,44 +1,801 @@
 {
-  "version": 1,
-  "note": "PLACEHOLDER CONTENT in Filipino for Level 4 (MATATAG bridge: L3-4 Filipino). Stories are at most 100 words, community-centred for Butuan learners. Teachers must review facts (the balangay story), vocabulary and cultural fit before the study.",
-  "passages": {
-    "p4-balangay": {"level": 4, "language": "fil-placeholder", "scene": "bay", "title": "Ang Balangay",
-      "text": "Noong unang panahon, gumawa ang mga tao sa Butuan ng mahahabang bangka. Tinatawag itong balangay. Gawa ito sa matibay na kahoy. Sumasakay rito ang maraming tao. Ginagamit nila ito sa paglalayag sa malawak na dagat. Dala nila ang bigas, isda at mga paninda. Ngayon, makikita pa rin ang balangay sa museo ng Butuan. Ipinagmamalaki ito ng mga taga-Butuan."},
-    "p4-ulan": {"level": 4, "language": "fil-placeholder", "scene": "village", "title": "Ang Malakas na Ulan",
-      "text": "Isang hapon, biglang dumilim ang langit. Umihip ang malakas na hangin. Tinawag ni Nanay si Mila. “Mila, umuwi ka na! Uulan na!” Tumakbo si Mila pauwi sa bahay. Pagdating niya, bumuhos ang malakas na ulan. Hindi nabasa si Mila. Nagpasalamat siya kay Nanay. Uminom sila ng mainit na tsokolate habang nakikinig sa ulan."},
-    "p4-hardin": {"level": 4, "language": "fil-placeholder", "scene": "grove", "title": "Ang Hardin ni Lolo",
-      "text": "Si Lolo Pedro ay may hardin sa likod ng bahay. May tanim siyang mangga, saging at kamatis. Tuwing Sabado, tinutulungan siya ni Rico. Nagdidilig sila ng mga halaman. Nagbubunot din sila ng damo. Isang Sabado, hinog na ang mga mangga. Pumitas sila ng sampung mangga. Ibinahagi nila ang mga ito sa mga kapitbahay. Natuwa ang lahat."}
-  },
-  "items": [
-    {"id": "vo4-01", "sub_skill": "vocabulary", "level": 4, "competency": "RL1VWK-I-2b", "language": "fil-placeholder", "task_type": "tap_choice", "prompt": "Ano ang ibig sabihin ng matamis?", "tts_text": "Matamis ang hinog na mangga. Ano ang ibig sabihin ng matamis?", "sentence": "Matamis ang hinog na mangga.", "choices": [{"id": "asukal", "label": "parang asukal"}, {"id": "asin", "label": "parang asin"}, {"id": "yelo", "label": "parang yelo"}], "answer": "asukal", "recovery": false},
-    {"id": "vo4-02", "sub_skill": "vocabulary", "level": 4, "competency": "RL1VWK-I-4", "language": "fil-placeholder", "task_type": "tap_choice", "prompt": "Alin ang may tatlong isda?", "tts_text": "Alin ang may tatlong isda?", "choices": [{"id": "1", "picture": "fish", "repeat": 1}, {"id": "3", "picture": "fish", "repeat": 3}, {"id": "2", "picture": "fish", "repeat": 2}], "answer": "3", "recovery": false},
-    {"id": "vo4-03", "sub_skill": "vocabulary", "level": 4, "competency": "RL1VWK-I-4", "language": "fil-placeholder", "task_type": "tap_choice", "prompt": "Alin ang may apat na bituin?", "tts_text": "Alin ang may apat na bituin?", "choices": [{"id": "2", "picture": "star", "repeat": 2}, {"id": "4", "picture": "star", "repeat": 4}, {"id": "3", "picture": "star", "repeat": 3}], "answer": "4", "recovery": false},
-    {"id": "vo4-04", "sub_skill": "vocabulary", "level": 4, "competency": "RL1VWK-I-4", "language": "fil-placeholder", "task_type": "tap_choice", "prompt": "Alin ang pagkaing nagpapalakas?", "tts_text": "Alin ang pagkaing nagpapalakas ng katawan?", "choices": [{"id": "cake", "label": "keyk", "picture": "cake"}, {"id": "apple", "label": "mansanas", "picture": "apple"}], "answer": "apple", "recovery": false},
-    {"id": "vo4-05", "sub_skill": "vocabulary", "level": 4, "competency": "RL1VWK-I-4", "language": "fil-placeholder", "task_type": "tap_choice", "prompt": "Alin ang nakatira sa tubig?", "tts_text": "Alin ang nakatira sa tubig?", "choices": [{"id": "dog", "label": "aso", "picture": "dog"}, {"id": "fish", "label": "isda", "picture": "fish"}, {"id": "hen", "label": "manok", "picture": "hen"}], "answer": "fish", "recovery": false},
-    {"id": "vo4-06", "sub_skill": "vocabulary", "level": 4, "competency": "RL1VWK-I-4", "language": "fil-placeholder", "task_type": "tap_choice", "prompt": "Tinulungan ka ng kaibigan mo. Ano ang sasabihin mo?", "tts_text": "Tinulungan ka ng kaibigan mo. Ano ang sasabihin mo?", "choices": [{"id": "salamat", "label": "Salamat po."}, {"id": "ayoko", "label": "Ayoko."}, {"id": "alis", "label": "Umalis ka."}], "answer": "salamat", "recovery": false},
-    {"id": "vo4-07", "sub_skill": "vocabulary", "level": 4, "competency": "RL1VWK-I-4", "language": "fil-placeholder", "task_type": "tap_choice", "prompt": "Nabangga mo ang kaklase mo. Ano ang sasabihin mo?", "tts_text": "Nabangga mo ang kaklase mo. Ano ang sasabihin mo?", "choices": [{"id": "umaga", "label": "Magandang umaga."}, {"id": "pasensya", "label": "Pasensya na po."}, {"id": "salamat", "label": "Salamat."}], "answer": "pasensya", "recovery": false},
-    {"id": "vo4-08", "sub_skill": "vocabulary", "level": 4, "competency": "RL1VWK-I-2b", "language": "fil-placeholder", "task_type": "tap_choice", "prompt": "Alin ang salitang naglalarawan?", "tts_text": "Alin ang salitang naglalarawan? Bahay, maganda, o tumakbo?", "choices": [{"id": "bahay", "label": "bahay"}, {"id": "maganda", "label": "maganda"}, {"id": "tumakbo", "label": "tumakbo"}], "answer": "maganda", "recovery": false},
-
-    {"id": "fl4-01", "sub_skill": "fluency", "level": 4, "competency": "RL1BPK-I-3c", "language": "fil-placeholder", "task_type": "order_tiles", "variant": "sentence", "prompt": "Ayusin ang mga salita.", "tts_text": "Ang balangay ay mahabang bangka. Ayusin ang mga salita.", "picture": "boat", "tiles": ["Ang", "balangay", "ay", "mahabang", "bangka."], "answer": "Ang|balangay|ay|mahabang|bangka.", "recovery": false},
-    {"id": "fl4-02", "sub_skill": "fluency", "level": 4, "competency": "RL1BPK-I-3c", "language": "fil-placeholder", "task_type": "order_tiles", "variant": "sentence", "prompt": "Ayusin ang mga salita.", "tts_text": "Nagdidilig si Rico ng halaman. Ayusin ang mga salita.", "picture": "tree", "tiles": ["Nagdidilig", "si", "Rico", "ng", "halaman."], "answer": "Nagdidilig|si|Rico|ng|halaman.", "recovery": false},
-    {"id": "fl4-03", "sub_skill": "fluency", "level": 4, "competency": "RL1BPK-I-3c", "language": "fil-placeholder", "task_type": "order_tiles", "variant": "sentence", "prompt": "Ayusin ang mga salita.", "tts_text": "Bumuhos ang malakas na ulan. Ayusin ang mga salita.", "tiles": ["Bumuhos", "ang", "malakas", "na", "ulan."], "answer": "Bumuhos|ang|malakas|na|ulan.", "recovery": false},
-    {"id": "fl4-04", "sub_skill": "fluency", "level": 4, "competency": "RL1BPK-I-3c", "language": "fil-placeholder", "task_type": "order_tiles", "variant": "sentence", "prompt": "Ayusin ang mga salita.", "tts_text": "Masaya ang mga bata sa palaruan. Ayusin ang mga salita.", "tiles": ["Masaya", "ang", "mga", "bata", "sa", "palaruan."], "answer": "Masaya|ang|mga|bata|sa|palaruan.", "recovery": false},
-    {"id": "fl4-05", "sub_skill": "fluency", "level": 4, "competency": "RL1PWS-I-5", "language": "fil-placeholder", "task_type": "tap_choice", "prompt": "Ano ang kulang?", "tts_text": "Uminom sila ng mainit na ano? Piliin ang tamang salita.", "sentence": "Uminom sila ng mainit na ___.", "choices": [{"id": "tsokolate", "label": "tsokolate"}, {"id": "bato", "label": "bato"}, {"id": "sapatos", "label": "sapatos"}], "answer": "tsokolate", "recovery": false},
-    {"id": "fl4-06", "sub_skill": "fluency", "level": 4, "competency": "RL1PWS-I-5", "language": "fil-placeholder", "task_type": "tap_choice", "prompt": "Ano ang kulang?", "tts_text": "Lumalangoy ang isda sa ano? Piliin ang tamang salita.", "picture": "fish", "sentence": "Lumalangoy ang isda sa ___.", "choices": [{"id": "puno", "label": "puno"}, {"id": "tubig", "label": "tubig"}, {"id": "bahay", "label": "bahay"}], "answer": "tubig", "recovery": false},
-    {"id": "fl4-07", "sub_skill": "fluency", "level": 4, "competency": "RL1PWS-I-5", "language": "fil-placeholder", "task_type": "tap_choice", "prompt": "Ano ang kulang?", "tts_text": "Sumisikat ang araw sa ano? Piliin ang tamang salita.", "picture": "sun", "sentence": "Sumisikat ang araw sa ___.", "choices": [{"id": "gabi", "label": "gabi"}, {"id": "umaga", "label": "umaga"}, {"id": "hatinggabi", "label": "hatinggabi"}], "answer": "umaga", "recovery": false},
-    {"id": "fl4-08", "sub_skill": "fluency", "level": 4, "competency": "RL1BPK-I-3c", "language": "fil-placeholder", "task_type": "order_tiles", "variant": "sentence", "prompt": "Ayusin ang mga salita.", "tts_text": "Pumitas sila ng hinog na mangga. Ayusin ang mga salita.", "tiles": ["Pumitas", "sila", "ng", "hinog", "na", "mangga."], "answer": "Pumitas|sila|ng|hinog|na|mangga.", "recovery": false},
-
-    {"id": "lc4-01", "sub_skill": "literal_comprehension", "level": 4, "competency": "RL1CAT-I-3a", "language": "fil-placeholder", "task_type": "tap_choice", "passage": "p4-balangay", "prompt": "Ano ang balangay?", "tts_text": "Ano ang balangay?", "choices": [{"id": "bangka", "label": "isang mahabang bangka", "picture": "boat"}, {"id": "bahay", "label": "isang malaking bahay", "picture": "house"}, {"id": "puno", "label": "isang matandang puno", "picture": "tree"}], "answer": "bangka", "recovery": false},
-    {"id": "lc4-02", "sub_skill": "literal_comprehension", "level": 4, "competency": "RL1CAT-I-3a", "language": "fil-placeholder", "task_type": "tap_choice", "passage": "p4-balangay", "prompt": "Saan gawa ang balangay?", "tts_text": "Saan gawa ang balangay?", "choices": [{"id": "bato", "label": "bato"}, {"id": "kahoy", "label": "kahoy"}, {"id": "papel", "label": "papel"}], "answer": "kahoy", "recovery": false},
-    {"id": "lc4-03", "sub_skill": "literal_comprehension", "level": 4, "competency": "RL1CAT-I-3a", "language": "fil-placeholder", "task_type": "tap_choice", "passage": "p4-balangay", "prompt": "Saan makikita ngayon ang balangay?", "tts_text": "Saan makikita ngayon ang balangay?", "choices": [{"id": "paaralan", "label": "sa paaralan"}, {"id": "palengke", "label": "sa palengke"}, {"id": "museo", "label": "sa museo ng Butuan"}], "answer": "museo", "recovery": false},
-    {"id": "lc4-04", "sub_skill": "literal_comprehension", "level": 4, "competency": "RL1CAT-I-2c", "language": "fil-placeholder", "task_type": "tap_choice", "passage": "p4-balangay", "prompt": "Ano ang nararamdaman ng mga taga-Butuan sa balangay?", "tts_text": "Ano ang nararamdaman ng mga taga-Butuan sa balangay?", "choices": [{"id": "proud", "label": "Ipinagmamalaki nila ito."}, {"id": "takot", "label": "Takot sila rito."}, {"id": "galit", "label": "Galit sila rito."}], "answer": "proud", "recovery": false},
-    {"id": "lc4-05", "sub_skill": "literal_comprehension", "level": 4, "competency": "RL1CAT-I-2a", "language": "fil-placeholder", "task_type": "tap_choice", "passage": "p4-ulan", "prompt": "Kailan nangyari ang kuwento?", "tts_text": "Kailan nangyari ang kuwento?", "choices": [{"id": "umaga", "label": "isang umaga"}, {"id": "hapon", "label": "isang hapon"}, {"id": "gabi", "label": "isang gabi"}], "answer": "hapon", "recovery": false},
-    {"id": "lc4-06", "sub_skill": "literal_comprehension", "level": 4, "competency": "RL1CAT-I-2f", "language": "fil-placeholder", "task_type": "tap_choice", "passage": "p4-ulan", "prompt": "Bakit tumakbo pauwi si Mila?", "tts_text": "Bakit tumakbo pauwi si Mila?", "choices": [{"id": "ulan", "label": "Uulan na."}, {"id": "gutom", "label": "Gutom na siya."}, {"id": "aso", "label": "May humahabol na aso."}], "answer": "ulan", "recovery": false},
-    {"id": "lc4-07", "sub_skill": "literal_comprehension", "level": 4, "competency": "RL1CAT-I-2f", "language": "fil-placeholder", "task_type": "tap_choice", "passage": "p4-ulan", "prompt": "Bakit hindi nabasa si Mila?", "tts_text": "Bakit hindi nabasa si Mila?", "choices": [{"id": "payong", "label": "May payong siya."}, {"id": "uwi", "label": "Nakauwi siya bago umulan."}, {"id": "hindi", "label": "Hindi umulan."}], "answer": "uwi", "recovery": false},
-    {"id": "lc4-08", "sub_skill": "literal_comprehension", "level": 4, "competency": "RL1CAT-I-2b", "language": "fil-placeholder", "task_type": "order_tiles", "variant": "sequence", "passage": "p4-ulan", "prompt": "Ayusin ang kuwento.", "tts_text": "Ano ang unang nangyari? Ayusin ang kuwento.", "tiles": [{"id": "a", "text": "Dumilim ang langit.", "picture": "cloud"}, {"id": "b", "text": "Tumakbo si Mila pauwi.", "picture": "house"}, {"id": "c", "text": "Bumuhos ang malakas na ulan.", "picture": "waves"}], "answer": "a|b|c", "recovery": false},
-    {"id": "lc4-09", "sub_skill": "literal_comprehension", "level": 4, "competency": "RL1CAT-I-2a", "language": "fil-placeholder", "task_type": "tap_choice", "passage": "p4-hardin", "prompt": "Sino ang tumutulong kay Lolo Pedro?", "tts_text": "Sino ang tumutulong kay Lolo Pedro?", "choices": [{"id": "mila", "label": "Si Mila"}, {"id": "rico", "label": "Si Rico"}, {"id": "ben", "label": "Si Ben"}], "answer": "rico", "recovery": false},
-    {"id": "lc4-10", "sub_skill": "literal_comprehension", "level": 4, "competency": "RL1CAT-I-2a", "language": "fil-placeholder", "task_type": "tap_choice", "passage": "p4-hardin", "prompt": "Kailan tumutulong si Rico?", "tts_text": "Kailan tumutulong si Rico?", "choices": [{"id": "sabado", "label": "tuwing Sabado"}, {"id": "lunes", "label": "tuwing Lunes"}, {"id": "gabi", "label": "tuwing gabi"}], "answer": "sabado", "recovery": false},
-    {"id": "lc4-11", "sub_skill": "literal_comprehension", "level": 4, "competency": "RL1CAT-I-2a", "language": "fil-placeholder", "task_type": "tap_choice", "passage": "p4-hardin", "prompt": "Ilang mangga ang pinitas nila?", "tts_text": "Ilang mangga ang pinitas nila?", "choices": [{"id": "5", "label": "lima"}, {"id": "10", "label": "sampu"}, {"id": "2", "label": "dalawa"}], "answer": "10", "recovery": false},
-    {"id": "lc4-12", "sub_skill": "literal_comprehension", "level": 4, "competency": "RL1CAT-I-3b", "language": "fil-placeholder", "task_type": "tap_choice", "passage": "p4-hardin", "prompt": "Ano ang ginawa nila sa mga mangga?", "tts_text": "Ano ang ginawa nila sa mga mangga?", "choices": [{"id": "bahagi", "label": "Ibinahagi sa mga kapitbahay."}, {"id": "tapon", "label": "Itinapon nila."}, {"id": "tago", "label": "Itinago nilang lahat."}], "answer": "bahagi", "recovery": false}
-  ]
+	"version": 1.0,
+	"note": "PLACEHOLDER CONTENT in Filipino for Level 4 (MATATAG bridge: L3-4 Filipino). Stories are at most 100 words, community-centred for Butuan learners. Teachers must review facts (the balangay story), vocabulary and cultural fit before the study.",
+	"passages": {
+		"p4-balangay": {
+			"level": 4.0,
+			"language": "fil-placeholder",
+			"scene": "bay",
+			"title": "Ang Balangay",
+			"text": "Noong unang panahon, gumawa ang mga tao sa Butuan ng mahahabang bangka. Tinatawag itong balangay. Gawa ito sa matibay na kahoy. Sumasakay rito ang maraming tao. Ginagamit nila ito sa paglalayag sa malawak na dagat. Dala nila ang bigas, isda at mga paninda. Ngayon, makikita pa rin ang balangay sa museo ng Butuan. Ipinagmamalaki ito ng mga taga-Butuan."
+		},
+		"p4-ulan": {
+			"level": 4.0,
+			"language": "fil-placeholder",
+			"scene": "village",
+			"title": "Ang Malakas na Ulan",
+			"text": "Isang hapon, biglang dumilim ang langit. Umihip ang malakas na hangin. Tinawag ni Nanay si Mila. “Mila, umuwi ka na! Uulan na!” Tumakbo si Mila pauwi sa bahay. Pagdating niya, bumuhos ang malakas na ulan. Hindi nabasa si Mila. Nagpasalamat siya kay Nanay. Uminom sila ng mainit na tsokolate habang nakikinig sa ulan."
+		},
+		"p4-hardin": {
+			"level": 4.0,
+			"language": "fil-placeholder",
+			"scene": "grove",
+			"title": "Ang Hardin ni Lolo",
+			"text": "Si Lolo Pedro ay may hardin sa likod ng bahay. May tanim siyang mangga, saging at kamatis. Tuwing Sabado, tinutulungan siya ni Rico. Nagdidilig sila ng mga halaman. Nagbubunot din sila ng damo. Isang Sabado, hinog na ang mga mangga. Pumitas sila ng sampung mangga. Ibinahagi nila ang mga ito sa mga kapitbahay. Natuwa ang lahat."
+		}
+	},
+	"items": [
+		{
+			"id": "vo4-01",
+			"sub_skill": "vocabulary",
+			"level": 4.0,
+			"competency": "RL1VWK-I-2b",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Ano ang ibig sabihin ng matamis?",
+			"tts_text": "Matamis ang hinog na mangga. Ano ang ibig sabihin ng matamis?",
+			"sentence": "Matamis ang hinog na mangga.",
+			"choices": [
+				{
+					"id": "asukal",
+					"label": "parang asukal"
+				},
+				{
+					"id": "asin",
+					"label": "parang asin"
+				},
+				{
+					"id": "yelo",
+					"label": "parang yelo"
+				}
+			],
+			"answer": "asukal",
+			"recovery": false,
+			"hint": "Isipin ang lasa ng hinog na mangga. Parang ano ito?",
+			"explain": "Ang matamis ay parang asukal. Maalat naman ang asin."
+		},
+		{
+			"id": "vo4-02",
+			"sub_skill": "vocabulary",
+			"level": 4.0,
+			"competency": "RL1VWK-I-4",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Alin ang may tatlong isda?",
+			"tts_text": "Alin ang may tatlong isda?",
+			"choices": [
+				{
+					"id": "1",
+					"picture": "fish",
+					"repeat": 1.0
+				},
+				{
+					"id": "3",
+					"picture": "fish",
+					"repeat": 3.0
+				},
+				{
+					"id": "2",
+					"picture": "fish",
+					"repeat": 2.0
+				}
+			],
+			"answer": "3",
+			"recovery": false,
+			"hint": "Bilangin ang isda sa bawat larawan: isa, dalawa, tatlo.",
+			"explain": "Isa, dalawa, tatlo. Tatlong isda!"
+		},
+		{
+			"id": "vo4-03",
+			"sub_skill": "vocabulary",
+			"level": 4.0,
+			"competency": "RL1VWK-I-4",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Alin ang may apat na bituin?",
+			"tts_text": "Alin ang may apat na bituin?",
+			"choices": [
+				{
+					"id": "2",
+					"picture": "star",
+					"repeat": 2.0
+				},
+				{
+					"id": "4",
+					"picture": "star",
+					"repeat": 4.0
+				},
+				{
+					"id": "3",
+					"picture": "star",
+					"repeat": 3.0
+				}
+			],
+			"answer": "4",
+			"recovery": false,
+			"hint": "Bilangin ang bituin sa bawat larawan: isa, dalawa, tatlo, apat.",
+			"explain": "Isa, dalawa, tatlo, apat. Apat na bituin!"
+		},
+		{
+			"id": "vo4-04",
+			"sub_skill": "vocabulary",
+			"level": 4.0,
+			"competency": "RL1VWK-I-4",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Alin ang pagkaing nagpapalakas?",
+			"tts_text": "Alin ang pagkaing nagpapalakas ng katawan?",
+			"choices": [
+				{
+					"id": "cake",
+					"label": "keyk",
+					"picture": "cake"
+				},
+				{
+					"id": "apple",
+					"label": "mansanas",
+					"picture": "apple"
+				}
+			],
+			"answer": "apple",
+			"recovery": false,
+			"hint": "Alin ang prutas? Ang prutas ay nagpapalakas ng katawan.",
+			"explain": "Ang mansanas ay prutas. Nagpapalakas ito ng katawan."
+		},
+		{
+			"id": "vo4-05",
+			"sub_skill": "vocabulary",
+			"level": 4.0,
+			"competency": "RL1VWK-I-4",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Alin ang nakatira sa tubig?",
+			"tts_text": "Alin ang nakatira sa tubig?",
+			"choices": [
+				{
+					"id": "dog",
+					"label": "aso",
+					"picture": "dog"
+				},
+				{
+					"id": "fish",
+					"label": "isda",
+					"picture": "fish"
+				},
+				{
+					"id": "hen",
+					"label": "manok",
+					"picture": "hen"
+				}
+			],
+			"answer": "fish",
+			"recovery": false,
+			"hint": "Aling hayop ang lumalangoy?",
+			"explain": "Ang isda ay nakatira sa tubig. Lumalangoy ito."
+		},
+		{
+			"id": "vo4-06",
+			"sub_skill": "vocabulary",
+			"level": 4.0,
+			"competency": "RL1VWK-I-4",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Tinulungan ka ng kaibigan mo. Ano ang sasabihin mo?",
+			"tts_text": "Tinulungan ka ng kaibigan mo. Ano ang sasabihin mo?",
+			"choices": [
+				{
+					"id": "salamat",
+					"label": "Salamat po."
+				},
+				{
+					"id": "ayoko",
+					"label": "Ayoko."
+				},
+				{
+					"id": "alis",
+					"label": "Umalis ka."
+				}
+			],
+			"answer": "salamat",
+			"recovery": false,
+			"hint": "Ano ang sinasabi natin kapag may tumulong sa atin?",
+			"explain": "Kapag may tumulong sa iyo, sabihin: Salamat po."
+		},
+		{
+			"id": "vo4-07",
+			"sub_skill": "vocabulary",
+			"level": 4.0,
+			"competency": "RL1VWK-I-4",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Nabangga mo ang kaklase mo. Ano ang sasabihin mo?",
+			"tts_text": "Nabangga mo ang kaklase mo. Ano ang sasabihin mo?",
+			"choices": [
+				{
+					"id": "umaga",
+					"label": "Magandang umaga."
+				},
+				{
+					"id": "pasensya",
+					"label": "Pasensya na po."
+				},
+				{
+					"id": "salamat",
+					"label": "Salamat."
+				}
+			],
+			"answer": "pasensya",
+			"recovery": false,
+			"hint": "Ano ang sinasabi natin kapag may nagawa tayong mali sa iba?",
+			"explain": "Kapag may nabangga ka, sabihin: Pasensya na po."
+		},
+		{
+			"id": "vo4-08",
+			"sub_skill": "vocabulary",
+			"level": 4.0,
+			"competency": "RL1VWK-I-2b",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Alin ang salitang naglalarawan?",
+			"tts_text": "Alin ang salitang naglalarawan? Bahay, maganda, o tumakbo?",
+			"choices": [
+				{
+					"id": "bahay",
+					"label": "bahay"
+				},
+				{
+					"id": "maganda",
+					"label": "maganda"
+				},
+				{
+					"id": "tumakbo",
+					"label": "tumakbo"
+				}
+			],
+			"answer": "maganda",
+			"recovery": false,
+			"hint": "Ang salitang naglalarawan ay nagsasabi kung ano ang itsura ng isang bagay.",
+			"explain": "Ang maganda ay naglalarawan. Ang bahay ay bagay, at ang tumakbo ay kilos."
+		},
+		{
+			"id": "fl4-01",
+			"sub_skill": "fluency",
+			"level": 4.0,
+			"competency": "RL1BPK-I-3c",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"variant": "sentence",
+			"prompt": "Ayusin ang mga salita.",
+			"tts_text": "Ang balangay ay mahabang bangka. Ayusin ang mga salita.",
+			"picture": "boat",
+			"tiles": [
+				"Ang",
+				"balangay",
+				"ay",
+				"mahabang",
+				"bangka."
+			],
+			"answer": "Ang|balangay|ay|mahabang|bangka.",
+			"recovery": false
+		},
+		{
+			"id": "fl4-02",
+			"sub_skill": "fluency",
+			"level": 4.0,
+			"competency": "RL1BPK-I-3c",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"variant": "sentence",
+			"prompt": "Ayusin ang mga salita.",
+			"tts_text": "Nagdidilig si Rico ng halaman. Ayusin ang mga salita.",
+			"picture": "tree",
+			"tiles": [
+				"Nagdidilig",
+				"si",
+				"Rico",
+				"ng",
+				"halaman."
+			],
+			"answer": "Nagdidilig|si|Rico|ng|halaman.",
+			"recovery": false
+		},
+		{
+			"id": "fl4-03",
+			"sub_skill": "fluency",
+			"level": 4.0,
+			"competency": "RL1BPK-I-3c",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"variant": "sentence",
+			"prompt": "Ayusin ang mga salita.",
+			"tts_text": "Bumuhos ang malakas na ulan. Ayusin ang mga salita.",
+			"tiles": [
+				"Bumuhos",
+				"ang",
+				"malakas",
+				"na",
+				"ulan."
+			],
+			"answer": "Bumuhos|ang|malakas|na|ulan.",
+			"recovery": false
+		},
+		{
+			"id": "fl4-04",
+			"sub_skill": "fluency",
+			"level": 4.0,
+			"competency": "RL1BPK-I-3c",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"variant": "sentence",
+			"prompt": "Ayusin ang mga salita.",
+			"tts_text": "Masaya ang mga bata sa palaruan. Ayusin ang mga salita.",
+			"tiles": [
+				"Masaya",
+				"ang",
+				"mga",
+				"bata",
+				"sa",
+				"palaruan."
+			],
+			"answer": "Masaya|ang|mga|bata|sa|palaruan.",
+			"recovery": false
+		},
+		{
+			"id": "fl4-05",
+			"sub_skill": "fluency",
+			"level": 4.0,
+			"competency": "RL1PWS-I-5",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Ano ang kulang?",
+			"tts_text": "Uminom sila ng mainit na ano? Piliin ang tamang salita.",
+			"sentence": "Uminom sila ng mainit na ___.",
+			"choices": [
+				{
+					"id": "tsokolate",
+					"label": "tsokolate"
+				},
+				{
+					"id": "bato",
+					"label": "bato"
+				},
+				{
+					"id": "sapatos",
+					"label": "sapatos"
+				}
+			],
+			"answer": "tsokolate",
+			"recovery": false
+		},
+		{
+			"id": "fl4-06",
+			"sub_skill": "fluency",
+			"level": 4.0,
+			"competency": "RL1PWS-I-5",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Ano ang kulang?",
+			"tts_text": "Lumalangoy ang isda sa ano? Piliin ang tamang salita.",
+			"picture": "fish",
+			"sentence": "Lumalangoy ang isda sa ___.",
+			"choices": [
+				{
+					"id": "puno",
+					"label": "puno"
+				},
+				{
+					"id": "tubig",
+					"label": "tubig"
+				},
+				{
+					"id": "bahay",
+					"label": "bahay"
+				}
+			],
+			"answer": "tubig",
+			"recovery": false
+		},
+		{
+			"id": "fl4-07",
+			"sub_skill": "fluency",
+			"level": 4.0,
+			"competency": "RL1PWS-I-5",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Ano ang kulang?",
+			"tts_text": "Sumisikat ang araw sa ano? Piliin ang tamang salita.",
+			"picture": "sun",
+			"sentence": "Sumisikat ang araw sa ___.",
+			"choices": [
+				{
+					"id": "gabi",
+					"label": "gabi"
+				},
+				{
+					"id": "umaga",
+					"label": "umaga"
+				},
+				{
+					"id": "hatinggabi",
+					"label": "hatinggabi"
+				}
+			],
+			"answer": "umaga",
+			"recovery": false
+		},
+		{
+			"id": "fl4-08",
+			"sub_skill": "fluency",
+			"level": 4.0,
+			"competency": "RL1BPK-I-3c",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"variant": "sentence",
+			"prompt": "Ayusin ang mga salita.",
+			"tts_text": "Pumitas sila ng hinog na mangga. Ayusin ang mga salita.",
+			"tiles": [
+				"Pumitas",
+				"sila",
+				"ng",
+				"hinog",
+				"na",
+				"mangga."
+			],
+			"answer": "Pumitas|sila|ng|hinog|na|mangga.",
+			"recovery": false
+		},
+		{
+			"id": "lc4-01",
+			"sub_skill": "literal_comprehension",
+			"level": 4.0,
+			"competency": "RL1CAT-I-3a",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"passage": "p4-balangay",
+			"prompt": "Ano ang balangay?",
+			"tts_text": "Ano ang balangay?",
+			"choices": [
+				{
+					"id": "bangka",
+					"label": "isang mahabang bangka",
+					"picture": "boat"
+				},
+				{
+					"id": "bahay",
+					"label": "isang malaking bahay",
+					"picture": "house"
+				},
+				{
+					"id": "puno",
+					"label": "isang matandang puno",
+					"picture": "tree"
+				}
+			],
+			"answer": "bangka",
+			"recovery": false,
+			"hint": "Saan sumasakay ang maraming tao para maglayag sa dagat?",
+			"explain": "Sabi sa kuwento: Ang balangay ay mahabang bangka."
+		},
+		{
+			"id": "lc4-02",
+			"sub_skill": "literal_comprehension",
+			"level": 4.0,
+			"competency": "RL1CAT-I-3a",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"passage": "p4-balangay",
+			"prompt": "Saan gawa ang balangay?",
+			"tts_text": "Saan gawa ang balangay?",
+			"choices": [
+				{
+					"id": "bato",
+					"label": "bato"
+				},
+				{
+					"id": "kahoy",
+					"label": "kahoy"
+				},
+				{
+					"id": "papel",
+					"label": "papel"
+				}
+			],
+			"answer": "kahoy",
+			"recovery": false,
+			"hint": "Ang balangay ay galing sa matibay na puno.",
+			"explain": "Sabi sa kuwento: Gawa ito sa matibay na kahoy."
+		},
+		{
+			"id": "lc4-03",
+			"sub_skill": "literal_comprehension",
+			"level": 4.0,
+			"competency": "RL1CAT-I-3a",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"passage": "p4-balangay",
+			"prompt": "Saan makikita ngayon ang balangay?",
+			"tts_text": "Saan makikita ngayon ang balangay?",
+			"choices": [
+				{
+					"id": "paaralan",
+					"label": "sa paaralan"
+				},
+				{
+					"id": "palengke",
+					"label": "sa palengke"
+				},
+				{
+					"id": "museo",
+					"label": "sa museo ng Butuan"
+				}
+			],
+			"answer": "museo",
+			"recovery": false,
+			"hint": "Saan inilalagay ang mga lumang bagay para makita ng lahat?",
+			"explain": "Sabi sa kuwento: Makikita pa rin ang balangay sa museo ng Butuan."
+		},
+		{
+			"id": "lc4-04",
+			"sub_skill": "literal_comprehension",
+			"level": 4.0,
+			"competency": "RL1CAT-I-2c",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"passage": "p4-balangay",
+			"prompt": "Ano ang nararamdaman ng mga taga-Butuan sa balangay?",
+			"tts_text": "Ano ang nararamdaman ng mga taga-Butuan sa balangay?",
+			"choices": [
+				{
+					"id": "proud",
+					"label": "Ipinagmamalaki nila ito."
+				},
+				{
+					"id": "takot",
+					"label": "Takot sila rito."
+				},
+				{
+					"id": "galit",
+					"label": "Galit sila rito."
+				}
+			],
+			"answer": "proud",
+			"recovery": false,
+			"hint": "Pakinggan ang huling pangungusap ng kuwento.",
+			"explain": "Sabi sa kuwento: Ipinagmamalaki ito ng mga taga-Butuan."
+		},
+		{
+			"id": "lc4-05",
+			"sub_skill": "literal_comprehension",
+			"level": 4.0,
+			"competency": "RL1CAT-I-2a",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"passage": "p4-ulan",
+			"prompt": "Kailan nangyari ang kuwento?",
+			"tts_text": "Kailan nangyari ang kuwento?",
+			"choices": [
+				{
+					"id": "umaga",
+					"label": "isang umaga"
+				},
+				{
+					"id": "hapon",
+					"label": "isang hapon"
+				},
+				{
+					"id": "gabi",
+					"label": "isang gabi"
+				}
+			],
+			"answer": "hapon",
+			"recovery": false,
+			"hint": "Hindi ito umaga at hindi rin gabi.",
+			"explain": "Sabi sa kuwento: Isang hapon, biglang dumilim ang langit."
+		},
+		{
+			"id": "lc4-06",
+			"sub_skill": "literal_comprehension",
+			"level": 4.0,
+			"competency": "RL1CAT-I-2f",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"passage": "p4-ulan",
+			"prompt": "Bakit tumakbo pauwi si Mila?",
+			"tts_text": "Bakit tumakbo pauwi si Mila?",
+			"choices": [
+				{
+					"id": "ulan",
+					"label": "Uulan na."
+				},
+				{
+					"id": "gutom",
+					"label": "Gutom na siya."
+				},
+				{
+					"id": "aso",
+					"label": "May humahabol na aso."
+				}
+			],
+			"answer": "ulan",
+			"recovery": false,
+			"hint": "Ano ang sinabi ni Nanay kay Mila?",
+			"explain": "Sabi ni Nanay: Mila, umuwi ka na! Uulan na!"
+		},
+		{
+			"id": "lc4-07",
+			"sub_skill": "literal_comprehension",
+			"level": 4.0,
+			"competency": "RL1CAT-I-2f",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"passage": "p4-ulan",
+			"prompt": "Bakit hindi nabasa si Mila?",
+			"tts_text": "Bakit hindi nabasa si Mila?",
+			"choices": [
+				{
+					"id": "payong",
+					"label": "May payong siya."
+				},
+				{
+					"id": "uwi",
+					"label": "Nakauwi siya bago umulan."
+				},
+				{
+					"id": "hindi",
+					"label": "Hindi umulan."
+				}
+			],
+			"answer": "uwi",
+			"recovery": false,
+			"hint": "Kailan bumuhos ang ulan: bago o pagkatapos makauwi ni Mila?",
+			"explain": "Sabi sa kuwento: Pagdating niya, saka bumuhos ang ulan. Nakauwi siya bago umulan."
+		},
+		{
+			"id": "lc4-08",
+			"sub_skill": "literal_comprehension",
+			"level": 4.0,
+			"competency": "RL1CAT-I-2b",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"variant": "sequence",
+			"passage": "p4-ulan",
+			"prompt": "Ayusin ang kuwento.",
+			"tts_text": "Ano ang unang nangyari? Ayusin ang kuwento.",
+			"tiles": [
+				{
+					"id": "a",
+					"text": "Dumilim ang langit.",
+					"picture": "cloud"
+				},
+				{
+					"id": "b",
+					"text": "Tumakbo si Mila pauwi.",
+					"picture": "house"
+				},
+				{
+					"id": "c",
+					"text": "Bumuhos ang malakas na ulan.",
+					"picture": "waves"
+				}
+			],
+			"answer": "a|b|c",
+			"recovery": false
+		},
+		{
+			"id": "lc4-09",
+			"sub_skill": "literal_comprehension",
+			"level": 4.0,
+			"competency": "RL1CAT-I-2a",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"passage": "p4-hardin",
+			"prompt": "Sino ang tumutulong kay Lolo Pedro?",
+			"tts_text": "Sino ang tumutulong kay Lolo Pedro?",
+			"choices": [
+				{
+					"id": "mila",
+					"label": "Si Mila"
+				},
+				{
+					"id": "rico",
+					"label": "Si Rico"
+				},
+				{
+					"id": "ben",
+					"label": "Si Ben"
+				}
+			],
+			"answer": "rico",
+			"recovery": false,
+			"hint": "Sino ang batang kasama ni Lolo tuwing Sabado?",
+			"explain": "Sabi sa kuwento: Tuwing Sabado, tinutulungan siya ni Rico."
+		},
+		{
+			"id": "lc4-10",
+			"sub_skill": "literal_comprehension",
+			"level": 4.0,
+			"competency": "RL1CAT-I-2a",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"passage": "p4-hardin",
+			"prompt": "Kailan tumutulong si Rico?",
+			"tts_text": "Kailan tumutulong si Rico?",
+			"choices": [
+				{
+					"id": "sabado",
+					"label": "tuwing Sabado"
+				},
+				{
+					"id": "lunes",
+					"label": "tuwing Lunes"
+				},
+				{
+					"id": "gabi",
+					"label": "tuwing gabi"
+				}
+			],
+			"answer": "sabado",
+			"recovery": false,
+			"hint": "Anong araw sila nagdidilig ng mga halaman?",
+			"explain": "Sabi sa kuwento: Tuwing Sabado, tinutulungan siya ni Rico."
+		},
+		{
+			"id": "lc4-11",
+			"sub_skill": "literal_comprehension",
+			"level": 4.0,
+			"competency": "RL1CAT-I-2a",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"passage": "p4-hardin",
+			"prompt": "Ilang mangga ang pinitas nila?",
+			"tts_text": "Ilang mangga ang pinitas nila?",
+			"choices": [
+				{
+					"id": "5",
+					"label": "lima"
+				},
+				{
+					"id": "10",
+					"label": "sampu"
+				},
+				{
+					"id": "2",
+					"label": "dalawa"
+				}
+			],
+			"answer": "10",
+			"recovery": false,
+			"hint": "Bilangin gamit ang lahat ng daliri mo.",
+			"explain": "Sabi sa kuwento: Pumitas sila ng sampung mangga."
+		},
+		{
+			"id": "lc4-12",
+			"sub_skill": "literal_comprehension",
+			"level": 4.0,
+			"competency": "RL1CAT-I-3b",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"passage": "p4-hardin",
+			"prompt": "Ano ang ginawa nila sa mga mangga?",
+			"tts_text": "Ano ang ginawa nila sa mga mangga?",
+			"choices": [
+				{
+					"id": "bahagi",
+					"label": "Ibinahagi sa mga kapitbahay."
+				},
+				{
+					"id": "tapon",
+					"label": "Itinapon nila."
+				},
+				{
+					"id": "tago",
+					"label": "Itinago nilang lahat."
+				}
+			],
+			"answer": "bahagi",
+			"recovery": false,
+			"hint": "Natuwa ang mga kapitbahay. Bakit kaya?",
+			"explain": "Sabi sa kuwento: Ibinahagi nila ang mga mangga sa mga kapitbahay."
+		}
+	]
 }

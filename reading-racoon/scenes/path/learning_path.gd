@@ -4,6 +4,9 @@ extends Control
 ## nodes, a treasure chest and a trophy. BKT decides when a world is cleared and
 ## the next one unlocks (FR-04); this screen only shows it.
 
+## On a laptop Racoon stands in a column this wide beside the map (D-023).
+const SIDE_W := 300.0
+
 @onready var scroll: ScrollContainer = %Scroll
 @onready var content: VBoxContainer = %Content
 
@@ -11,14 +14,19 @@ var _guide: Raccoon
 var _bubble: SpeechBubble
 var _focus_trail: WorldTrail
 var _focus_idx := -1
+var _side_guide := false   # Racoon stands beside the map, not on the trail
 
 
 func _ready() -> void:
 	if not GameState.guard():   # FR-12: Adventure's hours; otherwise back to the hub
 		return
-	%Reset.visible = OS.is_debug_build()
+	# Only when run from the editor: a debug APK on a class tablet must not let a
+	# child wipe their progress with one tap (D-022).
+	%Reset.visible = OS.has_feature("editor")
 	%Reset.pressed.connect(_on_reset)
 	%HomeButton.pressed.connect(GameState.go_home)   # D-015: the hub holds the Closet
+	%HomeButton.add_to_group("back_button")   # Android Back and Escape (D-023)
+	_fit_shape()
 	GameState.wallet_changed.connect(_update_top_bar)
 	_update_top_bar()
 	var timer := Timer.new()
@@ -29,20 +37,66 @@ func _ready() -> void:
 			_update_top_bar())
 	add_child(timer)
 	await _build()
+	if GameState.needs_pretest():
+		scroll.scroll_vertical = 0
+		_say(GameState.talk("path_start_top"), "happy")
+		return
 	_scroll_to_focus()
 	var chest_waiting := GameState.path.chest_ready(GameState.lesson_world)
 	_say(GameState.line("chest" if chest_waiting else "path_hello"), "happy")
 
 
+## The top bar clears a notch; on a laptop the map moves right and Racoon stands
+## on his mat in the column on the left, talking from there (D-023).
+func _fit_shape() -> void:
+	var safe := Kit.insets()
+	var bar: StyleBoxFlat = $TopBar.get_theme_stylebox("panel").duplicate()
+	bar.content_margin_top += safe.top
+	$TopBar.add_theme_stylebox_override("panel", bar)
+	$TopBar.offset_bottom += safe.top
+	scroll.offset_top += safe.top
+	if not Kit.landscape():
+		return
+	scroll.offset_left = 40 + SIDE_W + 24
+	scroll.offset_right = -24
+	var cx := 40 + SIDE_W / 2
+	var mat := BanigMat.new()
+	mat.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_pin(mat, cx - 140, cx + 140, -84, -28)
+	_guide = Raccoon.new()
+	_pin(_guide, cx - 120, cx + 120, -296, -56)
+	_bubble = SpeechBubble.new()
+	_bubble.tail = "down"
+	_bubble.tail_x = SIDE_W / 2 - 40
+	_pin(_bubble, 40, 40 + SIDE_W, -406, -316)
+	_bubble.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	_side_guide = true
+
+
+## Adds `node` anchored to the bottom-left corner at these offsets.
+func _pin(node: Control, left: float, right: float, top: float, bottom: float) -> void:
+	node.anchor_top = 1.0
+	node.anchor_bottom = 1.0
+	node.offset_left = left
+	node.offset_right = right
+	node.offset_top = top
+	node.offset_bottom = bottom
+	add_child(node)
+
+
 func _build() -> void:
 	for c in content.get_children():
 		c.queue_free()
-	_guide = null
-	_bubble = null
+	if not _side_guide:
+		_guide = null
+		_bubble = null
 	_focus_trail = null
 	content.add_child(_spacer(28))
-	if GameState.post_test_ready():
-		content.add_child(_margin(_post_test_card(), 24, 0))
+	if GameState.needs_pretest():
+		content.add_child(_margin(_test_card("pre"), 24, 0))
+		content.add_child(_spacer(20))
+	elif GameState.post_test_ready():
+		content.add_child(_margin(_test_card("post"), 24, 0))
 		content.add_child(_spacer(20))
 	for level in range(1, SkillCatalog.MAX_LEVEL + 1):
 		_add_world(level)
@@ -59,11 +113,13 @@ func _add_world(level: int) -> void:
 	var color: Color = info.color if unlocked else Palette.PAPER_DEEP.darkened(0.15)
 	content.add_child(_margin(_banner(level, info, has_content, unlocked), 24, 0))
 	var trail := WorldTrail.new()
-	trail.setup(GameState.path.layout(level, unlocked, cleared), color, info.scene)
+	# Before the pre-test every lesson node stays locked; the START is on its card (D-021).
+	var nodes_open := unlocked and not GameState.needs_pretest()
+	trail.setup(GameState.path.layout(level, nodes_open, cleared), color, info.scene)
 	trail.node_pressed.connect(_on_node_pressed.bind(level))
 	content.add_child(trail)
-	if _guide == null and unlocked:
-		var idx := trail.focus_index()
+	if _focus_trail == null and unlocked:
+		var idx := 0 if not nodes_open else trail.focus_index()
 		if idx < 0 and (level == GameState.model.highest_unlocked or level == GameState.content_max_level()):
 			idx = trail.nodes.size() - 1
 		if idx >= 0:
@@ -75,6 +131,8 @@ func _add_world(level: int) -> void:
 func _place_guide(trail: WorldTrail, idx: int) -> void:
 	_focus_trail = trail
 	_focus_idx = idx
+	if _side_guide:
+		return
 	_guide = Raccoon.new()
 	_guide.custom_minimum_size = Vector2(160, 160)
 	_guide.size = Vector2(160, 160)
@@ -111,7 +169,7 @@ func _banner(level: int, info: Dictionary, has_content: bool, unlocked: bool) ->
 	var scenery := PaperScenery.new()
 	scenery.scene = info.scene
 	scenery.fade = 0.0 if unlocked else 0.85
-	scenery.custom_minimum_size = Vector2(0, 210)
+	scenery.custom_minimum_size = Vector2(0, 170)
 	v.add_child(scenery)
 	var ribbon_bg: Color = color if unlocked else Palette.INK_SOFT
 	var ribbon := _pill("LEVEL %d" % level, ribbon_bg, Palette.text_on(ribbon_bg), 22)
@@ -135,16 +193,18 @@ func _banner(level: int, info: Dictionary, has_content: bool, unlocked: bool) ->
 	if not unlocked:
 		head.add_child(Icons.rect("lock", 46, Palette.INK_SOFT))
 	body.add_child(head)
-	if has_content:
-		for sp in GameState.model.skill_progress(level):
-			body.add_child(_skill_bar(sp, color, unlocked))
+	# Skill bars are for teachers (their dashboard has them): a slim banner here (D-022).
 	return card
 
 
-## "Big Reading Day": the post-test, shown once the teacher opens it (FR-10).
-func _post_test_card() -> Control:
+## The tests sit at the top of the map and start only when the child taps START:
+## the "Reading Adventure" pre-test before any lesson (FR-02, D-021), and "Big
+## Reading Day", the post-test, once the teacher opens it (FR-10).
+func _test_card(kind: String) -> Control:
+	var pre := kind == "pre"
 	var card := PanelContainer.new()
-	var sb := _paper_box(Palette.PLUM_LIGHT, 28, 8)
+	card.name = "PreTestCard" if pre else "PostTestCard"
+	var sb := _paper_box(Palette.SKY if pre else Palette.PLUM_LIGHT, 28, 8)
 	sb.set_content_margin_all(24)
 	card.add_theme_stylebox_override("panel", sb)
 	var v := VBoxContainer.new()
@@ -152,58 +212,71 @@ func _post_test_card() -> Control:
 	card.add_child(v)
 	var head := HBoxContainer.new()
 	head.add_theme_constant_override("separation", 16)
-	head.add_child(_icon_disc("stories", Palette.CARD, 64))
+	head.add_child(_icon_disc("book" if pre else "trophy", Palette.BLUE if pre else Palette.PLUM, 84))
 	var titles := VBoxContainer.new()
 	titles.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	titles.add_child(_label("Big Reading Day!", 38, Palette.INK, true))
-	titles.add_child(_label("Show your teacher how much you've grown.", 24, Palette.INK))
+	titles.add_child(_label("Reading Adventure!" if pre else "Big Reading Day!", 38, Palette.INK, true))
+	titles.add_child(_label(GameState.talk("path_pretest_label") if pre
+			else "Show your teacher how much you've grown.", 24, Palette.INK))
 	head.add_child(titles)
 	v.add_child(head)
+	# What's coming, in pictures, and no hearts (D-022, the A3 card on the map).
+	var kinds := HBoxContainer.new()
+	kinds.add_theme_constant_override("separation", 12)
+	for k in [["ear", "Sounds", Palette.TEAL], ["pencil", "Letters", Palette.BAY_DEEP],
+			["stories", "Stories", Palette.CORAL_DEEP]]:
+		var tile := PanelContainer.new()
+		tile.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		tile.add_theme_stylebox_override("panel", _flat(Palette.CARD, 20))
+		var tv := VBoxContainer.new()
+		tv.alignment = BoxContainer.ALIGNMENT_CENTER
+		tv.add_theme_constant_override("separation", 2)
+		tile.add_child(tv)
+		var icon := Icons.rect(k[0], 52, k[2])
+		icon.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+		tv.add_child(icon)
+		var name_l := _label(k[1], 24, Palette.INK, true)
+		name_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		tv.add_child(name_l)
+		kinds.add_child(tile)
+	v.add_child(kinds)
+	var hearts := HBoxContainer.new()
+	hearts.add_theme_constant_override("separation", 10)
+	hearts.add_child(Icons.rect("heart", 34, Palette.PAPER_DEEP.darkened(0.1)))
+	var no_hearts := _label("No hearts today. Just try your best!", 26, Palette.INK, true)
+	no_hearts.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	no_hearts.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	hearts.add_child(no_hearts)
+	v.add_child(hearts)
 	var go := ChunkyButton.new()
+	go.name = "Start"
 	go.text = "START"
 	go.face_color = Palette.ORANGE
-	go.custom_minimum_size = Vector2(0, 96)
-	go.pressed.connect(func(): GameState.start_assessment("post"))
+	go.icon_name = "play"
+	go.icon_px = 44
+	go.add_theme_font_size_override("font_size", 40)
+	go.custom_minimum_size = Vector2(0, 120)
+	go.pressed.connect(func():
+		Speech.stop()
+		GameState.start_assessment(kind))
 	v.add_child(go)
 	return card
 
 
-func _skill_bar(sp: Dictionary, color: Color, unlocked: bool) -> Control:
-	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 14)
-	row.add_child(Icons.rect(SkillCatalog.ICONS[sp.skill], 38, color if unlocked else Palette.INK_SOFT))
-	var skill_name := _label(SkillCatalog.NAMES[sp.skill], 28, Palette.INK)
-	skill_name.custom_minimum_size = Vector2(118, 0)
-	row.add_child(skill_name)
-	var bar := ProgressBar.new()
-	bar.show_percentage = false
-	bar.max_value = 1.0
-	bar.step = 0.001
-	bar.value = sp.progress if unlocked else 0.0
-	bar.custom_minimum_size = Vector2(0, 22)
-	bar.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	bar.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	bar.add_theme_stylebox_override("background", _flat(Palette.PAPER_DEEP, 11))
-	bar.add_theme_stylebox_override("fill", _flat(Palette.MANGO if sp.mastered else color, 11))
-	row.add_child(bar)
-	if sp.mastered:
-		row.add_child(Icons.rect("crown", 38, Palette.MANGO_DEEP))
-	elif sp.review:
-		row.add_child(Icons.rect("repeat", 34, Palette.BAY))
-	return row
-
-
-# --- Taps --------------------------------------------------------------------------------
-
 func _on_node_pressed(n: Dictionary, node: PathNode, level: int) -> void:
 	var world_name: String = SkillCatalog.world(level).name
 	if level > GameState.content_max_level():
-		_say("%s is coming soon!" % world_name, "thinking")
+		_say(GameState.talk("path_soon", [world_name]), "thinking")
+		return
+	if GameState.needs_pretest():
+		_say(GameState.talk("path_first_top"), "thinking")
+		_shake(node)
+		create_tween().tween_property(scroll, "scroll_vertical", 0, 0.4)
 		return
 	match n.kind:
 		"lesson":
 			if n.state == "locked":
-				_say("Finish the lessons above first!", "thinking")
+				_say(GameState.talk("path_finish_above"), "thinking")
 				_shake(node)
 				return
 			Speech.stop()
@@ -216,18 +289,18 @@ func _on_node_pressed(n: Dictionary, node: PathNode, level: int) -> void:
 					var at := scroll.scroll_vertical
 					await _build()
 					scroll.scroll_vertical = at
-					_say("Treasure! You found %d coins!" % coins, "celebrate")
+					_say(GameState.talk("path_treasure", [coins]), "celebrate")
 				"open":
-					_say("You already opened this chest!", "happy")
+					_say(GameState.talk("path_chest_opened"), "happy")
 				_:
-					_say("Play two lessons to open the chest!", "thinking")
+					_say(GameState.talk("path_chest_two"), "thinking")
 					_shake(node)
 		"trophy":
 			if n.state == "won":
 				Sfx.play("fanfare")
-				_say("You cleared %s!" % world_name, "celebrate")
+				_say(GameState.talk("path_cleared", [world_name]), "celebrate")
 			else:
-				_say("Learn every skill here to win the trophy!", "encourage")
+				_say(GameState.talk("path_trophy"), "encourage")
 
 
 func _say(text: String, mood: String) -> void:
@@ -264,12 +337,12 @@ func _on_reset() -> void:
 	_update_top_bar()
 	await _build()
 	scroll.scroll_vertical = 0
-	_say("Fresh start!", "happy")
+	_say(GameState.talk("path_fresh"), "happy")
 
 
 # --- Small builders ----------------------------------------------------------------------
 
-func _paper_box(col: Color, r: int, lift: int) -> StyleBoxFlat:
+func _paper_box(col: Color, r: int, lift: int) -> PaperBox:
 	var sb := _flat(col, r)
 	sb.shadow_color = Color(Palette.SHADOW, 0.2)
 	sb.shadow_offset = Vector2(0, lift)
@@ -277,8 +350,8 @@ func _paper_box(col: Color, r: int, lift: int) -> StyleBoxFlat:
 	return sb
 
 
-func _flat(col: Color, r: int) -> StyleBoxFlat:
-	var sb := StyleBoxFlat.new()
+func _flat(col: Color, r: int) -> PaperBox:
+	var sb := PaperBox.new()   # cut from paper (D-028)
 	sb.bg_color = col
 	sb.set_corner_radius_all(r)
 	sb.anti_aliasing = true

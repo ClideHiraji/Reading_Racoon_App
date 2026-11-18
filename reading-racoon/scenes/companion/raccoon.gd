@@ -1,324 +1,393 @@
 @tool
 class_name Raccoon
 extends Control
-## Racoon, the companion (FR-14), drawn as layered paper cut-outs (D-009): each
-## piece casts a small shadow on the piece behind it. Wears a teal river scarf.
-## Moods: idle, happy, thinking, encourage, celebrate, sleepy.
-## Swap for real art later; keep the set_mood() API.
+## Racoon, the companion (FR-14), on any screen. He's the Godot scene
+## scenes/companion/racoon_puppet.tscn (D-024): one node per part of the user's drawing, and an
+## AnimationPlayer with one animation per move (open it in the editor to see or edit them). This
+## Control fits him into its box and plays his moves.
+## Moods (the old API, kept): idle, happy, thinking, encourage, celebrate, sleepy. The lesson also
+## plays his moments: moment(), point_at(), look_at_point(), read_along(), talk().
+## Outfit (FR-07, Wardrobe): the scarves and the open book are drawn parts; the other Closet items
+## are drawn by the puppet in code, fitted to his head, neck and chest.
+## He stays calm while a child reads, and acts on Home, at results, or when a hint helps
+## (06-game-design, companion guardrails).
 
-const FUR := Color("8e8899")
-const FUR_LIGHT := Color("b8b2c2")
-const FUR_DARK := Color("5d5766")
-const MASK := Color("37303d")
-const CREAM := Color("fbf3e4")
-const EAR_IN := Color("e7b9a8")
-const BLUSH := Color(0.93, 0.47, 0.4, 0.35)
+const PUPPET := preload("res://scenes/companion/racoon_puppet.tscn")
+const MOODS := {"happy": "happy", "celebrate": "celebrate", "thinking": "thinking", "encourage": "encourage",
+	"sleepy": "sleepy", "idle": "idle"}
+## The lesson's moments (the canvas board "Racoon in the game") and the animation each one plays.
+const MOMENTS := {"greet": "greet", "right": "happy", "hint": "hint", "answer": "answer", "rescue": "rescue",
+	"rescue_won": "rescue_won", "level_up": "level_up", "complete": "celebrate", "nudge": "nudge", "rest": "sleepy"}
+## A tap he took: not while he's still reacting or speaking, nor right after the last one.
+signal tapped
 
-@export var mood := "idle":
+## Taps on him play these in turn.
+const TAPS := ["giggle", "spin", "peek", "jump", "dance", "hop_around", "big_jump", "tail_wag"]
+## What he does on his own when he's lively (look_around and tail_wag the most often).
+const AMBIENT := ["look_around", "tail_wag", "stretch", "look_around", "walk_around", "hop_around", "dance",
+	"tail_wag"]
+const BLEND := 0.18         # seconds to blend from one move into the next
+## His pet (D-029) circles his head when he makes one of these moves.
+const PET_ORBIT := ["dance", "celebrate", "big_jump", "level_up", "rescue_won", "hop_around", "spin", "jump"]
+## A tap is taken only this long after the last one, and once he has finished reacting and speaking:
+## rapid tapping can't pile up moves and lines.
+const TAP_REST_MS := 700
+const REACH_L := 190.0      # how far his drawing reaches left of where he stands, in any move,
+const REACH_R := 210.0      # right (his tail),
+const REACH_UP := 400.0     # and up from his feet (paws raised): drawing units, measured 2026-11-17
+
+@export var mood := "idle"
+## What Racoon wears, {slot: item id} (FR-07, Wardrobe). By default it follows the
+## child's saved outfit; the shop sets it directly to try things on.
+var _pet: Pet
+var outfit := {}:
 	set(v):
-		mood = v
-		queue_redraw()
+		outfit = v
+		_apply_outfit()
+@export var follow_saved_outfit := true
+## Which buddy this is (D-033): "" follows the student's pick, Roco or Rina; the buddy chooser's cards
+## set "roco" or "rina".
+@export var buddy := "":
+	set(v):
+		buddy = v
+		_apply_buddy()
+## Taps on Racoon make him react (giggle, spin, peekaboo, jump, a dance, hops, a big jump, a tail
+## wag). Home turns it on (FR-14).
+@export var react_to_taps := false
+## His own little life: when nobody has touched the screen for 6-11 seconds he looks around, wags
+## his tail, stretches, walks about, hops or dances (the animations in
+## racoon_puppet.tscn). Home, the start screen and the Closet turn it on; never where a child
+## reads or answers (his guardrails: calm while a child reads).
+@export var lively := false
+## Drawn once at rest and not animated (the Closet's small item cards), so a screen of
+## previews costs nothing per frame.
+@export var still := false:
+	set(v):
+		still = v
+		if puppet:
+			puppet.still = v
+		if _pet:
+			_pet.still = v
+## True while he's in the middle of a move (not while idle or asleep).
+var busy: bool:
+	get:
+		return _anim != null and _anim.is_playing() and not _anim.current_animation in ["idle", "asleep"]
 
-## Animated offsets, applied in _draw so containers never fight the tweens.
+## The old animated offsets, kept for any caller.
 var hop := 0.0:
 	set(v):
 		hop = v
-		queue_redraw()
+		puppet.hop = -v * 2.0
 var tilt := 0.0:
 	set(v):
 		tilt = v
-		queue_redraw()
+		puppet.lean = rad_to_deg(v)
 var squash := 1.0:
 	set(v):
 		squash = v
-		queue_redraw()
-var wag := 0.0:
-	set(v):
-		wag = v
-		queue_redraw()
+		puppet.squash = v
+var wag := 0.0
 
-## What Racoon wears, {slot: item id} (FR-07, Wardrobe). By default it follows the
-## child's saved outfit; the shop sets it directly to try things on.
-var outfit := {"neck": "scarf_teal"}:
-	set(v):
-		outfit = v
-		queue_redraw()
-@export var follow_saved_outfit := true
+var puppet: RacoonPuppet
+var _anim: AnimationPlayer
+var _tap_n := 0
+var _outfit_tween: Tween
+var _mouse_t := 0.0
+var _quiet_since := 0
+var _wait_next := 7000.0
+var _last_ambient := ""
+var _own_move := ""            # the move he's doing on his own (a tap may cut into it)
+var _last_tap := -100000
+var _reach := {}            # each move's furthest stroll and highest hop, read from its keys
+var _room_tween: Tween
 
-var _tween: Tween
+
+func _init() -> void:
+	puppet = PUPPET.instantiate()
+	add_child(puppet, false, INTERNAL_MODE_FRONT)
+	_anim = puppet.get_node("AnimationPlayer")
+	_anim.animation_finished.connect(_on_finished)
+	resized.connect(_fit)
 
 
 func _ready() -> void:
 	if custom_minimum_size == Vector2.ZERO:
 		custom_minimum_size = Vector2(180, 180)
+	puppet.still = still
 	var gs := get_node_or_null("/root/GameState")
 	if follow_saved_outfit and gs and not Engine.is_editor_hint():
 		outfit = gs.wardrobe.equipped.duplicate()
 		gs.outfit_changed.connect(func(): outfit = gs.wardrobe.equipped.duplicate())
-	if not Engine.is_editor_hint():
-		var idle := create_tween().set_loops()
-		idle.tween_property(self, "squash", 1.025, 1.3).set_trans(Tween.TRANS_SINE)
-		idle.parallel().tween_property(self, "wag", 1.0, 1.3).set_trans(Tween.TRANS_SINE)
-		idle.tween_property(self, "squash", 1.0, 1.3).set_trans(Tween.TRANS_SINE)
-		idle.parallel().tween_property(self, "wag", 0.0, 1.3).set_trans(Tween.TRANS_SINE)
+	else:
+		_apply_outfit()
+	if gs and not Engine.is_editor_hint():
+		gs.buddy_changed.connect(_apply_buddy)
+	_apply_buddy()
+	_fit()
+
+
+## Roco or Rina (D-033): Rina is the same raccoon with her girl details (eyelashes, rosy cheeks, a bow).
+func _apply_buddy() -> void:
+	if puppet == null:
+		return
+	var who := buddy
+	var gs := get_node_or_null("/root/GameState") if is_inside_tree() else null
+	if who == "" and gs and not Engine.is_editor_hint():
+		who = gs.buddy_id()
+	puppet.girl = who == "rina"
+
+
+## He stands at the bottom middle of the box, as big as it lets him (the drawing is 400 x 400).
+func _fit() -> void:
+	var k := maxf(minf(size.x, size.y), 1.0) / 400.0
+	puppet.scale = Vector2(k, k)
+	puppet.position = Vector2(size.x / 2.0 - RacoonPuppet._ax() * k, size.y - 4.0 - RacoonPuppet._gy() * k)
+
+
+func _process(_delta: float) -> void:
+	if puppet:
+		puppet.acting = busy
+		if Time.get_ticks_msec() - _mouse_t > 2500:
+			puppet.follow_point = Vector2.INF
+	if lively and not still and not Engine.is_editor_hint() and is_visible_in_tree():
+		var now := Time.get_ticks_msec()
+		if busy or mood == "sleepy" or _anim.current_animation == "asleep":
+			_quiet_since = now
+		elif now - _quiet_since > _wait_next:
+			_quiet_since = now
+			_wait_next = randf_range(6000.0, 11000.0)
+			_own_move = _pick_ambient()
+			play(_own_move)
+
+
+## How far his walk has carried him sideways from his place, in canvas pixels (his speech
+## bubble follows it).
+func walk_offset() -> float:
+	if puppet == null:
+		return 0.0
+	return puppet.stroll * puppet.roam * puppet.get_global_transform().get_scale().x
+
+
+## Where his head is, in the viewport's pixels: his speech bubble's tail points at it.
+func speak_point() -> Vector2:
+	if puppet == null:
+		return get_global_transform_with_canvas() * (size / 2.0)
+	var head := Vector2(RacoonPuppet._ax() + puppet.stroll * puppet.roam, RacoonPuppet._hc().y)
+	return puppet.get_global_transform_with_canvas() * head
+
+
+## One of his own moves, not the same as last time.
+func _pick_ambient() -> String:
+	var pick: String = AMBIENT.pick_random()
+	while pick == _last_ambient:
+		pick = AMBIENT.pick_random()
+	_last_ambient = pick
+	return pick
+
+
+# --- moods and moments -----------------------------------------------------------------------------
+
+## Plays one of his moves (an animation in racoon_puppet.tscn), blending from wherever he is.
+func play(anim_name: String, spot := Vector2.INF) -> void:
+	if Engine.is_editor_hint() or not _anim.has_animation(anim_name):
+		return
+	puppet.look_from = spot
+	puppet.look_to = spot
+	puppet.point_spot = spot
+	_fit_room(anim_name)
+	_anim.play(anim_name, BLEND)
+	if _pet and PET_ORBIT.has(anim_name):
+		_pet.orbit()
+
+
+## A move's walks and jumps shrink to fit the box he stands in (the nearest parent that clips,
+## else the screen), so he's never cut off at its edge: the Closet's stage is narrow on a
+## laptop and short on a phone.
+func _fit_room(anim_name: String) -> void:
+	var far := _move_reach(anim_name)
+	if far == Vector2.ZERO:
+		return   # nothing to fit (a move blending out of a walk keeps the walk's room)
+	var box := get_viewport_rect()
+	var n := get_parent()
+	while n is CanvasItem:
+		var box_node := n as Control
+		if box_node and (box_node.clip_children != CanvasItem.CLIP_CHILDREN_DISABLED or box_node.clip_contents):
+			box = box_node.get_global_rect()
+			break
+		n = n.get_parent()
+	var k := absf(puppet.get_global_transform().get_scale().x)
+	if k <= 0.0:
+		return
+	var feet := get_global_transform() * Vector2(size.x / 2.0, size.y - 4.0)
+	var roam := puppet.roam
+	var rise := puppet.rise
+	if far.x > 0.0:
+		var side := minf((box.end.x - feet.x) / k - REACH_R, (feet.x - box.position.x) / k - REACH_L)
+		roam = clampf(side / far.x, 0.0, 1.0)
+	if far.y > 0.0:
+		rise = clampf(((feet.y - box.position.y) / k - REACH_UP) / far.y, 0.0, 1.0)
+	# eased over the blend, so cutting into a walk never makes him jump sideways
+	if _room_tween:
+		_room_tween.kill()
+	_room_tween = create_tween().set_parallel()
+	_room_tween.tween_property(puppet, "roam", roam, BLEND)
+	_room_tween.tween_property(puppet, "rise", rise, BLEND)
+
+
+## How far a move carries him: its furthest stroll and its highest hop, in drawing units.
+func _move_reach(anim_name: String) -> Vector2:
+	if not _reach.has(anim_name):
+		var far := Vector2.ZERO
+		var a := _anim.get_animation(anim_name)
+		for t in a.get_track_count():
+			var prop := String(a.track_get_path(t).get_concatenated_subnames())
+			if prop == "stroll" or prop == "hop":
+				for i in a.track_get_key_count(t):
+					var v: float = a.track_get_key_value(t, i)
+					if prop == "stroll":
+						far.x = maxf(far.x, absf(v))
+					else:
+						far.y = maxf(far.y, v)
+		_reach[anim_name] = far
+	return _reach[anim_name]
 
 
 func set_mood(m: String) -> void:
 	mood = m
-	if _tween:
-		_tween.kill()
-	_tween = create_tween()
-	match m:
-		"happy":
-			_tween.tween_property(self, "hop", -24.0, 0.13).set_trans(Tween.TRANS_QUAD)
-			_tween.tween_property(self, "hop", 0.0, 0.22).set_trans(Tween.TRANS_BOUNCE)
-		"celebrate":
-			for i in 2:
-				_tween.tween_property(self, "hop", -42.0, 0.16).set_trans(Tween.TRANS_QUAD)
-				_tween.parallel().tween_property(self, "tilt", 0.14 * (1 - 2 * (i % 2)), 0.16)
-				_tween.tween_property(self, "hop", 0.0, 0.22).set_trans(Tween.TRANS_BOUNCE)
-			_tween.tween_property(self, "tilt", 0.0, 0.1)
-		"thinking":
-			_tween.tween_property(self, "tilt", -0.12, 0.25).set_trans(Tween.TRANS_SINE)
-			_tween.tween_interval(0.8)
-			_tween.tween_property(self, "tilt", 0.0, 0.25)
-		"encourage":
-			for i in 2:
-				_tween.tween_property(self, "squash", 0.94, 0.12)
-				_tween.tween_property(self, "squash", 1.0, 0.12)
-		_:
-			_tween.tween_property(self, "hop", 0.0, 0.1)
+	play(MOODS.get(m, "idle"))
+	if _pet:
+		_pet.set_asleep(MOODS.get(m, "") == "sleepy")
 
 
-func _draw() -> void:
-	var k := minf(size.x, size.y) / 210.0
-	var base := Vector2(size.x / 2.0, size.y - 4)
-	# Ground shadow stays on the floor while the body hops.
-	var gs := clampf(1.0 + hop / 120.0, 0.6, 1.0)
-	_ellipse_at(base, Vector2(58 * gs, 9 * gs) * k, Color(Palette.SHADOW, 0.25), false)
-	draw_set_transform(base + Vector2(0, hop * k), tilt, Vector2(1.0 / squash, squash) * k)
-	# Coordinates below: a 210x210 box with the feet at (0, 0).
-	_tail()
-	_piece(Vector2(-24, -6), Vector2(17, 9), FUR_DARK)             # feet
-	_piece(Vector2(24, -6), Vector2(17, 9), FUR_DARK)
-	_piece(Vector2(0, -46), Vector2(50, 44), FUR)                  # body
-	_piece(Vector2(0, -40), Vector2(31, 30), CREAM)                # belly
-	_pin(outfit.get("badge", ""))
-	_neck(outfit.get("neck", ""))
-	_piece(Vector2(-16, -60), Vector2(10, 8), FUR_DARK)            # paws
-	_piece(Vector2(16, -60), Vector2(10, 8), FUR_DARK)
-	_ear(-1)
-	_ear(1)
-	_head()
-	_face()
-	_glasses(outfit.get("eyes", ""))
-	_hat(outfit.get("hat", ""))
+## A lesson moment (D-024 board "Racoon in the game"): greet, right, hint, answer, rescue, rescue_won,
+## level_up, complete, nudge, rest. Some point at or look at a spot on screen (a global position).
+func moment(what: String, target := Vector2.INF) -> void:
+	if MOMENTS.has(what):
+		play(MOMENTS[what], _to_puppet(target))
 
 
-# --- Parts ----------------------------------------------------------------------------
-
-func _tail() -> void:
-	var sway := wag * 0.12
-	for i in 6:
-		var t := i / 5.0
-		var p := Vector2(46 + t * 36, -30 - t * 78).rotated(sway * t)
-		var r := 21.0 - i * 1.6
-		_piece(p, Vector2(r, r), MASK if i % 2 == 1 else FUR_LIGHT)
+## Look at a spot on screen (a global position) for a while, then back at you.
+func look_at_point(target: Vector2, _seconds := 1.2) -> void:
+	play("look", _to_puppet(target))
 
 
-func _scarf(col: Color) -> void:
-	var pts := PackedVector2Array([Vector2(-42, -86), Vector2(42, -86), Vector2(30, -70),
-			Vector2(0, -64), Vector2(-30, -70)])
-	_poly(pts, col)
-	_poly(PackedVector2Array([Vector2(14, -74), Vector2(34, -76), Vector2(28, -44),
-			Vector2(16, -52)]), col.darkened(0.25))
-	_piece(Vector2(18, -74), Vector2(8, 7), col.darkened(0.25))   # knot
+## Point at a spot on screen (a global position), then let the arm down.
+func point_at(target: Vector2, _seconds := 1.6) -> void:
+	play("point", _to_puppet(target))
 
 
-# --- Outfit (Wardrobe.ITEMS) ----------------------------------------------------------
-
-func _neck(id: String) -> void:
-	match id:
-		"scarf_teal":
-			_scarf(Palette.TEAL)
-		"scarf_coral":
-			_scarf(Palette.CORAL)
-		"scarf_mango":
-			_scarf(Palette.MANGO)
-		"bow_tie":
-			_poly(PackedVector2Array([Vector2(0, -78), Vector2(-28, -92), Vector2(-28, -64)]), Palette.PLUM)
-			_poly(PackedVector2Array([Vector2(0, -78), Vector2(28, -92), Vector2(28, -64)]), Palette.PLUM)
-			_piece(Vector2(0, -78), Vector2(9, 9), Palette.PLUM_DEEP)
-		"lei":
-			# Sampaguita garland: small white flowers with yellow centers.
-			for i in 11:
-				var a := PI * (0.08 + 0.84 * i / 10.0)
-				var p := Vector2(cos(a) * 44, -84 + sin(a) * 24)
-				_piece(p, Vector2(9, 9), Color("fbfaf3"))
-				draw_circle(p, 3.5, Palette.MANGO)
+## Read along a line of text (its start and end, global): his eyes follow the words with a small
+## nod each, then a look back at you. Calm: no words of his own.
+func read_along(from: Vector2, to: Vector2, _words := 5) -> void:
+	play("read")
+	puppet.look_from = _to_puppet(from)
+	puppet.look_to = _to_puppet(to)
 
 
-func _hat(id: String) -> void:
-	match id:
-		"cap":
-			_poly(_arc_pts(Vector2(0, -164), Vector2(62, 34), PI, TAU), Palette.TEAL)
-			_piece(Vector2(-46, -164), Vector2(40, 9), Palette.TEAL_DEEP)
-			_piece(Vector2(0, -196), Vector2(7, 5), Palette.TEAL_DEEP, false)
-		"party_hat":
-			_poly(PackedVector2Array([Vector2(-28, -170), Vector2(4, -242), Vector2(30, -168)]), Palette.CORAL)
-			for k in 3:
-				var t := 0.25 + k * 0.22
-				draw_line(Vector2(-28 + 32 * t, -170 - 72 * t), Vector2(30 - 26 * t, -168 - 74 * t),
-						Palette.MANGO, 5.0, true)
-			_piece(Vector2(4, -244), Vector2(10, 10), Palette.MANGO)
-		"flower_crown":
-			for i in 9:
-				var a := PI * (1.12 + 0.76 * i / 8.0)
-				var p := Vector2(cos(a) * 64, -150 + sin(a) * 38)
-				var col: Color = [Color("fbfaf3"), Palette.CORAL.lightened(0.3), Palette.MANGO][i % 3]
-				_piece(p, Vector2(11, 11), col)
-				draw_circle(p, 4, Palette.MANGO_DEEP)
-		"salakot":
-			# Filipino woven hat: a wide, low cone with radiating weave lines and a knob.
-			_piece(Vector2(0, -166), Vector2(98, 20), Palette.NIPA_DEEP)
-			var cone := PackedVector2Array([Vector2(-94, -168), Vector2(0, -214), Vector2(94, -168)])
-			_poly(cone, Palette.NIPA)
-			for k in 7:
-				var x := -80.0 + k * 26.7
-				draw_line(Vector2(0, -212), Vector2(x, -170), Palette.NIPA_DEEP, 2.0, true)
-			_piece(Vector2(0, -216), Vector2(8, 7), Palette.NIPA_DEEP)
-		"gold_crown":
-			var pts := PackedVector2Array([Vector2(-44, -168), Vector2(-46, -210), Vector2(-24, -188),
-					Vector2(0, -220), Vector2(24, -188), Vector2(46, -210), Vector2(44, -168)])
-			_poly(pts, Palette.MANGO)
-			for x in [-26.0, 0.0, 26.0]:
-				draw_circle(Vector2(x, -180), 6, Palette.CORAL)
+## His mouth moves for a while, as if saying a line.
+func talk(seconds: float) -> void:
+	puppet.talk(seconds)
 
 
-func _glasses(id: String) -> void:
-	match id:
-		"round_glasses":
-			for s in [-1, 1]:
-				draw_arc(Vector2(30 * s, -122), 17, 0, TAU, 28, Palette.INK, 4.0, true)
-			draw_line(Vector2(-13, -124), Vector2(13, -124), Palette.INK, 4.0, true)
-		"sunglasses":
-			for s in [-1, 1]:
-				_piece(Vector2(30 * s, -121), Vector2(20, 14), Color(0.13, 0.11, 0.14, 0.92), false)
-				draw_line(Vector2(30 * s - 10, -127), Vector2(30 * s - 2, -130), Color(1, 1, 1, 0.5), 3.0)
-			draw_line(Vector2(-10, -124), Vector2(10, -124), Palette.INK, 4.0, true)
-		"star_glasses":
-			for s in [-1, 1]:
-				_poly(_star_pts(Vector2(30 * s, -122), 22, 11), Palette.MANGO, false)
-				_poly(_star_pts(Vector2(30 * s, -122), 13, 7), Color(0.2, 0.17, 0.2, 0.85), false)
-			draw_line(Vector2(-10, -124), Vector2(10, -124), Palette.MANGO_DEEP, 4.0, true)
+func _on_finished(anim_name: StringName) -> void:
+	if anim_name == &"sleepy":
+		_anim.play("asleep")
 
 
-func _pin(id: String) -> void:
-	var icon: String = {"pin_star": "star", "pin_heart": "heart", "pin_book": "book"}.get(id, "")
-	if icon == "":
+## A global position (another Control's, say) in his drawing's units.
+func _to_puppet(global_pos: Vector2) -> Vector2:
+	if global_pos == Vector2.INF:
+		return Vector2.INF
+	return puppet.get_global_transform().affine_inverse() * global_pos
+
+
+# --- outfit ----------------------------------------------------------------------------------------
+
+func _apply_outfit() -> void:
+	if puppet == null:
 		return
-	var c := Vector2(-20, -36)
-	_piece(c, Vector2(15, 15), Palette.CARD)
-	draw_arc(c, 15, 0, TAU, 24, Palette.MANGO_DEEP, 2.5, true)
-	var col: Color = {"star": Palette.MANGO_DEEP, "heart": Palette.CORAL, "book": Palette.BAY}[icon]
-	Icons.draw(self, icon, c, 20, col)
+	puppet.outfit = outfit
+	_update_pet()
+	var neck: String = outfit.get("neck", "")
+	var want_scarf := Wardrobe.is_scarf(neck)
+	var want_book: bool = outfit.get("paws", "") != ""   # the open book, a parol, the golden book...
+	if want_scarf:
+		puppet.scarf_item = neck
+	if not is_inside_tree() or Engine.is_editor_hint():
+		puppet.scarf_shown = 1.0 if want_scarf else 0.0
+		puppet.book_shown = 1.0 if want_book else 0.0
+		puppet.hold_book = 1.0 if want_book else 0.0
+		return
+	# putting one on pops it in with a little overshoot; taking it off is quicker
+	var scarf_on := (puppet.scarf_shown > 0.5) != want_scarf
+	var book_on := (puppet.book_shown > 0.5) != want_book
+	if not scarf_on and not book_on:
+		return
+	if _outfit_tween:
+		_outfit_tween.kill()
+	_outfit_tween = create_tween().set_parallel()
+	if scarf_on:
+		_outfit_tween.tween_property(puppet, "scarf_shown", 1.0 if want_scarf else 0.0, 0.38 if want_scarf else 0.24) \
+				.set_trans(Tween.TRANS_BACK if want_scarf else Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	if book_on:
+		_outfit_tween.tween_property(puppet, "book_shown", 1.0 if want_book else 0.0, 0.38 if want_book else 0.24) \
+				.set_trans(Tween.TRANS_BACK if want_book else Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+		_outfit_tween.tween_property(puppet, "hold_book", 1.0 if want_book else 0.0, 0.32)
 
 
-func _star_pts(c: Vector2, r_out: float, r_in: float) -> PackedVector2Array:
-	var pts := PackedVector2Array()
-	for i in 10:
-		var a := -PI / 2 + TAU * i / 10.0
-		pts.append(c + Vector2(cos(a), sin(a)) * (r_out if i % 2 == 0 else r_in))
-	return pts
+## His pet (D-029), from his outfit: a Pet inside his puppet, so it grows and shrinks with him.
+func _update_pet() -> void:
+	var id: String = outfit.get("pet", "")
+	if Engine.is_editor_hint() or not Pet.has_kind(id):
+		if _pet:
+			_pet.queue_free()
+			_pet = null
+		return
+	if _pet == null:
+		_pet = Pet.new()
+		_pet.name = "Pet"
+		puppet.add_child(_pet)
+	if _pet.kind != id:
+		_pet.setup(id, puppet, still)
 
 
-func _arc_pts(c: Vector2, radii: Vector2, a0: float, a1: float) -> PackedVector2Array:
-	var pts := PackedVector2Array()
-	for i in 17:
-		var a := lerpf(a0, a1, i / 16.0)
-		pts.append(c + Vector2(cos(a) * radii.x, sin(a) * radii.y))
-	return pts
+# --- input: his eyes follow your pointer, taps make him react -----------------------------------------
+
+func _input(event: InputEvent) -> void:
+	if not is_visible_in_tree() or puppet == null:
+		return
+	if event is InputEventMouseMotion or event is InputEventScreenTouch or event is InputEventScreenDrag:
+		puppet.follow_point = puppet.get_global_transform_with_canvas().affine_inverse() * event.position
+		_mouse_t = Time.get_ticks_msec()
+	# while the child is tapping about, he stays calm; his own moves wait for a quiet moment
+	if (event is InputEventMouseButton or event is InputEventScreenTouch) and event.pressed:
+		_quiet_since = Time.get_ticks_msec()
 
 
-func _ear(side: int) -> void:
-	var s := float(side)
-	_poly(PackedVector2Array([Vector2(s * 30, -160), Vector2(s * 66, -196), Vector2(s * 72, -142)]), FUR_DARK)
-	_poly(PackedVector2Array([Vector2(s * 40, -160), Vector2(s * 63, -184), Vector2(s * 66, -150)]),
-			EAR_IN, false)
+func _gui_input(event: InputEvent) -> void:
+	if not react_to_taps:
+		return
+	var tap: bool = (event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT) \
+			or (event is InputEventScreenTouch and event.pressed)
+	if tap:
+		accept_event()
+		if not accepts_tap():
+			return
+		_last_tap = Time.get_ticks_msec()
+		_own_move = ""
+		play(TAPS[_tap_n % TAPS.size()])
+		_tap_n += 1
+		tapped.emit()
+		if _pet:
+			_pet.cheer()   # his pet joins in, with little hearts
 
 
-## Head with cheek tufts: an ellipse whose sides are pushed out into points.
-func _head() -> void:
-	var pts := PackedVector2Array()
-	for i in 40:
-		var a := TAU * i / 40.0
-		var tuft := 1.0 + 0.16 * pow(maxf(0.0, absf(cos(a)) - 0.6) / 0.4, 2.0) * (1.0 if sin(a) > -0.1 else 0.0)
-		pts.append(Vector2(0, -120) + Vector2(cos(a) * 74 * tuft, sin(a) * 58))
-	_poly(pts, FUR)
-	_piece(Vector2(-28, -146), Vector2(22, 8), CREAM, false)       # brows
-	_piece(Vector2(28, -146), Vector2(22, 8), CREAM, false)
-	# Bandit mask.
-	var mask := PackedVector2Array()
-	for i in 24:
-		var a := TAU * i / 24.0
-		mask.append(Vector2(cos(a) * 66, sin(a) * 19 - 122 + (6 if absf(cos(a)) < 0.25 else 0)))
-	_poly(mask, MASK, false)
-	_piece(Vector2(0, -94), Vector2(40, 26), CREAM)                # muzzle
-
-
-func _face() -> void:
-	for side in [-1, 1]:
-		var c := Vector2(30 * side, -122)
-		match mood:
-			"happy", "celebrate":
-				draw_arc(c + Vector2(0, 5), 10, PI + 0.35, TAU - 0.35, 12, CREAM, 4.5, true)
-			"sleepy":
-				draw_arc(c + Vector2(0, -3), 9, 0.35, PI - 0.35, 12, CREAM, 4.0, true)
-			_:
-				var look := Vector2(3 * side, -5) if mood == "thinking" else Vector2.ZERO
-				draw_circle(c, 12, CREAM)
-				draw_circle(c + look, 7.5, Palette.INK)
-				draw_circle(c + look + Vector2(-2.5, -3), 2.6, Color.WHITE)
-	_ellipse_at(Vector2(-48, -98), Vector2(10, 7), BLUSH, false)
-	_ellipse_at(Vector2(48, -98), Vector2(10, 7), BLUSH, false)
-	_ellipse_at(Vector2(0, -105), Vector2(11, 8), Palette.INK, false)   # nose
-	draw_circle(Vector2(-3, -108), 2.5, Color(1, 1, 1, 0.6))
-	var m := Vector2(0, -91)
-	match mood:
-		"celebrate":
-			_ellipse_at(m + Vector2(0, 4), Vector2(12, 10), Color("5a2b2b"), false)
-			_ellipse_at(m + Vector2(0, 9), Vector2(7, 4), Palette.CORAL, false)
-		"thinking":
-			draw_circle(m + Vector2(7, 3), 4, Color("5a2b2b"))
-		"sleepy":
-			draw_line(m + Vector2(-6, 2), m + Vector2(6, 2), Palette.INK, 3.0, true)
-		_:
-			draw_arc(m + Vector2(-7, 0), 7, 0.2, PI - 0.2, 10, Palette.INK, 3.0, true)
-			draw_arc(m + Vector2(7, 0), 7, 0.2, PI - 0.2, 10, Palette.INK, 3.0, true)
-
-
-# --- Paper helpers ---------------------------------------------------------------------
-
-func _piece(center: Vector2, radii: Vector2, color: Color, shadow: bool = true) -> void:
-	_poly(_ellipse_pts(center, radii), color, shadow)
-
-
-func _poly(pts: PackedVector2Array, color: Color, shadow: bool = true) -> void:
-	if shadow:
-		var sh := PackedVector2Array()
-		for p in pts:
-			sh.append(p + Vector2(0, 4))
-		draw_colored_polygon(sh, Color(Palette.SHADOW, 0.28))
-	draw_colored_polygon(pts, color)
-
-
-func _ellipse_at(center: Vector2, radii: Vector2, color: Color, shadow: bool) -> void:
-	_poly(_ellipse_pts(center, radii), color, shadow)
-
-
-func _ellipse_pts(center: Vector2, radii: Vector2) -> PackedVector2Array:
-	var pts := PackedVector2Array()
-	for i in 32:
-		var a := TAU * i / 32.0
-		pts.append(center + Vector2(cos(a) * radii.x, sin(a) * radii.y))
-	return pts
+## Whether he'd take a tap now: he has finished his last reaction (a move of his own can be cut
+## into) and what he was saying, and the last tap wasn't just now.
+func accepts_tap() -> bool:
+	if Time.get_ticks_msec() - _last_tap < TAP_REST_MS:
+		return false
+	if busy and String(_anim.current_animation) != _own_move:
+		return false
+	var speech := get_node_or_null("/root/Speech")
+	return not (speech and speech.speaking())

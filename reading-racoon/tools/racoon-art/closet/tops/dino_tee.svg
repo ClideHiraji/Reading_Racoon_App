@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racoon's Closet: Dino tee (violet, tops). FR-07, D-026.
+     Drawn to fit Racoon at rest: the bottom layer links ../../parts/racoon_C_inkscape.svg (locked).
+     Draw on the "Item" layer. The file's name is the item's id; its name, tier, price and how it's
+     earned are in reading-racoon/content/closet.json. motion-demo/build_racoon.py reads this file
+     and never writes it. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-dino-tee"
+   sodipodi:docname="dino_tee.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>Dino tee</title>
+  <sodipodi:namedview
+     id="namedview-dino-tee"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="2"
+     inkscape:cx="200"
+     inkscape:cy="200"
+     inkscape:current-layer="layer-item" />
+  <defs id="defs-dino-tee">
+    <linearGradient id="gr-dino-tee-1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" style="stop-color:#608f48" /><stop offset="0.3" style="stop-color:#6aab4c" /><stop offset="0.55" style="stop-color:#7cb561" /><stop offset="1" style="stop-color:#608f48" /></linearGradient>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="../../parts/racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-item" inkscape:label="Item">
+   <g id="item-dino-tee" inkscape:label="dino_tee">
+     <title>Dino tee: a green T-shirt with a dinosaur (violet)</title>
+     <path id="dino-tee-1" inkscape:label="Shirt" d="M 112 234 L 289 234 L 289 346 C 252.5 360 148.5 360 112 346 Z" style="fill:url(#gr-dino-tee-1);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="dino-tee-2" inkscape:label="Collar" d="M 170 251 C 184 270 217 270 231 251" style="fill:none;stroke:#3b2d3a;stroke-width:11;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="dino-tee-3" inkscape:label="Collar" d="M 170 251 C 184 270 217 270 231 251" style="fill:none;stroke:#a6d68a;stroke-width:7;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="dino-tee-4" inkscape:label="Plates" d="M 180 296 L 186 283 L 192 296 Z M 191 292 L 198 278 L 205 292 Z M 204 296 L 210 284 L 216 297 Z" style="fill:#f39a2f;stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="dino-tee-5" inkscape:label="Tail" d="M 180 305 C 170 309 163 316 158 314 C 165 305 172 299 182 298 Z" style="fill:#3f8a2e;stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="dino-tee-6" inkscape:label="Body" cx="197" cy="307" rx="21" ry="14" style="fill:#3f8a2e;stroke:#3b2d3a;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="dino-tee-7" inkscape:label="Neck" d="M 211 302 C 216 290 224 283 232 286 C 238 289 236 297 228 298 C 223 299 219 305 216 312 Z" style="fill:#3f8a2e;stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="dino-tee-8" inkscape:label="Legs" d="M 185 316 L 185 327 L 192 327 L 192 316 Z M 203 316 L 203 327 L 210 327 L 210 316 Z" style="fill:#3f8a2e;stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="dino-tee-9" inkscape:label="Eye" cx="229.5" cy="290.5" r="2" style="fill:#3b2d3a" />
+     <path id="dino-tee-10" inkscape:label="Shine" d="M 150 262 C 148 280 148 300 152 318" style="fill:none;stroke:#ffffff;stroke-width:5;stroke-linejoin:round;stroke-linecap:round;opacity:0.35" />
+   </g>
+  </g>
+</svg>

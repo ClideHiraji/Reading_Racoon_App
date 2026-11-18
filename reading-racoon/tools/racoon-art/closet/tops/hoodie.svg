@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racoon's Closet: Cozy hoodie (violet, tops). FR-07, D-026.
+     Drawn to fit Racoon at rest: the bottom layer links ../../parts/racoon_C_inkscape.svg (locked).
+     Draw on the "Item" layer. The file's name is the item's id; its name, tier, price and how it's
+     earned are in reading-racoon/content/closet.json. motion-demo/build_racoon.py reads this file
+     and never writes it. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-hoodie"
+   sodipodi:docname="hoodie.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>Cozy hoodie</title>
+  <sodipodi:namedview
+     id="namedview-hoodie"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="2"
+     inkscape:cx="200"
+     inkscape:cy="200"
+     inkscape:current-layer="layer-item" />
+  <defs id="defs-hoodie">
+    <linearGradient id="gr-hoodie-1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" style="stop-color:#bd4e48" /><stop offset="0.3" style="stop-color:#e2574c" /><stop offset="0.55" style="stop-color:#e56b61" /><stop offset="1" style="stop-color:#bd4e48" /></linearGradient>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="../../parts/racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-item" inkscape:label="Item">
+   <g id="item-hoodie" inkscape:label="hoodie">
+     <title>Cozy hoodie: a red hoodie with a pocket and drawstrings (violet)</title>
+     <path id="hoodie-1" inkscape:label="Hoodie" d="M 112 234 L 289 234 L 289 352 C 252.5 366 148.5 366 112 352 Z" style="fill:url(#gr-hoodie-1);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="hoodie-2" inkscape:label="Hood edge" d="M 162 244 C 174 274 227 274 239 244 L 246 252 C 232 288 169 288 155 252 Z" style="fill:#c14f48;stroke:#3b2d3a;stroke-width:3;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="hoodie-3" inkscape:label="String" d="M 189.5 266 L 188.5 296" style="fill:none;stroke:#fff7e6;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="hoodie-4" inkscape:label="Tip" cx="188.5" cy="298" r="2.6" style="fill:#fff7e6;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="hoodie-5" inkscape:label="String" d="M 211.5 266 L 212.5 296" style="fill:none;stroke:#fff7e6;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="hoodie-6" inkscape:label="Tip" cx="212.5" cy="298" r="2.6" style="fill:#fff7e6;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="hoodie-7" inkscape:label="Pocket" d="M 166 324 L 235 324 L 246 350 C 216 358 185 358 155 350 Z" style="fill:#ce524a;stroke:#3b2d3a;stroke-width:3;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="hoodie-8" inkscape:label="Pocket seam" d="M 168 328 L 233 328" style="fill:none;stroke:#ff8a7e;stroke-width:2;stroke-linejoin:round;stroke-linecap:round;opacity:0.8" />
+     <path id="hoodie-9" inkscape:label="Shine" d="M 150 262 C 148 280 148 300 152 318" style="fill:none;stroke:#ffffff;stroke-width:5;stroke-linejoin:round;stroke-linecap:round;opacity:0.35" />
+   </g>
+  </g>
+</svg>

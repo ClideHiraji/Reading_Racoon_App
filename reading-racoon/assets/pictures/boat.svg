@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="4 7.62 120 120" width="128" height="128">
+<defs>
+<clipPath id="boat-1"><path d="M 16 80 L 112 80 Q 108 102 86 104 L 42 104 Q 20 102 16 80 Z"/></clipPath>
+</defs>
+<path d="M 64 82 L 64 16" fill="none" stroke="#8a5a3a" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<path d="M 64 15 L 79 20 L 64 25 Z" fill="#3b2d3a"/>
+</g>
+<path d="M 64 15 L 79 20 L 64 25 Z" fill="#dc675c"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<path d="M 68 22 Q 98 44 104 74 L 68 74 Z" fill="#3b2d3a"/>
+</g>
+<g opacity="0.18">
+<path d="M 68 22 Q 98 44 104 74 L 68 74 Z" fill="#3b2d3a" stroke="#3b2d3a" stroke-width="3" stroke-linejoin="round"/>
+</g>
+<path d="M 68 22 Q 98 44 104 74 L 68 74 Z" fill="#fefaf0"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<path d="M 60 30 Q 40 50 30 74 L 60 74 Z" fill="#3b2d3a"/>
+</g>
+<path d="M 60 30 Q 40 50 30 74 L 60 74 Z" fill="#f4c62f"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<path d="M 16 80 L 112 80 Q 108 102 86 104 L 42 104 Q 20 102 16 80 Z" fill="#3b2d3a"/>
+</g>
+<path d="M 16 80 L 112 80 Q 108 102 86 104 L 42 104 Q 20 102 16 80 Z" fill="#ed886a"/>
+<g clip-path="url(#boat-1)">
+<rect x="10" y="84" width="110" height="6" fill="#fffffd"/>
+</g>
+<g opacity="0.22" transform="translate(0 2.4)">
+<path d="M 8 106 Q 15 99 22 106 Q 29 113 36 106 Q 43 99 50 106 Q 57 113 64 106 Q 71 99 78 106 Q 85 113 92 106 Q 99 99 106 106 Q 113 113 120 106 L 120 116 Q 64 122 8 116 Z" fill="#3b2d3a"/>
+</g>
+<g opacity="0.18">
+<path d="M 8 106 Q 15 99 22 106 Q 29 113 36 106 Q 43 99 50 106 Q 57 113 64 106 Q 71 99 78 106 Q 85 113 92 106 Q 99 99 106 106 Q 113 113 120 106 L 120 116 Q 64 122 8 116 Z" fill="#3b2d3a" stroke="#3b2d3a" stroke-width="3" stroke-linejoin="round"/>
+</g>
+<path d="M 8 106 Q 15 99 22 106 Q 29 113 36 106 Q 43 99 50 106 Q 57 113 64 106 Q 71 99 78 106 Q 85 113 92 106 Q 99 99 106 106 Q 113 113 120 106 L 120 116 Q 64 122 8 116 Z" fill="#9ad4ec"/>
+</svg>

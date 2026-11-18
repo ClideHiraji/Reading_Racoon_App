@@ -102,6 +102,7 @@ Status key: 🔴 blocks coding · 🟡 decide during build · 📝 manuscript-on
 - L1–2 are in "Mother Tongue" (Bisaya/Butuanon in Butuan), yet future work suggests "adding Bisaya passages", so it's unclear which Mother Tongue L1–2 actually use. Re-check against current DepEd language policy.
 - **Interim (2026-10-20):** the first game slice uses **English placeholder** items (`reading-racoon/content/levels.json`, `"language": "en-placeholder"`). Replace them once the language is decided and teachers review the content.
 - **Levels 3-5 (2026-10-20):** placeholder content follows the bridge: **Filipino** for levels 3-4 and **English** for level 5, with 8 Butuan stories (60 / 100 / 130-word caps), plus 20-item pre- and post-tests in the thesis blueprint. All of it needs teacher review.
+- **The buddy's language (2026-11-18, D-033):** the student can make the buddy and the spoken menus talk in English, Filipino or Bisaya. That choice doesn't touch the lessons: items, hints and reading words keep this policy's language. The Filipino and Bisaya lines are a draft for a teacher to check (issue 35).
 
 ### 16. Latency claim 📝
 - §3.4.2.2 says difficulty uses accuracy **and latency**, but BKT only uses correctness. Either define how latency is used or remove it.
@@ -133,6 +134,7 @@ Status key: 🔴 blocks coding · 🟡 decide during build · 📝 manuscript-on
 - **Decision:** a paper-cut storybook look set in Butuan City (Agusan River, Mango Grove, Bahay Kubo Village, Balangay Bay, Mount Mayapay), built with Godot UI only; pictures are tinted SVG silhouettes from game-icons.net (CC BY 3.0); **no emoji**. Details: [D-009](../../brain/decisions/D-009%20Art%20direction%20Butuan%20storybook.md).
 - **Manuscript to update:** credit game-icons.net (CC BY 3.0) and its authors in the acknowledgments or an appendix; show the new screens in §3.4.2.4.
 - **Colors updated (2026-10-21, [D-016](../../brain/decisions/D-016%20Thesis%20color%20palette.md)):** the thesis palette of light blue, cream, yellow and orange, with dark text on every colored button; leaf green and the world accents stay.
+- **Pictures updated (2026-11-18, [D-027](../../brain/decisions/D-027%20Full-colour%20pictures.md)):** the pictures are now full-colour drawings made for the game. Only the glyphs on buttons, badges and tabs stay tinted game-icons.net silhouettes, so the credit to game-icons.net stays (issue 28).
 
 ### 22. Home hub and what stays open 🟡 (hub decided: D-015)
 - The thesis has no landing page: the app opened straight into lessons, and time limits locked the whole app.
@@ -140,3 +142,166 @@ Status key: 🔴 blocks coding · 🟡 decide during build · 📝 manuscript-on
 - **Still open (wireframe questions):** do Practice games count toward BKT or stay just-for-fun (suggested: just-for-fun, logged for the teacher)? How many free-play minutes a day (45 for now)? Songs and chants, or "record yourself reading"? Videos downloaded and curated (suggested) or online only?
 - **Built with the suggested answers (2026-10-21, [D-017](../../brain/decisions/D-017%20Practice%20Library%20Watch%20and%20collections.md)):** Practice is just-for-fun (no BKT, logged as `practice` events); 45 free-play minutes; songs and chants included, no recording yet; videos curated and downloaded (Ogg Theora), none bundled. All sections are built: six Practice games, a Library of 8 placeholder books with read-along, Watch & Listen, Sticker Album, My Word Book and Today. **Server:** the new event types and the `free_play_minutes` / `day_start` / `day_end` schedule keys are accepted on the dashboard branch (4c26be5, not merged yet). Teachers pick books and videos on a Library & Videos page (D-019, e1a5d19, not merged) and the game downloads them on Wi-Fi with a SHA-256 check, never during a lesson ([D-020](../../brain/decisions/D-020%20Teacher%20content%20download%20in%20the%20game.md)).
 - **Manuscript to update:** §3.4.2.2 and the screens in §3.4.2.4 should show the hub and the picker; FR-12 now applies to Adventure only.
+- **Play picker merged into Home (2026-10-22, [D-022](../../brain/decisions/D-022%20Full%20UI%20redesign.md)):** one big PLAY on the hub (Adventure, Big Reading Day, or the opening time when Adventure rests); the separate diamond picker is gone.
+
+### 23. Second try, hints, hearts and unfinished lessons ✅ RESOLVED (2026-10-22)
+- The thesis loop shows the answer after one wrong try ("hint → next question", hint only when P(L) < 0.30), hearts refill on any right answer, and the first build saved every answer, so a lesson stopped halfway still counted. Every answer needed a CONTINUE tap, Adventure could drop the child straight into the pre-test, and the pre-test ended on a world card that looked like Adventure.
+- **Decision (user's play-tests):** two tries per question, only the first is BKT evidence; Racoon's question-specific hint after every wrong first try; after a wrong second try, the answer and an explanation; every wrong try costs a heart and every right answer gives one back; no CONTINUE taps (a short word from Racoon, then the next question); nothing is saved until a lesson or test finishes; Adventure always opens the map, where the pre-test waits behind START; the pre/post-test ends with a results bar per skill ("Great!" / "Practice"), then the home hub. A SKIP button was tried and removed the same day. Details: [D-021](../../brain/decisions/D-021%20Second%20try%20hints%20and%20finished-only%20progress.md).
+- **Still to do:** show second tries and the per-skill test results on the teacher dashboard; teachers review the hint and explanation wording (issue 15).
+- **Manuscript to update:** §3.4.2.2 and the gameplay flowchart (06-game-design step 6), FR-13 (one heart lost per wrong try, one back per right answer), FR-14 (hint after every wrong first try; P(L) < 0.30 still logged), FR-15 (second-try scoring).
+
+### 24. Visual design system ✅ RESOLVED (2026-10-22)
+- The design critique of every screen found tap targets and labels below Grade 1 sizes, colors used for many meanings (green buttons beside green right answers, yellow everywhere), PLAY taking two steps, and crowded headers.
+- **Decision (user reviewed the redesign canvas):** the game follows the redesign on every screen except Racoon. One meaning per color (yellow = Adventure, orange = the main button, green = a right answer only, blue = listening, plum = Big Reading Day and night); tap targets at least 96 px, main buttons 120 px, text at least 22 px; Home button on sections, ✕ on activities, round dots in games; the team's animated star wherever a star is earned. D-021 wins where the two differ. Details: [D-022](../../brain/decisions/D-022%20Full%20UI%20redesign.md).
+- **Still open:** the Apple-style motion plan on the canvas's Rules board (not built yet); the source and license of the animated star and hearts before release.
+- **Racoon's redesign: decided 2026-10-26 ([D-024](../../brain/decisions/D-024%20Racoon%20redesign.md)).** Option C, "Little reader": a round head, a small body, a thick ink outline with soft shading, the teal scarf, and an open book. The team's own 3D design was explored and discarded the same day.
+  - **Built 2026-11-16** from the user's own drawing (see "In the game" below), not from the plan's hand-drawn mood parts.
+  - **3D:** a 3D version of C, toon-shaded with an outline, is built in Blender and was refined in a seven-round loop: its outline overlaps the 2D drawing by 95.7%, and it reads well on the game's screens. It could be rendered into the same 2D parts, or shown in real-time 3D in Godot. Not decided.
+  - **Motion:** a canvas demo shows the 2D drawing turning all the way around, pointing, walking up to the screen and reacting to taps. Each part of the drawing sits on his round head and body, so no extra angles are drawn (D-024). Not in the game yet.
+  - **Redrawn by the user, 2026-11-16:** the user edited Racoon in Inkscape: a taller bean body and belly, thinner outlines, and no scarf or shadow; a second edit the same day moved his arms to hang at his sides. The motion demo and the parts board are now built from that file (`motion-demo/build_racoon.py`). **Decided the same day:** the scarf and the book come back as Closet items (FR-07): his default look has neither, the River scarf stays free in the Closet, and the book gets a new slot for things he holds (D-024, part 4). Both are drawn to fit him (`parts/racoon_C_closet.svg`) and can be tried on in the motion demo; not in the game yet.
+  - **Game moments (2026-11-16):** a canvas board, "C · Racoon in the game", plays his animations on the real laptop lesson screen: lesson start, reading, right, hint, answer, Racoon's Rescue, level up, lesson complete, waiting, and rest. It uses the game's lines, hints and rules (D-024). The "waiting" nudge line is still a proposal for the line library.
+  - **In the game (2026-11-16):** the new Racoon replaces the old one on every screen. `raccoon.gd` draws the user's drawing with the motion demo's rig, from `assets/racoon/racoon_rig.json`, and keeps the old API.
+    - The lesson plays his moments, and Home has the wave and tap reactions.
+    - The Closet has the scarf and the open book: new profiles wear nothing, and the book is free in the new "In his paws" slot.
+    - Tested on a scratch copy; not yet on a phone, and not committed (D-024, "In the game").
+  - **A Godot scene (2026-11-17):** he's now `scenes/companion/racoon_puppet.tscn`, with one node per part of the drawing (textures in `assets/racoon/parts/`) and an AnimationPlayer with his 21 moves as keyframed animations (`assets/racoon/racoon_moves.tres`), editable in the Godot editor. A script keeps the 3D look. D-024, "Racoon as a Godot scene".
+  - **One texture sheet and 8 new moves (2026-11-17):** the 27 part files are packed onto one sheet (`assets/racoon/racoon_atlas.svg`). He has 8 new animations (walk around, hops, a big jump, look around, stretch, dance, tail wag, turn around), which he plays on his own after a quiet spell on Home, the start screen and the Closet. Taps on Home cycle through 8 reactions. His walks and jumps shrink to stay inside the box he's in. D-024, "One texture sheet, and a livelier Racoon".
+- **Animated star and hearts (2026-10-22):** the team's Lottie files play live in the game (`ui/lottie_player.gd`): the earned star, Regain Heart for a heart that comes back, Broken Heart for a lost one, the hearts in the lesson hearts' colors.
+- **Manuscript to update:** the screens in §3.4.2.4 and the color and size rules in §3.4.2.2; NFR-02 can quote the 96 px / 48 dp minimum.
+
+### 35. A girl buddy, and a choice of language ✅ DECIDED (2026-11-18)
+- The user asked for both genders for students to choose from, a girl version of the companion for girl students, and a choice of language.
+- **Decision (D-033):**
+  - Each student picks **Roco** (boy) or **Rina** (girl), and **English, Filipino or Bisaya**, on a new "Choose your buddy" screen. It opens the first time a student plays; the profile chip on Home opens it again. Both picks are saved with the profile.
+  - Rina is the same raccoon with eyelashes, pink cheeks and ears, and a bow, so every Closet item fits her.
+  - The language changes the buddy's lines and the spoken menu lines (`content/talk.json`). Lessons, hints and reading words keep their own language (issue 15). Visible labels stay English for now.
+  - Voice: system text-to-speech for now, with Rina higher (pitch 1.4, a female voice where there is one). Recorded Gemini voices come later: Zeno for Roco, Cleo for Rina.
+  - Details: [D-033](../../brain/decisions/D-033%20Buddies%20Roco%20and%20Rina%20and%20talk%20language.md).
+- **Still open:**
+  - A teacher should review the Filipino and Bisaya lines.
+  - Phones without a Filipino or Cebuano voice stay silent in those languages.
+  - Translating the visible labels.
+  - Recording the voices.
+  - The manuscript names one companion, Racoon: add the choice to §3.4.2 (FR-14).
+
+### 34. The voice ran on into the next question ✅ RESOLVED (2026-11-18)
+- The user noticed Racoon's voice carrying on into the next question. On Windows a new line waited for the sentence being spoken (D-025), so the last question's words played over the new one.
+- **Decision (D-032):** a new question stops the voice at once, on every device.
+- **Still open:** starting any line from quiet costs Windows' voice one slow frame (about 0.14 s) inside Godot; recorded narration would remove it. This covers a lesson, a lesson's story, Practice, and books' and videos' questions (`Speech.new_question()`). Within a question, Windows still lets a sentence finish before a new line. On Windows the stop runs on a worker thread (optimised the same day): a cut costs the game 0.1 ms instead of 210 ms, and leaving a screen no longer pauses either.
+  - Details: [D-032](../../brain/decisions/D-032%20A%20new%20question%20stops%20the%20voice.md).
+
+### 33. Windblown diamond scarves and a halo ✅ DECIDED (2026-11-18)
+- The user asked for the diamond scarf to wave behind Racoon in the wind (reference: a "moving circles" scarf animation), in a design for girls and one for boys, and for an animated halo behind his head in the hats, at diamond tier (their reference picture's halo as a guide only, not to copy).
+- **Decision (D-031):**
+  - **Two new diamond scarves** (470 coins each): the **Starlight ribbon** (pink ribbon tails with stars, a lilac back, notched ends, twinkles) and the **Comet scarf** (a red hero tail with a gold lightning stripe, a forked end, sparks). Neither is labelled by gender. The **Rainbow scarf** blows in the wind too.
+  - **The wind:** each point along a tail moves round a small circle, a little later than the one before, so waves run down to the tip; the ribbon twists to show its back; gusts; a diamond shimmer runs along it. Drawn in code (`scenes/companion/wind_scarf.gd`).
+  - **The Star halo** (hat, diamond, 490 coins): a golden ring with gems and beads, a star on top, three small stars travelling round it, and a breathing glow. Our own design (`scenes/companion/halo.gd`).
+  - Both turn with Racoon: behind him when he faces you, in front when he turns away. Side-on, the halo is a thin ring standing behind the back of his head, with a gap (fixed the same day: at first it sat too close and looked like a line through his head).
+  - The Closet now has 52 items, 14 earned.
+  - Details: [D-031](../../brain/decisions/D-031%20Windblown%20scarves%20and%20the%20Star%20halo.md).
+- **Still open:** try them with children; whether the tails distract during a lesson.
+
+### 32. The item in his paws stretched ✅ RESOLVED (2026-11-18)
+- The user saw the item in Racoon's paws stretch when he moved his arms, and asked for it to be held in either paw during arm-moving animations.
+- The puppet stretched the item between his two paws. Over all 28 moves the worst stretch was 74% (peek), then hint and thinking (31–32%) and dance, happy, greet and walk_around (10–13%).
+- **Decision (D-030):** the item is stiff. In both paws it keeps its width; when his paws move apart or together, or one rises much higher than the other, it rides in one paw (the left, unless the left arm is the busy one), blending smoothly. A tilt turns it like a card instead of skewing it. No move changed.
+  - Details: [D-030](../../brain/decisions/D-030%20Stiff%20items%20in%20his%20paws.md).
+
+### 31. Clothes and pets instead of pins ✅ DECIDED (2026-11-18)
+- The user asked for T-shirts or other upper-body clothing (dresses too) instead of the Closet's pins, a small animated pet floating by Racoon's head that plays with him, and the turn-around move removed.
+- **Decision (D-029):**
+  - **Clothes (slot `top`):** 11 tees, tops and dresses, from a River tee to a Barong and a Filipiniana dress. Each is trimmed to his body's outline in the game, so it fits every pose.
+  - **Pets (slot `pet`):** 6 pets drawn in code (`scenes/companion/pet.gd`): maya bird, bee, butterfly, alitaptap, little dragon, star sprite. A pet loops with hearts when he's tapped, circles his head when he dances, rests on his head now and then, and sleeps there when he's sleepy.
+  - **Pins retired:** an old save's pins are dropped when it loads; the drawings are kept in `tools/racoon-art/parts/retired-pins/`.
+  - **`turn_around` removed** from his moves, his ambient list and the Closet's gold show-off (now `dance`).
+  - The Closet now has 49 items, 14 earned; tiers and prices unchanged.
+  - Details: [D-029](../../brain/decisions/D-029%20Clothes%20and%20pets%20in%20the%20Closet.md).
+- **Still open:** try the pets with children (do they distract during a lesson?); a pet's sound when it cheers.
+
+### 30. Developer menu: DELETE BEFORE THE FINAL RELEASE 🔴 OPEN (2026-11-18)
+- The user asked for debug options to explore the game, and to be reminded to delete them once everything is final.
+- **What it is:** `reading-racoon/ui/dev_menu.gd` (`DevMenu`).
+  - It opens with **F12**, or **5 quick taps in the top-right corner**.
+  - It jumps to any screen (Home, a lesson, the pre-test, every section, login, the lock screen).
+  - It adds coins or sets them to none.
+  - It unlocks all worlds, finishes the current world, skips the pre-test, opens the post-test, or resets progress.
+  - It gives all stickers, all Closet items or today's goals.
+  - It moves the clock (Monday 7:45 AM, Tuesday 6 PM, real time), and shows the frame rate or a test reward card.
+- **Safe meanwhile:** it only exists in debug builds (`OS.is_debug_build()`: the editor and debug exports). A release export never shows it, and `DevMenu.ENABLED = false` hides it in debug builds too. Each debug run prints a reminder in the Output panel.
+- **To delete it (all four, then run the tests):**
+  1. `reading-racoon/ui/dev_menu.gd` and `ui/dev_menu.gd.uid`.
+  2. In `scripts/autoload/screen.gd`: the `DevMenu.allowed()` print in `_ready()`, and the `_input()` function.
+  3. In `tests/ui_smoke.gd`: the "developer menu" block at the end.
+  4. Search the project for `DevMenu`: nothing should be left.
+
+### 29. A livelier UI: shapes cut from paper ✅ DECIDED (2026-11-18)
+- The user found the UI too plain ("not just full squares and rectangles or circles") and asked for something livelier, consistent, soft-coloured and fun, based on research into what children like.
+- **Decision (D-028):**
+  - **Hand-cut edges:** cards, buttons and panels have slightly uneven corners and gently wavy sides (`ui/paper_box.gd`, replacing StyleBoxFlat in the box builders).
+  - **Round stays round:** circles and pills stay perfectly round (the user's call).
+  - **Craft details:** stitches on the special big pieces (Home tiles, Practice cards, the lesson picture card, album panels), tilted Home tiles, washi tape on the lesson's picture card, pale paper confetti on section pages, and a crayon squiggle under section titles.
+  - The layout, palette, Racoon and sizes are unchanged.
+  - Details: [D-028](../../brain/decisions/D-028%20Paper-cut%20UI%20shapes.md).
+- **Still open:** a few boxes defined inside scene files are still straight (the lesson's top bar and sheet, the overlay card); try the look with children.
+
+### 28. Pictures in one style ✅ DECIDED (2026-11-18)
+- The pictures were white silhouettes from game-icons.net, tinted in Godot (D-009). They came from many artists and didn't match each other or Racoon. The old "mouse" was a computer mouse, though the lessons mean the animal.
+- The user asked for them redrawn in the style of their reference (cute, softly shaded characters with faces) and judged them on the canvas first.
+- **Decision (D-027):**
+  - **60 full-colour pictures** in `reading-racoon/assets/pictures/`, drawn in their own colours, never tinted. They cover every lesson picture, all 40 stickers, the Home tiles and every Practice game.
+  - **Cut from paper like the rest of the game (D-009):** flat colours from the palette, each piece lifted on a crisp little shadow, no gradients, shine or outlines; each picture cropped to fill its box. Faces go on animals, the sky and fruit; objects stay faceless.
+  - The first version the same day was glossy stickers with coloured outlines. In the game it looked out of place (D-009 had rejected sticker and clay looks), so it was redrawn as paper.
+  - **Drawn in code** in `reading-racoon/tools/icon-art/`.
+  - Glyphs the game tints (buttons, badges, tabs, the path) stay in `assets/icons/`.
+  - Details: [D-027](../../brain/decisions/D-027%20Full-colour%20pictures.md).
+- **Still open:** try the pictures with children (do they name each one?), especially at the smallest sizes.
+
+### 27. Closet tiers and earned items (FR-07) ✅ DECIDED (2026-11-17)
+- The user asked for richer, animated Closet items ranked in tiers, from copper (free or easy) to diamond (very expensive, with one or two earned by a hard goal), and for the items to be art files, separate from Racoon's own sheet.
+- **Decision (D-026):**
+  - **Five tiers:** copper, silver, violet, gold and diamond, shown as 1–5 stars and a colour. Each tier adds to the look: a shine, then a glow and swaying, then gleams and glints, then a rainbow.
+  - **27 items,** all drawn in `tools/racoon-art/parts/racoon_C_closet.svg`, on their own sheet in the game (`assets/racoon/racoon_closet.svg`).
+  - **Prices:** silver 20–40, violet 60–90, gold 150–250, diamond 450–500 (about 30 coins a day).
+  - **Earned items:** 8, from "finish a lesson" to "collect all 40 stickers" (Rainbow scarf) and "finish all 5 worlds" (Crystal storybook).
+  - **12 more items (2026-11-18)**, because the first set leaned toward what girls like: a builder's hard hat, pirate hat, captain's hat, hero mask, pilot goggles, explorer bandana, coach's whistle, rocket and dino pins, a basketball, a toy jeepney and a galaxy rocket. Now 39 items, 11 earned (D-026).
+  - **Nothing random:** no real money, no timers; every way to get an item is shown first.
+  - **Organised (2026-11-17):** each item is its own Inkscape file in `tools/racoon-art/closet/<slot folder>/`. The catalogue is `content/closet.json`, and the game has one sheet per slot (`assets/racoon/closet/`). Adding an item means a drawing, one catalogue line and a build, with no code ("How to" in `tools/racoon-art/closet/README.md`).
+- **Still open:**
+  - **The Laravel `SyncEventType` enum** listed only the lesson events, so `/api/sync` rejected the game's other events. **Fixed on branch `claude/elegant-dubinsky-5661ae` (commit `a958e29`, FR-11), not merged yet:** it adds the 13 missing types (`purchase`, `outfit`, `item_earned`, `sticker`, `goal`, `book`, `media`, `practice`, `word`, `placement`, `assessment`, `access`, `usage`), with a sync test that sends one of each and still rejects unknown types.
+  - Try the item sizes and the effects with children; check the prices against real play. (The pins were replaced by clothes in D-029, issue 31.)
+  - The manuscript's FR-07 description.
+
+### 26. Freezes when a child taps (NFR-01) ✅ RESOLVED (2026-11-17)
+- A profiling tour (`tools/perf/`) found freezes on the dev laptop:
+  - a lesson's end: 237 ms, writing its events one at a time
+  - Windows' read-aloud: 210 ms each time a line was cut off
+  - the Closet: up to 144 ms
+  - first visits to screens: 70–530 ms
+- **Decision (D-025):** each cause is fixed.
+  - On Windows, Racoon's read-aloud is never cut off mid-sentence within a screen (the user's choice): a new line waits for the current sentence to end. **Since 2026-11-18 a new question cuts it at once (D-032, issue 34).** Android and iPhone are unchanged. **Since 2026-11-17, leaving a screen stops his voice at once on every device** (the user's choice; about 0.2 s on Windows, during the screen change).
+  - **Rapid taps (2026-11-17):** buttons ignore a repeat within 0.45 s and any tap within 0.2 s of another; Back ignores a repeat within 0.45 s; Racoon takes a tap only after he finishes his reaction and line.
+  - Events are written in one go, buttons build their look once, screens load in the background, and Racoon's rig is lighter.
+  - Worst frames are now 15–63 ms where they were 109–237 ms.
+- **Still open:** a real 2 GB phone hasn't been measured; Library and Watch are render-heavy on phones; shader warm-up.
+
+### 25. Devices: shared laptops with a mouse, and parents' phones 🟡 MOSTLY RESOLVED (2026-10-24)
+- The thesis lists Android 8 / iOS 13 phones and the build so far targets a portrait Android phone. The user confirmed how the two classes will actually play:
+  - **Advanced section** (Teacher Delgado, 36 learners): at school on **3 shared Windows laptops with a mouse**, about 12 children per laptop.
+  - **Regular section** (Teacher Estremos, 26 learners): on **their parents' phones, Android and iPhone**.
+- **To decide or build:**
+  - A **Windows build** with mouse play: how the portrait 720×1280 layout sits on a landscape screen, and hover and drag with a mouse. *(Done, see below.)*
+  - An **iOS build**: safe areas, Reduce Motion, edge-swipe back. *(Safe areas done.)*
+  - **Android Back:** the game doesn't handle it, so Godot's default (`quit_on_go_back`) quits the game; a child pressing Back loses their place. *(Done.)*
+  - **Notches and system bars:** no safe-area insets are applied yet. *(Done.)*
+  - Where and when the regular section plays (at home, after school, with a parent nearby?).
+- Recorded in `PRODUCT.md` (Users, Operating Context, Capabilities and Constraints).
+- **Decision (2026-10-24, user chose real landscape layouts):**
+  - **Laptops:** a landscape window draws the game on a 1280×720 canvas, and every screen lays out side by side (Racoon beside the task, wider grids, picture beside words). A task too big for the shorter screen shrinks just enough to fit. Buttons show the pointing hand and lift under the mouse, and the login code can be typed. The Windows build opens full screen.
+  - **Phones:** stay portrait. Android Back and Escape do what the screen's ✕ or Home does (an open card first, "Stop now?" in a lesson), and leave the game only from Home, start, login and lock. Every screen keeps clear of notches and the home indicator.
+  - Details: [D-023](../../brain/decisions/D-023%20Laptop%20layouts%20Back%20and%20safe%20areas.md).
+- **Still open:**
+  - The iOS build (needs a Mac with Xcode and an Apple developer account).
+  - Whether the Windows laptops have Filipino and Bisaya text-to-speech voices.
+  - Where and when the regular section plays.
+  - Reduce Motion on iOS.
+

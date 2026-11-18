@@ -1,0 +1,869 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1012 526" width="1012" height="526">
+<g id="salakot" transform="translate(-48 2)">
+<defs>
+<linearGradient id="p0_g0" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#f0d39c"/>
+<stop offset="0.6" stop-color="#d4a86f"/>
+<stop offset="1" stop-color="#b9875b"/>
+</linearGradient>
+<linearGradient id="p0_g19" x1="0" y1="0" x2="1" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="0.5" stop-color="#d3dbe3"/>
+<stop offset="1" stop-color="#8e9aa6"/>
+</linearGradient>
+</defs>
+<path d="M 66 118 C 100 78 156 38 200.5 31 C 245 38 301 78 335 118 C 296 140 105 140 66 118 Z" fill="url(#p0_g0)" stroke="#3b2d3a" stroke-width="4.4"
+stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 189.3 36 C 138.43 65.33 96.67 92.83 64 118.5" fill="none" stroke="#9c6b45" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 190.9 36 C 147.3 65.33 111.5 93.33 83.5 120" fill="none" stroke="#9c6b45" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 192.5 36 C 156.17 65.33 126.33 93.83 103 121.5" fill="none" stroke="#9c6b45" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 194.1 36 C 165.03 65.33 141.17 94.33 122.5 123" fill="none" stroke="#9c6b45" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 195.7 36 C 173.9 65.33 156 94.83 142 124.5" fill="none" stroke="#9c6b45" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 197.3 36 C 182.77 65.33 170.83 95.33 161.5 126" fill="none" stroke="#9c6b45" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 198.9 36 C 191.63 65.33 185.67 95.83 181 127.5" fill="none" stroke="#9c6b45" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 200.5 36 C 200.5 65.33 200.5 96.33 200.5 129" fill="none" stroke="#9c6b45" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 202.1 36 C 209.37 65.33 215.33 95.83 220 127.5" fill="none" stroke="#9c6b45" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 203.7 36 C 218.23 65.33 230.17 95.33 239.5 126" fill="none" stroke="#9c6b45" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 205.3 36 C 227.1 65.33 245 94.83 259 124.5" fill="none" stroke="#9c6b45" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 206.9 36 C 235.97 65.33 259.83 94.33 278.5 123" fill="none" stroke="#9c6b45" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 208.5 36 C 244.83 65.33 274.67 93.83 298 121.5" fill="none" stroke="#9c6b45" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 210.1 36 C 253.7 65.33 289.5 93.33 317.5 120" fill="none" stroke="#9c6b45" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 211.7 36 C 262.57 65.33 304.33 92.83 337 118.5" fill="none" stroke="#9c6b45" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 90 102 C 140 122 261 122 311 102" fill="none" stroke="#845837" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 126 74 C 162 88 239 88 275 74" fill="none" stroke="#845837" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 66 118 C 105 140 296 140 335 118 C 311 145 90 145 66 118 Z" fill="#8a5d3a" stroke="#3b2d3a" stroke-width="4.4" stroke-linejoin="round"
+stroke-linecap="round"/>
+<path d="M 191 37 C 191 27 195 19 200.5 15 C 206 19 210 27 210 37 C 204 40 197 40 191 37 Z" fill="url(#p0_g19)" stroke="#3b2d3a" stroke-width="3.4"
+stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 110 98 C 134 76 158 60 180 50" fill="none" stroke="#fff7e0" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" opacity="0.5"/>
+</g>
+<g id="pirate_hat" transform="translate(221 5)">
+<defs>
+<linearGradient id="p1_g0" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#4a4258"/>
+<stop offset="1" stop-color="#2b2534"/>
+</linearGradient>
+<linearGradient id="p1_g1" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ff7a6e"/>
+<stop offset="1" stop-color="#d6453a"/>
+</linearGradient>
+<linearGradient id="p1_g5" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#3d364a"/>
+<stop offset="1" stop-color="#211c29"/>
+</linearGradient>
+<linearGradient id="p1_g7" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ff8fb1"/>
+<stop offset="1" stop-color="#d6456e"/>
+</linearGradient>
+</defs>
+<path d="M 140 98 C 138 52 168 30 200.5 30 C 233 30 263 52 261 98 C 220.67 98 180.33 98 140 98 Z" fill="url(#p1_g0)" stroke="#3b2d3a"
+stroke-width="4.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 246 62 C 252 36 268 18 288 12 C 286 30 276 50 258 66 C 254 64.67 250 63.33 246 62 Z" fill="url(#p1_g1)" stroke="#3b2d3a"
+stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 250 64 C 260 44 272 28 286 15" fill="none" stroke="#a8322a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 205 40 C 205 42.49 202.99 44.5 200.5 44.5 C 198.01 44.5 196 42.49 196 40 C 196 37.51 198.01 35.5 200.5 35.5 C 202.99 35.5 205 37.51 205 40
+Z" fill="none" stroke="#fff7e6" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 200.5 45 C 200.5 53.33 200.5 61.67 200.5 70 M 191 53 C 197.33 53 203.67 53 210 53 M 187 61 C 188.33 68.33 192.83 72 200.5 72 C 208.17 72
+212.67 68.33 214 61" fill="none" stroke="#fff7e6" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 90 118 C 106 72 150 58 200.5 84 C 251 58 295 72 311 118 C 270 104 231 108 200.5 130 C 170 108 131 104 90 118 Z" fill="url(#p1_g5)"
+stroke="#3b2d3a" stroke-width="4.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 97 110 C 114 76 152 66 200.5 90 C 249 66 287 76 304 110" fill="none" stroke="#f2c94c" stroke-width="4" stroke-linejoin="round"
+stroke-linecap="round"/>
+<path d="M 200.5 92 C 203 94.67 205.5 97.33 208 100 C 205.5 102.67 203 105.33 200.5 108 C 198 105.33 195.5 102.67 193 100 C 195.5 97.33 198 94.67
+200.5 92 Z" fill="url(#p1_g7)" stroke="#3b2d3a" stroke-width="2.8" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 152 46 C 162 38 172 34 182 33" fill="none" stroke="#ffffff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" opacity="0.4"/>
+</g>
+<g id="party_hat" transform="translate(406 18)">
+<defs>
+<linearGradient id="p2_g0" x1="0" y1="0" x2="1" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffb48f"/>
+<stop offset="0.55" stop-color="#f0805c"/>
+<stop offset="1" stop-color="#d95f3d"/>
+</linearGradient>
+<radialGradient id="p2_g8" cx="0.4" cy="0.35" r="0.65" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#fff3b0"/>
+<stop offset="0.6" stop-color="#ffd84d"/>
+<stop offset="1" stop-color="#f2a516"/>
+</radialGradient>
+</defs>
+<path d="M 150 110 C 168.67 77.33 187.33 44.67 206 12 C 222 44 238 76 254 108 C 224 118 180 119 150 110 Z" fill="url(#p2_g0)" stroke="#3b2d3a"
+stroke-width="4.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 209 38 C 209 41.31 206.31 44 203 44 C 199.69 44 197 41.31 197 38 C 197 34.69 199.69 32 203 32 C 206.31 32 209 34.69 209 38 Z"
+fill="#ffd84d" stroke="#cc8a00" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 195 66 C 195 69.87 191.87 73 188 73 C 184.13 73 181 69.87 181 66 C 181 62.13 184.13 59 188 59 C 191.87 59 195 62.13 195 66 Z"
+fill="#ffd84d" stroke="#cc8a00" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 226.5 62 C 226.5 65.59 223.59 68.5 220 68.5 C 216.41 68.5 213.5 65.59 213.5 62 C 213.5 58.41 216.41 55.5 220 55.5 C 223.59 55.5 226.5
+58.41 226.5 62 Z" fill="#ffd84d" stroke="#cc8a00" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 181 94 C 181 97.87 177.87 101 174 101 C 170.13 101 167 97.87 167 94 C 167 90.13 170.13 87 174 87 C 177.87 87 181 90.13 181 94 Z"
+fill="#ffd84d" stroke="#cc8a00" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 211.5 92 C 211.5 96.14 208.14 99.5 204 99.5 C 199.86 99.5 196.5 96.14 196.5 92 C 196.5 87.86 199.86 84.5 204 84.5 C 208.14 84.5 211.5
+87.86 211.5 92 Z" fill="#ffd84d" stroke="#cc8a00" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 238.5 92 C 238.5 95.59 235.59 98.5 232 98.5 C 228.41 98.5 225.5 95.59 225.5 92 C 225.5 88.41 228.41 85.5 232 85.5 C 235.59 85.5 238.5
+88.41 238.5 92 Z" fill="#ffd84d" stroke="#cc8a00" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 152 106 C 154.67 102.67 157.33 99.33 160 96 C 162.67 100 165.33 104 168 108 C 170.67 104.67 173.33 101.33 176 98 C 178.67 102 181.33 106
+184 110 C 186.67 106.67 189.33 103.33 192 100 C 194.67 103.67 197.33 107.33 200 111 C 202.67 107.67 205.33 104.33 208 101 C 210.67 104.33 213.33
+107.67 216 111 C 218.67 107.67 221.33 104.33 224 101 C 226.67 104 229.33 107 232 110 C 234.67 106.33 237.33 102.67 240 99 C 242.67 101.67 245.33
+104.33 248 107 C 249.67 105.67 251.33 104.33 253 103" fill="none" stroke="#ffffff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 218.5 12 C 218.5 18.9 212.9 24.5 206 24.5 C 199.1 24.5 193.5 18.9 193.5 12 C 193.5 5.1 199.1 -0.5 206 -0.5 C 212.9 -0.5 218.5 5.1 218.5 12
+Z" fill="url(#p2_g8)" stroke="#3b2d3a" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 200 7 C 201.33 4.33 203.67 3 207 3" fill="none" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" opacity="0.8"/>
+<path d="M 180 66 C 186.33 54 192.67 42 199 30" fill="none" stroke="#ffffff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" opacity="0.45"/>
+</g>
+<g id="star_crown" transform="translate(561 7)">
+<defs>
+<linearGradient id="p3_g0" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="0.5" stop-color="#d6f3ff"/>
+<stop offset="1" stop-color="#9fc6e0"/>
+</linearGradient>
+<linearGradient id="p3_g1" x1="0" y1="0" x2="1" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="0.5" stop-color="#c9b3ff"/>
+<stop offset="1" stop-color="#7fd3f0"/>
+</linearGradient>
+<linearGradient id="p3_g6" x1="0" y1="0" x2="1" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="0.5" stop-color="#ffc2e6"/>
+<stop offset="1" stop-color="#7fd3f0"/>
+</linearGradient>
+</defs>
+<path d="M 122 118 C 147 94 173 85 200.5 85 C 228 85 254 94 279 118 C 276 124 270 126 265 124 C 245 106 223 99 200.5 99 C 178 99 156 106 136 124 C
+131 126 125 124 122 118 Z" fill="url(#p3_g0)" stroke="#3b2d3a" stroke-width="3.8" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 154.5 64 C 158.17 69.67 161.83 75.33 165.5 81 C 161.83 86.67 158.17 92.33 154.5 98 C 150.83 92.33 147.17 86.67 143.5 81 C 147.17 75.33
+150.83 69.67 154.5 64 Z" fill="url(#p3_g1)" stroke="#3b2d3a" stroke-width="2.8" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 143.5 81 C 150.83 81 158.17 81 165.5 81 M 154.5 64 C 154.5 75.33 154.5 86.67 154.5 98" fill="none" stroke="#ffffff" stroke-width="1.4"
+stroke-linejoin="round" stroke-linecap="round" opacity="0.7"/>
+<path d="M 175.5 93 C 175.5 95.21 173.71 97 171.5 97 C 169.29 97 167.5 95.21 167.5 93 C 167.5 90.79 169.29 89 171.5 89 C 173.71 89 175.5 90.79 175.5
+93 Z" fill="#e9fbff" stroke="#3b2d3a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 162.5 96 C 162.5 98.21 160.71 100 158.5 100 C 156.29 100 154.5 98.21 154.5 96 C 154.5 93.79 156.29 92 158.5 92 C 160.71 92 162.5 93.79
+162.5 96 Z" fill="#e9fbff" stroke="#3b2d3a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 138.5 104 C 138.5 106.21 136.71 108 134.5 108 C 132.29 108 130.5 106.21 130.5 104 C 130.5 101.79 132.29 100 134.5 100 C 136.71 100 138.5
+101.79 138.5 104 Z" fill="#e9fbff" stroke="#3b2d3a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 246.5 64 C 250.17 69.67 253.83 75.33 257.5 81 C 253.83 86.67 250.17 92.33 246.5 98 C 242.83 92.33 239.17 86.67 235.5 81 C 239.17 75.33
+242.83 69.67 246.5 64 Z" fill="url(#p3_g6)" stroke="#3b2d3a" stroke-width="2.8" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 235.5 81 C 242.83 81 250.17 81 257.5 81 M 246.5 64 C 246.5 75.33 246.5 86.67 246.5 98" fill="none" stroke="#ffffff" stroke-width="1.4"
+stroke-linejoin="round" stroke-linecap="round" opacity="0.7"/>
+<path d="M 233.5 93 C 233.5 95.21 231.71 97 229.5 97 C 227.29 97 225.5 95.21 225.5 93 C 225.5 90.79 227.29 89 229.5 89 C 231.71 89 233.5 90.79 233.5
+93 Z" fill="#e9fbff" stroke="#3b2d3a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 246.5 96 C 246.5 98.21 244.71 100 242.5 100 C 240.29 100 238.5 98.21 238.5 96 C 238.5 93.79 240.29 92 242.5 92 C 244.71 92 246.5 93.79
+246.5 96 Z" fill="#e9fbff" stroke="#3b2d3a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 270.5 104 C 270.5 106.21 268.71 108 266.5 108 C 264.29 108 262.5 106.21 262.5 104 C 262.5 101.79 264.29 100 266.5 100 C 268.71 100 270.5
+101.79 270.5 104 Z" fill="#e9fbff" stroke="#3b2d3a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 200.5 50 C 197.07 45.28 193.64 40.56 190.21 35.84 C 193.64 27.23 197.07 18.61 200.5 10 C 200.5 23.33 200.5 36.67 200.5 50 Z" fill="#ffffff"/>
+<path d="M 200.5 50 C 200.5 36.67 200.5 23.33 200.5 10 C 203.93 18.61 207.36 27.23 210.79 35.84 C 207.36 40.56 203.93 45.28 200.5 50 Z" fill="#a8e6fa"/>
+<path d="M 200.5 50 C 203.93 45.28 207.36 40.56 210.79 35.84 C 220.04 36.44 229.29 37.04 238.54 37.64 C 225.86 41.76 213.18 45.88 200.5 50 Z" fill="#e8dcff"/>
+<path d="M 200.5 50 C 213.18 45.88 225.86 41.76 238.54 37.64 C 231.41 43.56 224.27 49.49 217.14 55.41 C 211.59 53.61 206.05 51.8 200.5 50 Z" fill="#b49bff"/>
+<path d="M 200.5 50 C 206.05 51.8 211.59 53.61 217.14 55.41 C 219.43 64.39 221.72 73.38 224.01 82.36 C 216.17 71.57 208.34 60.79 200.5 50 Z" fill="#ffe3f3"/>
+<path d="M 200.5 50 C 208.34 60.79 216.17 71.57 224.01 82.36 C 216.17 77.41 208.34 72.45 200.5 67.5 C 200.5 61.67 200.5 55.83 200.5 50 Z" fill="#ff9fd4"/>
+<path d="M 200.5 50 C 200.5 55.83 200.5 61.67 200.5 67.5 C 192.66 72.45 184.83 77.41 176.99 82.36 C 184.83 71.57 192.66 60.79 200.5 50 Z" fill="#e5fff4"/>
+<path d="M 200.5 50 C 192.66 60.79 184.83 71.57 176.99 82.36 C 179.28 73.38 181.57 64.39 183.86 55.41 C 189.41 53.61 194.95 51.8 200.5 50 Z" fill="#8ee8c7"/>
+<path d="M 200.5 50 C 194.95 51.8 189.41 53.61 183.86 55.41 C 176.73 49.49 169.59 43.56 162.46 37.64 C 175.14 41.76 187.82 45.88 200.5 50 Z" fill="#fff6d6"/>
+<path d="M 200.5 50 C 187.82 45.88 175.14 41.76 162.46 37.64 C 171.71 37.04 180.96 36.44 190.21 35.84 C 193.64 40.56 197.07 45.28 200.5 50 Z" fill="#ffd27a"/>
+<path d="M 200.5 10 C 203.93 18.61 207.36 27.23 210.79 35.84 C 220.04 36.44 229.29 37.04 238.54 37.64 C 231.41 43.56 224.27 49.49 217.14 55.41 C
+219.43 64.39 221.72 73.38 224.01 82.36 C 216.17 77.41 208.34 72.45 200.5 67.5 C 192.66 72.45 184.83 77.41 176.99 82.36 C 179.28 73.38 181.57 64.39
+183.86 55.41 C 176.73 49.49 169.59 43.56 162.46 37.64 C 171.71 37.04 180.96 36.44 190.21 35.84 C 193.64 27.23 197.07 18.61 200.5 10 Z" fill="none"
+stroke="#3b2d3a" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 200.5 50 C 200.5 36.67 200.5 23.33 200.5 10" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-linejoin="round"
+stroke-linecap="round" opacity="0.7"/>
+<path d="M 200.5 50 C 213.18 45.88 225.86 41.76 238.54 37.64" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-linejoin="round"
+stroke-linecap="round" opacity="0.7"/>
+<path d="M 200.5 50 C 208.34 60.79 216.17 71.57 224.01 82.36" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-linejoin="round"
+stroke-linecap="round" opacity="0.7"/>
+<path d="M 200.5 50 C 192.66 60.79 184.83 71.57 176.99 82.36" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-linejoin="round"
+stroke-linecap="round" opacity="0.7"/>
+<path d="M 200.5 50 C 187.82 45.88 175.14 41.76 162.46 37.64" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-linejoin="round"
+stroke-linecap="round" opacity="0.7"/>
+<path d="M 136 55 C 137.68 59.32 140.68 62.32 145 64 C 140.68 65.68 137.68 68.68 136 73 C 134.32 68.68 131.32 65.68 127 64 C 131.32 62.32 134.32
+59.32 136 55 Z" fill="#ffffff" stroke="#6fc7e8" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 266 50 C 267.49 53.84 270.16 56.51 274 58 C 270.16 59.49 267.49 62.16 266 66 C 264.51 62.16 261.84 59.49 258 58 C 261.84 56.51 264.51
+53.84 266 50 Z" fill="#ffffff" stroke="#6fc7e8" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 170 11.5 C 171.21 14.62 173.38 16.79 176.5 18 C 173.38 19.21 171.21 21.38 170 24.5 C 168.79 21.38 166.62 19.21 163.5 18 C 166.62 16.79
+168.79 14.62 170 11.5 Z" fill="#ffffff" stroke="#6fc7e8" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 234 16 C 235.12 18.88 237.12 20.88 240 22 C 237.12 23.12 235.12 25.12 234 28 C 232.88 25.12 230.88 23.12 228 22 C 230.88 20.88 232.88
+18.88 234 16 Z" fill="#ffffff" stroke="#6fc7e8" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round"/>
+</g>
+<g id="star_crown.back" transform="translate(-105 153)">
+<defs>
+<linearGradient id="p4_g0" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="0.5" stop-color="#d6f3ff"/>
+<stop offset="1" stop-color="#9fc6e0"/>
+</linearGradient>
+<linearGradient id="p4_g1" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="0.5" stop-color="#d6f3ff"/>
+<stop offset="1" stop-color="#9fc6e0"/>
+</linearGradient>
+<linearGradient id="p4_g3" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="0.5" stop-color="#d6f3ff"/>
+<stop offset="1" stop-color="#9fc6e0"/>
+</linearGradient>
+<linearGradient id="p4_g4" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="0.5" stop-color="#d6f3ff"/>
+<stop offset="1" stop-color="#9fc6e0"/>
+</linearGradient>
+</defs>
+<path d="M 122 118 C 147 94 173 85 200.5 85 C 228 85 254 94 279 118 C 276 124 270 126 265 124 C 245 106 223 99 200.5 99 C 178 99 156 106 136 124 C
+131 126 125 124 122 118 Z" fill="url(#p4_g0)" stroke="#3b2d3a" stroke-width="3.8" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 200.5 10 C 203.93 18.61 207.36 27.23 210.79 35.84 C 220.04 36.44 229.29 37.04 238.54 37.64 C 231.41 43.56 224.27 49.49 217.14 55.41 C
+219.43 64.39 221.72 73.38 224.01 82.36 C 216.17 77.41 208.34 72.45 200.5 67.5 C 192.66 72.45 184.83 77.41 176.99 82.36 C 179.28 73.38 181.57 64.39
+183.86 55.41 C 176.73 49.49 169.59 43.56 162.46 37.64 C 171.71 37.04 180.96 36.44 190.21 35.84 C 193.64 27.23 197.07 18.61 200.5 10 Z"
+fill="url(#p4_g1)" stroke="#3b2d3a" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" opacity="0.95"/>
+<path d="M 186 46 C 190.83 40.67 195.67 35.33 200.5 30 C 205.33 35.33 210.17 40.67 215 46" fill="none" stroke="#ffffff" stroke-width="2"
+stroke-linejoin="round" stroke-linecap="round" opacity="0.8"/>
+<path d="M 154.5 64 C 158.17 69.67 161.83 75.33 165.5 81 C 161.83 86.67 158.17 92.33 154.5 98 C 150.83 92.33 147.17 86.67 143.5 81 C 147.17 75.33
+150.83 69.67 154.5 64 Z" fill="url(#p4_g3)" stroke="#3b2d3a" stroke-width="2.8" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 246.5 64 C 250.17 69.67 253.83 75.33 257.5 81 C 253.83 86.67 250.17 92.33 246.5 98 C 242.83 92.33 239.17 86.67 235.5 81 C 239.17 75.33
+242.83 69.67 246.5 64 Z" fill="url(#p4_g4)" stroke="#3b2d3a" stroke-width="2.8" stroke-linejoin="round" stroke-linecap="round"/>
+</g>
+<g id="flower_crown" transform="translate(109 134)">
+<defs>
+<linearGradient id="p5_g2" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#8fd16a"/>
+<stop offset="1" stop-color="#4f8f37"/>
+</linearGradient>
+<linearGradient id="p5_g3" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#8fd16a"/>
+<stop offset="1" stop-color="#4f8f37"/>
+</linearGradient>
+<linearGradient id="p5_g4" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#8fd16a"/>
+<stop offset="1" stop-color="#4f8f37"/>
+</linearGradient>
+<linearGradient id="p5_g5" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#8fd16a"/>
+<stop offset="1" stop-color="#4f8f37"/>
+</linearGradient>
+<linearGradient id="p5_g6" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#8fd16a"/>
+<stop offset="1" stop-color="#4f8f37"/>
+</linearGradient>
+<linearGradient id="p5_g7" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#8fd16a"/>
+<stop offset="1" stop-color="#4f8f37"/>
+</linearGradient>
+<radialGradient id="p5_g8" cx="0.5" cy="0.5" r="0.5" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="1" stop-color="#eef0e6"/>
+</radialGradient>
+<radialGradient id="p5_g9" cx="0.5" cy="0.5" r="0.5" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="1" stop-color="#eef0e6"/>
+</radialGradient>
+<radialGradient id="p5_g10" cx="0.5" cy="0.5" r="0.5" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="1" stop-color="#eef0e6"/>
+</radialGradient>
+<radialGradient id="p5_g11" cx="0.5" cy="0.5" r="0.5" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="1" stop-color="#eef0e6"/>
+</radialGradient>
+<radialGradient id="p5_g12" cx="0.5" cy="0.5" r="0.5" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="1" stop-color="#eef0e6"/>
+</radialGradient>
+<radialGradient id="p5_g14" cx="0.5" cy="0.5" r="0.5" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="1" stop-color="#eef0e6"/>
+</radialGradient>
+<radialGradient id="p5_g15" cx="0.5" cy="0.5" r="0.5" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="1" stop-color="#eef0e6"/>
+</radialGradient>
+<radialGradient id="p5_g16" cx="0.5" cy="0.5" r="0.5" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="1" stop-color="#eef0e6"/>
+</radialGradient>
+<radialGradient id="p5_g17" cx="0.5" cy="0.5" r="0.5" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="1" stop-color="#eef0e6"/>
+</radialGradient>
+<radialGradient id="p5_g18" cx="0.5" cy="0.5" r="0.5" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="1" stop-color="#eef0e6"/>
+</radialGradient>
+<radialGradient id="p5_g20" cx="0.5" cy="0.5" r="0.5" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="1" stop-color="#eef0e6"/>
+</radialGradient>
+<radialGradient id="p5_g21" cx="0.5" cy="0.5" r="0.5" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="1" stop-color="#eef0e6"/>
+</radialGradient>
+<radialGradient id="p5_g22" cx="0.5" cy="0.5" r="0.5" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="1" stop-color="#eef0e6"/>
+</radialGradient>
+<radialGradient id="p5_g23" cx="0.5" cy="0.5" r="0.5" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="1" stop-color="#eef0e6"/>
+</radialGradient>
+<radialGradient id="p5_g24" cx="0.5" cy="0.5" r="0.5" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="1" stop-color="#eef0e6"/>
+</radialGradient>
+<radialGradient id="p5_g26" cx="0.5" cy="0.5" r="0.5" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="1" stop-color="#eef0e6"/>
+</radialGradient>
+<radialGradient id="p5_g27" cx="0.5" cy="0.5" r="0.5" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="1" stop-color="#eef0e6"/>
+</radialGradient>
+<radialGradient id="p5_g28" cx="0.5" cy="0.5" r="0.5" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="1" stop-color="#eef0e6"/>
+</radialGradient>
+<radialGradient id="p5_g29" cx="0.5" cy="0.5" r="0.5" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="1" stop-color="#eef0e6"/>
+</radialGradient>
+<radialGradient id="p5_g30" cx="0.5" cy="0.5" r="0.5" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="1" stop-color="#eef0e6"/>
+</radialGradient>
+<radialGradient id="p5_g32" cx="0.5" cy="0.5" r="0.5" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="1" stop-color="#eef0e6"/>
+</radialGradient>
+<radialGradient id="p5_g33" cx="0.5" cy="0.5" r="0.5" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="1" stop-color="#eef0e6"/>
+</radialGradient>
+<radialGradient id="p5_g34" cx="0.5" cy="0.5" r="0.5" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="1" stop-color="#eef0e6"/>
+</radialGradient>
+<radialGradient id="p5_g35" cx="0.5" cy="0.5" r="0.5" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="1" stop-color="#eef0e6"/>
+</radialGradient>
+<radialGradient id="p5_g36" cx="0.5" cy="0.5" r="0.5" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="1" stop-color="#eef0e6"/>
+</radialGradient>
+<radialGradient id="p5_g38" cx="0.5" cy="0.5" r="0.5" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="1" stop-color="#eef0e6"/>
+</radialGradient>
+<radialGradient id="p5_g39" cx="0.5" cy="0.5" r="0.5" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="1" stop-color="#eef0e6"/>
+</radialGradient>
+<radialGradient id="p5_g40" cx="0.5" cy="0.5" r="0.5" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="1" stop-color="#eef0e6"/>
+</radialGradient>
+<radialGradient id="p5_g41" cx="0.5" cy="0.5" r="0.5" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="1" stop-color="#eef0e6"/>
+</radialGradient>
+<radialGradient id="p5_g42" cx="0.5" cy="0.5" r="0.5" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="1" stop-color="#eef0e6"/>
+</radialGradient>
+<linearGradient id="p5_g44" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#fff3a6"/>
+<stop offset="1" stop-color="#ffc918"/>
+</linearGradient>
+<linearGradient id="p5_g45" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#fff3a6"/>
+<stop offset="1" stop-color="#ffc918"/>
+</linearGradient>
+<linearGradient id="p5_g46" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#fff3a6"/>
+<stop offset="1" stop-color="#ffc918"/>
+</linearGradient>
+<linearGradient id="p5_g47" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#fff3a6"/>
+<stop offset="1" stop-color="#ffc918"/>
+</linearGradient>
+<linearGradient id="p5_g48" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#fff3a6"/>
+<stop offset="1" stop-color="#ffc918"/>
+</linearGradient>
+<linearGradient id="p5_g49" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#fff3a6"/>
+<stop offset="1" stop-color="#ffc918"/>
+</linearGradient>
+<linearGradient id="p5_g51" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#fff3a6"/>
+<stop offset="1" stop-color="#ffc918"/>
+</linearGradient>
+<linearGradient id="p5_g52" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#fff3a6"/>
+<stop offset="1" stop-color="#ffc918"/>
+</linearGradient>
+<linearGradient id="p5_g53" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#fff3a6"/>
+<stop offset="1" stop-color="#ffc918"/>
+</linearGradient>
+<linearGradient id="p5_g54" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#fff3a6"/>
+<stop offset="1" stop-color="#ffc918"/>
+</linearGradient>
+<linearGradient id="p5_g55" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#fff3a6"/>
+<stop offset="1" stop-color="#ffc918"/>
+</linearGradient>
+<linearGradient id="p5_g56" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#fff3a6"/>
+<stop offset="1" stop-color="#ffc918"/>
+</linearGradient>
+<radialGradient id="p5_g58" cx="0.5" cy="0.45" r="0.6" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffd1f0"/>
+<stop offset="0.55" stop-color="#d98ad0"/>
+<stop offset="1" stop-color="#9a5bb8"/>
+</radialGradient>
+<radialGradient id="p5_g59" cx="0.5" cy="0.45" r="0.6" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffd1f0"/>
+<stop offset="0.55" stop-color="#d98ad0"/>
+<stop offset="1" stop-color="#9a5bb8"/>
+</radialGradient>
+<radialGradient id="p5_g60" cx="0.5" cy="0.45" r="0.6" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffd1f0"/>
+<stop offset="0.55" stop-color="#d98ad0"/>
+<stop offset="1" stop-color="#9a5bb8"/>
+</radialGradient>
+<radialGradient id="p5_g61" cx="0.5" cy="0.45" r="0.6" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffd1f0"/>
+<stop offset="0.55" stop-color="#d98ad0"/>
+<stop offset="1" stop-color="#9a5bb8"/>
+</radialGradient>
+<radialGradient id="p5_g62" cx="0.5" cy="0.45" r="0.6" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffd1f0"/>
+<stop offset="0.55" stop-color="#d98ad0"/>
+<stop offset="1" stop-color="#9a5bb8"/>
+</radialGradient>
+</defs>
+<path d="M 106 126 C 124 84 160 64 200.5 64 C 241 64 277 84 295 126" fill="none" stroke="#487f33" stroke-width="9" stroke-linejoin="round"
+stroke-linecap="round"/>
+<path d="M 108 122 C 126 84 160 66 200.5 66 C 241 66 275 84 293 122" fill="none" stroke="#7cc05a" stroke-width="3.4" stroke-linejoin="round"
+stroke-linecap="round"/>
+<path d="M 113.23 111.83 C 123.12 111.82 130.49 106.66 135.35 96.34 C 123.99 97.38 116.62 102.54 113.23 111.83 Z" fill="url(#p5_g2)" stroke="#3b2d3a"
+stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 214.86 64.87 C 218.25 74.16 225.62 79.32 236.98 80.35 C 232.12 70.03 224.75 64.87 214.86 64.87 Z" fill="url(#p5_g3)" stroke="#3b2d3a"
+stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 137.21 84.57 C 133.82 75.28 126.45 70.12 115.09 69.09 C 119.95 79.41 127.32 84.57 137.21 84.57 Z" fill="url(#p5_g4)" stroke="#3b2d3a"
+stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 248.15 74.73 C 238.26 74.74 230.89 79.9 226.03 90.22 C 237.39 89.18 244.76 84.02 248.15 74.73 Z" fill="url(#p5_g5)" stroke="#3b2d3a"
+stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 171.18 67.78 C 181.07 67.78 188.44 62.62 193.3 52.29 C 181.94 53.33 174.57 58.49 171.18 67.78 Z" fill="url(#p5_g6)" stroke="#3b2d3a"
+stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 278.34 98.59 C 281.72 107.88 289.09 113.05 300.45 114.08 C 295.59 103.76 288.22 98.6 278.34 98.59 Z" fill="url(#p5_g7)" stroke="#3b2d3a"
+stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 108.83 97.26 C 112.67 97.26 115.79 102.45 115.79 108.86 C 115.79 115.27 112.67 120.46 108.83 120.46 C 104.99 120.46 101.87 115.27 101.87
+108.86 C 101.87 102.45 104.99 97.26 108.83 97.26 Z" fill="url(#p5_g8)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 130.32 112.89 C 131.51 116.54 127.53 121.11 121.44 123.09 C 115.35 125.07 109.45 123.71 108.26 120.05 C 107.07 116.4 111.05 111.83 117.14
+109.85 C 123.23 107.87 129.13 109.23 130.32 112.89 Z" fill="url(#p5_g9)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 122.12 138.14 C 119.01 140.4 113.43 138.03 109.67 132.85 C 105.9 127.67 105.37 121.63 108.48 119.38 C 111.59 117.12 117.17 119.49 120.93
+124.67 C 124.7 129.85 125.23 135.89 122.12 138.14 Z" fill="url(#p5_g10)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 95.55 138.14 C 92.44 135.89 92.97 129.85 96.74 124.67 C 100.5 119.49 106.08 117.12 109.19 119.38 C 112.3 121.63 111.77 127.67 108 132.85 C
+104.24 138.03 98.66 140.4 95.55 138.14 Z" fill="url(#p5_g11)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 87.34 112.89 C 88.53 109.23 94.43 107.87 100.52 109.85 C 106.61 111.83 110.59 116.4 109.4 120.05 C 108.21 123.71 102.31 125.07 96.22
+123.09 C 90.13 121.11 86.15 116.54 87.34 112.89 Z" fill="url(#p5_g12)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 114.83 119.86 C 114.83 123.17 112.14 125.86 108.83 125.86 C 105.52 125.86 102.83 123.17 102.83 119.86 C 102.83 116.55 105.52 113.86 108.83
+113.86 C 112.14 113.86 114.83 116.55 114.83 119.86 Z" fill="#ffd84d" stroke="#3b2d3a" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 126.7 71.49 C 130.54 71.49 133.66 76.68 133.66 83.09 C 133.66 89.5 130.54 94.69 126.7 94.69 C 122.86 94.69 119.74 89.5 119.74 83.09 C
+119.74 76.68 122.86 71.49 126.7 71.49 Z" fill="url(#p5_g14)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 148.19 87.11 C 149.38 90.76 145.4 95.33 139.31 97.31 C 133.22 99.29 127.32 97.93 126.13 94.27 C 124.94 90.62 128.92 86.05 135.01 84.07 C
+141.1 82.09 147 83.45 148.19 87.11 Z" fill="url(#p5_g15)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 139.98 112.37 C 136.87 114.63 131.29 112.26 127.53 107.08 C 123.76 101.9 123.23 95.86 126.34 93.61 C 129.45 91.35 135.03 93.72 138.79 98.9
+C 142.56 104.08 143.09 110.12 139.98 112.37 Z" fill="url(#p5_g16)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 113.41 112.37 C 110.3 110.12 110.83 104.08 114.6 98.9 C 118.36 93.72 123.94 91.35 127.05 93.61 C 130.16 95.86 129.63 101.9 125.86 107.08 C
+122.1 112.26 116.52 114.63 113.41 112.37 Z" fill="url(#p5_g17)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 105.2 87.11 C 106.39 83.45 112.29 82.09 118.38 84.07 C 124.47 86.05 128.45 90.62 127.26 94.27 C 126.07 97.93 120.17 99.29 114.08 97.31 C
+107.99 95.33 104.01 90.76 105.2 87.11 Z" fill="url(#p5_g18)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 132.7 94.09 C 132.7 97.4 130.01 100.09 126.7 100.09 C 123.39 100.09 120.7 97.4 120.7 94.09 C 120.7 90.78 123.39 88.09 126.7 88.09 C 130.01
+88.09 132.7 90.78 132.7 94.09 Z" fill="#ffd84d" stroke="#3b2d3a" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 152.85 52.13 C 156.69 52.13 159.81 57.32 159.81 63.73 C 159.81 70.14 156.69 75.33 152.85 75.33 C 149.01 75.33 145.89 70.14 145.89 63.73 C
+145.89 57.32 149.01 52.13 152.85 52.13 Z" fill="url(#p5_g20)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 174.34 67.75 C 175.53 71.4 171.55 75.97 165.46 77.95 C 159.37 79.93 153.47 78.57 152.28 74.91 C 151.09 71.26 155.07 66.69 161.16 64.71 C
+167.25 62.73 173.15 64.09 174.34 67.75 Z" fill="url(#p5_g21)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 166.14 93.01 C 163.03 95.27 157.45 92.9 153.69 87.72 C 149.92 82.54 149.39 76.5 152.5 74.25 C 155.61 71.99 161.19 74.36 164.95 79.54 C
+168.72 84.72 169.25 90.76 166.14 93.01 Z" fill="url(#p5_g22)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 139.57 93.01 C 136.46 90.76 136.99 84.72 140.76 79.54 C 144.52 74.36 150.1 71.99 153.21 74.25 C 156.32 76.5 155.79 82.54 152.02 87.72 C
+148.26 92.9 142.68 95.27 139.57 93.01 Z" fill="url(#p5_g23)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 131.36 67.75 C 132.55 64.09 138.45 62.73 144.54 64.71 C 150.63 66.69 154.61 71.26 153.42 74.91 C 152.23 78.57 146.33 79.93 140.24 77.95 C
+134.15 75.97 130.17 71.4 131.36 67.75 Z" fill="url(#p5_g24)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 158.85 74.73 C 158.85 78.04 156.16 80.73 152.85 80.73 C 149.54 80.73 146.85 78.04 146.85 74.73 C 146.85 71.42 149.54 68.73 152.85 68.73 C
+156.16 68.73 158.85 71.42 158.85 74.73 Z" fill="#ffd84d" stroke="#3b2d3a" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 248.15 52.13 C 251.99 52.13 255.11 57.32 255.11 63.73 C 255.11 70.14 251.99 75.33 248.15 75.33 C 244.31 75.33 241.19 70.14 241.19 63.73 C
+241.19 57.32 244.31 52.13 248.15 52.13 Z" fill="url(#p5_g26)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 269.64 67.75 C 270.83 71.4 266.85 75.97 260.76 77.95 C 254.67 79.93 248.77 78.57 247.58 74.91 C 246.39 71.26 250.37 66.69 256.46 64.71 C
+262.55 62.73 268.45 64.09 269.64 67.75 Z" fill="url(#p5_g27)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 261.43 93.01 C 258.32 95.27 252.74 92.9 248.98 87.72 C 245.21 82.54 244.68 76.5 247.79 74.25 C 250.9 71.99 256.48 74.36 260.24 79.54 C
+264.01 84.72 264.54 90.76 261.43 93.01 Z" fill="url(#p5_g28)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 234.86 93.01 C 231.75 90.76 232.28 84.72 236.05 79.54 C 239.81 74.36 245.39 71.99 248.5 74.25 C 251.61 76.5 251.08 82.54 247.31 87.72 C
+243.55 92.9 237.97 95.27 234.86 93.01 Z" fill="url(#p5_g29)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 226.66 67.75 C 227.85 64.09 233.75 62.73 239.84 64.71 C 245.93 66.69 249.91 71.26 248.72 74.91 C 247.53 78.57 241.63 79.93 235.54 77.95 C
+229.45 75.97 225.47 71.4 226.66 67.75 Z" fill="url(#p5_g30)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 254.15 74.73 C 254.15 78.04 251.46 80.73 248.15 80.73 C 244.84 80.73 242.15 78.04 242.15 74.73 C 242.15 71.42 244.84 68.73 248.15 68.73 C
+251.46 68.73 254.15 71.42 254.15 74.73 Z" fill="#ffd84d" stroke="#3b2d3a" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 274.3 71.49 C 278.14 71.49 281.26 76.68 281.26 83.09 C 281.26 89.5 278.14 94.69 274.3 94.69 C 270.46 94.69 267.34 89.5 267.34 83.09 C
+267.34 76.68 270.46 71.49 274.3 71.49 Z" fill="url(#p5_g32)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 295.8 87.11 C 296.99 90.76 293.01 95.33 286.92 97.31 C 280.83 99.29 274.93 97.93 273.74 94.27 C 272.55 90.62 276.53 86.05 282.62 84.07 C
+288.71 82.09 294.61 83.45 295.8 87.11 Z" fill="url(#p5_g33)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 287.59 112.37 C 284.48 114.63 278.9 112.26 275.14 107.08 C 271.37 101.9 270.84 95.86 273.95 93.61 C 277.06 91.35 282.64 93.72 286.4 98.9 C
+290.17 104.08 290.7 110.12 287.59 112.37 Z" fill="url(#p5_g34)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 261.02 112.37 C 257.91 110.12 258.44 104.08 262.21 98.9 C 265.97 93.72 271.55 91.35 274.66 93.61 C 277.77 95.86 277.24 101.9 273.47 107.08
+C 269.71 112.26 264.13 114.63 261.02 112.37 Z" fill="url(#p5_g35)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 252.81 87.11 C 254 83.45 259.9 82.09 265.99 84.07 C 272.08 86.05 276.06 90.62 274.87 94.27 C 273.68 97.93 267.78 99.29 261.69 97.31 C
+255.6 95.33 251.62 90.76 252.81 87.11 Z" fill="url(#p5_g36)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 280.3 94.09 C 280.3 97.4 277.61 100.09 274.3 100.09 C 270.99 100.09 268.3 97.4 268.3 94.09 C 268.3 90.78 270.99 88.09 274.3 88.09 C 277.61
+88.09 280.3 90.78 280.3 94.09 Z" fill="#ffd84d" stroke="#3b2d3a" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 292.17 97.26 C 296.01 97.26 299.13 102.45 299.13 108.86 C 299.13 115.27 296.01 120.46 292.17 120.46 C 288.33 120.46 285.21 115.27 285.21
+108.86 C 285.21 102.45 288.33 97.26 292.17 97.26 Z" fill="url(#p5_g38)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 313.66 112.89 C 314.85 116.54 310.87 121.11 304.78 123.09 C 298.69 125.07 292.79 123.71 291.6 120.05 C 290.41 116.4 294.39 111.83 300.48
+109.85 C 306.57 107.87 312.47 109.23 313.66 112.89 Z" fill="url(#p5_g39)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 305.45 138.14 C 302.34 140.4 296.76 138.03 293 132.85 C 289.23 127.67 288.7 121.63 291.81 119.38 C 294.92 117.12 300.5 119.49 304.26
+124.67 C 308.03 129.85 308.56 135.89 305.45 138.14 Z" fill="url(#p5_g40)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 278.88 138.14 C 275.77 135.89 276.3 129.85 280.07 124.67 C 283.83 119.49 289.41 117.12 292.52 119.38 C 295.63 121.63 295.1 127.67 291.33
+132.85 C 287.57 138.03 281.99 140.4 278.88 138.14 Z" fill="url(#p5_g41)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 270.68 112.89 C 271.87 109.23 277.77 107.87 283.86 109.85 C 289.95 111.83 293.93 116.4 292.74 120.05 C 291.55 123.71 285.65 125.07 279.56
+123.09 C 273.47 121.11 269.49 116.54 270.68 112.89 Z" fill="url(#p5_g42)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 298.17 119.86 C 298.17 123.17 295.48 125.86 292.17 125.86 C 288.86 125.86 286.17 123.17 286.17 119.86 C 286.17 116.55 288.86 113.86 292.17
+113.86 C 295.48 113.86 298.17 116.55 298.17 119.86 Z" fill="#ffd84d" stroke="#3b2d3a" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 158 53.92 C 161.59 53.92 164.5 58.07 164.5 63.2 C 164.5 68.33 161.59 72.48 158 72.48 C 154.41 72.48 151.5 68.33 151.5 63.2 C 151.5 58.07
+154.41 53.92 158 53.92 Z" fill="url(#p5_g44)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 173.66 62.96 C 175.45 66.07 173.31 70.67 168.87 73.23 C 164.43 75.79 159.38 75.35 157.58 72.24 C 155.79 69.13 157.93 64.53 162.37 61.97 C
+166.81 59.41 171.86 59.85 173.66 62.96 Z" fill="url(#p5_g45)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 173.66 81.04 C 171.86 84.15 166.81 84.59 162.37 82.03 C 157.93 79.47 155.79 74.87 157.58 71.76 C 159.38 68.65 164.43 68.21 168.87 70.77 C
+173.31 73.33 175.45 77.93 173.66 81.04 Z" fill="url(#p5_g46)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 158 90.08 C 154.41 90.08 151.5 85.93 151.5 80.8 C 151.5 75.67 154.41 71.52 158 71.52 C 161.59 71.52 164.5 75.67 164.5 80.8 C 164.5 85.93
+161.59 90.08 158 90.08 Z" fill="url(#p5_g47)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 142.34 81.04 C 140.55 77.93 142.69 73.33 147.13 70.77 C 151.57 68.21 156.62 68.65 158.42 71.76 C 160.21 74.87 158.07 79.47 153.63 82.03 C
+149.19 84.59 144.14 84.15 142.34 81.04 Z" fill="url(#p5_g48)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 142.34 62.96 C 144.14 59.85 149.19 59.41 153.63 61.97 C 158.07 64.53 160.21 69.13 158.42 72.24 C 156.62 75.35 151.57 75.79 147.13 73.23 C
+142.69 70.67 140.55 66.07 142.34 62.96 Z" fill="url(#p5_g49)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 162.8 72 C 162.8 74.65 160.65 76.8 158 76.8 C 155.35 76.8 153.2 74.65 153.2 72 C 153.2 69.35 155.35 67.2 158 67.2 C 160.65 67.2 162.8
+69.35 162.8 72 Z" fill="#e9801f" stroke="#3b2d3a" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 243 53.92 C 246.59 53.92 249.5 58.07 249.5 63.2 C 249.5 68.33 246.59 72.48 243 72.48 C 239.41 72.48 236.5 68.33 236.5 63.2 C 236.5 58.07
+239.41 53.92 243 53.92 Z" fill="url(#p5_g51)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 258.66 62.96 C 260.45 66.07 258.31 70.67 253.87 73.23 C 249.43 75.79 244.38 75.35 242.58 72.24 C 240.79 69.13 242.93 64.53 247.37 61.97 C
+251.81 59.41 256.86 59.85 258.66 62.96 Z" fill="url(#p5_g52)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 258.66 81.04 C 256.86 84.15 251.81 84.59 247.37 82.03 C 242.93 79.47 240.79 74.87 242.58 71.76 C 244.38 68.65 249.43 68.21 253.87 70.77 C
+258.31 73.33 260.45 77.93 258.66 81.04 Z" fill="url(#p5_g53)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 243 90.08 C 239.41 90.08 236.5 85.93 236.5 80.8 C 236.5 75.67 239.41 71.52 243 71.52 C 246.59 71.52 249.5 75.67 249.5 80.8 C 249.5 85.93
+246.59 90.08 243 90.08 Z" fill="url(#p5_g54)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 227.34 81.04 C 225.55 77.93 227.69 73.33 232.13 70.77 C 236.57 68.21 241.62 68.65 243.42 71.76 C 245.21 74.87 243.07 79.47 238.63 82.03 C
+234.19 84.59 229.14 84.15 227.34 81.04 Z" fill="url(#p5_g55)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 227.34 62.96 C 229.14 59.85 234.19 59.41 238.63 61.97 C 243.07 64.53 245.21 69.13 243.42 72.24 C 241.62 75.35 236.57 75.79 232.13 73.23 C
+227.69 70.67 225.55 66.07 227.34 62.96 Z" fill="url(#p5_g56)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 247.8 72 C 247.8 74.65 245.65 76.8 243 76.8 C 240.35 76.8 238.2 74.65 238.2 72 C 238.2 69.35 240.35 67.2 243 67.2 C 245.65 67.2 247.8
+69.35 247.8 72 Z" fill="#e9801f" stroke="#3b2d3a" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 200.5 29 C 206.58 29 211.5 36.61 211.5 46 C 211.5 55.39 206.58 63 200.5 63 C 194.42 63 189.5 55.39 189.5 46 C 189.5 36.61 194.42 29 200.5
+29 Z" fill="url(#p5_g58)" stroke="#3b2d3a" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 231.89 51.81 C 233.77 57.58 228.05 64.62 219.12 67.52 C 210.19 70.42 201.43 68.09 199.55 62.31 C 197.67 56.54 203.39 49.5 212.32 46.6 C
+221.25 43.7 230.01 46.03 231.89 51.81 Z" fill="url(#p5_g59)" stroke="#3b2d3a" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 219.89 88.69 C 214.98 92.26 206.52 89 201 81.41 C 195.48 73.81 194.99 64.76 199.91 61.19 C 204.82 57.62 213.28 60.88 218.8 68.47 C 224.32
+76.07 224.81 85.12 219.89 88.69 Z" fill="url(#p5_g60)" stroke="#3b2d3a" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 181.11 88.69 C 176.19 85.12 176.68 76.07 182.2 68.47 C 187.72 60.88 196.18 57.62 201.09 61.19 C 206.01 64.76 205.52 73.81 200 81.41 C
+194.48 89 186.02 92.26 181.11 88.69 Z" fill="url(#p5_g61)" stroke="#3b2d3a" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 169.11 51.81 C 170.99 46.03 179.75 43.7 188.68 46.6 C 197.61 49.5 203.33 56.54 201.45 62.31 C 199.57 68.09 190.81 70.42 181.88 67.52 C
+172.95 64.62 167.23 57.58 169.11 51.81 Z" fill="url(#p5_g62)" stroke="#3b2d3a" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 189 62 C 189 76 212 76 212 62 C 206 70 195 70 189 62 Z" fill="#7b3f99" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round"
+stroke-linecap="round"/>
+<path d="M 197.2 56 C 197.2 57.22 196.22 58.2 195 58.2 C 193.78 58.2 192.8 57.22 192.8 56 C 192.8 54.78 193.78 53.8 195 53.8 C 196.22 53.8 197.2
+54.78 197.2 56 Z" fill="#7b3f99"/>
+<path d="M 208.2 56 C 208.2 57.22 207.22 58.2 206 58.2 C 204.78 58.2 203.8 57.22 203.8 56 C 203.8 54.78 204.78 53.8 206 53.8 C 207.22 53.8 208.2
+54.78 208.2 56 Z" fill="#7b3f99"/>
+<path d="M 202.7 51 C 202.7 52.22 201.72 53.2 200.5 53.2 C 199.28 53.2 198.3 52.22 198.3 51 C 198.3 49.78 199.28 48.8 200.5 48.8 C 201.72 48.8 202.7
+49.78 202.7 51 Z" fill="#7b3f99"/>
+<path d="M 205.7 58 C 205.7 60.87 203.37 63.2 200.5 63.2 C 197.63 63.2 195.3 60.87 195.3 58 C 195.3 55.13 197.63 52.8 200.5 52.8 C 203.37 52.8 205.7
+55.13 205.7 58 Z" fill="#fff3b0" stroke="#3b2d3a" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 128 58 C 129.49 61.84 132.16 64.51 136 66 C 132.16 67.49 129.49 70.16 128 74 C 126.51 70.16 123.84 67.49 120 66 C 123.84 64.51 126.51
+61.84 128 58 Z" fill="#ffffff" stroke="#b98ad6" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 274 57 C 275.31 60.36 277.64 62.69 281 64 C 277.64 65.31 275.31 67.64 274 71 C 272.69 67.64 270.36 65.31 267 64 C 270.36 62.69 272.69
+60.36 274 57 Z" fill="#ffffff" stroke="#b98ad6" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 176 34.5 C 177.03 37.14 178.86 38.97 181.5 40 C 178.86 41.03 177.03 42.86 176 45.5 C 174.97 42.86 173.14 41.03 170.5 40 C 173.14 38.97
+174.97 37.14 176 34.5 Z" fill="#ffffff" stroke="#b98ad6" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round"/>
+</g>
+<g id="gold_crown" transform="translate(342 150)">
+<defs>
+<linearGradient id="p6_g0" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#fff6b8"/>
+<stop offset="0.35" stop-color="#ffd84d"/>
+<stop offset="0.75" stop-color="#f2b705"/>
+<stop offset="1" stop-color="#c98a00"/>
+</linearGradient>
+<linearGradient id="p6_g1" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffd84d"/>
+<stop offset="1" stop-color="#d99a06"/>
+</linearGradient>
+<linearGradient id="p6_g4" x1="0" y1="0" x2="1" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ff9f8f"/>
+<stop offset="1" stop-color="#c0392b"/>
+</linearGradient>
+<linearGradient id="p6_g6" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#8ce8dc"/>
+<stop offset="1" stop-color="#1d7166"/>
+</linearGradient>
+<linearGradient id="p6_g7" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffc0a8"/>
+<stop offset="1" stop-color="#e2603f"/>
+</linearGradient>
+<linearGradient id="p6_g8" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffc0a8"/>
+<stop offset="1" stop-color="#e2603f"/>
+</linearGradient>
+<radialGradient id="p6_g9" cx="0.38" cy="0.35" r="0.7" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="0.7" stop-color="#fbf3e4"/>
+<stop offset="1" stop-color="#e3d3b8"/>
+</radialGradient>
+<radialGradient id="p6_g10" cx="0.38" cy="0.35" r="0.7" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="0.7" stop-color="#fbf3e4"/>
+<stop offset="1" stop-color="#e3d3b8"/>
+</radialGradient>
+<radialGradient id="p6_g11" cx="0.38" cy="0.35" r="0.7" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="0.7" stop-color="#fbf3e4"/>
+<stop offset="1" stop-color="#e3d3b8"/>
+</radialGradient>
+<radialGradient id="p6_g12" cx="0.38" cy="0.35" r="0.7" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="0.7" stop-color="#fbf3e4"/>
+<stop offset="1" stop-color="#e3d3b8"/>
+</radialGradient>
+<radialGradient id="p6_g13" cx="0.38" cy="0.35" r="0.7" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="0.7" stop-color="#fbf3e4"/>
+<stop offset="1" stop-color="#e3d3b8"/>
+</radialGradient>
+</defs>
+<path d="M 128 114 C 126.33 96.67 124.67 79.33 123 62 C 132.67 70 142.33 78 152 86 C 156.67 71.33 161.33 56.67 166 42 C 172 54.67 178 67.33 184 80 C
+189.5 61.33 195 42.67 200.5 24 C 206 42.67 211.5 61.33 217 80 C 223 67.33 229 54.67 235 42 C 239.67 56.67 244.33 71.33 249 86 C 258.67 78 268.33 70
+278 62 C 276.33 79.33 274.67 96.67 273 114 C 230 122 171 122 128 114 Z" fill="url(#p6_g0)" stroke="#3b2d3a" stroke-width="4.4"
+stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 129 97 C 172 105 229 105 272 97 C 272.33 102.67 272.67 108.33 273 114 C 230 122 171 122 128 114 C 128.33 108.33 128.67 102.67 129 97 Z"
+fill="url(#p6_g1)" stroke="#3b2d3a" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 156.5 92 C 144.5 84 151.5 74 159.5 76 C 165.5 78 161.5 89 156.5 88" fill="none" stroke="#a86f00" stroke-width="2.6"
+stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 244.5 92 C 256.5 84 249.5 74 241.5 76 C 235.5 78 239.5 89 244.5 88" fill="none" stroke="#a86f00" stroke-width="2.6"
+stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 200.5 52 C 204.33 57.33 208.17 62.67 212 68 C 208.17 73.67 204.33 79.33 200.5 85 C 196.67 79.33 192.83 73.67 189 68 C 192.83 62.67 196.67
+57.33 200.5 52 Z" fill="url(#p6_g4)" stroke="#3b2d3a" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 195 64 C 196.83 62 198.67 60 200.5 58 C 202.33 60 204.17 62 206 64" fill="none" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"
+stroke-linecap="round" opacity="0.85"/>
+<path d="M 210.5 108 C 210.5 111.65 206.02 114.6 200.5 114.6 C 194.98 114.6 190.5 111.65 190.5 108 C 190.5 104.35 194.98 101.4 200.5 101.4 C 206.02
+101.4 210.5 104.35 210.5 108 Z" fill="url(#p6_g6)" stroke="#3b2d3a" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 165.8 106 C 165.8 109.2 163.2 111.8 160 111.8 C 156.8 111.8 154.2 109.2 154.2 106 C 154.2 102.8 156.8 100.2 160 100.2 C 163.2 100.2 165.8
+102.8 165.8 106 Z" fill="url(#p6_g7)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 246.8 106 C 246.8 109.2 244.2 111.8 241 111.8 C 237.8 111.8 235.2 109.2 235.2 106 C 235.2 102.8 237.8 100.2 241 100.2 C 244.2 100.2 246.8
+102.8 246.8 106 Z" fill="url(#p6_g8)" stroke="#3b2d3a" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 129.6 60 C 129.6 63.65 126.65 66.6 123 66.6 C 119.35 66.6 116.4 63.65 116.4 60 C 116.4 56.35 119.35 53.4 123 53.4 C 126.65 53.4 129.6
+56.35 129.6 60 Z" fill="url(#p6_g9)" stroke="#3b2d3a" stroke-width="2.8" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 172.6 40 C 172.6 43.65 169.65 46.6 166 46.6 C 162.35 46.6 159.4 43.65 159.4 40 C 159.4 36.35 162.35 33.4 166 33.4 C 169.65 33.4 172.6
+36.35 172.6 40 Z" fill="url(#p6_g10)" stroke="#3b2d3a" stroke-width="2.8" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 207.1 22 C 207.1 25.65 204.15 28.6 200.5 28.6 C 196.85 28.6 193.9 25.65 193.9 22 C 193.9 18.35 196.85 15.4 200.5 15.4 C 204.15 15.4 207.1
+18.35 207.1 22 Z" fill="url(#p6_g11)" stroke="#3b2d3a" stroke-width="2.8" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 241.6 40 C 241.6 43.65 238.65 46.6 235 46.6 C 231.35 46.6 228.4 43.65 228.4 40 C 228.4 36.35 231.35 33.4 235 33.4 C 238.65 33.4 241.6
+36.35 241.6 40 Z" fill="url(#p6_g12)" stroke="#3b2d3a" stroke-width="2.8" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 284.6 60 C 284.6 63.65 281.65 66.6 278 66.6 C 274.35 66.6 271.4 63.65 271.4 60 C 271.4 56.35 274.35 53.4 278 53.4 C 281.65 53.4 284.6
+56.35 284.6 60 Z" fill="url(#p6_g13)" stroke="#3b2d3a" stroke-width="2.8" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 132 104 C 130.67 93.33 129.33 82.67 128 72" fill="none" stroke="#ffffff" stroke-width="3.8" stroke-linejoin="round" stroke-linecap="round"
+opacity="0.6"/>
+<path d="M 172 98 C 170.67 86.67 169.33 75.33 168 64" fill="none" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"
+opacity="0.5"/>
+<path d="M 110 36 C 111.49 39.84 114.16 42.51 118 44 C 114.16 45.49 111.49 48.16 110 52 C 108.51 48.16 105.84 45.49 102 44 C 105.84 42.51 108.51
+39.84 110 36 Z" fill="#fffbe0" stroke="#e0a20c" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 290 41 C 291.31 44.36 293.64 46.69 297 48 C 293.64 49.31 291.31 51.64 290 55 C 288.69 51.64 286.36 49.31 283 48 C 286.36 46.69 288.69
+44.36 290 41 Z" fill="#fffbe0" stroke="#e0a20c" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 220 12 C 221.12 14.88 223.12 16.88 226 18 C 223.12 19.12 221.12 21.12 220 24 C 218.88 21.12 216.88 19.12 214 18 C 216.88 16.88 218.88
+14.88 220 12 Z" fill="#fffbe0" stroke="#e0a20c" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round"/>
+</g>
+<g id="hard_hat" transform="translate(561 126)">
+<defs>
+<linearGradient id="p7_g0" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffe27a"/>
+<stop offset="1" stop-color="#f2ae0b"/>
+</linearGradient>
+<linearGradient id="p7_g1" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffd23f"/>
+<stop offset="1" stop-color="#e39b0d"/>
+</linearGradient>
+<linearGradient id="p7_g4" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffd23f"/>
+<stop offset="1" stop-color="#d99307"/>
+</linearGradient>
+<linearGradient id="p7_g5" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#9aa3b5"/>
+<stop offset="1" stop-color="#5c6475"/>
+</linearGradient>
+<radialGradient id="p7_g6" cx="0.35" cy="0.3" r="0.8" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="1" stop-color="#fff0a8"/>
+</radialGradient>
+</defs>
+<path d="M 116 118 C 112 68 152 38 200.5 38 C 249 38 289 68 285 118 C 245 110 156 110 116 118 Z" fill="url(#p7_g0)" stroke="#3b2d3a"
+stroke-width="4.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 188 41 C 186 68 186 94 188 112 C 196.33 112 204.67 112 213 112 C 215 94 215 68 213 41 C 205 38 196 38 188 41 Z" fill="url(#p7_g1)"
+stroke="#3b2d3a" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 158 52 C 150 72 148 94 150 113" fill="none" stroke="#d18c08" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 243 52 C 251 72 253 94 251 113" fill="none" stroke="#d18c08" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 100 120 C 130 105 271 105 301 120 C 295 133 262 138 200.5 138 C 139 138 106 133 100 120 Z" fill="url(#p7_g4)" stroke="#3b2d3a"
+stroke-width="4.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 215.5 84 C 215.5 90.63 208.78 96 200.5 96 C 192.22 96 185.5 90.63 185.5 84 C 185.5 77.37 192.22 72 200.5 72 C 208.78 72 215.5 77.37 215.5
+84 Z" fill="url(#p7_g5)" stroke="#3b2d3a" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 210 84 C 210 88.14 205.75 91.5 200.5 91.5 C 195.25 91.5 191 88.14 191 84 C 191 79.86 195.25 76.5 200.5 76.5 C 205.75 76.5 210 79.86 210 84
+Z" fill="url(#p7_g6)" stroke="#3b2d3a" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 138 74 C 150 56 168 46 184 44" fill="none" stroke="#ffffff" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" opacity="0.55"/>
+</g>
+<g id="hard_hat.back" transform="translate(-82 263)">
+<defs>
+<linearGradient id="p8_g0" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffe27a"/>
+<stop offset="1" stop-color="#f2ae0b"/>
+</linearGradient>
+<linearGradient id="p8_g1" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffd23f"/>
+<stop offset="1" stop-color="#e39b0d"/>
+</linearGradient>
+<linearGradient id="p8_g4" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffd23f"/>
+<stop offset="1" stop-color="#d99307"/>
+</linearGradient>
+</defs>
+<path d="M 116 118 C 112 68 152 38 200.5 38 C 249 38 289 68 285 118 C 245 110 156 110 116 118 Z" fill="url(#p8_g0)" stroke="#3b2d3a"
+stroke-width="4.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 188 41 C 186 68 186 94 188 112 C 196.33 112 204.67 112 213 112 C 215 94 215 68 213 41 C 205 38 196 38 188 41 Z" fill="url(#p8_g1)"
+stroke="#3b2d3a" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 158 52 C 150 72 148 94 150 113" fill="none" stroke="#d18c08" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 243 52 C 251 72 253 94 251 113" fill="none" stroke="#d18c08" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 100 120 C 130 105 271 105 301 120 C 295 133 262 138 200.5 138 C 139 138 106 133 100 120 Z" fill="url(#p8_g4)" stroke="#3b2d3a"
+stroke-width="4.4" stroke-linejoin="round" stroke-linecap="round"/>
+</g>
+<g id="pirate_hat.back" transform="translate(153 271)">
+<defs>
+<linearGradient id="p9_g0" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#4a4258"/>
+<stop offset="1" stop-color="#2b2534"/>
+</linearGradient>
+<linearGradient id="p9_g1" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#3d364a"/>
+<stop offset="1" stop-color="#211c29"/>
+</linearGradient>
+</defs>
+<path d="M 140 98 C 138 52 168 30 200.5 30 C 233 30 263 52 261 98 C 220.67 98 180.33 98 140 98 Z" fill="url(#p9_g0)" stroke="#3b2d3a"
+stroke-width="4.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 90 118 C 106 72 150 58 200.5 84 C 251 58 295 72 311 118 C 270 104 231 108 200.5 130 C 170 108 131 104 90 118 Z" fill="url(#p9_g1)"
+stroke="#3b2d3a" stroke-width="4.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 97 110 C 114 76 152 66 200.5 90 C 249 66 287 76 304 110" fill="none" stroke="#f2c94c" stroke-width="4" stroke-linejoin="round"
+stroke-linecap="round"/>
+</g>
+<g id="captain_hat" transform="translate(384 251)">
+<defs>
+<linearGradient id="p10_g0" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="1" stop-color="#e3ded4"/>
+</linearGradient>
+<linearGradient id="p10_g1" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#3a4f86"/>
+<stop offset="1" stop-color="#26355f"/>
+</linearGradient>
+<linearGradient id="p10_g2" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#3d3846"/>
+<stop offset="1" stop-color="#1e1b24"/>
+</linearGradient>
+<linearGradient id="p10_g7" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffe27a"/>
+<stop offset="1" stop-color="#d99307"/>
+</linearGradient>
+<linearGradient id="p10_g8" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffe27a"/>
+<stop offset="1" stop-color="#d99307"/>
+</linearGradient>
+<radialGradient id="p10_g9" cx="0.35" cy="0.3" r="0.8" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#fff3b0"/>
+<stop offset="1" stop-color="#e3a50d"/>
+</radialGradient>
+</defs>
+<path d="M 104 98 C 100 70 140 50 200.5 50 C 261 50 301 70 297 98 C 300 106 270 110 200.5 110 C 131 110 101 106 104 98 Z" fill="url(#p10_g0)"
+stroke="#3b2d3a" stroke-width="4.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 122 102 C 174.33 102 226.67 102 279 102 C 278 109.33 277 116.67 276 124 C 240 130 161 130 125 124 C 124 116.67 123 109.33 122 102 Z"
+fill="url(#p10_g1)" stroke="#3b2d3a" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 126 122 C 160 131 241 131 275 122 C 270 140 237 149 200.5 149 C 164 149 131 140 126 122 Z" fill="url(#p10_g2)" stroke="#3b2d3a"
+stroke-width="4.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 146 132 C 166 138 190 140 210 140" fill="none" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" opacity="0.35"/>
+<path d="M 130 123 C 165 132 236 132 271 123" fill="none" stroke="#f2c94c" stroke-width="4.2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 137 123 C 137 125.76 134.76 128 132 128 C 129.24 128 127 125.76 127 123 C 127 120.24 129.24 118 132 118 C 134.76 118 137 120.24 137 123 Z"
+fill="#ffd23f" stroke="#3b2d3a" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 274 123 C 274 125.76 271.76 128 269 128 C 266.24 128 264 125.76 264 123 C 264 120.24 266.24 118 269 118 C 271.76 118 274 120.24 274 123 Z"
+fill="#ffd23f" stroke="#3b2d3a" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 186.5 116 C 178.5 108 174.5 98 175.5 90 C 180.5 98 183.5 108 186.5 116 Z" fill="url(#p10_g7)" stroke="#3b2d3a" stroke-width="2.4"
+stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 214.5 116 C 222.5 108 226.5 98 225.5 90 C 220.5 98 217.5 108 214.5 116 Z" fill="url(#p10_g8)" stroke="#3b2d3a" stroke-width="2.4"
+stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 214.5 104 C 214.5 111.18 208.23 117 200.5 117 C 192.77 117 186.5 111.18 186.5 104 C 186.5 96.82 192.77 91 200.5 91 C 208.23 91 214.5 96.82
+214.5 104 Z" fill="url(#p10_g9)" stroke="#3b2d3a" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 200.12 96.42 C 200.37 95.81 200.63 95.81 200.88 96.42 C 201.41 97.73 201.94 99.03 202.47 100.34 C 202.72 100.95 203.18 101.29 203.84
+101.34 C 205.25 101.44 206.66 101.55 208.07 101.65 C 208.73 101.7 208.81 101.93 208.3 102.36 C 207.22 103.27 206.15 104.18 205.07 105.09 C 204.56
+105.52 204.38 106.06 204.54 106.7 C 204.88 108.07 205.21 109.44 205.55 110.81 C 205.71 111.46 205.51 111.61 204.94 111.26 C 203.74 110.51 202.55
+109.77 201.35 109.02 C 200.78 108.67 200.22 108.67 199.65 109.02 C 198.45 109.77 197.26 110.51 196.06 111.26 C 195.49 111.61 195.29 111.46 195.45
+110.81 C 195.79 109.44 196.12 108.07 196.46 106.7 C 196.62 106.06 196.44 105.52 195.93 105.09 C 194.85 104.18 193.78 103.27 192.7 102.36 C 192.19
+101.93 192.27 101.7 192.93 101.65 C 194.34 101.55 195.75 101.44 197.16 101.34 C 197.82 101.29 198.28 100.95 198.53 100.34 C 199.06 99.03 199.59 97.73
+200.12 96.42 Z" fill="#3a4f86" stroke="#3b2d3a" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 136 66 C 152 58 170 55 186 54" fill="none" stroke="#ffffff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" opacity="0.6"/>
+</g>
+<g id="cap" transform="translate(593 267)">
+<defs>
+<linearGradient id="p11_g0" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#4fc2b2"/>
+<stop offset="1" stop-color="#2a9d8f"/>
+</linearGradient>
+<linearGradient id="p11_g4" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#2a9d8f"/>
+<stop offset="1" stop-color="#1d7166"/>
+</linearGradient>
+</defs>
+<path d="M 112 117 C 106 70 148 38 200.5 38 C 253 38 295 70 289 117 C 248 105 153 105 112 117 Z" fill="url(#p11_g0)" stroke="#3b2d3a"
+stroke-width="4.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 200.5 42 C 194 62 190 84 191 106" fill="none" stroke="#1d7166" stroke-width="2.8" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 200.5 42 C 214 60 222 82 224 105" fill="none" stroke="#1d7166" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" opacity="0.6"/>
+<path d="M 117 96 C 132 88 143 102 158 94 C 173 86 184 102 199 94 C 214 86 225 102 240 94 C 255 86 266 100 285 97" fill="none" stroke="#c7f0e8"
+stroke-width="3.8" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 126 116 C 158 103 243 103 275 116 C 267 128 237 132 200.5 132 C 164 132 134 128 126 116 Z" fill="url(#p11_g4)" stroke="#3b2d3a"
+stroke-width="4.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 207.5 40 C 207.5 43.87 204.37 47 200.5 47 C 196.63 47 193.5 43.87 193.5 40 C 193.5 36.13 196.63 33 200.5 33 C 204.37 33 207.5 36.13 207.5
+40 Z" fill="#1d7166" stroke="#3b2d3a" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 140 72 C 154 56 172 48 188 46" fill="none" stroke="#ffffff" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" opacity="0.5"/>
+</g>
+<g id="cap.back" transform="translate(-94 391)">
+<defs>
+<linearGradient id="p12_g0" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#4fc2b2"/>
+<stop offset="1" stop-color="#2a9d8f"/>
+</linearGradient>
+</defs>
+<path d="M 112 117 C 106 70 148 38 200.5 38 C 253 38 295 70 289 117 C 248 105 153 105 112 117 Z" fill="url(#p12_g0)" stroke="#3b2d3a"
+stroke-width="4.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 200.5 42 C 200.5 62 200.5 84 200.5 101" fill="none" stroke="#1d7166" stroke-width="2.8" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 117 96 C 132 88 143 102 158 94 C 173 86 184 102 199 94 C 214 86 225 102 240 94 C 255 86 266 100 285 97" fill="none" stroke="#c7f0e8"
+stroke-width="3.8" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 182 112 C 184 99 217 99 219 112 C 206.67 112 194.33 112 182 112 Z" fill="#8e8899" stroke="#3b2d3a" stroke-width="3.2"
+stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 178 111 C 193 111 208 111 223 111" fill="none" stroke="#1d7166" stroke-width="4.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 207.5 40 C 207.5 43.87 204.37 47 200.5 47 C 196.63 47 193.5 43.87 193.5 40 C 193.5 36.13 196.63 33 200.5 33 C 204.37 33 207.5 36.13 207.5
+40 Z" fill="#1d7166" stroke="#3b2d3a" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round"/>
+</g>
+<g id="captain_hat.back" transform="translate(115 375)">
+<defs>
+<linearGradient id="p13_g0" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#ffffff"/>
+<stop offset="1" stop-color="#e3ded4"/>
+</linearGradient>
+<linearGradient id="p13_g1" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)">
+<stop offset="0" stop-color="#3a4f86"/>
+<stop offset="1" stop-color="#26355f"/>
+</linearGradient>
+</defs>
+<path d="M 104 98 C 100 70 140 50 200.5 50 C 261 50 301 70 297 98 C 300 106 270 110 200.5 110 C 131 110 101 106 104 98 Z" fill="url(#p13_g0)"
+stroke="#3b2d3a" stroke-width="4.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 122 102 C 174.33 102 226.67 102 279 102 C 278 109.33 277 116.67 276 124 C 240 130 161 130 125 124 C 124 116.67 123 109.33 122 102 Z"
+fill="url(#p13_g1)" stroke="#3b2d3a" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+</g>
+</svg>

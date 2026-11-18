@@ -34,15 +34,57 @@ func _run() -> void:
 	await _frames(5)
 	var lesson := current_scene
 	check(lesson.name == "Lesson", "lesson opens")
+	var model_before: Dictionary = gs.model.to_dict()
+	var queued_before: int = gs.store.read_queue().size()
 
-	# Three wrong answers in a row -> Racoon's Rescue, answered correctly.
-	for i in 3:
+	# D-021: a wrong first try: Racoon's hint and the same question, no answer yet.
+	var first_item: Dictionary = lesson._item
+	lesson._task.answered.emit("__wrong__", 900)
+	await _frames()
+	check(not lesson.sheet.visible and lesson._item == first_item, "a wrong first try: same question again")
+	check(lesson.session.hearts.hearts == 2, "a heart goes")
+	var lost_row: HBoxContainer = lesson.get_node("%Hearts")
+	check(lost_row.get_child(2).name.begins_with("BrokenHeart")
+			and lost_row.get_child(2).get_child(0) is AnimatedHeart
+			and lost_row.get_child(2).get_child(0).kind == "break", "the lost heart breaks (Broken Heart)")
+	check(lesson.bubble._label.text == HintText.hint(first_item), "Racoon gives the question's hint")
+	# A wrong second try: the answer and why, then the lesson moves on by itself.
+	lesson._task.answered.emit("__wrong__", 900)
+	await _frames()
+	check(lesson.sheet.visible and lesson.get_node("%SheetTitle").text.begins_with("The answer is"),
+			"the answer shows after the second try")
+	check(lesson.get_node("%SheetDetail").text == HintText.explain(first_item), "with the explanation")
+	check(not lesson.get_node("%ContinueButton").visible, "no CONTINUE button")
+	check(lesson.session.hearts.hearts == 1, "a second heart goes")
+	await create_timer(6.5).timeout
+	check(not lesson.sheet.visible and lesson._item != first_item, "on to the next question by itself")
+	# A right answer: a short word from Racoon, a heart back, and on by itself.
+	var second_item: Dictionary = lesson._item
+	if lesson._task is StoryPage:
+		lesson._task.done.emit()
+		await _frames(3)
+	lesson._task.answered.emit(str(second_item.answer), 800)
+	await _frames()
+	check(not lesson.sheet.visible and lesson.session.hearts.hearts == 2, "right: no sheet, one heart back")
+	var hearts_row: HBoxContainer = lesson.get_node("%Hearts")
+	var regained := hearts_row.get_children().filter(func(c): return c.name.begins_with("RegainedHeart"))
+	check(regained.size() == 1 and hearts_row.get_child(1) == regained[0]
+			and regained[0].get_child(0) is AnimatedHeart, "the heart that comes back fills in (Regain Heart)")
+	await create_timer(1.6).timeout
+	check(lesson._item != second_item, "and the next question comes by itself")
+	check(gs.model.to_dict() == model_before and gs.store.read_queue().size() == queued_before,
+			"nothing is saved while the lesson runs")
+
+	# Wrong tries until the hearts run out -> Racoon's Rescue, answered correctly.
+	for i in 8:
+		if lesson.session.in_rescue():
+			break
 		lesson._task.answered.emit("__wrong__", 900)
 		await _frames()
-		check(lesson.sheet.visible, "feedback sheet shows after an answer")
-		lesson._on_continue()
-		await _frames()
-	check(lesson.session.in_rescue(), "rescue started after 3 wrong answers")
+		if lesson.sheet.visible:
+			lesson._on_continue()
+			await _frames()
+	check(lesson.session.in_rescue(), "rescue started with no hearts left")
 	check(lesson.get_node("%Overlay").visible, "rescue intro card shows")
 	lesson.get_node("%OverlayPrimary").pressed.emit()
 	await _frames()
@@ -67,9 +109,13 @@ func _run() -> void:
 	check(gs.wallet.xp > 0 and gs.wallet.coins > 0, "XP and coins credited")
 	check(gs.path.world(1).done == 1, "first path node done")
 	check(gs.store.read_queue().size() > 20, "events queued for sync")
+	check(gs.model.to_dict() != model_before, "a finished lesson keeps its BKT")
 
 	current_scene.get_node("%ContinueButton").pressed.emit()
 	await _frames(5)
+	if current_scene.name == "LessonComplete" and current_scene.get_node("%Unlock").visible:
+		current_scene.get_node("%GoButton").pressed.emit()   # a Level Up shows the new world first
+		await _frames(5)
 	check(current_scene.name == "LearningPath", "back on the path")
 
 	# Level 3: story pages and the new task types run through the real scenes.
@@ -99,14 +145,64 @@ func _run() -> void:
 			"a new task type was played (%s)" % str(seen.keys()))
 	gs.lesson_seed = -1
 
-	# Reading Adventure (pre-test): intro card, 20 neutral items, placement card.
+	# D-021: stopping a lesson halfway keeps nothing; it starts over next time.
+	var kept: Dictionary = gs.model.to_dict()
+	var queue_size: int = gs.store.read_queue().size()
+	var xp: int = gs.wallet.xp
+	var done_nodes: int = gs.path.world(1).done
+	gs.start_lesson(1, 1, false)
+	await _frames(5)
+	lesson = current_scene
+	for i in 3:
+		lesson._task.answered.emit(str(lesson._item.answer), 800)
+		await _frames()
+		lesson._on_continue()
+		await _frames(3)
+	lesson._on_close()
+	await _frames()
+	lesson.get_node("%OverlaySecondary").pressed.emit()
+	await _frames(5)
+	check(current_scene.name == "LearningPath", "STOP goes back to the path")
+	check(gs.model.to_dict() == kept and gs.store.read_queue().size() == queue_size,
+			"a stopped lesson keeps no BKT and no events")
+	check(gs.wallet.xp == xp and gs.path.world(1).done == done_nodes, "and no XP or path progress")
+
+	# D-021: Adventure opens the map; the pre-test waits there until the child taps START.
+	gs.reset_progress()
+	queue_size = gs.store.read_queue().size()
+	gs.open_section("adventure")
+	await _frames(6)
+	check(current_scene.name == "LearningPath", "Adventure opens the map, not a test")
+	var card: Node = current_scene.find_child("PreTestCard", true, false)
+	check(card != null, "the Reading Adventure card is on the map")
+	card.find_child("Start", true, false).pressed.emit()
+	await _frames(5)
+	lesson = current_scene
+	check(lesson.name == "Lesson" and lesson._testing, "START begins the Reading Adventure")
+	check(not lesson.get_node("%Overlay").visible, "no extra card before the first question")
+	for i in 3:
+		if lesson._task is StoryPage:
+			lesson._task.done.emit()
+			await _frames(3)
+		lesson._task.answered.emit(str(lesson._item.answer), 900)
+		await _frames(2)
+		lesson._on_continue()
+		await _frames(3)
+	lesson._on_close()
+	await _frames()
+	lesson.get_node("%OverlaySecondary").pressed.emit()
+	await _frames(5)
+	check(current_scene.name == "LearningPath", "STOP in the test goes back to the map")
+	var added: Array = gs.store.read_queue().slice(queue_size).map(func(e): return e.type)
+	check(gs.needs_pretest() and not added.has("response") and not added.has("assessment"),
+			"a stopped test keeps no answers and waits on the map again (%s)" % str(added))
+
+	# Reading Adventure (pre-test): 20 items with no right/wrong, results by skill.
 	gs.reset_progress()
 	gs.start_assessment("pre")
 	await _frames(5)
 	lesson = current_scene
 	check(not lesson.get_node("%Hearts").visible, "no hearts in the test")
-	lesson.get_node("%OverlayPrimary").pressed.emit()
-	await _frames(3)
 	for i in 60:
 		if current_scene != lesson:
 			break
@@ -117,32 +213,30 @@ func _run() -> void:
 			continue
 		t.answered.emit(str(lesson._item.answer), 900)
 		await _frames(2)
-		check(lesson.get_node("%SheetTitle").text == "Thank you!", "test feedback is neutral")
+		check(not lesson.sheet.visible, "test feedback is a word from Racoon, no sheet")
 		lesson._on_continue()
 		await _frames(4)
 	check(current_scene.name == "LessonComplete", "test complete screen opens")
 	check(gs.assessments.has("pre") and gs.assessments.pre.total == 20, "pre-test stored")
 	check(gs.model.highest_unlocked == 2, "placed at level 2 after a perfect test")
+	var results: Node = current_scene.find_child("Results", true, false)
+	check(results != null and results.get_node("Rows").get_child_count() == 5,
+			"results show one bar per reading skill (D-021)")
+	check(current_scene.find_child("Footer", true, false) != null, "where the path starts is shown")
+	check(current_scene.get_node("%ContinueButton").text == "GO HOME", "the button says GO HOME")
 	current_scene.get_node("%ContinueButton").pressed.emit()
-	await _frames(3)
-	check(current_scene.get_node("%Unlock").visible, "placement card shown")
-	current_scene.get_node("%GoButton").pressed.emit()
 	await _frames(5)
 	check(current_scene.name == "Hub", "the home hub opens after the test (D-015)")
 
-	# Home hub and Play picker (D-015).
+	# Home, with the Play picker folded in (D-022).
 	var hub := current_scene
-	check(hub.get_node("%List").get_child_count() == 4, "For you: a header and three picks")
+	check(hub.get_node("%LibraryTile") != null and hub.get_node("%PracticeTile") != null
+			and hub.get_node("%WatchTile") != null, "Library, Practice and Watch are on Home")
+	check(hub._play_title.text == "PLAY" and hub._play.face_color == Palette.YELLOW,
+			"PLAY is the yellow Adventure button (no Big Reading Day yet)")
 	hub.get_node("%PlayButton").pressed.emit()
 	await _frames(5)
-	var picker := current_scene
-	check(picker.name == "PlayPicker", "PLAY opens the picker")
-	check(picker.tiles.size() == 5, "five diamond tiles")
-	check(not picker.tiles.adventure.locked, "Adventure open with no schedule yet")
-	check(picker.tiles.post.locked, "Big Test locked until the teacher opens it")
-	picker._on_tile("adventure")
-	await _frames(5)
-	check(current_scene.name == "LearningPath", "the gold diamond opens the path")
+	check(current_scene.name == "LearningPath", "PLAY opens the Adventure path")
 	current_scene.get_node("%HomeButton").pressed.emit()
 	await _frames(5)
 	check(current_scene.name == "Hub", "Home on the path goes to the hub")
@@ -156,17 +250,25 @@ func _run() -> void:
 
 	# Racoon's Closet: try on, buy, wear (FR-07).
 	gs.wallet.coins = 100
+	gs.path.complete_lesson(1, 0)   # a finished lesson: the River cap is earned (D-026)
 	current_scene.get_node("%ClosetTab").pressed.emit()
 	await _frames(5)
 	var shop := current_scene
 	check(shop.name == "Shop", "shop opens from the hub's Closet tab")
 	shop._show_slot("hat")
+	check(gs.wardrobe.owns("cap"), "the Closet gives the River cap a finished lesson earned (D-026)")
 	shop._select("salakot")
 	await _frames(2)
-	check(shop.raccoon.outfit.get("hat") == "salakot", "trying on shows the hat")
+	check(shop.raccoon.outfit.get("hat") == "salakot", "an item to earn can still be tried on")
 	shop._on_action()
 	await _frames(2)
-	check(gs.wardrobe.is_worn("salakot") and gs.wallet.coins == 40, "bought and wearing the salakot")
+	check(not gs.wardrobe.owns("salakot") and gs.wallet.coins == 100, "an item to earn isn't sold")
+	shop._select("party_hat")
+	await _frames(2)
+	check(shop.raccoon.outfit.get("hat") == "party_hat", "trying on shows the hat")
+	shop._on_action()
+	await _frames(2)
+	check(gs.wardrobe.is_worn("party_hat") and gs.wallet.coins == 70, "bought and wearing the party hat")
 	shop.get_node("%BackButton").pressed.emit()
 	await _frames(5)
 	check(current_scene.name == "Hub", "back from the shop to the hub")
@@ -179,10 +281,8 @@ func _run() -> void:
 	await _frames(5)
 	check(current_scene.name == "Hub", "Adventure closed: stays on the hub")
 	check(gs.notice == "", "the hub explained why (notice read)")
-	change_scene_to_file("res://scenes/hub/play_picker.tscn")
-	await _frames(5)
-	check(current_scene.tiles.adventure.locked, "gold diamond locked in other class hours")
-	check(not current_scene.tiles.library.locked, "Library open in other class hours")
+	check(current_scene._play.face_color == current_scene.LOCKED, "PLAY locked in other class hours")
+	check(current_scene._tiles.library.modulate.a == 1.0, "Library open in other class hours")
 	gs.open_section("watch")
 	await _frames(5)
 	check(current_scene.name == "Watch", "free play opens with the timer running")
@@ -324,8 +424,9 @@ func _run() -> void:
 	check(current_scene.name == "Words", "back to My Word Book")
 	gs.go_home()
 	await _frames(5)
-	check(current_scene.name == "Hub" and not current_scene.get_node("%Dot").visible,
-			"the Today dot is gone once the goals are done")
+	check(current_scene.name == "Hub"
+			and current_scene._goal_stars.all(func(st): return st.self_modulate == Palette.MANGO),
+			"all three Today stars light up once the goals are done")
 
 	# Login (D-010): the keypad fills the code; LET'S GO waits for 8 characters.
 	change_scene_to_file("res://scenes/login/login.tscn")
@@ -355,6 +456,48 @@ func _run() -> void:
 	change_scene_to_file("res://scenes/lock/lock_screen.tscn")
 	await _frames(5)
 	check(current_scene.name == "LockScreen", "lock screen loads")
+
+	# Choose your buddy (D-033): pick Rina and Bisaya, then Let's go saves them for this student.
+	var had_buddy: Dictionary = gs.buddy.duplicate()
+	gs.buddy = {"who": "", "lang": "en"}
+	change_scene_to_file(gs.BUDDY_SCENE)
+	await _frames(5)
+	var chooser := current_scene
+	check(chooser.name == "ChooseBuddy", "the buddy chooser loads")
+	check(chooser._go.disabled, "Let's go waits until a buddy is picked")
+	chooser._pick("rina")
+	chooser._pick_lang("bis")
+	check(not chooser._go.disabled and chooser._go.text == "Dali na!", "Let's go is ready, in Bisaya")
+	check(gs.buddy.who == "", "nothing is saved before Let's go")
+	chooser._done()
+	await _frames(5)
+	check(gs.buddy.who == "rina" and gs.buddy.lang == "bis", "Let's go saves Rina and Bisaya")
+	check(gs.talk("closet_title") == "Closet ni Rina", "the menus follow the buddy and language")
+	check(is_equal_approx(root.get_node("Speech").pitch, 1.4) and root.get_node("Speech").girl_voice, "Rina's higher voice")
+	check(not gs.line("rescue_start").contains("{buddy}"), "a buddy line names the buddy")
+	check(gs.line("hint_phonics") in gs.lines.hint_phonics, "hints stay in the lesson's language")
+	check(gs.talk("hub_hi_name", ["Ana"]).contains("Ana"), "a menu line fills its slot")
+	check(gs.talk("no_such_line") == "no_such_line", "an unknown menu line shows its key")
+	check(gs.talk_as("choose_hi", "en", "roco") == "Hi! I'm Roco!", "the chooser previews any buddy")
+	gs.buddy = {}
+	gs.load_profile()
+	check(gs.buddy.who == "rina" and gs.buddy.lang == "bis", "the buddy and language come back with the profile")
+	gs.set_buddy(str(had_buddy.get("who", "roco")), str(had_buddy.get("lang", "en")))
+	check(is_equal_approx(root.get_node("Speech").pitch, 1.1) or gs.buddy_id() == "rina", "the voice follows the buddy back")
+
+	# The developer menu (issue 30, debug builds only; DELETE BEFORE THE FINAL RELEASE with it).
+	if DevMenu.allowed():
+		DevMenu.toggle(self)
+		await _frames()
+		var menu: DevMenu = root.get_node_or_null("DevMenu")
+		check(menu != null, "the developer menu opens")
+		if menu:
+			var before := int(gs.wallet.coins)
+			menu.add_coins(50)
+			check(int(gs.wallet.coins) == before + 50, "the developer menu adds coins")
+		DevMenu.toggle(self)
+		await _frames()
+		check(root.get_node_or_null("DevMenu") == null, "the developer menu closes")
 
 	gs.store.wipe()
 	print("ui_smoke: %s" % ("OK" if _failures == 0 else "%d failed" % _failures))

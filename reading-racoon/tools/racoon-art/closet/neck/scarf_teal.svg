@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racoon's Closet: River scarf (copper, neck). FR-07, D-026.
+     Drawn to fit Racoon at rest: the bottom layer links ../../parts/racoon_C_inkscape.svg (locked).
+     Draw on the "Item" layer. The file's name is the item's id; its name, tier, price and how it's
+     earned are in reading-racoon/content/closet.json. motion-demo/build_racoon.py reads this file
+     and never writes it.
+     A scarf: Band and Stripe narrow with his neck; the rest (ends, Knot) travels with the knot.
+     Other scarves (Sunset, Mango, Rainbow) are recolours of this one, set in closet.json. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-scarf_teal"
+   sodipodi:docname="scarf_teal.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>River scarf</title>
+  <sodipodi:namedview
+     id="namedview-scarf_teal"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="2"
+     inkscape:cx="200"
+     inkscape:cy="280"
+     inkscape:current-layer="layer-item" />
+  <defs id="defs-scarf_teal">
+    <linearGradient id="g-teal" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" style="stop-color:#45b8a9" id="s-teal-0" />
+      <stop offset="1" style="stop-color:#2a9d8f" id="s-teal-1" />
+    </linearGradient>
+    <linearGradient id="g-teal-deep" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" style="stop-color:#2a9d8f" id="s-tealdeep-0" />
+      <stop offset="1" style="stop-color:#1d7166" id="s-tealdeep-1" />
+    </linearGradient>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="../../parts/racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-item" inkscape:label="Item">
+   <g id="river-scarf" inkscape:label="River scarf">
+    <path id="scarf-band" inkscape:label="Band" d="M 147.5 247 C 165 259.5 236.22 259.5 253.72 247 C 259.72 252 259.72 262 255.72 267.5 C 236.22 284.5 165 284.5 145.5 267.5 C 141.5 262 141.5 252 147.5 247 Z" style="fill:url(#g-teal);stroke:#3b2d3a;stroke-width:4.85;stroke-linejoin:round" />
+    <path id="scarf-stripe" inkscape:label="Stripe" d="M 151 257.43 C 151.67 258.02 153.67 260.13 155 260.97 C 156.33 261.81 157.67 262.31 159 262.47 C 160.33 262.63 161.67 262.13 163 261.92 C 164.33 261.72 165.67 261.17 167 261.24 C 168.33 261.31 169.67 261.67 171 262.33 C 172.33 262.98 173.67 264.25 175 265.18 C 176.33 266.11 177.67 267.33 179 267.9 C 180.33 268.46 181.67 268.69 183 268.57 C 184.33 268.46 185.67 267.68 187 267.2 C 188.33 266.73 189.67 265.91 191 265.7 C 192.33 265.49 193.67 265.58 195 265.96 C 196.33 266.34 197.67 267.34 199 267.99 C 200.33 268.64 201.67 269.59 203 269.88 C 204.33 270.17 205.67 270.12 207 269.73 C 208.33 269.34 209.67 268.29 211 267.54 C 212.33 266.78 213.67 265.69 215 265.21 C 216.33 264.72 217.67 264.53 219 264.64 C 220.33 264.75 221.67 265.47 223 265.85 C 224.33 266.22 225.67 266.9 227 266.91 C 228.33 266.93 229.67 266.6 231 265.94 C 232.33 265.27 233.67 263.95 235 262.92 C 236.33 261.89 237.67 260.52 239 259.76 C 240.33 259.01 241.67 258.54 243 258.37 C 244.33 258.21 246.33 258.69 247 258.75" style="fill:none;stroke:#b5e6dc;stroke-width:3.2;stroke-linecap:round" />
+    <path id="scarf-end-left" inkscape:label="End left" d="M 215.5 285 C 212 296 208.5 307 205.5 319 L 209.5 315.5 L 213 321 L 216.5 315.5 L 220.5 320.5 L 222.5 315 C 223 305 224.5 295 226.5 286.5 Z" style="fill:url(#g-teal);stroke:#3b2d3a;stroke-width:4;stroke-linejoin:round" />
+    <path id="scarf-end-right" inkscape:label="End right" d="M 224.5 287 C 228.5 296.5 233 306.5 235.5 317.5 L 239.5 313 L 244 318 L 246.5 311.5 C 243 301.5 238.5 292.5 233 284 Z" style="fill:url(#g-teal-deep);stroke:#3b2d3a;stroke-width:4;stroke-linejoin:round" />
+    <ellipse id="scarf-knot" inkscape:label="Knot" cx="222" cy="279.5" rx="12.5" ry="10.5" transform="rotate(-12 222 279.5)" style="fill:url(#g-teal-deep);stroke:#3b2d3a;stroke-width:4.85" />
+    <path id="scarf-fold" inkscape:label="Knot fold" d="M 215.5 276.5 Q 221.5 282 228.5 277.5" style="fill:none;stroke:#1d7166;stroke-width:2.6;stroke-linecap:round" />
+   </g>
+  </g>
+</svg>

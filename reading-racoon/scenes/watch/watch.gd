@@ -2,14 +2,18 @@ extends Control
 ## Watch & Listen (D-017, wireframe "Watch & Listen"): songs and chants to sing
 ## with Racoon, read-alongs of Library books, and videos the teacher picked.
 ## No ads and no open internet (RA 10173): videos play only once downloaded.
+## Each kind has its own icon and color on the chips and rows; yellow stays with
+## Adventure (D-022).
 
-const KIND_ICONS := {"song": "speaker", "read_along": "stories", "video": "sparkles"}
-const KIND_COLORS := {"song": Palette.BLUE, "read_along": Palette.ORANGE, "video": Palette.YELLOW}
+const KIND_ICONS := {"song": "speaker", "read_along": "book", "video": "play"}
+const KIND_COLORS := {"song": Palette.BLUE, "read_along": Palette.ORANGE, "video": Palette.TEAL}
+## Short chip names, so the four chips fit on one row.
+const KIND_CHIPS := {"song": "Songs", "read_along": "Stories", "video": "Videos"}
 
 var _kind := ""
 var _column: VBoxContainer
 var _chips: Control
-var _list: VBoxContainer
+var _list: GridContainer
 
 
 func _ready() -> void:
@@ -20,16 +24,18 @@ func _ready() -> void:
 	var scroll := ScrollContainer.new()
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	_list = VBoxContainer.new()
+	_list = GridContainer.new()
+	_list.columns = 2 if Kit.landscape() else 1   # D-023
 	_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	_list.add_theme_constant_override("separation", 16)
+	_list.add_theme_constant_override("h_separation", 16)
+	_list.add_theme_constant_override("v_separation", 16)
 	scroll.add_child(_list)
 	_build()
 	_column.add_child(scroll)
 	var note := Kit.label("Only songs and videos your teacher picked. No ads.", 22, Palette.INK_SOFT)
 	note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_column.add_child(note)
-	Speech.say("Let's sing and listen!")
+	Speech.say(GameState.talk("watch_hello"))
 
 
 func _build() -> void:
@@ -37,7 +43,9 @@ func _build() -> void:
 		_chips.queue_free()
 	var options := [["", "All"]]
 	for k in MediaLibrary.KINDS:
-		options.append([k, MediaLibrary.KINDS[k]])
+		var tint: Color = KIND_COLORS.get(k, Palette.BLUE)
+		options.append([k, KIND_CHIPS.get(k, MediaLibrary.KINDS[k]), KIND_ICONS.get(k, "speaker"),
+				Palette.INK if k == _kind else Palette.readable(tint.darkened(0.2))])
 	_chips = Kit.chips(options, _kind, _pick_kind)
 	_column.add_child(_chips)
 	_column.move_child(_chips, 1)
@@ -49,7 +57,9 @@ func _build() -> void:
 		empty.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		_list.add_child(empty)
 	for m in items:
-		_list.add_child(_row(m))
+		var row := _row(m)
+		row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		_list.add_child(row)
 
 
 func _pick_kind(kind: String) -> void:
@@ -63,27 +73,28 @@ func _row(m: Dictionary) -> Control:
 	var b := ChunkyButton.new()
 	b.card_style = true
 	b.custom_minimum_size = Vector2(0, 150)
+	b.radius = 28
 	b.tooltip_text = m.title
 	b.pressed.connect(_open.bind(m, can_play))
 	var row := HBoxContainer.new()
 	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	row.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	row.offset_left = 14
+	row.offset_left = 12
 	row.offset_right = -18
 	row.offset_top = 12
-	row.offset_bottom = -14
+	row.offset_bottom = -12
 	row.add_theme_constant_override("separation", 18)
 	b.add_child(row)
 	var thumb := PanelContainer.new()
-	thumb.add_theme_stylebox_override("panel", Kit.box(Palette.SKY, 16))
+	thumb.add_theme_stylebox_override("panel", Kit.box(Palette.SKY, 18))
 	thumb.clip_children = CanvasItem.CLIP_CHILDREN_AND_DRAW
-	thumb.custom_minimum_size = Vector2(180, 0)
+	thumb.custom_minimum_size = Vector2(176, 0)
 	thumb.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var scene := PaperScenery.new()
 	scene.scene = str(m.get("scene", "home"))
 	scene.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	thumb.add_child(scene)
-	var play := Kit.disc(KIND_ICONS.get(m.kind, "speaker"), color, 64)
+	var play := Kit.disc(KIND_ICONS.get(m.kind, "speaker"), color, 72)
 	thumb.add_child(play)
 	row.add_child(thumb)
 	var v := VBoxContainer.new()
@@ -97,6 +108,7 @@ func _row(m: Dictionary) -> Control:
 		info = "Downloads next time there's Wi-Fi"
 	elif m.get("teacher", false):
 		info += "  ·  from your teacher"
+	v.add_theme_constant_override("separation", 8)
 	v.add_child(Kit.label(info, 22, Palette.INK_SOFT))
 	row.add_child(v)
 	if GameState.collection.is_finished(m.id):
@@ -108,7 +120,7 @@ func _row(m: Dictionary) -> Control:
 
 func _open(m: Dictionary, can_play: bool) -> void:
 	if not can_play:
-		Speech.say("This one comes next time there's Wi-Fi.")
+		Speech.say(GameState.talk("watch_offline"))
 		return
 	if not GameState.guard_free_play():
 		return

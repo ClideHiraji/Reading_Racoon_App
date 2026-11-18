@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="227 166 31 17" width="31" height="17">
+<title>Face · Eye right (happy)</title>
+<defs>
+<radialGradient id="rr-fur" cx="0.38" cy="0.3" r="0.8"><stop offset="0" stop-color="#aaa4b6"/><stop offset="0.55" stop-color="#8e8899"/><stop offset="1" stop-color="#716a80"/></radialGradient>
+<radialGradient id="rr-cream" cx="0.4" cy="0.3" r="0.85"><stop offset="0" stop-color="#fffbf2"/><stop offset="0.7" stop-color="#fbf3e4"/><stop offset="1" stop-color="#ead8c0"/></radialGradient>
+<linearGradient id="rr-mask" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a3e52"/><stop offset="1" stop-color="#3a2f40"/></linearGradient>
+<linearGradient id="rr-teal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#45b8a9"/><stop offset="1" stop-color="#2a9d8f"/></linearGradient>
+<radialGradient id="rr-dark" cx="0.4" cy="0.3" r="0.8"><stop offset="0" stop-color="#6f6879"/><stop offset="1" stop-color="#5d5766"/></radialGradient>
+</defs>
+<g id="eye_right_happy">
+<path d="M 231.3 178.4 Q 242.3 161.9 253.3 178.4" fill="none" stroke="#fbf3e4" stroke-width="5.5" stroke-linecap="round"/>
+</g>
+</svg>

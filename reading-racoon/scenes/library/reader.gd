@@ -3,6 +3,7 @@ extends Control
 ## the setting drawn in paper and its pictures. "Read to me" reads the page aloud
 ## and lights each word (FR-20); tap any word to hear it again. After the last
 ## page: two easy questions, the book's credit, a sticker and the words.
+## Big words, page dots, round Back/Next arrows and a big blue Read to me (D-022).
 
 var _book := {}
 var _lang := "en"
@@ -11,13 +12,14 @@ var _reading := false
 var _started := 0
 var _right := 0
 var _column: VBoxContainer
-var _page_label: Label
+var _dots: HBoxContainer
 var _art: PanelContainer
 var _scene: PaperScenery
 var _photo: TextureRect
+var _photo_edge: Panel
 var _pictures: HBoxContainer
 var _text: ReadAlong
-var _body: VBoxContainer
+var _body: BoxContainer
 var _controls: HBoxContainer
 var _read_btn: ChunkyButton
 var _prev: ChunkyButton
@@ -32,18 +34,19 @@ func _ready() -> void:
 	_lang = str(_book.get("language", "en"))
 	_column = Kit.page(self)
 	Kit.header(_column, str(_book.get("title", "Book")), _back, true)
-	_page_label = Kit.label("", 24, Palette.INK_SOFT, true)
-	_column.add_child(_page_label)
 	var card := Kit.card(0)
 	card.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	card.clip_children = CanvasItem.CLIP_CHILDREN_AND_DRAW
 	_column.add_child(card)
-	_body = VBoxContainer.new()
+	# On a laptop the page's picture stands beside its words (D-023).
+	var wide := Kit.landscape()
+	_body = BoxContainer.new()
+	_body.vertical = not wide
 	_body.add_theme_constant_override("separation", 12)
 	card.add_child(_body)
 	_art = PanelContainer.new()
 	_art.add_theme_stylebox_override("panel", Kit.box(Palette.SKY, 0))
-	_art.custom_minimum_size = Vector2(0, 380)
+	_art.custom_minimum_size = Vector2(540, 0) if wide else Vector2(0, 420)
 	_body.add_child(_art)
 	_scene = PaperScenery.new()
 	_scene.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -54,6 +57,12 @@ func _ready() -> void:
 	_photo.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 	_photo.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_art.add_child(_photo)
+	_photo_edge = Kit.photo_edge(26, 0)   # the card's corner
+	if wide:   # the card's left corners instead
+		var edge: StyleBoxFlat = _photo_edge.get_theme_stylebox("panel")
+		edge.corner_radius_top_right = 0
+		edge.corner_radius_bottom_left = 26
+	_art.add_child(_photo_edge)
 	_pictures = HBoxContainer.new()
 	_pictures.alignment = BoxContainer.ALIGNMENT_CENTER
 	_pictures.size_flags_vertical = Control.SIZE_SHRINK_END
@@ -64,33 +73,55 @@ func _ready() -> void:
 	for side in ["left", "right", "top", "bottom"]:
 		m.add_theme_constant_override("margin_" + side, 24)
 	m.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	m.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_body.add_child(m)
+	var words := VBoxContainer.new()
+	words.alignment = BoxContainer.ALIGNMENT_CENTER
+	words.add_theme_constant_override("separation", 30)
+	m.add_child(words)
 	_text = ReadAlong.new()
 	_text.language = _lang
-	_text.font_size = 46
-	_text.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	_text.font_size = 54
 	_text.done.connect(_on_page_read)
-	m.add_child(_text)
+	words.add_child(_text)
+	_dots = HBoxContainer.new()
+	_dots.alignment = BoxContainer.ALIGNMENT_CENTER
+	_dots.add_theme_constant_override("separation", 12)
+	words.add_child(_dots)
 
 	_controls = HBoxContainer.new()
-	_controls.add_theme_constant_override("separation", 14)
+	_controls.add_theme_constant_override("separation", 20)
+	_controls.alignment = BoxContainer.ALIGNMENT_CENTER
 	_column.add_child(_controls)
-	_prev = Kit.button("Back", Palette.CREAM, "", 96)
-	_prev.card_style = true
-	_prev.custom_minimum_size.x = 150
+	_prev = _arrow("arrow_left", Palette.PAPER_DEEP, "Back a page")
 	_prev.pressed.connect(_turn.bind(-1))
 	_controls.add_child(_prev)
-	_read_btn = Kit.button("Read to me", Palette.BLUE, "speaker", 96)
+	_read_btn = Kit.button("Read to me", Palette.BLUE, "speaker", 128)
+	_read_btn.icon_px = 56
+	_read_btn.add_theme_font_size_override("font_size", 36)
 	_read_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_read_btn.pressed.connect(_toggle_read)
 	_controls.add_child(_read_btn)
-	_next_btn = Kit.button("Next", Palette.ORANGE, "", 96)
-	_next_btn.custom_minimum_size.x = 150
+	_next_btn = _arrow("arrow_right", Palette.ORANGE, "Next page")
 	_next_btn.pressed.connect(_turn.bind(1))
 	_controls.add_child(_next_btn)
 
 	_reading = Speech.available(_lang)
 	_show_page()
+
+
+func _arrow(icon: String, color: Color, tip: String) -> ChunkyButton:
+	var b := ChunkyButton.new()
+	b.face_color = color
+	b.icon_name = icon
+	b.icon_px = 52
+	b.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	b.expand_icon = true
+	b.radius = 56
+	b.tooltip_text = tip
+	b.custom_minimum_size = Vector2(112, 112)
+	b.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	return b
 
 
 func _pages() -> Array:
@@ -102,12 +133,15 @@ func _show_page() -> void:
 	if pages.is_empty():
 		return
 	var p: Dictionary = pages[_page]
-	_page_label.text = "Page %d of %d  ·  %s" % [_page + 1, pages.size(),
-			MediaLibrary.LANGUAGES.get(Collection.lang_of(_lang), "English")]
+	for c in _dots.get_children():
+		c.queue_free()
+	for i in pages.size():
+		_dots.add_child(Icons.rect("dot", 22, Palette.ORANGE if i == _page else Palette.PAPER_DEEP.darkened(0.06)))
 	_scene.scene = str(p.get("scene", _book.get("cover", "river")))
 	var photo := MediaLibrary.page_texture(p)
 	_photo.texture = photo
 	_photo.visible = photo != null
+	_photo_edge.visible = photo != null
 	_scene.visible = photo == null
 	for c in _pictures.get_children():
 		c.queue_free()
@@ -115,10 +149,14 @@ func _show_page() -> void:
 		for pic in p.get("pictures", []):
 			if Icons.exists(pic):
 				_pictures.add_child(Kit.picture(pic, 120))
-	_text.set_text(str(p.get("text", "")))
+	var text := str(p.get("text", ""))
+	_text.font_size = 54 if text.split(" ", false).size() <= 12 else 40
+	_text.set_text(text)
 	_prev.disabled = _page == 0
 	_prev.modulate.a = 0.4 if _page == 0 else 1.0
-	_next_btn.text = "The End" if _page == pages.size() - 1 else "Next"
+	var last := _page == pages.size() - 1
+	_next_btn.icon_name = "check" if last else "arrow_right"
+	_next_btn.tooltip_text = "The End" if last else "Next page"
 	_update_read_button()
 	if _reading:
 		_text.play.call_deferred()
@@ -166,9 +204,9 @@ func _on_page_read() -> void:
 func _questions() -> void:
 	_reading = false
 	_controls.visible = false
+	_body.vertical = true
 	for c in _body.get_children():
 		c.queue_free()
-	_page_label.text = "The End!"
 	var qs: Array = _book.get("questions", [])
 	_ask(qs, 0)
 
@@ -216,6 +254,7 @@ func _ask(qs: Array, i: int) -> void:
 		buttons[str(c.id)] = b
 	for id in buttons:
 		buttons[id].pressed.connect(_answer.bind(qs, i, id, buttons))
+	Speech.new_question()   # (D-032)
 	Speech.say(str(q.prompt), _lang)
 
 
@@ -247,7 +286,7 @@ func _done(total: int) -> void:
 	m.add_child(credit)
 	var seconds := (Time.get_ticks_msec() - _started) / 1000.0
 	var result := GameState.finish_book(str(_book.get("id", "")), _right, total, seconds)
-	Kit.reward(self, "You read a whole book!", result, _back)
+	Kit.reward(self, GameState.talk("reward_book"), result, _back)
 
 
 func _back() -> void:

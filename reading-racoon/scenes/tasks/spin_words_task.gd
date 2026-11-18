@@ -48,7 +48,7 @@ func _pointer() -> Control:
 
 func _word_piece(text: String, color: Color) -> Label:
 	var card := PanelContainer.new()
-	var sb := StyleBoxFlat.new()
+	var sb := PaperBox.new()
 	sb.bg_color = Palette.CARD
 	sb.set_corner_radius_all(18)
 	sb.shadow_color = Color(Palette.SHADOW, 0.16)
@@ -79,6 +79,18 @@ func _on_picked(i: int) -> void:
 	answered.emit(str(c.id), Time.get_ticks_msec() - _started)
 
 
+## Second try (D-021): the sound tried is greyed out and the wheel turns again.
+func try_again(chosen: String) -> void:
+	for i in _item.choices.size():
+		if str(_item.choices[i].id) == chosen:
+			_wheel.grey_out(i)
+	_onset.text = "?"
+	_onset.add_theme_color_override("font_color", Color(Palette.MANGO_DEEP, 0.45))
+	_started = Time.get_ticks_msec()
+	_locked = false
+	_wheel.locked = false
+
+
 func show_result(chosen: String, answer: String) -> void:
 	var right := answer
 	for c in _item.choices:
@@ -88,7 +100,7 @@ func show_result(chosen: String, answer: String) -> void:
 	var ok := chosen == answer
 	_onset.add_theme_color_override("font_color", Palette.readable(Palette.deep(Palette.RIGHT)))
 	var card: PanelContainer = _onset.get_parent()
-	var sb: StyleBoxFlat = card.get_theme_stylebox("panel").duplicate()
+	var sb: PaperBox = card.get_theme_stylebox("panel").duplicate()
 	sb.bg_color = Palette.pale(Palette.RIGHT if ok else Palette.ALMOST, 0.7)
 	card.add_theme_stylebox_override("panel", sb)
 

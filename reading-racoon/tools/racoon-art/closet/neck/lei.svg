@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racoon's Closet: Sampaguita lei (violet, neck). FR-07, D-026.
+     Drawn to fit Racoon at rest: the bottom layer links ../../parts/racoon_C_inkscape.svg (locked).
+     Draw on the "Item" layer. The file's name is the item's id; its name, tier, price and how it's
+     earned are in reading-racoon/content/closet.json. motion-demo/build_racoon.py reads this file
+     and never writes it. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-lei"
+   sodipodi:docname="lei.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>Sampaguita lei</title>
+  <sodipodi:namedview
+     id="namedview-lei"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="2"
+     inkscape:cx="200"
+     inkscape:cy="280"
+     inkscape:current-layer="layer-item" />
+  <defs id="defs-lei">
+    <radialGradient id="gr-lei-bloom" cx="0.5" cy="0.5" r="0.5"><stop offset="0" style="stop-color:#ffffff" /><stop offset="1" style="stop-color:#eceee2" /></radialGradient>
+    <linearGradient id="gr-lei-leaf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#8fd16a" /><stop offset="1" style="stop-color:#4f8f37" /></linearGradient>
+    <linearGradient id="gr-lei-ribbon" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#c9a2e6" /><stop offset="1" style="stop-color:#7d55a0" /></linearGradient>
+    <radialGradient id="gr-lei-orchid" cx="0.5" cy="0.45" r="0.6"><stop offset="0" style="stop-color:#ffd1f0" /><stop offset="0.55" style="stop-color:#d98ad0" /><stop offset="1" style="stop-color:#9a5bb8" /></radialGradient>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="../../parts/racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-item" inkscape:label="Item">
+   <g id="item-lei" inkscape:label="lei">
+     <title>Sampaguita lei: white jasmine with a waling-waling orchid (violet)</title>
+     <path id="lei-1" inkscape:label="String" d="M 150 250 C 158 288 180 306 200.5 306 C 221 306 243 288 251 250" style="fill:none;stroke:#487f33;stroke-width:3;stroke-linejoin:round;stroke-linecap:round" />
+     <g id="lei-2" inkscape:label="Sampaguita">
+     <ellipse id="lei-3" inkscape:label="Petal" cx="150.76" cy="244.84" rx="8.99" ry="5.39" transform="rotate(-90 150.76 244.84)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-4" inkscape:label="Petal" cx="158.87" cy="250.73" rx="8.99" ry="5.39" transform="rotate(-18 158.87 250.73)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-5" inkscape:label="Petal" cx="155.77" cy="260.26" rx="8.99" ry="5.39" transform="rotate(54 155.77 260.26)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-6" inkscape:label="Petal" cx="145.75" cy="260.26" rx="8.99" ry="5.39" transform="rotate(126 145.75 260.26)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-7" inkscape:label="Petal" cx="142.65" cy="250.73" rx="8.99" ry="5.39" transform="rotate(198 142.65 250.73)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="lei-8" inkscape:label="Centre" cx="150.76" cy="253.37" r="4.65" style="fill:#ffd84d;stroke:#3b2d3a;stroke-width:1.65;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <path id="lei-9" inkscape:label="Leaf" d="M 155.22 267.66 Q 146.57 264.95 140.18 273.13 Q 150.33 275.29 155.22 267.66 Z" style="fill:url(#gr-lei-leaf);stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <g id="lei-10" inkscape:label="Sampaguita">
+     <ellipse id="lei-11" inkscape:label="Petal" cx="155.22" cy="259.13" rx="8.99" ry="5.39" transform="rotate(-90 155.22 259.13)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-12" inkscape:label="Petal" cx="163.33" cy="265.02" rx="8.99" ry="5.39" transform="rotate(-18 163.33 265.02)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-13" inkscape:label="Petal" cx="160.23" cy="274.55" rx="8.99" ry="5.39" transform="rotate(54 160.23 274.55)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-14" inkscape:label="Petal" cx="150.21" cy="274.55" rx="8.99" ry="5.39" transform="rotate(126 150.21 274.55)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-15" inkscape:label="Petal" cx="147.11" cy="265.02" rx="8.99" ry="5.39" transform="rotate(198 147.11 265.02)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="lei-16" inkscape:label="Centre" cx="155.22" cy="267.66" r="4.65" style="fill:#ffd84d;stroke:#3b2d3a;stroke-width:1.65;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <g id="lei-17" inkscape:label="Sampaguita">
+     <ellipse id="lei-18" inkscape:label="Petal" cx="161.01" cy="271.11" rx="8.99" ry="5.39" transform="rotate(-90 161.01 271.11)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-19" inkscape:label="Petal" cx="169.12" cy="277" rx="8.99" ry="5.39" transform="rotate(-18 169.12 277)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-20" inkscape:label="Petal" cx="166.03" cy="286.53" rx="8.99" ry="5.39" transform="rotate(54 166.03 286.53)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-21" inkscape:label="Petal" cx="156" cy="286.53" rx="8.99" ry="5.39" transform="rotate(126 156 286.53)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-22" inkscape:label="Petal" cx="152.91" cy="277" rx="8.99" ry="5.39" transform="rotate(198 152.91 277)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="lei-23" inkscape:label="Centre" cx="161.01" cy="279.63" r="4.65" style="fill:#ffd84d;stroke:#3b2d3a;stroke-width:1.65;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <path id="lei-24" inkscape:label="Leaf" d="M 167.89 289.33 Q 159.25 286.63 152.86 294.8 Q 163.01 296.96 167.89 289.33 Z" style="fill:url(#gr-lei-leaf);stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <g id="lei-25" inkscape:label="Sampaguita">
+     <ellipse id="lei-26" inkscape:label="Petal" cx="167.89" cy="280.81" rx="8.99" ry="5.39" transform="rotate(-90 167.89 280.81)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-27" inkscape:label="Petal" cx="176" cy="286.7" rx="8.99" ry="5.39" transform="rotate(-18 176 286.7)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-28" inkscape:label="Petal" cx="172.9" cy="296.23" rx="8.99" ry="5.39" transform="rotate(54 172.9 296.23)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-29" inkscape:label="Petal" cx="162.88" cy="296.23" rx="8.99" ry="5.39" transform="rotate(126 162.88 296.23)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-30" inkscape:label="Petal" cx="159.78" cy="286.7" rx="8.99" ry="5.39" transform="rotate(198 159.78 286.7)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="lei-31" inkscape:label="Centre" cx="167.89" cy="289.33" r="4.65" style="fill:#ffd84d;stroke:#3b2d3a;stroke-width:1.65;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <g id="lei-32" inkscape:label="Sampaguita">
+     <ellipse id="lei-33" inkscape:label="Petal" cx="175.6" cy="288.26" rx="8.99" ry="5.39" transform="rotate(-90 175.6 288.26)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-34" inkscape:label="Petal" cx="183.7" cy="294.15" rx="8.99" ry="5.39" transform="rotate(-18 183.7 294.15)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-35" inkscape:label="Petal" cx="180.61" cy="303.68" rx="8.99" ry="5.39" transform="rotate(54 180.61 303.68)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-36" inkscape:label="Petal" cx="170.59" cy="303.68" rx="8.99" ry="5.39" transform="rotate(126 170.59 303.68)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-37" inkscape:label="Petal" cx="167.49" cy="294.15" rx="8.99" ry="5.39" transform="rotate(198 167.49 294.15)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="lei-38" inkscape:label="Centre" cx="175.6" cy="296.78" r="4.65" style="fill:#ffd84d;stroke:#3b2d3a;stroke-width:1.65;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <path id="lei-39" inkscape:label="Leaf" d="M 183.87 302.02 Q 175.23 299.32 168.84 307.5 Q 178.99 309.65 183.87 302.02 Z" style="fill:url(#gr-lei-leaf);stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <g id="lei-40" inkscape:label="Sampaguita">
+     <ellipse id="lei-41" inkscape:label="Petal" cx="183.87" cy="293.5" rx="8.99" ry="5.39" transform="rotate(-90 183.87 293.5)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-42" inkscape:label="Petal" cx="191.98" cy="299.39" rx="8.99" ry="5.39" transform="rotate(-18 191.98 299.39)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-43" inkscape:label="Petal" cx="188.88" cy="308.92" rx="8.99" ry="5.39" transform="rotate(54 188.88 308.92)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-44" inkscape:label="Petal" cx="178.86" cy="308.92" rx="8.99" ry="5.39" transform="rotate(126 178.86 308.92)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-45" inkscape:label="Petal" cx="175.76" cy="299.39" rx="8.99" ry="5.39" transform="rotate(198 175.76 299.39)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="lei-46" inkscape:label="Centre" cx="183.87" cy="302.02" r="4.65" style="fill:#ffd84d;stroke:#3b2d3a;stroke-width:1.65;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <g id="lei-47" inkscape:label="Sampaguita">
+     <ellipse id="lei-48" inkscape:label="Petal" cx="202.35" cy="297.43" rx="8.99" ry="5.39" transform="rotate(-90 202.35 297.43)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-49" inkscape:label="Petal" cx="210.46" cy="303.32" rx="8.99" ry="5.39" transform="rotate(-18 210.46 303.32)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-50" inkscape:label="Petal" cx="207.36" cy="312.85" rx="8.99" ry="5.39" transform="rotate(54 207.36 312.85)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-51" inkscape:label="Petal" cx="197.34" cy="312.85" rx="8.99" ry="5.39" transform="rotate(126 197.34 312.85)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-52" inkscape:label="Petal" cx="194.24" cy="303.32" rx="8.99" ry="5.39" transform="rotate(198 194.24 303.32)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="lei-53" inkscape:label="Centre" cx="202.35" cy="305.95" r="4.65" style="fill:#ffd84d;stroke:#3b2d3a;stroke-width:1.65;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <path id="lei-54" inkscape:label="Leaf" d="M 211.01 304.43 Q 215.89 312.06 226.04 309.9 Q 219.66 301.72 211.01 304.43 Z" style="fill:url(#gr-lei-leaf);stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <g id="lei-55" inkscape:label="Sampaguita">
+     <ellipse id="lei-56" inkscape:label="Petal" cx="211.01" cy="295.9" rx="8.99" ry="5.39" transform="rotate(-90 211.01 295.9)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-57" inkscape:label="Petal" cx="219.12" cy="301.8" rx="8.99" ry="5.39" transform="rotate(-18 219.12 301.8)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-58" inkscape:label="Petal" cx="216.02" cy="311.33" rx="8.99" ry="5.39" transform="rotate(54 216.02 311.33)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-59" inkscape:label="Petal" cx="206" cy="311.33" rx="8.99" ry="5.39" transform="rotate(126 206 311.33)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-60" inkscape:label="Petal" cx="202.9" cy="301.8" rx="8.99" ry="5.39" transform="rotate(198 202.9 301.8)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="lei-61" inkscape:label="Centre" cx="211.01" cy="304.43" r="4.65" style="fill:#ffd84d;stroke:#3b2d3a;stroke-width:1.65;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <g id="lei-62" inkscape:label="Sampaguita">
+     <ellipse id="lei-63" inkscape:label="Petal" cx="219.54" cy="292.23" rx="8.99" ry="5.39" transform="rotate(-90 219.54 292.23)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-64" inkscape:label="Petal" cx="227.64" cy="298.12" rx="8.99" ry="5.39" transform="rotate(-18 227.64 298.12)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-65" inkscape:label="Petal" cx="224.55" cy="307.65" rx="8.99" ry="5.39" transform="rotate(54 224.55 307.65)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-66" inkscape:label="Petal" cx="214.52" cy="307.65" rx="8.99" ry="5.39" transform="rotate(126 214.52 307.65)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-67" inkscape:label="Petal" cx="211.43" cy="298.12" rx="8.99" ry="5.39" transform="rotate(198 211.43 298.12)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="lei-68" inkscape:label="Centre" cx="219.54" cy="300.75" r="4.65" style="fill:#ffd84d;stroke:#3b2d3a;stroke-width:1.65;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <path id="lei-69" inkscape:label="Leaf" d="M 227.67 294.88 Q 232.56 302.51 242.71 300.36 Q 236.32 292.18 227.67 294.88 Z" style="fill:url(#gr-lei-leaf);stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <g id="lei-70" inkscape:label="Sampaguita">
+     <ellipse id="lei-71" inkscape:label="Petal" cx="227.67" cy="286.36" rx="8.99" ry="5.39" transform="rotate(-90 227.67 286.36)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-72" inkscape:label="Petal" cx="235.78" cy="292.25" rx="8.99" ry="5.39" transform="rotate(-18 235.78 292.25)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-73" inkscape:label="Petal" cx="232.68" cy="301.78" rx="8.99" ry="5.39" transform="rotate(54 232.68 301.78)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-74" inkscape:label="Petal" cx="222.66" cy="301.78" rx="8.99" ry="5.39" transform="rotate(126 222.66 301.78)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-75" inkscape:label="Petal" cx="219.57" cy="292.25" rx="8.99" ry="5.39" transform="rotate(198 219.57 292.25)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="lei-76" inkscape:label="Centre" cx="227.67" cy="294.88" r="4.65" style="fill:#ffd84d;stroke:#3b2d3a;stroke-width:1.65;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <g id="lei-77" inkscape:label="Sampaguita">
+     <ellipse id="lei-78" inkscape:label="Petal" cx="235.17" cy="278.27" rx="8.99" ry="5.39" transform="rotate(-90 235.17 278.27)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-79" inkscape:label="Petal" cx="243.28" cy="284.16" rx="8.99" ry="5.39" transform="rotate(-18 243.28 284.16)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-80" inkscape:label="Petal" cx="240.18" cy="293.69" rx="8.99" ry="5.39" transform="rotate(54 240.18 293.69)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-81" inkscape:label="Petal" cx="230.16" cy="293.69" rx="8.99" ry="5.39" transform="rotate(126 230.16 293.69)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-82" inkscape:label="Petal" cx="227.06" cy="284.16" rx="8.99" ry="5.39" transform="rotate(198 227.06 284.16)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="lei-83" inkscape:label="Centre" cx="235.17" cy="286.79" r="4.65" style="fill:#ffd84d;stroke:#3b2d3a;stroke-width:1.65;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <path id="lei-84" inkscape:label="Leaf" d="M 241.76 276.45 Q 246.65 284.08 256.8 281.92 Q 250.41 273.74 241.76 276.45 Z" style="fill:url(#gr-lei-leaf);stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <g id="lei-85" inkscape:label="Sampaguita">
+     <ellipse id="lei-86" inkscape:label="Petal" cx="241.76" cy="267.92" rx="8.99" ry="5.39" transform="rotate(-90 241.76 267.92)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-87" inkscape:label="Petal" cx="249.87" cy="273.81" rx="8.99" ry="5.39" transform="rotate(-18 249.87 273.81)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-88" inkscape:label="Petal" cx="246.77" cy="283.34" rx="8.99" ry="5.39" transform="rotate(54 246.77 283.34)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-89" inkscape:label="Petal" cx="236.75" cy="283.34" rx="8.99" ry="5.39" transform="rotate(126 236.75 283.34)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-90" inkscape:label="Petal" cx="233.66" cy="273.81" rx="8.99" ry="5.39" transform="rotate(198 233.66 273.81)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="lei-91" inkscape:label="Centre" cx="241.76" cy="276.45" r="4.65" style="fill:#ffd84d;stroke:#3b2d3a;stroke-width:1.65;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <path id="lei-92" inkscape:label="Ribbon left" d="M 196 310 C 192 320 188 330 182 338 L 189 340 C 194 332 199 322 202 312 Z" style="fill:url(#gr-lei-ribbon);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="lei-93" inkscape:label="Ribbon right" d="M 205 310 C 209 320 214 330 220 338 L 213 341 C 208 332 203 322 199 312 Z" style="fill:url(#gr-lei-ribbon);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <g id="lei-94" inkscape:label="Waling-waling orchid">
+     <ellipse id="lei-95" inkscape:label="Petal" cx="200.5" cy="295" rx="12" ry="8" transform="rotate(-90 200.5 295)" style="fill:url(#gr-lei-orchid);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-96" inkscape:label="Petal" cx="210.96" cy="302.6" rx="12" ry="8" transform="rotate(-18 210.96 302.6)" style="fill:url(#gr-lei-orchid);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-97" inkscape:label="Petal" cx="206.97" cy="314.9" rx="12" ry="8" transform="rotate(54 206.97 314.9)" style="fill:url(#gr-lei-orchid);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-98" inkscape:label="Petal" cx="194.03" cy="314.9" rx="12" ry="8" transform="rotate(126 194.03 314.9)" style="fill:url(#gr-lei-orchid);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-99" inkscape:label="Petal" cx="190.04" cy="302.6" rx="12" ry="8" transform="rotate(198 190.04 302.6)" style="fill:url(#gr-lei-orchid);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="lei-100" inkscape:label="Lip" d="M 193 306 C 193 315 208 315 208 306 C 204 311 197 311 193 306 Z" style="fill:#7b3f99;stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="lei-101" inkscape:label="Centre" cx="200.5" cy="303" r="3.8" style="fill:#fff3b0;stroke:#3b2d3a;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <path id="lei-102" inkscape:label="Twinkle" d="M 160 290.5 Q 161.54 294.46 165.5 296 Q 161.54 297.54 160 301.5 Q 158.46 297.54 154.5 296 Q 158.46 294.46 160 290.5 Z" style="fill:#ffffff;stroke:#b98ad6;stroke-width:1.1;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="lei-103" inkscape:label="Twinkle" d="M 243 289 Q 244.4 292.6 248 294 Q 244.4 295.4 243 299 Q 241.6 295.4 238 294 Q 241.6 292.6 243 289 Z" style="fill:#ffffff;stroke:#b98ad6;stroke-width:1.1;stroke-linejoin:round;stroke-linecap:round" />
+   </g>
+  </g>
+</svg>

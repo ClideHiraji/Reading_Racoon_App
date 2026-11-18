@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="15.5 16.62 99 99" width="128" height="128">
+<g opacity="0.22" transform="translate(0 2.4)">
+<rect x="18" y="48" width="28" height="34" rx="6" fill="#3b2d3a"/>
+</g>
+<rect x="18" y="48" width="28" height="34" rx="6" fill="#eb8435"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<path d="M 42 50 L 70 28 Q 76 24 76 32 L 76 98 Q 76 106 70 102 L 42 80 Z" fill="#3b2d3a"/>
+</g>
+<path d="M 42 50 L 70 28 Q 76 24 76 32 L 76 98 Q 76 106 70 102 L 42 80 Z" fill="#ee934e"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<path d="M 88 46 Q 98 65 88 84" fill="none" stroke="#3b2d3a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<path d="M 88 46 Q 98 65 88 84" fill="none" stroke="#3c9d90" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<path d="M 100 34 Q 117 65 100 96" fill="none" stroke="#3b2d3a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<path d="M 100 34 Q 117 65 100 96" fill="none" stroke="#3c9d90" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

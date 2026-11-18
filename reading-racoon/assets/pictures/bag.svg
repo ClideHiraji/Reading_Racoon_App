@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="10.5 10 107 107" width="128" height="128">
+<g opacity="0.22" transform="translate(0 2.4)">
+<path d="M 52 30 Q 52 16 64 16 Q 76 16 76 30" fill="none" stroke="#3b2d3a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<path d="M 52 30 Q 52 16 64 16 Q 76 16 76 30" fill="none" stroke="#327e74" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<rect x="20" y="52" width="12" height="42" rx="6" fill="#3b2d3a"/>
+</g>
+<rect x="20" y="52" width="12" height="42" rx="6" fill="#327e74"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<rect x="96" y="52" width="12" height="42" rx="6" fill="#3b2d3a"/>
+</g>
+<rect x="96" y="52" width="12" height="42" rx="6" fill="#327e74"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<rect x="28" y="28" width="72" height="84" rx="22" fill="#3b2d3a"/>
+</g>
+<rect x="28" y="28" width="72" height="84" rx="22" fill="#3c9d90"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<path d="M 28 58 L 28 50 Q 28 28 50 28 L 78 28 Q 100 28 100 50 L 100 58 Q 64 68 28 58 Z" fill="#3b2d3a"/>
+</g>
+<path d="M 28 58 L 28 50 Q 28 28 50 28 L 78 28 Q 100 28 100 50 L 100 58 Q 64 68 28 58 Z" fill="#49c6b4"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<rect x="40" y="56" width="8" height="12" rx="2.5" fill="#3b2d3a"/>
+</g>
+<rect x="40" y="56" width="8" height="12" rx="2.5" fill="#f4c62f"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<rect x="80" y="56" width="8" height="12" rx="2.5" fill="#3b2d3a"/>
+</g>
+<rect x="80" y="56" width="8" height="12" rx="2.5" fill="#f4c62f"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<rect x="40" y="74" width="48" height="30" rx="12" fill="#3b2d3a"/>
+</g>
+<rect x="40" y="74" width="48" height="30" rx="12" fill="#f6ba5e"/>
+<path d="M 47 84 L 81 84" fill="none" stroke="#9e3e08" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<circle cx="78" cy="84" r="3" fill="#3b2d3a"/>
+</g>
+<g opacity="0.18">
+<circle cx="78" cy="84" r="3" fill="#3b2d3a" stroke="#3b2d3a" stroke-width="3" stroke-linejoin="round"/>
+</g>
+<circle cx="78" cy="84" r="3" fill="#fffffd"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<path d="M 63.65 89.31 Q 64 88.5 64.35 89.31 L 65.59 92.17 Q 65.76 92.57 66.21 92.61 L 69.3 92.91 Q 70.18 92.99 69.52 93.58 L 67.19 95.63 Q 66.85 95.93 66.95 96.36 L 67.63 99.39 Q 67.82 100.26 67.06 99.81 L 64.38 98.23 Q 64 98 63.62 98.23 L 60.94 99.81 Q 60.18 100.26 60.37 99.39 L 61.05 96.36 Q 61.15 95.93 60.81 95.63 L 58.48 93.58 Q 57.82 92.99 58.7 92.91 L 61.79 92.61 Q 62.24 92.57 62.41 92.17 Z" fill="#3b2d3a"/>
+</g>
+<g opacity="0.18">
+<path d="M 63.65 89.31 Q 64 88.5 64.35 89.31 L 65.59 92.17 Q 65.76 92.57 66.21 92.61 L 69.3 92.91 Q 70.18 92.99 69.52 93.58 L 67.19 95.63 Q 66.85 95.93 66.95 96.36 L 67.63 99.39 Q 67.82 100.26 67.06 99.81 L 64.38 98.23 Q 64 98 63.62 98.23 L 60.94 99.81 Q 60.18 100.26 60.37 99.39 L 61.05 96.36 Q 61.15 95.93 60.81 95.63 L 58.48 93.58 Q 57.82 92.99 58.7 92.91 L 61.79 92.61 Q 62.24 92.57 62.41 92.17 Z" fill="#3b2d3a" stroke="#3b2d3a" stroke-width="3" stroke-linejoin="round"/>
+</g>
+<path d="M 63.65 89.31 Q 64 88.5 64.35 89.31 L 65.59 92.17 Q 65.76 92.57 66.21 92.61 L 69.3 92.91 Q 70.18 92.99 69.52 93.58 L 67.19 95.63 Q 66.85 95.93 66.95 96.36 L 67.63 99.39 Q 67.82 100.26 67.06 99.81 L 64.38 98.23 Q 64 98 63.62 98.23 L 60.94 99.81 Q 60.18 100.26 60.37 99.39 L 61.05 96.36 Q 61.15 95.93 60.81 95.63 L 58.48 93.58 Q 57.82 92.99 58.7 92.91 L 61.79 92.61 Q 62.24 92.57 62.41 92.17 Z" fill="#fbf1b7"/>
+</svg>

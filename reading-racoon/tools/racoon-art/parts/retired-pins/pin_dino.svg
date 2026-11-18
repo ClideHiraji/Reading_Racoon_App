@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racoon's Closet: Dino pin (violet, pins). FR-07, D-026.
+     Drawn to fit Racoon at rest: the bottom layer links ../../parts/racoon_C_inkscape.svg (locked).
+     Draw on the "Item" layer. The file's name is the item's id; its name, tier, price and how it's
+     earned are in reading-racoon/content/closet.json. motion-demo/build_racoon.py reads this file
+     and never writes it. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-pin-dino"
+   sodipodi:docname="pin_dino.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>Dino pin</title>
+  <sodipodi:namedview
+     id="namedview-pin-dino"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="2"
+     inkscape:cx="200"
+     inkscape:cy="200"
+     inkscape:current-layer="layer-item" />
+  <defs id="defs-pin-dino">
+    <linearGradient id="gr-pin-dino-1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#fff3c4" /><stop offset="1" style="stop-color:#ffd97a" /></linearGradient>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="../../parts/racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-item" inkscape:label="Item">
+   <g id="item-pin-dino" inkscape:label="pin_dino">
+     <title>Dino pin: a little green dinosaur with orange plates (violet)</title>
+     <circle id="pin-dino-1" inkscape:label="Pin" cx="174" cy="312" r="16" style="fill:url(#gr-pin-dino-1);stroke:#3b2d3a;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="pin-dino-2" inkscape:label="Ring" cx="174" cy="312" r="12.4" style="fill:none;stroke:#b48fd0;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="pin-dino-3" inkscape:label="Gem" cx="174" cy="297.6" r="2.2" style="fill:#b48fd0;stroke:#3b2d3a;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pin-dino-4" inkscape:label="Plates" d="M 165 309 L 167.5 303.5 L 170 309 Z M 169.5 308 L 172.5 302 L 175.5 308 Z M 175 309 L 177.5 303.5 L 180 309.5 Z" style="fill:#f39a2f;stroke:#3b2d3a;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pin-dino-5" inkscape:label="Tail" d="M 165 313 C 161 315 158 318 156 317 C 159 313 162 310 166 310 Z" style="fill:#5fae4c;stroke:#3b2d3a;stroke-width:1.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="pin-dino-6" inkscape:label="Body" cx="172.5" cy="313.5" rx="8.5" ry="5.8" style="fill:#5fae4c;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pin-dino-7" inkscape:label="Neck" d="M 178 311 C 180 306 183 303 186.5 304 C 189 305 188.5 308.5 185 309 C 183 310 181 313 180 316 Z" style="fill:#5fae4c;stroke:#3b2d3a;stroke-width:1.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pin-dino-8" inkscape:label="Legs" d="M 167.5 318 L 167.5 322.5 L 170.5 322.5 L 170.5 318 Z M 174.5 318 L 174.5 322.5 L 177.5 322.5 L 177.5 318 Z" style="fill:#5fae4c;stroke:#3b2d3a;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="pin-dino-9" inkscape:label="Eye" cx="185.4" cy="305.6" r="0.9" style="fill:#3b2d3a" />
+   </g>
+  </g>
+</svg>

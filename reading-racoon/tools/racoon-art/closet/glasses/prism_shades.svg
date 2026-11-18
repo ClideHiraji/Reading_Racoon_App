@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racoon's Closet: Prism shades (diamond, glasses). FR-07, D-026.
+     Drawn to fit Racoon at rest: the bottom layer links ../../parts/racoon_C_inkscape.svg (locked).
+     Draw on the "Item" layer. The file's name is the item's id; its name, tier, price and how it's
+     earned are in reading-racoon/content/closet.json. motion-demo/build_racoon.py reads this file
+     and never writes it. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-prism_shades"
+   sodipodi:docname="prism_shades.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>Prism shades</title>
+  <sodipodi:namedview
+     id="namedview-prism_shades"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="2"
+     inkscape:cx="200"
+     inkscape:cy="170"
+     inkscape:current-layer="layer-item" />
+  <defs id="defs-prism_shades">
+    <linearGradient id="gr-prism-lens" x1="0" y1="0" x2="1" y2="0.3"><stop offset="0" style="stop-color:#ff9a9a" /><stop offset="0.25" style="stop-color:#ffd36e" /><stop offset="0.5" style="stop-color:#a6f0a0" /><stop offset="0.75" style="stop-color:#7fd8ff" /><stop offset="1" style="stop-color:#c39bff" /></linearGradient>
+    <linearGradient id="gr-prism-bar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ffffff" /><stop offset="1" style="stop-color:#bfe9fb" /></linearGradient>
+    <linearGradient id="gr-prism-gem126" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ffffff" /><stop offset="1" style="stop-color:#b49bff" /></linearGradient>
+    <linearGradient id="gr-prism-gem275" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ffffff" /><stop offset="1" style="stop-color:#b49bff" /></linearGradient>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="../../parts/racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-item" inkscape:label="Item">
+   <g id="item-prism-shades" inkscape:label="prism_shades">
+     <title>Prism shades: a crystal visor with a rainbow lens (diamond)</title>
+     <path id="prism-shades-1" inkscape:label="Lens" d="M 129 152 L 272 152 L 269 170 C 265 185 247 191 231 186 L 213 176 L 200.5 172 L 188 176 L 170 186 C 154 191 136 185 132 170 Z" style="fill:url(#gr-prism-lens);stroke:#3b2d3a;stroke-width:4.2;stroke-linejoin:round;stroke-linecap:round;fill-opacity:0.92" />
+     <path id="prism-shades-2" inkscape:label="Facet" d="M 150 152 L 166 186" style="fill:none;stroke:#ffffff;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round;opacity:0.65" />
+     <path id="prism-shades-3" inkscape:label="Facet" d="M 180 152 L 171 184" style="fill:none;stroke:#ffffff;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round;opacity:0.65" />
+     <path id="prism-shades-4" inkscape:label="Facet" d="M 221 152 L 230 184" style="fill:none;stroke:#ffffff;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round;opacity:0.65" />
+     <path id="prism-shades-5" inkscape:label="Facet" d="M 251 152 L 235 186" style="fill:none;stroke:#ffffff;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round;opacity:0.65" />
+     <path id="prism-shades-6" inkscape:label="Facet" d="M 132 168 L 200.5 160 L 269 168" style="fill:none;stroke:#ffffff;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round;opacity:0.65" />
+     <path id="prism-shades-7" inkscape:label="Crystal bar" d="M 126 148 L 275 148 L 273 157 L 128 157 Z" style="fill:url(#gr-prism-bar);stroke:#3b2d3a;stroke-width:3;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="prism-shades-8" inkscape:label="Corner gem" d="M 126 144 L 133 152 L 126 160 L 119 152 Z" style="fill:url(#gr-prism-gem126);stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="prism-shades-9" inkscape:label="Corner gem" d="M 275 144 L 282 152 L 275 160 L 268 152 Z" style="fill:url(#gr-prism-gem275);stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="prism-shades-10" inkscape:label="Glint" d="M 146 160 L 156 170" style="fill:none;stroke:#ffffff;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round;opacity:0.85" />
+     <path id="prism-shades-11" inkscape:label="Glint 2" d="M 214 160 L 224 170" style="fill:none;stroke:#ffffff;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round;opacity:0.85" />
+     <path id="prism-shades-12" inkscape:label="Twinkle" d="M 118 128.5 Q 120.1 133.9 125.5 136 Q 120.1 138.1 118 143.5 Q 115.9 138.1 110.5 136 Q 115.9 133.9 118 128.5 Z" style="fill:#ffffff;stroke:#6fc7e8;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="prism-shades-13" inkscape:label="Twinkle" d="M 284 131 Q 285.96 136.04 291 138 Q 285.96 139.96 284 145 Q 282.04 139.96 277 138 Q 282.04 136.04 284 131 Z" style="fill:#ffffff;stroke:#6fc7e8;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="prism-shades-14" inkscape:label="Twinkle" d="M 200.5 135 Q 201.9 138.6 205.5 140 Q 201.9 141.4 200.5 145 Q 199.1 141.4 195.5 140 Q 199.1 138.6 200.5 135 Z" style="fill:#ffffff;stroke:#6fc7e8;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+   </g>
+  </g>
+</svg>

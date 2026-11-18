@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racoon's Closet: Book pin (silver, pins). FR-07, D-026.
+     Drawn to fit Racoon at rest: the bottom layer links ../../parts/racoon_C_inkscape.svg (locked).
+     Draw on the "Item" layer. The file's name is the item's id; its name, tier, price and how it's
+     earned are in reading-racoon/content/closet.json. motion-demo/build_racoon.py reads this file
+     and never writes it. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-pin_book"
+   sodipodi:docname="pin_book.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>Book pin</title>
+  <sodipodi:namedview
+     id="namedview-pin_book"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="2"
+     inkscape:cx="200"
+     inkscape:cy="312"
+     inkscape:current-layer="layer-item" />
+  <defs id="defs-pin_book">
+    <linearGradient id="gr-pinbook-disc" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:#ffffff" /><stop offset="0.5" style="stop-color:#d3dbe3" /><stop offset="1" style="stop-color:#8e9aa6" /></linearGradient>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="../../parts/racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-item" inkscape:label="Item">
+   <g id="item-pin-book" inkscape:label="pin_book" transform="matrix(1.35 0 0 1.35 -60.9 -109.2)">
+     <title>Book pin: a little open book on silver (silver)</title>
+     <circle id="pin-book-1" inkscape:label="Pin" cx="174" cy="312" r="16.5" style="fill:url(#gr-pinbook-disc);stroke:#3b2d3a;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="pin-book-2" inkscape:label="Ring" cx="174" cy="312" r="13" style="fill:#fbfcfd;stroke:#8e9aa6;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pin-book-3" inkscape:label="Cover" d="M 164 306 L 184 306 L 184 319 L 164 319 Z" style="fill:#e9801f;stroke:#3b2d3a;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pin-book-4" inkscape:label="Pages" d="M 166 305 Q 171 303 174 307 L 174 318 Q 171 315 166 317 Z" style="fill:#fffbf2;stroke:#3b2d3a;stroke-width:1.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pin-book-5" inkscape:label="Pages" d="M 182 305 Q 177 303 174 307 L 174 318 Q 177 315 182 317 Z" style="fill:#fffbf2;stroke:#3b2d3a;stroke-width:1.4;stroke-linejoin:round;stroke-linecap:round" />
+   </g>
+  </g>
+</svg>

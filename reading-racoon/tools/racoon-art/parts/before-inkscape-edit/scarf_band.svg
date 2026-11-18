@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="127 245 146 51" width="146" height="51">
+<title>Scarf · Band</title>
+<defs>
+<radialGradient id="rr-fur" cx="0.38" cy="0.3" r="0.8"><stop offset="0" stop-color="#aaa4b6"/><stop offset="0.55" stop-color="#8e8899"/><stop offset="1" stop-color="#716a80"/></radialGradient>
+<radialGradient id="rr-cream" cx="0.4" cy="0.3" r="0.85"><stop offset="0" stop-color="#fffbf2"/><stop offset="0.7" stop-color="#fbf3e4"/><stop offset="1" stop-color="#ead8c0"/></radialGradient>
+<linearGradient id="rr-mask" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a3e52"/><stop offset="1" stop-color="#3a2f40"/></linearGradient>
+<linearGradient id="rr-teal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#45b8a9"/><stop offset="1" stop-color="#2a9d8f"/></linearGradient>
+<radialGradient id="rr-dark" cx="0.4" cy="0.3" r="0.8"><stop offset="0" stop-color="#6f6879"/><stop offset="1" stop-color="#5d5766"/></radialGradient>
+</defs>
+<g id="scarf_band">
+<path d="M 134 250 C 167 274 233 274 266 250 L 268 269 C 233 298 167 298 132 269 Z" fill="url(#rr-teal)" stroke="#3b2d3a" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/>
+</g>
+</svg>

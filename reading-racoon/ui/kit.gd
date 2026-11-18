@@ -19,6 +19,13 @@ static func page(root: Control, scene: String = "", scene_height: float = 0.0) -
 	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	root.add_child(bg)
+	# pale cut-paper bits on the paper, a different scatter on each page (D-028)
+	var bits := PaperConfetti.new()
+	bits.pattern = absi(str(root.name).hash()) % 97
+	bits.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	root.add_child(bits)
+	if landscape():   # the scenery keeps its share of the shorter laptop screen (D-023)
+		scene_height *= 0.66
 	if scene != "":
 		var s := PaperScenery.new()
 		s.scene = scene
@@ -29,10 +36,12 @@ static func page(root: Control, scene: String = "", scene_height: float = 0.0) -
 		root.add_child(s)
 	var m := MarginContainer.new()
 	m.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	for side in ["left", "right"]:
-		m.add_theme_constant_override("margin_" + side, 24)
-	m.add_theme_constant_override("margin_top", 20)
-	m.add_theme_constant_override("margin_bottom", 20)
+	var safe := insets()
+	var side := 40.0 if landscape() else 24.0
+	m.add_theme_constant_override("margin_left", int(side + safe.left))
+	m.add_theme_constant_override("margin_right", int(side + safe.right))
+	m.add_theme_constant_override("margin_top", int(20 + safe.top))
+	m.add_theme_constant_override("margin_bottom", int(20 + safe.bottom))
 	root.add_child(m)
 	var v := VBoxContainer.new()
 	v.add_theme_constant_override("separation", 18)
@@ -40,9 +49,39 @@ static func page(root: Control, scene: String = "", scene_height: float = 0.0) -
 	return v
 
 
-## Top row: Home (or Close for a screen inside a section), the title and coins.
-## Returns {row, back, coins}.
-static func header(column: Control, title: String, on_back: Callable, close := false) -> Dictionary:
+## True on a landscape screen (the school laptops), where screens lay out side
+## by side on a 1280×720 canvas (D-023).
+static func landscape() -> bool:
+	var screen := _screen()
+	return screen != null and screen.landscape
+
+
+## The notch, rounded corners and home indicator, in canvas units (D-023).
+static func insets() -> Dictionary:
+	var screen := _screen()
+	if screen == null:
+		return {"top": 0.0, "bottom": 0.0, "left": 0.0, "right": 0.0}
+	return screen.insets()
+
+
+## Adds the safe area to a MarginContainer's own margins (scenes built in .tscn).
+static func fit_safe(m: MarginContainer) -> void:
+	var safe := insets()
+	for side: String in ["top", "bottom", "left", "right"]:
+		var key := "margin_" + side
+		m.add_theme_constant_override(key, int(m.get_theme_constant(key) + safe[side]))
+
+
+## The Screen autoload, reachable before a node is in the tree.
+static func _screen() -> Node:
+	var tree := Engine.get_main_loop() as SceneTree
+	return tree.root.get_node_or_null("Screen") if tree else null
+
+
+## Top row (D-022): Home on a section, or Close on an activity (it asks first),
+## the title and coins. Both buttons are 96 px (NFR-02). Returns {row, back, coins}.
+static func header(column: Control, title: String, on_back: Callable, close := false,
+		coins := true) -> Dictionary:
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 16)
 	column.add_child(row)
@@ -50,58 +89,213 @@ static func header(column: Control, title: String, on_back: Callable, close := f
 	if close:
 		back = CloseButton.new()
 	else:
-		var b := ChunkyButton.new()
-		b.card_style = true
-		b.icon_name = "house"
-		b.icon_px = 46
-		b.icon_tint = Palette.BAY_DEEP
-		b.lift = 5
-		b.radius = 44
-		b.expand_icon = true
-		b.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		b.custom_minimum_size = Vector2(88, 88)
-		back = b
+		back = home_button()
+	back.add_to_group("back_button")   # Android Back and Escape press it (D-023)
 	back.tooltip_text = "Back" if close else "Home"
 	back.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	back.pressed.connect(on_back)
 	row.add_child(back)
-	var t := label(title, 42, Palette.INK, true)
+	var t := label(title, 40, Palette.INK, true)
 	t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	t.autowrap_mode = TextServer.AUTOWRAP_OFF
 	t.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	# A long title gets a little smaller before it is ever cut short (D-022).
+	t.resized.connect(func(): fit_font(t, [40, 36, 32, 28]))
 	row.add_child(t)
+	t.add_child(Squiggle.new())   # a crayon line under the title (D-028)
+	if not coins:
+		return {"row": row, "back": back, "coins": null}
+	var pill := coin_pill(column)
+	row.add_child(pill)
+	return {"row": row, "back": back, "coins": pill.get_meta("label")}
+
+
+## A game's top row (D-022): Close, the name and one dot per round in place of
+## the coins (the reward card shows those). Fill the dots with show_rounds().
+## Returns {row, back, dots}.
+static func game_header(column: Control, title: String, on_back: Callable) -> Dictionary:
+	var head := header(column, title, on_back, true, false)
+	var row: HBoxContainer = head.row
+	var dots := HBoxContainer.new()
+	dots.add_theme_constant_override("separation", 10)
+	dots.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	row.add_child(dots)
+	return {"row": row, "back": head.back, "dots": dots}
+
+
+## Round dots: `results` holds "right" or "almost" for each round played so far
+## (green only for a right answer, D-022); the round being played has a blue ring.
+static func show_rounds(dots: HBoxContainer, total: int, results: Array) -> void:
+	for c in dots.get_children():
+		dots.remove_child(c)
+		c.queue_free()
+	for i in total:
+		var sb := box(Palette.CARD, 11)
+		if i < results.size():
+			sb.bg_color = Palette.RIGHT if results[i] == "right" else Palette.ALMOST
+		elif i == results.size():
+			sb.border_color = Palette.BAY_DEEP
+			sb.set_border_width_all(4)
+		var d := Panel.new()
+		d.custom_minimum_size = Vector2(22, 22)
+		d.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		d.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		d.add_theme_stylebox_override("panel", sb)
+		dots.add_child(d)
+
+
+## The round Home button every section starts with (D-022).
+static func home_button() -> ChunkyButton:
+	var b := ChunkyButton.new()
+	b.card_style = true
+	b.icon_name = "house"
+	b.icon_px = 50
+	b.icon_tint = Palette.BAY_DEEP
+	b.lift = 6
+	b.radius = 48
+	b.expand_icon = true
+	b.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	b.custom_minimum_size = Vector2(96, 96)
+	return b
+
+
+## The coins pill; its Label is in get_meta("label").
+static func coin_pill(anchor: Node) -> PanelContainer:
 	var pill := PanelContainer.new()
 	pill.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	pill.add_theme_stylebox_override("panel", box(Palette.CARD, 30, 4, Vector4(14, 8, 18, 8)))
+	pill.add_theme_stylebox_override("panel", box(Palette.CARD, 36, 5, Vector4(14, 12, 22, 12)))
 	var h := HBoxContainer.new()
 	h.add_theme_constant_override("separation", 8)
 	pill.add_child(h)
-	h.add_child(Icons.rect("coins", 36, Palette.MANGO_DEEP))
-	var gs := column.get_node_or_null("/root/GameState")
-	var coins := label(str(gs.wallet.coins) if gs else "0", 28, Palette.INK, true)
+	h.add_child(Icons.picture_rect("coin", 44))   # a gold paper coin (D-027)
+	var gs := anchor.get_node_or_null("/root/GameState")
+	var coins := label(str(gs.wallet.coins) if gs else "0", 30, Palette.INK, true)
 	coins.autowrap_mode = TextServer.AUTOWRAP_OFF
 	h.add_child(coins)
-	row.add_child(pill)
-	return {"row": row, "back": back, "coins": coins}
+	pill.set_meta("label", coins)
+	return pill
 
 
 ## A row of filter chips; the picked one is blue. on_pick(id) is called on tap.
+## Options are [id, label] or [id, label, icon]. Racoon reads the chip's name
+## aloud, since a child may not read it yet (D-022).
 static func chips(options: Array, selected: String, on_pick: Callable) -> HFlowContainer:
 	var flow := HFlowContainer.new()
-	flow.add_theme_constant_override("h_separation", 10)
-	flow.add_theme_constant_override("v_separation", 10)
+	flow.add_theme_constant_override("h_separation", 12)
+	flow.add_theme_constant_override("v_separation", 0)
 	for o in options:
 		var b := ChunkyButton.new()
 		b.text = o[1]
 		b.card_style = o[0] != selected
 		b.face_color = Palette.BLUE
-		b.lift = 4
-		b.radius = 22
-		b.add_theme_font_size_override("font_size", 24)
-		b.custom_minimum_size = Vector2(0, 64)
-		b.pressed.connect(on_pick.bind(o[0]))
+		b.lift = 5
+		b.radius = 36
+		b.pad = 18
+		b.add_theme_constant_override("h_separation", 8)
+		if o.size() > 2:
+			# [value, label, icon, tint]: a language chip shows its color dot (D-022).
+			b.icon_name = o[2]
+			b.icon_px = 22 if o[2] == "dot" else 34
+			b.icon_tint = o[3] if o.size() > 3 else (Palette.INK if o[0] == selected else Palette.BAY_DEEP)
+		b.add_theme_font_size_override("font_size", 26)
+		# A 72 px chip with a 96 px tap area (NFR-02, D-022).
+		b.slop = 12
+		b.custom_minimum_size = Vector2(0, 96)
+		b.pressed.connect(func():
+			var speech := flow.get_node_or_null("/root/Speech")
+			if speech:
+				speech.say(o[1], "en")   # the chips' names are English (D-033)
+			on_pick.call(o[0]))
 		flow.add_child(b)
 	return flow
+
+
+## The biggest of `sizes` at which the one-line label fits its width; the last
+## size (with the ellipsis) if none does.
+static func fit_font(l: Label, sizes: Array) -> void:
+	var font := l.get_theme_font("font")
+	for fs in sizes:
+		if font.get_string_size(l.text, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x <= l.size.x:
+			l.add_theme_font_size_override("font_size", fs)
+			return
+	l.add_theme_font_size_override("font_size", sizes[-1])
+
+
+## Breaks a two-line label where its lines come out even, so no word sits
+## alone on the second line (text-wrap: balance, D-022). Call it on `resized`.
+static func balance(l: Label) -> void:
+	var full: String = l.get_meta("full_text", l.text)
+	l.set_meta("full_text", full)
+	var font := l.get_theme_font("font")
+	var fs := l.get_theme_font_size("font_size")
+	var width := l.size.x
+	if width <= 0.0 or font.get_string_size(full, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x <= width:
+		l.text = full
+		return
+	var words := full.split(" ", false)
+	var best := full
+	var best_w := INF
+	for i in range(1, words.size()):
+		var a := " ".join(words.slice(0, i))
+		var b := " ".join(words.slice(i))
+		var w := maxf(font.get_string_size(a, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x,
+				font.get_string_size(b, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x)
+		if w <= width and w < best_w:
+			best_w = w
+			best = a + "\n" + b
+	l.text = best
+
+
+## A faint inset edge for a photo, so a light picture doesn't melt into the
+## card: pure black at 10%, never a palette color (D-022). Corners match the photo.
+static func photo_edge(top_r: int, bottom_r: int) -> Panel:
+	var sb := StyleBoxFlat.new()
+	sb.draw_center = false
+	sb.border_color = Color(0, 0, 0, 0.1)
+	sb.set_border_width_all(1)
+	sb.corner_radius_top_left = top_r
+	sb.corner_radius_top_right = top_r
+	sb.corner_radius_bottom_left = bottom_r
+	sb.corner_radius_bottom_right = bottom_r
+	sb.anti_aliasing = true
+	var p := Panel.new()
+	p.add_theme_stylebox_override("panel", sb)
+	p.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	return p
+
+
+## A small side-to-side "not now" shake. A tap in the middle of one starts again
+## from the resting spot, so quick taps never leave the node off-center (D-022).
+static func shake(node: Control, amount: float = 12.0) -> void:
+	if node.has_meta("shake_tween") and node.get_meta("shake_tween").is_valid():
+		node.get_meta("shake_tween").kill()
+	if not node.has_meta("rest_x"):
+		node.set_meta("rest_x", node.position.x)
+	var x: float = node.get_meta("rest_x")
+	var t := node.create_tween()
+	for d in [amount, -amount, amount * 0.66, 0.0]:
+		t.tween_property(node, "position:x", x + d, 0.05)
+	t.finished.connect(func(): node.remove_meta("rest_x"))
+	node.set_meta("shake_tween", t)
+
+
+## A quick grow-and-settle for a tapped thing; a new tap restarts it instead of
+## stacking a second animation on the same scale (D-022).
+static func pop(node: Control, to: float = 1.12) -> void:
+	if node.has_meta("pop_tween") and node.get_meta("pop_tween").is_valid():
+		node.get_meta("pop_tween").kill()
+	node.pivot_offset = node.size / 2
+	var t := node.create_tween()
+	t.tween_property(node, "scale", Vector2(to, to), 0.1)
+	t.tween_property(node, "scale", Vector2.ONE, 0.15)
+	node.set_meta("pop_tween", t)
+
+
+## A buddy line from content/talk.json in the student's language (D-033); English before GameState exists.
+static func _talk(key: String, args: Array = []) -> String:
+	var tree := Engine.get_main_loop() as SceneTree
+	var gs: Node = tree.root.get_node_or_null("GameState") if tree else null
+	return gs.talk(key, args) if gs else key
 
 
 static func label(text: String, fs: int = 28, col: Color = Palette.INK, bold: bool = false) -> Label:
@@ -124,8 +318,8 @@ static func word_label(text: String, fs: int = 40) -> Label:
 	return l
 
 
-static func box(col: Color, r: int, lift: int = 0, pad := Vector4.ZERO) -> StyleBoxFlat:
-	var sb := StyleBoxFlat.new()
+static func box(col: Color, r: int, lift: int = 0, pad := Vector4.ZERO) -> PaperBox:
+	var sb := PaperBox.new()   # cut from paper, not a machine-made rectangle (D-028)
 	sb.bg_color = col
 	sb.set_corner_radius_all(r)
 	sb.anti_aliasing = true
@@ -143,7 +337,9 @@ static func box(col: Color, r: int, lift: int = 0, pad := Vector4.ZERO) -> Style
 ## A paper card (PanelContainer) with padding.
 static func card(pad: float = 20, col: Color = Palette.CARD) -> PanelContainer:
 	var p := PanelContainer.new()
-	p.add_theme_stylebox_override("panel", box(col, 26, 6, Vector4(pad, pad, pad, pad)))
+	var sb := box(col, 26, 6, Vector4(pad, pad, pad, pad))
+	sb.stitch = true   # sewn round the inside, like the path's nodes (D-028)
+	p.add_theme_stylebox_override("panel", sb)
 	return p
 
 
@@ -162,27 +358,30 @@ static func disc(icon: String, color: Color, px: float) -> PanelContainer:
 	return p
 
 
-## A picture in its own color on a pale square (like the lesson picture cards).
-static func picture(icon: String, px: float) -> PanelContainer:
+## A picture in its own colours on a pale square of its paper color (like the lesson picture
+## cards, D-027). Inside a card, `corner` is the card's corner minus its padding (D-022).
+static func picture(icon: String, px: float, corner: int = 18) -> PanelContainer:
 	var col := Icons.picture_color(icon)
 	var p := PanelContainer.new()
-	p.add_theme_stylebox_override("panel", box(Palette.pale(col, 0.82), 18))
+	p.add_theme_stylebox_override("panel", box(Palette.pale(col, 0.82), corner))
 	p.custom_minimum_size = Vector2(px, px)
 	p.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var r := Icons.rect(icon, px * 0.72, col)
+	var r := Icons.picture_rect(icon, px * (0.8 if Icons.has_picture(icon) else 0.72))
 	r.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	r.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	p.add_child(r)
 	return p
 
 
-## A big paper button in a palette color with dark text.
-static func button(text: String, color: Color, icon: String = "", h: float = 96) -> ChunkyButton:
+## A big paper button in a palette color with dark text. Main buttons are
+## orange and 120 px tall; green only answers "right" (D-022).
+static func button(text: String, color: Color, icon: String = "", h: float = 120) -> ChunkyButton:
 	var b := ChunkyButton.new()
 	b.text = text
 	b.face_color = color
 	b.icon_name = icon
-	b.icon_px = 44
+	b.icon_px = 52
+	b.radius = 28
 	b.custom_minimum_size = Vector2(0, h)
 	return b
 
@@ -205,23 +404,75 @@ static func overlay(root: Control) -> VBoxContainer:
 	v.alignment = BoxContainer.ALIGNMENT_CENTER
 	c.add_child(v)
 	v.set_meta("overlay", dim)
-	c.pivot_offset = Vector2(300, 200)
+	# Grow from the card's own center once it is laid out (D-022).
+	c.resized.connect(func(): c.pivot_offset = c.size / 2)
 	c.scale = Vector2(0.9, 0.9)
 	c.create_tween().tween_property(c, "scale", Vector2.ONE, 0.22).set_trans(Tween.TRANS_BACK) \
 			.set_ease(Tween.EASE_OUT)
 	return v
 
 
-## A sticker as it sits in the album: its group color with the picture.
+## A sticker as it sits in the album: its picture in full colour on a paper disc ringed in its
+## group's color (D-027).
 static func sticker(id: String, px: float) -> PanelContainer:
-	return disc(id if Icons.exists(id) else "star", Collection.color_of(id), px)
+	if not Icons.has_picture(id):
+		return disc(id if Icons.exists(id) else "star", Collection.color_of(id), px)
+	var p := PanelContainer.new()
+	var sb := box(Palette.CARD, int(px / 2), 4)
+	sb.border_color = Collection.color_of(id)
+	sb.set_border_width_all(int(maxf(3.0, px * 0.06)))
+	p.add_theme_stylebox_override("panel", sb)
+	p.custom_minimum_size = Vector2(px, px)
+	p.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	p.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	p.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var r := Icons.picture_rect(id, px * 0.74)
+	r.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	r.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	p.add_child(r)
+	return p
 
 
-## The card after an activity: coins, new stickers and today's goals.
-## `result` = GameState.finish_*(): {coins, stickers: [ids], goals_done}.
+## A Closet item's tier as a divider: a line, 1 to 5 stars, a line, in the tier's colour (D-026).
+## No words: the number of stars says the tier (and the colour says it again).
+static func tier_badge(tier_id: String, px: float = 20) -> MarginContainer:
+	var tier: Dictionary = Wardrobe.TIERS.get(tier_id, Wardrobe.TIERS.copper)
+	var col: Color = tier.deep if tier_id == "silver" else tier.color   # silver is too pale on a card
+	var holder := MarginContainer.new()
+	holder.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	holder.add_theme_constant_override("margin_left", int(px * 0.6))
+	holder.add_theme_constant_override("margin_right", int(px * 0.6))
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", int(maxf(2.0, px * 0.12)))
+	row.alignment = BoxContainer.ALIGNMENT_CENTER
+	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	row.add_child(_tier_line(col, px))
+	for i in int(tier.rank):
+		row.add_child(Icons.rect("star", px, col))
+	row.add_child(_tier_line(col, px))
+	holder.add_child(row)
+	return holder
+
+
+## One side of the tier divider: a thin rounded line that fills the space beside the stars.
+static func _tier_line(col: Color, px: float) -> Panel:
+	var line := Panel.new()
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = col
+	sb.set_corner_radius_all(2)
+	line.add_theme_stylebox_override("panel", sb)
+	line.custom_minimum_size = Vector2(px * 0.8, maxf(2.0, px * 0.16))
+	line.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	line.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	line.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	return line
+
+
+## The card after an activity: coins, new stickers, today's goals and Closet items just earned.
+## `result` = GameState.finish_*(): {coins, stickers: [ids], goals_done, items: [ids]}.
 static func reward(root: Control, title: String, result: Dictionary, on_done: Callable) -> void:
 	var v := overlay(root)
-	var t := label(title, 44, Palette.INK, true)
+	var t := label(title, 48, Palette.INK, true)
 	t.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	v.add_child(t)
 	var said := title
@@ -229,9 +480,9 @@ static func reward(root: Control, title: String, result: Dictionary, on_done: Ca
 	if coins > 0:
 		var row := HBoxContainer.new()
 		row.alignment = BoxContainer.ALIGNMENT_CENTER
-		row.add_theme_constant_override("separation", 10)
-		row.add_child(Icons.rect("coins", 44, Palette.MANGO_DEEP))
-		var c := label("+%d coins" % coins, 34, Palette.readable(Palette.MANGO_DEEP), true)
+		row.add_theme_constant_override("separation", 12)
+		row.add_child(Icons.picture_rect("coin", 52))
+		var c := label("+%d coins" % coins, 38, Palette.readable(Palette.MANGO_DEEP), true)
 		c.autowrap_mode = TextServer.AUTOWRAP_OFF
 		row.add_child(c)
 		v.add_child(row)
@@ -242,29 +493,59 @@ static func reward(root: Control, title: String, result: Dictionary, on_done: Ca
 		row.add_theme_constant_override("separation", 18)
 		for id in stickers:
 			var col := VBoxContainer.new()
-			col.add_child(sticker(id, 110))
-			var n := label(Collection.sticker(id).get("name", ""), 24, Palette.INK, true)
+			col.add_child(sticker(id, 140))
+			var n := label(Collection.sticker(id).get("name", ""), 28, Palette.INK, true)
 			n.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 			col.add_child(n)
 			row.add_child(col)
 		v.add_child(row)
-		var s := label("New sticker for your album!" if stickers.size() == 1
-				else "New stickers for your album!", 26, Palette.INK_SOFT)
+		var s := label(_talk("reward_sticker" if stickers.size() == 1 else "reward_stickers"), 26, Palette.INK_SOFT)
 		s.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		v.add_child(s)
 		said += " " + s.text
 	if result.get("goals_done", false):
-		var g := label("You finished today's goals!", 28, Palette.readable(Palette.LEAF), true)
-		g.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		v.add_child(g)
+		var row := HBoxContainer.new()
+		row.alignment = BoxContainer.ALIGNMENT_CENTER
+		row.add_theme_constant_override("separation", 4)
+		row.add_child(AnimatedStar.make(96))
+		var g := label(_talk("reward_goals"), 28, Palette.readable(Palette.LEAF), true)
+		g.autowrap_mode = TextServer.AUTOWRAP_OFF
+		row.add_child(g)
+		v.add_child(row)
+	var items: Array = result.get("items", [])
+	if not items.is_empty():
+		# D-026: an earned Closet item, on Racoon, with its tier
+		var row := HBoxContainer.new()
+		row.alignment = BoxContainer.ALIGNMENT_CENTER
+		row.add_theme_constant_override("separation", 18)
+		for id in items:
+			var col := VBoxContainer.new()
+			col.add_theme_constant_override("separation", 0)
+			var r := Raccoon.new()
+			r.follow_saved_outfit = false
+			r.outfit = {Wardrobe.ITEMS[id].slot: id}
+			r.custom_minimum_size = Vector2(150, 150)
+			r.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			col.add_child(r)
+			var n := label(Wardrobe.ITEMS[id].name, 28, Palette.INK, true)
+			n.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			col.add_child(n)
+			col.add_child(tier_badge(str(Wardrobe.ITEMS[id].tier), 20))
+			row.add_child(col)
+		v.add_child(row)
+		var s := label(_talk("reward_closet"), 26, Palette.INK_SOFT)
+		s.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		v.add_child(s)
+		said += " " + _talk("reward_got", [Wardrobe.ITEMS[items[0]].name])
 	var ok := button("OK!", Palette.ORANGE)
+	ok.add_to_group("back_cancel")   # Back closes the card (D-023)
 	ok.pressed.connect(func():
 		v.get_meta("overlay").queue_free()
 		on_done.call())
 	v.add_child(ok)
 	var sfx := root.get_node_or_null("/root/Sfx")
 	if sfx:
-		sfx.play("fanfare" if not stickers.is_empty() else "coin")
+		sfx.play("fanfare" if not stickers.is_empty() or not items.is_empty() else "coin")
 	var speech := root.get_node_or_null("/root/Speech")
 	if speech:
 		speech.say(said)

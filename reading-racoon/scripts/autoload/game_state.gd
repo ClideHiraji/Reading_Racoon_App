@@ -6,16 +6,34 @@ extends Node
 
 signal wallet_changed
 signal outfit_changed
+## The student picked a different buddy or talk language (D-033).
+signal buddy_changed
 
 const LINES_PATH := "res://content/companion_lines.json"
+## The buddy's lines in Filipino and Bisaya; English is companion_lines.json (D-033).
+const LINES_BY_LANG := {"fil": "res://content/companion_lines.fil.json", "bis": "res://content/companion_lines.bis.json"}
+## What the buddy says on the menus, in each talk language (D-033).
+const TALK_PATH := "res://content/talk.json"
+## The two buddies a student picks between (D-033): the boy Roco and the girl Rina. Rina's voice is
+## higher; both wear the same Closet items.
+const BUDDIES := {"roco": {"name": "Roco", "pitch": 1.1}, "rina": {"name": "Rina", "pitch": 1.4}}
+## The languages the buddy can talk in (D-033). Lessons keep their own (MATATAG bridge).
+const TALK_LANGS := {"en": "English", "fil": "Filipino", "bis": "Bisaya"}
 
 var model := StudentModel.new()
 var path := PathProgress.new()
 var bank := QuestionBank.new()
 var store: SaveStore
 var wallet := {"xp": 0, "coins": 0}
+## Closet items earned on today's first visit, for the hub's "Hello, new day!" card (D-026).
+var new_day_items: Array = []
 var flags: Array = []
 var lines := {}
+var _lines_by_lang := {}
+var _talk := {}
+## This student's buddy and talk language (D-033): {"who": "roco" | "rina" | "" (not picked yet),
+## "lang": "en" | "fil" | "bis"}. Saved in their profile.
+var buddy := {"who": "", "lang": "en"}
 ## Racoon's outfit and the items bought in the shop (FR-07).
 var wardrobe := Wardrobe.new()
 ## Pre/post-test records: {"pre": {date, correct, total, scores, placed_level}, "post": ...}
@@ -48,6 +66,20 @@ const ADVENTURE_SCENES := ["LearningPath", "Lesson", "LessonComplete"]
 const FREE_PLAY_SCENES := ["Practice", "MemoryMatch", "RhymePop", "WordCatch", "PracticeRound",
 		"Library", "Reader", "Watch", "Player"]
 const HUB_SCENE := "res://scenes/hub/hub.tscn"
+## Choose your buddy and language (D-033): before Home, until the student has picked.
+const BUDDY_SCENE := "res://scenes/buddy/choose_buddy.tscn"
+## Loads the screens in the background (NFR-01); null in headless test runs.
+var preloader: ScenePreloader
+## The screens a child opens first, most likely first. A screen's scripts compile
+## on its first visit in a run (Home about 0.5 s on a laptop, several seconds on
+## a low-end phone), so warm_scenes() loads them in the background while the
+## start screen waits for a tap. Later visits take about 40 ms either way.
+const WARM_SCENES := [HUB_SCENE, "res://scenes/path/learning_path.tscn",
+		"res://scenes/lesson/lesson.tscn", "res://scenes/lesson/lesson_complete.tscn",
+		"res://scenes/practice/practice.tscn", "res://scenes/library/library.tscn",
+		"res://scenes/watch/watch.tscn"]
+var _warm: Array[Resource] = []   # kept, so they stay loaded for the run
+var _warming := false
 var _usage_tick := 0.0
 var _decision := {}
 var _free_decision := {}
@@ -82,10 +114,28 @@ func _ready() -> void:
 	media.load_all()
 	var data = JSON.parse_string(FileAccess.get_file_as_string(LINES_PATH))
 	lines = data if typeof(data) == TYPE_DICTIONARY else {}
+	for lang in LINES_BY_LANG:
+		var more = JSON.parse_string(FileAccess.get_file_as_string(LINES_BY_LANG[lang]))
+		_lines_by_lang[lang] = more if typeof(more) == TYPE_DICTIONARY else {}
+	var talk_data = JSON.parse_string(FileAccess.get_file_as_string(TALK_PATH))
+	_talk = talk_data if typeof(talk_data) == TYPE_DICTIONARY else {}
 	load_profile()
 	if _args.has("fresh"):
 		reset_progress()
 	_debug_hooks()
+	# NFR-01: the screens load in the background once the start screen is up, so a first visit
+	# doesn't freeze (not in headless test runs).
+	if DisplayServer.get_name() != "headless":
+		preloader = ScenePreloader.new()
+		preloader.name = "ScenePreloader"
+		add_child(preloader)
+		_start_preloading.call_deferred()
+
+
+func _start_preloading() -> void:
+	await get_tree().process_frame
+	await get_tree().process_frame
+	preloader.start()
 
 
 func load_profile() -> void:
@@ -104,6 +154,10 @@ func load_profile() -> void:
 	usage.merge(data.get("usage", {}), true)
 	if data.has("bkt_params"):
 		model.params = SyncProtocol.params_from_config({"bkt": {"skills": data.bkt_params}})
+	var b: Dictionary = data.get("buddy", {})
+	buddy = {"who": str(b.get("who", "")) if BUDDIES.has(str(b.get("who", ""))) else "",
+		"lang": str(b.get("lang", "en")) if TALK_LANGS.has(str(b.get("lang", "en"))) else "en"}
+	use_buddy_voice()
 	_check_clock()
 
 
@@ -121,6 +175,7 @@ func save_profile() -> void:
 		"access": access,
 		"usage": usage,
 		"bkt_params": model.params,
+		"buddy": buddy,
 	})
 
 
@@ -183,6 +238,8 @@ func reset_progress() -> void:
 	assessments = {}
 	wardrobe = Wardrobe.new()
 	collection = Collection.new()
+	buddy = {"who": "", "lang": "en"}
+	use_buddy_voice()
 	save_profile()
 	outfit_changed.emit()
 
@@ -230,16 +287,22 @@ func post_test_ready() -> bool:
 
 
 ## A LessonSession, or an AssessmentSession for the pre/post-test (same interface).
+## Both work on a copy of the model: a lesson or test stopped halfway leaves no
+## trace, and the child plays it again from the start (D-021).
 func new_session() -> RefCounted:
 	if lesson_mode in ["pre", "post"]:
-		return AssessmentSession.new(model, lesson_mode)
-	return LessonSession.new(model, bank, lesson_world, lesson_seed)
+		return AssessmentSession.new(model.copy(), lesson_mode)
+	return LessonSession.new(model.copy(), bank, lesson_world, lesson_seed)
 
 
-## Called after every answer: queue the events for sync and save (FR-11).
+## A finished lesson or test: keep its BKT states and queue its events for sync
+## (FR-11). The model's parameters stay ours, in case /api/config changed them.
 func record(session: RefCounted) -> void:
+	model.from_dict(session.model.to_dict())
+	store.hold()   # the session's events go to disk in one write (NFR-01)
 	for ev in session.drain_events():
 		store.queue_event(ev.type, ev.payload)
+	store.release()
 	save_profile()
 
 
@@ -247,6 +310,7 @@ func finish_lesson(session: RefCounted) -> void:
 	if session is AssessmentSession:
 		_finish_assessment(session)
 		return
+	store.hold()   # the answers, words, sticker and goal: one write, not one each (NFR-01)
 	record(session)
 	last_summary = session.summary()
 	if not session.ended_early:
@@ -257,19 +321,21 @@ func finish_lesson(session: RefCounted) -> void:
 		flags.append(f)
 	store.queue_event("lesson_end", {"level": lesson_world, "node": lesson_node,
 			"correct": last_summary.correct, "total": last_summary.total,
-			"stars": last_summary.stars})
+			"stars": last_summary.stars, "second_try": last_summary.second_try})
 	# D-017: the words practiced go to My Word Book; a sticker a day; today's goal.
 	var practiced := []
 	for r in session.results:
-		if r.correct:
+		if r.solved:
 			practiced.append_array(Collection.words_from_item(bank.item(r.id)))
 	learn_words(practiced, "lesson")
 	var rewards := {"coins": 0, "stickers": []}
 	if not session.ended_early:
 		_add_sticker(rewards, "adventure", true)
 		_add_goal(rewards, "lesson")
+		grant_items(rewards)
 	last_summary["rewards"] = rewards
 	wallet.coins += int(rewards.coins)
+	store.release()
 	save_profile()
 	wallet_changed.emit()
 	_sync_soon()
@@ -293,7 +359,7 @@ func _finish_assessment(session: AssessmentSession) -> void:
 	last_summary = session.summary()
 	assessments[session.kind] = {"date": last_summary.date, "correct": last_summary.correct,
 			"total": last_summary.total, "scores": last_summary.scores,
-			"placed_level": last_summary.placed_level}
+			"passed": last_summary.passed, "placed_level": last_summary.placed_level}
 	if session.kind == "pre":
 		path = PathProgress.new()
 	wallet.xp += last_summary.xp
@@ -312,10 +378,14 @@ func _finish_assessment(session: AssessmentSession) -> void:
 ## day, and today's "play a game" goal.
 func finish_practice(game: String, correct: int, total: int, seconds: float) -> Dictionary:
 	var r := {"coins": PracticePool.coins_for(correct), "stickers": []}
+	store.hold()
 	_add_sticker(r, "games", true)
 	_add_goal(r, "game")
+	collection.counts["games"] = int(collection.counts.get("games", 0)) + 1
+	grant_items(r)
 	store.queue_event("practice", {"game": game, "correct": correct, "total": total,
 			"seconds": roundi(seconds)})
+	store.release()
 	return _pay(r)
 
 
@@ -325,14 +395,17 @@ func finish_book(id: String, questions_right: int, questions_total: int, seconds
 	var first := collection.finish(id, today())
 	var book := media.book(id)
 	var r := {"coins": 5 if first else 2, "stickers": []}
+	store.hold()
 	if first:
 		_add_sticker(r, "books", false)
 	var lang := Collection.lang_of(str(book.get("language", "en")))
 	learn_words(book.get("words", []).map(func(w): return {"word": w.word, "picture": w.picture,
 			"lang": lang}), "book")
 	_add_goal(r, "story")
+	grant_items(r)
 	store.queue_event("book", {"id": id, "first": first, "questions_right": questions_right,
 			"questions_total": questions_total, "seconds": roundi(seconds)})
+	store.release()
 	return _pay(r)
 
 
@@ -341,11 +414,14 @@ func finish_book(id: String, questions_right: int, questions_total: int, seconds
 func finish_media(id: String, check_right: bool, seconds: float) -> Dictionary:
 	var first := collection.finish(id, today())
 	var r := {"coins": 3 if first else 1, "stickers": []}
+	store.hold()
 	if first:
 		_add_sticker(r, "watch", false)
 	_add_goal(r, "lesson")
+	grant_items(r)
 	store.queue_event("media", {"id": id, "first": first, "check_right": check_right,
 			"seconds": roundi(seconds)})
+	store.release()
 	return _pay(r)
 
 
@@ -355,19 +431,53 @@ func new_day() -> String:
 		return ""
 	var r := {"stickers": []}
 	_add_sticker(r, "days", false)
+	new_day_items = grant_items()
 	save_profile()
 	return r.stickers[0] if not r.stickers.is_empty() else ""
+
+
+## How far the child has come, for the Closet's earned items (D-026): lessons and worlds from the
+## path, books from the Library, days played, stickers, Practice games and all-goals days.
+func earn_progress() -> Dictionary:
+	var lessons := 0
+	var worlds := 0
+	for level in range(1, SkillCatalog.MAX_LEVEL + 1):
+		var w := path.world(level)
+		lessons += int(w.done) + w.bonus.size()
+		if int(w.done) >= PathProgress.LESSONS_PER_WORLD:
+			worlds += 1
+	var books := 0
+	for id in collection.finished:
+		if not media.book(str(id)).is_empty():
+			books += 1
+	return {"lessons": lessons, "worlds": worlds, "books": books, "days": collection.days.size(),
+			"stickers": collection.count(), "games": int(collection.counts.get("games", 0)),
+			"goal_days": maxi(int(collection.counts.get("goal_days", 0)), collection.count("goals"))}
+
+
+## Gives every earned Closet item whose goal is now reached (D-026). They're added to
+## r.items for Kit.reward(), and returned.
+func grant_items(r: Dictionary = {}) -> Array:
+	var got := wardrobe.grant_earned(earn_progress())
+	for id in got:
+		store.queue_event("item_earned", {"item": id, "tier": Wardrobe.ITEMS[id].tier})
+	if not got.is_empty():
+		r["items"] = r.get("items", []) + got
+		save_profile()
+	return got
 
 
 ## Adds words to My Word Book ([{word, picture, lang}]); returns how many were new.
 func learn_words(list: Array, from: String) -> int:
 	var added := 0
+	store.hold()
 	for w in list:
 		if collection.add_word(str(w.word), str(w.get("picture", "")), str(w.get("lang", "en")),
 				from, today()):
 			added += 1
 			store.queue_event("word", {"word": Collection.clean_word(str(w.word)), "lang": w.get("lang", "en"),
 					"from": from})
+	store.release()
 	return added
 
 
@@ -387,6 +497,7 @@ func _add_goal(r: Dictionary, goal: String) -> void:
 	if g.all:
 		r["goals_done"] = true
 		r.coins = int(r.get("coins", 0)) + 10
+		collection.counts["goal_days"] = int(collection.counts.get("goal_days", 0)) + 1
 		_add_sticker(r, "goals", false)
 
 
@@ -490,17 +601,14 @@ func _bounce(reason: String) -> void:
 		get_tree().change_scene_to_file(HUB_SCENE)
 
 
-## Opens a hub section by HubSections id, applying its time rule. Adventure opens
-## the pre-test first if the child hasn't taken it (FR-02). Unbuilt sections show
-## the "coming soon" page.
+## Opens a hub section by HubSections id, applying its time rule. Adventure always
+## opens the map; before the pre-test the map offers it at the top and keeps the
+## lessons closed (FR-02, D-021). Unbuilt sections show the "coming soon" page.
 func open_section(id: String) -> void:
 	var info := HubSections.get_info(id)
 	match str(info.get("kind", "")):
 		"adventure":
 			if not guard():
-				return
-			if needs_pretest():
-				start_assessment("pre")
 				return
 		"free":
 			if not guard_free_play():
@@ -513,6 +621,24 @@ func open_section(id: String) -> void:
 	else:
 		soon_section = id
 		get_tree().change_scene_to_file("res://scenes/hub/coming_soon.tscn")
+
+
+## Loads WARM_SCENES one at a time on a background thread, so the start screen
+## stays smooth and Home is ready first. It starts once the start screen is up
+## (sooner, it slowed the start screen's first frames). Opening a screen that is
+## still loading just waits for it.
+func warm_scenes() -> void:
+	if _warming:
+		return
+	_warming = true
+	await get_tree().create_timer(0.5).timeout
+	for p: String in WARM_SCENES:
+		if ResourceLoader.has_cached(p) or ResourceLoader.load_threaded_request(p) != OK:
+			continue
+		while ResourceLoader.load_threaded_get_status(p) == ResourceLoader.THREAD_LOAD_IN_PROGRESS:
+			await get_tree().process_frame
+		if ResourceLoader.load_threaded_get_status(p) == ResourceLoader.THREAD_LOAD_LOADED:
+			_warm.append(ResourceLoader.load_threaded_get(p))
 
 
 func go_home() -> void:
@@ -622,13 +748,75 @@ func open_chest(world: int) -> int:
 	return PathProgress.CHEST_COINS
 
 
-## A random raccoon line for a state, from the bundled fallback library
-## (docs/knowledge/08-ai-integration.md: offline companion dialogue).
+## A random buddy line for a state, from the bundled fallback library
+## (docs/knowledge/08-ai-integration.md: offline companion dialogue), in the student's talk language
+## (English where a line isn't translated, like the hints, D-033).
 func line(state: String) -> String:
-	var options: Array = lines.get(state, [])
+	var options: Array = _lines_by_lang.get(talk_language(), {}).get(state, [])
+	if options.is_empty():
+		options = lines.get(state, [])
 	if options.is_empty():
 		return ""
-	return options[randi_range(0, options.size() - 1)]
+	return _named(str(options[randi_range(0, options.size() - 1)]))
+
+
+## What the buddy says on a menu (content/talk.json), in the student's talk language, with %s / %d
+## filled from `args` (D-033).
+func talk(key: String, args: Array = []) -> String:
+	var table: Dictionary = _talk.get(talk_language(), {})
+	var text := str(table.get(key, _talk.get("en", {}).get(key, key)))
+	text = _named(text)
+	return text % args if not args.is_empty() else text
+
+
+func _named(text: String) -> String:
+	return text.replace("{buddy}", buddy_name())
+
+
+## A menu line in a chosen language, for a chosen buddy: the buddy chooser's previews (D-033).
+func talk_as(key: String, lang: String, who: String) -> String:
+	var table: Dictionary = _talk.get(lang, {})
+	var text := str(table.get(key, _talk.get("en", {}).get(key, key)))
+	return text.replace("{buddy}", str(BUDDIES.get(who, BUDDIES.roco).name))
+
+
+# --- The buddy and talk language (D-033) ---------------------------------------------
+
+## "roco" or "rina" (Roco until the student picks).
+func buddy_id() -> String:
+	return str(buddy.who) if BUDDIES.has(str(buddy.who)) else "roco"
+
+
+func buddy_name() -> String:
+	return str(BUDDIES[buddy_id()].name)
+
+
+func buddy_chosen() -> bool:
+	return BUDDIES.has(str(buddy.who))
+
+
+## "en", "fil" or "bis": what the buddy speaks and the menus say.
+func talk_language() -> String:
+	return str(buddy.lang) if TALK_LANGS.has(str(buddy.lang)) else "en"
+
+
+func set_buddy(who: String, lang: String) -> void:
+	buddy = {"who": who if BUDDIES.has(who) else "roco", "lang": lang if TALK_LANGS.has(lang) else "en"}
+	use_buddy_voice()
+	save_profile()
+	buddy_changed.emit()
+
+
+## The voice follows the buddy: Rina speaks higher. `who` lends another buddy's voice for a moment
+## (the buddy chooser's previews); empty is the student's own.
+func use_buddy_voice(who: String = "") -> void:
+	if not is_inside_tree():
+		return   # a unit test's own GameState
+	var id := who if BUDDIES.has(who) else buddy_id()
+	var speech := get_node_or_null("/root/Speech")
+	if speech:
+		speech.pitch = float(BUDDIES[id].pitch)
+		speech.girl_voice = id == "rina"
 
 
 # --- Debug hooks (desktop testing only) ---------------------------------------

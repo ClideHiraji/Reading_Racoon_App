@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="9.5 14 109 109" width="128" height="128">
+<g opacity="0.22" transform="translate(0 2.4)">
+<path d="M 34 64 L 44 38 Q 47 32 54 32 L 80 32 Q 86 32 90 38 L 102 64 Z" fill="#3b2d3a"/>
+</g>
+<path d="M 34 64 L 44 38 Q 47 32 54 32 L 80 32 Q 86 32 90 38 L 102 64 Z" fill="#eb766a"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<path d="M 44 60 L 50 42 Q 51 39 55 39 L 64 39 L 64 60 Z" fill="#3b2d3a"/>
+</g>
+<g opacity="0.18">
+<path d="M 44 60 L 50 42 Q 51 39 55 39 L 64 39 L 64 60 Z" fill="#3b2d3a" stroke="#3b2d3a" stroke-width="3" stroke-linejoin="round"/>
+</g>
+<path d="M 44 60 L 50 42 Q 51 39 55 39 L 64 39 L 64 60 Z" fill="#cae8f4"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<path d="M 70 39 L 79 39 Q 83 39 85 42 L 93 60 L 70 60 Z" fill="#3b2d3a"/>
+</g>
+<g opacity="0.18">
+<path d="M 70 39 L 79 39 Q 83 39 85 42 L 93 60 L 70 60 Z" fill="#3b2d3a" stroke="#3b2d3a" stroke-width="3" stroke-linejoin="round"/>
+</g>
+<path d="M 70 39 L 79 39 Q 83 39 85 42 L 93 60 L 70 60 Z" fill="#cae8f4"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<rect x="12" y="58" width="104" height="32" rx="14" fill="#3b2d3a"/>
+</g>
+<rect x="12" y="58" width="104" height="32" rx="14" fill="#eb766a"/>
+<path d="M 67 62 L 67 86" fill="none" stroke="#931e13" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 72 68 L 78 68" fill="none" stroke="#931e13" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<ellipse cx="110" cy="68" rx="4" ry="3.4" fill="#3b2d3a"/>
+</g>
+<g opacity="0.18">
+<ellipse cx="110" cy="68" rx="4" ry="3.4" fill="#3b2d3a" stroke="#3b2d3a" stroke-width="3" stroke-linejoin="round"/>
+</g>
+<ellipse cx="110" cy="68" rx="4" ry="3.4" fill="#fbf1b7"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<ellipse cx="18" cy="68" rx="3" ry="3.4" fill="#3b2d3a"/>
+</g>
+<ellipse cx="18" cy="68" rx="3" ry="3.4" fill="#f6ba5e"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<circle cx="38" cy="90" r="12.5" fill="#3b2d3a"/>
+</g>
+<circle cx="38" cy="90" r="12.5" fill="#544b52"/>
+<circle cx="38" cy="90" r="5" fill="#cdd2da"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<circle cx="90" cy="90" r="12.5" fill="#3b2d3a"/>
+</g>
+<circle cx="90" cy="90" r="12.5" fill="#544b52"/>
+<circle cx="90" cy="90" r="5" fill="#cdd2da"/>
+</svg>

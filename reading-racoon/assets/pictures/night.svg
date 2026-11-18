@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="14.25 13.5 99.5 99.5" width="128" height="128">
+<defs>
+<clipPath id="night-1"><circle cx="64" cy="62" r="46"/></clipPath>
+</defs>
+<g opacity="0.22" transform="translate(0 2.4)">
+<circle cx="64" cy="62" r="46" fill="#3b2d3a"/>
+</g>
+<circle cx="64" cy="62" r="46" fill="#5a63a5"/>
+<g clip-path="url(#night-1)">
+<g opacity="0.22" transform="translate(0 2.4)">
+<path d="M 80.44 27.09 A 13 13 0 1 0 94.52 43.52 A 11 11 0 0 1 80.44 27.09 Z" fill="#3b2d3a"/>
+</g>
+<path d="M 80.44 27.09 A 13 13 0 1 0 94.52 43.52 A 11 11 0 0 1 80.44 27.09 Z" fill="#f8e087"/>
+<path d="M 40 32 Q 41.2 36.8 46 38 Q 41.2 39.2 40 44 Q 38.8 39.2 34 38 Q 38.8 36.8 40 32 Z" fill="#fbf1b7"/>
+<path d="M 58 52 Q 58.8 55.2 62 56 Q 58.8 56.8 58 60 Q 57.2 56.8 54 56 Q 57.2 55.2 58 52 Z" fill="#fbf1b7"/>
+<path d="M 100 57 Q 101 61 105 62 Q 101 63 100 67 Q 99 63 95 62 Q 99 61 100 57 Z" fill="#fbf1b7"/>
+<path d="M 30 60.5 Q 30.7 63.3 33.5 64 Q 30.7 64.7 30 67.5 Q 29.3 64.7 26.5 64 Q 29.3 63.3 30 60.5 Z" fill="#fbf1b7"/>
+<circle cx="70" cy="24" r="1.6" fill="#fbf1b7"/>
+<circle cx="48" cy="22" r="1.6" fill="#fbf1b7"/>
+<circle cx="86" cy="70" r="1.6" fill="#fbf1b7"/>
+<circle cx="22" cy="50" r="1.6" fill="#fbf1b7"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<path d="M 6 96 Q 40 72 72 90 Q 98 78 124 92 L 124 124 L 6 124 Z" fill="#3b2d3a"/>
+</g>
+<path d="M 6 96 Q 40 72 72 90 Q 98 78 124 92 L 124 124 L 6 124 Z" fill="#4c8d7a"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<path d="M 6 108 Q 44 92 84 106 Q 106 100 124 106 L 124 124 L 6 124 Z" fill="#3b2d3a"/>
+</g>
+<path d="M 6 108 Q 44 92 84 106 Q 106 100 124 106 L 124 124 L 6 124 Z" fill="#5da589"/>
+</g>
+</svg>

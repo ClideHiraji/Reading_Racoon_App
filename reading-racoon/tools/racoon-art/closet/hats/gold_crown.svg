@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racoon's Closet: Gold crown (gold, hats). FR-07, D-026.
+     Drawn to fit Racoon at rest: the bottom layer links ../../parts/racoon_C_inkscape.svg (locked).
+     Draw on the "Item" layer. The file's name is the item's id; its name, tier, price and how it's
+     earned are in reading-racoon/content/closet.json. motion-demo/build_racoon.py reads this file
+     and never writes it. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-gold_crown"
+   sodipodi:docname="gold_crown.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>Gold crown</title>
+  <sodipodi:namedview
+     id="namedview-gold_crown"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="2"
+     inkscape:cx="200"
+     inkscape:cy="80"
+     inkscape:current-layer="layer-item" />
+  <defs id="defs-gold_crown">
+    <linearGradient id="gr-crown-gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#fff6b8" /><stop offset="0.35" style="stop-color:#ffd84d" /><stop offset="0.75" style="stop-color:#f2b705" /><stop offset="1" style="stop-color:#c98a00" /></linearGradient>
+    <linearGradient id="gr-crown-band" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ffd84d" /><stop offset="1" style="stop-color:#d99a06" /></linearGradient>
+    <linearGradient id="gr-crown-ruby" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:#ff9f8f" /><stop offset="1" style="stop-color:#c0392b" /></linearGradient>
+    <linearGradient id="gr-crown-teal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#8ce8dc" /><stop offset="1" style="stop-color:#1d7166" /></linearGradient>
+    <linearGradient id="gr-crown-coral-160" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ffc0a8" /><stop offset="1" style="stop-color:#e2603f" /></linearGradient>
+    <linearGradient id="gr-crown-coral-241" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ffc0a8" /><stop offset="1" style="stop-color:#e2603f" /></linearGradient>
+    <radialGradient id="gr-pearl" cx="0.38" cy="0.35" r="0.7"><stop offset="0" style="stop-color:#ffffff" /><stop offset="0.7" style="stop-color:#fbf3e4" /><stop offset="1" style="stop-color:#e3d3b8" /></radialGradient>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="../../parts/racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-item" inkscape:label="Item">
+   <g id="item-gold-crown" inkscape:label="gold_crown">
+     <title>Gold crown: Butuan gold with spirals, gems and pearls (gold)</title>
+     <path id="gold-crown-1" inkscape:label="Crown" d="M 128 114 L 123 62 L 152 86 L 166 42 L 184 80 L 200.5 24 L 217 80 L 235 42 L 249 86 L 278 62 L 273 114 C 230 122 171 122 128 114 Z" style="fill:url(#gr-crown-gold);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="gold-crown-2" inkscape:label="Band" d="M 129 97 C 172 105 229 105 272 97 L 273 114 C 230 122 171 122 128 114 Z" style="fill:url(#gr-crown-band);stroke:#3b2d3a;stroke-width:3.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="gold-crown-3" inkscape:label="Spiral" d="M 156.5 92 C 144.5 84 151.5 74 159.5 76 C 165.5 78 161.5 89 156.5 88" style="fill:none;stroke:#a86f00;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="gold-crown-4" inkscape:label="Spiral" d="M 244.5 92 C 256.5 84 249.5 74 241.5 76 C 235.5 78 239.5 89 244.5 88" style="fill:none;stroke:#a86f00;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="gold-crown-5" inkscape:label="Ruby" d="M 200.5 52 L 212 68 L 200.5 85 L 189 68 Z" style="fill:url(#gr-crown-ruby);stroke:#3b2d3a;stroke-width:3;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="gold-crown-6" inkscape:label="Ruby facet" d="M 195 64 L 200.5 58 L 206 64" style="fill:none;stroke:#ffffff;stroke-width:2;stroke-linejoin:round;stroke-linecap:round;opacity:0.85" />
+     <ellipse id="gold-crown-7" inkscape:label="Teal gem" cx="200.5" cy="108" rx="10" ry="6.6" style="fill:url(#gr-crown-teal);stroke:#3b2d3a;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="gold-crown-8" inkscape:label="Coral gem" cx="160" cy="106" r="5.8" style="fill:url(#gr-crown-coral-160);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="gold-crown-9" inkscape:label="Coral gem" cx="241" cy="106" r="5.8" style="fill:url(#gr-crown-coral-241);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="gold-crown-10" inkscape:label="Pearl" cx="123" cy="60" r="6.6" style="fill:url(#gr-pearl);stroke:#3b2d3a;stroke-width:2.8;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="gold-crown-11" inkscape:label="Pearl" cx="166" cy="40" r="6.6" style="fill:url(#gr-pearl);stroke:#3b2d3a;stroke-width:2.8;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="gold-crown-12" inkscape:label="Pearl" cx="200.5" cy="22" r="6.6" style="fill:url(#gr-pearl);stroke:#3b2d3a;stroke-width:2.8;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="gold-crown-13" inkscape:label="Pearl" cx="235" cy="40" r="6.6" style="fill:url(#gr-pearl);stroke:#3b2d3a;stroke-width:2.8;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="gold-crown-14" inkscape:label="Pearl" cx="278" cy="60" r="6.6" style="fill:url(#gr-pearl);stroke:#3b2d3a;stroke-width:2.8;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="gold-crown-15" inkscape:label="Shine" d="M 132 104 L 128 72" style="fill:none;stroke:#ffffff;stroke-width:3.8;stroke-linejoin:round;stroke-linecap:round;opacity:0.6" />
+     <path id="gold-crown-16" inkscape:label="Shine 2" d="M 172 98 L 168 64" style="fill:none;stroke:#ffffff;stroke-width:3;stroke-linejoin:round;stroke-linecap:round;opacity:0.5" />
+     <path id="gold-crown-17" inkscape:label="Glint" d="M 110 36 Q 112.24 41.76 118 44 Q 112.24 46.24 110 52 Q 107.76 46.24 102 44 Q 107.76 41.76 110 36 Z" style="fill:#fffbe0;stroke:#e0a20c;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="gold-crown-18" inkscape:label="Glint" d="M 290 41 Q 291.96 46.04 297 48 Q 291.96 49.96 290 55 Q 288.04 49.96 283 48 Q 288.04 46.04 290 41 Z" style="fill:#fffbe0;stroke:#e0a20c;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="gold-crown-19" inkscape:label="Glint" d="M 220 12 Q 221.68 16.32 226 18 Q 221.68 19.68 220 24 Q 218.32 19.68 214 18 Q 218.32 16.32 220 12 Z" style="fill:#fffbe0;stroke:#e0a20c;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+   </g>
+  </g>
+</svg>

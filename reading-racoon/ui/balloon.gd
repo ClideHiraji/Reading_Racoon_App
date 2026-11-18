@@ -22,7 +22,7 @@ func _ready() -> void:
 	v.size = Vector2(170, 160)
 	add_child(v)
 	if picture != "":
-		var r := Icons.rect(picture, 72, Palette.text_on(color))
+		var r := Icons.picture_rect(picture, 80, Palette.text_on(color))
 		r.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 		v.add_child(r)
 	var l := Kit.word_label(word, 34)
@@ -34,11 +34,11 @@ func _draw() -> void:
 	var c := Vector2(85, 96)
 	var r := Vector2(80, 92)
 	var shadow := _oval(c + Vector2(0, 6), r)
-	draw_colored_polygon(shadow, Palette.SHADOW)
-	draw_colored_polygon(_oval(c, r), color)
-	draw_colored_polygon(_oval(c + Vector2(-30, -42), Vector2(14, 22)), Color(1, 1, 1, 0.35))
+	Smooth.polygon(self, shadow, Palette.SHADOW)
+	Smooth.polygon(self, _oval(c, r), color)
+	Smooth.polygon(self, _oval(c + Vector2(-30, -42), Vector2(14, 22)), Color(1, 1, 1, 0.35))
 	var knot := PackedVector2Array([c + Vector2(-10, r.y + 10), c + Vector2(10, r.y + 10), c + Vector2(0, r.y - 4)])
-	draw_colored_polygon(knot, color.darkened(0.15))
+	Smooth.polygon(self, knot, color.darkened(0.15))
 	var pts := PackedVector2Array()
 	for i in 12:
 		var t := i / 11.0

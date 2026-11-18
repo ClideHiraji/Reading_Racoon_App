@@ -4,9 +4,17 @@ extends RefCounted
 ## BKT, hearts and Racoon's Rescue, and reports outcomes for the UI to show.
 ## No UI code here, so the whole loop is unit-tested.
 ## FR-03, FR-04, FR-13, FR-14, FR-15; loop from docs/knowledge/06-game-design.md.
+##
+## D-021: each question has two tries. Only the first try is BKT evidence. A wrong
+## first try brings Racoon's hint (HintText, FR-14) and the same question again; a
+## wrong second try shows the answer and why. Every wrong try costs a heart and
+## every right answer gives one back (HeartSystem). The session works on a copy of
+## the model, so a lesson stopped halfway leaves no trace.
 
 const LESSON_LENGTH := 8
+const MAX_TRIES := 2
 const XP_PER_CORRECT := 10
+const XP_SECOND_TRY := 5
 const COINS_PER_STAR := 5
 const LEVEL_UP_COINS := 20
 
@@ -20,9 +28,11 @@ var level := 1
 var mode := Mode.NORMAL
 
 var current: Dictionary = {}
+var tries := 0                   # tries used on the current item
 var answered := 0
 var lesson_length := LESSON_LENGTH
-var results: Array = []          # normal items only: {id, skill, level, correct, ms}
+## Normal items only: {id, skill, level, correct (first try), solved, tries, ms}
+var results: Array = []
 var used_ids: Array = []
 var last_id := ""
 var sticky_skill := ""           # after a wrong answer, stay on the same skill
@@ -33,6 +43,7 @@ var flags: Array = []            # intervention flags for the teacher (FR-17)
 var events: Array = []           # drained by GameState into the sync queue (FR-11)
 
 var rescue := {}                 # {skill, level, from_level, has_lower, answered, correct}
+var _response := {}              # the current item's queued response payload (try 2)
 
 
 func _init(p_model: StudentModel, p_bank: QuestionBank, p_level: int,
@@ -65,6 +76,8 @@ func next_item() -> Dictionary:
 		target = model.target_for(sticky_skill, level)
 	else:
 		target = model.pick_target(level, rng)
+	tries = 0
+	_response = {}
 	# Finish one story's questions before starting another, so the child
 	# reads each story once even when other skills come in between.
 	current = bank.pick(target.skill, target.level, recovery_items, used_ids, last_id, rng, story)
@@ -82,64 +95,98 @@ func next_item() -> Dictionary:
 	return current
 
 
-## Scores the current item. Returns what the UI needs:
-## correct, answer, hint, hearts, mood, level_up, mastered_now, and `next`:
+## Scores one try at the current item. Returns what the UI needs:
+## correct, answer, hint (show Racoon's hint and try again), hearts, mood,
+## level_up, mastered_now, try, and `next`: "retry" (same item, D-021) |
 ## "continue" | "rescue_start" | "rescue_end" | "done" | "end_session".
 func submit(answer, ms: int = 0) -> Dictionary:
 	var item := current
 	var correct := str(answer) == str(item.answer)
-	var skill: String = item.sub_skill
-	var item_level: int = item.level
-	var rec := model.record(skill, item_level, correct, QuestionBank.num_choices(item))
-	# num_choices lets the server replay BKT with the same guess rate (D-003 rule 7).
-	_event("response", {"item_id": item.id, "skill": skill, "level": item_level,
-			"answer": str(answer), "correct": correct, "response_ms": ms, "rescue": in_rescue(),
-			"num_choices": QuestionBank.num_choices(item)})
-	_event("bkt_state", {"skill": skill, "level": item_level, "p": rec.p_next,
-			"posterior": rec.posterior, "attempts": rec.attempts,
-			"mastered": model.state(skill, item_level).mastered})
+	tries += 1
+	var rec := {"mastered_now": false, "level_up": false}
+	if tries == 1:
+		rec = _first_try(item, str(answer), correct, ms)
+	else:
+		# The second try is practice, not BKT evidence: it rides on the first
+		# try's response event for the teacher (D-021).
+		_response.retry_answer = str(answer)
+		_response.retry_correct = correct
+		_response.retry_ms = ms
 	var out := {
 		"correct": correct,
 		"answer": item.answer,
-		"hint": rec.hint,
+		"hint": false,
 		"mastered_now": rec.mastered_now,
 		"level_up": false,
-		"mood": "happy" if correct else ("thinking" if rec.hint else "encourage"),
-		"skill": skill,
+		"mood": "happy" if correct else "encourage",
+		"skill": item.sub_skill,
+		"try": tries,
 		"next": "continue",
 	}
 	if mode == Mode.RECOVERY:
 		_submit_rescue(correct, out)
 	else:
-		_submit_normal(item, correct, ms, rec, out)
+		_submit_normal(item, correct, ms, rec.level_up, out)
 	out.hearts = rescue.correct if mode == Mode.RECOVERY else hearts.hearts
 	return out
 
 
-func _submit_normal(item: Dictionary, correct: bool, ms: int, rec: Dictionary,
+## BKT update and the queued response for an item's first try (FR-03).
+func _first_try(item: Dictionary, answer: String, correct: bool, ms: int) -> Dictionary:
+	var skill: String = item.sub_skill
+	var item_level: int = item.level
+	var choices := QuestionBank.num_choices(item)
+	var rec := model.record(skill, item_level, correct, choices)
+	# num_choices lets the server replay BKT with the same guess rate (D-003 rule 7).
+	# low_pl: P(L) < 0.30 after a wrong answer, the thesis's hint trigger (D-003 rule 6),
+	# kept for the study; the hint itself now follows every wrong first try.
+	_response = {"item_id": item.id, "skill": skill, "level": item_level, "answer": answer,
+			"correct": correct, "response_ms": ms, "rescue": in_rescue(), "num_choices": choices,
+			"low_pl": rec.hint}
+	_event("response", _response)
+	_event("bkt_state", {"skill": skill, "level": item_level, "p": rec.p_next,
+			"posterior": rec.posterior, "attempts": rec.attempts,
+			"mastered": model.state(skill, item_level).mastered})
+	return rec
+
+
+func _submit_normal(item: Dictionary, correct: bool, ms: int, level_up_now: bool,
 		out: Dictionary) -> void:
-	answered += 1
-	results.append({"id": item.id, "skill": item.sub_skill, "level": item.level,
-			"correct": correct, "ms": ms})
-	sticky_skill = "" if correct else item.sub_skill
-	if rec.level_up:
+	if level_up_now:
 		level_up = true
 		out.level_up = true
 		out.mood = "celebrate"
 		_event("level_up", {"to_level": model.highest_unlocked})
-	match hearts.on_answer(item.sub_skill, correct):
+	match hearts.on_answer(correct):
 		HeartSystem.Result.RECOVERY:
+			_close_item(item, false, ms)
 			_start_rescue(item.sub_skill, item.level)
 			out.next = "rescue_start"
 			return
 		HeartSystem.Result.END_SESSION:
+			_close_item(item, false, ms)
 			ended_early = true
 			_flag("rescue_limit", item.sub_skill, item.level, {})
 			out.next = "end_session"
 			return
 	_event("hearts", {"hearts": hearts.hearts})
+	if not correct and tries < MAX_TRIES:
+		out.next = "retry"
+		out.hint = true
+		out.mood = "thinking"
+		_response.hint = true
+		return
+	_close_item(item, correct, ms)
+	sticky_skill = "" if correct else item.sub_skill
 	if level_up or answered >= lesson_length:
 		out.next = "done"
+
+
+## The item is over (right, or out of tries): it counts toward the lesson.
+func _close_item(item: Dictionary, solved: bool, ms: int) -> void:
+	answered += 1
+	results.append({"id": item.id, "skill": item.sub_skill, "level": item.level,
+			"correct": solved and tries == 1, "solved": solved, "tries": tries, "ms": ms})
 
 
 func _start_rescue(skill: String, from_level: int) -> void:
@@ -174,14 +221,18 @@ func _submit_rescue(correct: bool, out: Dictionary) -> void:
 		out.next = "done"
 
 
-## Totals for the lesson-complete screen (FR-15).
+## Totals for the lesson-complete screen (FR-15). `correct` counts first tries;
+## a second-try answer earns half (accuracy and XP, D-021).
 func summary() -> Dictionary:
 	var correct := 0
+	var second_try := 0
 	for r in results:
 		if r.correct:
 			correct += 1
+		elif r.get("solved", false):
+			second_try += 1
 	var total := results.size()
-	var accuracy := float(correct) / total if total > 0 else 0.0
+	var accuracy := (correct + 0.5 * second_try) / total if total > 0 else 0.0
 	var stars := 1
 	if accuracy >= 0.9:
 		stars = 3
@@ -190,10 +241,11 @@ func summary() -> Dictionary:
 	return {
 		"level": level,
 		"correct": correct,
+		"second_try": second_try,
 		"total": total,
 		"accuracy": accuracy,
 		"stars": stars,
-		"xp": correct * XP_PER_CORRECT,
+		"xp": correct * XP_PER_CORRECT + second_try * XP_SECOND_TRY,
 		"coins": stars * COINS_PER_STAR + (LEVEL_UP_COINS if level_up else 0),
 		"level_up": level_up,
 		"ended_early": ended_early,

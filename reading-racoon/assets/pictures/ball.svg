@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="14.5 13 99 99" width="128" height="128">
+<defs>
+<clipPath id="ball-1"><circle cx="64" cy="62" r="45"/></clipPath>
+</defs>
+<g opacity="0.22" transform="translate(0 2.4)">
+<circle cx="64" cy="62" r="45" fill="#3b2d3a"/>
+</g>
+<g opacity="0.18">
+<circle cx="64" cy="62" r="45" fill="#3b2d3a" stroke="#3b2d3a" stroke-width="3" stroke-linejoin="round"/>
+</g>
+<circle cx="64" cy="62" r="45" fill="#fefaf3"/>
+<g clip-path="url(#ball-1)">
+<path d="M 64 17 Q -2 62 64 107 Q 32 62 64 17 Z" fill="#f77a6a"/>
+<path d="M 64 17 Q 130 62 64 107 Q 96 62 64 17 Z" fill="#6aaddf"/>
+<path d="M 64 17 Q 80 62 64 107 Q 48 62 64 17 Z" fill="#f4c62f"/>
+</g>
+<g opacity="0.22" transform="translate(0 2.4)">
+<ellipse cx="64" cy="22" rx="6" ry="3.4" fill="#3b2d3a"/>
+</g>
+<g opacity="0.18">
+<ellipse cx="64" cy="22" rx="6" ry="3.4" fill="#3b2d3a" stroke="#3b2d3a" stroke-width="3" stroke-linejoin="round"/>
+</g>
+<ellipse cx="64" cy="22" rx="6" ry="3.4" fill="#fffffd"/>
+</svg>

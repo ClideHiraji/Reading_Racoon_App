@@ -4,10 +4,11 @@ The student app: a Duolingo-style learning path for Grade 1 reading (D-007) in a
 
 ## What's in it
 - **Home hub** (D-015): a game-lobby screen with Racoon in the middle, the child's level, coins and XP on top, Shop and Today on the left, "For you" picks on the right, Closet, Stickers and Words tabs, and a big **PLAY** button that opens a diamond **Play picker** (Adventure, Library, Practice, Watch & Listen, Big Test). Behind it (D-017): **Practice** (Rhyme Pop, Memory Match, Spin the Words, Syllable Train, Story Shuffle, Word Catch; no BKT), the **Library** (8 picture books in English, Filipino and Bisaya with a read-along reader), **Watch & Listen** (songs, chants, read-alongs; teacher videos once downloaded), the **Sticker Album**, **My Word Book** and **Today**'s goals.
-- **Reading Adventure** pre-test on first launch places the child on the path (FR-02); **Big Reading Day** post-test when the teacher opens it (FR-10).
+- **Reading Adventure** pre-test places the child on the path (FR-02): it waits at the top of the Adventure map behind a START button, and the lessons open after it. **Big Reading Day** post-test when the teacher opens it (FR-10). Both end with a results bar per reading skill ("Great!" or "Practice"), then the home hub (D-021).
 - Five worlds, levels 1-5: tap-choice, drag-the-letter, **Spin the Words**, syllable and sentence building, **stories** with who/what/where/when, sequence and prediction questions. Levels 3-4 in Filipino, level 5 in English (placeholders for teacher review).
 - BKT per skill-level (D-003), hearts and Racoon's Rescue (D-004), stars, XP and coins.
-- **Racoon's Closet** shop: hats (salakot!), scarves, glasses, pins (FR-07).
+- **Two tries per question** (D-021): a wrong first try greys out that choice and Racoon gives the question's hint (FR-14); a wrong second try shows the answer and why (`scripts/core/hint_text.gd`, or `hint` / `explain` in the content). Only the first try updates BKT. Every wrong try costs a heart and every right answer gives one back. No CONTINUE taps: a short word from Racoon, then the next question. Nothing is saved until a lesson or test is finished, so stopping halfway means starting it again.
+- **Racoon's Closet** shop (FR-07): hats (salakot!), scarves, glasses, T-shirts and dresses (a barong and a Filipiniana too), things to hold, and a little pet that floats by his head and plays with him (D-029).
 - **Play-time limits** (FR-12, D-015): only Adventure follows the class window, after-school 30 min/day and weekends. Practice, Library and Watch share a 45-minute daily free-play timer outside Reading time. Everything sleeps at night (9 PM–6 AM) behind a friendly lock screen.
 - **Login** once per device with the student's code on a big keypad; "Switch student" on the start screen (only when everything is uploaded).
 - **Automatic sync**: after lessons, on start and resume, every 2 minutes; backs off when offline; never during a lesson; file and JSON work on a worker thread.
@@ -25,7 +26,7 @@ From the repo root (run the import once after cloning or adding a `class_name`):
 "/c/Program Files/Godot/Godot.exe" --headless --path reading-racoon -s res://tests/run_tests.gd
 "/c/Program Files/Godot/Godot.exe" --headless --path reading-racoon -s res://tests/ui_smoke.gd -- --profile=smoke --fresh
 ```
-`tests/ui_shots.gd`, `tests/hub_shots.gd` and `tests/section_shots.gd` save screenshots of key moments and of the hub in each time state (need a window; see the comment at their top).
+`tests/ui_shots.gd`, `tests/hub_shots.gd`, `tests/section_shots.gd` and `tests/lesson_shots.gd` save screenshots of key moments and of the hub in each time state (need a window; see the comment at their top).
 
 ## Layout
 | Path | What |
@@ -36,10 +37,11 @@ From the repo root (run the import once after cloning or adding a `class_name`):
 | `content/` | `library.json` (Library books), `watch.json` (songs and read-alongs), `levels.json` (L1-2, English placeholders, open issue 15), `levels_3.json`/`levels_4.json` (Filipino), `levels_5.json` (English), `pretest.json`/`posttest.json`, `companion_lines.json` |
 | `ui/` | Storybook look (D-009): `palette.gd`, `icons.gd`, `theme.tres`, `ChunkyButton`, `PlayButton`, `DiamondTile`, `BanigMat`, `Kit` (shared screen builders), `ReadAlong`, `Balloon`, `PaperScenery` (Butuan landscapes), `PictureCard`, `Sunburst`, `paper.gdshader` |
 | `assets/fonts/` | Nunito (UI) and Andika (reading text), both SIL OFL |
-| `assets/icons/` | SVG silhouettes from game-icons.net, CC BY 3.0, see `assets/icons/CREDITS.md`. No emoji anywhere (tests check it) |
+| `assets/pictures/` | Full-colour pictures for words, stickers, Home tiles and practice games (D-027), drawn by `tools/icon-art` |
+| `assets/icons/` | One-colour SVG glyphs the game tints (buttons, badges, tabs, the path), from game-icons.net, CC BY 3.0, see `assets/icons/CREDITS.md`. No emoji anywhere (tests check it) |
 
 ## Adding a task item
-Add an object to `content/levels.json` with `id, sub_skill, level, competency, language, task_type, prompt, tts_text, choices, answer, recovery`. Pictures are icon names (`"picture": "cat"`) from `assets/icons/`; add a color for new ones in `ui/icons.gd`. `tests/run_tests.gd` checks that every item is well-formed.
+Add an object to `content/levels.json` with `id, sub_skill, level, competency, language, task_type, prompt, tts_text, choices, answer, recovery`. Pictures are names (`"picture": "cat"`): a full-colour drawing in `assets/pictures/` (add one in `tools/icon-art/icon_set.py`) and a glyph in `assets/icons/`; add a paper color for new ones in `ui/icons.gd`. `tests/run_tests.gd` checks that every item is well-formed.
 
 Stories live in a file's `passages` map; items point at them with `"passage": "<id>"`. Other task types: `order_tiles` (`variant` syllables / sentence / sequence, `tiles`, answer = tile keys joined by `|`) and `spin_words` (`rime` + `choices` of first sounds).
 

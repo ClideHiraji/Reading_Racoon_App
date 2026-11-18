@@ -29,7 +29,15 @@ const ALL := {
 
 
 static func get_info(id: String) -> Dictionary:
-	return ALL.get(id, {})
+	var info: Dictionary = ALL.get(id, {})
+	if id == "closet":
+		# the buddy's own Closet (D-033): "Roco's Closet", "Closet ni Rina"
+		var tree := Engine.get_main_loop() as SceneTree
+		var gs: Node = tree.root.get_node_or_null("GameState") if tree else null
+		if gs:
+			info = info.duplicate()
+			info.name = gs.talk("closet_title")
+	return info
 
 
 static func is_built(id: String) -> bool:

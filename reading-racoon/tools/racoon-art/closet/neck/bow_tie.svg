@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racoon's Closet: Bow tie (silver, neck). FR-07, D-026.
+     Drawn to fit Racoon at rest: the bottom layer links ../../parts/racoon_C_inkscape.svg (locked).
+     Draw on the "Item" layer. The file's name is the item's id; its name, tier, price and how it's
+     earned are in reading-racoon/content/closet.json. motion-demo/build_racoon.py reads this file
+     and never writes it. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-bow_tie"
+   sodipodi:docname="bow_tie.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>Bow tie</title>
+  <sodipodi:namedview
+     id="namedview-bow_tie"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="2"
+     inkscape:cx="200"
+     inkscape:cy="280"
+     inkscape:current-layer="layer-item" />
+  <defs id="defs-bow_tie">
+    <linearGradient id="gr-bow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#b58fd0" /><stop offset="1" style="stop-color:#6a4c80" /></linearGradient>
+    <linearGradient id="gr-bow-stud" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ffffff" /><stop offset="1" style="stop-color:#a3b1be" /></linearGradient>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="../../parts/racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-item" inkscape:label="Item">
+   <g id="item-bow-tie" inkscape:label="bow_tie">
+     <title>Bow tie: plum with polka dots and a silver stud (silver)</title>
+     <path id="bow-tie-1" inkscape:label="Wing" d="M 200.5 268 C 188.5 257 174.5 250 167.5 252 C 160.5 255 160.5 281 167.5 284 C 174.5 286 188.5 279 200.5 268 Z" style="fill:url(#gr-bow);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="bow-tie-2" inkscape:label="Dot" cx="178.5" cy="259" r="2.4" style="fill:#efe0fa" />
+     <circle id="bow-tie-3" inkscape:label="Dot" cx="170.5" cy="269" r="2.4" style="fill:#efe0fa" />
+     <circle id="bow-tie-4" inkscape:label="Dot" cx="179.5" cy="274" r="2.4" style="fill:#efe0fa" />
+     <circle id="bow-tie-5" inkscape:label="Dot" cx="169.5" cy="279" r="2.4" style="fill:#efe0fa" />
+     <path id="bow-tie-6" inkscape:label="Pleat" d="M 167.5 262 Q 176.5 267 186.5 268" style="fill:none;stroke:#5f3f80;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="bow-tie-7" inkscape:label="Pleat" d="M 167.5 276 Q 176.5 271 186.5 270" style="fill:none;stroke:#5f3f80;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="bow-tie-8" inkscape:label="Wing" d="M 200.5 268 C 212.5 257 226.5 250 233.5 252 C 240.5 255 240.5 281 233.5 284 C 226.5 286 212.5 279 200.5 268 Z" style="fill:url(#gr-bow);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="bow-tie-9" inkscape:label="Dot" cx="222.5" cy="259" r="2.4" style="fill:#efe0fa" />
+     <circle id="bow-tie-10" inkscape:label="Dot" cx="230.5" cy="269" r="2.4" style="fill:#efe0fa" />
+     <circle id="bow-tie-11" inkscape:label="Dot" cx="221.5" cy="274" r="2.4" style="fill:#efe0fa" />
+     <circle id="bow-tie-12" inkscape:label="Dot" cx="231.5" cy="279" r="2.4" style="fill:#efe0fa" />
+     <path id="bow-tie-13" inkscape:label="Pleat" d="M 233.5 262 Q 224.5 267 214.5 268" style="fill:none;stroke:#5f3f80;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="bow-tie-14" inkscape:label="Pleat" d="M 233.5 276 Q 224.5 271 214.5 270" style="fill:none;stroke:#5f3f80;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="bow-tie-15" inkscape:label="Knot" d="M 192 261 C 192 258 194 257 197 257 L 204 257 C 207 257 209 258 209 261 L 209 276 C 209 279 207 280 204 280 L 197 280 C 194 280 192 279 192 276 Z" style="fill:#7d5aa0;stroke:#3b2d3a;stroke-width:3.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="bow-tie-16" inkscape:label="Stud" cx="200.5" cy="268.5" r="3.6" style="fill:url(#gr-bow-stud);stroke:#3b2d3a;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+   </g>
+  </g>
+</svg>

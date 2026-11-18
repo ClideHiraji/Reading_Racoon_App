@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racoon's Closet: Hero mask (silver, glasses). FR-07, D-026.
+     Drawn to fit Racoon at rest: the bottom layer links ../../parts/racoon_C_inkscape.svg (locked).
+     Draw on the "Item" layer. The file's name is the item's id; its name, tier, price and how it's
+     earned are in reading-racoon/content/closet.json. motion-demo/build_racoon.py reads this file
+     and never writes it. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-hero-mask"
+   sodipodi:docname="hero_mask.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>Hero mask</title>
+  <sodipodi:namedview
+     id="namedview-hero-mask"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="2"
+     inkscape:cx="200"
+     inkscape:cy="200"
+     inkscape:current-layer="layer-item" />
+  <defs id="defs-hero-mask">
+    <linearGradient id="gr-hero-mask-1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ff7a6e" /><stop offset="1" style="stop-color:#c43d33" /></linearGradient>
+    <linearGradient id="gr-hero-mask-2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ff7a6e" /><stop offset="1" style="stop-color:#c43d33" /></linearGradient>
+    <linearGradient id="gr-hero-mask-3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ff6f61" /><stop offset="1" style="stop-color:#d6453a" /></linearGradient>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="../../parts/racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-item" inkscape:label="Item">
+   <g id="item-hero-mask" inkscape:label="hero_mask">
+     <title>Hero mask: a red hero's eye mask with ties (silver)</title>
+     <path id="hero-mask-1" inkscape:label="Tie" d="M 278 158 L 300 148 L 296 168 Z" style="fill:url(#gr-hero-mask-1);stroke:#3b2d3a;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="hero-mask-2" inkscape:label="Tie" d="M 279 164 L 298 176 L 288 182 Z" style="fill:url(#gr-hero-mask-2);stroke:#3b2d3a;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="hero-mask-3" inkscape:label="Mask" d="M 122 160 C 124 141 150 136 173 145 C 186 150 194 153 200.5 153 C 207 153 215 150 228 145 C 251 136 277 141 279 160 C 281 181 263 197 243 195 C 226 193 214 183 200.5 181 C 187 183 175 193 158 195 C 138 197 120 181 122 160 Z M 175.3 169.1 C 175.3 160.82 167.69 154.1 158.3 154.1 C 148.91 154.1 141.3 160.82 141.3 169.1 C 141.3 177.38 148.91 184.1 158.3 184.1 C 167.69 184.1 175.3 177.38 175.3 169.1 Z M 259.9 169.1 C 259.9 160.82 252.29 154.1 242.9 154.1 C 233.51 154.1 225.9 160.82 225.9 169.1 C 225.9 177.38 233.51 184.1 242.9 184.1 C 252.29 184.1 259.9 177.38 259.9 169.1 Z" style="fill:url(#gr-hero-mask-3);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="hero-mask-4" inkscape:label="Shine" d="M 134 155 C 142 146 156 143 168 146" style="fill:none;stroke:#ffffff;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round;opacity:0.55" />
+     <path id="hero-mask-5" inkscape:label="Shine" d="M 266 155 C 258 146 244 143 232 146" style="fill:none;stroke:#ffffff;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round;opacity:0.4" />
+   </g>
+  </g>
+</svg>

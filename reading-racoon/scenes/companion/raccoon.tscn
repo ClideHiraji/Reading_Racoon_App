@@ -1,8 +1,8 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://celt5pyi52xmx"]
 
-[ext_resource type="Script" path="res://scenes/companion/raccoon.gd" id="1_raccoon"]
+[ext_resource type="Script" uid="uid://rminaxglsiay" path="res://scenes/companion/raccoon.gd" id="1_raccoon"]
 
-[node name="Raccoon" type="Control"]
+[node name="Raccoon" type="Control" unique_id=303638675]
 custom_minimum_size = Vector2(180, 180)
 layout_mode = 3
 anchors_preset = 0

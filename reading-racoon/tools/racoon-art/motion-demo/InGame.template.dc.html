@@ -1,0 +1,825 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Racoon in the game</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&amp;display=swap">
+<style>
+body{margin:0}
+.rr-mo{transition:transform 80ms ease-out,box-shadow 80ms ease-out}
+.rr-mo:hover{background:#fffbea}
+.rr-mo:active{transform:translateY(4px);box-shadow:0 1px 0 #e3d6b4}
+.rr-card{transition:transform 90ms ease-out}
+.rr-card:hover{transform:translateY(-3px)}
+.rr-card:active{transform:translateY(5px)}
+.rr-ok{transition:transform 80ms ease-out,box-shadow 80ms ease-out}
+.rr-ok:active{transform:translateY(5px);box-shadow:0 1px 0 #cc8a00}
+.rr-mo:focus-visible,.rr-card:focus-visible,.rr-ok:focus-visible{outline:3px solid #1d7166;outline-offset:3px}
+</style>
+</helmet>
+<div style="width: 1712px; height: 800px; box-sizing: border-box; padding: 40px; background: #fefde0; font-family: 'Andika', sans-serif; color: #3a2a1f; display: flex; gap: 32px">
+
+<div onPointerMove="{{ h.move }}" onPointerDown="{{ h.down }}" onPointerLeave="{{ h.leave }}" style="position: relative; width: 1280px; height: 720px; flex-shrink: 0; overflow: hidden; border-radius: 8px; background: radial-gradient(ellipse at 55% 25%, #fffdf2, #f6eccd); box-shadow: 0 0 0 10px #3b3340, 0 16px 0 10px rgba(58, 42, 31, 0.16); user-select: none">
+
+<svg viewBox="0 0 1280 720" width="1280" height="720" aria-hidden="true" style="position: absolute; left: 0; top: 0; display: block">
+<defs>
+<linearGradient id="rr-river" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#63c5b8"></stop><stop offset="1" stop-color="#2a9d8f"></stop></linearGradient>
+<linearGradient id="rr-hill-back" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d4e8b8"></stop><stop offset="1" stop-color="#c2dca2"></stop></linearGradient>
+<linearGradient id="rr-hill-front" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a6cf84"></stop><stop offset="1" stop-color="#8fbe6c"></stop></linearGradient>
+<symbol id="rr-icon-hat" viewBox="0 0 120 120"><ellipse cx="60" cy="88" rx="46" ry="11" fill="#5b4a66" stroke="#3a2a1f" stroke-width="5"></ellipse><path d="M 34 86 L 39 34 Q 60 25 81 34 L 86 86 Z" fill="#6e5a7c" stroke="#3a2a1f" stroke-width="5" stroke-linejoin="round"></path><path d="M 36 70 L 84 70 L 85 80 L 35 80 Z" fill="#e9801f" stroke="#3a2a1f" stroke-width="4" stroke-linejoin="round"></path></symbol>
+<symbol id="rr-icon-dog" viewBox="0 0 120 120"><ellipse cx="29" cy="54" rx="13" ry="25" transform="rotate(18 29 54)" fill="#8a5a3b" stroke="#3a2a1f" stroke-width="5"></ellipse><ellipse cx="91" cy="54" rx="13" ry="25" transform="rotate(-18 91 54)" fill="#8a5a3b" stroke="#3a2a1f" stroke-width="5"></ellipse><circle cx="60" cy="64" r="33" fill="#d8a874" stroke="#3a2a1f" stroke-width="5"></circle><ellipse cx="60" cy="80" rx="17" ry="13" fill="#f6dfc1"></ellipse><ellipse cx="60" cy="73" rx="7" ry="5" fill="#3a2a1f"></ellipse><circle cx="47" cy="58" r="4.5" fill="#3a2a1f"></circle><circle cx="73" cy="58" r="4.5" fill="#3a2a1f"></circle><path d="M 53 86 Q 60 91 67 86" fill="none" stroke="#3a2a1f" stroke-width="3.5" stroke-linecap="round"></path></symbol>
+<symbol id="rr-icon-sun" viewBox="0 0 120 120"><g stroke="#f0a51a" stroke-width="8" stroke-linecap="round"><path d="M 60 8 L 60 22 M 60 98 L 60 112 M 8 60 L 22 60 M 98 60 L 112 60 M 23 23 L 33 33 M 87 87 L 97 97 M 97 23 L 87 33 M 33 87 L 23 97"></path></g><circle cx="60" cy="60" r="27" fill="#ffc918" stroke="#3a2a1f" stroke-width="5"></circle><path d="M 48 64 Q 60 74 72 64" fill="none" stroke="#3a2a1f" stroke-width="4" stroke-linecap="round"></path></symbol>
+<symbol id="rr-icon-cat" viewBox="0 0 120 120"><path d="M 30 56 L 30 18 L 56 40 Z M 90 56 L 90 18 L 64 40 Z" fill="#f2a65a" stroke="#3a2a1f" stroke-width="5" stroke-linejoin="round"></path><circle cx="60" cy="66" r="33" fill="#f2a65a" stroke="#3a2a1f" stroke-width="5"></circle><circle cx="47" cy="60" r="4.5" fill="#3a2a1f"></circle><circle cx="73" cy="60" r="4.5" fill="#3a2a1f"></circle><path d="M 55 72 L 65 72 L 60 78 Z" fill="#e8738a"></path><path d="M 22 72 L 42 74 M 22 82 L 42 79 M 98 72 L 78 74 M 98 82 L 78 79" stroke="#3a2a1f" stroke-width="3" stroke-linecap="round"></path></symbol>
+<symbol id="rr-icon-tree" viewBox="0 0 120 120"><path d="M 51 68 L 69 68 L 71 108 L 49 108 Z" fill="#8a5a3b" stroke="#3a2a1f" stroke-width="5" stroke-linejoin="round"></path><circle cx="60" cy="50" r="36" fill="#6aab4c" stroke="#3a2a1f" stroke-width="5"></circle><circle cx="48" cy="40" r="8" fill="#8cc46b"></circle></symbol>
+<symbol id="rr-icon-car" viewBox="0 0 120 120"><path d="M 12 82 L 14 64 Q 16 58 24 56 L 34 42 Q 38 38 46 38 L 74 38 Q 82 38 88 46 L 96 56 L 104 58 Q 110 60 110 68 L 110 82 Z" fill="#74a6cb" stroke="#3a2a1f" stroke-width="5" stroke-linejoin="round"></path><path d="M 40 54 L 46 45 L 58 45 L 58 54 Z M 66 54 L 66 45 L 76 45 L 84 54 Z" fill="#e6f2fa" stroke="#3a2a1f" stroke-width="3.5" stroke-linejoin="round"></path><circle cx="36" cy="84" r="12" fill="#3a2a1f"></circle><circle cx="36" cy="84" r="4.5" fill="#d9d4cc"></circle><circle cx="86" cy="84" r="12" fill="#3a2a1f"></circle><circle cx="86" cy="84" r="4.5" fill="#d9d4cc"></circle></symbol>
+<symbol id="rr-icon-moon" viewBox="0 0 120 120"><path d="M 74 16 A 44 44 0 1 0 104 88 A 36 36 0 1 1 74 16 Z" fill="#ffd34d" stroke="#3a2a1f" stroke-width="5" stroke-linejoin="round"></path><circle cx="48" cy="70" r="5" fill="#f0b92c"></circle><circle cx="58" cy="90" r="3.5" fill="#f0b92c"></circle></symbol>
+<symbol id="rr-icon-fish" viewBox="0 0 120 120"><path d="M 84 60 L 110 40 L 108 80 Z" fill="#e9801f" stroke="#3a2a1f" stroke-width="5" stroke-linejoin="round"></path><ellipse cx="54" cy="60" rx="38" ry="24" fill="#f39a45" stroke="#3a2a1f" stroke-width="5"></ellipse><path d="M 62 44 Q 70 60 62 76" fill="none" stroke="#e9801f" stroke-width="4" stroke-linecap="round"></path><circle cx="36" cy="54" r="6" fill="#ffffff" stroke="#3a2a1f" stroke-width="3"></circle><circle cx="37" cy="55" r="2.6" fill="#3a2a1f"></circle></symbol>
+<!--RACOON:DEFS-->
+</defs>
+
+<!-- the river world's paper-cut landscape (Scenery, bottom 190 px on a laptop) -->
+<path d="M 0 604 C 150 556 290 572 420 598 C 560 626 690 566 830 574 C 980 582 1110 548 1280 580 L 1280 720 L 0 720 Z" fill="#3a2a1f" opacity="0.07" transform="translate(0 6)"></path>
+<path d="M 0 604 C 150 556 290 572 420 598 C 560 626 690 566 830 574 C 980 582 1110 548 1280 580 L 1280 720 L 0 720 Z" fill="url(#rr-hill-back)"></path>
+<path d="M 0 652 C 230 632 420 668 640 654 C 860 640 1050 668 1280 650 L 1280 694 C 1050 708 860 682 640 694 C 420 706 230 672 0 690 Z" fill="#3a2a1f" opacity="0.08" transform="translate(0 5)"></path>
+<path d="M 0 652 C 230 632 420 668 640 654 C 860 640 1050 668 1280 650 L 1280 694 C 1050 708 860 682 640 694 C 420 706 230 672 0 690 Z" fill="url(#rr-river)"></path>
+<path d="M 470 666 Q 490 660 510 666 M 760 656 Q 780 650 800 656 M 1010 666 Q 1030 660 1050 666" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" opacity="0.7"></path>
+<path d="M 0 688 C 200 674 380 698 600 690 C 820 682 1040 702 1280 688 L 1280 720 L 0 720 Z" fill="#3a2a1f" opacity="0.09" transform="translate(0 -5)"></path>
+<path d="M 0 688 C 200 674 380 698 600 690 C 820 682 1040 702 1280 688 L 1280 720 L 0 720 Z" fill="url(#rr-hill-front)"></path>
+
+<!-- hearts (FR-13): an empty slot under each, the heart on top cracks away or pops back -->
+<g transform="translate(1117 64)"><path d="M 0 15 C -7 10 -21 1 -21 -9 C -21 -16 -15 -21 -8.5 -21 C -4 -21 -1 -18 0 -15 C 1 -18 4 -21 8.5 -21 C 15 -21 21 -16 21 -9 C 21 1 7 10 0 15 Z" fill="#efe3c4" stroke="#d6c493" stroke-width="3" stroke-linejoin="round"></path><g transform="{{ g.h0.t }}" opacity="{{ g.h0.op }}"><path d="M 0 15 C -7 10 -21 1 -21 -9 C -21 -16 -15 -21 -8.5 -21 C -4 -21 -1 -18 0 -15 C 1 -18 4 -21 8.5 -21 C 15 -21 21 -16 21 -9 C 21 1 7 10 0 15 Z" fill="#f05a5a" stroke="#3a2a1f" stroke-width="3" stroke-linejoin="round"></path><ellipse cx="-10" cy="-10" rx="4.5" ry="3" transform="rotate(-35 -10 -10)" fill="#ffffff" opacity="0.6"></ellipse></g></g>
+<g transform="translate(1167 64)"><path d="M 0 15 C -7 10 -21 1 -21 -9 C -21 -16 -15 -21 -8.5 -21 C -4 -21 -1 -18 0 -15 C 1 -18 4 -21 8.5 -21 C 15 -21 21 -16 21 -9 C 21 1 7 10 0 15 Z" fill="#efe3c4" stroke="#d6c493" stroke-width="3" stroke-linejoin="round"></path><g transform="{{ g.h1.t }}" opacity="{{ g.h1.op }}"><path d="M 0 15 C -7 10 -21 1 -21 -9 C -21 -16 -15 -21 -8.5 -21 C -4 -21 -1 -18 0 -15 C 1 -18 4 -21 8.5 -21 C 15 -21 21 -16 21 -9 C 21 1 7 10 0 15 Z" fill="#f05a5a" stroke="#3a2a1f" stroke-width="3" stroke-linejoin="round"></path><ellipse cx="-10" cy="-10" rx="4.5" ry="3" transform="rotate(-35 -10 -10)" fill="#ffffff" opacity="0.6"></ellipse></g></g>
+<g transform="translate(1217 64)"><path d="M 0 15 C -7 10 -21 1 -21 -9 C -21 -16 -15 -21 -8.5 -21 C -4 -21 -1 -18 0 -15 C 1 -18 4 -21 8.5 -21 C 15 -21 21 -16 21 -9 C 21 1 7 10 0 15 Z" fill="#efe3c4" stroke="#d6c493" stroke-width="3" stroke-linejoin="round"></path><g transform="{{ g.h2.t }}" opacity="{{ g.h2.op }}"><path d="M 0 15 C -7 10 -21 1 -21 -9 C -21 -16 -15 -21 -8.5 -21 C -4 -21 -1 -18 0 -15 C 1 -18 4 -21 8.5 -21 C 15 -21 21 -16 21 -9 C 21 1 7 10 0 15 Z" fill="#f05a5a" stroke="#3a2a1f" stroke-width="3" stroke-linejoin="round"></path><ellipse cx="-10" cy="-10" rx="4.5" ry="3" transform="rotate(-35 -10 -10)" fill="#ffffff" opacity="0.6"></ellipse></g></g>
+
+<!-- Racoon, in his 200 px box at the foot of the left column (D-023) -->
+<g transform="{{ r.place }}">
+<ellipse cx="{{ r.shadow.cx }}" cy="{{ r.shadow.cy }}" rx="{{ r.shadow.rx }}" ry="{{ r.shadow.ry }}" fill="#3a2a1f" opacity="{{ r.shadow.op }}"></ellipse>
+<g transform="{{ r.bodyT }}" onPointerDown="{{ h.tap }}" style="cursor: pointer">
+<!--RACOON:BODY-->
+</g>
+</g>
+</svg>
+
+<!-- top row: close, progress, (hearts are drawn above) -->
+<div aria-hidden="true" style="position: absolute; left: 40px; top: 16px; width: 96px; height: 96px; box-sizing: border-box; border-radius: 50%; background: #fffef4; border: 3px solid #e3d6b4; box-shadow: 0 6px 0 #e3d6b4; display: flex; align-items: center; justify-content: center">
+<svg width="38" height="38" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="#7d6857" stroke-width="3.2" stroke-linecap="round"></path></svg>
+</div>
+<div aria-hidden="true" style="position: absolute; left: 152px; top: 50px; width: 926px; height: 28px; border-radius: 14px; background: #efe4c3; box-shadow: inset 0 3px 0 rgba(58, 42, 31, 0.1); overflow: hidden">
+<div style="width: {{ g.progW }}px; height: 28px; border-radius: 14px; background: #ffc918; box-shadow: inset 0 -5px 0 #e6a800, inset 0 4px 0 rgba(255, 255, 255, 0.45)"></div>
+</div>
+
+<!-- Racoon's Rescue banner -->
+<div aria-hidden="true" style="position: absolute; left: 364px; top: 92px; width: 876px; display: {{ g.rb.css }}; justify-content: center; pointer-events: none">
+<div style="display: flex; align-items: center; gap: 10px; padding: 6px 18px; border-radius: 999px; background: #dcebf0; box-shadow: 0 4px 0 #b5cfd8; font-size: 26px; font-weight: 700">
+<svg width="30" height="30" viewBox="-24 -24 48 48"><path d="M 0 15 C -7 10 -21 1 -21 -9 C -21 -16 -15 -21 -8.5 -21 C -4 -21 -1 -18 0 -15 C 1 -18 4 -21 8.5 -21 C 15 -21 21 -16 21 -9 C 21 1 7 10 0 15 Z" fill="#f05a5a" stroke="#3a2a1f" stroke-width="3"></path><path d="M -7 -4 L 7 -4 M 0 -11 L 0 3" stroke="#ffffff" stroke-width="4" stroke-linecap="round"></path></svg>
+<span>{{ g.rb.text }}</span>
+</div>
+</div>
+
+<!-- the question on its paper card, with the speaker -->
+<div style="position: absolute; left: 364px; top: 128px; width: 876px; height: 128px; box-sizing: border-box; border-radius: 26px; background: #fffef4; border: 3px solid #efe3c4; box-shadow: 0 6px 0 #e3d6b4; display: flex; align-items: center; gap: 18px; padding: 0 16px">
+<div aria-hidden="true" style="flex-shrink: 0; width: 96px; height: 96px; border-radius: 50%; background: #74a6cb; box-shadow: 0 6px 0 #4a7ea6; display: flex; align-items: center; justify-content: center; transform: scale({{ g.spk }})">
+<svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="#ffffff"></path><path d="M16.5 8.5a5 5 0 0 1 0 7"></path><path d="M19 6a8.5 8.5 0 0 1 0 12"></path></svg>
+</div>
+<div style="font-size: 36px; font-weight: 700; line-height: 1.2; white-space: nowrap">
+<span style="padding: 0 6px; border-radius: 8px; background: {{ g.w0.bg }}">{{ g.w0.t }}</span><span style="padding: 0 6px; border-radius: 8px; background: {{ g.w1.bg }}">{{ g.w1.t }}</span><span style="padding: 0 6px; border-radius: 8px; background: {{ g.w2.bg }}">{{ g.w2.t }}</span><span style="padding: 0 6px; border-radius: 8px; background: {{ g.w3.bg }}">{{ g.w3.t }}</span><span style="padding: 0 6px; border-radius: 8px; background: {{ g.w4.bg }}">{{ g.w4.t }}</span>
+</div>
+</div>
+
+<!-- the task: three picture cards (tap_choice) -->
+<button type="button" class="rr-card" aria-label="{{ g.c0.label }}" onClick="{{ h.ans0 }}" style="position: absolute; left: 397px; top: 300px; width: 250px; height: 250px; padding: 0; border: none; background: none; cursor: {{ g.c0.cur }}; font-family: 'Andika', sans-serif">
+<div style="width: 250px; height: 250px; box-sizing: border-box; border-radius: 28px; border: 4px solid {{ g.c0.bd }}; background: {{ g.c0.bg }}; box-shadow: 0 8px 0 {{ g.c0.sh }}; opacity: {{ g.c0.op }}; transform: scale({{ g.c0.sc }}); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px">
+<svg width="132" height="132" viewBox="0 0 120 120" aria-hidden="true"><use href="{{ g.c0.icon }}"></use></svg>
+<span style="font-size: 56px; font-weight: 700; line-height: 1; color: {{ g.c0.ink }}">{{ g.c0.label }}</span>
+</div>
+</button>
+<button type="button" class="rr-card" aria-label="{{ g.c1.label }}" onClick="{{ h.ans1 }}" style="position: absolute; left: 677px; top: 300px; width: 250px; height: 250px; padding: 0; border: none; background: none; cursor: {{ g.c1.cur }}; font-family: 'Andika', sans-serif">
+<div style="width: 250px; height: 250px; box-sizing: border-box; border-radius: 28px; border: 4px solid {{ g.c1.bd }}; background: {{ g.c1.bg }}; box-shadow: 0 8px 0 {{ g.c1.sh }}; opacity: {{ g.c1.op }}; transform: scale({{ g.c1.sc }}); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px">
+<svg width="132" height="132" viewBox="0 0 120 120" aria-hidden="true"><use href="{{ g.c1.icon }}"></use></svg>
+<span style="font-size: 56px; font-weight: 700; line-height: 1; color: {{ g.c1.ink }}">{{ g.c1.label }}</span>
+</div>
+</button>
+<button type="button" class="rr-card" aria-label="{{ g.c2.label }}" onClick="{{ h.ans2 }}" style="position: absolute; left: 957px; top: 300px; width: 250px; height: 250px; padding: 0; border: none; background: none; cursor: {{ g.c2.cur }}; font-family: 'Andika', sans-serif">
+<div style="width: 250px; height: 250px; box-sizing: border-box; border-radius: 28px; border: 4px solid {{ g.c2.bd }}; background: {{ g.c2.bg }}; box-shadow: 0 8px 0 {{ g.c2.sh }}; opacity: {{ g.c2.op }}; transform: scale({{ g.c2.sc }}); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px">
+<svg width="132" height="132" viewBox="0 0 120 120" aria-hidden="true"><use href="{{ g.c2.icon }}"></use></svg>
+<span style="font-size: 56px; font-weight: 700; line-height: 1; color: {{ g.c2.ink }}">{{ g.c2.label }}</span>
+</div>
+</button>
+
+<!-- Racoon's speech bubble, above him in the column (tail down) -->
+<div aria-hidden="true" style="position: absolute; left: 40px; bottom: 240px; width: 300px; display: {{ g.bub.css }}; transform: scale({{ g.bub.sc }}); transform-origin: 110px calc(100% + 16px); pointer-events: none">
+<div style="position: relative; box-sizing: border-box; border-radius: 22px; background: #ffffff; border: 3px solid #e3d6b4; box-shadow: 0 5px 0 #e3d6b4; padding: 12px 18px; font-size: 22px; font-weight: 700; line-height: 1.3">
+<div style="display: grid"><span style="grid-area: 1 / 1; visibility: hidden">{{ g.bub.said }}</span><span style="grid-area: 1 / 1">{{ g.bub.text }}</span></div>
+<div style="position: absolute; left: 98px; bottom: -14px; width: 22px; height: 22px; background: #ffffff; border-right: 3px solid #e3d6b4; border-bottom: 3px solid #e3d6b4; transform: rotate(45deg)"></div>
+</div>
+</div>
+<div aria-live="polite" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap">{{ g.bub.said }}</div>
+
+<!-- after a wrong second try: the answer and why, on a paper sheet over the task's side -->
+<div style="position: absolute; left: 352px; top: 520px; width: 928px; height: 200px; box-sizing: border-box; display: {{ g.sheet.css }}; transform: translateY({{ g.sheet.y }}px); border-radius: 30px 30px 0 0; background: #fffef4; border: 3px solid #efe3c4; border-bottom: none; box-shadow: 0 -6px 0 rgba(58, 42, 31, 0.07); padding: 24px 34px">
+<div style="display: flex; align-items: center; gap: 14px">
+<div aria-hidden="true" style="width: 48px; height: 48px; border-radius: 50%; background: #6aab4c; box-shadow: 0 4px 0 #487f33; display: flex; align-items: center; justify-content: center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></div>
+<span style="font-size: 34px; font-weight: 700">{{ g.sheet.title }}</span>
+</div>
+<p style="margin: 14px 0 0 62px; font-size: 26px; line-height: 1.35; color: #5d4a3a">{{ g.sheet.why }}</p>
+</div>
+
+<!-- Level up! -->
+<div aria-hidden="true" style="position: absolute; left: 364px; top: 150px; width: 876px; display: {{ g.lv.css }}; justify-content: center; pointer-events: none">
+<div style="transform: scale({{ g.lv.sc }}) rotate(-3deg); padding: 10px 34px; border-radius: 999px; background: #ffc918; border: 4px solid #3a2a1f; box-shadow: 0 8px 0 #cc8a00; font-size: 58px; font-weight: 700">Level up!</div>
+</div>
+
+<!-- overlays: Racoon's Rescue, Lesson complete (over the task's side, so Racoon stays in view) -->
+<div style="position: absolute; left: 352px; top: 0; width: 928px; height: 720px; display: {{ g.ov.css }}; align-items: center; justify-content: center; background: rgba(58, 42, 31, {{ g.ov.scrim }})">
+<div role="dialog" aria-label="{{ g.ov.title }}" style="width: 520px; box-sizing: border-box; transform: scale({{ g.ov.sc }}); border-radius: 30px; background: #fffef4; border: 3px solid #efe3c4; box-shadow: 0 10px 0 rgba(58, 42, 31, 0.18); padding: 26px 34px 30px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
+<svg width="160" height="140" viewBox="0 0 160 140" aria-hidden="true" style="overflow: visible">
+<g display="{{ g.ov.starDisp }}"><g transform="{{ g.ov.starT }}"><path d="M 80 13 L 96.46 52.35 L 138.97 55.84 L 106.63 83.65 L 116.44 125.16 L 80 103 L 43.56 125.16 L 53.37 83.65 L 21.03 55.84 L 63.54 52.35 Z" fill="#ffc918" stroke="#3a2a1f" stroke-width="6" stroke-linejoin="round"></path><path d="M 66 50 L 80 30" stroke="#fff6c8" stroke-width="7" stroke-linecap="round"></path></g>
+<g opacity="{{ g.ov.spark }}" stroke="#ffc918" stroke-width="5" stroke-linecap="round"><path d="M 16 20 L 24 28 M 144 20 L 136 28 M 8 92 L 20 90 M 152 92 L 140 90 M 80 -6 L 80 4"></path></g></g>
+<g display="{{ g.ov.heartDisp }}" transform="translate(80 72) scale(2.6)"><path d="M 0 15 C -7 10 -21 1 -21 -9 C -21 -16 -15 -21 -8.5 -21 C -4 -21 -1 -18 0 -15 C 1 -18 4 -21 8.5 -21 C 15 -21 21 -16 21 -9 C 21 1 7 10 0 15 Z" fill="#f05a5a" stroke="#3a2a1f" stroke-width="2.4" stroke-linejoin="round"></path><path d="M -7 -4 L 7 -4 M 0 -11 L 0 3" stroke="#ffffff" stroke-width="3.4" stroke-linecap="round"></path></g>
+</svg>
+<span style="font-size: 44px; font-weight: 700; line-height: 1.1">{{ g.ov.title }}</span>
+<span style="font-size: 24px; line-height: 1.35; color: #5d4a3a">{{ g.ov.text }}</span>
+<button type="button" class="rr-ok" onClick="{{ h.ok }}" style="margin-top: 10px; min-width: 220px; min-height: 84px; padding: 0 30px; border: none; border-radius: 24px; background: #ffc918; box-shadow: 0 7px 0 #cc8a00; font-family: 'Andika', sans-serif; font-size: 32px; font-weight: 700; color: #3a2a1f; cursor: pointer">{{ g.ov.btn }}</button>
+</div>
+</div>
+
+<!-- on top: confetti, a clap's spark, z z z -->
+<svg viewBox="0 0 1280 720" width="1280" height="720" aria-hidden="true" style="position: absolute; left: 0; top: 0; display: block; pointer-events: none">
+<path d="{{ g.cf0 }}" fill="#ffc918"></path>
+<path d="{{ g.cf1 }}" fill="#2a9d8f"></path>
+<path d="{{ g.cf2 }}" fill="#e9801f"></path>
+<path d="{{ g.cf3 }}" fill="#74a6cb"></path>
+<path d="{{ g.clap.d }}" fill="none" stroke="#ffc918" stroke-width="4" stroke-linecap="round" opacity="{{ g.clap.op }}"></path>
+<text x="{{ g.z0.x }}" y="{{ g.z0.y }}" font-size="{{ g.z0.s }}" font-weight="700" fill="#4a7ea6" opacity="{{ g.z0.op }}" style="font-family: 'Andika', sans-serif">z</text>
+<text x="{{ g.z1.x }}" y="{{ g.z1.y }}" font-size="{{ g.z1.s }}" font-weight="700" fill="#4a7ea6" opacity="{{ g.z1.op }}" style="font-family: 'Andika', sans-serif">z</text>
+<text x="{{ g.z2.x }}" y="{{ g.z2.y }}" font-size="{{ g.z2.s }}" font-weight="700" fill="#4a7ea6" opacity="{{ g.z2.op }}" style="font-family: 'Andika', sans-serif">z</text>
+</svg>
+</div>
+
+<div style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px">
+<h1 style="margin: 0; font-size: 30px; font-weight: 700; line-height: 1.1">Racoon in the game</h1>
+<p style="margin: 0 0 4px; font-size: 16px; line-height: 1.4; color: #6b5646">The lesson screen on a laptop, at its real size. Tap a picture to answer, or play a moment:</p>
+<button type="button" class="rr-mo" data-act="start" onClick="{{ h.mStart }}" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; min-height: 44px; padding: 0 12px; border: 2px solid #e3d6b4; border-radius: 14px; background: #fffef4; box-shadow: 0 4px 0 #e3d6b4; font-family: 'Andika', sans-serif; font-size: 18px; font-weight: 700; color: #3a2a1f; text-align: left; cursor: pointer"><span>Lesson starts</span><span style="font-size: 13px; color: #1d7166; background: #e2f3ee; border-radius: 999px; padding: 3px 9px">happy</span></button>
+<button type="button" class="rr-mo" data-act="read" onClick="{{ h.mRead }}" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; min-height: 44px; padding: 0 12px; border: 2px solid #e3d6b4; border-radius: 14px; background: #fffef4; box-shadow: 0 4px 0 #e3d6b4; font-family: 'Andika', sans-serif; font-size: 18px; font-weight: 700; color: #3a2a1f; text-align: left; cursor: pointer"><span>Reading the question</span><span style="font-size: 13px; color: #4a7ea6; background: #e6eff7; border-radius: 999px; padding: 3px 9px">calm</span></button>
+<button type="button" class="rr-mo" data-act="right" onClick="{{ h.mRight }}" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; min-height: 44px; padding: 0 12px; border: 2px solid #e3d6b4; border-radius: 14px; background: #fffef4; box-shadow: 0 4px 0 #e3d6b4; font-family: 'Andika', sans-serif; font-size: 18px; font-weight: 700; color: #3a2a1f; text-align: left; cursor: pointer"><span>Right answer</span><span style="font-size: 13px; color: #1d7166; background: #e2f3ee; border-radius: 999px; padding: 3px 9px">happy</span></button>
+<button type="button" class="rr-mo" data-act="hint" onClick="{{ h.mHint }}" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; min-height: 44px; padding: 0 12px; border: 2px solid #e3d6b4; border-radius: 14px; background: #fffef4; box-shadow: 0 4px 0 #e3d6b4; font-family: 'Andika', sans-serif; font-size: 18px; font-weight: 700; color: #3a2a1f; text-align: left; cursor: pointer"><span>Wrong, first try: a hint</span><span style="font-size: 13px; color: #684c7a; background: #f1eaf5; border-radius: 999px; padding: 3px 9px">thinking</span></button>
+<button type="button" class="rr-mo" data-act="again" onClick="{{ h.mAgain }}" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; min-height: 44px; padding: 0 12px; border: 2px solid #e3d6b4; border-radius: 14px; background: #fffef4; box-shadow: 0 4px 0 #e3d6b4; font-family: 'Andika', sans-serif; font-size: 18px; font-weight: 700; color: #3a2a1f; text-align: left; cursor: pointer"><span>Wrong again</span><span style="font-size: 13px; color: #bd6212; background: #fdeede; border-radius: 999px; padding: 3px 9px">encourage</span></button>
+<button type="button" class="rr-mo" data-act="rescue" onClick="{{ h.mRescue }}" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; min-height: 44px; padding: 0 12px; border: 2px solid #e3d6b4; border-radius: 14px; background: #fffef4; box-shadow: 0 4px 0 #e3d6b4; font-family: 'Andika', sans-serif; font-size: 18px; font-weight: 700; color: #3a2a1f; text-align: left; cursor: pointer"><span>Racoon's Rescue</span><span style="font-size: 13px; color: #bd6212; background: #fdeede; border-radius: 999px; padding: 3px 9px">encourage</span></button>
+<button type="button" class="rr-mo" data-act="level" onClick="{{ h.mLevel }}" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; min-height: 44px; padding: 0 12px; border: 2px solid #e3d6b4; border-radius: 14px; background: #fffef4; box-shadow: 0 4px 0 #e3d6b4; font-family: 'Andika', sans-serif; font-size: 18px; font-weight: 700; color: #3a2a1f; text-align: left; cursor: pointer"><span>Level up</span><span style="font-size: 13px; color: #8a6a00; background: #fff4cc; border-radius: 999px; padding: 3px 9px">celebrate</span></button>
+<button type="button" class="rr-mo" data-act="done" onClick="{{ h.mDone }}" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; min-height: 44px; padding: 0 12px; border: 2px solid #e3d6b4; border-radius: 14px; background: #fffef4; box-shadow: 0 4px 0 #e3d6b4; font-family: 'Andika', sans-serif; font-size: 18px; font-weight: 700; color: #3a2a1f; text-align: left; cursor: pointer"><span>Lesson complete</span><span style="font-size: 13px; color: #8a6a00; background: #fff4cc; border-radius: 999px; padding: 3px 9px">celebrate</span></button>
+<button type="button" class="rr-mo" data-act="nudge" onClick="{{ h.mNudge }}" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; min-height: 44px; padding: 0 12px; border: 2px solid #e3d6b4; border-radius: 14px; background: #fffef4; box-shadow: 0 4px 0 #e3d6b4; font-family: 'Andika', sans-serif; font-size: 18px; font-weight: 700; color: #3a2a1f; text-align: left; cursor: pointer"><span>Waiting for an answer</span><span style="font-size: 13px; color: #4a7ea6; background: #e6eff7; border-radius: 999px; padding: 3px 9px">helps</span></button>
+<button type="button" class="rr-mo" data-act="rest" onClick="{{ h.mRest }}" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; min-height: 44px; padding: 0 12px; border: 2px solid #e3d6b4; border-radius: 14px; background: #fffef4; box-shadow: 0 4px 0 #e3d6b4; font-family: 'Andika', sans-serif; font-size: 18px; font-weight: 700; color: #3a2a1f; text-align: left; cursor: pointer"><span>Time to rest</span><span style="font-size: 13px; color: #6b5646; background: #efebe4; border-radius: 999px; padding: 3px 9px">sleepy</span></button>
+<p style="margin: 6px 0 0; font-size: 14px; line-height: 1.4; color: #7d6857">His lines, hints and rules are the game's own (companion lines, HintText, FR-13, FR-14).</p>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1712,"height":800}}'>
+/*RACOON:BASE*/
+
+// ===== Racoon in the game ==========================================================================
+// The laptop lesson screen (D-007 layout, D-023 laptop column) at its real size, 1280 x 720, with
+// Racoon in his 200 px box. The moments are the game's (scenes/lesson/lesson.gd,
+// scripts/core/lesson_session.gd): his lines come from content/companion_lines.json, hints and
+// explanations are built the way HintText builds them, and the rules are the game's: a heart lost per
+// wrong try and one back for a right answer (FR-13), a hint after a wrong first try (FR-14), the
+// answer and why after a second, and Racoon's Rescue when the hearts run out. He stays calm while the
+// question is read (06-game-design, companion guardrails).
+const STAGE = { w: 1280, h: 720 };
+const BOX = { x: 90, y: 510, size: 200 };
+const SPEAKER = [428, 192], PROMPT_X = 494, PROMPT_Y = 192;
+function CARD(i) { return [522 + i * 280, 425]; }
+const QUESTIONS = [
+  { prompt: 'Which one rhymes with cat?', word: 'cat', choices: ['hat', 'dog', 'sun'], answer: 0 },
+  { prompt: 'Which one rhymes with bee?', word: 'bee', choices: ['cat', 'tree', 'car'], answer: 1 },
+  { prompt: 'Which one rhymes with star?', word: 'star', choices: ['moon', 'fish', 'car'], answer: 2 },
+];
+const LINES = {
+  intro: ["Let's play!", "Ready? Let's go!", "I'm here with you!", "Let's read together!"],
+  correct: ['Great job!', 'You got it!', 'Yay! Super!', 'Wow, nice work!', 'High five!', "You're a reading star!"],
+  retry: ['Yes! You figured it out!', 'You did it!', "That's it! Good thinking!"],
+  incorrect: ["Good try! Here's how it works.", "That's okay! Let's learn it together.", "Nice try! Here's the answer."],
+  rescueStart: ["Oh no, no hearts! Let's do Racoon's Rescue together!"],
+  rescueCorrect: ['A heart came back!', 'Yay, one more heart!'],
+  rescueFull: ['All your hearts are back!', 'You did it! Hearts are full!'],
+  levelUp: ["Level up! You're amazing!", 'You unlocked a new world!'],
+  done: ['You finished the lesson!', 'What a reader you are!'],
+  rest: ["Let's rest and try again tomorrow!"],
+  nudge: ['Tap the speaker to hear it again.'],
+};
+function pick(list) { return list[Math.floor(Math.random() * list.length)]; }
+// HintText.rime / hint / explain, for "rhymes with" questions
+function rime(w) { for (let i = 0; i < w.length; i++) { if ('aeiou'.indexOf(w[i]) >= 0) return w.slice(i); } return w; }
+function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+function hintFor(q) { return 'Say ' + q.word + ' slowly. Listen to the end: ' + rime(q.word) + '. Which word ends the same way?'; }
+function explainFor(q) { return cap(q.word) + ' and ' + q.choices[q.answer] + ' rhyme. They both end with ' + rime(q.word) + '.'; }
+// confetti pieces, the same every time (a small seeded random)
+const CONFETTI = (function () {
+  let seed = 7;
+  const rnd = function () { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
+  const out = [];
+  for (let i = 0; i < 44; i++) {
+    out.push({ x: 802 + (rnd() - 0.5) * 300, y: 250, vx: (rnd() - 0.5) * 820, vy: -420 - rnd() * 520,
+      r: rnd() * TAU, vr: (rnd() - 0.5) * 14, w: 8 + rnd() * 7, h: 5 + rnd() * 4, c: i % 4 });
+  }
+  return out;
+})();
+
+Component = (function (Base) {
+  return class extends Base {
+    constructor(props) {
+      super(props);
+      this.g = this.fresh();
+      this.gTimers = [];
+      this.gLast = 0;
+      this.sleeping = false;
+      this.glanceAt = performance.now() + 6000;
+      const self = this, h = this.h;
+      [0, 1, 2].forEach(function (i) { h['ans' + i] = function () { self.answer(i); }; });
+      h.mStart = function () { self.mStart(); };
+      h.mRead = function () { self.prep(false); self.run(self.gRead); };
+      h.mRight = function () { const g = self.prep(false); self.answer(QUESTIONS[g.q].answer); };
+      h.mHint = function () { self.prep(true); self.answer(self.wrongs()[0]); };
+      h.mAgain = function () {
+        const g = self.prep(true), w = self.wrongs();
+        g.cards[w[0]] = 'grey';
+        g.tries = 1;
+        self.loseHeart();
+        self.answer(w[1]);
+      };
+      h.mRescue = function () {
+        const g = self.prep(false);
+        g.locked = true;
+        let k = 0;
+        for (let i = 2; i >= 0; i--) {
+          if (g.hearts[i]) { self.later(k * 200, function () { self.loseHeart(); }); k += 1; }
+        }
+        self.later(k * 200 + 500, function () { self.startRescue(); });
+      };
+      h.mLevel = function () { const now = performance.now(); self.g.banner = now; self.g.conf = now; self.run(self.gLevelUp); };
+      h.mDone = function () { self.prep(false); self.finish(); };
+      h.mNudge = function () { self.prep(false); self.run(self.gNudge); };
+      h.mRest = function () { self.run(self.gRest); };
+      h.ok = function () { self.okOverlay(); };
+    }
+
+    // Racoon's 200 px box (the 400 px drawing at half size), and this stage's size
+    get home() { const s = BOX.size / 400; return { x: BOX.x + AX * s, y: BOX.y + GY * s, s: s }; }
+    get nearP() { return this.home; }
+    get stageW() { return STAGE.w; }
+    get stageH() { return STAGE.h; }
+
+    fresh() {
+      return { q: 0, tries: 0, hearts: [1, 1, 1], hfx: [null, null, null], cards: ['idle', 'idle', 'idle'], pop: [0, 0, 0],
+        locked: false, done: false, word: -1, reading: false, sheet: null, overlay: null, rescue: null,
+        prog: 0, progT: 0, banner: 0, conf: 0, star: 0, nudge: 0, clap: 0 };
+    }
+
+    later(ms, fn) { this.gTimers.push({ at: performance.now() + ms, fn: fn }); }
+
+    run(fn) {
+      this.sleeping = false;
+      this.g.word = -1;
+      this.g.reading = false;
+      super.run(fn);
+    }
+
+    tick(now) {
+      super.tick(now);
+      const g = this.g, dt = this.gLast ? Math.min(0.05, (now - this.gLast) / 1000) : 0.016;
+      this.gLast = now;
+      if (this.gTimers.length) {
+        const due = this.gTimers.filter(function (q) { return q.at <= now; });
+        this.gTimers = this.gTimers.filter(function (q) { return q.at > now; });
+        due.forEach(function (q) { q.fn(); });
+      }
+      g.prog += (g.progT - g.prog) * (1 - Math.exp(-dt / 0.22));
+      // while the child thinks, now and then a calm glance at the pictures (no words)
+      if (!this.busy && !this.mouseIn && !this.sleeping && !g.locked && !g.overlay && now > this.glanceAt) {
+        this.glanceAt = now + 6000 + Math.random() * 4000;
+        this.run(this.gGlance);
+      }
+    }
+
+    // --- the lesson's rules ---------------------------------------------------------------------------
+
+    heartsLeft() { return this.g.hearts.reduce(function (a, b) { return a + b; }, 0); }
+
+    // the rightmost heart cracks away first; a heart comes back into the leftmost empty slot
+    loseHeart() {
+      const g = this.g;
+      for (let i = 2; i >= 0; i--) {
+        if (g.hearts[i]) { g.hearts[i] = 0; g.hfx[i] = { k: 'break', t0: performance.now() }; return; }
+      }
+    }
+
+    gainHeart() {
+      const g = this.g;
+      for (let i = 0; i < 3; i++) {
+        if (!g.hearts[i]) { g.hearts[i] = 1; g.hfx[i] = { k: 'regain', t0: performance.now() }; return; }
+      }
+    }
+
+    wrongs() { const q = QUESTIONS[this.g.q]; return [0, 1, 2].filter(function (i) { return i !== q.answer; }); }
+
+    // A clean question for a moment button: closes sheets and overlays, keeps the lesson where it is.
+    prep(fullHearts) {
+      this.gTimers = [];
+      if (this.g.done) this.g = this.fresh();
+      const g = this.g;
+      Object.assign(g, { overlay: null, sheet: null, rescue: null, locked: false, tries: 0, banner: 0, cards: ['idle', 'idle', 'idle'] });
+      if (fullHearts) { while (this.heartsLeft() < 3) this.gainHeart(); }
+      return g;
+    }
+
+    answer(i) {
+      const g = this.g, q = QUESTIONS[g.q], self = this;
+      if (!q || g.locked || g.done || g.overlay || g.cards[i] !== 'idle') return;
+      g.tries += 1;
+      if (i === q.answer) {
+        g.cards = g.cards.map(function (c, k) { return k === i ? 'right' : (c === 'grey' ? 'grey' : 'dim'); });
+        g.pop[i] = performance.now();
+        this.gainHeart();
+        g.locked = true;
+        const line = pick(g.tries === 1 ? LINES.correct : LINES.retry);
+        this.run(function () { return this.gRight(line, i); });
+        this.later(2400, function () { self.nextQuestion(); });
+        return;
+      }
+      g.cards[i] = 'grey';
+      this.loseHeart();
+      if (this.heartsLeft() === 0) {
+        g.locked = true;
+        this.later(700, function () { self.startRescue(); });
+        return;
+      }
+      if (g.tries === 1) {
+        const hint = hintFor(q);
+        this.run(function () { return this.gHint(hint); });
+        return;
+      }
+      // a wrong second try: the right picture lights up, and the answer and why come up on a sheet
+      g.cards = g.cards.map(function (c, k) { return k === q.answer ? 'right' : (c === 'grey' ? 'grey' : 'dim'); });
+      g.sheet = { t0: performance.now(), title: 'The answer is ' + q.choices[q.answer] + '.', why: explainFor(q) };
+      g.locked = true;
+      const line = pick(LINES.incorrect);
+      this.run(function () { return this.gAnswer(q.answer, line); });
+      this.later(4200, function () { if (self.g.sheet) self.g.sheet.out = performance.now(); });
+      this.later(4500, function () { self.nextQuestion(); });
+    }
+
+    nextQuestion() {
+      const g = this.g;
+      g.sheet = null;
+      if (g.q + 1 >= QUESTIONS.length) { this.finish(); return; }
+      g.q += 1;
+      g.progT = g.q / QUESTIONS.length;
+      Object.assign(g, { tries: 0, cards: ['idle', 'idle', 'idle'], locked: false });
+      this.run(this.gRead);
+    }
+
+    finish() {
+      const g = this.g, now = performance.now();
+      Object.assign(g, { done: true, locked: true, progT: 1, sheet: null, overlay: { kind: 'complete', t0: now + 200 }, star: now + 450, conf: now + 300 });
+      this.run(this.gComplete);
+    }
+
+    startRescue() {
+      this.g.overlay = { kind: 'rescue', t0: performance.now() };
+      this.run(this.gRescue);
+    }
+
+    okOverlay() {
+      const g = this.g, self = this;
+      if (!g.overlay) return;
+      if (g.overlay.kind === 'complete') { this.mStart(); return; }
+      // Racoon's Rescue: three easy ones, a heart back for each (shown here as the hearts returning)
+      g.overlay = null;
+      g.rescue = { n: 0 };
+      [0, 1, 2].forEach(function (k) {
+        self.later(400 + k * 800, function () { self.gainHeart(); if (self.g.rescue) self.g.rescue.n = k + 1; });
+      });
+      this.run(this.gRescueWin);
+      this.later(3600, function () {
+        const h = self.g;
+        Object.assign(h, { rescue: null, tries: 0, cards: ['idle', 'idle', 'idle'], locked: false });
+        self.run(self.gRead);
+      });
+    }
+
+    mStart() {
+      this.gTimers = [];
+      this.g = this.fresh();
+      this.run(async function () { await this.gGreet(); await this.gRead(); });
+    }
+
+    // --- Racoon's moves for the game's moments ----------------------------------------------------------
+
+    // how to look at a point on the screen: eyes, head turn and tilt
+    lookVals(X, Y) {
+      const pl = this.pl, hx = pl.x, hy = pl.y + (HC[1] - GY) * pl.s, dx = X - hx, dy = Y - hy;
+      return { lookX: clamp(dx / 170, -1, 1), lookY: clamp(dy / 170, -1, 1), headYaw: clamp(dx / 900, -0.42, 0.42), pitch: clamp(-dy / 1500, -0.16, 0.16) };
+    }
+
+    look(X, Y, ms, ease) { return this.tw(this.lookVals(X, Y), ms || 260, ease || EASE.out); }
+
+    lookHome(ms) { return this.tw({ lookX: 0, lookY: 0, headYaw: 0, pitch: 0 }, ms || 380, EASE.inOut); }
+
+    // where arm j's paw tip goes to point at a point on the screen
+    aim(j, X, Y) {
+      const A = ART.arms[j], t = this.toLocal(X, Y), S = this.shoulder(j, this.p.yaw);
+      const dx = t[0] - S[0], dy = t[1] - S[1], dl = Math.hypot(dx, dy) || 1, r = Math.min(A.len * 1.45, dl);
+      return [S[0] + dx / dl * r, S[1] + dy / dl * r];
+    }
+
+    async pointAt(X, Y) {
+      const t = this.aim(1, X, Y);
+      Object.assign(this.p, { tRx: t[0], tRy: t[1] });
+      this.tw({ freeR: 1 }, 200, EASE.out);
+      this.look(X, Y, 300, EASE.out);
+      await this.tw({ armR: 1 }, 380, EASE.back);
+    }
+
+    async jump(h) {
+      await this.tw({ sq: 0.86 }, 130, EASE.out);
+      this.tw({ sq: 1.08 }, 130, EASE.out).then(() => this.tw({ sq: 1 }, 240, EASE.inOut));
+      this.tw({ liftL: this.raiseTo(0, -35), liftR: this.raiseTo(1, -35) }, 200, EASE.back);
+      await this.tw({ hop: h }, 280, EASE.out);
+      await this.tw({ hop: 0 }, 260, EASE.inc);
+      this.tw({ liftL: 0, liftR: 0 }, 320, EASE.inOut);
+      await this.tw({ sq: 0.88 }, 80, EASE.out);
+      await this.tw({ sq: 1 }, 260, EASE.back);
+    }
+
+    // Lesson starts (happy): a wave hello and the intro line
+    async gGreet() {
+      this.toRest(220);
+      this.eyes = 'happy';
+      this.mouth = 'happy';
+      this.say(pick(LINES.intro), 1300);
+      const w1 = this.reach(1, -44, 1.04), w2 = this.reach(1, -72, 1.04);
+      Object.assign(this.p, { tRx: w1[0], tRy: w1[1] });
+      this.tw({ freeR: 1 }, 200, EASE.out);
+      this.tw({ hop: -12 }, 200, EASE.out).then(() => this.tw({ hop: 0 }, 220, EASE.inc));
+      await this.tw({ armR: 1 }, 320, EASE.back);
+      for (let i = 0; i < 3; i++) {
+        await this.tw({ tRx: w2[0], tRy: w2[1] }, 210, EASE.inOut);
+        await this.tw({ tRx: w1[0], tRy: w1[1] }, 210, EASE.inOut);
+      }
+      await this.tw({ armR: 0, freeR: 0 }, 320, EASE.inOut);
+      this.eyes = 'open';
+      this.mouth = 'w';
+      await this.wait(300);
+    }
+
+    // Reading the question (calm, FR-20 read-aloud): his eyes follow each word as it's read, with a
+    // small nod; then a look at the pictures and back at you: your turn. No words of his own.
+    async gRead() {
+      const g = this.g, q = QUESTIONS[Math.min(g.q, QUESTIONS.length - 1)], words = q.prompt.split(' ');
+      this.toRest(200, ['lookX', 'lookY', 'headYaw', 'pitch']);
+      g.reading = true;
+      let x = PROMPT_X;
+      const xs = words.map(function (w) { const c = x + 6 + w.length * 9.4; x += w.length * 18.8 + 12; return c; });
+      await this.look(xs[0], PROMPT_Y, 320, EASE.inOut);
+      for (let i = 0; i < words.length; i++) {
+        g.word = i;
+        const v = this.lookVals(xs[i], PROMPT_Y);
+        this.tw({ lookX: v.lookX, headYaw: v.headYaw }, 200, EASE.inOut);
+        this.tw({ pitch: v.pitch - 0.04 }, 130, EASE.out).then(() => this.tw({ pitch: v.pitch }, 170, EASE.inOut));
+        await this.wait(330 + words[i].length * 30);
+      }
+      g.word = -1;
+      g.reading = false;
+      const c = CARD(1);
+      await this.look(c[0], c[1], 380, EASE.inOut);
+      await this.wait(500);
+      await this.tw({ lookX: 0, lookY: 0.1, headYaw: 0, pitch: 0 }, 400, EASE.inOut);
+    }
+
+    // a calm glance at the pictures while the child thinks
+    async gGlance() {
+      const c = CARD(Math.floor(Math.random() * 3));
+      await this.look(c[0], c[1], 420, EASE.inOut);
+      await this.wait(900);
+      await this.lookHome(480);
+    }
+
+    // Right answer (happy): a look at the picture, a hop and a paw pump
+    async gRight(line, i) {
+      this.toRest(160, ['lookX', 'lookY', 'headYaw', 'pitch']);
+      this.eyes = 'happy';
+      this.mouth = 'happy';
+      this.say(line, 1000);
+      const c = CARD(i);
+      this.look(c[0], c[1], 200, EASE.out);
+      await this.tw({ sq: 0.88 }, 100, EASE.out);
+      this.tw({ sq: 1.05 }, 140, EASE.out).then(() => this.tw({ sq: 1 }, 220, EASE.inOut));
+      this.tw({ liftR: this.raiseTo(1, -65) }, 160, EASE.out);
+      await this.tw({ hop: -26 }, 220, EASE.out);
+      await this.tw({ hop: 0 }, 220, EASE.inc);
+      this.tw({ sq: 0.92 }, 80, EASE.out).then(() => this.tw({ sq: 1 }, 220, EASE.back));
+      await this.tw({ liftR: this.raiseTo(1, -20) }, 140, EASE.inOut);
+      await this.tw({ liftR: this.raiseTo(1, -65) }, 140, EASE.out);
+      this.lookHome(320);
+      await this.tw({ liftR: 0 }, 300, EASE.back);
+      await this.wait(400);
+      this.eyes = 'open';
+      this.mouth = 'w';
+    }
+
+    // Wrong, first try (thinking): eyes up, paw on his chin, then the hint and a point at the question
+    async gHint(text) {
+      this.toRest(200, ['lookX', 'lookY', 'headYaw', 'pitch', 'roll']);
+      const chin = [AX + ART.muzzle.c[0] - 2, HC[1] + ART.muzzle.c[1] + ART.muzzle.ry + 2];
+      const t = this.tipFor(0, chin);
+      Object.assign(this.p, { tLx: t[0], tLy: t[1] });
+      this.tw({ lookX: 0.35, lookY: -1, roll: -6, headYaw: -0.1 }, 260, EASE.out);
+      await this.tw({ armL: 1 }, 340, EASE.out);
+      this.say(text, 1400);
+      await this.wait(900);
+      this.tw({ armL: 0, roll: 0 }, 320, EASE.inOut);
+      await this.pointAt(PROMPT_X + 200, PROMPT_Y);
+      await this.wait(Math.max(900, text.length * 42 - 1300));
+      await this.tw({ armR: 0, freeR: 0 }, 360, EASE.inOut);
+      const c = CARD(1);
+      await this.look(c[0], c[1], 360, EASE.inOut);   // back to the pictures: your turn
+      await this.wait(500);
+    }
+
+    // Wrong again (encourage): a gentle nod, a point at the right picture, an encouraging smile
+    async gAnswer(i, line) {
+      this.toRest(200, ['lookX', 'lookY', 'headYaw', 'pitch']);
+      this.say(line, 1800);
+      await this.tw({ pitch: -0.1 }, 180, EASE.inOut);
+      await this.tw({ pitch: 0.02 }, 200, EASE.inOut);
+      await this.tw({ pitch: -0.1 }, 180, EASE.inOut);
+      await this.tw({ pitch: 0 }, 200, EASE.inOut);
+      const c = CARD(i);
+      await this.pointAt(c[0], c[1]);
+      await this.wait(1500);
+      await this.tw({ armR: 0, freeR: 0 }, 360, EASE.inOut);
+      this.eyes = 'happy';
+      await this.tw({ lookX: 0, lookY: 0, headYaw: 0, pitch: 0, sq: 0.95 }, 300, EASE.inOut);
+      await this.tw({ sq: 1 }, 260, EASE.back);
+      await this.wait(500);
+      this.eyes = 'open';
+    }
+
+    // Racoon's Rescue (encourage): a surprised start, then he's ready to help, arms up
+    async gRescue() {
+      this.toRest(160);
+      this.mouth = 'o';
+      await this.tw({ sq: 1.06, hop: -8 }, 140, EASE.out);
+      await this.tw({ sq: 1, hop: 0 }, 200, EASE.inc);
+      this.eyes = 'happy';
+      this.mouth = 'happy';
+      this.say(pick(LINES.rescueStart), 2200);
+      await this.tw({ sq: 0.88 }, 120, EASE.out);
+      this.tw({ liftL: this.raiseTo(0, -30), liftR: this.raiseTo(1, -30) }, 260, EASE.back);
+      await this.tw({ hop: -34, sq: 1.05 }, 240, EASE.out);
+      await this.tw({ hop: 0, sq: 1 }, 240, EASE.inc);
+      await this.tw({ sq: 0.92 }, 80, EASE.out);
+      await this.tw({ sq: 1 }, 220, EASE.back);
+      await this.wait(900);
+      await this.tw({ liftL: 0, liftR: 0 }, 360, EASE.inOut);
+      this.eyes = 'open';
+      this.mouth = 'w';
+    }
+
+    // the rescue won: a hop for each heart that comes back, and a big jump
+    async gRescueWin() {
+      this.toRest(160);
+      for (let k = 0; k < 3; k++) {
+        await this.wait(k ? 560 : 400);
+        this.eyes = 'happy';
+        this.mouth = 'happy';
+        if (k < 2) this.say(pick(LINES.rescueCorrect), 300);
+        this.tw({ liftR: this.raiseTo(1, -60) }, 140, EASE.out).then(() => this.tw({ liftR: 0 }, 300, EASE.back));
+        await this.tw({ hop: -18, sq: 1.04 }, 120, EASE.out);
+        await this.tw({ hop: 0, sq: 1 }, 120, EASE.inc);
+      }
+      this.say(pick(LINES.rescueFull), 900);
+      await this.jump(-56);
+      await this.wait(500);
+      this.eyes = 'open';
+      this.mouth = 'w';
+    }
+
+    // Level up (celebrate): a crouch, a big spinning jump with his arms up
+    async gLevelUp() {
+      this.toRest(160, ['yaw', 'hop', 'sq']);
+      this.eyes = 'happy';
+      this.mouth = 'happy';
+      this.say(pick(LINES.levelUp), 1200);
+      await this.tw({ sq: 0.84 }, 160, EASE.out);
+      this.tw({ sq: 1.1 }, 140, EASE.out).then(() => this.tw({ sq: 1 }, 260, EASE.inOut));
+      this.tw({ liftL: this.raiseTo(0, -40), liftR: this.raiseTo(1, -40) }, 220, EASE.back);
+      const spin = this.tw({ yaw: TAU }, 720, EASE.inOut);
+      await this.tw({ hop: -72 }, 340, EASE.out);
+      await this.tw({ hop: 0 }, 320, EASE.inc);
+      await spin;
+      this.p.yaw = 0;
+      await this.tw({ sq: 0.86 }, 80, EASE.out);
+      await this.tw({ sq: 1 }, 300, EASE.back);
+      await this.wait(700);
+      await this.tw({ liftL: 0, liftR: 0 }, 360, EASE.inOut);
+      this.eyes = 'open';
+      this.mouth = 'w';
+    }
+
+    // Lesson complete (celebrate): three claps, a little dance, arms up
+    async gComplete() {
+      this.toRest(200);
+      this.eyes = 'happy';
+      this.mouth = 'happy';
+      this.say(pick(LINES.done), 1500);
+      const inL = this.tipFor(0, [AX - 9, 292]), inR = this.tipFor(1, [AX + 9, 292]);
+      const outL = this.tipFor(0, [AX - 46, 282]), outR = this.tipFor(1, [AX + 46, 282]);
+      Object.assign(this.p, { tLx: outL[0], tLy: outL[1], tRx: outR[0], tRy: outR[1] });
+      this.tw({ freeR: 1 }, 160, EASE.out);
+      await this.tw({ armL: 1, armR: 1 }, 260, EASE.out);
+      for (let i = 0; i < 3; i++) {
+        await this.tw({ tLx: inL[0], tLy: inL[1], tRx: inR[0], tRy: inR[1] }, 110, EASE.inc);
+        this.g.clap = performance.now();
+        this.tw({ sq: 0.96 }, 60, EASE.out).then(() => this.tw({ sq: 1 }, 140, EASE.out));
+        await this.tw({ tLx: outL[0], tLy: outL[1], tRx: outR[0], tRy: outR[1] }, 160, EASE.out);
+      }
+      await this.tw({ armL: 0, armR: 0 }, 260, EASE.inOut);
+      for (let i = 0; i < 2; i++) {
+        this.tw({ yaw: 0.3, liftL: this.raiseTo(0, -35), liftR: 0 }, 260, EASE.inOut);
+        await this.tw({ hop: -16 }, 130, EASE.out);
+        await this.tw({ hop: 0 }, 130, EASE.inc);
+        this.tw({ yaw: -0.3, liftR: this.raiseTo(1, -35), liftL: 0 }, 260, EASE.inOut);
+        await this.tw({ hop: -16 }, 130, EASE.out);
+        await this.tw({ hop: 0 }, 130, EASE.inc);
+      }
+      await this.tw({ yaw: 0, liftL: this.raiseTo(0, -23), liftR: this.raiseTo(1, -23) }, 280, EASE.back);
+      await this.wait(900);
+      await this.tw({ liftL: 0, liftR: 0, freeR: 0 }, 380, EASE.inOut);
+      this.eyes = 'open';
+      this.mouth = 'w';
+    }
+
+    // Waiting for an answer (helps): a look at you, then a point at the speaker, which bounces
+    async gNudge() {
+      this.toRest(200, ['lookX', 'lookY', 'headYaw', 'pitch']);
+      await this.tw({ lookX: 0, lookY: 0.15, headYaw: 0, pitch: 0 }, 260, EASE.out);
+      this.say(pick(LINES.nudge), 1400);
+      this.g.nudge = performance.now();
+      await this.pointAt(SPEAKER[0], SPEAKER[1]);
+      for (let i = 0; i < 2; i++) {
+        await this.tw({ knock: 1 }, 110, EASE.inc);
+        await this.tw({ knock: 0 }, 170, EASE.out);
+      }
+      await this.wait(1100);
+      await this.tw({ armR: 0, freeR: 0 }, 360, EASE.inOut);
+      await this.lookHome(320);
+    }
+
+    // Time to rest (sleepy): the kind goodbye, a yawn and a stretch, then off to sleep, z z z
+    async gRest() {
+      this.toRest(240);
+      this.say(pick(LINES.rest), 1500);
+      await this.wait(1700);
+      this.mouth = 'o';
+      this.eyes = 'closed';
+      // (up and out: straight up, his arms would hide behind his big head)
+      this.tw({ liftL: this.raiseTo(0, -28), liftR: this.raiseTo(1, -28), sq: 1.06, pitch: 0.1 }, 700, EASE.inOut);
+      await this.wait(1100);
+      await this.tw({ liftL: 0, liftR: 0, sq: 1, pitch: 0 }, 600, EASE.inOut);
+      this.mouth = 'w';
+      this.sleeping = true;
+      this.sleepT0 = performance.now();
+      await this.tw({ pitch: -0.14, roll: 7, headYaw: 0.08 }, 900, EASE.inOut);
+      for (;;) {   // slow breaths until another move wakes him (it drops these tweens)
+        await this.tw({ sq: 0.97 }, 1400, EASE.inOut);
+        await this.tw({ sq: 1.01 }, 1400, EASE.inOut);
+      }
+    }
+
+    // --- the screen -------------------------------------------------------------------------------------
+
+    toStage(x, y) { const pl = this.pl; return [pl.x + (x - AX) * pl.s, pl.y + (y - GY) * pl.s]; }
+
+    gview() {
+      const g = this.g, now = this.now, q = QUESTIONS[Math.min(g.q, QUESTIONS.length - 1)], out = {};
+      // hearts
+      for (let i = 0; i < 3; i++) {
+        const fx = g.hfx[i];
+        let sc = g.hearts[i] ? 1 : 0, op = g.hearts[i] ? 1 : 0, dy = 0, dx = 0, rot = 0;
+        if (fx) {
+          const t = (now - fx.t0) / 1000;
+          if (fx.k === 'break' && t < 0.6) {
+            if (t < 0.14) { sc = 1 + 0.22 * (t / 0.14); op = 1; dx = Math.sin(t * 90) * 2.5; }
+            else { const u = (t - 0.14) / 0.46; sc = 1.22 - 0.6 * u; dy = 28 * u * u; rot = 28 * u; op = 1 - u; }
+          } else if (fx.k === 'regain' && t < 0.45) {
+            const u = clamp(t / 0.45, 0, 1);
+            sc = EASE.back(u);
+            op = Math.min(1, u * 3);
+          }
+        }
+        out['h' + i] = { t: 'translate(' + r1(dx) + ' ' + r1(dy) + ') rotate(' + r1(rot) + ') scale(' + r3(Math.max(0.001, sc)) + ')', op: r3(op) };
+      }
+      out.progW = r1(clamp(g.prog, 0, 1) * 926);
+      out.rb = g.rescue ? { css: 'flex', text: "Racoon's Rescue  " + g.rescue.n + ' / 3' } : { css: 'none', text: '' };
+      // the question, each word lit as it's read
+      const words = q.prompt.split(' ');
+      for (let k = 0; k < 5; k++) {
+        out['w' + k] = { t: words[k] || '', bg: k === g.word ? '#ffe27a' : (g.reading && k < g.word ? '#fff3c4' : 'transparent') };
+      }
+      const nt = (now - g.nudge) / 1000;
+      out.spk = g.reading ? r3(1 + 0.05 * (0.5 + 0.5 * Math.sin(now * 0.012))) : (g.nudge && nt < 2.6 ? r3(1 + 0.12 * Math.abs(Math.sin(nt * 7))) : 1);
+      // the picture cards
+      for (let i = 0; i < 3; i++) {
+        const st = g.cards[i], c = { bg: '#fffef4', bd: '#e3d6b4', sh: '#e3d6b4', op: 1, ink: '#3a2a1f', cur: 'pointer', label: q.choices[i], icon: '#rr-icon-' + q.choices[i] };
+        if (st === 'grey') Object.assign(c, { bd: '#e9801f', sh: 'transparent', op: 0.5, cur: 'default' });
+        if (st === 'right') Object.assign(c, { bg: '#6aab4c', bd: '#487f33', sh: '#487f33' });
+        if (st === 'dim') Object.assign(c, { op: 0.45, cur: 'default' });
+        if (g.locked || g.done || g.overlay) c.cur = 'default';
+        const pt = (now - g.pop[i]) / 1000;
+        c.sc = g.pop[i] && pt < 0.45 ? r3(1 + 0.08 * Math.sin(Math.PI * pt / 0.45)) : 1;
+        c.op = r3(c.op);
+        out['c' + i] = c;
+      }
+      // his bubble (typed by the shared rig)
+      const bb = this.bubble, on = !!bb.full && this.p.bubbleS > 0.02;
+      out.bub = { css: on ? 'block' : 'none', sc: r3(this.p.bubbleS), text: on ? bb.full.slice(0, bb.shown) : '', said: on ? bb.full : '' };
+      // the answer sheet
+      if (g.sheet) {
+        let y = 200 * (1 - EASE.out(clamp((now - g.sheet.t0) / 350, 0, 1)));
+        if (g.sheet.out) y = Math.max(y, 200 * EASE.inc(clamp((now - g.sheet.out) / 250, 0, 1)));
+        out.sheet = { css: 'block', y: r1(y), title: g.sheet.title, why: g.sheet.why };
+      } else {
+        out.sheet = { css: 'none', y: 200, title: '', why: '' };
+      }
+      // Level up!
+      const lt = (now - g.banner) / 1000;
+      out.lv = g.banner && lt < 2.4 ? { css: 'flex', sc: r3(lt < 2 ? EASE.back(clamp(lt / 0.32, 0, 1)) : 1 - EASE.inc(clamp((lt - 2) / 0.4, 0, 1))) } : { css: 'none', sc: 0 };
+      // overlays
+      const ov = g.overlay;
+      if (ov) {
+        const t = (now - ov.t0) / 1000, done = ov.kind === 'complete';
+        const st = (now - g.star) / 1000, sp = clamp(st / 0.5, 0, 1);
+        out.ov = {
+          css: t >= 0 ? 'flex' : 'none', sc: r3(EASE.back(clamp(t / 0.35, 0, 1))), scrim: r3(0.22 * clamp(t / 0.3, 0, 1)),
+          title: done ? 'Lesson complete!' : "Racoon's Rescue!",
+          text: done ? 'You earned a star!' : 'Answer 3 easy ones to get your hearts back.',
+          btn: done ? 'Play again' : 'OK!',
+          starDisp: done ? 'inline' : 'none', heartDisp: done ? 'none' : 'inline',
+          starT: 'translate(80 70) rotate(' + r1(-40 * (1 - sp) + (sp >= 1 ? 6 * Math.sin(now * 0.004) : 0)) + ') scale(' + r3(Math.max(0.001, EASE.back(sp))) + ') translate(-80 -70)',
+          spark: r3(sp >= 1 ? 0.5 + 0.5 * Math.sin(now * 0.008) : 0),
+        };
+      } else {
+        out.ov = { css: 'none', sc: 0, scrim: 0, title: '', text: '', btn: '', starDisp: 'none', heartDisp: 'none', starT: '', spark: 0 };
+      }
+      // confetti
+      const ct = (now - g.conf) / 1000, paths = ['', '', '', ''];
+      if (g.conf && ct >= 0 && ct < 2.6) {
+        CONFETTI.forEach(function (c) {
+          const x = c.x + c.vx * ct, y = c.y + c.vy * ct + 450 * ct * ct, r = c.r + c.vr * ct;
+          const cr = Math.cos(r), sr = Math.sin(r), hw = c.w / 2, hh = c.h / 2 * Math.abs(Math.cos(r * 1.7));
+          const pts = [[-hw, -hh], [hw, -hh], [hw, hh], [-hw, hh]].map(function (q2) { return pt([x + q2[0] * cr - q2[1] * sr, y + q2[0] * sr + q2[1] * cr]); });
+          paths[c.c] += 'M ' + pts.join(' L ') + ' Z ';
+        });
+      }
+      for (let k = 0; k < 4; k++) out['cf' + k] = paths[k] || 'M 0 0';
+      // a spark where his paws clap
+      const kt = (now - g.clap) / 1000;
+      if (g.clap && kt < 0.3) {
+        const c = this.toStage(AX, 284), r0 = 10 + 30 * kt, r2 = r0 + 8;
+        let d = '';
+        for (let k = 0; k < 6; k++) {
+          const a = -Math.PI / 2 + (k - 2.5) * 0.5;
+          d += 'M ' + pt([c[0] + Math.cos(a) * r0, c[1] + Math.sin(a) * r0]) + ' L ' + pt([c[0] + Math.cos(a) * r2, c[1] + Math.sin(a) * r2]) + ' ';
+        }
+        out.clap = { d: d, op: r3(1 - kt / 0.3) };
+      } else {
+        out.clap = { d: 'M 0 0', op: 0 };
+      }
+      // z z z while he sleeps
+      for (let k = 0; k < 3; k++) {
+        if (this.sleeping) {
+          const ph = (((now - this.sleepT0) / 1000 + k * 0.8) % 2.4) / 2.4, base = this.toStage(AX + 70, HC[1] - 70);
+          out['z' + k] = { x: r1(base[0] + ph * 24), y: r1(base[1] - ph * 56), s: r1(18 + ph * 12), op: r3(Math.sin(ph * Math.PI)) };
+        } else {
+          out['z' + k] = { x: 0, y: 0, s: 18, op: 0 };
+        }
+      }
+      return out;
+    }
+
+    renderVals() {
+      const v = super.renderVals();
+      v.g = this.gview();
+      return v;
+    }
+  };
+})(Component);
+</script>
+</body>
+</html>

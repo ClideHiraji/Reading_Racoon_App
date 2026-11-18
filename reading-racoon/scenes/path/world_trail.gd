@@ -6,7 +6,7 @@ extends Control
 
 signal node_pressed(n: Dictionary, node: PathNode)
 
-const ROW_H := 190.0
+const ROW_H := 210.0
 const SWING := 150.0
 const DECOR := {
 	"river": ["waves", "cloud", "fish"],

@@ -32,6 +32,11 @@ func _run() -> void:
 	var gs := root.get_node("GameState")
 	gs.reset_progress()
 	gs.model.highest_unlocked = 5
+	# Monday at Reading time, whatever the real clock says (like hub_shots.gd),
+	# so lessons are open.
+	gs.access.schedule = AccessPolicy.DEFAULTS.duplicate()
+	gs._debug_now = {"year": 2026, "month": 10, "day": 19, "weekday": 1, "hour": 7, "minute": 45,
+			"second": 0}
 	for id in _ids:
 		var item := {}
 		for it in gs.bank.items:

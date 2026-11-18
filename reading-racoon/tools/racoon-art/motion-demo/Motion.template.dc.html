@@ -1,0 +1,1101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Racoon in motion</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#1d7166}a:hover{color:#3a2a1f}
+.rr-btn{transition:transform 80ms ease-out,box-shadow 80ms ease-out}
+.rr-btn:hover{background:#fffbea}
+.rr-btn:active{transform:translateY(4px);box-shadow:0 1px 0 #e3d6b4}
+.rr-btn:focus-visible{outline:3px solid #1d7166;outline-offset:3px}
+.rr-chip{transition:transform 80ms ease-out,box-shadow 80ms ease-out}
+.rr-chip:active{transform:translateY(3px);box-shadow:0 1px 0 #e3d6b4 !important}
+.rr-chip:focus-visible{outline:3px solid #1d7166;outline-offset:3px}
+</style>
+</helmet>
+<div style="width: 1440px; height: 860px; box-sizing: border-box; padding: 40px; background: #fefde0; font-family: 'Andika', sans-serif; color: #3a2a1f; display: flex; gap: 40px">
+<div style="position: relative; width: 1000px; height: 780px; flex-shrink: 0; border-radius: 28px; overflow: hidden; box-shadow: 0 6px 0 rgba(58, 42, 31, 0.12); background: #f7efd9">
+<svg viewBox="0 0 1000 780" width="1000" height="780" role="img" aria-label="Racoon on his reading mat beside a PLAY button. He looks at your pointer, and reacts when you tap him." style="display: block; touch-action: none; user-select: none" onPointerMove="{{ h.move }}" onPointerDown="{{ h.down }}" onPointerLeave="{{ h.leave }}">
+<defs>
+<linearGradient id="rr-wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbf4e3"></stop><stop offset="1" stop-color="#f2e3c1"></stop></linearGradient>
+<linearGradient id="rr-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bfe0ea"></stop><stop offset="1" stop-color="#eaf5ef"></stop></linearGradient>
+<clipPath id="rr-window-clip"><circle cx="190" cy="186" r="112"></circle></clipPath>
+<!--RACOON:DEFS-->
+</defs>
+<g transform="{{ r.shakeT }}">
+<rect x="-20" y="-20" width="1040" height="820" fill="url(#rr-wall)"></rect>
+<circle cx="190" cy="186" r="126" fill="#e6d2a6"></circle>
+<circle cx="190" cy="186" r="112" fill="url(#rr-sky)"></circle>
+<g clip-path="url(#rr-window-clip)">
+<circle cx="250" cy="136" r="32" fill="#fbd36a"></circle>
+<path d="M 96 214 C 112 190 146 194 156 210 C 172 196 206 204 206 228 L 206 238 L 92 238 Z" fill="#ffffff" opacity="0.9"></path>
+<path d="M 60 300 Q 150 236 232 266 Q 292 248 330 300 Z" fill="#9cc77e"></path>
+</g>
+<path d="M 190 74 L 190 298 M 78 186 L 302 186" stroke="#e6d2a6" stroke-width="10"></path>
+<rect x="-20" y="598" width="1040" height="202" fill="#e9d7b0"></rect>
+<rect x="-20" y="598" width="1040" height="6" fill="#f4e7c9"></rect>
+<ellipse cx="330" cy="660" rx="206" ry="40" fill="#fbe7b0" stroke="#e9801f" stroke-width="10"></ellipse>
+<ellipse cx="330" cy="660" rx="160" ry="30" fill="none" stroke="#6aa9d8" stroke-width="8"></ellipse>
+<ellipse cx="330" cy="660" rx="114" ry="21" fill="none" stroke="#f6c544" stroke-width="8"></ellipse>
+<g transform="{{ r.playT }}" onPointerDown="{{ h.play }}" style="cursor: pointer">
+<rect x="-14" y="-14" width="318" height="134" rx="38" fill="none" stroke="#f6c544" stroke-width="8" opacity="{{ r.glowOp }}"></rect>
+<rect x="0" y="10" width="290" height="96" rx="28" fill="#d9a521"></rect>
+<g transform="{{ r.playPress }}">
+<rect x="0" y="0" width="290" height="96" rx="28" fill="#f6c544"></rect>
+<circle cx="54" cy="48" r="30" fill="#1d7166"></circle>
+<path d="M 46 34 L 68 48 L 46 62 Z" fill="#fffef4" stroke="#fffef4" stroke-width="4" stroke-linejoin="round"></path>
+<text x="102" y="64" font-size="44" font-weight="700" fill="#3a2a1f" style="font-family: 'Andika', sans-serif">PLAY</text>
+</g>
+</g>
+<rect x="-20" y="-20" width="1040" height="820" fill="#3a2a1f" opacity="{{ r.scrimOp }}" pointer-events="none"></rect>
+<g transform="{{ r.place }}">
+<ellipse cx="{{ r.shadow.cx }}" cy="{{ r.shadow.cy }}" rx="{{ r.shadow.rx }}" ry="{{ r.shadow.ry }}" fill="#3a2a1f" opacity="{{ r.shadow.op }}"></ellipse>
+<g transform="{{ r.bodyT }}" onPointerDown="{{ h.tap }}" style="cursor: pointer">
+<!--RACOON:BODY-->
+</g>
+</g>
+<g pointer-events="none">
+<circle cx="{{ r.rip1.cx }}" cy="{{ r.rip1.cy }}" r="{{ r.rip1.r }}" fill="none" stroke="#fffef4" stroke-width="6" opacity="{{ r.rip1.op }}"></circle>
+<circle cx="{{ r.rip2.cx }}" cy="{{ r.rip2.cy }}" r="{{ r.rip2.r }}" fill="none" stroke="#fffef4" stroke-width="4" opacity="{{ r.rip2.op }}"></circle>
+<text x="{{ r.tok.x }}" y="{{ r.tok.y }}" font-size="36" font-weight="700" fill="#fffef4" opacity="{{ r.tok.op }}" style="font-family: 'Andika', sans-serif">tok!</text>
+</g>
+<g transform="{{ r.bub.t }}" display="{{ r.bub.disp }}" pointer-events="none">
+<path d="{{ r.bub.d }}" fill="#3a2a1f" opacity="0.12" transform="translate(0 5)"></path>
+<path d="{{ r.bub.d }}" fill="#ffffff" stroke="#e3d6b4" stroke-width="3" stroke-linejoin="round"></path>
+</g>
+</g>
+</svg>
+<div aria-hidden="true" style="position: absolute; left: {{ r.bub.lx }}px; top: {{ r.bub.ly }}px; height: 64px; display: {{ r.bub.css }}; transform-origin: {{ r.bub.ox }}px {{ r.bub.oy }}px; transform: translateX({{ r.bub.sx }}px) scale({{ r.bub.sc }}); font-family: 'Andika', sans-serif; font-size: 28px; font-weight: 700; line-height: 64px; white-space: nowrap; color: #3a2a1f; pointer-events: none">{{ r.bub.text }}</div>
+<div aria-live="polite" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap">{{ r.bub.said }}</div>
+</div>
+<div style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 10px">
+<h1 style="margin: 0; font-size: 34px; font-weight: 700; line-height: 1.1">Racoon in motion</h1>
+<p style="margin: 0 0 6px; font-size: 18px; line-height: 1.4; color: #6b5646">Built from your Inkscape drawing, moving as if he were in 3D. Press Play, then try each move.</p>
+<button type="button" class="rr-btn" onClick="{{ h.look }}" style="display: flex; align-items: center; gap: 12px; width: 100%; min-height: 54px; padding: 0 16px; border: 2px solid #e3d6b4; border-radius: 18px; background: #fffef4; box-shadow: 0 5px 0 #e3d6b4; font-family: 'Andika', sans-serif; font-size: 22px; font-weight: 700; color: #3a2a1f; text-align: left; cursor: pointer">
+<svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1d7166" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+Look around
+</button>
+<p style="margin: 0 0 0 6px; font-size: 16px; line-height: 1.35; color: #7d6857">A head turn from one drawing.</p>
+<button type="button" class="rr-btn" onClick="{{ h.turn }}" style="display: flex; align-items: center; gap: 12px; width: 100%; min-height: 54px; padding: 0 16px; border: 2px solid #e3d6b4; border-radius: 18px; background: #fffef4; box-shadow: 0 5px 0 #e3d6b4; font-family: 'Andika', sans-serif; font-size: 22px; font-weight: 700; color: #3a2a1f; text-align: left; cursor: pointer">
+<svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1d7166" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"></path><path d="M21 3v6h-6"></path></svg>
+Turn around
+</button>
+<p style="margin: 0 0 0 6px; font-size: 16px; line-height: 1.35; color: #7d6857">Each part sits on his round body.</p>
+<button type="button" class="rr-btn" onClick="{{ h.point }}" style="display: flex; align-items: center; gap: 12px; width: 100%; min-height: 54px; padding: 0 16px; border: 2px solid #e3d6b4; border-radius: 18px; background: #fffef4; box-shadow: 0 5px 0 #e3d6b4; font-family: 'Andika', sans-serif; font-size: 22px; font-weight: 700; color: #3a2a1f; text-align: left; cursor: pointer">
+<svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1d7166" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h14"></path><path d="M12 6l6 6-6 6"></path><path d="M21 4v16"></path></svg>
+Point at PLAY
+</button>
+<p style="margin: 0 0 0 6px; font-size: 16px; line-height: 1.35; color: #7d6857">Eyes first, then head, then arm.</p>
+<button type="button" class="rr-btn" onClick="{{ h.hi }}" style="display: flex; align-items: center; gap: 12px; width: 100%; min-height: 54px; padding: 0 16px; border: 2px solid #e3d6b4; border-radius: 18px; background: #fffef4; box-shadow: 0 5px 0 #e3d6b4; font-family: 'Andika', sans-serif; font-size: 22px; font-weight: 700; color: #3a2a1f; text-align: left; cursor: pointer">
+<svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1d7166" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6a2 2 0 0 0-4 0"></path><path d="M14 10V4a2 2 0 0 0-4 0v2"></path><path d="M10 10.5V6a2 2 0 0 0-4 0v8"></path><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-6-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"></path></svg>
+Come say hi
+</button>
+<p style="margin: 0 0 0 6px; font-size: 16px; line-height: 1.35; color: #7d6857">He walks up to the glass and knocks.</p>
+<button type="button" class="rr-btn" onClick="{{ h.tapBtn }}" style="display: flex; align-items: center; gap: 12px; width: 100%; min-height: 54px; padding: 0 16px; border: 2px solid #e3d6b4; border-radius: 18px; background: #fffef4; box-shadow: 0 5px 0 #e3d6b4; font-family: 'Andika', sans-serif; font-size: 22px; font-weight: 700; color: #3a2a1f; text-align: left; cursor: pointer">
+<svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1d7166" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"></path></svg>
+Tap Racoon
+</button>
+<p style="margin: 0 0 0 6px; font-size: 16px; line-height: 1.35; color: #7d6857">Or tap him in the scene: four reactions.</p>
+<div style="display: flex; align-items: flex-start; gap: 10px; margin-top: 4px; font-size: 16px; line-height: 1.35; color: #6b5646">
+<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6b5646" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 1px"><path d="M4 3l7 17 2.5-7.4L21 10.1 4 3z"></path></svg>
+<span>Move your pointer over the scene and his eyes and head follow it.</span>
+</div>
+<div style="margin-top: auto; display: flex; flex-direction: column; gap: 6px">
+<p style="margin: 0; font-size: 16px; font-weight: 700; line-height: 1.3; color: #6b5646">Try on from the Closet</p>
+<div style="display: flex; gap: 10px">
+<button type="button" class="rr-chip" aria-pressed="{{ r.wear.scarf }}" onClick="{{ h.wearScarf }}" style="flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 46px; padding: 0 10px; border: 2px solid {{ r.wear.scarfBd }}; border-radius: 16px; background: {{ r.wear.scarfBg }}; box-shadow: 0 4px 0 {{ r.wear.scarfBd }}; font-family: 'Andika', sans-serif; font-size: 19px; font-weight: 700; color: #3a2a1f; cursor: pointer">
+<span aria-hidden="true" style="flex-shrink: 0; display: flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: #2a9d8f; box-shadow: inset 0 0 0 2px #3b2d3a; color: #ffffff; font-size: 13px; line-height: 1">{{ r.wear.scarfMark }}</span>
+<span style="white-space: nowrap">River scarf</span>
+</button>
+<button type="button" class="rr-chip" aria-pressed="{{ r.wear.book }}" onClick="{{ h.wearBook }}" style="flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 46px; padding: 0 10px; border: 2px solid {{ r.wear.bookBd }}; border-radius: 16px; background: {{ r.wear.bookBg }}; box-shadow: 0 4px 0 {{ r.wear.bookBd }}; font-family: 'Andika', sans-serif; font-size: 19px; font-weight: 700; color: #3a2a1f; cursor: pointer">
+<span aria-hidden="true" style="flex-shrink: 0; display: flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 5px; background: #e9801f; box-shadow: inset 0 0 0 2px #3b2d3a; color: #ffffff; font-size: 13px; line-height: 1">{{ r.wear.bookMark }}</span>
+<span style="white-space: nowrap">Open book</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":860}}'>
+// Racoon as a 2.5D puppet. His shapes come from the hand-edited Inkscape drawing
+// (parts/racoon_C_inkscape.svg, put here by build_racoon.py as ART). Each part has a place on his
+// round head and body, so turning him moves the parts around instead of needing a drawing per angle.
+const ART = /*RACOON:ART*/null;
+const TAU = Math.PI * 2;
+const AX = ART.ax, GY = ART.ground, HC = ART.head.c, HRX = ART.head.r[0], HRY = ART.head.r[1];
+const DEPTH = 0.886;      // his body's depth as a share of its width
+const ARM_Z = 6, FOOT_Z = 12;
+const HOME = { x: 330, y: 652, s: 1.05 };
+const NEAR = { x: 500, y: 935, s: 2.5 };
+const PLAY_PT = { x: 700, y: 578 };
+function restTip(A) { return [AX + A.S[0] + A.side * A.len * Math.cos(A.elev), A.S[1] + A.len * Math.sin(A.elev)]; }
+const TIP_L = restTip(ART.arms[0]), TIP_R = restTip(ART.arms[1]);
+const REST = { near: 0, yaw: 0, headYaw: 0, pitch: 0, roll: 0, hop: 0, sq: 1, lean: 0, lookX: 0, lookY: 0,
+  armL: 0, armR: 0, tLx: TIP_L[0], tLy: TIP_L[1], tRx: TIP_R[0], tRy: TIP_R[1], liftL: 0, liftR: 0, freeR: 0, pawS: 1, knock: 0,
+  earL: 0, earR: 0, tailLag: 0, walk: 0, scrim: 0, glow: 0, press: 0, wiggle: 0, bubbleS: 0 };
+// How wide each of his lines is in Andika bold 28 px, so the bubble fits the words.
+const BUBBLE_W = { 'Hmm?': 83.7, 'Ta-da!': 91.8, 'Tap PLAY to start!': 253.5, 'Hi! Ready to read with me?': 365.8,
+  "Let's read!": 146.8, 'Hee hee! That tickles!': 294.1, 'Wheee!': 102.3, 'Peekaboo!': 139.5, 'Boing!': 87.4,
+  'My river scarf!': 202.2, 'Story time!': 151.9 };
+// Closet items (FR-07): how much he wears each. They're tweened on their own, so a move never
+// cuts a put-on or take-off short.
+const WEAR_KEYS = ['hold', 'bookS', 'scarfS'];
+const EASE = {
+  out: function (t) { return 1 - Math.pow(1 - t, 3); },
+  inc: function (t) { return t * t * t; },
+  in2: function (t) { return t * t; },
+  out2: function (t) { return 1 - (1 - t) * (1 - t); },
+  inOut: function (t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; },
+  back: function (t) { const c = 1.6, u = t - 1; return 1 + (c + 1) * u * u * u + c * u * u; },
+};
+
+function clamp(v, a, b) { return v < a ? a : v > b ? b : v; }
+function lerp(a, b, t) { return a + (b - a) * t; }
+function r1(v) { return Math.round(v * 10) / 10; }
+function r3(v) { return Math.round(v * 1000) / 1000; }
+function sstep(a, b, x) { const t = clamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); }
+function wrapPi(a) { let b = (a + Math.PI) % TAU; if (b < 0) b += TAU; return b - Math.PI; }
+function pt(q) { return r1(q[0]) + ' ' + r1(q[1]); }
+
+// A drawn outline as a path: the points are close enough together to read as a curve.
+function polyD(pts, open) {
+  let d = 'M ' + pt(pts[0]);
+  for (let i = 1; i < pts.length; i++) d += ' L ' + pt(pts[i]);
+  return open ? d : d + ' Z';
+}
+
+// A drawn shape (Bezier curves) with every x passed through f: squeezes or slides it sideways.
+function pathX(sh, f) {
+  let d = 'M ' + r1(f(sh.m[0])) + ' ' + sh.m[1];
+  for (const c of sh.c) d += ' C ' + r1(f(c[0])) + ' ' + c[1] + ' ' + r1(f(c[2])) + ' ' + c[3] + ' ' + r1(f(c[4])) + ' ' + c[5];
+  return d + ' Z';
+}
+
+// A point drawn on the front of his head, turned by th (yaw) and tilted by the pitch: it slides
+// around the head and squeezes as it nears the edge, then folds onto the edge behind it.
+// lamC, the shape's own centre, keeps a shape in one piece when it turns past the back.
+function headDecal(x, y, th, cp, sp, lamC) {
+  const q = clamp(y / HRY, -0.995, 0.995), ring = HRX * Math.sqrt(1 - q * q);
+  const lam = Math.asin(clamp(x / ring, -1, 1));
+  const l2 = lamC === undefined ? wrapPi(lam + th) : wrapPi(lamC + th) + lam - lamC, v = Math.cos(l2);
+  const lc = clamp(l2, -Math.PI / 2, Math.PI / 2), zz = ring * Math.cos(lc);
+  return { x: HC[0] + ring * Math.sin(lc), y: HC[1] + y * cp - zz * sp, v: v, fs: Math.max(0, v) / Math.max(0.05, Math.cos(lam)) };
+}
+
+// A whole shape on his face (mask, brow), or nothing once it has turned out of sight.
+function decalPath(D, th, cp, sp) {
+  let seen = false;
+  const out = D.pts.map(function (q) {
+    const d = headDecal(q[0], q[1], th, cp, sp, D.lam);
+    if (d.v > 0.02) seen = true;
+    return [d.x, d.y];
+  });
+  return seen ? polyD(out) : 'M 0 0';
+}
+
+// A point on his muzzle, which sticks out from his face and shows in profile.
+function onMuzzle(x, y, ch, shh, cp, sp) {
+  const M = ART.muzzle, u = (x - M.c[0]) / M.rx, w = (y - M.c[1]) / M.ry;
+  const zz = HRY + 30 * Math.sqrt(Math.max(0, 1 - u * u - w * w)), z1 = -x * shh + zz * ch;
+  return [HC[0] + x * ch + zz * shh, HC[1] + y * cp - z1 * sp];
+}
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.p = Object.assign({}, REST, { hold: 0, bookS: 0, scarfS: 0 });
+    this.wear = { scarf: false, book: false };
+    this.tweens = {};
+    this.timers = [];
+    this.now = performance.now();
+    this.last = 0;
+    this.runId = 0;
+    this.busy = false;
+    this.eyes = 'open';
+    this.mouth = 'w';
+    this.bubble = { full: '', shown: 0, start: 0, hold: 0, hideAt: 0 };
+    this.mouse = { x: 500, y: 300 };
+    this.mouseIn = false;
+    this.touch = false;
+    this.mouseT = 0;
+    this.walkPhase = 0;
+    this.shakeAmp = 0;
+    this.ripples = [];
+    this.tapN = 0;
+    this.blinkAt = this.now + 1800;
+    this.blinkUntil = 0;
+    this.pl = HOME;
+    this.tipR = TIP_R;
+    this.earS = [{ ang: 0, vel: 0 }, { ang: 0, vel: 0 }];
+    this.earLag = { ang: 0, vel: 0 };
+    this.twitchAt = this.now + 3000;
+    this.prevTh = 0;
+    this.prevHop = 0;
+    this.reduce = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.tick = this.tick.bind(this);
+    const self = this;
+    this.h = {
+      look: function () { self.run(self.aLook); },
+      turn: function () { self.run(self.aTurn); },
+      point: function () { self.run(self.aPoint); },
+      hi: function () { self.run(self.aHi); },
+      tapBtn: function () { self.react(); },
+      tap: function (e) { if (e && e.stopPropagation) e.stopPropagation(); self.react(); },
+      play: function (e) { if (e && e.stopPropagation) e.stopPropagation(); self.run(self.aPlay); },
+      move: function (e) { self.pointer(e); },
+      down: function (e) { self.pointer(e); },
+      leave: function () { if (!self.touch) self.mouseIn = false; },
+      wearScarf: function () { self.toggle('scarf'); },
+      wearBook: function () { self.toggle('book'); },
+    };
+  }
+
+  componentDidMount() { this.raf = requestAnimationFrame(this.tick); }
+
+  componentWillUnmount() { cancelAnimationFrame(this.raf); }
+
+  tick(now) {
+    this.raf = requestAnimationFrame(this.tick);
+    const dt = this.last ? Math.min(0.05, (now - this.last) / 1000) : 0.016;
+    this.last = now;
+    this.now = now;
+    const p = this.p;
+    for (const k in this.tweens) {
+      const t = this.tweens[k], u = clamp((now - t.t0) / t.dur, 0, 1);
+      p[k] = t.from + (t.to - t.from) * t.ease(u);
+      if (u >= 1) { delete this.tweens[k]; t.done(); }
+    }
+    if (this.timers.length) {
+      const due = this.timers.filter(function (q) { return q.at <= now; });
+      this.timers = this.timers.filter(function (q) { return q.at > now; });
+      due.forEach(function (q) { q.done(); });
+    }
+    if (this.touch && now - this.mouseT > 1600) this.mouseIn = false;
+    if (!this.busy) {
+      // between moves he watches your pointer: eyes quickly, head more slowly
+      const pl = this.pl, hx = pl.x, hy = pl.y + (HC[1] - GY) * pl.s;
+      let tx = 0, ty = 0, hyw = 0, hp = 0;
+      if (this.mouseIn) {
+        const dx = this.mouse.x - hx, dy = this.mouse.y - hy;
+        tx = clamp(dx / 170, -1, 1);
+        ty = clamp(dy / 170, -1, 1);
+        hyw = clamp(dx / 700, -0.45, 0.45);
+        hp = clamp(-dy / 1300, -0.17, 0.17);
+      }
+      this.spring('lookX', tx, dt, 0.06);
+      this.spring('lookY', ty, dt, 0.06);
+      this.spring('headYaw', hyw, dt, 0.2);
+      this.spring('pitch', hp, dt, 0.24);
+    }
+    // ears trail behind quick turns and hops, bounce back, and twitch now and then
+    const thNow = p.yaw + p.headYaw, hopNow = p.hop - Math.abs(Math.sin(this.walkPhase)) * 7 * p.walk;
+    const yawRate = wrapPi(thNow - this.prevTh) / dt, hopRate = (hopNow - this.prevHop) / dt;
+    this.prevTh = thNow;
+    this.prevHop = hopNow;
+    if (!this.busy && now > this.twitchAt) {
+      const j = Math.random() < 0.5 ? 0 : 1;
+      this.earS[j].vel += ART.ears[j].side * (480 + Math.random() * 140);
+      if (Math.random() < 0.4) this.twitch2 = { j: j, at: now + 150 };
+      this.twitchAt = now + 3500 + Math.random() * 5000;
+    }
+    if (this.twitch2 && now > this.twitch2.at) {
+      this.earS[this.twitch2.j].vel += ART.ears[this.twitch2.j].side * 420;
+      this.twitch2 = null;
+    }
+    for (let j = 0; j < 2; j++) {
+      const e = this.earS[j], side = ART.ears[j].side;
+      const target = clamp(-side * hopRate * 0.03 + side * (1 - p.sq) * 60, -24, 24);
+      e.vel += (576 * (target - e.ang) - 18 * e.vel) * dt;
+      e.ang += e.vel * dt;
+    }
+    // in a head turn the ears lag a little and catch up, swinging round his head (in depth)
+    // rather than leaning sideways together
+    const lg = this.earLag, lagT = clamp(-yawRate * 0.1, -0.3, 0.3);
+    lg.vel += (110 * (lagT - lg.ang) - 12 * lg.vel) * dt;
+    lg.ang += lg.vel * dt;
+    if (p.walk > 0.01) this.walkPhase += dt * TAU * 1.7;
+    if (now > this.blinkAt) {
+      this.blinkUntil = now + 120;
+      this.blinkAt = now + (Math.random() < 0.18 ? 280 : 2400 + Math.random() * 3200);
+    }
+    const b = this.bubble;
+    if (b.full) {
+      if (b.shown < b.full.length) {
+        b.shown = Math.min(b.full.length, Math.floor((now - b.start) / 42) + 1);
+        if (b.shown >= b.full.length) b.hideAt = now + b.hold;
+      } else if (b.hideAt && now > b.hideAt) {
+        b.hideAt = 0;
+        this.tw({ bubbleS: 0 }, 200, EASE.out);
+      } else if (!b.hideAt && !this.tweens.bubbleS && p.bubbleS < 0.02) {
+        b.full = '';
+      }
+    }
+    this.shakeAmp *= Math.exp(-dt * 10);
+    // idle (only breathing and the tail sway): draw every other frame
+    const idle = !this.busy && !this.mouseIn && !b.full && !Object.keys(this.tweens).length;
+    this.frameN = (this.frameN || 0) + 1;
+    if (idle && this.frameN % 2) return;
+    this.forceUpdate();
+  }
+
+  spring(k, target, dt, tau) {
+    if (this.tweens[k]) return;
+    this.p[k] += (target - this.p[k]) * (1 - Math.exp(-dt / tau));
+  }
+
+  // Tween some values from where they are now. A newer tween of the same value takes over.
+  tw(props, ms, ease) {
+    const self = this, keys = Object.keys(props);
+    ease = ease || EASE.inOut;
+    return new Promise(function (resolve) {
+      let left = keys.length;
+      if (!left) { resolve(); return; }
+      const done = function () { left -= 1; if (left === 0) resolve(); };
+      keys.forEach(function (k) {
+        const old = self.tweens[k];
+        self.tweens[k] = { from: self.p[k], to: props[k], t0: performance.now(), dur: Math.max(16, ms), ease: ease, done: done };
+        if (old) old.done();
+      });
+    });
+  }
+
+  wait(ms) {
+    const self = this;
+    return new Promise(function (resolve) { self.timers.push({ at: performance.now() + ms, done: resolve }); });
+  }
+
+  // Start a move. Any move in progress stops where it is, and the new one carries on from there.
+  run(fn) {
+    const keep = {};
+    for (const k of WEAR_KEYS) if (this.tweens[k]) keep[k] = this.tweens[k];
+    this.tweens = keep;
+    this.timers = [];
+    this.p.yaw = wrapPi(this.p.yaw);
+    this.busy = true;
+    this.eyes = 'open';
+    this.mouth = 'w';
+    const self = this, id = ++this.runId;
+    Promise.resolve().then(function () { return fn.call(self); }).then(
+      function () { if (self.runId === id) self.busy = false; },
+      function (err) { if (self.runId === id) self.busy = false; console.error(err); });
+  }
+
+  toRest(ms, keep) {
+    const t = {};
+    for (const k in REST) {
+      if ((!keep || keep.indexOf(k) < 0) && Math.abs(this.p[k] - REST[k]) > 0.001) t[k] = REST[k];
+    }
+    return this.tw(t, ms, EASE.inOut);
+  }
+
+  say(text, hold) {
+    this.bubble = { full: text, shown: 0, start: performance.now(), hold: hold || 1200, hideAt: 0 };
+    this.tw({ bubbleS: 1 }, 260, EASE.back);
+  }
+
+  pointer(e) {
+    const el = e && e.currentTarget;
+    if (!el || !el.getBoundingClientRect) return;
+    const rc = el.getBoundingClientRect();
+    if (!rc.width || !rc.height) return;
+    this.mouse = { x: (e.clientX - rc.left) / rc.width * (this.stageW || 1000), y: (e.clientY - rc.top) / rc.height * (this.stageH || 780) };
+    this.mouseIn = true;
+    this.touch = e.pointerType === 'touch';
+    this.mouseT = performance.now();
+  }
+
+  // Put a Closet item on or take it off. Putting one on gets a happy little reaction.
+  toggle(item) {
+    if (!ART[item]) return;
+    const on = !this.wear[item];
+    this.wear[item] = on;
+    if (item === 'scarf') {
+      this.tw({ scarfS: on ? 1 : 0 }, on ? 380 : 240, on ? EASE.back : EASE.out);
+    } else {
+      this.tw({ bookS: on ? 1 : 0 }, on ? 380 : 240, on ? EASE.back : EASE.out);
+      this.tw({ hold: on ? 1 : 0 }, 320, EASE.inOut);
+    }
+    if (on) this.run(item === 'scarf' ? this.rScarf : this.rBook);
+  }
+
+  async rScarf() {
+    this.toRest(200, ['sq']);
+    this.eyes = 'happy';
+    this.mouth = 'happy';
+    this.say('My river scarf!', 1000);
+    await this.tw({ sq: 0.92 }, 110, EASE.out);
+    await this.tw({ sq: 1 }, 260, EASE.back);
+    await this.wait(1000);
+    this.eyes = 'open';
+    this.mouth = 'w';
+  }
+
+  async rBook() {
+    this.toRest(200, ['lookY', 'pitch']);
+    this.say('Story time!', 1000);
+    // a glance down at the pages, then a happy look back up at you
+    await this.tw({ lookY: 0.9, pitch: -0.12 }, 320, EASE.inOut);
+    await this.wait(800);
+    this.eyes = 'happy';
+    this.mouth = 'happy';
+    await this.tw({ lookY: 0, pitch: 0 }, 360, EASE.inOut);
+    await this.wait(500);
+    this.eyes = 'open';
+    this.mouth = 'w';
+  }
+
+  // Where an arm's paw tip goes so that the middle of the paw lands on E (a book edge).
+  holdTip(A, S, E) {
+    const dx = E[0] - S[0], dy = E[1] - S[1], D = Math.hypot(dx, dy) || 1, back = A.len - A.uPc;
+    let len = D + back;
+    if (len * 1.6 < A.len) {
+      // a short reach shrinks the paw a little (see arm), so it needs a little further to go
+      len = D / (1 - 1.6 * back / A.len);
+      if (len * 1.6 / A.len < 0.6) len = D + 0.6 * back;
+    }
+    return [S[0] + dx / D * len, S[1] + dy / D * len];
+  }
+
+  tipFor(j, E) { return this.holdTip(ART.arms[j], this.shoulder(j, 0), E); }
+
+  // The lift that brings arm j up to deg below level (negative: above it), or down to it.
+  // Moves use these, so they work from whatever pose his arms are drawn in.
+  raiseTo(j, deg) { return Math.max(0, ART.arms[j].elev - deg * Math.PI / 180); }
+  dropTo(j, deg) { return Math.min(0, ART.arms[j].elev - deg * Math.PI / 180); }
+
+  react() {
+    const list = [this.rGiggle, this.rSpin, this.rPeek, this.rJump];
+    this.run(list[this.tapN % list.length]);
+    this.tapN += 1;
+  }
+
+  knockFx() {
+    const pl = this.pl, t = performance.now();
+    const x = pl.x + (this.tipR[0] - AX) * pl.s, y = pl.y + (this.tipR[1] - GY) * pl.s;
+    this.ripples = [{ x: x, y: y, t0: t }, { x: x, y: y, t0: t + 110 }];
+    if (!this.reduce) this.shakeAmp = 5;
+  }
+
+  toLocal(X, Y) { const pl = this.pl; return [(X - pl.x) / pl.s + AX, (Y - pl.y) / pl.s + GY]; }
+
+  shoulder(j, yaw) { const A = ART.arms[j]; return [AX + A.S[0] * Math.cos(yaw) + ARM_Z * Math.sin(yaw), A.S[1]]; }
+
+  // Where an arm's paw tip is when the arm points at an angle (degrees, 0 = level, up is negative).
+  reach(j, deg, stretch) {
+    const A = ART.arms[j], S = this.shoulder(j, 0), a = deg * Math.PI / 180;
+    return [S[0] + A.side * Math.cos(a) * A.len * stretch, S[1] + Math.sin(a) * A.len * stretch];
+  }
+
+  async aLook() {
+    this.toRest(260, ['headYaw', 'pitch', 'roll', 'lookX', 'lookY']);
+    this.tw({ lookX: -1, lookY: 0.1 }, 140, EASE.out);
+    await this.wait(110);
+    await this.tw({ headYaw: -0.62, roll: -4, pitch: 0.02 }, 420, EASE.out);
+    await this.wait(520);
+    this.tw({ lookX: 1 }, 140, EASE.out);
+    await this.wait(110);
+    await this.tw({ headYaw: 0.62, roll: 4 }, 560, EASE.inOut);
+    await this.wait(520);
+    this.tw({ lookX: 0.4, lookY: -1 }, 160, EASE.out);
+    this.say('Hmm?', 900);
+    // a curious ear: one perks up, the other tips out
+    this.tw({ earR: -14, earL: -5 }, 280, EASE.back);
+    await this.tw({ headYaw: 0.18, pitch: 0.2, roll: -3 }, 420, EASE.inOut);
+    await this.wait(900);
+    await this.tw({ headYaw: 0, pitch: 0, roll: 0, lookX: 0, lookY: 0, earL: 0, earR: 0 }, 480, EASE.inOut);
+  }
+
+  async aTurn() {
+    this.toRest(220, ['yaw', 'headYaw', 'sq', 'tailLag', 'hop']);
+    await this.tw({ yaw: -0.25, headYaw: -0.08, sq: 0.93, tailLag: 0.1 }, 230, EASE.out);
+    // his head leads and his tail trails behind
+    this.tw({ sq: 1 }, 300, EASE.out);
+    this.tw({ headYaw: 0.38, tailLag: -0.5 }, 380, EASE.out).then(() => this.tw({ headYaw: 0, tailLag: 0 }, 420, EASE.inOut));
+    await this.tw({ yaw: Math.PI }, 800, EASE.inOut);
+    // a beat with his back to you, and a tail wag
+    this.tw({ tailLag: 0.35 }, 180, EASE.inOut).then(() => this.tw({ tailLag: -0.3 }, 200, EASE.inOut))
+      .then(() => this.tw({ tailLag: 0 }, 180, EASE.inOut));
+    await this.wait(560);
+    this.tw({ headYaw: 0.38, tailLag: -0.5 }, 380, EASE.out).then(() => this.tw({ headYaw: 0, tailLag: 0 }, 420, EASE.inOut));
+    this.tw({ hop: -16 }, 380, EASE.out).then(() => this.tw({ hop: 0 }, 380, EASE.inc));
+    await this.tw({ yaw: TAU + 0.12 }, 800, EASE.inOut);
+    await this.tw({ yaw: TAU }, 220, EASE.out);
+    this.p.yaw = 0;
+    this.eyes = 'happy';
+    this.mouth = 'happy';
+    this.say('Ta-da!', 1000);
+    // arms thrown up for the ta-da
+    this.tw({ liftL: this.raiseTo(0, -23), liftR: this.raiseTo(1, -23) }, 260, EASE.back);
+    this.tw({ sq: 0.94 }, 120, EASE.out).then(() => this.tw({ sq: 1 }, 260, EASE.back));
+    await this.wait(1300);
+    this.eyes = 'open';
+    this.mouth = 'w';
+    await this.tw({ liftL: 0, liftR: 0 }, 380, EASE.inOut);
+  }
+
+  async aPoint() {
+    this.toRest(260, ['lookX', 'lookY', 'headYaw', 'pitch', 'yaw', 'armR', 'tRx', 'tRy', 'glow', 'liftL', 'liftR', 'freeR']);
+    const tgt = this.toLocal(PLAY_PT.x, PLAY_PT.y);
+    this.tw({ lookX: 1, lookY: 0.25 }, 130, EASE.out);
+    await this.wait(130);
+    this.tw({ headYaw: 0.42, pitch: -0.04 }, 330, EASE.out);
+    await this.wait(140);
+    // his other arm drops, and the pointing arm winds up...
+    this.tw({ yaw: 0.32, liftL: this.dropTo(0, 54) }, 380, EASE.out);
+    await this.tw({ liftR: this.raiseTo(1, -20), freeR: 1 }, 220, EASE.out);
+    // ...then stretches, cartoon-style, toward the button
+    const A = ART.arms[1], S = this.shoulder(1, 0.32);
+    const dx = tgt[0] - S[0], dy = tgt[1] - S[1], dl = Math.hypot(dx, dy) || 1, reach = Math.min(A.len * 1.45, dl);
+    this.p.tRx = S[0] + dx / dl * reach;
+    this.p.tRy = S[1] + dy / dl * reach;
+    await this.tw({ armR: 1 }, 380, EASE.back);
+    this.tw({ glow: 1 }, 260, EASE.out);
+    this.say('Tap PLAY to start!', 1700);
+    await this.wait(2300);
+    this.tw({ glow: 0 }, 300, EASE.inOut);
+    await this.tw({ armR: 0, liftR: 0, liftL: 0, freeR: 0 }, 380, EASE.inOut);
+    await this.tw({ yaw: 0, headYaw: 0, pitch: 0, lookX: 0, lookY: 0 }, 460, EASE.inOut);
+  }
+
+  async aHi() {
+    this.toRest(240, ['near', 'walk', 'scrim', 'yaw', 'headYaw', 'lookX', 'lookY', 'armR', 'tRx', 'tRy', 'liftL', 'liftR', 'freeR']);
+    await this.tw({ yaw: 0, headYaw: 0, lookX: 0, lookY: 0.1 }, 220, EASE.out);
+    // he walks toward you, arms swinging low: he grows faster as he gets close, like coming toward a camera
+    this.tw({ walk: 1, liftL: this.dropTo(0, 37), liftR: this.dropTo(1, 37) }, 240, EASE.out);
+    this.tw({ scrim: 1 }, 1500, EASE.inOut);
+    await this.tw({ near: 1 }, 1700, EASE.in2);
+    this.tw({ walk: 0 }, 160, EASE.out);
+    await this.tw({ sq: 0.93 }, 110, EASE.out);
+    await this.tw({ sq: 1 }, 240, EASE.back);
+    const kn = this.reach(1, -57, 1), w1 = this.reach(1, -44, 1.04), w2 = this.reach(1, -72, 1.04);
+    this.p.tRx = kn[0];
+    this.p.tRy = kn[1];
+    await this.tw({ armR: 1, freeR: 1 }, 380, EASE.back);
+    // knock knock on the glass
+    for (let i = 0; i < 2; i++) {
+      await this.tw({ knock: 1 }, 110, EASE.inc);
+      this.knockFx();
+      await this.tw({ knock: 0 }, 170, EASE.out);
+    }
+    await this.wait(160);
+    this.say('Hi! Ready to read with me?', 1600);
+    for (let i = 0; i < 3; i++) {
+      await this.tw({ tRx: w1[0], tRy: w1[1] }, 230, EASE.inOut);
+      await this.tw({ tRx: w2[0], tRy: w2[1] }, 230, EASE.inOut);
+    }
+    this.eyes = 'happy';
+    await this.tw({ armR: 0, freeR: 0 }, 360, EASE.inOut);
+    await this.wait(1100);
+    this.eyes = 'open';
+    // back to his mat: turn around, walk away, turn to face you again
+    await this.tw({ yaw: Math.PI }, 420, EASE.inOut);
+    this.tw({ walk: 1 }, 160, EASE.out);
+    this.tw({ scrim: 0 }, 1300, EASE.inOut);
+    await this.tw({ near: 0 }, 1400, EASE.out2);
+    this.tw({ walk: 0, liftL: 0, liftR: 0 }, 300, EASE.out);
+    await this.tw({ yaw: TAU }, 420, EASE.inOut);
+    this.p.yaw = 0;
+  }
+
+  async aPlay() {
+    this.p.press = 1;
+    this.tw({ press: 0 }, 300, EASE.out);
+    this.toRest(200, ['press', 'lookX', 'lookY', 'headYaw']);
+    this.tw({ lookX: 1, lookY: 0.4, headYaw: 0.3 }, 160, EASE.out);
+    this.eyes = 'happy';
+    this.mouth = 'happy';
+    this.say("Let's read!", 900);
+    await this.tw({ sq: 0.88 }, 120, EASE.out);
+    this.tw({ sq: 1.06 }, 150, EASE.out).then(() => this.tw({ sq: 1 }, 260, EASE.inOut));
+    await this.tw({ hop: -36 }, 240, EASE.out);
+    await this.tw({ hop: 0 }, 240, EASE.inc);
+    await this.tw({ sq: 0.9 }, 80, EASE.out);
+    await this.tw({ sq: 1 }, 240, EASE.back);
+    await this.wait(500);
+    this.eyes = 'open';
+    this.mouth = 'w';
+    await this.tw({ lookX: 0, lookY: 0, headYaw: 0 }, 400, EASE.inOut);
+  }
+
+  async rGiggle() {
+    this.toRest(200, ['sq', 'wiggle']);
+    this.eyes = 'happy';
+    this.mouth = 'happy';
+    this.say('Hee hee! That tickles!', 1100);
+    this.p.wiggle = 1;
+    this.tw({ wiggle: 0 }, 1000, EASE.out);
+    await this.tw({ sq: 0.9 }, 90, EASE.out);
+    await this.tw({ sq: 1.05 }, 140, EASE.out);
+    await this.tw({ sq: 1 }, 220, EASE.back);
+    await this.wait(1100);
+    this.eyes = 'open';
+    this.mouth = 'w';
+  }
+
+  async rSpin() {
+    this.toRest(160, ['yaw', 'hop', 'sq', 'headYaw', 'tailLag']);
+    await this.tw({ sq: 0.9 }, 120, EASE.out);
+    this.tw({ sq: 1.06 }, 160, EASE.out).then(() => this.tw({ sq: 1 }, 300, EASE.inOut));
+    this.tw({ hop: -46 }, 380, EASE.out).then(() => this.tw({ hop: 0 }, 360, EASE.inc));
+    this.tw({ tailLag: -0.6 }, 300, EASE.out).then(() => this.tw({ tailLag: 0 }, 500, EASE.inOut));
+    this.say('Wheee!', 700);
+    await this.tw({ yaw: TAU }, 760, EASE.inOut);
+    this.p.yaw = 0;
+    await this.tw({ sq: 0.92 }, 90, EASE.out);
+    await this.tw({ sq: 1 }, 240, EASE.back);
+  }
+
+  // With the book, he hides behind it instead of his paws.
+  async rPeekBook() {
+    this.toRest(200, ['armL', 'armR', 'tLx', 'tLy', 'tRx', 'tRy', 'lookX', 'lookY', 'earL', 'earR', 'liftL', 'liftR']);
+    const BK = ART.book, ey = HC[1] + ART.eyes[0].c[1];
+    const hL = this.tipFor(0, [BK.x0, ey + 6]), hR = this.tipFor(1, [BK.x1, ey + 6]);
+    Object.assign(this.p, { tLx: hL[0], tLy: hL[1], tRx: hR[0], tRy: hR[1] });
+    this.tw({ earL: -10, earR: 10 }, 300, EASE.out);
+    await this.tw({ armL: 1, armR: 1 }, 380, EASE.out);
+    await this.wait(600);
+    // a peek over the top of the pages
+    const pL = this.tipFor(0, [BK.x0, ey + 66]), pR = this.tipFor(1, [BK.x1, ey + 66]);
+    this.tw({ tLx: pL[0], tLy: pL[1], tRx: pR[0], tRy: pR[1] }, 280, EASE.inOut);
+    await this.wait(280);
+    await this.tw({ lookX: -1 }, 160, EASE.out);
+    await this.wait(220);
+    await this.tw({ lookX: 1 }, 200, EASE.inOut);
+    await this.wait(200);
+    // the book swings up out of the way: peekaboo!
+    this.tw({ lookX: 0, earL: 6, earR: -6 }, 160, EASE.out);
+    this.eyes = 'happy';
+    this.mouth = 'happy';
+    this.say('Peekaboo!', 900);
+    await this.tw({ armL: 0, armR: 0, liftL: 0.5, liftR: 0.5 }, 340, EASE.back);
+    await this.wait(900);
+    await this.tw({ liftL: 0, liftR: 0, earL: 0, earR: 0 }, 380, EASE.inOut);
+    this.eyes = 'open';
+    this.mouth = 'w';
+  }
+
+  async rPeek() {
+    if (this.wear.book && ART.book) return this.rPeekBook();
+    this.toRest(200, ['armL', 'armR', 'tLx', 'tLy', 'tRx', 'tRy', 'pawS', 'lookX', 'lookY', 'earL', 'earR', 'liftL', 'liftR']);
+    // both paws over his eyes, ears folded back
+    const eL = [HC[0] + ART.eyes[0].c[0], HC[1] + ART.eyes[0].c[1]], eR = [HC[0] + ART.eyes[1].c[0], HC[1] + ART.eyes[1].c[1]];
+    Object.assign(this.p, { tLx: eL[0], tLy: eL[1] - 16, tRx: eR[0], tRy: eR[1] - 16 });
+    this.tw({ pawS: 1.35, earL: -10, earR: 10 }, 300, EASE.out);
+    await this.tw({ armL: 1, armR: 1 }, 360, EASE.out);
+    await this.wait(600);
+    // a peek between his paws
+    this.tw({ tLx: eL[0] - 24, tRx: eR[0] + 24, tLy: eL[1] + 6, tRy: eR[1] + 6 }, 260, EASE.inOut);
+    await this.wait(260);
+    await this.tw({ lookX: -1 }, 160, EASE.out);
+    await this.wait(220);
+    await this.tw({ lookX: 1 }, 200, EASE.inOut);
+    await this.wait(200);
+    // arms thrown wide: peekaboo!
+    this.tw({ lookX: 0, earL: 6, earR: -6, pawS: 1 }, 160, EASE.out);
+    this.eyes = 'happy';
+    this.mouth = 'happy';
+    this.say('Peekaboo!', 900);
+    await this.tw({ armL: 0, armR: 0, liftL: this.raiseTo(0, -20), liftR: this.raiseTo(1, -20) }, 340, EASE.back);
+    await this.wait(900);
+    await this.tw({ liftL: 0, liftR: 0, earL: 0, earR: 0 }, 380, EASE.inOut);
+    this.eyes = 'open';
+    this.mouth = 'w';
+  }
+
+  async rJump() {
+    this.toRest(160, ['sq', 'hop']);
+    await this.tw({ sq: 0.84 }, 160, EASE.out);
+    this.eyes = 'happy';
+    this.mouth = 'o';
+    this.tw({ sq: 1.1 }, 140, EASE.out);
+    await this.tw({ hop: -80 }, 300, EASE.out);
+    this.tw({ sq: 1 }, 200, EASE.inOut);
+    this.say('Boing!', 700);
+    await this.tw({ hop: 0 }, 280, EASE.inc);
+    await this.tw({ sq: 0.86 }, 80, EASE.out);
+    await this.tw({ sq: 1 }, 300, EASE.back);
+    this.eyes = 'open';
+    this.mouth = 'w';
+  }
+
+  // One arm: its drawn shapes laid along the line from his shoulder to where the paw should be.
+  // a = 0 leaves it as drawn (raised by `lift`); a = 1 points the paw tip at T. ps scales the paw.
+  // h = how much it holds the book, E = the book edge it holds ([x, y, depth]).
+  arm(A, a, T, lift, cb, sb, ps, h, E) {
+    // (an arm never drops past hanging straight down, so it can't swing in across his body)
+    const flip = cb >= 0 ? 1 : -1, e = clamp(A.elev - lift, -1.3, Math.max(A.elev, 1.5));
+    const S = [AX + A.S[0] * cb + ARM_Z * sb, A.S[1]];
+    const tx = A.S[0] + A.side * A.len * Math.cos(e);
+    let R = [AX + tx * cb + ARM_Z * sb, A.S[1] + A.len * Math.sin(e)], z = -tx * sb + ARM_Z * cb;
+    if (h > 0.001) {
+      const G = this.holdTip(A, S, E);
+      R = [lerp(R[0], G[0], h), lerp(R[1], G[1], h)];
+      z = lerp(z, E[2], h);
+    }
+    let ang = Math.atan2(R[1] - S[1], R[0] - S[0]), len = Math.hypot(R[0] - S[0], R[1] - S[1]);
+    if (a > 0.001) {
+      // swing round the shoulder, like a real arm, instead of sliding the paw straight across
+      ang += wrapPi(Math.atan2(T[1] - S[1], T[0] - S[0]) - ang) * a;
+      len = lerp(len, Math.hypot(T[0] - S[0], T[1] - S[1]), a);
+    }
+    // reaching further stretches the sleeve and keeps the paw's size; turned toward you, the
+    // sleeve shortens to nothing and the paw stays, a little smaller: a round paw at his shoulder
+    const pawLen = A.len - A.uPaw, kp = clamp(len / A.len * 1.6, 0.6, 1), ks = Math.max(0.02, (len - pawLen * kp) / A.uPaw);
+    const L = A.uPaw * ks + pawLen * kp, upc = A.uPaw * ks + (A.uPc - A.uPaw) * kp;
+    const dx = Math.cos(ang), dy = Math.sin(ang), bend = 10 * a * A.side;
+    const P = [S[0] + dx * L, S[1] + dy * L];
+    const C = [(S[0] + P[0]) / 2 - dy * flip * bend, (S[1] + P[1]) / 2 + dx * flip * bend];
+    const t0 = [C[0] - S[0], C[1] - S[1]], t1 = [P[0] - C[0], P[1] - C[1]];
+    const l0 = Math.hypot(t0[0], t0[1]) || 1, l1 = Math.hypot(t1[0], t1[1]) || 1;
+    const place = function (q) {
+      const u = q[0];
+      let uu = u <= 0 ? u : (u <= A.uPaw ? u * ks : A.uPaw * ks + (u - A.uPaw) * kp), v = q[1];
+      if (ps !== 1) {
+        const sc = 1 + (ps - 1) * sstep(A.uPaw - 10, A.uPaw + 6, u);
+        uu = upc + (uu - upc) * sc;
+        v *= sc;
+      }
+      const t = uu / L;
+      let bx, by, tx2, ty2;
+      if (t <= 0) {
+        tx2 = t0[0] / l0; ty2 = t0[1] / l0; bx = S[0] + tx2 * uu; by = S[1] + ty2 * uu;
+      } else if (t >= 1) {
+        tx2 = t1[0] / l1; ty2 = t1[1] / l1; bx = P[0] + tx2 * (uu - L); by = P[1] + ty2 * (uu - L);
+      } else {
+        const w = 1 - t;
+        bx = w * w * S[0] + 2 * w * t * C[0] + t * t * P[0];
+        by = w * w * S[1] + 2 * w * t * C[1] + t * t * P[1];
+        tx2 = w * t0[0] + t * t1[0]; ty2 = w * t0[1] + t * t1[1];
+        const ln = Math.hypot(tx2, ty2) || 1;
+        tx2 /= ln; ty2 /= ln;
+      }
+      return [bx - ty2 * flip * v, by + tx2 * flip * v];
+    };
+    // Where it's drawn: an arm reaching for something counts as in front of him (he faces what he
+    // points at). Over his head (pointing up, a paw pump, a paw at his chin) it goes in front of
+    // the head until the paw has cleared it, so a paw never slips behind his face.
+    const zf = a > 0.001 ? lerp(z, Math.max(z, ARM_Z + 12), Math.min(1, a * 2)) : z;
+    const raised = a > 0.02 && S[1] - P[1] > 14;
+    // (the paw end of the arm, as wide as the arm: the root by his shoulder stays under his jaw)
+    const near = A.half;
+    const overHead = [A.uPaw * 0.8, A.uPaw, A.uPc].some(function (u) {
+      const q = place([u, 0]);
+      return Math.pow((q[0] - HC[0]) / (HRX + near), 2) + Math.pow((q[1] - HC[1]) / (HRY + near), 2) < 1;
+    });
+    // how far the arm has swung from its drawn pose: past a little, its drawn outline is hidden
+    // near the shoulder, so the arm grows out of the body without seams or stray lines
+    const tx0 = A.S[0] + A.side * A.len * Math.cos(A.elev);
+    const ang0 = Math.atan2(A.S[1] + A.len * Math.sin(A.elev) - S[1], AX + tx0 * cb + ARM_Z * sb - S[0]);
+    const swung = sstep(0.08, 0.45, Math.abs(wrapPi(ang - ang0)));
+    const slot = zf < -18 ? 'b' : (raised || overHead ? 'f' : 'm');
+    const o = { tip: P, pc: place([A.uPc, 0]), b: slot === 'b' ? 'inline' : 'none', m: slot === 'm' ? 'inline' : 'none', f: slot === 'f' ? 'inline' : 'none',
+      mx: r1(S[0]), my: r1(S[1]), mr: r1(A.half * 1.4 * swung), z: zf, mb: 'none' };
+    A.parts.forEach(function (pp, j) { o['d' + j] = polyD(pp.map(place)); });
+    return o;
+  }
+
+  rig() {
+    const p = this.p, now = this.now, out = {};
+    // placement on the stage (another board can give its own: home, nearP)
+    const H0 = this.home || HOME, N0 = this.nearP || NEAR, nr = clamp(p.near, 0, 1);
+    const s = 1 / (1 / H0.s + (1 / N0.s - 1 / H0.s) * nr);
+    const k = N0.s === H0.s ? 0 : (s - H0.s) / (N0.s - H0.s);
+    const X = lerp(H0.x, N0.x, k), Y = lerp(H0.y, N0.y, k);
+    this.pl = { x: X, y: Y, s: s };
+    out.shakeT = 'translate(' + r1(this.shakeAmp * Math.sin(now * 0.12)) + ' 0)';
+    out.scrimOp = r3(0.38 * p.scrim);
+    const pulse = 0.5 + 0.5 * Math.sin(now * 0.011);
+    out.playT = 'translate(650 560) translate(145 53) scale(' + r3(1 + 0.035 * p.glow * pulse) + ') translate(-145 -53)';
+    out.playPress = 'translate(0 ' + r1(7 * p.press) + ')';
+    out.glowOp = r3(p.glow * (0.45 + 0.55 * pulse));
+    out.place = 'translate(' + r1(X) + ' ' + r1(Y) + ') scale(' + r3(s) + ') translate(' + (-AX) + ' ' + (-GY) + ')';
+
+    // body: hop, squash and stretch, breathing, the walk bob
+    const ph = this.walkPhase, wk = p.walk;
+    const breathe = Math.sin(now / 1000 * TAU / 3.4);
+    const hop = p.hop - Math.abs(Math.sin(ph)) * 7 * wk;
+    const wig = p.wiggle * Math.sin(now * 0.05) * (this.reduce ? 3 : 6);
+    const sqX = 1 + (1 - p.sq) * 0.7, sqY = p.sq * (1 + 0.012 * breathe);
+    out.bodyT = 'translate(' + AX + ' ' + r1(GY + hop) + ') rotate(' + r1(p.lean + Math.sin(ph) * 3 * wk + wig * 0.4) +
+      ') scale(' + r3(sqX) + ' ' + r3(sqY) + ') translate(' + (-AX) + ' ' + (-GY) + ')';
+    const hs = clamp(1 + hop / 220, 0.55, 1);
+    out.shadow = { cx: AX, cy: GY + 2, rx: r1(ART.shadowRx * hs), ry: r1(12 * hs), op: r3(0.14 * hs) };
+    const yb = p.yaw, cb = Math.cos(yb), sb = Math.sin(yb);
+
+    // tail: every outline point rides on the tail's centre line, which turns with him (a little
+    // behind when he spins), so the tail keeps its thickness from every side
+    const T = ART.tail;
+    const tt = yb + p.tailLag + 0.06 * Math.sin(now / 1000 * TAU / 2.6) * (1 - wk) + Math.sin(ph) * 0.12 * wk;
+    const ct = Math.cos(tt), st = Math.sin(tt);
+    let tz = 0;
+    const sp3 = T.spine.map(function (q, j) {
+      tz += -(q[0] - AX) * st + T.z[j] * ct;
+      return [AX + (q[0] - AX) * ct + T.z[j] * st, q[1]];
+    });
+    const skin = function (q) {
+      const t = q[0], u = 1 - t;
+      const x = u * u * sp3[0][0] + 2 * u * t * sp3[1][0] + t * t * sp3[2][0];
+      const y = u * u * sp3[0][1] + 2 * u * t * sp3[1][1] + t * t * sp3[2][1];
+      let tx = u * (sp3[1][0] - sp3[0][0]) + t * (sp3[2][0] - sp3[1][0]), ty = u * (sp3[1][1] - sp3[0][1]) + t * (sp3[2][1] - sp3[1][1]);
+      const ln = Math.hypot(tx, ty) || 1;
+      tx /= ln; ty /= ln;
+      return [x + q[1] * tx - q[2] * ty, y + q[1] * ty + q[2] * tx];
+    };
+    out.tail = {};
+    T.parts.forEach(function (pp, j) { out.tail['d' + j] = polyD(pp.map(skin)); });
+    out.tailBack = tz <= 0 ? 'inline' : 'none';
+    out.tailFront = tz > 0 ? 'inline' : 'none';
+
+    // feet
+    const foot = function (F, i) {
+      const lift = -Math.max(0, Math.sin(ph + (i > 0 ? 0 : Math.PI))) * 9 * wk;
+      return { z: -F.x * sb + FOOT_Z * cb, cx: r1(AX + F.x * cb + FOOT_Z * sb), cy: r1(F.y + lift), rx: r1(Math.hypot(F.rx * cb, F.rx * 1.28 * sb)) };
+    };
+    const fL = foot(ART.feet[0], -1), fR = foot(ART.feet[1], 1);
+    fL.back = fL.z <= fR.z ? 'inline' : 'none';
+    fL.front = fL.z > fR.z ? 'inline' : 'none';
+    out.footL = fL;
+    out.footR = fR;
+
+    // body: a little narrower from the side; the belly is a patch on its front that slides round
+    const bsx = Math.hypot(cb, DEPTH * sb), Rb = ART.bodyHalf, silX = Rb * bsx, B = ART.belly;
+    out.bodyD = pathX(ART.body, function (x) { return AX + (x - AX) * bsx; });
+    // the patch covers an arc around his body; only the part of the arc that faces you shows
+    const lL = Math.asin(clamp((B.cx - B.hw) / Rb, -1, 1)), lR = Math.asin(clamp((B.cx + B.hw) / Rb, -1, 1)), Q = Math.PI / 2;
+    let a0 = wrapPi(lL + yb), a1 = a0 + lR - lL;
+    if (Math.min(a1, Q) <= Math.max(a0, -Q)) { a0 -= TAU; a1 -= TAU; }
+    const lo = Math.max(a0, -Q), hi = Math.min(a1, Q);
+    const edgeX = function (a) {
+      if (a <= -Q + 1e-6) return -silX;
+      if (a >= Q - 1e-6) return silX;
+      return Rb * Math.sin(a - yb) * cb + Rb * DEPTH * Math.cos(a - yb) * sb;
+    };
+    const xl = edgeX(lo), xr = edgeX(hi);
+    const nc = AX + (xl + xr) / 2, nh = Math.max(0.5, (xr - xl) / 2);
+    out.bellyD = pathX(B.shape, function (x) { return nc + (x - AX - B.cx) * nh / B.hw; });
+    out.bellyDisp = hi > lo + 0.02 ? 'inline' : 'none';
+
+    // Closet scarf: the band hugs his neck and narrows with it as he turns; the knot travels round
+    const SC = ART.scarf;
+    out.scarf = { disp: 'none', bandT: '', knotT: '', knotDisp: 'none' };
+    if (SC && p.scarfS > 0.01) {
+      const s = p.scarfS, pv = SC.pivot, l = Math.asin(clamp(SC.knot[0] / SC.neckR, -1, 1));
+      const kx = SC.neckR * (Math.sin(l) * cb + DEPTH * Math.cos(l) * sb);
+      const kz = SC.neckR * (-Math.sin(l) * sb + DEPTH * Math.cos(l) * cb), kz0 = SC.neckR * DEPTH * Math.cos(l);
+      out.scarf = {
+        disp: 'inline',
+        bandT: 'translate(' + pv[0] + ' ' + pv[1] + ') scale(' + r3(bsx * s) + ' ' + r3(s) + ') translate(' + (-pv[0]) + ' ' + (-pv[1]) + ')',
+        knotT: 'translate(' + r1(AX + kx) + ' ' + r1(SC.knot[1] + 10 * (kz - kz0) / SC.neckR) + ') scale(' + r3(clamp(kz / kz0, 0.3, 1.1) * s) +
+          ' ' + r3(s) + ') translate(' + r1(-(AX + SC.knot[0])) + ' ' + (-SC.knot[1]) + ')',
+        knotDisp: kz > -2 ? 'inline' : 'none',
+      };
+    }
+
+    // arms: out to his sides as drawn; they sway as he breathes, fly up when he hops, press down
+    // when he lands, swing as he walks, and reach when a move asks (point, knock, wave, peekaboo)
+    const lift = function (i, own) {
+      return own + 0.035 * breathe + 0.5 * clamp(-hop / 80, 0, 1) - (1 - p.sq) * 0.9 +
+        wk * 0.12 * Math.sin(ph + (i > 0 ? Math.PI : 0)) + p.wiggle * 0.14 * Math.sin(now * 0.05 + i);
+    };
+    const liftL = lift(-1, p.liftL), liftR = lift(1, p.liftR);
+    // Closet book: held in front of his belly by its edges; lifting his arms lifts the book
+    const BK = ART.book, BW = BK ? BK.x1 - BK.x0 : 1;
+    const bookEdge = function (x, l) {
+      return [AX + (x - AX) * cb + BK.z * sb, BK.y - clamp(l, -1, 0.6) * (l > 0 ? 90 : 30), -(x - AX) * sb + BK.z * cb];
+    };
+    const EL = BK ? bookEdge(BK.x0, liftL) : null, ER = BK ? bookEdge(BK.x1, liftR) : null, hold = BK ? p.hold : 0;
+    out.armL = this.arm(ART.arms[0], p.armL, [p.tLx, p.tLy], liftL, cb, sb, p.pawS, hold, EL);
+    out.armR = this.arm(ART.arms[1], p.armR, [p.tRx, p.tRy], liftR, cb, sb, p.pawS * (1 + 0.32 * p.knock), hold * (1 - p.freeR), ER);
+    this.tipR = out.armR.tip;
+    // facing away, his tail sticks out toward you: an arm further back than the tail goes behind it
+    if (tz > 0) {
+      for (const o of [out.armL, out.armR]) {
+        if (o.m === 'inline' && o.z < tz / 3) { o.m = 'none'; o.mb = 'inline'; }
+      }
+    }
+    out.book = { t: 'matrix(1 0 0 1 0 0)', bb: 'none', bm: 'none', bf: 'none' };
+    if (BK && p.bookS > 0.01) {
+      // the book sits between his paws; with his right paw busy it hangs from his left
+      const k = sstep(0.6, 1, p.hold), fr = sstep(0, 1, p.freeR), s = p.bookS;
+      const L = [lerp(EL[0], out.armL.pc[0], k), lerp(EL[1], out.armL.pc[1], k)];
+      let Rt = [lerp(ER[0], out.armR.pc[0], k), lerp(ER[1], out.armR.pc[1], k)];
+      Rt = [lerp(Rt[0], L[0] + BW * cb, fr), lerp(Rt[1], L[1] + 12, fr)];
+      let ba = (Rt[0] - L[0]) / BW;
+      const bq = (Rt[1] - L[1]) / BW, C = [(L[0] + Rt[0]) / 2, (L[1] + Rt[1]) / 2], c0 = (BK.x0 + BK.x1) / 2;
+      if (Math.abs(ba) < 0.06) ba = cb >= 0 ? 0.06 : -0.06;
+      const facing = cb > 0, front = facing && C[1] - BK.h / 2 < HC[1] + 80;
+      out.book = {
+        t: 'matrix(' + r3(ba * s) + ' ' + r3(bq * s) + ' 0 ' + r3(s) + ' ' + r1(C[0] - s * ba * c0) + ' ' + r1(C[1] - s * (bq * c0 + BK.y)) + ')',
+        bb: facing ? 'none' : 'inline', bm: facing && !front ? 'inline' : 'none', bf: front ? 'inline' : 'none',
+      };
+      // held up in front of his face: the book, and the paws on it, come in front of his head
+      if (front && p.hold > 0.5) {
+        for (const o of p.freeR > 0.5 ? [out.armL] : [out.armL, out.armR]) { o.b = 'none'; o.m = 'none'; o.mb = 'none'; o.f = 'inline'; }
+      }
+    }
+    const chip = function (on) { return on ? ['true', '#e2f3ee', '#2a9d8f', '✓'] : ['false', '#fffef4', '#e3d6b4', '']; };
+    const cs = chip(this.wear.scarf), cbk = chip(this.wear.book);
+    out.wear = { scarf: cs[0], scarfBg: cs[1], scarfBd: cs[2], scarfMark: cs[3], book: cbk[0], bookBg: cbk[1], bookBd: cbk[2], bookMark: cbk[3] };
+
+    // head: everything on his face slides around the round head as he turns or looks up
+    const th = yb + p.headYaw, ch = Math.cos(th), shh = Math.sin(th), cp = Math.cos(p.pitch), sp = Math.sin(p.pitch);
+    out.headT = 'rotate(' + r1(p.roll + wig) + ' ' + ART.head.pivot[0] + ' ' + ART.head.pivot[1] + ') translate(0 ' +
+      r1(-Math.abs(Math.cos(ph)) * 2.5 * wk) + ')';
+    // ears: set a little forward on his head, so the near one slides along with his face as he
+    // turns; cones, so they stay wide from the side; springy (see tick); perky when he's happy
+    // turned toward the front, an ear comes in front of his head, cut where it meets the fur
+    const perk = this.eyes === 'happy' ? 5 : 0, earS = this.earS, lag = this.earLag.ang;
+    const ear = function (j) {
+      const E = ART.ears[j], lam = E.lam0 + th + lag, x = E.R * Math.sin(lam), z0 = E.R * Math.cos(lam);
+      const tilt = E.tilt * Math.sin(lam) / Math.sin(E.lam0) - 5 * shh + earS[j].ang + (E.side < 0 ? p.earL : p.earR) - perk * E.side;
+      // the copy in front shows the ear down to a cut line that slides from the dome's edge to
+      // the ear's base as it comes forward, so it grows over the head instead of fading in
+      // (only while his face is turned toward you: seen from behind, the ears stay behind his head)
+      const sx = Math.sqrt(ch * ch + 0.49 * shh * shh), zr = E.R * Math.cos(E.lam0);
+      const k = sstep(zr + 2, zr + 20, z0 * cp) * sstep(-0.1, 0.35, ch);
+      const off = (1 - k) * E.cut[2];
+      return {
+        fo: 1,
+        fd: k > 0.01 ? 'inline' : 'none',
+        cx: r1(E.cut[0] * off),
+        cy: r1(E.cut[1] * off),
+        z: E.off[1] * sp + z0 * cp,
+        t: 'translate(' + r1(HC[0] + x) + ' ' + r1(HC[1] + E.off[1] * cp - z0 * sp) + ') rotate(' + r1(tilt) + ') scale(' + r3(sx) + ' ' + (perk ? 1.05 : 1) + ')',
+        innerT: 'translate(' + r1(7 * shh) + ' 0) scale(' + r3(clamp(ch / sx, 0.2, 1)) + ' 1)',
+        inner: r3(sstep(0.05, 0.35, ch)),
+      };
+    };
+    const earL = ear(0), earR = ear(1);
+    earL.back = earL.z <= earR.z ? 'inline' : 'none';
+    earL.front = earL.z > earR.z ? 'inline' : 'none';
+    out.earL = earL;
+    out.earR = earR;
+    const M = ART.muzzle, N = ART.nose, nz = HRY + 26.3;
+    out.muz = { cx: r1(HC[0] + M.c[0] * ch + HRY * shh), cy: r1(HC[1] + M.c[1] * cp - HRY * ch * sp), rx: r1(Math.hypot(M.rx * ch, 30 * shh)), disp: ch > -0.3 ? 'inline' : 'none' };
+    out.nose = { cx: r1(HC[0] + N.c[0] * ch + nz * shh), cy: r1(HC[1] + N.c[1] * cp - nz * ch * sp), rx: r1(Math.hypot(N.rx * ch, 8 * shh)), disp: ch > -0.15 ? 'inline' : 'none' };
+    out.nose.sx = r1(out.nose.cx + N.shine[0] * ch);
+    out.nose.sy = r1(out.nose.cy + N.shine[1]);
+    out.nose.srx = r1(Math.max(1.2, N.shine[2] * Math.abs(ch)));
+    out.browL = decalPath(ART.brows[0], th, cp, sp);
+    out.browR = decalPath(ART.brows[1], th, cp, sp);
+    out.maskD = decalPath(ART.mask, th, cp, sp);
+    const blush = function (Bl) {
+      const d = headDecal(Bl.c[0], Bl.c[1], th, cp, sp);
+      return { cx: r1(d.x), cy: r1(d.y), rx: r1(Math.max(0.3, Bl.rx * d.fs)), op: r3(Bl.op * sstep(0.02, 0.3, d.v)) };
+    };
+    out.blushL = blush(ART.blush[0]);
+    out.blushR = blush(ART.blush[1]);
+    let eyes = this.eyes;
+    if (eyes === 'open' && now < this.blinkUntil) eyes = 'closed';
+    const lookX = p.lookX, lookY = p.lookY;
+    const eye = function (E) {
+      const d = headDecal(E.c[0], E.c[1], th, cp, sp), fs = d.fs, ks = E.r / 15.64;
+      const px = d.x + E.pupil[0] * fs + lookX * 4.6 * ks * fs, py = d.y + E.pupil[1] + lookY * 4.2 * ks;
+      const arc = function (a, m, c) {
+        return 'M ' + pt([d.x + a[0] * ks * fs, d.y + a[1] * ks]) + ' Q ' + pt([d.x + m[0] * ks * fs, d.y + m[1] * ks]) + ' ' + pt([d.x + c[0] * ks * fs, d.y + c[1] * ks]);
+      };
+      const o = {
+        op: r3(sstep(0.02, 0.3, d.v)),
+        cx: r1(d.x), cy: r1(d.y), rx: r1(Math.max(0.3, E.r * fs)),
+        px: r1(px), py: r1(py), prx: r1(Math.max(0.2, E.pupil[2] * fs)),
+        closed: arc([-11, -0.92], [0, 9.2], [11, -0.92]),
+        happy: arc([-11, 4.6], [0, -11.96], [11, 4.6]),
+        openDisp: eyes === 'open' ? 'inline' : 'none',
+        closedDisp: eyes === 'closed' ? 'inline' : 'none',
+        happyDisp: eyes === 'happy' ? 'inline' : 'none',
+      };
+      E.glints.forEach(function (g, j) {
+        o['g' + j + 'x'] = r1(px + g[0] * fs);
+        o['g' + j + 'y'] = r1(py + g[1]);
+        o['g' + j + 'r'] = r1(Math.max(0.1, g[2] * fs));
+      });
+      return o;
+    };
+    out.eyeL = eye(ART.eyes[0]);
+    out.eyeR = eye(ART.eyes[1]);
+
+    // mouth: it flaps while a line is being typed into his speech bubble
+    const bb = this.bubble, talking = !!bb.full && bb.shown < bb.full.length;
+    let mouth = this.mouth;
+    if (talking) mouth = Math.sin(now * 0.05) + Math.sin(now * 0.021) > 0.1 ? 'open' : 'w';
+    const m = function (q) { return onMuzzle(q[0], q[1], ch, shh, cp, sp); };
+    const mx = M.c[0], my = M.c[1];
+    const md = [[mx - 13.8, my], [mx, my + 20.24], [mx + 13.8, my]].map(m);
+    const mo = [[mx - 9.5, my + 2.7], [mx, my + 17.2], [mx + 9.5, my + 2.7]].map(m);
+    const tH = m([mx, my + 10.12]), tO = m([mx, my + 8.8]), oC = m([mx, my + 6.44]), aw = Math.abs(ch);
+    out.mouth = {
+      op: r3(sstep(0.12, 0.4, ch)),
+      w: polyD(ART.mouth.map(m), true),
+      wDisp: mouth === 'w' ? 'inline' : 'none',
+      happy: 'M ' + pt(md[0]) + ' Q ' + pt(md[1]) + ' ' + pt(md[2]) + ' Z',
+      happyDisp: mouth === 'happy' ? 'inline' : 'none',
+      tx: r1(tH[0]), ty: r1(tH[1]), trx: r1(Math.max(0.5, 6.44 * aw)),
+      open: 'M ' + pt(mo[0]) + ' Q ' + pt(mo[1]) + ' ' + pt(mo[2]) + ' Z',
+      openDisp: mouth === 'open' ? 'inline' : 'none',
+      ox: r1(tO[0]), oy: r1(tO[1]), orx: r1(Math.max(0.5, 4.5 * aw)),
+      ocx: r1(oC[0]), ocy: r1(oC[1]), ocrx: r1(Math.max(0.5, 4.6 * aw)),
+      oDisp: mouth === 'o' ? 'inline' : 'none',
+    };
+
+    // knock ripples on the glass
+    const rip = function (q, i) {
+      if (!q) return { cx: 0, cy: 0, r: 0, op: 0 };
+      const u = clamp((now - q.t0) / 560, 0, 1);
+      return { cx: r1(q.x), cy: r1(q.y), r: r1(12 + 70 * EASE.out(u)), op: now < q.t0 ? 0 : r3((1 - u) * (i ? 0.7 : 0.95)) };
+    };
+    out.rip1 = rip(this.ripples[0], 0);
+    out.rip2 = rip(this.ripples[1], 1);
+    const r0 = this.ripples[0], tu = r0 ? clamp((now - r0.t0) / 700, 0, 1) : 1;
+    out.tok = { x: r0 ? r1(r0.x + 40) : 0, y: r0 ? r1(r0.y - 46 - 20 * tu) : 0, op: r3(1 - tu) };
+
+    // speech bubble: above his head, or in the corner when he's up close
+    if (!bb.full || p.bubbleS < 0.02) {
+      out.bub = { disp: 'none', t: '', d: 'M 0 0', text: '', said: '', css: 'none', lx: 0, ly: 0, ox: 0, oy: 0, sx: 0, sc: 0 };
+    } else {
+      const tw = BUBBLE_W[bb.full] || bb.full.length * 14.5, w = Math.round(tw + 44), h = 64, rr = 24;
+      const hx = X, hy = Y + (HC[1] - GY + hop) * s, close = s > 1.8;
+      const dir = close ? [-0.5, -0.86] : [0.6, -0.8];
+      const tipX = hx + dir[0] * (108 * s + 6), tipY = hy + dir[1] * (100 * s + 6);
+      let bx = close ? 40 : tipX + 10, by = close ? 40 : tipY - h - 34;
+      bx = clamp(bx, 24, 1000 - w - 24);
+      by = clamp(by, 24, 780 - h - 24);
+      const baseL = clamp(tipX - 22, bx + rr + 2, bx + w - rr - 34), baseR = baseL + 30;
+      out.bub = {
+        disp: 'inline',
+        d: 'M ' + (bx + rr) + ' ' + by + ' H ' + (bx + w - rr) + ' A ' + rr + ' ' + rr + ' 0 0 1 ' + (bx + w) + ' ' + (by + rr) +
+          ' V ' + (by + h - rr) + ' A ' + rr + ' ' + rr + ' 0 0 1 ' + (bx + w - rr) + ' ' + (by + h) +
+          ' H ' + r1(baseR) + ' L ' + r1(tipX) + ' ' + r1(tipY) + ' L ' + r1(baseL) + ' ' + (by + h) +
+          ' H ' + (bx + rr) + ' A ' + rr + ' ' + rr + ' 0 0 1 ' + bx + ' ' + (by + h - rr) + ' V ' + (by + rr) +
+          ' A ' + rr + ' ' + rr + ' 0 0 1 ' + (bx + rr) + ' ' + by + ' Z',
+        t: 'translate(' + r1(tipX) + ' ' + r1(tipY) + ') scale(' + r3(p.bubbleS) + ') translate(' + r1(-tipX) + ' ' + r1(-tipY) + ')',
+        // the words sit on the bubble as HTML (SVG can't show live text here) and scale with it
+        text: bb.full.slice(0, bb.shown),
+        said: bb.full,
+        css: 'block',
+        lx: r1(bx + 22),
+        ly: by,
+        ox: r1(tipX - bx - 22),
+        oy: r1(tipY - by),
+        sx: r1(this.shakeAmp * Math.sin(now * 0.12)),
+        sc: r3(p.bubbleS),
+      };
+    }
+    return out;
+  }
+
+  renderVals() {
+    return { r: this.rig(), h: this.h };
+  }
+}
+</script>
+</body>
+</html>

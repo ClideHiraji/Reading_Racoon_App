@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racoon's Closet: Striped tee (silver, tops). FR-07, D-026.
+     Drawn to fit Racoon at rest: the bottom layer links ../../parts/racoon_C_inkscape.svg (locked).
+     Draw on the "Item" layer. The file's name is the item's id; its name, tier, price and how it's
+     earned are in reading-racoon/content/closet.json. motion-demo/build_racoon.py reads this file
+     and never writes it. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-striped-tee"
+   sodipodi:docname="striped_tee.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>Striped tee</title>
+  <sodipodi:namedview
+     id="namedview-striped-tee"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="2"
+     inkscape:cx="200"
+     inkscape:cy="200"
+     inkscape:current-layer="layer-item" />
+  <defs id="defs-striped-tee">
+    <linearGradient id="gr-striped-tee-1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" style="stop-color:#e2d5c4" /><stop offset="0.3" style="stop-color:#fff3dc" /><stop offset="0.55" style="stop-color:#fff4e0" /><stop offset="1" style="stop-color:#e2d5c4" /></linearGradient>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="../../parts/racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-item" inkscape:label="Item">
+   <g id="item-striped-tee" inkscape:label="striped_tee">
+     <title>Striped tee: a cream T-shirt with orange stripes (silver)</title>
+     <path id="striped-tee-1" inkscape:label="Shirt" d="M 112 234 L 289 234 L 289 346 C 252.5 360 148.5 360 112 346 Z" style="fill:url(#gr-striped-tee-1);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="striped-tee-2" inkscape:label="Stripe" d="M 112 262 L 289 262 L 289 272 L 112 272 Z" style="fill:#f08a3c" />
+     <path id="striped-tee-3" inkscape:label="Stripe" d="M 112 284 L 289 284 L 289 294 L 112 294 Z" style="fill:#f08a3c" />
+     <path id="striped-tee-4" inkscape:label="Stripe" d="M 112 306 L 289 306 L 289 316 L 112 316 Z" style="fill:#f08a3c" />
+     <path id="striped-tee-5" inkscape:label="Stripe" d="M 112 326 L 289 326 L 289 336 L 112 336 Z" style="fill:#f08a3c" />
+     <path id="striped-tee-6" inkscape:label="Hem line" d="M 112 234 L 289 234 L 289 346 C 252.5 360 148.5 360 112 346 Z" style="fill:none;stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="striped-tee-7" inkscape:label="Collar" d="M 170 251 C 184 270 217 270 231 251" style="fill:none;stroke:#3b2d3a;stroke-width:11;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="striped-tee-8" inkscape:label="Collar" d="M 170 251 C 184 270 217 270 231 251" style="fill:none;stroke:#f08a3c;stroke-width:7;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="striped-tee-9" inkscape:label="Shine" d="M 150 262 C 148 280 148 300 152 318" style="fill:none;stroke:#ffffff;stroke-width:5;stroke-linejoin:round;stroke-linecap:round;opacity:0.35" />
+   </g>
+  </g>
+</svg>

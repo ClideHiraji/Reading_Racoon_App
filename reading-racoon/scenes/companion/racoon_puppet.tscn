@@ -1,0 +1,251 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/companion/racoon_puppet.gd" id="1_d6f4k"]
+[ext_resource type="Texture2D" path="res://assets/racoon/closet/paws.svg" id="2_8p562"]
+[ext_resource type="Texture2D" path="res://assets/racoon/racoon_atlas.svg" id="3_e472y"]
+[ext_resource type="Shader" path="res://scenes/companion/racoon_belly_clip.gdshader" id="4_18dxh"]
+[ext_resource type="Texture2D" path="res://assets/racoon/closet/neck.svg" id="5_8547j"]
+[ext_resource type="Shader" path="res://scenes/companion/racoon_cheek_fur.gdshader" id="6_aeqco"]
+[ext_resource type="Shader" path="res://scenes/companion/racoon_face_clip.gdshader" id="7_28d44"]
+[ext_resource type="AnimationLibrary" path="res://assets/racoon/racoon_moves.tres" id="8_sddmf"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5mdpl"]
+shader = ExtResource("4_18dxh")
+shader_parameter/body_tex = ExtResource("3_e472y")
+shader_parameter/body_uv = Vector4(0.65217394, 0.03287671, 0.13241106, 0.4219178)
+shader_parameter/body_rect = Vector4(136, 231, 134, 154)
+shader_parameter/to_body_x = Vector2(1, 0)
+shader_parameter/to_body_y = Vector2(0, 1)
+shader_parameter/to_body_o = Vector2(0, 0)
+shader_parameter/ink = Vector3(0.23137255, 0.1764706, 0.22745098)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_la4ag"]
+shader = ExtResource("6_aeqco")
+shader_parameter/tip_l = Vector2(89.77, 198.8)
+shader_parameter/root_l = Vector2(100.77, 201.8)
+shader_parameter/ang_l = null
+shader_parameter/tip_r = Vector2(311.25, 194.62)
+shader_parameter/root_r = Vector2(300.25, 197.62)
+shader_parameter/ang_r = null
+shader_parameter/reach = null
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7bqt8"]
+shader = ExtResource("7_28d44")
+shader_parameter/head_mask = ExtResource("3_e472y")
+shader_parameter/head_rect = Vector4(84, 68, 233, 195)
+shader_parameter/head_uv = Vector4(0.011857707, 0.03287671, 0.23023716, 0.53424656)
+
+[node name="Racoon" type="Node2D" unique_id=1880803043]
+texture_filter = 4
+script = ExtResource("1_d6f4k")
+reach_left_to = Vector2(130.10585, 344.98984)
+reach_right_to = Vector2(275.54416, 346.30984)
+
+[node name="Shadow" type="Polygon2D" parent="." unique_id=104978867]
+color = Color(0.23, 0.16, 0.12, 0.14)
+polygon = PackedVector2Array(296.51, 388.23, 294.66537, 390.5711, 289.20242, 392.8222, 280.3311, 394.89685, 268.39224, 396.7153, 253.84474, 398.20764, 237.2476, 399.31656, 219.23866, 399.99942, 200.51, 400.23, 181.78133, 399.99942, 163.77238, 399.31656, 147.17525, 398.20764, 132.62775, 396.7153, 120.68891, 394.89685, 111.817566, 392.8222, 106.354614, 390.5711, 104.509995, 388.23, 106.354614, 385.88892, 111.817566, 383.63782, 120.68891, 381.56317, 132.62775, 379.74472, 147.17525, 378.25238, 163.77238, 377.14346, 181.78133, 376.4606, 200.51, 376.23, 219.23866, 376.4606, 237.2476, 377.14346, 253.84474, 378.25238, 268.39224, 379.74472, 280.3311, 381.56317, 289.20242, 383.63782, 294.66537, 385.88892)
+
+[node name="Body" type="Node2D" parent="." unique_id=295010356]
+
+[node name="Book" type="Polygon2D" parent="Body" unique_id=1704544668]
+visible = false
+texture = ExtResource("2_8p562")
+polygon = PackedVector2Array(136, 279, 266, 279, 266, 378, 136, 378)
+uv = PackedVector2Array(1112, 24, 1372, 24, 1372, 222, 1112, 222)
+metadata/tex = "open_book"
+
+[node name="Tail" type="Polygon2D" parent="Body" unique_id=473554565]
+texture = ExtResource("3_e472y")
+polygon = PackedVector2Array(218.43214, 353.15073, 226.69572, 294.5101, 227.93822, 354.49033, 236.2018, 295.8497, 241.41905, 357.47757, 246.02367, 295.46994, 254.90236, 359.82202, 254.28413, 293.86346, 268.3933, 361.09912, 260.97778, 291.45477, 281.98914, 361.0099, 266.00763, 288.54303, 295.6809, 359.23273, 269.3825, 285.4496, 309.29788, 355.45767, 271.2733, 282.4846, 322.48605, 349.47348, 272.03366, 279.85916, 334.7595, 341.26913, 272.14993, 277.5845, 345.63406, 331.07095, 272.10593, 275.43405, 354.7696, 319.26993, 272.24207, 273.01706, 362.0259, 306.29047, 272.69833, 269.90887, 367.4281, 292.4872, 273.4497, 265.75504, 371.0967, 278.09402, 274.37558, 260.32162, 360.69116, 261.9919, 287.81677, 254.72757, 360.6961, 247.59264, 289.28833, 245.56123, 359.75128, 232.72163, 290.1507, 234.99712, 357.92575, 217.31003, 290.33475, 223.10406, 355.2818, 201.42007, 289.7782, 209.81992, 350.95468, 167.67639, 285.45108, 176.07623)
+uv = PackedVector2Array(992.86426, 378.30145, 1009.3915, 261.0202, 1011.87646, 380.98065, 1028.4036, 263.6994, 1038.8381, 386.95514, 1048.0474, 262.93988, 1065.8047, 391.64404, 1064.5682, 259.72693, 1092.7866, 394.1982, 1077.9556, 254.90955, 1119.9783, 394.01974, 1088.0153, 249.08604, 1147.3618, 390.46545, 1094.765, 242.89917, 1174.5957, 382.91534, 1098.5466, 236.96918, 1200.9722, 370.94696, 1100.0674, 231.71832, 1225.519, 354.53827, 1100.2998, 227.169, 1247.2681, 334.1419, 1100.2119, 222.8681, 1265.5392, 310.53986, 1100.4841, 218.03413, 1280.0518, 284.58093, 1101.3967, 211.81775, 1290.8562, 256.97443, 1102.8994, 203.51007, 1298.1934, 228.18805, 1104.7512, 192.64325, 1277.3823, 195.98383, 1131.6335, 181.45514, 1277.3922, 167.18527, 1134.5767, 163.12247, 1275.5026, 137.44327, 1136.3014, 141.99423, 1271.8516, 106.620056, 1136.6694, 118.20812, 1266.5636, 74.84015, 1135.5564, 91.63983, 1257.9094, 7.352783, 1126.9021, 24.152466)
+polygons = [PackedInt32Array(0, 2, 1), PackedInt32Array(1, 2, 3), PackedInt32Array(2, 4, 3), PackedInt32Array(3, 4, 5), PackedInt32Array(4, 6, 5), PackedInt32Array(5, 6, 7), PackedInt32Array(6, 8, 7), PackedInt32Array(7, 8, 9), PackedInt32Array(8, 10, 9), PackedInt32Array(9, 10, 11), PackedInt32Array(10, 12, 11), PackedInt32Array(11, 12, 13), PackedInt32Array(12, 14, 13), PackedInt32Array(13, 14, 15), PackedInt32Array(14, 16, 15), PackedInt32Array(15, 16, 17), PackedInt32Array(16, 18, 17), PackedInt32Array(17, 18, 19), PackedInt32Array(18, 20, 19), PackedInt32Array(19, 20, 21), PackedInt32Array(20, 22, 21), PackedInt32Array(21, 22, 23), PackedInt32Array(22, 24, 23), PackedInt32Array(23, 24, 25), PackedInt32Array(24, 26, 25), PackedInt32Array(25, 26, 27), PackedInt32Array(26, 28, 27), PackedInt32Array(27, 28, 29), PackedInt32Array(28, 30, 29), PackedInt32Array(29, 30, 31), PackedInt32Array(30, 32, 31), PackedInt32Array(31, 32, 33), PackedInt32Array(32, 34, 33), PackedInt32Array(33, 34, 35), PackedInt32Array(34, 36, 35), PackedInt32Array(35, 36, 37), PackedInt32Array(36, 38, 37), PackedInt32Array(37, 38, 39), PackedInt32Array(38, 40, 39), PackedInt32Array(39, 40, 41)]
+metadata/tris = 120
+
+[node name="FootLeft" type="Polygon2D" parent="Body" unique_id=1305087749]
+texture = ExtResource("3_e472y")
+polygon = PackedVector2Array(130, 360, 192, 360, 192, 398, 130, 398)
+uv = PackedVector2Array(1650, 438, 1774, 438, 1774, 514, 1650, 514)
+metadata/tex = "foot_l"
+
+[node name="FootRight" type="Polygon2D" parent="Body" unique_id=218990575]
+texture = ExtResource("3_e472y")
+polygon = PackedVector2Array(207, 359, 269, 359, 269, 397, 207, 397)
+uv = PackedVector2Array(1798, 438, 1922, 438, 1922, 514, 1798, 514)
+metadata/tex = "foot_r"
+
+[node name="Torso" type="Polygon2D" parent="Body" unique_id=715459351]
+texture = ExtResource("3_e472y")
+polygon = PackedVector2Array(136, 231, 270, 231, 270, 385, 136, 385)
+uv = PackedVector2Array(1320, 24, 1588, 24, 1588, 332, 1320, 332)
+metadata/tex = "body"
+
+[node name="Belly" type="Polygon2D" parent="Body" unique_id=944453406]
+material = SubResource("ShaderMaterial_5mdpl")
+texture = ExtResource("3_e472y")
+polygon = PackedVector2Array(156, 266, 249, 266, 249, 367, 156, 367)
+uv = PackedVector2Array(1612, 24, 1798, 24, 1798, 226, 1612, 226)
+metadata/tex = "belly"
+
+[node name="ChestItems" type="Node2D" parent="Body" unique_id=543047036]
+
+[node name="Top" type="Polygon2D" parent="Body/ChestItems" unique_id=1720550040]
+visible = false
+
+[node name="ScarfBand" type="Polygon2D" parent="Body" unique_id=808097809]
+visible = false
+texture = ExtResource("5_8547j")
+polygon = PackedVector2Array(137, 241, 264, 241, 264, 286, 137, 286)
+uv = PackedVector2Array(24, 278, 278, 278, 278, 368, 24, 368)
+metadata/tex = "scarf_teal.band"
+
+[node name="ScarfKnot" type="Polygon2D" parent="Body" unique_id=1092678409]
+visible = false
+texture = ExtResource("5_8547j")
+polygon = PackedVector2Array(200, 263, 252, 263, 252, 326, 200, 326)
+uv = PackedVector2Array(888, 24, 992, 24, 992, 150, 888, 150)
+metadata/tex = "scarf_teal.knot"
+
+[node name="NeckItems" type="Node2D" parent="Body" unique_id=395301545]
+
+[node name="Item" type="Polygon2D" parent="Body/NeckItems" unique_id=215427466]
+visible = false
+
+[node name="ArmLeft" type="Node2D" parent="Body" unique_id=23469967]
+
+[node name="Fill" type="Polygon2D" parent="Body/ArmLeft" unique_id=1917937892]
+texture = ExtResource("3_e472y")
+polygon = PackedVector2Array(178.36049, 258.71234, 140.0182, 246.63304, 176.03084, 266.10712, 137.68855, 254.02783, 173.70119, 273.50192, 135.3589, 261.42264, 171.37154, 280.8967, 133.02925, 268.8174, 169.04192, 288.29153, 130.69963, 276.21225, 166.71227, 295.6863, 128.36998, 283.60703, 164.3826, 303.0811, 126.04031, 291.0018, 162.05296, 310.47592, 123.71068, 298.39664, 159.7233, 317.87067, 121.38101, 305.79138, 157.39368, 325.26547, 119.05139, 313.1862, 155.06403, 332.66028, 116.72174, 320.58093, 152.73438, 340.0551, 114.39209, 327.97577, 150.40472, 347.4499, 112.06245, 335.37054, 148.07507, 354.84467, 109.732796, 342.76532)
+uv = PackedVector2Array(396.72098, 449.42468, 320.0364, 425.26608, 392.06168, 464.21423, 315.3771, 440.05563, 387.40237, 479.00385, 310.7178, 454.84528, 382.7431, 493.7934, 306.05853, 469.63483, 378.0838, 508.583, 301.39923, 484.42444, 373.4245, 523.37256, 296.73993, 499.214, 368.7652, 538.1622, 292.08063, 514.0036, 364.1059, 552.9517, 287.42133, 528.79315, 359.44662, 567.74133, 282.76205, 543.58276, 354.78732, 582.53094, 278.10275, 558.3724, 350.12802, 597.3205, 273.44345, 573.1619, 345.46872, 612.1101, 268.78415, 587.95154, 340.80942, 626.89966, 264.12485, 602.7411, 336.15015, 641.6893, 259.46558, 617.5307)
+polygons = [PackedInt32Array(0, 2, 1), PackedInt32Array(1, 2, 3), PackedInt32Array(2, 4, 3), PackedInt32Array(3, 4, 5), PackedInt32Array(4, 6, 5), PackedInt32Array(5, 6, 7), PackedInt32Array(6, 8, 7), PackedInt32Array(7, 8, 9), PackedInt32Array(8, 10, 9), PackedInt32Array(9, 10, 11), PackedInt32Array(10, 12, 11), PackedInt32Array(11, 12, 13), PackedInt32Array(12, 14, 13), PackedInt32Array(13, 14, 15), PackedInt32Array(14, 16, 15), PackedInt32Array(15, 16, 17), PackedInt32Array(16, 18, 17), PackedInt32Array(17, 18, 19), PackedInt32Array(18, 20, 19), PackedInt32Array(19, 20, 21), PackedInt32Array(20, 22, 21), PackedInt32Array(21, 22, 23), PackedInt32Array(22, 24, 23), PackedInt32Array(23, 24, 25), PackedInt32Array(24, 26, 25), PackedInt32Array(25, 26, 27)]
+metadata/tris = 78
+
+[node name="Rim" type="Node2D" parent="Body/ArmLeft" unique_id=292183049]
+
+[node name="Outline" type="Polygon2D" parent="Body/ArmLeft" unique_id=1754997670]
+texture = ExtResource("3_e472y")
+polygon = PackedVector2Array(178.36049, 258.71234, 140.0182, 246.63304, 176.03084, 266.10712, 137.68855, 254.02783, 173.70119, 273.50192, 135.3589, 261.42264, 171.37154, 280.8967, 133.02925, 268.8174, 169.04192, 288.29153, 130.69963, 276.21225, 166.71227, 295.6863, 128.36998, 283.60703, 164.3826, 303.0811, 126.04031, 291.0018, 162.05296, 310.47592, 123.71068, 298.39664, 159.7233, 317.87067, 121.38101, 305.79138, 157.39368, 325.26547, 119.05139, 313.1862, 155.06403, 332.66028, 116.72174, 320.58093, 152.73438, 340.0551, 114.39209, 327.97577, 150.40472, 347.4499, 112.06245, 335.37054, 148.07507, 354.84467, 109.732796, 342.76532)
+uv = PackedVector2Array(268.72098, 449.42468, 192.0364, 425.26608, 264.06168, 464.21423, 187.3771, 440.05563, 259.40237, 479.00385, 182.7178, 454.84528, 254.7431, 493.7934, 178.05853, 469.63483, 250.0838, 508.583, 173.39923, 484.42444, 245.4245, 523.37256, 168.73993, 499.214, 240.7652, 538.1622, 164.08063, 514.0036, 236.1059, 552.9517, 159.42133, 528.79315, 231.44662, 567.74133, 154.76205, 543.58276, 226.78732, 582.53094, 150.10275, 558.3724, 222.12802, 597.3205, 145.44345, 573.1619, 217.46872, 612.1101, 140.78415, 587.95154, 212.80942, 626.89966, 136.12485, 602.7411, 208.15015, 641.6893, 131.46558, 617.5307)
+polygons = [PackedInt32Array(0, 2, 1), PackedInt32Array(1, 2, 3), PackedInt32Array(2, 4, 3), PackedInt32Array(3, 4, 5), PackedInt32Array(4, 6, 5), PackedInt32Array(5, 6, 7), PackedInt32Array(6, 8, 7), PackedInt32Array(7, 8, 9), PackedInt32Array(8, 10, 9), PackedInt32Array(9, 10, 11), PackedInt32Array(10, 12, 11), PackedInt32Array(11, 12, 13), PackedInt32Array(12, 14, 13), PackedInt32Array(13, 14, 15), PackedInt32Array(14, 16, 15), PackedInt32Array(15, 16, 17), PackedInt32Array(16, 18, 17), PackedInt32Array(17, 18, 19), PackedInt32Array(18, 20, 19), PackedInt32Array(19, 20, 21), PackedInt32Array(20, 22, 21), PackedInt32Array(21, 22, 23), PackedInt32Array(22, 24, 23), PackedInt32Array(23, 24, 25), PackedInt32Array(24, 26, 25), PackedInt32Array(25, 26, 27)]
+metadata/tris = 78
+
+[node name="ArmRight" type="Node2D" parent="Body" unique_id=2061268595]
+
+[node name="Fill" type="Polygon2D" parent="Body/ArmRight" unique_id=843317124]
+texture = ExtResource("3_e472y")
+polygon = PackedVector2Array(265.63177, 247.95305, 227.2895, 260.03235, 267.96143, 255.34784, 229.61916, 267.42712, 270.29108, 262.74265, 231.9488, 274.82193, 272.6207, 270.13742, 234.27843, 282.2167, 274.95038, 277.53223, 236.6081, 289.6115, 277.28003, 284.927, 238.93774, 297.0063, 279.60968, 292.32184, 241.2674, 304.40112, 281.93933, 299.7166, 243.59705, 311.79596, 284.26898, 307.11136, 245.9267, 319.1907, 286.59863, 314.50616, 248.25635, 326.5855, 288.92828, 321.90094, 250.586, 333.9803, 291.25793, 329.29575, 252.91565, 341.3751, 293.5876, 336.69052, 255.2453, 348.76987, 295.91724, 344.08533, 257.57495, 356.16467)
+uv = PackedVector2Array(85.26355, 425.9061, 8.579009, 450.0647, 89.92285, 440.69565, 13.238312, 464.85425, 94.58215, 455.4853, 17.897614, 479.64386, 99.241455, 470.27484, 22.556885, 494.4334, 103.90076, 485.06445, 27.216187, 509.22302, 108.56006, 499.854, 31.875488, 524.0126, 113.21936, 514.6436, 36.53479, 538.8022, 117.87866, 529.43317, 41.19409, 553.59174, 122.537964, 544.2228, 45.853394, 568.38135, 127.19727, 559.0124, 50.512695, 583.17096, 131.85657, 573.80194, 55.171997, 597.9605, 136.51581, 588.59155, 59.831238, 612.7501, 141.17511, 603.3811, 64.49054, 627.5397, 145.83441, 618.1707, 69.14984, 642.3293)
+polygons = [PackedInt32Array(0, 2, 1), PackedInt32Array(1, 2, 3), PackedInt32Array(2, 4, 3), PackedInt32Array(3, 4, 5), PackedInt32Array(4, 6, 5), PackedInt32Array(5, 6, 7), PackedInt32Array(6, 8, 7), PackedInt32Array(7, 8, 9), PackedInt32Array(8, 10, 9), PackedInt32Array(9, 10, 11), PackedInt32Array(10, 12, 11), PackedInt32Array(11, 12, 13), PackedInt32Array(12, 14, 13), PackedInt32Array(13, 14, 15), PackedInt32Array(14, 16, 15), PackedInt32Array(15, 16, 17), PackedInt32Array(16, 18, 17), PackedInt32Array(17, 18, 19), PackedInt32Array(18, 20, 19), PackedInt32Array(19, 20, 21), PackedInt32Array(20, 22, 21), PackedInt32Array(21, 22, 23), PackedInt32Array(22, 24, 23), PackedInt32Array(23, 24, 25), PackedInt32Array(24, 26, 25), PackedInt32Array(25, 26, 27)]
+metadata/tris = 78
+
+[node name="Rim" type="Node2D" parent="Body/ArmRight" unique_id=1946196494]
+
+[node name="Outline" type="Polygon2D" parent="Body/ArmRight" unique_id=1492150629]
+texture = ExtResource("3_e472y")
+polygon = PackedVector2Array(265.63177, 247.95305, 227.2895, 260.03235, 267.96143, 255.34784, 229.61916, 267.42712, 270.29108, 262.74265, 231.9488, 274.82193, 272.6207, 270.13742, 234.27843, 282.2167, 274.95038, 277.53223, 236.6081, 289.6115, 277.28003, 284.927, 238.93774, 297.0063, 279.60968, 292.32184, 241.2674, 304.40112, 281.93933, 299.7166, 243.59705, 311.79596, 284.26898, 307.11136, 245.9267, 319.1907, 286.59863, 314.50616, 248.25635, 326.5855, 288.92828, 321.90094, 250.586, 333.9803, 291.25793, 329.29575, 252.91565, 341.3751, 293.5876, 336.69052, 255.2453, 348.76987, 295.91724, 344.08533, 257.57495, 356.16467)
+uv = PackedVector2Array(1883.2635, 11.906097, 1806.579, 36.064697, 1887.9229, 26.695648, 1811.2383, 50.854248, 1892.5822, 41.48529, 1815.8976, 65.64386, 1897.2415, 56.27484, 1820.5569, 80.43341, 1901.9008, 71.06445, 1825.2162, 95.22302, 1906.56, 85.854004, 1829.8755, 110.01257, 1911.2194, 100.643616, 1834.5348, 124.802185, 1915.8787, 115.43317, 1839.1941, 139.59174, 1920.538, 130.22278, 1843.8534, 154.38135, 1925.1973, 145.01239, 1848.5127, 169.17096, 1929.8566, 159.80194, 1853.172, 183.96051, 1934.5157, 174.59155, 1857.8313, 198.75012, 1939.175, 189.3811, 1862.4905, 213.53967, 1943.8345, 204.17072, 1867.1499, 228.32928)
+polygons = [PackedInt32Array(0, 2, 1), PackedInt32Array(1, 2, 3), PackedInt32Array(2, 4, 3), PackedInt32Array(3, 4, 5), PackedInt32Array(4, 6, 5), PackedInt32Array(5, 6, 7), PackedInt32Array(6, 8, 7), PackedInt32Array(7, 8, 9), PackedInt32Array(8, 10, 9), PackedInt32Array(9, 10, 11), PackedInt32Array(10, 12, 11), PackedInt32Array(11, 12, 13), PackedInt32Array(12, 14, 13), PackedInt32Array(13, 14, 15), PackedInt32Array(14, 16, 15), PackedInt32Array(15, 16, 17), PackedInt32Array(16, 18, 17), PackedInt32Array(17, 18, 19), PackedInt32Array(18, 20, 19), PackedInt32Array(19, 20, 21), PackedInt32Array(20, 22, 21), PackedInt32Array(21, 22, 23), PackedInt32Array(22, 24, 23), PackedInt32Array(23, 24, 25), PackedInt32Array(24, 26, 25), PackedInt32Array(25, 26, 27)]
+metadata/tris = 78
+
+[node name="Head" type="Node2D" parent="Body" unique_id=1499356432]
+
+[node name="EarRight" type="Polygon2D" parent="Body/Head" unique_id=391860211]
+position = Vector2(271.91678, 89.90001)
+rotation = 0.41887903
+texture = ExtResource("3_e472y")
+polygon = PackedVector2Array(-44, -52, 44, -52, 44, 43, -44, 43)
+uv = PackedVector2Array(606, 438, 782, 438, 782, 628, 606, 628)
+metadata/tex = "earR"
+
+[node name="Inner" type="Polygon2D" parent="Body/Head/EarRight" unique_id=1994852630]
+texture = ExtResource("3_e472y")
+polygon = PackedVector2Array(-23, -28, 23, -28, 23, 32, -23, 32)
+uv = PackedVector2Array(1128, 438, 1220, 438, 1220, 558, 1128, 558)
+metadata/tex = "earR_in"
+
+[node name="EarLeft" type="Polygon2D" parent="Body/Head" unique_id=1011501139]
+position = Vector2(129.31427, 89.90001)
+rotation = -0.41887903
+texture = ExtResource("3_e472y")
+polygon = PackedVector2Array(-44, -52, 44, -52, 44, 43, -44, 43)
+uv = PackedVector2Array(406, 438, 582, 438, 582, 628, 406, 628)
+metadata/tex = "earL"
+
+[node name="Inner" type="Polygon2D" parent="Body/Head/EarLeft" unique_id=142232081]
+texture = ExtResource("3_e472y")
+polygon = PackedVector2Array(-23, -28, 23, -28, 23, 32, -23, 32)
+uv = PackedVector2Array(1012, 438, 1104, 438, 1104, 558, 1012, 558)
+metadata/tex = "earL_in"
+
+[node name="MuzzleSide" type="Node2D" parent="Body/Head" unique_id=1583741963]
+
+[node name="Skull" type="Polygon2D" parent="Body/Head" unique_id=1684995212]
+material = SubResource("ShaderMaterial_la4ag")
+texture = ExtResource("3_e472y")
+polygon = PackedVector2Array(84, 68, 317, 68, 317, 263, 84, 263)
+uv = PackedVector2Array(24, 24, 490, 24, 490, 414, 24, 414)
+metadata/tex = "head"
+
+[node name="Face" type="Node2D" parent="Body/Head" unique_id=219968293]
+material = SubResource("ShaderMaterial_7bqt8")
+
+[node name="BrowLeft" type="Polygon2D" parent="Body/Head/Face" unique_id=1341968217]
+use_parent_material = true
+texture = ExtResource("3_e472y")
+polygon = PackedVector2Array(134, 118, 134, 130.5, 134, 143, 144.2, 118, 144.2, 130.5, 144.2, 143, 154.4, 118, 154.4, 130.5, 154.4, 143, 164.6, 118, 164.6, 130.5, 164.6, 143, 174.8, 118, 174.8, 130.5, 174.8, 143, 185, 118, 185, 130.5, 185, 143)
+uv = PackedVector2Array(24, 656, 24, 681, 24, 706, 44.4, 656, 44.4, 681, 44.4, 706, 64.8, 656, 64.8, 681, 64.8, 706, 85.2, 656, 85.2, 681, 85.2, 706, 105.6, 656, 105.6, 681, 105.6, 706, 126, 656, 126, 681, 126, 706)
+polygons = [PackedInt32Array(0, 3, 1), PackedInt32Array(1, 3, 4), PackedInt32Array(1, 4, 2), PackedInt32Array(2, 4, 5), PackedInt32Array(3, 6, 4), PackedInt32Array(4, 6, 7), PackedInt32Array(4, 7, 5), PackedInt32Array(5, 7, 8), PackedInt32Array(6, 9, 7), PackedInt32Array(7, 9, 10), PackedInt32Array(7, 10, 8), PackedInt32Array(8, 10, 11), PackedInt32Array(9, 12, 10), PackedInt32Array(10, 12, 13), PackedInt32Array(10, 13, 11), PackedInt32Array(11, 13, 14), PackedInt32Array(12, 15, 13), PackedInt32Array(13, 15, 16), PackedInt32Array(13, 16, 14), PackedInt32Array(14, 16, 17)]
+metadata/tris = 60
+
+[node name="BrowRight" type="Polygon2D" parent="Body/Head/Face" unique_id=83927868]
+use_parent_material = true
+texture = ExtResource("3_e472y")
+polygon = PackedVector2Array(217, 118, 217, 130.5, 217, 143, 227, 118, 227, 130.5, 227, 143, 237, 118, 237, 130.5, 237, 143, 247, 118, 247, 130.5, 247, 143, 257, 118, 257, 130.5, 257, 143, 267, 118, 267, 130.5, 267, 143)
+uv = PackedVector2Array(150, 656, 150, 681, 150, 706, 170, 656, 170, 681, 170, 706, 190, 656, 190, 681, 190, 706, 210, 656, 210, 681, 210, 706, 230, 656, 230, 681, 230, 706, 250, 656, 250, 681, 250, 706)
+polygons = [PackedInt32Array(0, 3, 1), PackedInt32Array(1, 3, 4), PackedInt32Array(1, 4, 2), PackedInt32Array(2, 4, 5), PackedInt32Array(3, 6, 4), PackedInt32Array(4, 6, 7), PackedInt32Array(4, 7, 5), PackedInt32Array(5, 7, 8), PackedInt32Array(6, 9, 7), PackedInt32Array(7, 9, 10), PackedInt32Array(7, 10, 8), PackedInt32Array(8, 10, 11), PackedInt32Array(9, 12, 10), PackedInt32Array(10, 12, 13), PackedInt32Array(10, 13, 11), PackedInt32Array(11, 13, 14), PackedInt32Array(12, 15, 13), PackedInt32Array(13, 15, 16), PackedInt32Array(13, 16, 14), PackedInt32Array(14, 16, 17)]
+metadata/tris = 60
+
+[node name="Mask" type="Polygon2D" parent="Body/Head/Face" unique_id=1395545696]
+use_parent_material = true
+texture = ExtResource("3_e472y")
+polygon = PackedVector2Array(105, 143, 105, 163, 105, 183, 105, 203, 122.36363, 143, 122.36363, 163, 122.36363, 183, 122.36363, 203, 139.72726, 143, 139.72726, 163, 139.72726, 183, 139.72726, 203, 157.09091, 143, 157.09091, 163, 157.09091, 183, 157.09091, 203, 174.45454, 143, 174.45454, 163, 174.45454, 183, 174.45454, 203, 191.81818, 143, 191.81818, 163, 191.81818, 183, 191.81818, 203, 209.18182, 143, 209.18182, 163, 209.18182, 183, 209.18182, 203, 226.54546, 143, 226.54546, 163, 226.54546, 183, 226.54546, 203, 243.90909, 143, 243.90909, 163, 243.90909, 183, 243.90909, 203, 261.2727, 143, 261.2727, 163, 261.2727, 183, 261.2727, 203, 278.63635, 143, 278.63635, 163, 278.63635, 183, 278.63635, 203, 296, 143, 296, 163, 296, 183, 296, 203)
+uv = PackedVector2Array(1244, 438, 1244, 478, 1244, 518, 1244, 558, 1278.7273, 438, 1278.7273, 478, 1278.7273, 518, 1278.7273, 558, 1313.4546, 438, 1313.4546, 478, 1313.4546, 518, 1313.4546, 558, 1348.1819, 438, 1348.1819, 478, 1348.1819, 518, 1348.1819, 558, 1382.909, 438, 1382.909, 478, 1382.909, 518, 1382.909, 558, 1417.6364, 438, 1417.6364, 478, 1417.6364, 518, 1417.6364, 558, 1452.3636, 438, 1452.3636, 478, 1452.3636, 518, 1452.3636, 558, 1487.091, 438, 1487.091, 478, 1487.091, 518, 1487.091, 558, 1521.8181, 438, 1521.8181, 478, 1521.8181, 518, 1521.8181, 558, 1556.5454, 438, 1556.5454, 478, 1556.5454, 518, 1556.5454, 558, 1591.2727, 438, 1591.2727, 478, 1591.2727, 518, 1591.2727, 558, 1626, 438, 1626, 478, 1626, 518, 1626, 558)
+polygons = [PackedInt32Array(0, 4, 1), PackedInt32Array(1, 4, 5), PackedInt32Array(1, 5, 2), PackedInt32Array(2, 5, 6), PackedInt32Array(2, 6, 3), PackedInt32Array(3, 6, 7), PackedInt32Array(4, 8, 5), PackedInt32Array(5, 8, 9), PackedInt32Array(5, 9, 6), PackedInt32Array(6, 9, 10), PackedInt32Array(6, 10, 7), PackedInt32Array(7, 10, 11), PackedInt32Array(8, 12, 9), PackedInt32Array(9, 12, 13), PackedInt32Array(9, 13, 10), PackedInt32Array(10, 13, 14), PackedInt32Array(10, 14, 11), PackedInt32Array(11, 14, 15), PackedInt32Array(12, 16, 13), PackedInt32Array(13, 16, 17), PackedInt32Array(13, 17, 14), PackedInt32Array(14, 17, 18), PackedInt32Array(14, 18, 15), PackedInt32Array(15, 18, 19), PackedInt32Array(16, 20, 17), PackedInt32Array(17, 20, 21), PackedInt32Array(17, 21, 18), PackedInt32Array(18, 21, 22), PackedInt32Array(18, 22, 19), PackedInt32Array(19, 22, 23), PackedInt32Array(20, 24, 21), PackedInt32Array(21, 24, 25), PackedInt32Array(21, 25, 22), PackedInt32Array(22, 25, 26), PackedInt32Array(22, 26, 23), PackedInt32Array(23, 26, 27), PackedInt32Array(24, 28, 25), PackedInt32Array(25, 28, 29), PackedInt32Array(25, 29, 26), PackedInt32Array(26, 29, 30), PackedInt32Array(26, 30, 27), PackedInt32Array(27, 30, 31), PackedInt32Array(28, 32, 29), PackedInt32Array(29, 32, 33), PackedInt32Array(29, 33, 30), PackedInt32Array(30, 33, 34), PackedInt32Array(30, 34, 31), PackedInt32Array(31, 34, 35), PackedInt32Array(32, 36, 33), PackedInt32Array(33, 36, 37), PackedInt32Array(33, 37, 34), PackedInt32Array(34, 37, 38), PackedInt32Array(34, 38, 35), PackedInt32Array(35, 38, 39), PackedInt32Array(36, 40, 37), PackedInt32Array(37, 40, 41), PackedInt32Array(37, 41, 38), PackedInt32Array(38, 41, 42), PackedInt32Array(38, 42, 39), PackedInt32Array(39, 42, 43), PackedInt32Array(40, 44, 41), PackedInt32Array(41, 44, 45), PackedInt32Array(41, 45, 42), PackedInt32Array(42, 45, 46), PackedInt32Array(42, 46, 43), PackedInt32Array(43, 46, 47)]
+metadata/tris = 198
+
+[node name="Eyes" type="Node2D" parent="Body/Head/Face" unique_id=395951717]
+use_parent_material = true
+
+[node name="Blush" type="Node2D" parent="Body/Head/Face" unique_id=757371871]
+use_parent_material = true
+
+[node name="HeadLine" type="Polygon2D" parent="Body/Head" unique_id=1522882487]
+material = SubResource("ShaderMaterial_la4ag")
+texture = ExtResource("3_e472y")
+polygon = PackedVector2Array(84, 68, 317, 68, 317, 263, 84, 263)
+uv = PackedVector2Array(514, 24, 980, 24, 980, 414, 514, 414)
+metadata/tex = "head_line"
+
+[node name="EarFronts" type="Node2D" parent="Body/Head" unique_id=342953011]
+
+[node name="Muzzle" type="Polygon2D" parent="Body/Head" unique_id=498577106]
+texture = ExtResource("3_e472y")
+polygon = PackedVector2Array(155, 172, 246, 172, 246, 236, 155, 236)
+uv = PackedVector2Array(806, 438, 988, 438, 988, 566, 806, 566)
+metadata/tex = "muzzle"
+
+[node name="Nose" type="Node2D" parent="Body/Head" unique_id=562943487]
+
+[node name="Mouth" type="Node2D" parent="Body/Head" unique_id=1110022891]
+
+[node name="HeadItems" type="Node2D" parent="Body/Head" unique_id=1707621081]
+
+[node name="Glasses" type="Polygon2D" parent="Body/Head/HeadItems" unique_id=2049091279]
+visible = false
+
+[node name="Hat" type="Polygon2D" parent="Body/Head/HeadItems" unique_id=1507422867]
+visible = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=488142917]
+deterministic = true
+libraries/ = ExtResource("8_sddmf")
+playback_default_blend_time = 0.18

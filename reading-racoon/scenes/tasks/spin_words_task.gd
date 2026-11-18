@@ -48,7 +48,7 @@ func _pointer() -> Control:
 
 func _word_piece(text: String, color: Color) -> Label:
 	var card := PanelContainer.new()
-	var sb := StyleBoxFlat.new()
+	var sb := PaperBox.new()
 	sb.bg_color = Palette.CARD
 	sb.set_corner_radius_all(18)
 	sb.shadow_color = Color(Palette.SHADOW, 0.16)
@@ -100,7 +100,7 @@ func show_result(chosen: String, answer: String) -> void:
 	var ok := chosen == answer
 	_onset.add_theme_color_override("font_color", Palette.readable(Palette.deep(Palette.RIGHT)))
 	var card: PanelContainer = _onset.get_parent()
-	var sb: StyleBoxFlat = card.get_theme_stylebox("panel").duplicate()
+	var sb: PaperBox = card.get_theme_stylebox("panel").duplicate()
 	sb.bg_color = Palette.pale(Palette.RIGHT if ok else Palette.ALMOST, 0.7)
 	card.add_theme_stylebox_override("panel", sb)
 

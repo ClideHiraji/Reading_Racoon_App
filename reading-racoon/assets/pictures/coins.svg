@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="19.5 24.75 97.5 97.5" width="128" height="128">
+<g opacity="0.22" transform="translate(0 2.4)">
+<ellipse cx="44" cy="102" rx="22" ry="7" fill="#3b2d3a"/>
+</g>
+<ellipse cx="44" cy="102" rx="22" ry="7" fill="#d28f1e"/>
+<rect x="22" y="94" width="44" height="8" fill="#d28f1e"/>
+<ellipse cx="44" cy="94" rx="22" ry="7" fill="#f0c65b"/>
+<ellipse cx="44" cy="94" rx="14" ry="4" fill="none" stroke="#df8f08" stroke-width="1.8"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<ellipse cx="44" cy="92" rx="22" ry="7" fill="#3b2d3a"/>
+</g>
+<ellipse cx="44" cy="92" rx="22" ry="7" fill="#d28f1e"/>
+<rect x="22" y="84" width="44" height="8" fill="#d28f1e"/>
+<ellipse cx="44" cy="84" rx="22" ry="7" fill="#f0c65b"/>
+<ellipse cx="44" cy="84" rx="14" ry="4" fill="none" stroke="#df8f08" stroke-width="1.8"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<ellipse cx="44" cy="82" rx="22" ry="7" fill="#3b2d3a"/>
+</g>
+<ellipse cx="44" cy="82" rx="22" ry="7" fill="#d28f1e"/>
+<rect x="22" y="74" width="44" height="8" fill="#d28f1e"/>
+<ellipse cx="44" cy="74" rx="22" ry="7" fill="#f0c65b"/>
+<ellipse cx="44" cy="74" rx="14" ry="4" fill="none" stroke="#df8f08" stroke-width="1.8"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<ellipse cx="44" cy="72" rx="22" ry="7" fill="#3b2d3a"/>
+</g>
+<ellipse cx="44" cy="72" rx="22" ry="7" fill="#d28f1e"/>
+<rect x="22" y="64" width="44" height="8" fill="#d28f1e"/>
+<ellipse cx="44" cy="64" rx="22" ry="7" fill="#f0c65b"/>
+<ellipse cx="44" cy="64" rx="14" ry="4" fill="none" stroke="#df8f08" stroke-width="1.8"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<circle cx="84" cy="80" r="27" fill="#3b2d3a"/>
+</g>
+<circle cx="84" cy="80" r="27" fill="#eebd3e"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<path d="M 83.35 69.51 Q 84 68 84.65 69.51 L 86.91 74.8 Q 87.23 75.55 88.05 75.62 L 93.78 76.14 Q 95.41 76.29 94.18 77.37 L 89.85 81.16 Q 89.23 81.7 89.41 82.5 L 90.69 88.11 Q 91.05 89.71 89.64 88.87 L 84.71 85.92 Q 84 85.5 83.29 85.92 L 78.36 88.87 Q 76.95 89.71 77.31 88.11 L 78.59 82.5 Q 78.77 81.7 78.15 81.16 L 73.82 77.37 Q 72.59 76.29 74.22 76.14 L 79.95 75.62 Q 80.77 75.55 81.09 74.8 Z" fill="#3b2d3a"/>
+</g>
+<g opacity="0.18">
+<path d="M 83.35 69.51 Q 84 68 84.65 69.51 L 86.91 74.8 Q 87.23 75.55 88.05 75.62 L 93.78 76.14 Q 95.41 76.29 94.18 77.37 L 89.85 81.16 Q 89.23 81.7 89.41 82.5 L 90.69 88.11 Q 91.05 89.71 89.64 88.87 L 84.71 85.92 Q 84 85.5 83.29 85.92 L 78.36 88.87 Q 76.95 89.71 77.31 88.11 L 78.59 82.5 Q 78.77 81.7 78.15 81.16 L 73.82 77.37 Q 72.59 76.29 74.22 76.14 L 79.95 75.62 Q 80.77 75.55 81.09 74.8 Z" fill="#3b2d3a" stroke="#3b2d3a" stroke-width="3" stroke-linejoin="round"/>
+</g>
+<path d="M 83.35 69.51 Q 84 68 84.65 69.51 L 86.91 74.8 Q 87.23 75.55 88.05 75.62 L 93.78 76.14 Q 95.41 76.29 94.18 77.37 L 89.85 81.16 Q 89.23 81.7 89.41 82.5 L 90.69 88.11 Q 91.05 89.71 89.64 88.87 L 84.71 85.92 Q 84 85.5 83.29 85.92 L 78.36 88.87 Q 76.95 89.71 77.31 88.11 L 78.59 82.5 Q 78.77 81.7 78.15 81.16 L 73.82 77.37 Q 72.59 76.29 74.22 76.14 L 79.95 75.62 Q 80.77 75.55 81.09 74.8 Z" fill="#f6db95"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<path d="M 106 37 Q 107.4 42.6 113 44 Q 107.4 45.4 106 51 Q 104.6 45.4 99 44 Q 104.6 42.6 106 37 Z" fill="#3b2d3a"/>
+</g>
+<g opacity="0.18">
+<path d="M 106 37 Q 107.4 42.6 113 44 Q 107.4 45.4 106 51 Q 104.6 45.4 99 44 Q 104.6 42.6 106 37 Z" fill="#3b2d3a" stroke="#3b2d3a" stroke-width="3" stroke-linejoin="round"/>
+</g>
+<path d="M 106 37 Q 107.4 42.6 113 44 Q 107.4 45.4 106 51 Q 104.6 45.4 99 44 Q 104.6 42.6 106 37 Z" fill="#fbf1b7"/>
+</svg>

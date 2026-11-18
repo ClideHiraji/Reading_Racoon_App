@@ -16,7 +16,7 @@ func setup(passage: Dictionary, button_text: String = "I READ IT!") -> void:
 	add_theme_constant_override("separation", 18)
 	size_flags_vertical = Control.SIZE_EXPAND_FILL
 	var card := PanelContainer.new()
-	var sb := StyleBoxFlat.new()
+	var sb := PaperBox.new()
 	sb.bg_color = Palette.CARD
 	sb.set_corner_radius_all(28)
 	sb.shadow_color = Color(Palette.SHADOW, 0.2)
@@ -26,12 +26,15 @@ func setup(passage: Dictionary, button_text: String = "I READ IT!") -> void:
 	card.clip_children = CanvasItem.CLIP_CHILDREN_AND_DRAW
 	card.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	add_child(card)
-	var v := VBoxContainer.new()
+	# On a laptop the setting stands beside the words (D-023).
+	var wide := Kit.landscape()
+	var v := BoxContainer.new()
+	v.vertical = not wide
 	v.add_theme_constant_override("separation", 0)
 	card.add_child(v)
 	var scenery := PaperScenery.new()
 	scenery.scene = passage.get("scene", "river")
-	scenery.custom_minimum_size = Vector2(0, 170)
+	scenery.custom_minimum_size = Vector2(240, 0) if wide else Vector2(0, 170)
 	v.add_child(scenery)
 	var m := MarginContainer.new()
 	for side in ["left", "right"]:

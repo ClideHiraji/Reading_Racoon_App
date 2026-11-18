@@ -15,6 +15,7 @@ func _ready() -> void:
 	%ContinueButton.pressed.connect(_on_continue)
 	%GoButton.pressed.connect(_to_path)
 	%Unlock.hide()
+	_fit_shape()
 	if _sum.is_empty():
 		_to_path.call_deferred()
 		return
@@ -22,7 +23,7 @@ func _ready() -> void:
 		_show_test_done()
 		return
 	var early: bool = _sum.ended_early
-	%Title.text = "Let's rest!" if early else "Lesson complete!"
+	%Title.text = GameState.talk("lets_rest") if early else "Lesson complete!"
 	%Burst.visible = not early
 	_build_stats()
 	_build_answers()
@@ -36,10 +37,53 @@ func _ready() -> void:
 		_confetti()
 	# D-017: a sticker (once a day) and today's goal, shown after the stars.
 	var rewards: Dictionary = _sum.get("rewards", {})
-	if not rewards.get("stickers", []).is_empty() or rewards.get("goals_done", false):
+	if not rewards.get("stickers", []).is_empty() or rewards.get("goals_done", false) \
+			or not rewards.get("items", []).is_empty():
 		await get_tree().create_timer(2.2).timeout
 		if is_inside_tree():
-			Kit.reward(self, "Sticker time!", rewards, func(): pass)
+			Kit.reward(self, GameState.talk("reward_sticker_time"), rewards, func(): pass)
+
+
+## Laptops (D-023): Racoon and his bubble on the left, the title, stars and
+## CONTINUE on the right, so nothing falls off the shorter screen. Both shapes
+## keep clear of a notch.
+func _fit_shape() -> void:
+	var margin: MarginContainer = $Margin
+	if Kit.landscape():
+		var col: VBoxContainer = $Margin/VBox
+		var row: Control = $Margin/VBox/RaccoonRow
+		var body := HBoxContainer.new()
+		body.name = "Body"
+		body.add_theme_constant_override("separation", 40)
+		$Margin.add_child(body)
+		col.reparent(body, false)
+		col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		col.add_theme_constant_override("separation", 14)
+		%Title.add_theme_font_size_override("font_size", 46)
+		var side := VBoxContainer.new()
+		side.name = "Side"
+		side.custom_minimum_size = Vector2(380, 0)
+		side.alignment = BoxContainer.ALIGNMENT_CENTER
+		side.add_theme_constant_override("separation", 34)
+		body.add_child(side)
+		body.move_child(side, 0)
+		var bubble: SpeechBubble = %Bubble
+		bubble.tail = "down"
+		bubble.tail_x = 150.0
+		bubble.reparent(side, false)
+		%Raccoon.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+		%Raccoon.reparent(side, false)
+		row.queue_free()
+		for edge in ["left", "right"]:
+			margin.add_theme_constant_override("margin_" + edge, 40)
+		margin.add_theme_constant_override("margin_top", 36)
+		margin.add_theme_constant_override("margin_bottom", 28)
+	Kit.fit_safe(margin)
+
+
+## Android Back or Escape (D-023) does what CONTINUE does.
+func go_back() -> void:
+	_on_continue()
 
 
 ## End of the Reading Adventure (pre/post-test), D-021: one bar per reading skill
@@ -82,7 +126,7 @@ func _results_card(pre: bool) -> PanelContainer:
 	card.name = "Results"
 	var rows := VBoxContainer.new()
 	rows.name = "Rows"
-	rows.add_theme_constant_override("separation", 14)
+	rows.add_theme_constant_override("separation", 10 if Kit.landscape() else 14)
 	card.add_child(rows)
 	var before: Dictionary = {} if pre else GameState.assessments.get("pre", {}).get("scores", {})
 	var scores: Dictionary = _sum.get("scores", {})
@@ -98,7 +142,7 @@ func _skill_row(skill: String, score: Dictionary, strong: bool, before: Dictiona
 	var color := Palette.LEAF if strong else Palette.ORANGE
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 14)
-	row.add_child(Kit.disc(SkillCatalog.ICONS[skill], color, 62))
+	row.add_child(Kit.disc(SkillCatalog.ICONS[skill], color, 50 if Kit.landscape() else 62))
 	var mid := VBoxContainer.new()
 	mid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	mid.add_theme_constant_override("separation", 4)
@@ -150,7 +194,7 @@ func _test_footer(pre: bool) -> HBoxContainer:
 		var gap := Control.new()
 		gap.custom_minimum_size = Vector2(14, 0)
 		row.add_child(gap)
-	row.add_child(Icons.rect("coins", 40, Palette.CORAL_DEEP))
+	row.add_child(Icons.picture_rect("coin", 40))   # a gold paper coin (D-027)
 	var coins := Kit.label("+%d" % _sum.coins, 26, Palette.INK, true)
 	coins.autowrap_mode = TextServer.AUTOWRAP_OFF
 	row.add_child(coins)
@@ -158,13 +202,13 @@ func _test_footer(pre: bool) -> HBoxContainer:
 
 
 func _build_stats() -> void:
-	_stat("COINS", "coins", "+%d" % _sum.coins, Palette.CORAL)
+	_stat("COINS", "coin", "+%d" % _sum.coins, Palette.CORAL)
 
 
 ## A paper stat card: colored header tab, icon and big number on cream.
 func _stat(title: String, icon: String, value: String, color: Color) -> void:
 	var card := PanelContainer.new()
-	var sb := StyleBoxFlat.new()
+	var sb := PaperBox.new()
 	sb.bg_color = color
 	sb.set_corner_radius_all(24)
 	sb.set_content_margin_all(5)
@@ -184,7 +228,7 @@ func _stat(title: String, icon: String, value: String, color: Color) -> void:
 	head.add_theme_color_override("font_color", Palette.text_on(color))
 	v.add_child(head)
 	var body := PanelContainer.new()
-	var bsb := StyleBoxFlat.new()
+	var bsb := PaperBox.new()
 	bsb.bg_color = Palette.CARD
 	bsb.set_corner_radius_all(20)
 	bsb.set_content_margin_all(14)
@@ -192,7 +236,7 @@ func _stat(title: String, icon: String, value: String, color: Color) -> void:
 	var row := HBoxContainer.new()
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
 	row.add_theme_constant_override("separation", 8)
-	row.add_child(Icons.rect(icon, 40, Palette.readable(Palette.deep(color))))
+	row.add_child(Icons.picture_rect(icon, 44, Palette.readable(Palette.deep(color))))   # D-027
 	var val := Label.new()
 	val.text = value
 	val.theme_type_variation = &"TitleLabel"
@@ -209,7 +253,7 @@ func _stat(title: String, icon: String, value: String, color: Color) -> void:
 func _build_answers() -> void:
 	for r in _sum.results:
 		var stamp := PanelContainer.new()
-		var sb := StyleBoxFlat.new()
+		var sb := PaperBox.new()
 		sb.set_corner_radius_all(22)
 		sb.set_content_margin_all(8)
 		var solved: bool = r.get("solved", r.correct)
@@ -271,7 +315,7 @@ func _on_continue() -> void:
 		%UnlockName.text = "Level %d  ·  %s" % [to, info.name]
 		%Unlock.show()
 		Sfx.play("fanfare")
-		Speech.say("New world unlocked! " + info.name)
+		Speech.say(GameState.talk("new_world", [info.name]))
 		_confetti()
 		return
 	_to_path()

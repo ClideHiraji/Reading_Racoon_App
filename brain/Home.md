@@ -36,8 +36,20 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 - [[D-020 Teacher content download in the game]]
 - [[D-021 Second try hints and finished-only progress]]
 - [[D-022 Full UI redesign]]
+- [[D-023 Laptop layouts Back and safe areas]]
+- [[D-024 Racoon redesign]]
+- [[D-025 Performance no freezes]]
+- [[D-026 Closet tiers and item art]]
+- [[D-027 Full-colour pictures]]
+- [[D-028 Paper-cut UI shapes]]
+- [[D-029 Clothes and pets in the Closet]]
+- [[D-030 Stiff items in his paws]]
+- [[D-031 Windblown scarves and the Star halo]]
+- [[D-032 A new question stops the voice]]
+- [[D-033 Buddies Roco and Rina and talk language]]
 
 ## Still open (from [[10-open-issues]])
+- 🔴 **Before the final release: delete the developer menu** (issue 30). It's debug-build-only, but it must go: `reading-racoon/ui/dev_menu.gd` (and its `.uid`), its lines in `scripts/autoload/screen.gd`, and its check at the end of `tests/ui_smoke.gd`.
 - 🔴 Timeline: a 4-month evaluation doesn't fit before November. Re-plan with the adviser (issue 11).
 - 🔴 Finish the database design (issue 8, [[04-data-model]]). The first 8 tables are built in `backend/`.
 - 🟡 How 6-year-olds log in: interim login code on a kid keypad (D-010); picture PIN or QR card still possible (issue 9).
@@ -49,8 +61,14 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 - [[2026-10-20]]: blueprint page, Obsidian + Graphify brain, first playable game slice (D-007), first Laravel backend slice (D-008).
 - [[2026-10-21]]: hub wireframes approved; game-lobby home hub, diamond Play picker, Adventure-only time locks (D-015); thesis color palette with dark text (D-016); Practice, Library, Watch & Listen, stickers, word book and daily goals (D-017); teacher books and videos downloaded on Wi-Fi (D-020).
 - [[2026-10-22]]: play-test fixes (D-021): two tries with a hint for every question, answer and explanation after the second, -1/+1 hearts, no CONTINUE taps, nothing saved from a stopped lesson, Adventure opens the map, pre/post-test results by skill then home. Then the full UI redesign from the canvas, except Racoon (D-022): Home with PLAY built in, one meaning per color, 96/120 px sizes, the animated earned star.
+- [[2026-10-24]]: product record (`PRODUCT.md`); the editor freezes fixed (short Lottie lines, a guard hook); laptop and phone layouts started (D-023).
+- [[2026-10-26]]: laptop and phone layouts finished (D-023); the star baked; Racoon drawn as moving layers and the main screens warmed up; Racoon redesign, option C (D-024): its 3D model, refined in a seven-round loop, and a 2D motion demo in which the drawing turns, points and walks up to the screen.
+- [[2026-11-16]]: the user redrew Racoon in Inkscape (bean body, no scarf; arms at his sides after a second edit); the motion demo and parts board are now built from that drawing, and the River scarf and open book are drawn as Closet items you can try on; a second board shows his animations for the game's lesson moments; then the new Racoon went into the game: the rig ported to `raccoon.gd`, his moments in the lesson, and the book in a new Closet slot (D-024).
+- [[2026-11-17]]: Racoon's arm outline joins his body's, and a raised paw never slips behind his head (D-024; canvas version 43). Then Racoon became a Godot scene: one node per part of the drawing, and his 21 moves as AnimationPlayer animations you can edit in the editor (D-024). Then the freezes were found and fixed (D-025): a lesson's end, Windows read-aloud cut-offs, the Closet and first visits. Then his 27 part files became one texture sheet, and he got 8 new moves he plays on his own on Home, the start screen and the Closet (walking about, hops, a big jump, a dance...), fitted to the box he stands in (D-024). Then the Closet got five tiers, copper to diamond, with 27 drawn items on their own sheet, effects that grow with the tier, and items earned by reading (D-026).
+- [[2026-11-18]]: the pictures redrawn in one soft storybook style, judged on the canvas (Icons page), then put in the game: full-colour pictures for words, stickers, Home tiles and practice games (D-027). In the game the glossy sticker look was out of place, so the 60 pictures were redrawn as flat paper cut-outs on crisp shadows, like the rest of the game. A read-along no longer moves its screen on once the child has left it. Then the game files nothing uses were cleaned out: 24 old silhouettes, a font, the old Home tile and two empty scenes; the team's animated SVGs moved to `tools/team-animations/`. Then the UI was cut from paper (D-028): hand-cut edges on cards and buttons (circles stay round), stitches on the special pieces, tilted Home tiles, washi tape, paper confetti and a crayon underline. Then the UI's own icons went to paper colours: a gold paper coin everywhere, a sticker and a word book on the Home bar, and the sticker and Closet tabs. Then a debug-only developer menu (delete before release, issue 30), and 12 more Closet items with sports, builder, explorer and space themes (39 in all, D-026).
 
 ## Learnings
+- [[Judge new art inside the game, not on a board]]
 - [[BKT passes 0.95 after 3 correct]]
 - [[Godot MCP cannot set Vector2]]
 - [[Gitignore slash patterns are anchored]]
@@ -69,9 +87,27 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 - [[Autoload names fail in static helpers under -s tests]]
 - [[Python write_text makes CRLF on Windows]]
 - [[Headless test runs hide GDScript warnings]]
+- [[Two Godot editors on one project freeze the editor]]
+- [[Godot editor freezes on very long lines]]
 - [[Godot cannot play animated SVG]]
 - [[Code-built unique nodes need an owner]]
 - [[Godot buttons pin the icon to the edge]]
+- [[Godot can play Lottie with a small player]]
+- [[Embedded game window freezes the editor]]
+- [[Godot boxes can't change orientation]]
+- [[Animate drawn shapes by moving a layer, not redrawing]]
+- [[Blender opens files in Solid shading]]
+- [[Compare 3D renders with 2D art in one shared frame]]
+- [[Turn a flat 2D character by putting its parts on round shapes]]
+- [[Headless Chrome runs animation frames only once]]
+- [[Build a puppet from the artist's file, not from code]]
+- [[Move a vector puppet in Godot with SVG textures on meshes]]
+- [[Record coded tweens as AnimationPlayer keyframes]]
+- [[Windows text-to-speech blocks when it stops]]
+- [[Pack a Godot puppet's SVG parts onto one sheet]]
+- [[A saved Godot scene keeps a sheet's old UVs]]
+- [[Godot canvas COLOR already holds the texture]]
+- [[Git Bash sed -i drops CRLF]]
 
 ## Links
 - Visual blueprint (private page): https://claude.ai/artifact/TPcwMuVYMvR9gx8ypBMYB9

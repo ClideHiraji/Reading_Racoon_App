@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racoon's Closet: Gold rosette (gold, pins). FR-07, D-026.
+     Drawn to fit Racoon at rest: the bottom layer links ../../parts/racoon_C_inkscape.svg (locked).
+     Draw on the "Item" layer. The file's name is the item's id; its name, tier, price and how it's
+     earned are in reading-racoon/content/closet.json. motion-demo/build_racoon.py reads this file
+     and never writes it. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-pin_rosette"
+   sodipodi:docname="pin_rosette.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>Gold rosette</title>
+  <sodipodi:namedview
+     id="namedview-pin_rosette"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="2"
+     inkscape:cx="200"
+     inkscape:cy="312"
+     inkscape:current-layer="layer-item" />
+  <defs id="defs-pin_rosette">
+    <linearGradient id="gr-rosette" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ffb48f" /><stop offset="1" style="stop-color:#e2603f" /></linearGradient>
+    <radialGradient id="gr-rosette-gold" cx="0.4" cy="0.35" r="0.7"><stop offset="0" style="stop-color:#fff6b8" /><stop offset="0.6" style="stop-color:#ffd84d" /><stop offset="1" style="stop-color:#d99a06" /></radialGradient>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="../../parts/racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-item" inkscape:label="Item">
+   <g id="item-pin-rosette" inkscape:label="pin_rosette" transform="matrix(1.35 0 0 1.35 -60.9 -109.2)">
+     <title>Gold rosette: a ribbon rosette with a gold star (gold)</title>
+     <path id="pin-rosette-1" inkscape:label="Tail left" d="M 170 320 L 161 344 L 168 340 L 175 344 Z" style="fill:#2a9d8f;stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pin-rosette-2" inkscape:label="Tail right" d="M 178 320 L 187 344 L 180 340 L 173 344 Z" style="fill:#e2603f;stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pin-rosette-3" inkscape:label="Rosette" d="M 190 312 Q 194.96 316.78 188.42 318.94 Q 190.81 325.41 183.98 324.51 Q 183.33 331.37 177.56 327.6 Q 174 333.5 170.44 327.6 Q 164.67 331.37 164.02 324.51 Q 157.19 325.41 159.58 318.94 Q 153.04 316.78 158 312 Q 153.04 307.22 159.58 305.06 Q 157.19 298.59 164.02 299.49 Q 164.67 292.63 170.44 296.4 Q 174 290.5 177.56 296.4 Q 183.33 292.63 183.98 299.49 Q 190.81 298.59 188.42 305.06 Q 194.96 307.22 190 312 Z" style="fill:url(#gr-rosette);stroke:#3b2d3a;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="pin-rosette-4" inkscape:label="Gold" cx="174" cy="312" r="12" style="fill:url(#gr-rosette-gold);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pin-rosette-5" inkscape:label="Star" d="M 173.7 305.21 Q 174 304.5 174.3 305.21 L 175.82 308.88 Q 176.12 309.59 176.88 309.65 L 180.84 309.97 Q 181.61 310.03 181.02 310.53 L 178.01 313.11 Q 177.42 313.61 177.6 314.36 L 178.52 318.22 Q 178.7 318.97 178.04 318.57 L 174.66 316.5 Q 174 316.1 173.34 316.5 L 169.96 318.57 Q 169.3 318.97 169.48 318.22 L 170.4 314.36 Q 170.58 313.61 169.99 313.11 L 166.98 310.53 Q 166.39 310.03 167.16 309.97 L 171.12 309.65 Q 171.88 309.59 172.18 308.88 Z" style="fill:#fffbe0;stroke:#c98a00;stroke-width:1.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pin-rosette-6" inkscape:label="Glint" d="M 187 293.5 Q 188.26 296.74 191.5 298 Q 188.26 299.26 187 302.5 Q 185.74 299.26 182.5 298 Q 185.74 296.74 187 293.5 Z" style="fill:#fffbe0;stroke:#e0a20c;stroke-width:1;stroke-linejoin:round;stroke-linecap:round" />
+   </g>
+  </g>
+</svg>

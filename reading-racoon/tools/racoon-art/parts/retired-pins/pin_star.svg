@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racoon's Closet: Star pin (copper, pins). FR-07, D-026.
+     Drawn to fit Racoon at rest: the bottom layer links ../../parts/racoon_C_inkscape.svg (locked).
+     Draw on the "Item" layer. The file's name is the item's id; its name, tier, price and how it's
+     earned are in reading-racoon/content/closet.json. motion-demo/build_racoon.py reads this file
+     and never writes it. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-pin_star"
+   sodipodi:docname="pin_star.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>Star pin</title>
+  <sodipodi:namedview
+     id="namedview-pin_star"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="2"
+     inkscape:cx="200"
+     inkscape:cy="312"
+     inkscape:current-layer="layer-item" />
+  <defs id="defs-pin_star">
+    <linearGradient id="gr-pinstar" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:#efb17c" /><stop offset="1" style="stop-color:#b56c3a" /></linearGradient>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="../../parts/racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-item" inkscape:label="Item">
+   <g id="item-pin-star" inkscape:label="pin_star" transform="matrix(1.35 0 0 1.35 -60.9 -109.2)">
+     <title>Star pin: a copper button with a cream star (copper)</title>
+     <circle id="pin-star-1" inkscape:label="Pin" cx="174" cy="312" r="16" style="fill:url(#gr-pinstar);stroke:#3b2d3a;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="pin-star-2" inkscape:label="Ring" cx="174" cy="312" r="12.4" style="fill:none;stroke:#8a4f2b;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pin-star-3" inkscape:label="Star" d="M 173.65 303.84 Q 174 303 174.35 303.84 L 176.17 308.18 Q 176.53 309.02 177.44 309.1 L 182.12 309.49 Q 183.04 309.56 182.34 310.16 L 178.78 313.23 Q 178.09 313.83 178.3 314.72 L 179.37 319.3 Q 179.58 320.19 178.8 319.71 L 174.78 317.27 Q 174 316.8 173.22 317.27 L 169.2 319.71 Q 168.42 320.19 168.63 319.3 L 169.7 314.72 Q 169.91 313.83 169.22 313.23 L 165.66 310.16 Q 164.96 309.56 165.88 309.49 L 170.56 309.1 Q 171.47 309.02 171.83 308.18 Z" style="fill:#fff3d6;stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+   </g>
+  </g>
+</svg>

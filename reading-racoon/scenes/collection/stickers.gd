@@ -26,7 +26,7 @@ func _ready() -> void:
 	var note := Kit.label("Stickers are yours to keep. No ranking, no losing.", 22, Palette.INK_SOFT)
 	note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_column.add_child(note)
-	Speech.say("Your sticker album!")
+	Speech.say(GameState.talk("stickers_hello"))
 
 
 func _build() -> void:
@@ -59,7 +59,7 @@ func _build() -> void:
 	title.add_child(got)
 	v.add_child(title)
 	var grid := GridContainer.new()
-	grid.columns = 4
+	grid.columns = 7 if Kit.landscape() else 4   # D-023
 	grid.add_theme_constant_override("h_separation", 12)
 	grid.add_theme_constant_override("v_separation", 18)
 	v.add_child(grid)
@@ -82,6 +82,7 @@ func _tab(g: String) -> ChunkyButton:
 	var b := ChunkyButton.new()
 	b.card_style = not on
 	b.face_color = Palette.BLUE
+	b.full_color = true   # each group's paper picture (D-027)
 	b.icon_name = GROUP_ICONS.get(g, "star")
 	b.icon_px = 54
 	b.icon_tint = Palette.INK if on else Palette.readable(Color(info.color).darkened(0.2))
@@ -98,7 +99,7 @@ func _tab(g: String) -> ChunkyButton:
 
 func _pick(group: String) -> void:
 	_group = group
-	Speech.say(Collection.GROUPS[group].name)
+	Speech.say(Collection.GROUPS[group].name, "en")
 	_build()
 
 
@@ -140,6 +141,6 @@ func _slot(id: String) -> Control:
 
 
 func _say(id: String, b: Control) -> void:
-	Speech.say(Collection.sticker(id).name)
+	Speech.say(Collection.sticker(id).name, "en")
 	Sfx.play("pop")
 	Kit.pop(b)

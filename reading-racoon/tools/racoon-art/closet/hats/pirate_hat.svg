@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racoon's Closet: Pirate hat (violet, hats). FR-07, D-026.
+     Drawn to fit Racoon at rest: the bottom layer links ../../parts/racoon_C_inkscape.svg (locked).
+     Draw on the "Item" layer. The file's name is the item's id; its name, tier, price and how it's
+     earned are in reading-racoon/content/closet.json. motion-demo/build_racoon.py reads this file
+     and never writes it. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-pirate-hat"
+   sodipodi:docname="pirate_hat.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>Pirate hat</title>
+  <sodipodi:namedview
+     id="namedview-pirate-hat"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="2"
+     inkscape:cx="200"
+     inkscape:cy="200"
+     inkscape:current-layer="layer-item" />
+  <defs id="defs-pirate-hat">
+    <linearGradient id="gr-pirate-hat-1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#4a4258" /><stop offset="1" style="stop-color:#2b2534" /></linearGradient>
+    <linearGradient id="gr-pirate-hat-2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ff7a6e" /><stop offset="1" style="stop-color:#d6453a" /></linearGradient>
+    <linearGradient id="gr-pirate-hat-3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#3d364a" /><stop offset="1" style="stop-color:#211c29" /></linearGradient>
+    <linearGradient id="gr-pirate-hat-4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ff8fb1" /><stop offset="1" style="stop-color:#d6456e" /></linearGradient>
+    <linearGradient id="gr-pirate-hat-5" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#4a4258" /><stop offset="1" style="stop-color:#2b2534" /></linearGradient>
+    <linearGradient id="gr-pirate-hat-6" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#3d364a" /><stop offset="1" style="stop-color:#211c29" /></linearGradient>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="../../parts/racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-item" inkscape:label="Item">
+   <g id="item-pirate-hat" inkscape:label="pirate_hat">
+     <title>Pirate hat: a tricorne with a gold trim, an anchor, a gem and a feather (violet)</title>
+     <path id="pirate-hat-1" inkscape:label="Crown" d="M 140 98 C 138 52 168 30 200.5 30 C 233 30 263 52 261 98 Z" style="fill:url(#gr-pirate-hat-1);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pirate-hat-2" inkscape:label="Feather" d="M 246 62 C 252 36 268 18 288 12 C 286 30 276 50 258 66 Z" style="fill:url(#gr-pirate-hat-2);stroke:#3b2d3a;stroke-width:3.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pirate-hat-3" inkscape:label="Quill" d="M 250 64 C 260 44 272 28 286 15" style="fill:none;stroke:#a8322a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="pirate-hat-4" inkscape:label="Anchor ring" cx="200.5" cy="40" r="4.5" style="fill:none;stroke:#fff7e6;stroke-width:3;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pirate-hat-5" inkscape:label="Anchor" d="M 200.5 45 L 200.5 70 M 191 53 L 210 53 M 187 61 Q 189 72 200.5 72 Q 212 72 214 61" style="fill:none;stroke:#fff7e6;stroke-width:3.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pirate-hat-6" inkscape:label="Brim" d="M 90 118 C 106 72 150 58 200.5 84 C 251 58 295 72 311 118 C 270 104 231 108 200.5 130 C 170 108 131 104 90 118 Z" style="fill:url(#gr-pirate-hat-3);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pirate-hat-7" inkscape:label="Gold trim" d="M 97 110 C 114 76 152 66 200.5 90 C 249 66 287 76 304 110" style="fill:none;stroke:#f2c94c;stroke-width:4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pirate-hat-8" inkscape:label="Gem" d="M 200.5 92 L 208 100 L 200.5 108 L 193 100 Z" style="fill:url(#gr-pirate-hat-4);stroke:#3b2d3a;stroke-width:2.8;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pirate-hat-9" inkscape:label="Shine" d="M 152 46 C 162 38 172 34 182 33" style="fill:none;stroke:#ffffff;stroke-width:4;stroke-linejoin:round;stroke-linecap:round;opacity:0.4" />
+     <g id="pirate-hat-10" inkscape:label="Back view" style="display:none">
+     <path id="pirate-hat-11" inkscape:label="Crown" d="M 140 98 C 138 52 168 30 200.5 30 C 233 30 263 52 261 98 Z" style="fill:url(#gr-pirate-hat-5);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pirate-hat-12" inkscape:label="Brim" d="M 90 118 C 106 72 150 58 200.5 84 C 251 58 295 72 311 118 C 270 104 231 108 200.5 130 C 170 108 131 104 90 118 Z" style="fill:url(#gr-pirate-hat-6);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pirate-hat-13" inkscape:label="Gold trim" d="M 97 110 C 114 76 152 66 200.5 90 C 249 66 287 76 304 110" style="fill:none;stroke:#f2c94c;stroke-width:4;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+   </g>
+  </g>
+</svg>

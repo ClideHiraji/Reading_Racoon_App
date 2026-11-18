@@ -76,7 +76,7 @@ func show_result(chosen: String, answer: String) -> void:
 ## A printed letter of the word, on its own paper square.
 func _letter_box(ch: String) -> Control:
 	var p := PanelContainer.new()
-	var sb := StyleBoxFlat.new()
+	var sb := PaperBox.new()
 	sb.bg_color = Palette.CARD
 	sb.set_corner_radius_all(20)
 	sb.shadow_color = Color(Palette.SHADOW, 0.16)

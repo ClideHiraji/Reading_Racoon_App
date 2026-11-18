@@ -1,6 +1,6 @@
 # Icon credits
 
-Icons and pictures in this folder come from **game-icons.net** (https://game-icons.net,
+The one-colour glyphs in this folder come from **game-icons.net** (https://game-icons.net,
 source: https://github.com/game-icons/icons), licensed under
 **CC BY 3.0** (https://creativecommons.org/licenses/by/3.0/).
 
@@ -9,12 +9,13 @@ files renamed, and the four "badges" icons cropped.
 
 | File | Original | Author |
 |---|---|---|
-| cat, hat, sun, bee, tree, moon, frog, cake, butterfly, snake, book, scissors, apple, grapes, hand, lock, crown, chest, trophy, bulb, repeat, talk, night, waves, cloud | lorc/cat, top-hat, sun, bee, oak, moon, frog, cake-slice, butterfly, snake, open-book, scissors, shiny-apple, grapes, hand, padlock, crown, locked-chest, trophy, light-bulb, cycle, conversation, night-sky, waves, fluffy-cloud | Lorc |
-| dog, car, fish, box, bus, banana, rabbit, ball, mouse, house, boat, bear, pear, hen, pencil, bag, elephant, ant, coins, speaker, check, sparkles, ear, gift, stories, raccoon, palm, hut | delapouite/sitting-dog, city-car, tropical-fish, cardboard-box, bus, banana, rabbit, soccer-ball, mouse, house, sailboat, bear-head, pear, chicken, pencil, backpack, elephant, ant, coins, speaker, check-mark, sparkles, human-ear, present, book-cover, raccoon-head, palm-tree, hut | Delapouite |
-| goat, chest_open | skoll/goat, open-treasure-chest | Skoll |
-| fox | caro-asercion/fox | Caro Asercion |
+| cat, hat, sun, tree, moon, book, lock, crown, chest, trophy, bulb, repeat, talk, night, waves, cloud | lorc/cat, top-hat, sun, oak, moon, open-book, padlock, crown, locked-chest, trophy, light-bulb, cycle, conversation, night-sky, waves, fluffy-cloud | Lorc |
+| fish, house, boat, pear, hen, pencil, speaker, check, sparkles, ear, stories, raccoon, palm, hut | delapouite/tropical-fish, house, sailboat, pear, chicken, pencil, speaker, check-mark, sparkles, human-ear, book-cover, raccoon-head, palm-tree, hut | Delapouite |
+| chest_open | skoll/open-treasure-chest | Skoll |
 | heart_plus | zeromancer/heart-plus | Zeromancer |
 | star, heart, bolt, mountain | badges/star, heart, bolt, mountain | game-icons.net "badges" set |
 | play, pause, dot, arrow_left, arrow_right, glasses, scarf | drawn for this project: rounded play and pause signs, a plain dot, two arrows, glasses, a scarf | Reading Racoon team |
 
-`Animated - Star.svg` (the earned-star animation) was provided by the team; `assets/anim/star/` holds its frames, rendered by Godot from the SVG (D-022). Confirm its source and license before release.
+The earned star, Regain Heart and Broken Heart animations were provided by the team as Lottie files (`Star.lottie`, `Regain Heart.lottie`, `Broken Heart.lottie`); their JSON is in `assets/anim/lottie/` and the game plays it live with `ui/lottie_player.gd` (D-022), the hearts in the lesson hearts' colors. `regain_heart.json` is adjusted to match the team's `Regain Heart.mp4`: normal speed, 3.25 s, and a grey empty heart (with Broken Heart's outline, so the two meet) instead of the black outline. The still hearts in a lesson are these animations' end frames. The animated SVG exports (`Animated - Star.svg`, `Regain Heart.svg`, `Broken Heart.svg`) are kept as references in `tools/team-animations/`, outside the game. Confirm their source and license before release.
+
+The full-colour pictures for words, stickers, Home tiles and Practice games are in `assets/pictures/`, drawn for the game (D-027); they need no credit. The silhouettes they replaced were removed on 2026-11-18.

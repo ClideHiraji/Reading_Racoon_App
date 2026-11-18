@@ -12,6 +12,8 @@ var profile_path := "user://profile.json"
 var queue_path := "user://event_queue.jsonl"
 
 var _lock := Mutex.new()
+var _held := 0                  # hold() depth: events wait in _pending until release()
+var _pending := PackedStringArray()
 
 
 func _init(profile_name: String = "") -> void:
@@ -43,14 +45,46 @@ func queue_event(type: String, payload: Dictionary) -> String:
 		"device_time": Time.get_datetime_string_from_system(true) + "Z",
 	})
 	_lock.lock()
+	_pending.append(line)
+	var ok := true
+	if _held == 0:
+		ok = _write_pending()
+	_lock.unlock()
+	return id if ok else ""
+
+
+## A burst of events (a lesson's answers, its words, a sticker and a goal) is written in one go:
+## between hold() and release() they wait in memory, then release() appends them all with a single
+## file write. Opening the queue file once per event cost about 9 ms each on a Windows laptop,
+## a quarter of a second at the end of every lesson (NFR-01). Holds can nest.
+func hold() -> void:
+	_lock.lock()
+	_held += 1
+	_lock.unlock()
+
+
+func release() -> void:
+	_lock.lock()
+	_held = maxi(0, _held - 1)
+	if _held == 0:
+		_write_pending()
+	_lock.unlock()
+
+
+## Appends the waiting events to the queue file (call with _lock held).
+func _write_pending() -> bool:
+	if _pending.is_empty():
+		return true
 	var f := FileAccess.open(queue_path,
 			FileAccess.READ_WRITE if FileAccess.file_exists(queue_path) else FileAccess.WRITE)
-	if f:
-		f.seek_end()
+	if f == null:
+		return false
+	f.seek_end()
+	for line in _pending:
 		f.store_line(line)
-		f.close()
-	_lock.unlock()
-	return id if f else ""
+	f.close()
+	_pending.clear()
+	return true
 
 
 ## The whole queue, parsed. Only for tests and small queues; sync uses read_head().
@@ -124,6 +158,7 @@ static func _line_id(line: String) -> String:
 
 func wipe() -> void:
 	_lock.lock()
+	_pending.clear()
 	for p in [profile_path, queue_path, queue_path.get_basename() + "_rejected.jsonl"]:
 		if FileAccess.file_exists(p):
 			DirAccess.remove_absolute(p)

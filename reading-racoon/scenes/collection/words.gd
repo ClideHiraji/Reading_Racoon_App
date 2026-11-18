@@ -25,7 +25,7 @@ func _ready() -> void:
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	_grid = GridContainer.new()
-	_grid.columns = 2
+	_grid.columns = 3 if Kit.landscape() else 2   # D-023
 	_grid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_grid.add_theme_constant_override("h_separation", 16)
 	_grid.add_theme_constant_override("v_separation", 16)
@@ -33,7 +33,7 @@ func _ready() -> void:
 	_build()
 	_column.add_child(scroll)
 	_column.add_child(_practice)
-	Speech.say("Your word book!")
+	Speech.say(GameState.talk("words_hello"))
 
 
 func _build() -> void:

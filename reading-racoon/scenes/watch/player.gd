@@ -31,17 +31,23 @@ func _ready() -> void:
 	_lang = str(_item.get("language", "en"))
 	var column := Kit.page(self)
 	Kit.header(column, str(_item.get("title", "Watch")), _back, true)
-	var sheet := VBoxContainer.new()
+	# On a laptop the stage stands beside the words card (D-023).
+	var wide := Kit.landscape()
+	var sheet := BoxContainer.new()
+	sheet.vertical = not wide
 	sheet.add_theme_constant_override("separation", 0)
 	sheet.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	column.add_child(sheet)
 	_stage = PanelContainer.new()
 	var stage_box := Kit.box(Palette.SKY, 28)
-	stage_box.corner_radius_bottom_left = 0
 	stage_box.corner_radius_bottom_right = 0
+	if wide:
+		stage_box.corner_radius_top_right = 0
+	else:
+		stage_box.corner_radius_bottom_left = 0
 	_stage.add_theme_stylebox_override("panel", stage_box)
 	_stage.clip_children = CanvasItem.CLIP_CHILDREN_AND_DRAW
-	_stage.custom_minimum_size = Vector2(0, 430)
+	_stage.custom_minimum_size = Vector2(580, 0) if wide else Vector2(0, 430)
 	sheet.add_child(_stage)
 	_scene = PaperScenery.new()
 	_scene.scene = str(_item.get("scene", "home"))
@@ -55,11 +61,15 @@ func _ready() -> void:
 	_stage.add_child(_pictures)
 
 	var card := Kit.card(30)
-	var card_box: StyleBoxFlat = card.get_theme_stylebox("panel").duplicate()
+	var card_box: PaperBox = card.get_theme_stylebox("panel").duplicate()
 	card_box.corner_radius_top_left = 0
-	card_box.corner_radius_top_right = 0
+	if wide:
+		card_box.corner_radius_bottom_left = 0
+	else:
+		card_box.corner_radius_top_right = 0
 	card.add_theme_stylebox_override("panel", card_box)
 	card.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	sheet.add_child(card)
 	var words := VBoxContainer.new()
 	words.alignment = BoxContainer.ALIGNMENT_CENTER
@@ -237,6 +247,7 @@ func _end() -> void:
 		buttons[str(c.id)] = b
 	for id in buttons:
 		buttons[id].pressed.connect(_check.bind(id, str(check.answer), buttons, v))
+	Speech.new_question()   # (D-032)
 	Speech.say(str(check.prompt), _lang)
 
 
@@ -258,7 +269,7 @@ func _check(id: String, right: String, buttons: Dictionary, v: Control) -> void:
 func _reward(check_right: bool) -> void:
 	var seconds := (Time.get_ticks_msec() - _started) / 1000.0
 	var result := GameState.finish_media(str(_item.get("id", "")), check_right, seconds)
-	Kit.reward(self, "What a show!", result, _back)
+	Kit.reward(self, GameState.talk("reward_show"), result, _back)
 
 
 func _back() -> void:

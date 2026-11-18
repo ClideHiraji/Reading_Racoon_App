@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racoon's Closet: Captain's hat (gold, hats). FR-07, D-026.
+     Drawn to fit Racoon at rest: the bottom layer links ../../parts/racoon_C_inkscape.svg (locked).
+     Draw on the "Item" layer. The file's name is the item's id; its name, tier, price and how it's
+     earned are in reading-racoon/content/closet.json. motion-demo/build_racoon.py reads this file
+     and never writes it. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-captain-hat"
+   sodipodi:docname="captain_hat.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>Captain's hat</title>
+  <sodipodi:namedview
+     id="namedview-captain-hat"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="2"
+     inkscape:cx="200"
+     inkscape:cy="200"
+     inkscape:current-layer="layer-item" />
+  <defs id="defs-captain-hat">
+    <linearGradient id="gr-captain-hat-1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ffffff" /><stop offset="1" style="stop-color:#e3ded4" /></linearGradient>
+    <linearGradient id="gr-captain-hat-2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#3a4f86" /><stop offset="1" style="stop-color:#26355f" /></linearGradient>
+    <linearGradient id="gr-captain-hat-3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#3d3846" /><stop offset="1" style="stop-color:#1e1b24" /></linearGradient>
+    <linearGradient id="gr-captain-hat-4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ffe27a" /><stop offset="1" style="stop-color:#d99307" /></linearGradient>
+    <linearGradient id="gr-captain-hat-5" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ffe27a" /><stop offset="1" style="stop-color:#d99307" /></linearGradient>
+    <radialGradient id="gr-captain-hat-6" cx="0.35" cy="0.3" r="0.8"><stop offset="0" style="stop-color:#fff3b0" /><stop offset="1" style="stop-color:#e3a50d" /></radialGradient>
+    <linearGradient id="gr-captain-hat-7" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ffffff" /><stop offset="1" style="stop-color:#e3ded4" /></linearGradient>
+    <linearGradient id="gr-captain-hat-8" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#3a4f86" /><stop offset="1" style="stop-color:#26355f" /></linearGradient>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="../../parts/racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-item" inkscape:label="Item">
+   <g id="item-captain-hat" inkscape:label="captain_hat">
+     <title>Captain's hat: a ship captain's cap with a gold badge, laurels and braid (gold)</title>
+     <path id="captain-hat-1" inkscape:label="Top" d="M 104 98 C 100 70 140 50 200.5 50 C 261 50 301 70 297 98 C 300 106 270 110 200.5 110 C 131 110 101 106 104 98 Z" style="fill:url(#gr-captain-hat-1);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="captain-hat-2" inkscape:label="Band" d="M 122 102 L 279 102 L 276 124 C 240 130 161 130 125 124 Z" style="fill:url(#gr-captain-hat-2);stroke:#3b2d3a;stroke-width:4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="captain-hat-3" inkscape:label="Visor" d="M 126 122 C 160 131 241 131 275 122 C 270 140 237 149 200.5 149 C 164 149 131 140 126 122 Z" style="fill:url(#gr-captain-hat-3);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="captain-hat-4" inkscape:label="Visor shine" d="M 146 132 C 166 138 190 140 210 140" style="fill:none;stroke:#ffffff;stroke-width:3;stroke-linejoin:round;stroke-linecap:round;opacity:0.35" />
+     <path id="captain-hat-5" inkscape:label="Gold braid" d="M 130 123 C 165 132 236 132 271 123" style="fill:none;stroke:#f2c94c;stroke-width:4.2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="captain-hat-6" inkscape:label="Button" cx="132" cy="123" r="5" style="fill:#ffd23f;stroke:#3b2d3a;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="captain-hat-7" inkscape:label="Button" cx="269" cy="123" r="5" style="fill:#ffd23f;stroke:#3b2d3a;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="captain-hat-8" inkscape:label="Laurel" d="M 186.5 116 C 178.5 108 174.5 98 175.5 90 C 180.5 98 183.5 108 186.5 116 Z" style="fill:url(#gr-captain-hat-4);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="captain-hat-9" inkscape:label="Laurel" d="M 214.5 116 C 222.5 108 226.5 98 225.5 90 C 220.5 98 217.5 108 214.5 116 Z" style="fill:url(#gr-captain-hat-5);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="captain-hat-10" inkscape:label="Badge" cx="200.5" cy="104" rx="14" ry="13" style="fill:url(#gr-captain-hat-6);stroke:#3b2d3a;stroke-width:3;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="captain-hat-11" inkscape:label="Badge star" d="M 200.12 96.42 Q 200.5 95.5 200.88 96.42 L 202.47 100.34 Q 202.85 101.26 203.84 101.34 L 208.07 101.65 Q 209.06 101.72 208.3 102.36 L 205.07 105.09 Q 204.3 105.74 204.54 106.7 L 205.55 110.81 Q 205.79 111.78 204.94 111.26 L 201.35 109.02 Q 200.5 108.5 199.65 109.02 L 196.06 111.26 Q 195.21 111.78 195.45 110.81 L 196.46 106.7 Q 196.7 105.74 195.93 105.09 L 192.7 102.36 Q 191.94 101.72 192.93 101.65 L 197.16 101.34 Q 198.15 101.26 198.53 100.34 Z" style="fill:#3a4f86;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="captain-hat-12" inkscape:label="Shine" d="M 136 66 C 152 58 170 55 186 54" style="fill:none;stroke:#ffffff;stroke-width:4;stroke-linejoin:round;stroke-linecap:round;opacity:0.6" />
+     <g id="captain-hat-13" inkscape:label="Back view" style="display:none">
+     <path id="captain-hat-14" inkscape:label="Top" d="M 104 98 C 100 70 140 50 200.5 50 C 261 50 301 70 297 98 C 300 106 270 110 200.5 110 C 131 110 101 106 104 98 Z" style="fill:url(#gr-captain-hat-7);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="captain-hat-15" inkscape:label="Band" d="M 122 102 L 279 102 L 276 124 C 240 130 161 130 125 124 Z" style="fill:url(#gr-captain-hat-8);stroke:#3b2d3a;stroke-width:4;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+   </g>
+  </g>
+</svg>

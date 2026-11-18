@@ -13,6 +13,7 @@ config_version=5
 config/name="Reading Racoon"
 config/description="Game-based adaptive reading comprehension assessment for Grade 1 learners."
 run/main_scene="res://scenes/main.tscn"
+config/quit_on_go_back=false
 config/features=PackedStringArray("4.7", "GL Compatibility")
 boot_splash/bg_color=Color(1, 0.964706, 0.878431, 1)
 config/icon="res://icon.svg"
@@ -27,6 +28,7 @@ GameState="*res://scripts/autoload/game_state.gd"
 Sfx="*res://scripts/autoload/sfx.gd"
 Speech="*res://scripts/autoload/speech.gd"
 Sync="*res://scripts/autoload/sync.gd"
+Screen="*res://scripts/autoload/screen.gd"
 
 [display]
 

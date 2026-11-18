@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racoon's Closet: Party dress (violet, tops). FR-07, D-026.
+     Drawn to fit Racoon at rest: the bottom layer links ../../parts/racoon_C_inkscape.svg (locked).
+     Draw on the "Item" layer. The file's name is the item's id; its name, tier, price and how it's
+     earned are in reading-racoon/content/closet.json. motion-demo/build_racoon.py reads this file
+     and never writes it. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-party-dress"
+   sodipodi:docname="party_dress.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>Party dress</title>
+  <sodipodi:namedview
+     id="namedview-party-dress"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="2"
+     inkscape:cx="200"
+     inkscape:cy="200"
+     inkscape:current-layer="layer-item" />
+  <defs id="defs-party-dress">
+    <linearGradient id="gr-party-dress-1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" style="stop-color:#e08daa" /><stop offset="0.3" style="stop-color:#ff9fbf" /><stop offset="0.55" style="stop-color:#ffabc7" /><stop offset="1" style="stop-color:#e08daa" /></linearGradient>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="../../parts/racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-item" inkscape:label="Item">
+   <g id="item-party-dress" inkscape:label="party_dress">
+     <title>Party dress: a pink dress with tulle, a sash and sparkles (violet)</title>
+     <path id="party-dress-1" inkscape:label="Dress" d="M 112 234 L 289 234 L 289 374 Q 279.17 383 269.33 374 Q 259.5 383 249.67 374 Q 239.83 383 230 374 Q 220.17 383 210.33 374 Q 200.5 383 190.67 374 Q 180.83 383 171 374 Q 161.17 383 151.33 374 Q 141.5 383 131.67 374 Q 121.83 383 112 374 Z" style="fill:url(#gr-party-dress-1);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="party-dress-2" inkscape:label="Tulle" d="M 112 304 L 289 304 L 289 374 Q 279.17 383 269.33 374 Q 259.5 383 249.67 374 Q 239.83 383 230 374 Q 220.17 383 210.33 374 Q 200.5 383 190.67 374 Q 180.83 383 171 374 Q 161.17 383 151.33 374 Q 141.5 383 131.67 374 Q 121.83 383 112 374 Z" style="fill:#ffd0e0;stroke:#3b2d3a;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round;fill-opacity:0.85" />
+     <path id="party-dress-3" inkscape:label="Tulle" d="M 112 318 L 289 318 L 289 360 Q 277.94 369 266.88 360 Q 255.81 369 244.75 360 Q 233.69 369 222.62 360 Q 211.56 369 200.5 360 Q 189.44 369 178.38 360 Q 167.31 369 156.25 360 Q 145.19 369 134.12 360 Q 123.06 369 112 360 Z" style="fill:#ffe3ee;stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round;fill-opacity:0.8" />
+     <path id="party-dress-4" inkscape:label="Sash" d="M 112 298 L 289 298 L 289 308 L 112 308 Z" style="fill:#b48fd0;stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="party-dress-5" inkscape:label="Bow" d="M 200.5 303 C 190 293 177 296 180 304 C 183 312 193 310 200.5 303 C 208 310 218 312 221 304 C 224 296 211 293 200.5 303 Z" style="fill:#b48fd0;stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="party-dress-6" inkscape:label="Knot" cx="200.5" cy="303" r="3.6" style="fill:#d8b8ee;stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="party-dress-7" inkscape:label="Sparkle" d="M 168 332 Q 168.88 335.12 172 336 Q 168.88 336.88 168 340 Q 167.12 336.88 164 336 Q 167.12 335.12 168 332 Z" style="fill:#ffffff" />
+     <path id="party-dress-8" inkscape:label="Sparkle" d="M 232 340.6 Q 232.75 343.25 235.4 344 Q 232.75 344.75 232 347.4 Q 231.25 344.75 228.6 344 Q 231.25 343.25 232 340.6 Z" style="fill:#ffffff" />
+     <path id="party-dress-9" inkscape:label="Sparkle" d="M 198 352.4 Q 198.79 355.21 201.6 356 Q 198.79 356.79 198 359.6 Q 197.21 356.79 194.4 356 Q 197.21 355.21 198 352.4 Z" style="fill:#ffffff" />
+     <path id="party-dress-10" inkscape:label="Sparkle" d="M 214 327.2 Q 214.62 329.38 216.8 330 Q 214.62 330.62 214 332.8 Q 213.38 330.62 211.2 330 Q 213.38 329.38 214 327.2 Z" style="fill:#ffffff" />
+     <path id="party-dress-11" inkscape:label="Sparkle" d="M 180 359.2 Q 180.62 361.38 182.8 362 Q 180.62 362.62 180 364.8 Q 179.38 362.62 177.2 362 Q 179.38 361.38 180 359.2 Z" style="fill:#ffffff" />
+     <path id="party-dress-12" inkscape:label="Collar" d="M 170 251 C 184 270 217 270 231 251" style="fill:none;stroke:#3b2d3a;stroke-width:10;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="party-dress-13" inkscape:label="Collar" d="M 170 251 C 184 270 217 270 231 251" style="fill:none;stroke:#ffd0e0;stroke-width:6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="party-dress-14" inkscape:label="Shine" d="M 150 262 C 148 274 148 286 150 294" style="fill:none;stroke:#ffffff;stroke-width:5;stroke-linejoin:round;stroke-linecap:round;opacity:0.35" />
+   </g>
+  </g>
+</svg>

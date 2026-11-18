@@ -46,7 +46,7 @@
     "Think about the story again."
   ],
   "rescue_start": [
-    "Oh no, no hearts! Let's do Racoon's Rescue together!",
+    "Oh no, no hearts! Let's do {buddy}'s Rescue together!",
     "Let's get your hearts back! Three easy ones!"
   ],
   "rescue_correct": [

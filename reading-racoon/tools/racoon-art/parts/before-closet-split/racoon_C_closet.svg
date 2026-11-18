@@ -1,0 +1,722 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racoon's Closet items (D-024, D-026, FR-07), drawn to fit parts/racoon_C_inkscape.svg.
+     One layer per slot, one group per item, labelled with its id in scripts/core/wardrobe.gd.
+     A paws item's hidden "Back view" group is what shows when he turns his back.
+     Edit freely: motion-demo/build_racoon.py reads this file and never writes it. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-closet"
+   sodipodi:docname="racoon_C_closet.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>Racoon's Closet: every item, copper to diamond</title>
+  <sodipodi:namedview
+     id="namedview-closet"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="2"
+     inkscape:cx="200"
+     inkscape:cy="300"
+     inkscape:current-layer="layer-book" />
+  <defs id="defs-closet">
+    <linearGradient id="g-teal" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" style="stop-color:#45b8a9" id="s-teal-0" />
+      <stop offset="1" style="stop-color:#2a9d8f" id="s-teal-1" />
+    </linearGradient>
+    <linearGradient id="g-teal-deep" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" style="stop-color:#2a9d8f" id="s-tealdeep-0" />
+      <stop offset="1" style="stop-color:#1d7166" id="s-tealdeep-1" />
+    </linearGradient>
+    <linearGradient id="g-cover" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" style="stop-color:#f39a45" id="s-cover-0" />
+      <stop offset="1" style="stop-color:#e9801f" id="s-cover-1" />
+    </linearGradient>
+    <linearGradient id="g-page-left" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" style="stop-color:#fffbf2" id="s-pagel-0" />
+      <stop offset="0.7" style="stop-color:#fbf3e4" id="s-pagel-1" />
+      <stop offset="1" style="stop-color:#ecdcc0" id="s-pagel-2" />
+    </linearGradient>
+    <linearGradient id="g-page-right" x1="1" y1="0" x2="0" y2="0">
+      <stop offset="0" style="stop-color:#fffbf2" id="s-pager-0" />
+      <stop offset="0.7" style="stop-color:#fbf3e4" id="s-pager-1" />
+      <stop offset="1" style="stop-color:#ecdcc0" id="s-pager-2" />
+    </linearGradient>
+    <linearGradient id="gr-cap-dome" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#4fc2b2" /><stop offset="1" style="stop-color:#2a9d8f" /></linearGradient>
+    <linearGradient id="gr-cap-brim" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#2a9d8f" /><stop offset="1" style="stop-color:#1d7166" /></linearGradient>
+    <linearGradient id="gr-party-cone" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:#ffb48f" /><stop offset="0.55" style="stop-color:#f0805c" /><stop offset="1" style="stop-color:#d95f3d" /></linearGradient>
+    <radialGradient id="gr-party-pom" cx="0.4" cy="0.35" r="0.65"><stop offset="0" style="stop-color:#fff3b0" /><stop offset="0.6" style="stop-color:#ffd84d" /><stop offset="1" style="stop-color:#f2a516" /></radialGradient>
+    <linearGradient id="gr-salakot" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#f0d39c" /><stop offset="0.6" style="stop-color:#d4a86f" /><stop offset="1" style="stop-color:#b9875b" /></linearGradient>
+    <linearGradient id="gr-salakot-tip" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:#ffffff" /><stop offset="0.5" style="stop-color:#d3dbe3" /><stop offset="1" style="stop-color:#8e9aa6" /></linearGradient>
+    <linearGradient id="gr-crown-leaf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#8fd16a" /><stop offset="1" style="stop-color:#4f8f37" /></linearGradient>
+    <radialGradient id="gr-sampaguita" cx="0.5" cy="0.5" r="0.5"><stop offset="0" style="stop-color:#ffffff" /><stop offset="1" style="stop-color:#eef0e6" /></radialGradient>
+    <linearGradient id="gr-crown-yellow-158" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#fff3a6" /><stop offset="1" style="stop-color:#ffc918" /></linearGradient>
+    <linearGradient id="gr-crown-yellow-243" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#fff3a6" /><stop offset="1" style="stop-color:#ffc918" /></linearGradient>
+    <radialGradient id="gr-orchid" cx="0.5" cy="0.45" r="0.6"><stop offset="0" style="stop-color:#ffd1f0" /><stop offset="0.55" style="stop-color:#d98ad0" /><stop offset="1" style="stop-color:#9a5bb8" /></radialGradient>
+    <linearGradient id="gr-crown-gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#fff6b8" /><stop offset="0.35" style="stop-color:#ffd84d" /><stop offset="0.75" style="stop-color:#f2b705" /><stop offset="1" style="stop-color:#c98a00" /></linearGradient>
+    <linearGradient id="gr-crown-band" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ffd84d" /><stop offset="1" style="stop-color:#d99a06" /></linearGradient>
+    <linearGradient id="gr-crown-ruby" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:#ff9f8f" /><stop offset="1" style="stop-color:#c0392b" /></linearGradient>
+    <linearGradient id="gr-crown-teal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#8ce8dc" /><stop offset="1" style="stop-color:#1d7166" /></linearGradient>
+    <linearGradient id="gr-crown-coral-160" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ffc0a8" /><stop offset="1" style="stop-color:#e2603f" /></linearGradient>
+    <linearGradient id="gr-crown-coral-241" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ffc0a8" /><stop offset="1" style="stop-color:#e2603f" /></linearGradient>
+    <radialGradient id="gr-pearl" cx="0.38" cy="0.35" r="0.7"><stop offset="0" style="stop-color:#ffffff" /><stop offset="0.7" style="stop-color:#fbf3e4" /><stop offset="1" style="stop-color:#e3d3b8" /></radialGradient>
+    <linearGradient id="gr-tiara-band" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ffffff" /><stop offset="0.5" style="stop-color:#d6f3ff" /><stop offset="1" style="stop-color:#9fc6e0" /></linearGradient>
+    <linearGradient id="gr-tiara-gem-1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:#ffffff" /><stop offset="0.5" style="stop-color:#c9b3ff" /><stop offset="1" style="stop-color:#7fd3f0" /></linearGradient>
+    <linearGradient id="gr-tiara-gem1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:#ffffff" /><stop offset="0.5" style="stop-color:#ffc2e6" /><stop offset="1" style="stop-color:#7fd3f0" /></linearGradient>
+    <linearGradient id="gr-sun-lens" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:#6a5aa8" /><stop offset="0.45" style="stop-color:#2f2850" /><stop offset="1" style="stop-color:#3f7fa0" /></linearGradient>
+    <linearGradient id="gr-sun-bar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ffffff" /><stop offset="1" style="stop-color:#a3b1be" /></linearGradient>
+    <linearGradient id="gr-starg-frame" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:#ffe680" /><stop offset="1" style="stop-color:#f2a516" /></linearGradient>
+    <linearGradient id="gr-starg-lens" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:#ffb3e2" /><stop offset="1" style="stop-color:#a35cf0" /></linearGradient>
+    <linearGradient id="gr-heart-rim" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:#fff6b8" /><stop offset="0.45" style="stop-color:#ffd84d" /><stop offset="1" style="stop-color:#c98a00" /></linearGradient>
+    <linearGradient id="gr-heart-lens" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:#ffc4da" /><stop offset="1" style="stop-color:#ff5d8f" /></linearGradient>
+    <linearGradient id="gr-heart-gem128" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#b8fff4" /><stop offset="1" style="stop-color:#1d9d8f" /></linearGradient>
+    <linearGradient id="gr-heart-gem273" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#b8fff4" /><stop offset="1" style="stop-color:#1d9d8f" /></linearGradient>
+    <linearGradient id="gr-prism-lens" x1="0" y1="0" x2="1" y2="0.3"><stop offset="0" style="stop-color:#ff9a9a" /><stop offset="0.25" style="stop-color:#ffd36e" /><stop offset="0.5" style="stop-color:#a6f0a0" /><stop offset="0.75" style="stop-color:#7fd8ff" /><stop offset="1" style="stop-color:#c39bff" /></linearGradient>
+    <linearGradient id="gr-prism-bar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ffffff" /><stop offset="1" style="stop-color:#bfe9fb" /></linearGradient>
+    <linearGradient id="gr-prism-gem126" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ffffff" /><stop offset="1" style="stop-color:#b49bff" /></linearGradient>
+    <linearGradient id="gr-prism-gem275" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ffffff" /><stop offset="1" style="stop-color:#b49bff" /></linearGradient>
+    <linearGradient id="gr-bow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#b58fd0" /><stop offset="1" style="stop-color:#6a4c80" /></linearGradient>
+    <linearGradient id="gr-bow-stud" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ffffff" /><stop offset="1" style="stop-color:#a3b1be" /></linearGradient>
+    <linearGradient id="gr-lei-leaf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#8fd16a" /><stop offset="1" style="stop-color:#4f8f37" /></linearGradient>
+    <radialGradient id="gr-lei-bloom" cx="0.5" cy="0.5" r="0.5"><stop offset="0" style="stop-color:#ffffff" /><stop offset="1" style="stop-color:#eceee2" /></radialGradient>
+    <linearGradient id="gr-lei-ribbon" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#c9a2e6" /><stop offset="1" style="stop-color:#7d55a0" /></linearGradient>
+    <radialGradient id="gr-lei-orchid" cx="0.5" cy="0.45" r="0.6"><stop offset="0" style="stop-color:#ffd1f0" /><stop offset="0.55" style="stop-color:#d98ad0" /><stop offset="1" style="stop-color:#9a5bb8" /></radialGradient>
+    <linearGradient id="gr-medal-teal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#4fc2b2" /><stop offset="1" style="stop-color:#1d7166" /></linearGradient>
+    <linearGradient id="gr-medal-coral" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ffb48f" /><stop offset="1" style="stop-color:#d95f3d" /></linearGradient>
+    <linearGradient id="gr-medal-rays" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ffe680" /><stop offset="1" style="stop-color:#d99a06" /></linearGradient>
+    <radialGradient id="gr-medal-disc" cx="0.4" cy="0.35" r="0.7"><stop offset="0" style="stop-color:#fff6b8" /><stop offset="0.55" style="stop-color:#ffd84d" /><stop offset="1" style="stop-color:#e0a20c" /></radialGradient>
+    <linearGradient id="gr-pinstar" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:#efb17c" /><stop offset="1" style="stop-color:#b56c3a" /></linearGradient>
+    <linearGradient id="gr-pinheart-disc" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:#ffffff" /><stop offset="0.5" style="stop-color:#d3dbe3" /><stop offset="1" style="stop-color:#8e9aa6" /></linearGradient>
+    <linearGradient id="gr-pinheart" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ffb3a1" /><stop offset="1" style="stop-color:#e2603f" /></linearGradient>
+    <linearGradient id="gr-pinbook-disc" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:#ffffff" /><stop offset="0.5" style="stop-color:#d3dbe3" /><stop offset="1" style="stop-color:#8e9aa6" /></linearGradient>
+    <linearGradient id="gr-pinboat-rim" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:#ffe680" /><stop offset="1" style="stop-color:#c98a00" /></linearGradient>
+    <linearGradient id="gr-pinboat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#c7a3e8" /><stop offset="1" style="stop-color:#5f3f80" /></linearGradient>
+    <linearGradient id="gr-rosette" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ffb48f" /><stop offset="1" style="stop-color:#e2603f" /></linearGradient>
+    <radialGradient id="gr-rosette-gold" cx="0.4" cy="0.35" r="0.7"><stop offset="0" style="stop-color:#fff6b8" /><stop offset="0.6" style="stop-color:#ffd84d" /><stop offset="1" style="stop-color:#d99a06" /></radialGradient>
+    <linearGradient id="gr-parol-paper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ffd36e" /><stop offset="0.5" style="stop-color:#ff8a5c" /><stop offset="1" style="stop-color:#e2603f" /></linearGradient>
+    <linearGradient id="gr-parol-glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#fffbe0" /><stop offset="1" style="stop-color:#ffd36e" /></linearGradient>
+    <linearGradient id="gr-parol-centre" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#d6b3f0" /><stop offset="1" style="stop-color:#7d55a0" /></linearGradient>
+    <linearGradient id="gr-gbook-cover" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:#fff0a0" /><stop offset="0.4" style="stop-color:#ffd84d" /><stop offset="1" style="stop-color:#c98a00" /></linearGradient>
+    <linearGradient id="gr-gbook-page" x1="0" y1="0" x2="1" y2="0"><stop offset="0" style="stop-color:#fffdf2" /><stop offset="0.75" style="stop-color:#fff3c4" /><stop offset="1" style="stop-color:#f2d27a" /></linearGradient>
+    <linearGradient id="gr-gbook-page-r" x1="1" y1="0" x2="0" y2="0"><stop offset="0" style="stop-color:#fffdf2" /><stop offset="0.75" style="stop-color:#fff3c4" /><stop offset="1" style="stop-color:#f2d27a" /></linearGradient>
+    <linearGradient id="gr-gbook-star" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#fff6b8" /><stop offset="1" style="stop-color:#f2a516" /></linearGradient>
+    <radialGradient id="gr-gbook-emblem" cx="0.5" cy="0.5" r="0.5"><stop offset="0" style="stop-color:#fff6b8" /><stop offset="1" style="stop-color:#e0a20c" /></radialGradient>
+    <linearGradient id="gr-cbook-cover" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:#f2fdff" /><stop offset="0.45" style="stop-color:#a6e4f7" /><stop offset="1" style="stop-color:#b7a3ff" /></linearGradient>
+    <linearGradient id="gr-cbook-page" x1="0" y1="0" x2="1" y2="0"><stop offset="0" style="stop-color:#ffffff" /><stop offset="0.7" style="stop-color:#f3f9ff" /><stop offset="1" style="stop-color:#d9ecff" /></linearGradient>
+    <linearGradient id="gr-cbook-page-r" x1="1" y1="0" x2="0" y2="0"><stop offset="0" style="stop-color:#ffffff" /><stop offset="0.7" style="stop-color:#f3f9ff" /><stop offset="1" style="stop-color:#d9ecff" /></linearGradient>
+    <linearGradient id="gr-cbook-gem" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ffffff" /><stop offset="1" style="stop-color:#7fd3f0" /></linearGradient>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-scarf" inkscape:label="Scarf">
+   <g id="river-scarf" inkscape:label="River scarf">
+    <path id="scarf-band" inkscape:label="Band" d="M 147.5 247 C 165 259.5 236.22 259.5 253.72 247 C 259.72 252 259.72 262 255.72 267.5 C 236.22 284.5 165 284.5 145.5 267.5 C 141.5 262 141.5 252 147.5 247 Z" style="fill:url(#g-teal);stroke:#3b2d3a;stroke-width:4.85;stroke-linejoin:round" />
+    <path id="scarf-stripe" inkscape:label="Stripe" d="M 151 257.43 C 151.67 258.02 153.67 260.13 155 260.97 C 156.33 261.81 157.67 262.31 159 262.47 C 160.33 262.63 161.67 262.13 163 261.92 C 164.33 261.72 165.67 261.17 167 261.24 C 168.33 261.31 169.67 261.67 171 262.33 C 172.33 262.98 173.67 264.25 175 265.18 C 176.33 266.11 177.67 267.33 179 267.9 C 180.33 268.46 181.67 268.69 183 268.57 C 184.33 268.46 185.67 267.68 187 267.2 C 188.33 266.73 189.67 265.91 191 265.7 C 192.33 265.49 193.67 265.58 195 265.96 C 196.33 266.34 197.67 267.34 199 267.99 C 200.33 268.64 201.67 269.59 203 269.88 C 204.33 270.17 205.67 270.12 207 269.73 C 208.33 269.34 209.67 268.29 211 267.54 C 212.33 266.78 213.67 265.69 215 265.21 C 216.33 264.72 217.67 264.53 219 264.64 C 220.33 264.75 221.67 265.47 223 265.85 C 224.33 266.22 225.67 266.9 227 266.91 C 228.33 266.93 229.67 266.6 231 265.94 C 232.33 265.27 233.67 263.95 235 262.92 C 236.33 261.89 237.67 260.52 239 259.76 C 240.33 259.01 241.67 258.54 243 258.37 C 244.33 258.21 246.33 258.69 247 258.75" style="fill:none;stroke:#b5e6dc;stroke-width:3.2;stroke-linecap:round" />
+    <path id="scarf-end-left" inkscape:label="End left" d="M 215.5 285 C 212 296 208.5 307 205.5 319 L 209.5 315.5 L 213 321 L 216.5 315.5 L 220.5 320.5 L 222.5 315 C 223 305 224.5 295 226.5 286.5 Z" style="fill:url(#g-teal);stroke:#3b2d3a;stroke-width:4;stroke-linejoin:round" />
+    <path id="scarf-end-right" inkscape:label="End right" d="M 224.5 287 C 228.5 296.5 233 306.5 235.5 317.5 L 239.5 313 L 244 318 L 246.5 311.5 C 243 301.5 238.5 292.5 233 284 Z" style="fill:url(#g-teal-deep);stroke:#3b2d3a;stroke-width:4;stroke-linejoin:round" />
+    <ellipse id="scarf-knot" inkscape:label="Knot" cx="222" cy="279.5" rx="12.5" ry="10.5" transform="rotate(-12 222 279.5)" style="fill:url(#g-teal-deep);stroke:#3b2d3a;stroke-width:4.85" />
+    <path id="scarf-fold" inkscape:label="Knot fold" d="M 215.5 276.5 Q 221.5 282 228.5 277.5" style="fill:none;stroke:#1d7166;stroke-width:2.6;stroke-linecap:round" />
+   </g>
+  </g>
+  <g inkscape:groupmode="layer" id="layer-book" inkscape:label="Book">
+   <g id="open-book" inkscape:label="Open book">
+    <path id="book-ribbon" inkscape:label="Ribbon" d="M 203.6 357 L 203.6 373 L 207.1 369 L 210.6 373 L 210.6 356.5 Z" style="fill:#2a9d8f;stroke:#3b2d3a;stroke-width:2.6;stroke-linejoin:round" />
+    <path id="book-cover" inkscape:label="Cover" d="M 143.6 284.5 L 196.6 288 Q 200.6 290.5 204.6 288 L 257.6 284.5 Q 259.6 284.5 259.6 286.5 L 259.6 355.5 Q 259.6 357.5 257.6 357.5 L 204.6 360 Q 200.6 362.5 196.6 360 L 143.6 357.5 Q 141.6 357.5 141.6 355.5 L 141.6 286.5 Q 141.6 284.5 143.6 284.5 Z" style="fill:url(#g-cover);stroke:#3b2d3a;stroke-width:4.85;stroke-linejoin:round" />
+    <path id="book-page-left" inkscape:label="Page left" d="M 149.5 288 C 164 283 184.5 283.5 199.4 290.5 L 199.4 353.5 C 184.5 348 164 348 149.5 351 Z" style="fill:url(#g-page-left);stroke:#3b2d3a;stroke-width:3.4;stroke-linejoin:round" />
+    <path id="book-page-right" inkscape:label="Page right" d="M 251.72 288 C 237.22 283 216.72 283.5 201.82 290.5 L 201.82 353.5 C 216.72 348 237.22 348 251.72 351 Z" style="fill:url(#g-page-right);stroke:#3b2d3a;stroke-width:3.4;stroke-linejoin:round" />
+    <path id="book-lines-left" inkscape:label="Lines left" d="M 156.5 298 Q 174 295.5 192 299.5 M 156.5 308.5 Q 174 306 192 310 M 156.5 319 Q 174 316.5 192 320.5 M 156.5 329.5 Q 174 327 192 331 M 156.5 340 Q 174 337.5 179 341.5" style="fill:none;stroke:#c9bfd3;stroke-width:3.2;stroke-linecap:round" />
+    <path id="book-lines-right" inkscape:label="Lines right" d="M 244.72 298 Q 227.22 295.5 209.22 299.5 M 244.72 308.5 Q 227.22 306 209.22 310 M 244.72 319 Q 227.22 316.5 209.22 320.5 M 244.72 329.5 Q 227.22 327 209.22 331 M 244.72 340 Q 227.22 337.5 222.22 341.5" style="fill:none;stroke:#c9bfd3;stroke-width:3.2;stroke-linecap:round" />
+    <path id="book-spine" inkscape:label="Spine" d="M 200.6 290 L 200.6 357" style="fill:none;stroke:#3b2d3a;stroke-width:3;stroke-linecap:round" />
+   </g>
+  </g>
+  <g inkscape:groupmode="layer" id="layer-hats" inkscape:label="Hats">
+   <g id="item-cap" inkscape:label="cap">
+     <title>River cap: a teal cap with a river stripe (copper)</title>
+     <path id="cap-1" inkscape:label="Dome" d="M 112 117 C 106 70 148 38 200.5 38 C 253 38 295 70 289 117 C 248 105 153 105 112 117 Z" style="fill:url(#gr-cap-dome);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="cap-2" inkscape:label="Seam" d="M 200.5 42 C 194 62 190 84 191 106" style="fill:none;stroke:#1d7166;stroke-width:2.8;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="cap-3" inkscape:label="Seam" d="M 200.5 42 C 214 60 222 82 224 105" style="fill:none;stroke:#1d7166;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round;opacity:0.6" />
+     <path id="cap-4" inkscape:label="Wave" d="M 117 96 C 132 88 143 102 158 94 C 173 86 184 102 199 94 C 214 86 225 102 240 94 C 255 86 266 100 285 97" style="fill:none;stroke:#c7f0e8;stroke-width:3.8;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="cap-5" inkscape:label="Brim" d="M 126 116 C 158 103 243 103 275 116 C 267 128 237 132 200.5 132 C 164 132 134 128 126 116 Z" style="fill:url(#gr-cap-brim);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="cap-6" inkscape:label="Button" cx="200.5" cy="40" r="7" style="fill:#1d7166;stroke:#3b2d3a;stroke-width:3.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="cap-7" inkscape:label="Shine" d="M 140 72 C 154 56 172 48 188 46" style="fill:none;stroke:#ffffff;stroke-width:5;stroke-linejoin:round;stroke-linecap:round;opacity:0.5" />
+   </g>
+   <g id="item-party-hat" inkscape:label="party_hat">
+     <title>Party hat: a coral cone with mango dots and a pom-pom (silver)</title>
+     <path id="party-hat-1" inkscape:label="Cone" d="M 150 110 L 206 12 L 254 108 C 224 118 180 119 150 110 Z" style="fill:url(#gr-party-cone);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="party-hat-2" inkscape:label="Dot" cx="203" cy="38" r="6" style="fill:#ffd84d;stroke:#cc8a00;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="party-hat-3" inkscape:label="Dot" cx="188" cy="66" r="7" style="fill:#ffd84d;stroke:#cc8a00;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="party-hat-4" inkscape:label="Dot" cx="220" cy="62" r="6.5" style="fill:#ffd84d;stroke:#cc8a00;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="party-hat-5" inkscape:label="Dot" cx="174" cy="94" r="7" style="fill:#ffd84d;stroke:#cc8a00;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="party-hat-6" inkscape:label="Dot" cx="204" cy="92" r="7.5" style="fill:#ffd84d;stroke:#cc8a00;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="party-hat-7" inkscape:label="Dot" cx="232" cy="92" r="6.5" style="fill:#ffd84d;stroke:#cc8a00;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="party-hat-8" inkscape:label="Trim" d="M 152 106 L 160 96 L 168 108 L 176 98 L 184 110 L 192 100 L 200 111 L 208 101 L 216 111 L 224 101 L 232 110 L 240 99 L 248 107 L 253 103" style="fill:none;stroke:#ffffff;stroke-width:4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="party-hat-9" inkscape:label="Pom-pom" cx="206" cy="12" r="12.5" style="fill:url(#gr-party-pom);stroke:#3b2d3a;stroke-width:3.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="party-hat-10" inkscape:label="Pom shine" d="M 200 7 Q 202 3 207 3" style="fill:none;stroke:#ffffff;stroke-width:3;stroke-linejoin:round;stroke-linecap:round;opacity:0.8" />
+     <path id="party-hat-11" inkscape:label="Shine" d="M 180 66 L 199 30" style="fill:none;stroke:#ffffff;stroke-width:4;stroke-linejoin:round;stroke-linecap:round;opacity:0.45" />
+   </g>
+   <g id="item-salakot" inkscape:label="salakot">
+     <title>Salakot: a woven Filipino hat with a silver tip (silver)</title>
+     <path id="salakot-1" inkscape:label="Hat" d="M 66 118 C 100 78 156 38 200.5 31 C 245 38 301 78 335 118 C 296 140 105 140 66 118 Z" style="fill:url(#gr-salakot);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-2" inkscape:label="Weave" d="M 189.3 36 Q 113 80 64 118.5" style="fill:none;stroke:#9c6b45;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-3" inkscape:label="Weave" d="M 190.9 36 Q 125.5 80 83.5 120" style="fill:none;stroke:#9c6b45;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-4" inkscape:label="Weave" d="M 192.5 36 Q 138 80 103 121.5" style="fill:none;stroke:#9c6b45;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-5" inkscape:label="Weave" d="M 194.1 36 Q 150.5 80 122.5 123" style="fill:none;stroke:#9c6b45;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-6" inkscape:label="Weave" d="M 195.7 36 Q 163 80 142 124.5" style="fill:none;stroke:#9c6b45;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-7" inkscape:label="Weave" d="M 197.3 36 Q 175.5 80 161.5 126" style="fill:none;stroke:#9c6b45;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-8" inkscape:label="Weave" d="M 198.9 36 Q 188 80 181 127.5" style="fill:none;stroke:#9c6b45;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-9" inkscape:label="Weave" d="M 200.5 36 Q 200.5 80 200.5 129" style="fill:none;stroke:#9c6b45;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-10" inkscape:label="Weave" d="M 202.1 36 Q 213 80 220 127.5" style="fill:none;stroke:#9c6b45;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-11" inkscape:label="Weave" d="M 203.7 36 Q 225.5 80 239.5 126" style="fill:none;stroke:#9c6b45;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-12" inkscape:label="Weave" d="M 205.3 36 Q 238 80 259 124.5" style="fill:none;stroke:#9c6b45;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-13" inkscape:label="Weave" d="M 206.9 36 Q 250.5 80 278.5 123" style="fill:none;stroke:#9c6b45;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-14" inkscape:label="Weave" d="M 208.5 36 Q 263 80 298 121.5" style="fill:none;stroke:#9c6b45;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-15" inkscape:label="Weave" d="M 210.1 36 Q 275.5 80 317.5 120" style="fill:none;stroke:#9c6b45;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-16" inkscape:label="Weave" d="M 211.7 36 Q 288 80 337 118.5" style="fill:none;stroke:#9c6b45;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-17" inkscape:label="Band 1" d="M 90 102 C 140 122 261 122 311 102" style="fill:none;stroke:#845837;stroke-width:3;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-18" inkscape:label="Band 2" d="M 126 74 C 162 88 239 88 275 74" style="fill:none;stroke:#845837;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-19" inkscape:label="Rim" d="M 66 118 C 105 140 296 140 335 118 C 311 145 90 145 66 118 Z" style="fill:#8a5d3a;stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-20" inkscape:label="Tip" d="M 191 37 C 191 27 195 19 200.5 15 C 206 19 210 27 210 37 C 204 40 197 40 191 37 Z" style="fill:url(#gr-salakot-tip);stroke:#3b2d3a;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-21" inkscape:label="Shine" d="M 110 98 C 134 76 158 60 180 50" style="fill:none;stroke:#fff7e0;stroke-width:5;stroke-linejoin:round;stroke-linecap:round;opacity:0.5" />
+   </g>
+   <g id="item-flower-crown" inkscape:label="flower_crown">
+     <title>Flower crown: sampaguita and a waling-waling orchid (violet)</title>
+     <path id="flower-crown-1" inkscape:label="Vine" d="M 106 126 C 124 84 160 64 200.5 64 C 241 64 277 84 295 126" style="fill:none;stroke:#487f33;stroke-width:9;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="flower-crown-2" inkscape:label="Vine light" d="M 108 122 C 126 84 160 66 200.5 66 C 241 66 275 84 293 122" style="fill:none;stroke:#7cc05a;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="flower-crown-3" inkscape:label="Leaf" d="M 113.23 111.83 Q 128.06 111.82 135.35 96.34 Q 118.31 97.9 113.23 111.83 Z" style="fill:url(#gr-crown-leaf);stroke:#3b2d3a;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="flower-crown-4" inkscape:label="Leaf" d="M 214.86 64.87 Q 219.94 78.8 236.98 80.35 Q 229.69 64.87 214.86 64.87 Z" style="fill:url(#gr-crown-leaf);stroke:#3b2d3a;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="flower-crown-5" inkscape:label="Leaf" d="M 137.21 84.57 Q 132.13 70.64 115.09 69.09 Q 122.38 84.57 137.21 84.57 Z" style="fill:url(#gr-crown-leaf);stroke:#3b2d3a;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="flower-crown-6" inkscape:label="Leaf" d="M 248.15 74.73 Q 233.32 74.74 226.03 90.22 Q 243.07 88.66 248.15 74.73 Z" style="fill:url(#gr-crown-leaf);stroke:#3b2d3a;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="flower-crown-7" inkscape:label="Leaf" d="M 171.18 67.78 Q 186.01 67.78 193.3 52.29 Q 176.26 53.85 171.18 67.78 Z" style="fill:url(#gr-crown-leaf);stroke:#3b2d3a;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="flower-crown-8" inkscape:label="Leaf" d="M 278.34 98.59 Q 283.41 112.53 300.45 114.08 Q 293.16 98.6 278.34 98.59 Z" style="fill:url(#gr-crown-leaf);stroke:#3b2d3a;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <g id="flower-crown-9" inkscape:label="Sampaguita">
+     <ellipse id="flower-crown-10" inkscape:label="Petal" cx="108.83" cy="108.86" rx="11.6" ry="6.96" transform="rotate(-90 108.83 108.86)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-11" inkscape:label="Petal" cx="119.29" cy="116.47" rx="11.6" ry="6.96" transform="rotate(-18 119.29 116.47)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-12" inkscape:label="Petal" cx="115.3" cy="128.76" rx="11.6" ry="6.96" transform="rotate(54 115.3 128.76)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-13" inkscape:label="Petal" cx="102.37" cy="128.76" rx="11.6" ry="6.96" transform="rotate(126 102.37 128.76)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-14" inkscape:label="Petal" cx="98.37" cy="116.47" rx="11.6" ry="6.96" transform="rotate(198 98.37 116.47)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="flower-crown-15" inkscape:label="Centre" cx="108.83" cy="119.86" r="6" style="fill:#ffd84d;stroke:#3b2d3a;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <g id="flower-crown-16" inkscape:label="Sampaguita">
+     <ellipse id="flower-crown-17" inkscape:label="Petal" cx="126.7" cy="83.09" rx="11.6" ry="6.96" transform="rotate(-90 126.7 83.09)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-18" inkscape:label="Petal" cx="137.16" cy="90.69" rx="11.6" ry="6.96" transform="rotate(-18 137.16 90.69)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-19" inkscape:label="Petal" cx="133.16" cy="102.99" rx="11.6" ry="6.96" transform="rotate(54 133.16 102.99)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-20" inkscape:label="Petal" cx="120.23" cy="102.99" rx="11.6" ry="6.96" transform="rotate(126 120.23 102.99)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-21" inkscape:label="Petal" cx="116.23" cy="90.69" rx="11.6" ry="6.96" transform="rotate(198 116.23 90.69)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="flower-crown-22" inkscape:label="Centre" cx="126.7" cy="94.09" r="6" style="fill:#ffd84d;stroke:#3b2d3a;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <g id="flower-crown-23" inkscape:label="Sampaguita">
+     <ellipse id="flower-crown-24" inkscape:label="Petal" cx="152.85" cy="63.73" rx="11.6" ry="6.96" transform="rotate(-90 152.85 63.73)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-25" inkscape:label="Petal" cx="163.31" cy="71.33" rx="11.6" ry="6.96" transform="rotate(-18 163.31 71.33)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-26" inkscape:label="Petal" cx="159.32" cy="83.63" rx="11.6" ry="6.96" transform="rotate(54 159.32 83.63)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-27" inkscape:label="Petal" cx="146.39" cy="83.63" rx="11.6" ry="6.96" transform="rotate(126 146.39 83.63)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-28" inkscape:label="Petal" cx="142.39" cy="71.33" rx="11.6" ry="6.96" transform="rotate(198 142.39 71.33)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="flower-crown-29" inkscape:label="Centre" cx="152.85" cy="74.73" r="6" style="fill:#ffd84d;stroke:#3b2d3a;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <g id="flower-crown-30" inkscape:label="Sampaguita">
+     <ellipse id="flower-crown-31" inkscape:label="Petal" cx="248.15" cy="63.73" rx="11.6" ry="6.96" transform="rotate(-90 248.15 63.73)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-32" inkscape:label="Petal" cx="258.61" cy="71.33" rx="11.6" ry="6.96" transform="rotate(-18 258.61 71.33)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-33" inkscape:label="Petal" cx="254.61" cy="83.63" rx="11.6" ry="6.96" transform="rotate(54 254.61 83.63)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-34" inkscape:label="Petal" cx="241.68" cy="83.63" rx="11.6" ry="6.96" transform="rotate(126 241.68 83.63)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-35" inkscape:label="Petal" cx="237.69" cy="71.33" rx="11.6" ry="6.96" transform="rotate(198 237.69 71.33)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="flower-crown-36" inkscape:label="Centre" cx="248.15" cy="74.73" r="6" style="fill:#ffd84d;stroke:#3b2d3a;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <g id="flower-crown-37" inkscape:label="Sampaguita">
+     <ellipse id="flower-crown-38" inkscape:label="Petal" cx="274.3" cy="83.09" rx="11.6" ry="6.96" transform="rotate(-90 274.3 83.09)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-39" inkscape:label="Petal" cx="284.77" cy="90.69" rx="11.6" ry="6.96" transform="rotate(-18 284.77 90.69)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-40" inkscape:label="Petal" cx="280.77" cy="102.99" rx="11.6" ry="6.96" transform="rotate(54 280.77 102.99)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-41" inkscape:label="Petal" cx="267.84" cy="102.99" rx="11.6" ry="6.96" transform="rotate(126 267.84 102.99)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-42" inkscape:label="Petal" cx="263.84" cy="90.69" rx="11.6" ry="6.96" transform="rotate(198 263.84 90.69)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="flower-crown-43" inkscape:label="Centre" cx="274.3" cy="94.09" r="6" style="fill:#ffd84d;stroke:#3b2d3a;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <g id="flower-crown-44" inkscape:label="Sampaguita">
+     <ellipse id="flower-crown-45" inkscape:label="Petal" cx="292.17" cy="108.86" rx="11.6" ry="6.96" transform="rotate(-90 292.17 108.86)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-46" inkscape:label="Petal" cx="302.63" cy="116.47" rx="11.6" ry="6.96" transform="rotate(-18 302.63 116.47)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-47" inkscape:label="Petal" cx="298.63" cy="128.76" rx="11.6" ry="6.96" transform="rotate(54 298.63 128.76)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-48" inkscape:label="Petal" cx="285.7" cy="128.76" rx="11.6" ry="6.96" transform="rotate(126 285.7 128.76)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-49" inkscape:label="Petal" cx="281.71" cy="116.47" rx="11.6" ry="6.96" transform="rotate(198 281.71 116.47)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="flower-crown-50" inkscape:label="Centre" cx="292.17" cy="119.86" r="6" style="fill:#ffd84d;stroke:#3b2d3a;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <g id="flower-crown-51" inkscape:label="Yellow bloom">
+     <ellipse id="flower-crown-52" inkscape:label="Petal" cx="158" cy="63.2" rx="9.28" ry="6.5" transform="rotate(-90 158 63.2)" style="fill:url(#gr-crown-yellow-158);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-53" inkscape:label="Petal" cx="165.62" cy="67.6" rx="9.28" ry="6.5" transform="rotate(-30 165.62 67.6)" style="fill:url(#gr-crown-yellow-158);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-54" inkscape:label="Petal" cx="165.62" cy="76.4" rx="9.28" ry="6.5" transform="rotate(30 165.62 76.4)" style="fill:url(#gr-crown-yellow-158);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-55" inkscape:label="Petal" cx="158" cy="80.8" rx="9.28" ry="6.5" transform="rotate(90 158 80.8)" style="fill:url(#gr-crown-yellow-158);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-56" inkscape:label="Petal" cx="150.38" cy="76.4" rx="9.28" ry="6.5" transform="rotate(150 150.38 76.4)" style="fill:url(#gr-crown-yellow-158);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-57" inkscape:label="Petal" cx="150.38" cy="67.6" rx="9.28" ry="6.5" transform="rotate(210 150.38 67.6)" style="fill:url(#gr-crown-yellow-158);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="flower-crown-58" inkscape:label="Centre" cx="158" cy="72" r="4.8" style="fill:#e9801f;stroke:#3b2d3a;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <g id="flower-crown-59" inkscape:label="Yellow bloom">
+     <ellipse id="flower-crown-60" inkscape:label="Petal" cx="243" cy="63.2" rx="9.28" ry="6.5" transform="rotate(-90 243 63.2)" style="fill:url(#gr-crown-yellow-243);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-61" inkscape:label="Petal" cx="250.62" cy="67.6" rx="9.28" ry="6.5" transform="rotate(-30 250.62 67.6)" style="fill:url(#gr-crown-yellow-243);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-62" inkscape:label="Petal" cx="250.62" cy="76.4" rx="9.28" ry="6.5" transform="rotate(30 250.62 76.4)" style="fill:url(#gr-crown-yellow-243);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-63" inkscape:label="Petal" cx="243" cy="80.8" rx="9.28" ry="6.5" transform="rotate(90 243 80.8)" style="fill:url(#gr-crown-yellow-243);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-64" inkscape:label="Petal" cx="235.38" cy="76.4" rx="9.28" ry="6.5" transform="rotate(150 235.38 76.4)" style="fill:url(#gr-crown-yellow-243);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-65" inkscape:label="Petal" cx="235.38" cy="67.6" rx="9.28" ry="6.5" transform="rotate(210 235.38 67.6)" style="fill:url(#gr-crown-yellow-243);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="flower-crown-66" inkscape:label="Centre" cx="243" cy="72" r="4.8" style="fill:#e9801f;stroke:#3b2d3a;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <g id="flower-crown-67" inkscape:label="Waling-waling orchid">
+     <ellipse id="flower-crown-68" inkscape:label="Petal" cx="200.5" cy="46" rx="17" ry="11" transform="rotate(-90 200.5 46)" style="fill:url(#gr-orchid);stroke:#3b2d3a;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-69" inkscape:label="Petal" cx="215.72" cy="57.06" rx="17" ry="11" transform="rotate(-18 215.72 57.06)" style="fill:url(#gr-orchid);stroke:#3b2d3a;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-70" inkscape:label="Petal" cx="209.9" cy="74.94" rx="17" ry="11" transform="rotate(54 209.9 74.94)" style="fill:url(#gr-orchid);stroke:#3b2d3a;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-71" inkscape:label="Petal" cx="191.1" cy="74.94" rx="17" ry="11" transform="rotate(126 191.1 74.94)" style="fill:url(#gr-orchid);stroke:#3b2d3a;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-72" inkscape:label="Petal" cx="185.28" cy="57.06" rx="17" ry="11" transform="rotate(198 185.28 57.06)" style="fill:url(#gr-orchid);stroke:#3b2d3a;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="flower-crown-73" inkscape:label="Lip" d="M 189 62 C 189 76 212 76 212 62 C 206 70 195 70 189 62 Z" style="fill:#7b3f99;stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="flower-crown-74" inkscape:label="Spot" cx="195" cy="56" r="2.2" style="fill:#7b3f99" />
+     <circle id="flower-crown-75" inkscape:label="Spot" cx="206" cy="56" r="2.2" style="fill:#7b3f99" />
+     <circle id="flower-crown-76" inkscape:label="Spot" cx="200.5" cy="51" r="2.2" style="fill:#7b3f99" />
+     <circle id="flower-crown-77" inkscape:label="Centre" cx="200.5" cy="58" r="5.2" style="fill:#fff3b0;stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <path id="flower-crown-78" inkscape:label="Twinkle" d="M 128 58 Q 130.24 63.76 136 66 Q 130.24 68.24 128 74 Q 125.76 68.24 120 66 Q 125.76 63.76 128 58 Z" style="fill:#ffffff;stroke:#b98ad6;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="flower-crown-79" inkscape:label="Twinkle" d="M 274 57 Q 275.96 62.04 281 64 Q 275.96 65.96 274 71 Q 272.04 65.96 267 64 Q 272.04 62.04 274 57 Z" style="fill:#ffffff;stroke:#b98ad6;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="flower-crown-80" inkscape:label="Twinkle" d="M 176 34.5 Q 177.54 38.46 181.5 40 Q 177.54 41.54 176 45.5 Q 174.46 41.54 170.5 40 Q 174.46 38.46 176 34.5 Z" style="fill:#ffffff;stroke:#b98ad6;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+   </g>
+   <g id="item-gold-crown" inkscape:label="gold_crown">
+     <title>Gold crown: Butuan gold with spirals, gems and pearls (gold)</title>
+     <path id="gold-crown-1" inkscape:label="Crown" d="M 128 114 L 123 62 L 152 86 L 166 42 L 184 80 L 200.5 24 L 217 80 L 235 42 L 249 86 L 278 62 L 273 114 C 230 122 171 122 128 114 Z" style="fill:url(#gr-crown-gold);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="gold-crown-2" inkscape:label="Band" d="M 129 97 C 172 105 229 105 272 97 L 273 114 C 230 122 171 122 128 114 Z" style="fill:url(#gr-crown-band);stroke:#3b2d3a;stroke-width:3.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="gold-crown-3" inkscape:label="Spiral" d="M 156.5 92 C 144.5 84 151.5 74 159.5 76 C 165.5 78 161.5 89 156.5 88" style="fill:none;stroke:#a86f00;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="gold-crown-4" inkscape:label="Spiral" d="M 244.5 92 C 256.5 84 249.5 74 241.5 76 C 235.5 78 239.5 89 244.5 88" style="fill:none;stroke:#a86f00;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="gold-crown-5" inkscape:label="Ruby" d="M 200.5 52 L 212 68 L 200.5 85 L 189 68 Z" style="fill:url(#gr-crown-ruby);stroke:#3b2d3a;stroke-width:3;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="gold-crown-6" inkscape:label="Ruby facet" d="M 195 64 L 200.5 58 L 206 64" style="fill:none;stroke:#ffffff;stroke-width:2;stroke-linejoin:round;stroke-linecap:round;opacity:0.85" />
+     <ellipse id="gold-crown-7" inkscape:label="Teal gem" cx="200.5" cy="108" rx="10" ry="6.6" style="fill:url(#gr-crown-teal);stroke:#3b2d3a;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="gold-crown-8" inkscape:label="Coral gem" cx="160" cy="106" r="5.8" style="fill:url(#gr-crown-coral-160);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="gold-crown-9" inkscape:label="Coral gem" cx="241" cy="106" r="5.8" style="fill:url(#gr-crown-coral-241);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="gold-crown-10" inkscape:label="Pearl" cx="123" cy="60" r="6.6" style="fill:url(#gr-pearl);stroke:#3b2d3a;stroke-width:2.8;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="gold-crown-11" inkscape:label="Pearl" cx="166" cy="40" r="6.6" style="fill:url(#gr-pearl);stroke:#3b2d3a;stroke-width:2.8;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="gold-crown-12" inkscape:label="Pearl" cx="200.5" cy="22" r="6.6" style="fill:url(#gr-pearl);stroke:#3b2d3a;stroke-width:2.8;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="gold-crown-13" inkscape:label="Pearl" cx="235" cy="40" r="6.6" style="fill:url(#gr-pearl);stroke:#3b2d3a;stroke-width:2.8;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="gold-crown-14" inkscape:label="Pearl" cx="278" cy="60" r="6.6" style="fill:url(#gr-pearl);stroke:#3b2d3a;stroke-width:2.8;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="gold-crown-15" inkscape:label="Shine" d="M 132 104 L 128 72" style="fill:none;stroke:#ffffff;stroke-width:3.8;stroke-linejoin:round;stroke-linecap:round;opacity:0.6" />
+     <path id="gold-crown-16" inkscape:label="Shine 2" d="M 172 98 L 168 64" style="fill:none;stroke:#ffffff;stroke-width:3;stroke-linejoin:round;stroke-linecap:round;opacity:0.5" />
+     <path id="gold-crown-17" inkscape:label="Glint" d="M 110 36 Q 112.24 41.76 118 44 Q 112.24 46.24 110 52 Q 107.76 46.24 102 44 Q 107.76 41.76 110 36 Z" style="fill:#fffbe0;stroke:#e0a20c;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="gold-crown-18" inkscape:label="Glint" d="M 290 41 Q 291.96 46.04 297 48 Q 291.96 49.96 290 55 Q 288.04 49.96 283 48 Q 288.04 46.04 290 41 Z" style="fill:#fffbe0;stroke:#e0a20c;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="gold-crown-19" inkscape:label="Glint" d="M 220 12 Q 221.68 16.32 226 18 Q 221.68 19.68 220 24 Q 218.32 19.68 214 18 Q 218.32 16.32 220 12 Z" style="fill:#fffbe0;stroke:#e0a20c;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+   </g>
+   <g id="item-star-crown" inkscape:label="star_crown">
+     <title>Star crown: a crystal tiara with a faceted star gem (diamond)</title>
+     <path id="star-crown-1" inkscape:label="Band" d="M 122 118 C 147 94 173 85 200.5 85 C 228 85 254 94 279 118 C 276 124 270 126 265 124 C 245 106 223 99 200.5 99 C 178 99 156 106 136 124 C 131 126 125 124 122 118 Z" style="fill:url(#gr-tiara-band);stroke:#3b2d3a;stroke-width:3.8;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="star-crown-2" inkscape:label="Side gem" d="M 154.5 64 L 165.5 81 L 154.5 98 L 143.5 81 Z" style="fill:url(#gr-tiara-gem-1);stroke:#3b2d3a;stroke-width:2.8;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="star-crown-3" inkscape:label="Side gem facet" d="M 143.5 81 L 165.5 81 M 154.5 64 L 154.5 98" style="fill:none;stroke:#ffffff;stroke-width:1.4;stroke-linejoin:round;stroke-linecap:round;opacity:0.7" />
+     <circle id="star-crown-4" inkscape:label="Bead" cx="171.5" cy="93" r="4" style="fill:#e9fbff;stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="star-crown-5" inkscape:label="Bead" cx="158.5" cy="96" r="4" style="fill:#e9fbff;stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="star-crown-6" inkscape:label="Bead" cx="134.5" cy="104" r="4" style="fill:#e9fbff;stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="star-crown-7" inkscape:label="Side gem" d="M 246.5 64 L 257.5 81 L 246.5 98 L 235.5 81 Z" style="fill:url(#gr-tiara-gem1);stroke:#3b2d3a;stroke-width:2.8;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="star-crown-8" inkscape:label="Side gem facet" d="M 235.5 81 L 257.5 81 M 246.5 64 L 246.5 98" style="fill:none;stroke:#ffffff;stroke-width:1.4;stroke-linejoin:round;stroke-linecap:round;opacity:0.7" />
+     <circle id="star-crown-9" inkscape:label="Bead" cx="229.5" cy="93" r="4" style="fill:#e9fbff;stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="star-crown-10" inkscape:label="Bead" cx="242.5" cy="96" r="4" style="fill:#e9fbff;stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="star-crown-11" inkscape:label="Bead" cx="266.5" cy="104" r="4" style="fill:#e9fbff;stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <g id="star-crown-12" inkscape:label="Star gem">
+     <path id="star-crown-13" inkscape:label="Facet" d="M 200.5 50 L 190.21 35.84 L 200.5 10 Z" style="fill:#ffffff" />
+     <path id="star-crown-14" inkscape:label="Facet" d="M 200.5 50 L 200.5 10 L 210.79 35.84 Z" style="fill:#a8e6fa" />
+     <path id="star-crown-15" inkscape:label="Facet" d="M 200.5 50 L 210.79 35.84 L 238.54 37.64 Z" style="fill:#e8dcff" />
+     <path id="star-crown-16" inkscape:label="Facet" d="M 200.5 50 L 238.54 37.64 L 217.14 55.41 Z" style="fill:#b49bff" />
+     <path id="star-crown-17" inkscape:label="Facet" d="M 200.5 50 L 217.14 55.41 L 224.01 82.36 Z" style="fill:#ffe3f3" />
+     <path id="star-crown-18" inkscape:label="Facet" d="M 200.5 50 L 224.01 82.36 L 200.5 67.5 Z" style="fill:#ff9fd4" />
+     <path id="star-crown-19" inkscape:label="Facet" d="M 200.5 50 L 200.5 67.5 L 176.99 82.36 Z" style="fill:#e5fff4" />
+     <path id="star-crown-20" inkscape:label="Facet" d="M 200.5 50 L 176.99 82.36 L 183.86 55.41 Z" style="fill:#8ee8c7" />
+     <path id="star-crown-21" inkscape:label="Facet" d="M 200.5 50 L 183.86 55.41 L 162.46 37.64 Z" style="fill:#fff6d6" />
+     <path id="star-crown-22" inkscape:label="Facet" d="M 200.5 50 L 162.46 37.64 L 190.21 35.84 Z" style="fill:#ffd27a" />
+     <path id="star-crown-23" inkscape:label="Outline" d="M 200.5 10 L 210.79 35.84 L 238.54 37.64 L 217.14 55.41 L 224.01 82.36 L 200.5 67.5 L 176.99 82.36 L 183.86 55.41 L 162.46 37.64 L 190.21 35.84 Z" style="fill:none;stroke:#3b2d3a;stroke-width:3.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="star-crown-24" inkscape:label="Edge" d="M 200.5 50 L 200.5 10" style="fill:none;stroke:#ffffff;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round;opacity:0.7" />
+     <path id="star-crown-25" inkscape:label="Edge" d="M 200.5 50 L 238.54 37.64" style="fill:none;stroke:#ffffff;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round;opacity:0.7" />
+     <path id="star-crown-26" inkscape:label="Edge" d="M 200.5 50 L 224.01 82.36" style="fill:none;stroke:#ffffff;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round;opacity:0.7" />
+     <path id="star-crown-27" inkscape:label="Edge" d="M 200.5 50 L 176.99 82.36" style="fill:none;stroke:#ffffff;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round;opacity:0.7" />
+     <path id="star-crown-28" inkscape:label="Edge" d="M 200.5 50 L 162.46 37.64" style="fill:none;stroke:#ffffff;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round;opacity:0.7" />
+     </g>
+     <path id="star-crown-29" inkscape:label="Twinkle" d="M 136 55 Q 138.52 61.48 145 64 Q 138.52 66.52 136 73 Q 133.48 66.52 127 64 Q 133.48 61.48 136 55 Z" style="fill:#ffffff;stroke:#6fc7e8;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="star-crown-30" inkscape:label="Twinkle" d="M 266 50 Q 268.24 55.76 274 58 Q 268.24 60.24 266 66 Q 263.76 60.24 258 58 Q 263.76 55.76 266 50 Z" style="fill:#ffffff;stroke:#6fc7e8;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="star-crown-31" inkscape:label="Twinkle" d="M 170 11.5 Q 171.82 16.18 176.5 18 Q 171.82 19.82 170 24.5 Q 168.18 19.82 163.5 18 Q 168.18 16.18 170 11.5 Z" style="fill:#ffffff;stroke:#6fc7e8;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="star-crown-32" inkscape:label="Twinkle" d="M 234 16 Q 235.68 20.32 240 22 Q 235.68 23.68 234 28 Q 232.32 23.68 228 22 Q 232.32 20.32 234 16 Z" style="fill:#ffffff;stroke:#6fc7e8;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+   </g>
+  </g>
+  <g inkscape:groupmode="layer" id="layer-glasses" inkscape:label="Glasses">
+   <g id="item-round-glasses" inkscape:label="round_glasses">
+     <title>Reading glasses: round copper frames (copper)</title>
+     <circle id="round-glasses-1" inkscape:label="Lens" cx="158.3" cy="168.1" r="21" style="fill:#d8f1ff;fill-opacity:0.28" />
+     <circle id="round-glasses-2" inkscape:label="Lens" cx="242.9" cy="168.1" r="21" style="fill:#d8f1ff;fill-opacity:0.28" />
+     <circle id="round-glasses-3" inkscape:label="Frame" cx="158.3" cy="168.1" r="21" style="fill:none;stroke:#3b2d3a;stroke-width:8;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="round-glasses-4" inkscape:label="Frame" cx="242.9" cy="168.1" r="21" style="fill:none;stroke:#3b2d3a;stroke-width:8;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="round-glasses-5" inkscape:label="Bridge" d="M 179 165 Q 200.5 153 222 165" style="fill:none;stroke:#3b2d3a;stroke-width:8;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="round-glasses-6" inkscape:label="Arm left" d="M 137.5 166 L 117 161" style="fill:none;stroke:#3b2d3a;stroke-width:8;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="round-glasses-7" inkscape:label="Arm right" d="M 263.5 166 L 284 161" style="fill:none;stroke:#3b2d3a;stroke-width:8;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="round-glasses-8" inkscape:label="Frame" cx="158.3" cy="168.1" r="21" style="fill:none;stroke:#a8693d;stroke-width:4.2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="round-glasses-9" inkscape:label="Frame" cx="242.9" cy="168.1" r="21" style="fill:none;stroke:#a8693d;stroke-width:4.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="round-glasses-10" inkscape:label="Bridge" d="M 179 165 Q 200.5 153 222 165" style="fill:none;stroke:#a8693d;stroke-width:4.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="round-glasses-11" inkscape:label="Arm left" d="M 137.5 166 L 117 161" style="fill:none;stroke:#a8693d;stroke-width:4.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="round-glasses-12" inkscape:label="Arm right" d="M 263.5 166 L 284 161" style="fill:none;stroke:#a8693d;stroke-width:4.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="round-glasses-13" inkscape:label="Glint" d="M 146.3 161 Q 149.3 154 155.3 153" style="fill:none;stroke:#ffffff;stroke-width:3;stroke-linejoin:round;stroke-linecap:round;opacity:0.85" />
+     <path id="round-glasses-14" inkscape:label="Glint" d="M 230.9 161 Q 233.9 154 239.9 153" style="fill:none;stroke:#ffffff;stroke-width:3;stroke-linejoin:round;stroke-linecap:round;opacity:0.85" />
+   </g>
+   <g id="item-sunglasses" inkscape:label="sunglasses">
+     <title>Sunglasses: dark lenses with a silver brow bar (silver)</title>
+     <path id="sunglasses-1" inkscape:label="Lens" d="M 134.3 150 C 136.3 147 156.3 147 171.3 148 C 179.3 149 182.3 153 181.3 160 C 180.3 174 173.3 187 158.3 187 C 143.3 188 134.3 179 134.3 168 Z" style="fill:url(#gr-sun-lens);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="sunglasses-2" inkscape:label="Reflection" d="M 146.3 158 L 156.3 176" style="fill:none;stroke:#ffffff;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round;opacity:0.5" />
+     <path id="sunglasses-3" inkscape:label="Reflection 2" d="M 155.3 157 L 160.3 166" style="fill:none;stroke:#ffffff;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round;opacity:0.45" />
+     <path id="sunglasses-4" inkscape:label="Lens" d="M 266.9 150 C 264.9 147 244.9 147 229.9 148 C 221.9 149 218.9 153 219.9 160 C 220.9 174 227.9 187 242.9 187 C 257.9 188 266.9 179 266.9 168 Z" style="fill:url(#gr-sun-lens);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="sunglasses-5" inkscape:label="Reflection" d="M 254.9 158 L 244.9 176" style="fill:none;stroke:#ffffff;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round;opacity:0.5" />
+     <path id="sunglasses-6" inkscape:label="Reflection 2" d="M 245.9 157 L 240.9 166" style="fill:none;stroke:#ffffff;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round;opacity:0.45" />
+     <path id="sunglasses-7" inkscape:label="Bridge" d="M 181 157 Q 200.5 149 220 157" style="fill:none;stroke:#3b2d3a;stroke-width:5.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="sunglasses-8" inkscape:label="Brow bar" d="M 133 150 C 150 144 180 145 200.5 149 C 221 145 251 144 268 150 C 268 155 265 156 262 155 C 245 151 222 152 200.5 155 C 179 152 156 151 139 155 C 136 156 133 155 133 150 Z" style="fill:url(#gr-sun-bar);stroke:#3b2d3a;stroke-width:2.8;stroke-linejoin:round;stroke-linecap:round" />
+   </g>
+   <g id="item-star-glasses" inkscape:label="star_glasses">
+     <title>Star glasses: star frames with pink-violet lenses (violet)</title>
+     <path id="star-glasses-1" inkscape:label="Frame" d="M 153.44 136.62 Q 154.75 133.29 156.71 136.27 L 165.08 148.96 Q 167.05 151.94 170.62 152.16 L 185.79 153.06 Q 189.36 153.27 187.13 156.07 L 177.65 167.94 Q 175.42 170.74 176.32 174.2 L 180.15 188.91 Q 181.05 192.37 177.7 191.11 L 163.48 185.76 Q 160.13 184.5 157.12 186.43 L 144.31 194.62 Q 141.3 196.54 141.46 192.97 L 142.15 177.79 Q 142.31 174.22 139.55 171.95 L 127.81 162.3 Q 125.04 160.03 128.49 159.08 L 143.14 155.04 Q 146.59 154.09 147.9 150.77 Z" style="fill:url(#gr-starg-frame);stroke:#3b2d3a;stroke-width:4.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="star-glasses-2" inkscape:label="Lens" d="M 155.53 148.78 Q 156.1 147.22 157 148.63 L 162.66 157.59 Q 163.55 159.01 165.22 159.07 L 175.81 159.49 Q 177.48 159.56 176.41 160.85 L 169.64 169 Q 168.57 170.28 169.02 171.89 L 171.9 182.1 Q 172.35 183.71 170.8 183.09 L 160.95 179.16 Q 159.4 178.54 158.01 179.47 L 149.19 185.36 Q 147.8 186.29 147.91 184.62 L 148.6 174.04 Q 148.71 172.37 147.39 171.33 L 139.07 164.77 Q 137.76 163.73 139.38 163.32 L 149.65 160.71 Q 151.27 160.3 151.85 158.73 Z" style="fill:url(#gr-starg-lens);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round;fill-opacity:0.88" />
+     <path id="star-glasses-3" inkscape:label="Glint" d="M 152.3 163 L 157.3 158" style="fill:none;stroke:#ffffff;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round;opacity:0.9" />
+     <path id="star-glasses-4" inkscape:label="Frame" d="M 244.49 136.27 Q 246.45 133.29 247.76 136.62 L 253.3 150.77 Q 254.61 154.09 258.06 155.04 L 272.71 159.08 Q 276.16 160.03 273.39 162.3 L 261.65 171.95 Q 258.89 174.22 259.05 177.79 L 259.74 192.97 Q 259.9 196.54 256.89 194.62 L 244.08 186.43 Q 241.07 184.5 237.72 185.76 L 223.5 191.11 Q 220.15 192.37 221.05 188.91 L 224.88 174.2 Q 225.78 170.74 223.55 167.94 L 214.07 156.07 Q 211.84 153.27 215.41 153.06 L 230.58 152.16 Q 234.15 151.94 236.12 148.96 Z" style="fill:url(#gr-starg-frame);stroke:#3b2d3a;stroke-width:4.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="star-glasses-5" inkscape:label="Lens" d="M 244.2 148.63 Q 245.1 147.22 245.67 148.78 L 249.35 158.73 Q 249.93 160.3 251.55 160.71 L 261.82 163.32 Q 263.44 163.73 262.13 164.77 L 253.81 171.33 Q 252.49 172.37 252.6 174.04 L 253.29 184.62 Q 253.4 186.29 252.01 185.36 L 243.19 179.47 Q 241.8 178.54 240.25 179.16 L 230.4 183.09 Q 228.85 183.71 229.3 182.1 L 232.18 171.89 Q 232.63 170.28 231.56 169 L 224.79 160.85 Q 223.72 159.56 225.39 159.49 L 235.98 159.07 Q 237.65 159.01 238.54 157.59 Z" style="fill:url(#gr-starg-lens);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round;fill-opacity:0.88" />
+     <path id="star-glasses-6" inkscape:label="Glint" d="M 236.9 163 L 241.9 158" style="fill:none;stroke:#ffffff;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round;opacity:0.9" />
+     <path id="star-glasses-7" inkscape:label="Bridge" d="M 184 166 Q 200.5 158 217 166" style="fill:none;stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="star-glasses-8" inkscape:label="Twinkle" d="M 118 130 Q 120.24 135.76 126 138 Q 120.24 140.24 118 146 Q 115.76 140.24 110 138 Q 115.76 135.76 118 130 Z" style="fill:#fff6c8;stroke:#d08ad8;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="star-glasses-9" inkscape:label="Twinkle" d="M 284 130 Q 286.24 135.76 292 138 Q 286.24 140.24 284 146 Q 281.76 140.24 276 138 Q 281.76 135.76 284 130 Z" style="fill:#fff6c8;stroke:#d08ad8;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="star-glasses-10" inkscape:label="Twinkle" d="M 200.5 137 Q 201.9 140.6 205.5 142 Q 201.9 143.4 200.5 147 Q 199.1 143.4 195.5 142 Q 199.1 140.6 200.5 137 Z" style="fill:#fff6c8;stroke:#d08ad8;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+   </g>
+   <g id="item-heart-glasses" inkscape:label="heart_glasses">
+     <title>Golden hearts: heart lenses in gold rims with gems (gold)</title>
+     <path id="heart-glasses-1" inkscape:label="Rim" d="M 158.3 189.36 C 151.55 182.94 131.3 172.24 131.3 159.4 C 131.3 148.7 140.3 143.36 148.18 143.36 C 153.8 143.36 157.18 146.57 158.3 150.84 C 159.43 146.57 162.8 143.36 168.43 143.36 C 176.3 143.36 185.3 148.7 185.3 159.4 C 185.3 172.24 165.05 182.94 158.3 189.36 Z" style="fill:url(#gr-heart-rim);stroke:#3b2d3a;stroke-width:4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="heart-glasses-2" inkscape:label="Lens" d="M 158.3 184.41 C 153.3 179.81 138.3 172.13 138.3 162.93 C 138.3 155.25 144.97 151.41 150.8 151.41 C 154.97 151.41 157.47 153.72 158.3 156.79 C 159.13 153.72 161.63 151.41 165.8 151.41 C 171.63 151.41 178.3 155.25 178.3 162.93 C 178.3 172.13 163.3 179.81 158.3 184.41 Z" style="fill:url(#gr-heart-lens);stroke:#c98a00;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round;fill-opacity:0.9" />
+     <path id="heart-glasses-3" inkscape:label="Glint" d="M 146.3 161 Q 150.3 157 154.3 158" style="fill:none;stroke:#ffffff;stroke-width:2.8;stroke-linejoin:round;stroke-linecap:round;opacity:0.9" />
+     <path id="heart-glasses-4" inkscape:label="Rim" d="M 242.9 189.36 C 236.15 182.94 215.9 172.24 215.9 159.4 C 215.9 148.7 224.9 143.36 232.78 143.36 C 238.4 143.36 241.78 146.57 242.9 150.84 C 244.03 146.57 247.4 143.36 253.03 143.36 C 260.9 143.36 269.9 148.7 269.9 159.4 C 269.9 172.24 249.65 182.94 242.9 189.36 Z" style="fill:url(#gr-heart-rim);stroke:#3b2d3a;stroke-width:4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="heart-glasses-5" inkscape:label="Lens" d="M 242.9 184.41 C 237.9 179.81 222.9 172.13 222.9 162.93 C 222.9 155.25 229.57 151.41 235.4 151.41 C 239.57 151.41 242.07 153.72 242.9 156.79 C 243.73 153.72 246.23 151.41 250.4 151.41 C 256.23 151.41 262.9 155.25 262.9 162.93 C 262.9 172.13 247.9 179.81 242.9 184.41 Z" style="fill:url(#gr-heart-lens);stroke:#c98a00;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round;fill-opacity:0.9" />
+     <path id="heart-glasses-6" inkscape:label="Glint" d="M 230.9 161 Q 234.9 157 238.9 158" style="fill:none;stroke:#ffffff;stroke-width:2.8;stroke-linejoin:round;stroke-linecap:round;opacity:0.9" />
+     <path id="heart-glasses-7" inkscape:label="Bridge" d="M 184 160 Q 200.5 151 217 160" style="fill:none;stroke:#c98a00;stroke-width:4.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="heart-glasses-8" inkscape:label="Gem" d="M 128 151 L 134 157 L 128 163 L 122 157 Z" style="fill:url(#gr-heart-gem128);stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="heart-glasses-9" inkscape:label="Gem" d="M 273 151 L 279 157 L 273 163 L 267 157 Z" style="fill:url(#gr-heart-gem273);stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="heart-glasses-10" inkscape:label="Glint star" d="M 122 133.5 Q 123.82 138.18 128.5 140 Q 123.82 141.82 122 146.5 Q 120.18 141.82 115.5 140 Q 120.18 138.18 122 133.5 Z" style="fill:#fffbe0;stroke:#e0a20c;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="heart-glasses-11" inkscape:label="Glint star" d="M 280 133.5 Q 281.82 138.18 286.5 140 Q 281.82 141.82 280 146.5 Q 278.18 141.82 273.5 140 Q 278.18 138.18 280 133.5 Z" style="fill:#fffbe0;stroke:#e0a20c;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+   </g>
+   <g id="item-prism-shades" inkscape:label="prism_shades">
+     <title>Prism shades: a crystal visor with a rainbow lens (diamond)</title>
+     <path id="prism-shades-1" inkscape:label="Lens" d="M 129 152 L 272 152 L 269 170 C 265 185 247 191 231 186 L 213 176 L 200.5 172 L 188 176 L 170 186 C 154 191 136 185 132 170 Z" style="fill:url(#gr-prism-lens);stroke:#3b2d3a;stroke-width:4.2;stroke-linejoin:round;stroke-linecap:round;fill-opacity:0.92" />
+     <path id="prism-shades-2" inkscape:label="Facet" d="M 150 152 L 166 186" style="fill:none;stroke:#ffffff;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round;opacity:0.65" />
+     <path id="prism-shades-3" inkscape:label="Facet" d="M 180 152 L 171 184" style="fill:none;stroke:#ffffff;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round;opacity:0.65" />
+     <path id="prism-shades-4" inkscape:label="Facet" d="M 221 152 L 230 184" style="fill:none;stroke:#ffffff;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round;opacity:0.65" />
+     <path id="prism-shades-5" inkscape:label="Facet" d="M 251 152 L 235 186" style="fill:none;stroke:#ffffff;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round;opacity:0.65" />
+     <path id="prism-shades-6" inkscape:label="Facet" d="M 132 168 L 200.5 160 L 269 168" style="fill:none;stroke:#ffffff;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round;opacity:0.65" />
+     <path id="prism-shades-7" inkscape:label="Crystal bar" d="M 126 148 L 275 148 L 273 157 L 128 157 Z" style="fill:url(#gr-prism-bar);stroke:#3b2d3a;stroke-width:3;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="prism-shades-8" inkscape:label="Corner gem" d="M 126 144 L 133 152 L 126 160 L 119 152 Z" style="fill:url(#gr-prism-gem126);stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="prism-shades-9" inkscape:label="Corner gem" d="M 275 144 L 282 152 L 275 160 L 268 152 Z" style="fill:url(#gr-prism-gem275);stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="prism-shades-10" inkscape:label="Glint" d="M 146 160 L 156 170" style="fill:none;stroke:#ffffff;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round;opacity:0.85" />
+     <path id="prism-shades-11" inkscape:label="Glint 2" d="M 214 160 L 224 170" style="fill:none;stroke:#ffffff;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round;opacity:0.85" />
+     <path id="prism-shades-12" inkscape:label="Twinkle" d="M 118 128.5 Q 120.1 133.9 125.5 136 Q 120.1 138.1 118 143.5 Q 115.9 138.1 110.5 136 Q 115.9 133.9 118 128.5 Z" style="fill:#ffffff;stroke:#6fc7e8;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="prism-shades-13" inkscape:label="Twinkle" d="M 284 131 Q 285.96 136.04 291 138 Q 285.96 139.96 284 145 Q 282.04 139.96 277 138 Q 282.04 136.04 284 131 Z" style="fill:#ffffff;stroke:#6fc7e8;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="prism-shades-14" inkscape:label="Twinkle" d="M 200.5 135 Q 201.9 138.6 205.5 140 Q 201.9 141.4 200.5 145 Q 199.1 141.4 195.5 140 Q 199.1 138.6 200.5 135 Z" style="fill:#ffffff;stroke:#6fc7e8;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+   </g>
+  </g>
+  <g inkscape:groupmode="layer" id="layer-neck" inkscape:label="Neck">
+   <g id="item-bow-tie" inkscape:label="bow_tie">
+     <title>Bow tie: plum with polka dots and a silver stud (silver)</title>
+     <path id="bow-tie-1" inkscape:label="Wing" d="M 200.5 268 C 188.5 257 174.5 250 167.5 252 C 160.5 255 160.5 281 167.5 284 C 174.5 286 188.5 279 200.5 268 Z" style="fill:url(#gr-bow);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="bow-tie-2" inkscape:label="Dot" cx="178.5" cy="259" r="2.4" style="fill:#efe0fa" />
+     <circle id="bow-tie-3" inkscape:label="Dot" cx="170.5" cy="269" r="2.4" style="fill:#efe0fa" />
+     <circle id="bow-tie-4" inkscape:label="Dot" cx="179.5" cy="274" r="2.4" style="fill:#efe0fa" />
+     <circle id="bow-tie-5" inkscape:label="Dot" cx="169.5" cy="279" r="2.4" style="fill:#efe0fa" />
+     <path id="bow-tie-6" inkscape:label="Pleat" d="M 167.5 262 Q 176.5 267 186.5 268" style="fill:none;stroke:#5f3f80;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="bow-tie-7" inkscape:label="Pleat" d="M 167.5 276 Q 176.5 271 186.5 270" style="fill:none;stroke:#5f3f80;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="bow-tie-8" inkscape:label="Wing" d="M 200.5 268 C 212.5 257 226.5 250 233.5 252 C 240.5 255 240.5 281 233.5 284 C 226.5 286 212.5 279 200.5 268 Z" style="fill:url(#gr-bow);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="bow-tie-9" inkscape:label="Dot" cx="222.5" cy="259" r="2.4" style="fill:#efe0fa" />
+     <circle id="bow-tie-10" inkscape:label="Dot" cx="230.5" cy="269" r="2.4" style="fill:#efe0fa" />
+     <circle id="bow-tie-11" inkscape:label="Dot" cx="221.5" cy="274" r="2.4" style="fill:#efe0fa" />
+     <circle id="bow-tie-12" inkscape:label="Dot" cx="231.5" cy="279" r="2.4" style="fill:#efe0fa" />
+     <path id="bow-tie-13" inkscape:label="Pleat" d="M 233.5 262 Q 224.5 267 214.5 268" style="fill:none;stroke:#5f3f80;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="bow-tie-14" inkscape:label="Pleat" d="M 233.5 276 Q 224.5 271 214.5 270" style="fill:none;stroke:#5f3f80;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="bow-tie-15" inkscape:label="Knot" d="M 192 261 C 192 258 194 257 197 257 L 204 257 C 207 257 209 258 209 261 L 209 276 C 209 279 207 280 204 280 L 197 280 C 194 280 192 279 192 276 Z" style="fill:#7d5aa0;stroke:#3b2d3a;stroke-width:3.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="bow-tie-16" inkscape:label="Stud" cx="200.5" cy="268.5" r="3.6" style="fill:url(#gr-bow-stud);stroke:#3b2d3a;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+   </g>
+   <g id="item-lei" inkscape:label="lei">
+     <title>Sampaguita lei: white jasmine with a waling-waling orchid (violet)</title>
+     <path id="lei-1" inkscape:label="String" d="M 150 250 C 158 288 180 306 200.5 306 C 221 306 243 288 251 250" style="fill:none;stroke:#487f33;stroke-width:3;stroke-linejoin:round;stroke-linecap:round" />
+     <g id="lei-2" inkscape:label="Sampaguita">
+     <ellipse id="lei-3" inkscape:label="Petal" cx="150.76" cy="244.84" rx="8.99" ry="5.39" transform="rotate(-90 150.76 244.84)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-4" inkscape:label="Petal" cx="158.87" cy="250.73" rx="8.99" ry="5.39" transform="rotate(-18 158.87 250.73)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-5" inkscape:label="Petal" cx="155.77" cy="260.26" rx="8.99" ry="5.39" transform="rotate(54 155.77 260.26)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-6" inkscape:label="Petal" cx="145.75" cy="260.26" rx="8.99" ry="5.39" transform="rotate(126 145.75 260.26)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-7" inkscape:label="Petal" cx="142.65" cy="250.73" rx="8.99" ry="5.39" transform="rotate(198 142.65 250.73)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="lei-8" inkscape:label="Centre" cx="150.76" cy="253.37" r="4.65" style="fill:#ffd84d;stroke:#3b2d3a;stroke-width:1.65;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <path id="lei-9" inkscape:label="Leaf" d="M 155.22 267.66 Q 146.57 264.95 140.18 273.13 Q 150.33 275.29 155.22 267.66 Z" style="fill:url(#gr-lei-leaf);stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <g id="lei-10" inkscape:label="Sampaguita">
+     <ellipse id="lei-11" inkscape:label="Petal" cx="155.22" cy="259.13" rx="8.99" ry="5.39" transform="rotate(-90 155.22 259.13)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-12" inkscape:label="Petal" cx="163.33" cy="265.02" rx="8.99" ry="5.39" transform="rotate(-18 163.33 265.02)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-13" inkscape:label="Petal" cx="160.23" cy="274.55" rx="8.99" ry="5.39" transform="rotate(54 160.23 274.55)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-14" inkscape:label="Petal" cx="150.21" cy="274.55" rx="8.99" ry="5.39" transform="rotate(126 150.21 274.55)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-15" inkscape:label="Petal" cx="147.11" cy="265.02" rx="8.99" ry="5.39" transform="rotate(198 147.11 265.02)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="lei-16" inkscape:label="Centre" cx="155.22" cy="267.66" r="4.65" style="fill:#ffd84d;stroke:#3b2d3a;stroke-width:1.65;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <g id="lei-17" inkscape:label="Sampaguita">
+     <ellipse id="lei-18" inkscape:label="Petal" cx="161.01" cy="271.11" rx="8.99" ry="5.39" transform="rotate(-90 161.01 271.11)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-19" inkscape:label="Petal" cx="169.12" cy="277" rx="8.99" ry="5.39" transform="rotate(-18 169.12 277)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-20" inkscape:label="Petal" cx="166.03" cy="286.53" rx="8.99" ry="5.39" transform="rotate(54 166.03 286.53)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-21" inkscape:label="Petal" cx="156" cy="286.53" rx="8.99" ry="5.39" transform="rotate(126 156 286.53)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-22" inkscape:label="Petal" cx="152.91" cy="277" rx="8.99" ry="5.39" transform="rotate(198 152.91 277)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="lei-23" inkscape:label="Centre" cx="161.01" cy="279.63" r="4.65" style="fill:#ffd84d;stroke:#3b2d3a;stroke-width:1.65;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <path id="lei-24" inkscape:label="Leaf" d="M 167.89 289.33 Q 159.25 286.63 152.86 294.8 Q 163.01 296.96 167.89 289.33 Z" style="fill:url(#gr-lei-leaf);stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <g id="lei-25" inkscape:label="Sampaguita">
+     <ellipse id="lei-26" inkscape:label="Petal" cx="167.89" cy="280.81" rx="8.99" ry="5.39" transform="rotate(-90 167.89 280.81)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-27" inkscape:label="Petal" cx="176" cy="286.7" rx="8.99" ry="5.39" transform="rotate(-18 176 286.7)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-28" inkscape:label="Petal" cx="172.9" cy="296.23" rx="8.99" ry="5.39" transform="rotate(54 172.9 296.23)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-29" inkscape:label="Petal" cx="162.88" cy="296.23" rx="8.99" ry="5.39" transform="rotate(126 162.88 296.23)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-30" inkscape:label="Petal" cx="159.78" cy="286.7" rx="8.99" ry="5.39" transform="rotate(198 159.78 286.7)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="lei-31" inkscape:label="Centre" cx="167.89" cy="289.33" r="4.65" style="fill:#ffd84d;stroke:#3b2d3a;stroke-width:1.65;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <g id="lei-32" inkscape:label="Sampaguita">
+     <ellipse id="lei-33" inkscape:label="Petal" cx="175.6" cy="288.26" rx="8.99" ry="5.39" transform="rotate(-90 175.6 288.26)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-34" inkscape:label="Petal" cx="183.7" cy="294.15" rx="8.99" ry="5.39" transform="rotate(-18 183.7 294.15)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-35" inkscape:label="Petal" cx="180.61" cy="303.68" rx="8.99" ry="5.39" transform="rotate(54 180.61 303.68)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-36" inkscape:label="Petal" cx="170.59" cy="303.68" rx="8.99" ry="5.39" transform="rotate(126 170.59 303.68)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-37" inkscape:label="Petal" cx="167.49" cy="294.15" rx="8.99" ry="5.39" transform="rotate(198 167.49 294.15)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="lei-38" inkscape:label="Centre" cx="175.6" cy="296.78" r="4.65" style="fill:#ffd84d;stroke:#3b2d3a;stroke-width:1.65;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <path id="lei-39" inkscape:label="Leaf" d="M 183.87 302.02 Q 175.23 299.32 168.84 307.5 Q 178.99 309.65 183.87 302.02 Z" style="fill:url(#gr-lei-leaf);stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <g id="lei-40" inkscape:label="Sampaguita">
+     <ellipse id="lei-41" inkscape:label="Petal" cx="183.87" cy="293.5" rx="8.99" ry="5.39" transform="rotate(-90 183.87 293.5)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-42" inkscape:label="Petal" cx="191.98" cy="299.39" rx="8.99" ry="5.39" transform="rotate(-18 191.98 299.39)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-43" inkscape:label="Petal" cx="188.88" cy="308.92" rx="8.99" ry="5.39" transform="rotate(54 188.88 308.92)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-44" inkscape:label="Petal" cx="178.86" cy="308.92" rx="8.99" ry="5.39" transform="rotate(126 178.86 308.92)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-45" inkscape:label="Petal" cx="175.76" cy="299.39" rx="8.99" ry="5.39" transform="rotate(198 175.76 299.39)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="lei-46" inkscape:label="Centre" cx="183.87" cy="302.02" r="4.65" style="fill:#ffd84d;stroke:#3b2d3a;stroke-width:1.65;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <g id="lei-47" inkscape:label="Sampaguita">
+     <ellipse id="lei-48" inkscape:label="Petal" cx="202.35" cy="297.43" rx="8.99" ry="5.39" transform="rotate(-90 202.35 297.43)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-49" inkscape:label="Petal" cx="210.46" cy="303.32" rx="8.99" ry="5.39" transform="rotate(-18 210.46 303.32)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-50" inkscape:label="Petal" cx="207.36" cy="312.85" rx="8.99" ry="5.39" transform="rotate(54 207.36 312.85)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-51" inkscape:label="Petal" cx="197.34" cy="312.85" rx="8.99" ry="5.39" transform="rotate(126 197.34 312.85)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-52" inkscape:label="Petal" cx="194.24" cy="303.32" rx="8.99" ry="5.39" transform="rotate(198 194.24 303.32)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="lei-53" inkscape:label="Centre" cx="202.35" cy="305.95" r="4.65" style="fill:#ffd84d;stroke:#3b2d3a;stroke-width:1.65;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <path id="lei-54" inkscape:label="Leaf" d="M 211.01 304.43 Q 215.89 312.06 226.04 309.9 Q 219.66 301.72 211.01 304.43 Z" style="fill:url(#gr-lei-leaf);stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <g id="lei-55" inkscape:label="Sampaguita">
+     <ellipse id="lei-56" inkscape:label="Petal" cx="211.01" cy="295.9" rx="8.99" ry="5.39" transform="rotate(-90 211.01 295.9)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-57" inkscape:label="Petal" cx="219.12" cy="301.8" rx="8.99" ry="5.39" transform="rotate(-18 219.12 301.8)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-58" inkscape:label="Petal" cx="216.02" cy="311.33" rx="8.99" ry="5.39" transform="rotate(54 216.02 311.33)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-59" inkscape:label="Petal" cx="206" cy="311.33" rx="8.99" ry="5.39" transform="rotate(126 206 311.33)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-60" inkscape:label="Petal" cx="202.9" cy="301.8" rx="8.99" ry="5.39" transform="rotate(198 202.9 301.8)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="lei-61" inkscape:label="Centre" cx="211.01" cy="304.43" r="4.65" style="fill:#ffd84d;stroke:#3b2d3a;stroke-width:1.65;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <g id="lei-62" inkscape:label="Sampaguita">
+     <ellipse id="lei-63" inkscape:label="Petal" cx="219.54" cy="292.23" rx="8.99" ry="5.39" transform="rotate(-90 219.54 292.23)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-64" inkscape:label="Petal" cx="227.64" cy="298.12" rx="8.99" ry="5.39" transform="rotate(-18 227.64 298.12)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-65" inkscape:label="Petal" cx="224.55" cy="307.65" rx="8.99" ry="5.39" transform="rotate(54 224.55 307.65)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-66" inkscape:label="Petal" cx="214.52" cy="307.65" rx="8.99" ry="5.39" transform="rotate(126 214.52 307.65)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-67" inkscape:label="Petal" cx="211.43" cy="298.12" rx="8.99" ry="5.39" transform="rotate(198 211.43 298.12)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="lei-68" inkscape:label="Centre" cx="219.54" cy="300.75" r="4.65" style="fill:#ffd84d;stroke:#3b2d3a;stroke-width:1.65;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <path id="lei-69" inkscape:label="Leaf" d="M 227.67 294.88 Q 232.56 302.51 242.71 300.36 Q 236.32 292.18 227.67 294.88 Z" style="fill:url(#gr-lei-leaf);stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <g id="lei-70" inkscape:label="Sampaguita">
+     <ellipse id="lei-71" inkscape:label="Petal" cx="227.67" cy="286.36" rx="8.99" ry="5.39" transform="rotate(-90 227.67 286.36)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-72" inkscape:label="Petal" cx="235.78" cy="292.25" rx="8.99" ry="5.39" transform="rotate(-18 235.78 292.25)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-73" inkscape:label="Petal" cx="232.68" cy="301.78" rx="8.99" ry="5.39" transform="rotate(54 232.68 301.78)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-74" inkscape:label="Petal" cx="222.66" cy="301.78" rx="8.99" ry="5.39" transform="rotate(126 222.66 301.78)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-75" inkscape:label="Petal" cx="219.57" cy="292.25" rx="8.99" ry="5.39" transform="rotate(198 219.57 292.25)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="lei-76" inkscape:label="Centre" cx="227.67" cy="294.88" r="4.65" style="fill:#ffd84d;stroke:#3b2d3a;stroke-width:1.65;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <g id="lei-77" inkscape:label="Sampaguita">
+     <ellipse id="lei-78" inkscape:label="Petal" cx="235.17" cy="278.27" rx="8.99" ry="5.39" transform="rotate(-90 235.17 278.27)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-79" inkscape:label="Petal" cx="243.28" cy="284.16" rx="8.99" ry="5.39" transform="rotate(-18 243.28 284.16)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-80" inkscape:label="Petal" cx="240.18" cy="293.69" rx="8.99" ry="5.39" transform="rotate(54 240.18 293.69)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-81" inkscape:label="Petal" cx="230.16" cy="293.69" rx="8.99" ry="5.39" transform="rotate(126 230.16 293.69)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-82" inkscape:label="Petal" cx="227.06" cy="284.16" rx="8.99" ry="5.39" transform="rotate(198 227.06 284.16)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="lei-83" inkscape:label="Centre" cx="235.17" cy="286.79" r="4.65" style="fill:#ffd84d;stroke:#3b2d3a;stroke-width:1.65;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <path id="lei-84" inkscape:label="Leaf" d="M 241.76 276.45 Q 246.65 284.08 256.8 281.92 Q 250.41 273.74 241.76 276.45 Z" style="fill:url(#gr-lei-leaf);stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <g id="lei-85" inkscape:label="Sampaguita">
+     <ellipse id="lei-86" inkscape:label="Petal" cx="241.76" cy="267.92" rx="8.99" ry="5.39" transform="rotate(-90 241.76 267.92)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-87" inkscape:label="Petal" cx="249.87" cy="273.81" rx="8.99" ry="5.39" transform="rotate(-18 249.87 273.81)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-88" inkscape:label="Petal" cx="246.77" cy="283.34" rx="8.99" ry="5.39" transform="rotate(54 246.77 283.34)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-89" inkscape:label="Petal" cx="236.75" cy="283.34" rx="8.99" ry="5.39" transform="rotate(126 236.75 283.34)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-90" inkscape:label="Petal" cx="233.66" cy="273.81" rx="8.99" ry="5.39" transform="rotate(198 233.66 273.81)" style="fill:url(#gr-lei-bloom);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="lei-91" inkscape:label="Centre" cx="241.76" cy="276.45" r="4.65" style="fill:#ffd84d;stroke:#3b2d3a;stroke-width:1.65;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <path id="lei-92" inkscape:label="Ribbon left" d="M 196 310 C 192 320 188 330 182 338 L 189 340 C 194 332 199 322 202 312 Z" style="fill:url(#gr-lei-ribbon);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="lei-93" inkscape:label="Ribbon right" d="M 205 310 C 209 320 214 330 220 338 L 213 341 C 208 332 203 322 199 312 Z" style="fill:url(#gr-lei-ribbon);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <g id="lei-94" inkscape:label="Waling-waling orchid">
+     <ellipse id="lei-95" inkscape:label="Petal" cx="200.5" cy="295" rx="12" ry="8" transform="rotate(-90 200.5 295)" style="fill:url(#gr-lei-orchid);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-96" inkscape:label="Petal" cx="210.96" cy="302.6" rx="12" ry="8" transform="rotate(-18 210.96 302.6)" style="fill:url(#gr-lei-orchid);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-97" inkscape:label="Petal" cx="206.97" cy="314.9" rx="12" ry="8" transform="rotate(54 206.97 314.9)" style="fill:url(#gr-lei-orchid);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-98" inkscape:label="Petal" cx="194.03" cy="314.9" rx="12" ry="8" transform="rotate(126 194.03 314.9)" style="fill:url(#gr-lei-orchid);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="lei-99" inkscape:label="Petal" cx="190.04" cy="302.6" rx="12" ry="8" transform="rotate(198 190.04 302.6)" style="fill:url(#gr-lei-orchid);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="lei-100" inkscape:label="Lip" d="M 193 306 C 193 315 208 315 208 306 C 204 311 197 311 193 306 Z" style="fill:#7b3f99;stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="lei-101" inkscape:label="Centre" cx="200.5" cy="303" r="3.8" style="fill:#fff3b0;stroke:#3b2d3a;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <path id="lei-102" inkscape:label="Twinkle" d="M 160 290.5 Q 161.54 294.46 165.5 296 Q 161.54 297.54 160 301.5 Q 158.46 297.54 154.5 296 Q 158.46 294.46 160 290.5 Z" style="fill:#ffffff;stroke:#b98ad6;stroke-width:1.1;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="lei-103" inkscape:label="Twinkle" d="M 243 289 Q 244.4 292.6 248 294 Q 244.4 295.4 243 299 Q 241.6 295.4 238 294 Q 241.6 292.6 243 289 Z" style="fill:#ffffff;stroke:#b98ad6;stroke-width:1.1;stroke-linejoin:round;stroke-linecap:round" />
+   </g>
+   <g id="item-sun-medal" inkscape:label="sun_medal">
+     <title>Sun medal: a gold sunburst medal on a teal and coral ribbon (gold)</title>
+     <path id="sun-medal-1" inkscape:label="Ribbon left" d="M 166 252 L 189 292 L 199 288 L 180 249 Z" style="fill:url(#gr-medal-teal);stroke:#3b2d3a;stroke-width:3;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="sun-medal-2" inkscape:label="Ribbon right" d="M 235 252 L 212 292 L 202 288 L 221 249 Z" style="fill:url(#gr-medal-coral);stroke:#3b2d3a;stroke-width:3;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="sun-medal-3" inkscape:label="Ribbon stripe" d="M 173 251 L 193 290 M 228 251 L 208 290" style="fill:none;stroke:#ffffff;stroke-width:2;stroke-linejoin:round;stroke-linecap:round;opacity:0.7" />
+     <path id="sun-medal-4" inkscape:label="Sunburst" d="M 200.5 271 L 205.68 278.68 L 214 274.62 L 214.64 283.86 L 223.88 284.5 L 219.82 292.82 L 227.5 298 L 219.82 303.18 L 223.88 311.5 L 214.64 312.14 L 214 321.38 L 205.68 317.32 L 200.5 325 L 195.32 317.32 L 187 321.38 L 186.36 312.14 L 177.12 311.5 L 181.18 303.18 L 173.5 298 L 181.18 292.82 L 177.12 284.5 L 186.36 283.86 L 187 274.62 L 195.32 278.68 Z" style="fill:url(#gr-medal-rays);stroke:#3b2d3a;stroke-width:2.8;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sun-medal-5" inkscape:label="Medal" cx="200.5" cy="298" r="18" style="fill:url(#gr-medal-disc);stroke:#3b2d3a;stroke-width:3.2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sun-medal-6" inkscape:label="Rim" cx="200.5" cy="298" r="13.5" style="fill:none;stroke:#c98a00;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="sun-medal-7" inkscape:label="Star" d="M 200.12 289.38 Q 200.5 288.5 200.88 289.38 L 202.83 293.9 Q 203.2 294.78 204.16 294.87 L 209.06 295.32 Q 210.01 295.41 209.29 296.04 L 205.59 299.29 Q 204.87 299.92 205.09 300.86 L 206.17 305.66 Q 206.38 306.59 205.55 306.1 L 201.32 303.59 Q 200.5 303.1 199.68 303.59 L 195.45 306.1 Q 194.62 306.59 194.83 305.66 L 195.91 300.86 Q 196.13 299.92 195.41 299.29 L 191.71 296.04 Q 190.99 295.41 191.94 295.32 L 196.84 294.87 Q 197.8 294.78 198.17 293.9 Z" style="fill:#fffbe0;stroke:#c98a00;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sun-medal-8" inkscape:label="Ruby" cx="200.5" cy="298.5" r="2.6" style="fill:#e2603f" />
+     <path id="sun-medal-9" inkscape:label="Shine" d="M 189 290 Q 192 285 198 284" style="fill:none;stroke:#ffffff;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round;opacity:0.85" />
+     <path id="sun-medal-10" inkscape:label="Glint" d="M 170 294 Q 171.68 298.32 176 300 Q 171.68 301.68 170 306 Q 168.32 301.68 164 300 Q 168.32 298.32 170 294 Z" style="fill:#fffbe0;stroke:#e0a20c;stroke-width:1.1;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="sun-medal-11" inkscape:label="Glint" d="M 232 280.5 Q 233.54 284.46 237.5 286 Q 233.54 287.54 232 291.5 Q 230.46 287.54 226.5 286 Q 230.46 284.46 232 280.5 Z" style="fill:#fffbe0;stroke:#e0a20c;stroke-width:1.1;stroke-linejoin:round;stroke-linecap:round" />
+   </g>
+  </g>
+  <g inkscape:groupmode="layer" id="layer-pins" inkscape:label="Pins">
+   <g id="item-pin-star" inkscape:label="pin_star" transform="matrix(1.35 0 0 1.35 -60.9 -109.2)">
+     <title>Star pin: a copper button with a cream star (copper)</title>
+     <circle id="pin-star-1" inkscape:label="Pin" cx="174" cy="312" r="16" style="fill:url(#gr-pinstar);stroke:#3b2d3a;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="pin-star-2" inkscape:label="Ring" cx="174" cy="312" r="12.4" style="fill:none;stroke:#8a4f2b;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pin-star-3" inkscape:label="Star" d="M 173.65 303.84 Q 174 303 174.35 303.84 L 176.17 308.18 Q 176.53 309.02 177.44 309.1 L 182.12 309.49 Q 183.04 309.56 182.34 310.16 L 178.78 313.23 Q 178.09 313.83 178.3 314.72 L 179.37 319.3 Q 179.58 320.19 178.8 319.71 L 174.78 317.27 Q 174 316.8 173.22 317.27 L 169.2 319.71 Q 168.42 320.19 168.63 319.3 L 169.7 314.72 Q 169.91 313.83 169.22 313.23 L 165.66 310.16 Q 164.96 309.56 165.88 309.49 L 170.56 309.1 Q 171.47 309.02 171.83 308.18 Z" style="fill:#fff3d6;stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+   </g>
+   <g id="item-pin-heart" inkscape:label="pin_heart" transform="matrix(1.35 0 0 1.35 -60.9 -109.2)">
+     <title>Heart pin: a coral heart on silver (silver)</title>
+     <circle id="pin-heart-1" inkscape:label="Pin" cx="174" cy="312" r="16.5" style="fill:url(#gr-pinheart-disc);stroke:#3b2d3a;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="pin-heart-2" inkscape:label="Ring" cx="174" cy="312" r="13" style="fill:#fbfcfd;stroke:#8e9aa6;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pin-heart-3" inkscape:label="Heart" d="M 174 320.53 C 171.5 318.02 164 313.84 164 308.81 C 164 304.63 167.33 302.53 170.25 302.53 C 172.33 302.53 173.58 303.79 174 305.47 C 174.42 303.79 175.67 302.53 177.75 302.53 C 180.67 302.53 184 304.63 184 308.81 C 184 313.84 176.5 318.02 174 320.53 Z" style="fill:url(#gr-pinheart);stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pin-heart-4" inkscape:label="Shine" d="M 168 310 Q 169 307 172 307" style="fill:none;stroke:#ffffff;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+   </g>
+   <g id="item-pin-book" inkscape:label="pin_book" transform="matrix(1.35 0 0 1.35 -60.9 -109.2)">
+     <title>Book pin: a little open book on silver (silver)</title>
+     <circle id="pin-book-1" inkscape:label="Pin" cx="174" cy="312" r="16.5" style="fill:url(#gr-pinbook-disc);stroke:#3b2d3a;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="pin-book-2" inkscape:label="Ring" cx="174" cy="312" r="13" style="fill:#fbfcfd;stroke:#8e9aa6;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pin-book-3" inkscape:label="Cover" d="M 164 306 L 184 306 L 184 319 L 164 319 Z" style="fill:#e9801f;stroke:#3b2d3a;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pin-book-4" inkscape:label="Pages" d="M 166 305 Q 171 303 174 307 L 174 318 Q 171 315 166 317 Z" style="fill:#fffbf2;stroke:#3b2d3a;stroke-width:1.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pin-book-5" inkscape:label="Pages" d="M 182 305 Q 177 303 174 307 L 174 318 Q 177 315 182 317 Z" style="fill:#fffbf2;stroke:#3b2d3a;stroke-width:1.4;stroke-linejoin:round;stroke-linecap:round" />
+   </g>
+   <g id="item-pin-boat" inkscape:label="pin_boat" transform="matrix(1.35 0 0 1.35 -60.9 -109.2)">
+     <title>Balangay pin: Butuan's balangay boat on violet enamel (violet)</title>
+     <circle id="pin-boat-1" inkscape:label="Rim" cx="174" cy="312" r="17.5" style="fill:url(#gr-pinboat-rim);stroke:#3b2d3a;stroke-width:3.2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="pin-boat-2" inkscape:label="Enamel" cx="174" cy="312" r="13.5" style="fill:url(#gr-pinboat);stroke:#c98a00;stroke-width:1.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pin-boat-3" inkscape:label="Sail" d="M 175 302 L 175 314 L 166 314 Z" style="fill:#fff3d6;stroke:#3b2d3a;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pin-boat-4" inkscape:label="Hull" d="M 163 314 Q 174 316 185 313 Q 178 321 168 320 Z" style="fill:#a8693d;stroke:#3b2d3a;stroke-width:1.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pin-boat-5" inkscape:label="Waves" d="M 163 322 Q 168 319 173 322 Q 178 325 184 322" style="fill:none;stroke:#7fe3d6;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pin-boat-6" inkscape:label="Twinkle" d="M 183 300.4 Q 184.01 302.99 186.6 304 Q 184.01 305.01 183 307.6 Q 181.99 305.01 179.4 304 Q 181.99 302.99 183 300.4 Z" style="fill:#ffffff" />
+   </g>
+   <g id="item-pin-rosette" inkscape:label="pin_rosette" transform="matrix(1.35 0 0 1.35 -60.9 -109.2)">
+     <title>Gold rosette: a ribbon rosette with a gold star (gold)</title>
+     <path id="pin-rosette-1" inkscape:label="Tail left" d="M 170 320 L 161 344 L 168 340 L 175 344 Z" style="fill:#2a9d8f;stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pin-rosette-2" inkscape:label="Tail right" d="M 178 320 L 187 344 L 180 340 L 173 344 Z" style="fill:#e2603f;stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pin-rosette-3" inkscape:label="Rosette" d="M 190 312 Q 194.96 316.78 188.42 318.94 Q 190.81 325.41 183.98 324.51 Q 183.33 331.37 177.56 327.6 Q 174 333.5 170.44 327.6 Q 164.67 331.37 164.02 324.51 Q 157.19 325.41 159.58 318.94 Q 153.04 316.78 158 312 Q 153.04 307.22 159.58 305.06 Q 157.19 298.59 164.02 299.49 Q 164.67 292.63 170.44 296.4 Q 174 290.5 177.56 296.4 Q 183.33 292.63 183.98 299.49 Q 190.81 298.59 188.42 305.06 Q 194.96 307.22 190 312 Z" style="fill:url(#gr-rosette);stroke:#3b2d3a;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="pin-rosette-4" inkscape:label="Gold" cx="174" cy="312" r="12" style="fill:url(#gr-rosette-gold);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pin-rosette-5" inkscape:label="Star" d="M 173.7 305.21 Q 174 304.5 174.3 305.21 L 175.82 308.88 Q 176.12 309.59 176.88 309.65 L 180.84 309.97 Q 181.61 310.03 181.02 310.53 L 178.01 313.11 Q 177.42 313.61 177.6 314.36 L 178.52 318.22 Q 178.7 318.97 178.04 318.57 L 174.66 316.5 Q 174 316.1 173.34 316.5 L 169.96 318.57 Q 169.3 318.97 169.48 318.22 L 170.4 314.36 Q 170.58 313.61 169.99 313.11 L 166.98 310.53 Q 166.39 310.03 167.16 309.97 L 171.12 309.65 Q 171.88 309.59 172.18 308.88 Z" style="fill:#fffbe0;stroke:#c98a00;stroke-width:1.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pin-rosette-6" inkscape:label="Glint" d="M 187 293.5 Q 188.26 296.74 191.5 298 Q 188.26 299.26 187 302.5 Q 185.74 299.26 182.5 298 Q 185.74 296.74 187 293.5 Z" style="fill:#fffbe0;stroke:#e0a20c;stroke-width:1;stroke-linejoin:round;stroke-linecap:round" />
+   </g>
+  </g>
+  <g inkscape:groupmode="layer" id="layer-paws" inkscape:label="In his paws">
+   <g id="item-parol" inkscape:label="parol">
+     <title>Parol lantern: a Filipino Christmas star lantern that glows (violet)</title>
+     <path id="parol-1" inkscape:label="Tail" d="M 164.68 371.3 C 173.68 379.3 165.68 385.3 171.68 393.3 L 164.68 394.3 C 158.68 385.3 166.68 379.3 170.68 371.3 Z" style="fill:#ffd84d;stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="parol-2" inkscape:label="Tail" d="M 230.52 371.3 C 227.52 379.3 235.52 385.3 229.52 393.3 L 236.52 394.3 C 242.52 385.3 234.52 379.3 236.52 371.3 Z" style="fill:#c9a2e6;stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="parol-3" inkscape:label="Star" d="M 200.6 270 L 216.07 304.71 L 253.86 308.7 L 225.63 334.13 L 233.52 371.3 L 200.6 352.32 L 167.68 371.3 L 175.57 334.13 L 147.34 308.7 L 185.13 304.71 Z" style="fill:url(#gr-parol-paper);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="parol-4" inkscape:label="Glow star" d="M 200.6 295.64 L 209.49 314.77 L 230.43 317.31 L 214.98 331.67 L 219.03 352.37 L 200.6 342.12 L 182.17 352.37 L 186.22 331.67 L 170.77 317.31 L 191.71 314.77 Z" style="fill:url(#gr-parol-glow);stroke:#e9801f;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="parol-5" inkscape:label="Crease" d="M 200.6 327 L 200.6 270" style="fill:none;stroke:#e9801f;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round;opacity:0.6" />
+     <path id="parol-6" inkscape:label="Crease" d="M 200.6 327 L 253.86 308.7" style="fill:none;stroke:#e9801f;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round;opacity:0.6" />
+     <path id="parol-7" inkscape:label="Crease" d="M 200.6 327 L 233.52 371.3" style="fill:none;stroke:#e9801f;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round;opacity:0.6" />
+     <path id="parol-8" inkscape:label="Crease" d="M 200.6 327 L 167.68 371.3" style="fill:none;stroke:#e9801f;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round;opacity:0.6" />
+     <path id="parol-9" inkscape:label="Crease" d="M 200.6 327 L 147.34 308.7" style="fill:none;stroke:#e9801f;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round;opacity:0.6" />
+     <circle id="parol-10" inkscape:label="Centre" cx="200.6" cy="327" r="7.5" style="fill:url(#gr-parol-centre);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="parol-11" inkscape:label="Twinkle" d="M 156 282 Q 157.68 286.32 162 288 Q 157.68 289.68 156 294 Q 154.32 289.68 150 288 Q 154.32 286.32 156 282 Z" style="fill:#fffbe0;stroke:#d08ad8;stroke-width:1.1;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="parol-12" inkscape:label="Twinkle" d="M 246 284.5 Q 247.54 288.46 251.5 290 Q 247.54 291.54 246 295.5 Q 244.46 291.54 240.5 290 Q 244.46 288.46 246 284.5 Z" style="fill:#fffbe0;stroke:#d08ad8;stroke-width:1.1;stroke-linejoin:round;stroke-linecap:round" />
+     <g id="parol-13" inkscape:label="Back view" style="display:none">
+     <path id="parol-14" inkscape:label="Star" d="M 200.6 270 L 216.07 304.71 L 253.86 308.7 L 225.63 334.13 L 233.52 371.3 L 200.6 352.32 L 167.68 371.3 L 175.57 334.13 L 147.34 308.7 L 185.13 304.71 Z" style="fill:url(#gr-parol-paper);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="parol-15" inkscape:label="Centre" cx="200.6" cy="327" r="7.5" style="fill:#7d55a0;stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+   </g>
+   <g id="item-golden-book" inkscape:label="golden_book">
+     <title>Golden book: a gold cover and glowing pages with a golden star (gold)</title>
+     <path id="golden-book-1" inkscape:label="Ribbon" d="M 203.6 357 L 203.6 373 L 207.1 369 L 210.6 373 L 210.6 356.5 Z" style="fill:#e2603f;stroke:#3b2d3a;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="golden-book-2" inkscape:label="Cover" d="M 143.6 284.5 L 196.6 288 Q 200.6 290.5 204.6 288 L 257.6 284.5 Q 259.6 284.5 259.6 286.5 L 259.6 355.5 Q 259.6 357.5 257.6 357.5 L 204.6 360 Q 200.6 362.5 196.6 360 L 143.6 357.5 Q 141.6 357.5 141.6 355.5 L 141.6 286.5 Q 141.6 284.5 143.6 284.5 Z" style="fill:url(#gr-gbook-cover);stroke:#3b2d3a;stroke-width:4.85;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="golden-book-3" inkscape:label="Filigree" d="M 146 299 C 146 289 150 289 156 289" style="fill:none;stroke:#a86f00;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="golden-book-4" inkscape:label="Filigree" d="M 255 299 C 255 289 251 289 245 289" style="fill:none;stroke:#a86f00;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="golden-book-5" inkscape:label="Filigree" d="M 146 343 C 146 353 150 353 156 353" style="fill:none;stroke:#a86f00;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="golden-book-6" inkscape:label="Filigree" d="M 255 343 C 255 353 251 353 245 353" style="fill:none;stroke:#a86f00;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="golden-book-7" inkscape:label="Page left" d="M 149.5 288 C 164 283 184.5 283.5 199.4 290.5 L 199.4 353.5 C 184.5 348 164 348 149.5 351 Z" style="fill:url(#gr-gbook-page);stroke:#3b2d3a;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="golden-book-8" inkscape:label="Page right" d="M 251.72 288 C 237.22 283 216.72 283.5 201.82 290.5 L 201.82 353.5 C 216.72 348 237.22 348 251.72 351 Z" style="fill:url(#gr-gbook-page-r);stroke:#3b2d3a;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="golden-book-9" inkscape:label="Lines left" d="M 156.5 298 Q 174 295.5 192 299.5 M 156.5 308.5 Q 174 306 192 310 M 156.5 319 Q 174 316.5 192 320.5 M 156.5 329.5 Q 174 327 192 331 M 156.5 340 Q 174 337.5 179 341.5" style="fill:none;stroke:#e8c35a;stroke-width:3;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="golden-book-10" inkscape:label="Star" d="M 225.88 302.53 Q 226.5 301 227.12 302.53 L 230.29 310.4 Q 230.91 311.93 232.55 312.05 L 241.02 312.63 Q 242.67 312.75 241.4 313.81 L 234.9 319.26 Q 233.63 320.32 234.03 321.92 L 236.09 330.15 Q 236.49 331.75 235.09 330.88 L 227.9 326.38 Q 226.5 325.5 225.1 326.38 L 217.91 330.88 Q 216.51 331.75 216.91 330.15 L 218.97 321.92 Q 219.37 320.32 218.1 319.26 L 211.6 313.81 Q 210.33 312.75 211.98 312.63 L 220.45 312.05 Q 222.09 311.93 222.71 310.4 Z" style="fill:url(#gr-gbook-star);stroke:#3b2d3a;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="golden-book-11" inkscape:label="Spine" d="M 200.6 290 L 200.6 357" style="fill:none;stroke:#3b2d3a;stroke-width:3;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="golden-book-12" inkscape:label="Sparkle" d="M 226.5 289.5 Q 227.76 292.74 231 294 Q 227.76 295.26 226.5 298.5 Q 225.24 295.26 222 294 Q 225.24 292.74 226.5 289.5 Z" style="fill:#fffbe0;stroke:#e0a20c;stroke-width:1;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="golden-book-13" inkscape:label="Sparkle" d="M 244 332 Q 245.12 334.88 248 336 Q 245.12 337.12 244 340 Q 242.88 337.12 240 336 Q 242.88 334.88 244 332 Z" style="fill:#fffbe0;stroke:#e0a20c;stroke-width:1;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="golden-book-14" inkscape:label="Sparkle" d="M 210 336.4 Q 211.01 338.99 213.6 340 Q 211.01 341.01 210 343.6 Q 208.99 341.01 206.4 340 Q 208.99 338.99 210 336.4 Z" style="fill:#fffbe0;stroke:#e0a20c;stroke-width:1;stroke-linejoin:round;stroke-linecap:round" />
+     <g id="golden-book-15" inkscape:label="Back view" style="display:none">
+     <path id="golden-book-16" inkscape:label="Cover" d="M 143.6 284.5 L 257.6 284.5 Q 259.6 284.5 259.6 286.5 L 259.6 355.5 Q 259.6 357.5 257.6 357.5 L 143.6 357.5 Q 141.6 357.5 141.6 355.5 L 141.6 286.5 Q 141.6 284.5 143.6 284.5 Z" style="fill:url(#gr-gbook-cover);stroke:#3b2d3a;stroke-width:4.85;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="golden-book-17" inkscape:label="Emblem" cx="200.6" cy="321" r="15" style="fill:url(#gr-gbook-emblem);stroke:#3b2d3a;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="golden-book-18" inkscape:label="Star" d="M 200.27 313.31 Q 200.6 312.5 200.93 313.31 L 202.62 317.46 Q 202.95 318.26 203.82 318.33 L 208.29 318.66 Q 209.16 318.72 208.49 319.28 L 205.07 322.17 Q 204.4 322.74 204.61 323.58 L 205.68 327.93 Q 205.89 328.78 205.15 328.32 L 201.34 325.96 Q 200.6 325.5 199.86 325.96 L 196.05 328.32 Q 195.31 328.78 195.52 327.93 L 196.59 323.58 Q 196.8 322.74 196.13 322.17 L 192.71 319.28 Q 192.04 318.72 192.91 318.66 L 197.38 318.33 Q 198.25 318.26 198.58 317.46 Z" style="fill:#fffbe0;stroke:#c98a00;stroke-width:1.4;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+   </g>
+   <g id="item-crystal-book" inkscape:label="crystal_book">
+     <title>Crystal storybook: an ice-crystal cover, rainbow pages and a star gem (diamond)</title>
+     <path id="crystal-book-1" inkscape:label="Ribbon" d="M 203.6 357 L 203.6 373 L 207.1 369 L 210.6 373 L 210.6 356.5 Z" style="fill:#c39bff;stroke:#3b2d3a;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="crystal-book-2" inkscape:label="Cover" d="M 143.6 284.5 L 196.6 288 Q 200.6 290.5 204.6 288 L 257.6 284.5 Q 259.6 284.5 259.6 286.5 L 259.6 355.5 Q 259.6 357.5 257.6 357.5 L 204.6 360 Q 200.6 362.5 196.6 360 L 143.6 357.5 Q 141.6 357.5 141.6 355.5 L 141.6 286.5 Q 141.6 284.5 143.6 284.5 Z" style="fill:url(#gr-cbook-cover);stroke:#3b2d3a;stroke-width:4.85;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="crystal-book-3" inkscape:label="Facet" d="M 143 300 L 152 288" style="fill:none;stroke:#ffffff;stroke-width:2;stroke-linejoin:round;stroke-linecap:round;opacity:0.8" />
+     <path id="crystal-book-4" inkscape:label="Facet" d="M 258 300 L 249 288" style="fill:none;stroke:#ffffff;stroke-width:2;stroke-linejoin:round;stroke-linecap:round;opacity:0.8" />
+     <path id="crystal-book-5" inkscape:label="Facet" d="M 143 342 L 152 356" style="fill:none;stroke:#ffffff;stroke-width:2;stroke-linejoin:round;stroke-linecap:round;opacity:0.8" />
+     <path id="crystal-book-6" inkscape:label="Facet" d="M 258 342 L 249 356" style="fill:none;stroke:#ffffff;stroke-width:2;stroke-linejoin:round;stroke-linecap:round;opacity:0.8" />
+     <path id="crystal-book-7" inkscape:label="Page left" d="M 149.5 288 C 164 283 184.5 283.5 199.4 290.5 L 199.4 353.5 C 184.5 348 164 348 149.5 351 Z" style="fill:url(#gr-cbook-page);stroke:#3b2d3a;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="crystal-book-8" inkscape:label="Page right" d="M 251.72 288 C 237.22 283 216.72 283.5 201.82 290.5 L 201.82 353.5 C 216.72 348 237.22 348 251.72 351 Z" style="fill:url(#gr-cbook-page-r);stroke:#3b2d3a;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="crystal-book-9" inkscape:label="Rainbow line" d="M 156.5 298 Q 174 295.5 192 299.5" style="fill:none;stroke:#ff9a9a;stroke-width:3;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="crystal-book-10" inkscape:label="Rainbow line" d="M 156.5 308.5 Q 174 306 192 310" style="fill:none;stroke:#ffd36e;stroke-width:3;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="crystal-book-11" inkscape:label="Rainbow line" d="M 156.5 319 Q 174 316.5 192 320.5" style="fill:none;stroke:#8ee8a0;stroke-width:3;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="crystal-book-12" inkscape:label="Rainbow line" d="M 156.5 329.5 Q 174 327 192 331" style="fill:none;stroke:#7fd8ff;stroke-width:3;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="crystal-book-13" inkscape:label="Rainbow line" d="M 156.5 340 Q 174 337.5 192 341.5" style="fill:none;stroke:#c39bff;stroke-width:3;stroke-linejoin:round;stroke-linecap:round" />
+     <g id="crystal-book-14" inkscape:label="Star gem">
+     <path id="crystal-book-15" inkscape:label="Facet" d="M 226.5 319 L 221.5 312.12 L 226.5 300 Z" style="fill:#ffffff" />
+     <path id="crystal-book-16" inkscape:label="Facet" d="M 226.5 319 L 226.5 300 L 231.5 312.12 Z" style="fill:#a8e6fa" />
+     <path id="crystal-book-17" inkscape:label="Facet" d="M 226.5 319 L 231.5 312.12 L 244.57 313.13 Z" style="fill:#e8dcff" />
+     <path id="crystal-book-18" inkscape:label="Facet" d="M 226.5 319 L 244.57 313.13 L 234.58 321.63 Z" style="fill:#b49bff" />
+     <path id="crystal-book-19" inkscape:label="Facet" d="M 226.5 319 L 234.58 321.63 L 237.67 334.37 Z" style="fill:#ffe3f3" />
+     <path id="crystal-book-20" inkscape:label="Facet" d="M 226.5 319 L 237.67 334.37 L 226.5 327.5 Z" style="fill:#ff9fd4" />
+     <path id="crystal-book-21" inkscape:label="Facet" d="M 226.5 319 L 226.5 327.5 L 215.33 334.37 Z" style="fill:#e5fff4" />
+     <path id="crystal-book-22" inkscape:label="Facet" d="M 226.5 319 L 215.33 334.37 L 218.42 321.63 Z" style="fill:#8ee8c7" />
+     <path id="crystal-book-23" inkscape:label="Facet" d="M 226.5 319 L 218.42 321.63 L 208.43 313.13 Z" style="fill:#fff6d6" />
+     <path id="crystal-book-24" inkscape:label="Facet" d="M 226.5 319 L 208.43 313.13 L 221.5 312.12 Z" style="fill:#ffd27a" />
+     <path id="crystal-book-25" inkscape:label="Outline" d="M 226.5 300 L 231.5 312.12 L 244.57 313.13 L 234.58 321.63 L 237.67 334.37 L 226.5 327.5 L 215.33 334.37 L 218.42 321.63 L 208.43 313.13 L 221.5 312.12 Z" style="fill:none;stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="crystal-book-26" inkscape:label="Edge" d="M 226.5 319 L 226.5 300" style="fill:none;stroke:#ffffff;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round;opacity:0.7" />
+     <path id="crystal-book-27" inkscape:label="Edge" d="M 226.5 319 L 244.57 313.13" style="fill:none;stroke:#ffffff;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round;opacity:0.7" />
+     <path id="crystal-book-28" inkscape:label="Edge" d="M 226.5 319 L 237.67 334.37" style="fill:none;stroke:#ffffff;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round;opacity:0.7" />
+     <path id="crystal-book-29" inkscape:label="Edge" d="M 226.5 319 L 215.33 334.37" style="fill:none;stroke:#ffffff;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round;opacity:0.7" />
+     <path id="crystal-book-30" inkscape:label="Edge" d="M 226.5 319 L 208.43 313.13" style="fill:none;stroke:#ffffff;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round;opacity:0.7" />
+     </g>
+     <path id="crystal-book-31" inkscape:label="Spine" d="M 200.6 290 L 200.6 357" style="fill:none;stroke:#3b2d3a;stroke-width:3;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="crystal-book-32" inkscape:label="Spine gem" d="M 200.6 279 L 207 287 L 200.6 295 L 194.2 287 Z" style="fill:url(#gr-cbook-gem);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="crystal-book-33" inkscape:label="Twinkle" d="M 150 274 Q 151.68 278.32 156 280 Q 151.68 281.68 150 286 Q 148.32 281.68 144 280 Q 148.32 278.32 150 274 Z" style="fill:#ffffff;stroke:#6fc7e8;stroke-width:1.1;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="crystal-book-34" inkscape:label="Twinkle" d="M 254 276.5 Q 255.54 280.46 259.5 282 Q 255.54 283.54 254 287.5 Q 252.46 283.54 248.5 282 Q 252.46 280.46 254 276.5 Z" style="fill:#ffffff;stroke:#6fc7e8;stroke-width:1.1;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="crystal-book-35" inkscape:label="Twinkle" d="M 244 340 Q 245.12 342.88 248 344 Q 245.12 345.12 244 348 Q 242.88 345.12 240 344 Q 242.88 342.88 244 340 Z" style="fill:#ffffff;stroke:#6fc7e8;stroke-width:1.1;stroke-linejoin:round;stroke-linecap:round" />
+     <g id="crystal-book-36" inkscape:label="Back view" style="display:none">
+     <path id="crystal-book-37" inkscape:label="Cover" d="M 143.6 284.5 L 257.6 284.5 Q 259.6 284.5 259.6 286.5 L 259.6 355.5 Q 259.6 357.5 257.6 357.5 L 143.6 357.5 Q 141.6 357.5 141.6 355.5 L 141.6 286.5 Q 141.6 284.5 143.6 284.5 Z" style="fill:url(#gr-cbook-cover);stroke:#3b2d3a;stroke-width:4.85;stroke-linejoin:round;stroke-linecap:round" />
+     <g id="crystal-book-38" inkscape:label="Star gem">
+     <path id="crystal-book-39" inkscape:label="Facet" d="M 200.6 321 L 195.31 313.72 L 200.6 301 Z" style="fill:#ffffff" />
+     <path id="crystal-book-40" inkscape:label="Facet" d="M 200.6 321 L 200.6 301 L 205.89 313.72 Z" style="fill:#a8e6fa" />
+     <path id="crystal-book-41" inkscape:label="Facet" d="M 200.6 321 L 205.89 313.72 L 219.62 314.82 Z" style="fill:#e8dcff" />
+     <path id="crystal-book-42" inkscape:label="Facet" d="M 200.6 321 L 219.62 314.82 L 209.16 323.78 Z" style="fill:#b49bff" />
+     <path id="crystal-book-43" inkscape:label="Facet" d="M 200.6 321 L 209.16 323.78 L 212.36 337.18 Z" style="fill:#ffe3f3" />
+     <path id="crystal-book-44" inkscape:label="Facet" d="M 200.6 321 L 212.36 337.18 L 200.6 330 Z" style="fill:#ff9fd4" />
+     <path id="crystal-book-45" inkscape:label="Facet" d="M 200.6 321 L 200.6 330 L 188.84 337.18 Z" style="fill:#e5fff4" />
+     <path id="crystal-book-46" inkscape:label="Facet" d="M 200.6 321 L 188.84 337.18 L 192.04 323.78 Z" style="fill:#8ee8c7" />
+     <path id="crystal-book-47" inkscape:label="Facet" d="M 200.6 321 L 192.04 323.78 L 181.58 314.82 Z" style="fill:#fff6d6" />
+     <path id="crystal-book-48" inkscape:label="Facet" d="M 200.6 321 L 181.58 314.82 L 195.31 313.72 Z" style="fill:#ffd27a" />
+     <path id="crystal-book-49" inkscape:label="Outline" d="M 200.6 301 L 205.89 313.72 L 219.62 314.82 L 209.16 323.78 L 212.36 337.18 L 200.6 330 L 188.84 337.18 L 192.04 323.78 L 181.58 314.82 L 195.31 313.72 Z" style="fill:none;stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="crystal-book-50" inkscape:label="Edge" d="M 200.6 321 L 200.6 301" style="fill:none;stroke:#ffffff;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round;opacity:0.7" />
+     <path id="crystal-book-51" inkscape:label="Edge" d="M 200.6 321 L 219.62 314.82" style="fill:none;stroke:#ffffff;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round;opacity:0.7" />
+     <path id="crystal-book-52" inkscape:label="Edge" d="M 200.6 321 L 212.36 337.18" style="fill:none;stroke:#ffffff;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round;opacity:0.7" />
+     <path id="crystal-book-53" inkscape:label="Edge" d="M 200.6 321 L 188.84 337.18" style="fill:none;stroke:#ffffff;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round;opacity:0.7" />
+     <path id="crystal-book-54" inkscape:label="Edge" d="M 200.6 321 L 181.58 314.82" style="fill:none;stroke:#ffffff;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round;opacity:0.7" />
+     </g>
+     </g>
+   </g>
+  </g>
+</svg>

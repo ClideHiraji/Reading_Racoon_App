@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racoon's Closet: Coach's whistle (silver, neck). FR-07, D-026.
+     Drawn to fit Racoon at rest: the bottom layer links ../../parts/racoon_C_inkscape.svg (locked).
+     Draw on the "Item" layer. The file's name is the item's id; its name, tier, price and how it's
+     earned are in reading-racoon/content/closet.json. motion-demo/build_racoon.py reads this file
+     and never writes it. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-whistle"
+   sodipodi:docname="whistle.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>Coach's whistle</title>
+  <sodipodi:namedview
+     id="namedview-whistle"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="2"
+     inkscape:cx="200"
+     inkscape:cy="200"
+     inkscape:current-layer="layer-item" />
+  <defs id="defs-whistle">
+    <linearGradient id="gr-whistle-1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#f4f6fa" /><stop offset="1" style="stop-color:#a9b1c0" /></linearGradient>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="../../parts/racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-item" inkscape:label="Item">
+   <g id="item-whistle" inkscape:label="whistle">
+     <title>Coach's whistle: a silver whistle on a blue cord (silver)</title>
+     <path id="whistle-1" inkscape:label="Cord outline" d="M 160 255 C 171 278 186 292 196 296" style="fill:none;stroke:#3b2d3a;stroke-width:8.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="whistle-2" inkscape:label="Cord outline" d="M 241 255 C 231 276 219 288 210 293" style="fill:none;stroke:#3b2d3a;stroke-width:8.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="whistle-3" inkscape:label="Cord" d="M 160 255 C 171 278 186 292 196 296" style="fill:none;stroke:#3f86c8;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="whistle-4" inkscape:label="Cord" d="M 241 255 C 231 276 219 288 210 293" style="fill:none;stroke:#3f86c8;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="whistle-5" inkscape:label="Mouthpiece" d="M 205 296 L 226 293 C 229 293 230 295 230 297 L 230 302 C 230 304 229 306 226 306 L 207 307 Z" style="fill:url(#gr-whistle-1);stroke:#3b2d3a;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="whistle-6" inkscape:label="Barrel" cx="199" cy="305" r="13" style="fill:url(#gr-whistle-1);stroke:#3b2d3a;stroke-width:3.6;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="whistle-7" inkscape:label="Hole" cx="203" cy="297" rx="4.2" ry="2.2" style="fill:#4b4458" />
+     <circle id="whistle-8" inkscape:label="Ring" cx="192" cy="292" r="4" style="fill:none;stroke:#a9b1c0;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="whistle-9" inkscape:label="Shine" d="M 191 300 C 192 296 195 294 198 294" style="fill:none;stroke:#ffffff;stroke-width:3;stroke-linejoin:round;stroke-linecap:round;opacity:0.8" />
+   </g>
+  </g>
+</svg>

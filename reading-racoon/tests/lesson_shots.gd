@@ -48,6 +48,10 @@ func _run() -> void:
 	var gs := root.get_node("GameState")
 	gs.reset_progress()
 	gs.device = {"token": "", "student_name": "Ana", "student_id": 0}
+	# Monday at Reading time, whatever the real clock says (like hub_shots.gd).
+	gs.access.schedule = AccessPolicy.DEFAULTS.duplicate()
+	gs._debug_now = {"year": 2026, "month": 10, "day": 19, "weekday": 1, "hour": 7, "minute": 45,
+			"second": 0}
 
 	change_scene_to_file("res://scenes/path/learning_path.tscn")
 	await _shot("t0_map_pretest_card")
@@ -72,6 +76,8 @@ func _run() -> void:
 			break
 	lesson._task.answered.emit(wrong, 900)
 	await _shot("t3_hint_first_wrong")
+	await create_timer(0.9).timeout   # the lost heart has broken and fallen away (D-021)
+	await _shot("t3b_heart_broken")
 	lesson._task.answered.emit("__wrong__", 900)
 	await _shot("t4_answer_and_why")
 	lesson._on_continue()
@@ -79,6 +85,8 @@ func _run() -> void:
 	lesson._task.answered.emit(str(lesson._item.answer), 800)
 	await _frames(12)
 	await _shot("t5_right_no_popup")
+	await create_timer(0.6).timeout   # the heart that came back has filled in (D-021)
+	await _shot("t5b_heart_back")
 	lesson._on_continue()
 	await _frames(4)
 	lesson._on_close()

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racoon's Closet: Salakot (silver, hats). FR-07, D-026.
+     Drawn to fit Racoon at rest: the bottom layer links ../../parts/racoon_C_inkscape.svg (locked).
+     Draw on the "Item" layer. The file's name is the item's id; its name, tier, price and how it's
+     earned are in reading-racoon/content/closet.json. motion-demo/build_racoon.py reads this file
+     and never writes it. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-salakot"
+   sodipodi:docname="salakot.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>Salakot</title>
+  <sodipodi:namedview
+     id="namedview-salakot"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="2"
+     inkscape:cx="200"
+     inkscape:cy="80"
+     inkscape:current-layer="layer-item" />
+  <defs id="defs-salakot">
+    <linearGradient id="gr-salakot" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#f0d39c" /><stop offset="0.6" style="stop-color:#d4a86f" /><stop offset="1" style="stop-color:#b9875b" /></linearGradient>
+    <linearGradient id="gr-salakot-tip" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:#ffffff" /><stop offset="0.5" style="stop-color:#d3dbe3" /><stop offset="1" style="stop-color:#8e9aa6" /></linearGradient>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="../../parts/racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-item" inkscape:label="Item">
+   <g id="item-salakot" inkscape:label="salakot">
+     <title>Salakot: a woven Filipino hat with a silver tip (silver)</title>
+     <path id="salakot-1" inkscape:label="Hat" d="M 66 118 C 100 78 156 38 200.5 31 C 245 38 301 78 335 118 C 296 140 105 140 66 118 Z" style="fill:url(#gr-salakot);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-2" inkscape:label="Weave" d="M 189.3 36 Q 113 80 64 118.5" style="fill:none;stroke:#9c6b45;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-3" inkscape:label="Weave" d="M 190.9 36 Q 125.5 80 83.5 120" style="fill:none;stroke:#9c6b45;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-4" inkscape:label="Weave" d="M 192.5 36 Q 138 80 103 121.5" style="fill:none;stroke:#9c6b45;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-5" inkscape:label="Weave" d="M 194.1 36 Q 150.5 80 122.5 123" style="fill:none;stroke:#9c6b45;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-6" inkscape:label="Weave" d="M 195.7 36 Q 163 80 142 124.5" style="fill:none;stroke:#9c6b45;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-7" inkscape:label="Weave" d="M 197.3 36 Q 175.5 80 161.5 126" style="fill:none;stroke:#9c6b45;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-8" inkscape:label="Weave" d="M 198.9 36 Q 188 80 181 127.5" style="fill:none;stroke:#9c6b45;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-9" inkscape:label="Weave" d="M 200.5 36 Q 200.5 80 200.5 129" style="fill:none;stroke:#9c6b45;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-10" inkscape:label="Weave" d="M 202.1 36 Q 213 80 220 127.5" style="fill:none;stroke:#9c6b45;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-11" inkscape:label="Weave" d="M 203.7 36 Q 225.5 80 239.5 126" style="fill:none;stroke:#9c6b45;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-12" inkscape:label="Weave" d="M 205.3 36 Q 238 80 259 124.5" style="fill:none;stroke:#9c6b45;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-13" inkscape:label="Weave" d="M 206.9 36 Q 250.5 80 278.5 123" style="fill:none;stroke:#9c6b45;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-14" inkscape:label="Weave" d="M 208.5 36 Q 263 80 298 121.5" style="fill:none;stroke:#9c6b45;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-15" inkscape:label="Weave" d="M 210.1 36 Q 275.5 80 317.5 120" style="fill:none;stroke:#9c6b45;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-16" inkscape:label="Weave" d="M 211.7 36 Q 288 80 337 118.5" style="fill:none;stroke:#9c6b45;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-17" inkscape:label="Band 1" d="M 90 102 C 140 122 261 122 311 102" style="fill:none;stroke:#845837;stroke-width:3;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-18" inkscape:label="Band 2" d="M 126 74 C 162 88 239 88 275 74" style="fill:none;stroke:#845837;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-19" inkscape:label="Rim" d="M 66 118 C 105 140 296 140 335 118 C 311 145 90 145 66 118 Z" style="fill:#8a5d3a;stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-20" inkscape:label="Tip" d="M 191 37 C 191 27 195 19 200.5 15 C 206 19 210 27 210 37 C 204 40 197 40 191 37 Z" style="fill:url(#gr-salakot-tip);stroke:#3b2d3a;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="salakot-21" inkscape:label="Shine" d="M 110 98 C 134 76 158 60 180 50" style="fill:none;stroke:#fff7e0;stroke-width:5;stroke-linejoin:round;stroke-linecap:round;opacity:0.5" />
+   </g>
+  </g>
+</svg>

@@ -43,6 +43,10 @@ func _run() -> void:
 	await _frames()
 	check(not lesson.sheet.visible and lesson._item == first_item, "a wrong first try: same question again")
 	check(lesson.session.hearts.hearts == 2, "a heart goes")
+	var lost_row: HBoxContainer = lesson.get_node("%Hearts")
+	check(lost_row.get_child(2).name.begins_with("BrokenHeart")
+			and lost_row.get_child(2).get_child(0) is AnimatedHeart
+			and lost_row.get_child(2).get_child(0).kind == "break", "the lost heart breaks (Broken Heart)")
 	check(lesson.bubble._label.text == HintText.hint(first_item), "Racoon gives the question's hint")
 	# A wrong second try: the answer and why, then the lesson moves on by itself.
 	lesson._task.answered.emit("__wrong__", 900)
@@ -62,6 +66,10 @@ func _run() -> void:
 	lesson._task.answered.emit(str(second_item.answer), 800)
 	await _frames()
 	check(not lesson.sheet.visible and lesson.session.hearts.hearts == 2, "right: no sheet, one heart back")
+	var hearts_row: HBoxContainer = lesson.get_node("%Hearts")
+	var regained := hearts_row.get_children().filter(func(c): return c.name.begins_with("RegainedHeart"))
+	check(regained.size() == 1 and hearts_row.get_child(1) == regained[0]
+			and regained[0].get_child(0) is AnimatedHeart, "the heart that comes back fills in (Regain Heart)")
 	await create_timer(1.6).timeout
 	check(lesson._item != second_item, "and the next question comes by itself")
 	check(gs.model.to_dict() == model_before and gs.store.read_queue().size() == queued_before,
@@ -242,17 +250,25 @@ func _run() -> void:
 
 	# Racoon's Closet: try on, buy, wear (FR-07).
 	gs.wallet.coins = 100
+	gs.path.complete_lesson(1, 0)   # a finished lesson: the River cap is earned (D-026)
 	current_scene.get_node("%ClosetTab").pressed.emit()
 	await _frames(5)
 	var shop := current_scene
 	check(shop.name == "Shop", "shop opens from the hub's Closet tab")
 	shop._show_slot("hat")
+	check(gs.wardrobe.owns("cap"), "the Closet gives the River cap a finished lesson earned (D-026)")
 	shop._select("salakot")
 	await _frames(2)
-	check(shop.raccoon.outfit.get("hat") == "salakot", "trying on shows the hat")
+	check(shop.raccoon.outfit.get("hat") == "salakot", "an item to earn can still be tried on")
 	shop._on_action()
 	await _frames(2)
-	check(gs.wardrobe.is_worn("salakot") and gs.wallet.coins == 40, "bought and wearing the salakot")
+	check(not gs.wardrobe.owns("salakot") and gs.wallet.coins == 100, "an item to earn isn't sold")
+	shop._select("party_hat")
+	await _frames(2)
+	check(shop.raccoon.outfit.get("hat") == "party_hat", "trying on shows the hat")
+	shop._on_action()
+	await _frames(2)
+	check(gs.wardrobe.is_worn("party_hat") and gs.wallet.coins == 70, "bought and wearing the party hat")
 	shop.get_node("%BackButton").pressed.emit()
 	await _frames(5)
 	check(current_scene.name == "Hub", "back from the shop to the hub")
@@ -440,6 +456,48 @@ func _run() -> void:
 	change_scene_to_file("res://scenes/lock/lock_screen.tscn")
 	await _frames(5)
 	check(current_scene.name == "LockScreen", "lock screen loads")
+
+	# Choose your buddy (D-033): pick Rina and Bisaya, then Let's go saves them for this student.
+	var had_buddy: Dictionary = gs.buddy.duplicate()
+	gs.buddy = {"who": "", "lang": "en"}
+	change_scene_to_file(gs.BUDDY_SCENE)
+	await _frames(5)
+	var chooser := current_scene
+	check(chooser.name == "ChooseBuddy", "the buddy chooser loads")
+	check(chooser._go.disabled, "Let's go waits until a buddy is picked")
+	chooser._pick("rina")
+	chooser._pick_lang("bis")
+	check(not chooser._go.disabled and chooser._go.text == "Dali na!", "Let's go is ready, in Bisaya")
+	check(gs.buddy.who == "", "nothing is saved before Let's go")
+	chooser._done()
+	await _frames(5)
+	check(gs.buddy.who == "rina" and gs.buddy.lang == "bis", "Let's go saves Rina and Bisaya")
+	check(gs.talk("closet_title") == "Closet ni Rina", "the menus follow the buddy and language")
+	check(is_equal_approx(root.get_node("Speech").pitch, 1.4) and root.get_node("Speech").girl_voice, "Rina's higher voice")
+	check(not gs.line("rescue_start").contains("{buddy}"), "a buddy line names the buddy")
+	check(gs.line("hint_phonics") in gs.lines.hint_phonics, "hints stay in the lesson's language")
+	check(gs.talk("hub_hi_name", ["Ana"]).contains("Ana"), "a menu line fills its slot")
+	check(gs.talk("no_such_line") == "no_such_line", "an unknown menu line shows its key")
+	check(gs.talk_as("choose_hi", "en", "roco") == "Hi! I'm Roco!", "the chooser previews any buddy")
+	gs.buddy = {}
+	gs.load_profile()
+	check(gs.buddy.who == "rina" and gs.buddy.lang == "bis", "the buddy and language come back with the profile")
+	gs.set_buddy(str(had_buddy.get("who", "roco")), str(had_buddy.get("lang", "en")))
+	check(is_equal_approx(root.get_node("Speech").pitch, 1.1) or gs.buddy_id() == "rina", "the voice follows the buddy back")
+
+	# The developer menu (issue 30, debug builds only; DELETE BEFORE THE FINAL RELEASE with it).
+	if DevMenu.allowed():
+		DevMenu.toggle(self)
+		await _frames()
+		var menu: DevMenu = root.get_node_or_null("DevMenu")
+		check(menu != null, "the developer menu opens")
+		if menu:
+			var before := int(gs.wallet.coins)
+			menu.add_coins(50)
+			check(int(gs.wallet.coins) == before + 50, "the developer menu adds coins")
+		DevMenu.toggle(self)
+		await _frames()
+		check(root.get_node_or_null("DevMenu") == null, "the developer menu closes")
 
 	gs.store.wipe()
 	print("ui_smoke: %s" % ("OK" if _failures == 0 else "%d failed" % _failures))

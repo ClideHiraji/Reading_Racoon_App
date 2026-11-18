@@ -87,8 +87,8 @@ func _layer(pts: PackedVector2Array, col: Color) -> void:
 	var shadow := PackedVector2Array()
 	for p in pts:
 		shadow.append(p + Vector2(0, -6))
-	draw_colored_polygon(shadow, Color(Palette.SHADOW, Palette.SHADOW.a * (1.0 - fade * 0.7)))
-	draw_colored_polygon(pts, col)
+	Smooth.polygon(self, shadow, Color(Palette.SHADOW, Palette.SHADOW.a * (1.0 - fade * 0.7)))
+	Smooth.polygon(self, pts, col)
 
 
 func _hills(top: float, amp: float, freq: float, col: Color) -> void:
@@ -132,13 +132,13 @@ func _trees(base: float, count: int, crown: float, mango: float) -> void:
 		var r := crown * _rng.randf_range(0.8, 1.15)
 		draw_rect(Rect2(x - r * 0.12, y - r * 0.4, r * 0.24, r * 0.9), _c(Palette.NIPA_DEEP))
 		var leaf := _c(Palette.LEAF_DEEP if i % 2 == 0 else Palette.LEAF.darkened(0.08))
-		draw_circle(Vector2(x, y - r * 0.6 - 5), r, Color(Palette.SHADOW, 0.18))
-		draw_circle(Vector2(x, y - r * 0.6), r, leaf)
-		draw_circle(Vector2(x - r * 0.35, y - r * 0.85), r * 0.45, leaf.lightened(0.12))
+		Smooth.circle(self, Vector2(x, y - r * 0.6 - 5), r, Color(Palette.SHADOW, 0.18))
+		Smooth.circle(self, Vector2(x, y - r * 0.6), r, leaf)
+		Smooth.circle(self, Vector2(x - r * 0.35, y - r * 0.85), r * 0.45, leaf.lightened(0.12))
 		if _rng.randf() < mango:
 			for m in 3:
 				var a := _rng.randf() * TAU
-				draw_circle(Vector2(x, y - r * 0.6) + Vector2(cos(a), sin(a)) * r * 0.55,
+				Smooth.circle(self, Vector2(x, y - r * 0.6) + Vector2(cos(a), sin(a)) * r * 0.55,
 						r * 0.14, _c(Palette.MANGO))
 
 
@@ -206,13 +206,13 @@ func _peaks(base: float, height: float, col: Color, count: int) -> void:
 		var cap := PackedVector2Array([Vector2(cx - hw * 0.26, base - hh * 0.72),
 				Vector2(cx - hw * 0.12, base - hh), Vector2(cx + hw * 0.12, base - hh),
 				Vector2(cx + hw * 0.26, base - hh * 0.72), Vector2(cx, base - hh * 0.8)])
-		draw_colored_polygon(cap, col.lightened(0.25))
+		Smooth.polygon(self, cap, col.lightened(0.25))
 
 
 ## A pale sun: strong yellow is kept for Adventure and PLAY (D-022).
 func _sun(at: Vector2, r: float) -> void:
-	draw_circle(at, r * 1.45, _c(Palette.MANGO.lightened(0.82)))
-	draw_circle(at, r, _c(Palette.MANGO.lightened(0.62)))
+	Smooth.circle(self, at, r * 1.45, _c(Palette.MANGO.lightened(0.82)))
+	Smooth.circle(self, at, r, _c(Palette.MANGO.lightened(0.62)))
 
 
 func _cloud(at: Vector2, r: float) -> void:
@@ -220,7 +220,7 @@ func _cloud(at: Vector2, r: float) -> void:
 	for pass_i in 2:
 		var off := Vector2(0, 5) if pass_i == 0 else Vector2.ZERO
 		var c := Color(Palette.SHADOW, 0.14) if pass_i == 0 else col
-		draw_circle(at + off + Vector2(-r * 1.1, r * 0.2), r * 0.75, c)
-		draw_circle(at + off, r, c)
-		draw_circle(at + off + Vector2(r * 1.05, r * 0.25), r * 0.7, c)
+		Smooth.circle(self, at + off + Vector2(-r * 1.1, r * 0.2), r * 0.75, c)
+		Smooth.circle(self, at + off, r, c)
+		Smooth.circle(self, at + off + Vector2(r * 1.05, r * 0.25), r * 0.7, c)
 		draw_rect(Rect2(at + off + Vector2(-r * 1.1, r * 0.2), Vector2(r * 2.15, r * 0.75)), c)

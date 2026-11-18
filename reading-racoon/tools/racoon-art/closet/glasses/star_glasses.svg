@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racoon's Closet: Star glasses (violet, glasses). FR-07, D-026.
+     Drawn to fit Racoon at rest: the bottom layer links ../../parts/racoon_C_inkscape.svg (locked).
+     Draw on the "Item" layer. The file's name is the item's id; its name, tier, price and how it's
+     earned are in reading-racoon/content/closet.json. motion-demo/build_racoon.py reads this file
+     and never writes it. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-star_glasses"
+   sodipodi:docname="star_glasses.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>Star glasses</title>
+  <sodipodi:namedview
+     id="namedview-star_glasses"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="2"
+     inkscape:cx="200"
+     inkscape:cy="170"
+     inkscape:current-layer="layer-item" />
+  <defs id="defs-star_glasses">
+    <linearGradient id="gr-starg-frame" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:#ffe680" /><stop offset="1" style="stop-color:#f2a516" /></linearGradient>
+    <linearGradient id="gr-starg-lens" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:#ffb3e2" /><stop offset="1" style="stop-color:#a35cf0" /></linearGradient>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="../../parts/racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-item" inkscape:label="Item">
+   <g id="item-star-glasses" inkscape:label="star_glasses">
+     <title>Star glasses: star frames with pink-violet lenses (violet)</title>
+     <path id="star-glasses-1" inkscape:label="Frame" d="M 153.44 136.62 Q 154.75 133.29 156.71 136.27 L 165.08 148.96 Q 167.05 151.94 170.62 152.16 L 185.79 153.06 Q 189.36 153.27 187.13 156.07 L 177.65 167.94 Q 175.42 170.74 176.32 174.2 L 180.15 188.91 Q 181.05 192.37 177.7 191.11 L 163.48 185.76 Q 160.13 184.5 157.12 186.43 L 144.31 194.62 Q 141.3 196.54 141.46 192.97 L 142.15 177.79 Q 142.31 174.22 139.55 171.95 L 127.81 162.3 Q 125.04 160.03 128.49 159.08 L 143.14 155.04 Q 146.59 154.09 147.9 150.77 Z" style="fill:url(#gr-starg-frame);stroke:#3b2d3a;stroke-width:4.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="star-glasses-2" inkscape:label="Lens" d="M 155.53 148.78 Q 156.1 147.22 157 148.63 L 162.66 157.59 Q 163.55 159.01 165.22 159.07 L 175.81 159.49 Q 177.48 159.56 176.41 160.85 L 169.64 169 Q 168.57 170.28 169.02 171.89 L 171.9 182.1 Q 172.35 183.71 170.8 183.09 L 160.95 179.16 Q 159.4 178.54 158.01 179.47 L 149.19 185.36 Q 147.8 186.29 147.91 184.62 L 148.6 174.04 Q 148.71 172.37 147.39 171.33 L 139.07 164.77 Q 137.76 163.73 139.38 163.32 L 149.65 160.71 Q 151.27 160.3 151.85 158.73 Z" style="fill:url(#gr-starg-lens);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round;fill-opacity:0.88" />
+     <path id="star-glasses-3" inkscape:label="Glint" d="M 152.3 163 L 157.3 158" style="fill:none;stroke:#ffffff;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round;opacity:0.9" />
+     <path id="star-glasses-4" inkscape:label="Frame" d="M 244.49 136.27 Q 246.45 133.29 247.76 136.62 L 253.3 150.77 Q 254.61 154.09 258.06 155.04 L 272.71 159.08 Q 276.16 160.03 273.39 162.3 L 261.65 171.95 Q 258.89 174.22 259.05 177.79 L 259.74 192.97 Q 259.9 196.54 256.89 194.62 L 244.08 186.43 Q 241.07 184.5 237.72 185.76 L 223.5 191.11 Q 220.15 192.37 221.05 188.91 L 224.88 174.2 Q 225.78 170.74 223.55 167.94 L 214.07 156.07 Q 211.84 153.27 215.41 153.06 L 230.58 152.16 Q 234.15 151.94 236.12 148.96 Z" style="fill:url(#gr-starg-frame);stroke:#3b2d3a;stroke-width:4.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="star-glasses-5" inkscape:label="Lens" d="M 244.2 148.63 Q 245.1 147.22 245.67 148.78 L 249.35 158.73 Q 249.93 160.3 251.55 160.71 L 261.82 163.32 Q 263.44 163.73 262.13 164.77 L 253.81 171.33 Q 252.49 172.37 252.6 174.04 L 253.29 184.62 Q 253.4 186.29 252.01 185.36 L 243.19 179.47 Q 241.8 178.54 240.25 179.16 L 230.4 183.09 Q 228.85 183.71 229.3 182.1 L 232.18 171.89 Q 232.63 170.28 231.56 169 L 224.79 160.85 Q 223.72 159.56 225.39 159.49 L 235.98 159.07 Q 237.65 159.01 238.54 157.59 Z" style="fill:url(#gr-starg-lens);stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round;fill-opacity:0.88" />
+     <path id="star-glasses-6" inkscape:label="Glint" d="M 236.9 163 L 241.9 158" style="fill:none;stroke:#ffffff;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round;opacity:0.9" />
+     <path id="star-glasses-7" inkscape:label="Bridge" d="M 184 166 Q 200.5 158 217 166" style="fill:none;stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="star-glasses-8" inkscape:label="Twinkle" d="M 118 130 Q 120.24 135.76 126 138 Q 120.24 140.24 118 146 Q 115.76 140.24 110 138 Q 115.76 135.76 118 130 Z" style="fill:#fff6c8;stroke:#d08ad8;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="star-glasses-9" inkscape:label="Twinkle" d="M 284 130 Q 286.24 135.76 292 138 Q 286.24 140.24 284 146 Q 281.76 140.24 276 138 Q 281.76 135.76 284 130 Z" style="fill:#fff6c8;stroke:#d08ad8;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="star-glasses-10" inkscape:label="Twinkle" d="M 200.5 137 Q 201.9 140.6 205.5 142 Q 201.9 143.4 200.5 147 Q 199.1 143.4 195.5 142 Q 199.1 140.6 200.5 137 Z" style="fill:#fff6c8;stroke:#d08ad8;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+   </g>
+  </g>
+</svg>

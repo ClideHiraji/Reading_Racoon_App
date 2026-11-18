@@ -38,6 +38,12 @@ func _run() -> void:
 	gs.assessments = {"pre": {"total": 20}}
 	gs.wallet = {"xp": 140, "coins": 120}
 	gs.model.highest_unlocked = 3
+	# A Tuesday evening with free play open, whatever the real clock says
+	# (like hub_shots.gd), so the sections never hit the lock screen.
+	gs.access.schedule = AccessPolicy.DEFAULTS.duplicate()
+	gs._debug_now = {"year": 2026, "month": 10, "day": 20, "weekday": 2, "hour": 18, "minute": 0,
+			"second": 0}
+	gs.usage = {"date": gs.today(), "minutes": 0.0, "free_minutes": 0.0}
 	for g in ["adventure", "adventure", "adventure", "books", "games", "days", "watch"]:
 		gs.collection.earn(g, gs.today())
 	gs.learn_words(PracticePool.picture_words(gs.bank, 3).slice(0, 9), "lesson")

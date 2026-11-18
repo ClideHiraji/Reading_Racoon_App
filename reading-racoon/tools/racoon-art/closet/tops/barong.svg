@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racoon's Closet: Barong (gold, tops). FR-07, D-026.
+     Drawn to fit Racoon at rest: the bottom layer links ../../parts/racoon_C_inkscape.svg (locked).
+     Draw on the "Item" layer. The file's name is the item's id; its name, tier, price and how it's
+     earned are in reading-racoon/content/closet.json. motion-demo/build_racoon.py reads this file
+     and never writes it. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-barong"
+   sodipodi:docname="barong.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>Barong</title>
+  <sodipodi:namedview
+     id="namedview-barong"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="2"
+     inkscape:cx="200"
+     inkscape:cy="200"
+     inkscape:current-layer="layer-item" />
+  <defs id="defs-barong">
+    <linearGradient id="gr-barong-1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" style="stop-color:#e4dac9" /><stop offset="0.3" style="stop-color:#fbf2dc" /><stop offset="0.55" style="stop-color:#fbf4e0" /><stop offset="1" style="stop-color:#e4dac9" /></linearGradient>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="../../parts/racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-item" inkscape:label="Item">
+   <g id="item-barong" inkscape:label="barong">
+     <title>Barong: a sheer barong with gold embroidery (gold)</title>
+     <path id="barong-1" inkscape:label="Barong" d="M 112 234 L 289 234 L 289 354 C 252.5 368 148.5 368 112 354 Z" style="fill:url(#gr-barong-1);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round;fill-opacity:0.9" />
+     <path id="barong-2" inkscape:label="Embroidery panel" d="M 180 262 L 221 262 L 221 360 L 180 360 Z" style="fill:#f6e7c2" />
+     <path id="barong-3" inkscape:label="Motif" d="M 200.5 265 L 206 270 L 200.5 275 L 195 270 Z" style="fill:none;stroke:#c99a3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="barong-4" inkscape:label="Vine" d="M 186 268 Q 190 274 194 268 M 207 268 Q 211 274 215 268" style="fill:none;stroke:#c99a3a;stroke-width:1.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="barong-5" inkscape:label="Motif" d="M 200.5 278 L 206 283 L 200.5 288 L 195 283 Z" style="fill:none;stroke:#c99a3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="barong-6" inkscape:label="Vine" d="M 186 281 Q 190 287 194 281 M 207 281 Q 211 287 215 281" style="fill:none;stroke:#c99a3a;stroke-width:1.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="barong-7" inkscape:label="Motif" d="M 200.5 291 L 206 296 L 200.5 301 L 195 296 Z" style="fill:none;stroke:#c99a3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="barong-8" inkscape:label="Vine" d="M 186 294 Q 190 300 194 294 M 207 294 Q 211 300 215 294" style="fill:none;stroke:#c99a3a;stroke-width:1.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="barong-9" inkscape:label="Motif" d="M 200.5 304 L 206 309 L 200.5 314 L 195 309 Z" style="fill:none;stroke:#c99a3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="barong-10" inkscape:label="Vine" d="M 186 307 Q 190 313 194 307 M 207 307 Q 211 313 215 307" style="fill:none;stroke:#c99a3a;stroke-width:1.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="barong-11" inkscape:label="Motif" d="M 200.5 317 L 206 322 L 200.5 327 L 195 322 Z" style="fill:none;stroke:#c99a3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="barong-12" inkscape:label="Vine" d="M 186 320 Q 190 326 194 320 M 207 320 Q 211 326 215 320" style="fill:none;stroke:#c99a3a;stroke-width:1.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="barong-13" inkscape:label="Motif" d="M 200.5 330 L 206 335 L 200.5 340 L 195 335 Z" style="fill:none;stroke:#c99a3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="barong-14" inkscape:label="Vine" d="M 186 333 Q 190 339 194 333 M 207 333 Q 211 339 215 333" style="fill:none;stroke:#c99a3a;stroke-width:1.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="barong-15" inkscape:label="Motif" d="M 200.5 343 L 206 348 L 200.5 353 L 195 348 Z" style="fill:none;stroke:#c99a3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="barong-16" inkscape:label="Vine" d="M 186 346 Q 190 352 194 346 M 207 346 Q 211 352 215 346" style="fill:none;stroke:#c99a3a;stroke-width:1.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="barong-17" inkscape:label="Panel edge" d="M 180 262 L 180 360 M 221 262 L 221 360" style="fill:none;stroke:#c99a3a;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="barong-18" inkscape:label="Button" cx="200.5" cy="276" r="2.4" style="fill:#f2c94c;stroke:#3b2d3a;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="barong-19" inkscape:label="Button" cx="200.5" cy="296" r="2.4" style="fill:#f2c94c;stroke:#3b2d3a;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="barong-20" inkscape:label="Button" cx="200.5" cy="316" r="2.4" style="fill:#f2c94c;stroke:#3b2d3a;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="barong-21" inkscape:label="Button" cx="200.5" cy="336" r="2.4" style="fill:#f2c94c;stroke:#3b2d3a;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="barong-22" inkscape:label="Button" cx="200.5" cy="352" r="2.4" style="fill:#f2c94c;stroke:#3b2d3a;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="barong-23" inkscape:label="Collar" d="M 170 251 C 184 270 217 270 231 251" style="fill:none;stroke:#3b2d3a;stroke-width:10;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="barong-24" inkscape:label="Collar" d="M 170 251 C 184 270 217 270 231 251" style="fill:none;stroke:#f6e7c2;stroke-width:6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="barong-25" inkscape:label="Collar gold" d="M 172 254 C 186 270 215 270 229 254" style="fill:none;stroke:#c99a3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+   </g>
+  </g>
+</svg>

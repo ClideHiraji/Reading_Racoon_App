@@ -13,7 +13,7 @@ const KIND_CHIPS := {"song": "Songs", "read_along": "Stories", "video": "Videos"
 var _kind := ""
 var _column: VBoxContainer
 var _chips: Control
-var _list: VBoxContainer
+var _list: GridContainer
 
 
 func _ready() -> void:
@@ -24,16 +24,18 @@ func _ready() -> void:
 	var scroll := ScrollContainer.new()
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	_list = VBoxContainer.new()
+	_list = GridContainer.new()
+	_list.columns = 2 if Kit.landscape() else 1   # D-023
 	_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	_list.add_theme_constant_override("separation", 16)
+	_list.add_theme_constant_override("h_separation", 16)
+	_list.add_theme_constant_override("v_separation", 16)
 	scroll.add_child(_list)
 	_build()
 	_column.add_child(scroll)
 	var note := Kit.label("Only songs and videos your teacher picked. No ads.", 22, Palette.INK_SOFT)
 	note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_column.add_child(note)
-	Speech.say("Let's sing and listen!")
+	Speech.say(GameState.talk("watch_hello"))
 
 
 func _build() -> void:
@@ -55,7 +57,9 @@ func _build() -> void:
 		empty.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		_list.add_child(empty)
 	for m in items:
-		_list.add_child(_row(m))
+		var row := _row(m)
+		row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		_list.add_child(row)
 
 
 func _pick_kind(kind: String) -> void:
@@ -116,7 +120,7 @@ func _row(m: Dictionary) -> Control:
 
 func _open(m: Dictionary, can_play: bool) -> void:
 	if not can_play:
-		Speech.say("This one comes next time there's Wi-Fi.")
+		Speech.say(GameState.talk("watch_offline"))
 		return
 	if not GameState.guard_free_play():
 		return

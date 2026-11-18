@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racoon's Closet: Book tee (silver, tops). FR-07, D-026.
+     Drawn to fit Racoon at rest: the bottom layer links ../../parts/racoon_C_inkscape.svg (locked).
+     Draw on the "Item" layer. The file's name is the item's id; its name, tier, price and how it's
+     earned are in reading-racoon/content/closet.json. motion-demo/build_racoon.py reads this file
+     and never writes it. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-book-tee"
+   sodipodi:docname="book_tee.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>Book tee</title>
+  <sodipodi:namedview
+     id="namedview-book-tee"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="2"
+     inkscape:cx="200"
+     inkscape:cy="200"
+     inkscape:current-layer="layer-item" />
+  <defs id="defs-book-tee">
+    <linearGradient id="gr-book-tee-1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" style="stop-color:#d4a71f" /><stop offset="0.3" style="stop-color:#ffc918" /><stop offset="0.55" style="stop-color:#ffcf34" /><stop offset="1" style="stop-color:#d4a71f" /></linearGradient>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="../../parts/racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-item" inkscape:label="Item">
+   <g id="item-book-tee" inkscape:label="book_tee">
+     <title>Book tee: a yellow T-shirt with an open book (silver)</title>
+     <path id="book-tee-1" inkscape:label="Shirt" d="M 112 234 L 289 234 L 289 346 C 252.5 360 148.5 360 112 346 Z" style="fill:url(#gr-book-tee-1);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="book-tee-2" inkscape:label="Collar" d="M 170 251 C 184 270 217 270 231 251" style="fill:none;stroke:#3b2d3a;stroke-width:11;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="book-tee-3" inkscape:label="Collar" d="M 170 251 C 184 270 217 270 231 251" style="fill:none;stroke:#ffe27a;stroke-width:7;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="book-tee-4" inkscape:label="Cover" d="M 172 287 L 199 291 Q 200.5 292.5 202 291 L 229 287 L 229 318 L 202 322 Q 200.5 323.5 199 322 L 172 318 Z" style="fill:#5c9bd4;stroke:#3b2d3a;stroke-width:2.8;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="book-tee-5" inkscape:label="Page" d="M 176 289 C 184 287 193 288 199.4 292 L 199.4 318 C 193 315 184 314 176 316 Z" style="fill:#fffaf0;stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="book-tee-6" inkscape:label="Page" d="M 225 289 C 217 287 208 288 201.6 292 L 201.6 318 C 208 315 217 314 225 316 Z" style="fill:#fffaf0;stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="book-tee-7" inkscape:label="Lines" d="M 180 297 Q 189 296 196 299 M 180 304 Q 189 303 196 306 M 205 299 Q 212 296 221 297 M 205 306 Q 212 303 221 304" style="fill:none;stroke:#c9b893;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="book-tee-8" inkscape:label="Shine" d="M 150 262 C 148 280 148 300 152 318" style="fill:none;stroke:#ffffff;stroke-width:5;stroke-linejoin:round;stroke-linecap:round;opacity:0.35" />
+   </g>
+  </g>
+</svg>

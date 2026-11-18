@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racoon's Closet: Rocket pin (silver, pins). FR-07, D-026.
+     Drawn to fit Racoon at rest: the bottom layer links ../../parts/racoon_C_inkscape.svg (locked).
+     Draw on the "Item" layer. The file's name is the item's id; its name, tier, price and how it's
+     earned are in reading-racoon/content/closet.json. motion-demo/build_racoon.py reads this file
+     and never writes it. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-pin-rocket"
+   sodipodi:docname="pin_rocket.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>Rocket pin</title>
+  <sodipodi:namedview
+     id="namedview-pin-rocket"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="2"
+     inkscape:cx="200"
+     inkscape:cy="200"
+     inkscape:current-layer="layer-item" />
+  <defs id="defs-pin-rocket">
+    <linearGradient id="gr-pin-rocket-1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#3a4f86" /><stop offset="1" style="stop-color:#26355f" /></linearGradient>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="../../parts/racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-item" inkscape:label="Item">
+   <g id="item-pin-rocket" inkscape:label="pin_rocket">
+     <title>Rocket pin: a rocket flying through the night (silver)</title>
+     <circle id="pin-rocket-1" inkscape:label="Pin" cx="174" cy="312" r="16" style="fill:url(#gr-pin-rocket-1);stroke:#3b2d3a;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="pin-rocket-2" inkscape:label="Ring" cx="174" cy="312" r="12.4" style="fill:none;stroke:#8fb8e8;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="pin-rocket-3" inkscape:label="Star" cx="165" cy="304" r="1.1" style="fill:#ffffff" />
+     <circle id="pin-rocket-4" inkscape:label="Star" cx="184" cy="317" r="1.1" style="fill:#ffffff" />
+     <circle id="pin-rocket-5" inkscape:label="Star" cx="167" cy="321" r="1.1" style="fill:#ffffff" />
+     <g id="pin-rocket-6" inkscape:label="Rocket" transform="rotate(35 174 312)">
+     <path id="pin-rocket-7" inkscape:label="Body" d="M 174 300 C 179 304 180 312 179 320 L 169 320 C 168 312 169 304 174 300 Z" style="fill:#fdfbf6;stroke:#3b2d3a;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pin-rocket-8" inkscape:label="Nose" d="M 174 300 C 177 302 178.5 305 179 307 L 169 307 C 169.5 305 171 302 174 300 Z" style="fill:#e2574c;stroke:#3b2d3a;stroke-width:1.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="pin-rocket-9" inkscape:label="Window" cx="174" cy="312" r="2.4" style="fill:#8fd3f2;stroke:#3b2d3a;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pin-rocket-10" inkscape:label="Fin" d="M 169 315 L 165 322 L 169 321 Z" style="fill:#e2574c;stroke:#3b2d3a;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pin-rocket-11" inkscape:label="Fin" d="M 179 315 L 183 322 L 179 321 Z" style="fill:#e2574c;stroke:#3b2d3a;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pin-rocket-12" inkscape:label="Flame" d="M 171 321 Q 174 328 177 321 Z" style="fill:#ffb52e;stroke:#3b2d3a;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+   </g>
+  </g>
+</svg>

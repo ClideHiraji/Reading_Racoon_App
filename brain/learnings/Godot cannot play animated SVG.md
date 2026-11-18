@@ -14,4 +14,12 @@ Godot imports an SVG as one still image: SMIL animation (`<animate>`, `<animateT
 
 **Watch for:** the star settles at about 45% of its box, so size the box about twice the star you want; and run `--import` after adding the PNGs and the new `class_name`.
 
+**Two more traps (the second star and the heart, same day):**
+- Animated colors (`values="#f08f00; #f08f00"`) must be blended as colors. Read as numbers, they turn into invalid colors, strokes vanish and fills go black.
+- Check the SVG in a browser first: `svg.pauseAnimations(); svg.setCurrentTime(t)` at a few times. A re-exported star kept its main layer at scale 0 the whole time, so it was empty in the browser too; no renderer bug.
+
+The sampler and renderer now live in `tools/svg-frames/` with the commands for the star and the heart.
+
+**Later the same day:** the game switched to playing the team's Lottie files live ([[Godot can play Lottie with a small player]]), and the PNG frames and `ui/frame_animation.gd` were removed. This frame route is still the way for an animation that only exists as animated SVG.
+
 Seen while building [[D-022 Full UI redesign]].

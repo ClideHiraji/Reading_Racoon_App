@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="141 157 34 34" width="34" height="34">
+<title>Face · Eye left (open)</title>
+<defs>
+<radialGradient id="rr-fur" cx="0.38" cy="0.3" r="0.8"><stop offset="0" stop-color="#aaa4b6"/><stop offset="0.55" stop-color="#8e8899"/><stop offset="1" stop-color="#716a80"/></radialGradient>
+<radialGradient id="rr-cream" cx="0.4" cy="0.3" r="0.85"><stop offset="0" stop-color="#fffbf2"/><stop offset="0.7" stop-color="#fbf3e4"/><stop offset="1" stop-color="#ead8c0"/></radialGradient>
+<linearGradient id="rr-mask" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a3e52"/><stop offset="1" stop-color="#3a2f40"/></linearGradient>
+<linearGradient id="rr-teal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#45b8a9"/><stop offset="1" stop-color="#2a9d8f"/></linearGradient>
+<radialGradient id="rr-dark" cx="0.4" cy="0.3" r="0.8"><stop offset="0" stop-color="#6f6879"/><stop offset="1" stop-color="#5d5766"/></radialGradient>
+</defs>
+<g id="eye_left">
+<ellipse cx="157.7" cy="173.8" rx="15.6" ry="15.6" fill="#fbf3e4"/><ellipse cx="157.7" cy="174.8" rx="9.7" ry="9.7" fill="#221a26"/><ellipse cx="154.5" cy="171.1" rx="3.5" ry="3.5" fill="#ffffff"/><ellipse cx="160.9" cy="178" rx="1.5" ry="1.5" fill="#ffffff" opacity="0.8"/>
+</g>
+</svg>

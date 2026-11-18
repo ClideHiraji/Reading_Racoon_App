@@ -20,7 +20,7 @@ func _ready() -> void:
 	talk.add_theme_constant_override("separation", 12)
 	column.add_child(talk)
 	var raccoon := Raccoon.new()
-	raccoon.custom_minimum_size = Vector2(130, 130)
+	raccoon.custom_minimum_size = Vector2(100, 100) if Kit.landscape() else Vector2(130, 130)
 	talk.add_child(raccoon)
 	var bubble := SpeechBubble.new()
 	bubble.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -30,7 +30,7 @@ func _ready() -> void:
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	_list = GridContainer.new()
-	_list.columns = 2
+	_list.columns = 3 if Kit.landscape() else 2   # all six games on one laptop screen (D-023)
 	_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_list.add_theme_constant_override("h_separation", 18)
 	_list.add_theme_constant_override("v_separation", 18)
@@ -38,12 +38,16 @@ func _ready() -> void:
 	column.add_child(scroll)
 	var level := GameState.model.highest_unlocked
 	var games: Array = PracticePool.GAMES.duplicate()
-	games.sort_custom(func(a, b):
-		return PracticePool.unlocked(a.id, GameState.bank, level) and not PracticePool.unlocked(b.id, GameState.bank, level))
+	# Whether each game is open, worked out once: each check searches the question bank, and the
+	# sort asked it twice per comparison (~50 ms each time Practice opened; NFR-01).
+	var open := {}
 	for g in games:
-		_list.add_child(_card(g, PracticePool.unlocked(g.id, GameState.bank, level)))
-	bubble.say("Pick a game! No hearts, just fun.")
-	Speech.say("Pick a game!")
+		open[g.id] = PracticePool.unlocked(g.id, GameState.bank, level)
+	games.sort_custom(func(a, b): return open[a.id] and not open[b.id])
+	for g in games:
+		_list.add_child(_card(g, open[g.id]))
+	bubble.say(GameState.talk("practice_hello_bubble"))
+	Speech.say(GameState.talk("practice_hello"))
 
 
 func _card(g: Dictionary, open: bool) -> Control:
@@ -51,10 +55,13 @@ func _card(g: Dictionary, open: bool) -> Control:
 	var b := ChunkyButton.new()
 	b.card_style = true
 	b.radius = 28
-	b.custom_minimum_size = Vector2(0, 286)
+	var wide := Kit.landscape()
+	b.custom_minimum_size = Vector2(0, 210 if wide else 286)
 	b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	b.tooltip_text = g.name
 	b.pressed.connect(_open.bind(g, open))
+	if open:
+		b.stitched = true   # an open game's card is sewn round, like a felt patch (D-028)
 	if not open:
 		# A locked card lies flat on the page (D-022).
 		b.card_style = false
@@ -70,10 +77,12 @@ func _card(g: Dictionary, open: bool) -> Control:
 	b.add_child(v)
 	var disc := PanelContainer.new()
 	disc.add_theme_stylebox_override("panel", Kit.box(Palette.pale(color, 0.8) if open else LOCKED.darkened(0.06), 70))
-	disc.custom_minimum_size = Vector2(140, 140)
+	disc.custom_minimum_size = Vector2(108, 108) if wide else Vector2(140, 140)
 	disc.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	disc.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var icon := Icons.rect(g.icon if open else "lock", 92, color.darkened(0.1) if open else Color("b5a88c"))
+	var icon_px := 72 if wide else 92
+	var icon := Icons.picture_rect(g.icon, icon_px, color.darkened(0.1)) if open \
+			else Icons.rect("lock", icon_px, Color("b5a88c"))
 	icon.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	icon.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	disc.add_child(icon)
@@ -97,7 +106,7 @@ func _card(g: Dictionary, open: bool) -> Control:
 
 func _open(g: Dictionary, open: bool) -> void:
 	if not open:
-		Speech.say("Keep playing Adventure to open %s!" % g.name)
+		Speech.say(GameState.talk("practice_locked", [g.name]))
 		return
 	if not GameState.guard_free_play():
 		return

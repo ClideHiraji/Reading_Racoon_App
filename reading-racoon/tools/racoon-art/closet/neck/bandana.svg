@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racoon's Closet: Explorer bandana (copper, neck). FR-07, D-026.
+     Drawn to fit Racoon at rest: the bottom layer links ../../parts/racoon_C_inkscape.svg (locked).
+     Draw on the "Item" layer. The file's name is the item's id; its name, tier, price and how it's
+     earned are in reading-racoon/content/closet.json. motion-demo/build_racoon.py reads this file
+     and never writes it. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-bandana"
+   sodipodi:docname="bandana.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>Explorer bandana</title>
+  <sodipodi:namedview
+     id="namedview-bandana"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="2"
+     inkscape:cx="200"
+     inkscape:cy="200"
+     inkscape:current-layer="layer-item" />
+  <defs id="defs-bandana">
+    
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="../../parts/racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-item" inkscape:label="Item">
+   <g id="item-bandana" inkscape:label="bandana">
+     <title>Explorer bandana: a red bandana with white dots (copper)</title>
+     <path id="bandana-1" inkscape:label="Bandana" d="M 156 254 C 180 262 221 262 245 254 L 241 268 C 232 274 222 280 214 290 L 200.5 305 L 187 290 C 179 280 169 274 160 268 Z" style="fill:#e2574c;stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="bandana-2" inkscape:label="Fold" d="M 165 266 C 184 276 217 276 236 266" style="fill:none;stroke:#a8322a;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="bandana-3" inkscape:label="Dot" cx="171" cy="262" r="2.6" style="fill:#fff7e6" />
+     <circle id="bandana-4" inkscape:label="Dot" cx="189" cy="268" r="2.6" style="fill:#fff7e6" />
+     <circle id="bandana-5" inkscape:label="Dot" cx="212" cy="268" r="2.6" style="fill:#fff7e6" />
+     <circle id="bandana-6" inkscape:label="Dot" cx="230" cy="262" r="2.6" style="fill:#fff7e6" />
+     <circle id="bandana-7" inkscape:label="Dot" cx="192" cy="283" r="2.6" style="fill:#fff7e6" />
+     <circle id="bandana-8" inkscape:label="Dot" cx="209" cy="283" r="2.6" style="fill:#fff7e6" />
+     <circle id="bandana-9" inkscape:label="Dot" cx="200.5" cy="295" r="2.6" style="fill:#fff7e6" />
+     <path id="bandana-10" inkscape:label="Shine" d="M 168 259 C 180 263 192 265 204 265" style="fill:none;stroke:#ffffff;stroke-width:3;stroke-linejoin:round;stroke-linecap:round;opacity:0.45" />
+   </g>
+  </g>
+</svg>

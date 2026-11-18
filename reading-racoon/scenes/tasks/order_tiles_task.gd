@@ -100,9 +100,10 @@ func _tile_button(t) -> ChunkyButton:
 			b.custom_minimum_size = Vector2(620, 96)
 			b.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 			if t is Dictionary and t.has("picture"):
-				b.icon = Icons.tex(t.picture)
+				var full := Icons.picture_tex(t.picture)   # in its own colours (D-027)
+				b.icon = full if full else Icons.tex(t.picture)
 				b.icon_px = 56
-				b.icon_tint = Icons.picture_color(t.picture)
+				b.icon_tint = Color.WHITE if full else Icons.picture_color(t.picture)
 	return b
 
 
@@ -110,6 +111,7 @@ func _tile_button(t) -> ChunkyButton:
 func _slot(i: int) -> Control:
 	var s := DropSlot.new()
 	s.mouse_filter = Control.MOUSE_FILTER_STOP
+	s.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND   # D-023
 	s.gui_input.connect(_on_slot_input.bind(i))
 	match _variant:
 		"syllables":

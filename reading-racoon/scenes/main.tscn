@@ -1,17 +1,219 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://cyty4ch5ag866"]
 
-[ext_resource type="Script" path="res://scenes/main.gd" id="1_main"]
-[ext_resource type="Script" path="res://ui/chunky_button.gd" id="2_chunky"]
-[ext_resource type="Script" path="res://scenes/companion/raccoon.gd" id="3_raccoon"]
-[ext_resource type="Script" path="res://scenes/companion/speech_bubble.gd" id="4_bubble"]
-[ext_resource type="Shader" path="res://ui/paper.gdshader" id="5_paper"]
-[ext_resource type="Script" path="res://ui/paper_scenery.gd" id="6_scenery"]
-[ext_resource type="Script" path="res://ui/sunburst.gd" id="7_burst"]
+[ext_resource type="Script" uid="uid://cepp0s4r4uj2p" path="res://scenes/main.gd" id="1_main"]
+[ext_resource type="Script" uid="uid://bukqwhxmsvhmq" path="res://ui/chunky_button.gd" id="2_chunky"]
+[ext_resource type="Script" uid="uid://rminaxglsiay" path="res://scenes/companion/raccoon.gd" id="3_raccoon"]
+[ext_resource type="Script" uid="uid://dbqn176oc7h7p" path="res://scenes/companion/speech_bubble.gd" id="4_bubble"]
+[ext_resource type="Shader" uid="uid://cfqhnq55teme" path="res://ui/paper.gdshader" id="5_paper"]
+[ext_resource type="Script" uid="uid://c7shvn0xm6nbf" path="res://ui/paper_scenery.gd" id="6_scenery"]
+[ext_resource type="Script" uid="uid://dw8fdkbdj5p4c" path="res://ui/sunburst.gd" id="7_burst"]
 
 [sub_resource type="ShaderMaterial" id="Paper"]
 shader = ExtResource("5_paper")
+shader_parameter/paper = Color(0.996, 0.992, 0.878, 1)
+shader_parameter/grain = 0.035
+shader_parameter/vignette = 0.1
 
-[node name="Main" type="Control"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o6xl0"]
+content_margin_left = 91.0
+content_margin_top = 12.0
+content_margin_right = 23.0
+content_margin_bottom = 14.0
+bg_color = Color(0.914, 0.502, 0.122, 1)
+border_width_top = 3
+border_color = Color(0.92947996, 0.59164, 0.28004003, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+shadow_color = Color(0.23, 0.15, 0.08, 0.22)
+shadow_size = 1
+shadow_offset = Vector2(0, 9)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tipki"]
+content_margin_left = 91.0
+content_margin_top = 19.0
+content_margin_right = 23.0
+content_margin_bottom = 7.0
+bg_color = Color(0.85915995, 0.47188, 0.11468, 1)
+border_width_top = 3
+border_color = Color(0.8845112, 0.5669416, 0.2740376, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+expand_margin_top = -7.0
+expand_margin_bottom = 7.0
+shadow_color = Color(0.23, 0.15, 0.08, 0.22)
+shadow_size = 1
+shadow_offset = Vector2(0, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_85g3d"]
+content_margin_left = 91.0
+content_margin_top = 10.0
+content_margin_right = 23.0
+content_margin_bottom = 16.0
+bg_color = Color(0.92002, 0.53686, 0.18346, 1)
+border_width_top = 3
+border_color = Color(0.9344164, 0.6202252, 0.33043718, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+expand_margin_top = 2.0
+expand_margin_bottom = -2.0
+shadow_color = Color(0.23, 0.15, 0.08, 0.22)
+shadow_size = 1
+shadow_offset = Vector2(0, 11)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_choun"]
+content_margin_left = 91.0
+content_margin_top = 19.0
+content_margin_right = 23.0
+content_margin_bottom = 7.0
+bg_color = Color(0.85915995, 0.47188, 0.11468, 1)
+border_width_top = 3
+border_color = Color(0.8845112, 0.5669416, 0.2740376, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+expand_margin_top = -7.0
+expand_margin_bottom = 7.0
+shadow_color = Color(0.23, 0.15, 0.08, 0.22)
+shadow_size = 1
+shadow_offset = Vector2(0, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ya4ey"]
+content_margin_left = 91.0
+content_margin_top = 12.0
+content_margin_right = 23.0
+content_margin_bottom = 14.0
+bg_color = Color(0.914, 0.502, 0.122, 1)
+border_width_top = 3
+border_color = Color(0.92947996, 0.59164, 0.28004003, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+shadow_color = Color(0.23, 0.15, 0.08, 0.22)
+shadow_size = 1
+shadow_offset = Vector2(0, 9)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eb6dy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_trceg"]
+content_margin_left = 22.0
+content_margin_top = 12.0
+content_margin_right = 22.0
+content_margin_bottom = 14.0
+bg_color = Color(1, 0.99607843, 0.95686275, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 0.06)
+corner_radius_top_left = 48
+corner_radius_top_right = 48
+corner_radius_bottom_right = 48
+corner_radius_bottom_left = 48
+shadow_color = Color(0.23, 0.15, 0.08, 0.16)
+shadow_size = 1
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a8y0u"]
+content_margin_left = 22.0
+content_margin_top = 14.0
+content_margin_right = 22.0
+content_margin_bottom = 12.0
+bg_color = Color(0.94, 0.93631375, 0.89945096, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 0.06)
+corner_radius_top_left = 48
+corner_radius_top_right = 48
+corner_radius_bottom_right = 48
+corner_radius_bottom_left = 48
+expand_margin_top = -2.0
+expand_margin_bottom = 2.0
+shadow_color = Color(0.23, 0.15, 0.08, 0.16)
+shadow_size = 1
+shadow_offset = Vector2(0, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jkv2x"]
+content_margin_left = 22.0
+content_margin_top = 10.0
+content_margin_right = 22.0
+content_margin_bottom = 16.0
+bg_color = Color(1, 0.996353, 0.9598824, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 0.06)
+corner_radius_top_left = 48
+corner_radius_top_right = 48
+corner_radius_bottom_right = 48
+corner_radius_bottom_left = 48
+expand_margin_top = 2.0
+expand_margin_bottom = -2.0
+shadow_color = Color(0.23, 0.15, 0.08, 0.16)
+shadow_size = 1
+shadow_offset = Vector2(0, 6)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jbj1t"]
+content_margin_left = 22.0
+content_margin_top = 14.0
+content_margin_right = 22.0
+content_margin_bottom = 12.0
+bg_color = Color(0.94, 0.93631375, 0.89945096, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 0.06)
+corner_radius_top_left = 48
+corner_radius_top_right = 48
+corner_radius_bottom_right = 48
+corner_radius_bottom_left = 48
+expand_margin_top = -2.0
+expand_margin_bottom = 2.0
+shadow_color = Color(0.23, 0.15, 0.08, 0.16)
+shadow_size = 1
+shadow_offset = Vector2(0, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_muem4"]
+content_margin_left = 22.0
+content_margin_top = 12.0
+content_margin_right = 22.0
+content_margin_bottom = 14.0
+bg_color = Color(1, 0.99607843, 0.95686275, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 0.06)
+corner_radius_top_left = 48
+corner_radius_top_right = 48
+corner_radius_bottom_right = 48
+corner_radius_bottom_left = 48
+shadow_color = Color(0.23, 0.15, 0.08, 0.16)
+shadow_size = 1
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dp3eg"]
+
+[sub_resource type="Animation" id="Animation_yc10j"]
+resource_name = "Tree"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jscy8"]
+_data = {
+&"Tree": SubResource("Animation_yc10j")
+}
+
+[node name="Main" type="Control" unique_id=2144349854]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -20,7 +222,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_main")
 
-[node name="Bg" type="ColorRect" parent="."]
+[node name="Bg" type="ColorRect" parent="." unique_id=1939586741]
 material = SubResource("Paper")
 layout_mode = 1
 anchors_preset = 15
@@ -30,7 +232,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Burst" type="Control" parent="."]
+[node name="Burst" type="Control" parent="." unique_id=1593908798]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -42,7 +244,7 @@ script = ExtResource("7_burst")
 color = Color(1, 0.788, 0.094, 0.16)
 speed = 0.06
 
-[node name="Scenery" type="Control" parent="."]
+[node name="Scenery" type="Control" parent="." unique_id=1025657561]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -56,7 +258,7 @@ script = ExtResource("6_scenery")
 scene = "home"
 show_sky = false
 
-[node name="Margin" type="MarginContainer" parent="."]
+[node name="Margin" type="MarginContainer" parent="." unique_id=2093706393]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -68,11 +270,11 @@ theme_override_constants/margin_top = 110
 theme_override_constants/margin_right = 40
 theme_override_constants/margin_bottom = 64
 
-[node name="VBox" type="VBoxContainer" parent="Margin"]
+[node name="VBox" type="VBoxContainer" parent="Margin" unique_id=144212684]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="Reading" type="Label" parent="Margin/VBox"]
+[node name="Reading" type="Label" parent="Margin/VBox" unique_id=32951317]
 layout_mode = 2
 theme_type_variation = &"TitleLabel"
 theme_override_colors/font_color = Color(0.227, 0.165, 0.122, 1)
@@ -80,7 +282,7 @@ theme_override_font_sizes/font_size = 92
 text = "Reading"
 horizontal_alignment = 1
 
-[node name="Racoon" type="Label" parent="Margin/VBox"]
+[node name="Racoon" type="Label" parent="Margin/VBox" unique_id=1243236690]
 layout_mode = 2
 theme_type_variation = &"TitleLabel"
 theme_override_colors/font_color = Color(0.741, 0.384, 0.071, 1)
@@ -89,48 +291,67 @@ theme_override_font_sizes/font_size = 108
 text = "Racoon"
 horizontal_alignment = 1
 
-[node name="Tagline" type="Label" parent="Margin/VBox"]
+[node name="Tagline" type="Label" parent="Margin/VBox" unique_id=1294811571]
 layout_mode = 2
 theme_type_variation = &"MutedLabel"
 theme_override_font_sizes/font_size = 30
 text = "Stories and sounds from the Agusan River"
 horizontal_alignment = 1
 
-[node name="Spacer" type="Control" parent="Margin/VBox"]
+[node name="Spacer" type="Control" parent="Margin/VBox" unique_id=1277594518]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Bubble" type="PanelContainer" parent="Margin/VBox"]
+[node name="Bubble" type="PanelContainer" parent="Margin/VBox" unique_id=283393111]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 script = ExtResource("4_bubble")
 tail = "down"
 
-[node name="Gap" type="Control" parent="Margin/VBox"]
+[node name="Gap" type="Control" parent="Margin/VBox" unique_id=34817636]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 
-[node name="RaccoonRow" type="CenterContainer" parent="Margin/VBox"]
+[node name="RaccoonRow" type="CenterContainer" parent="Margin/VBox" unique_id=112657735]
 layout_mode = 2
 
-[node name="Raccoon" type="Control" parent="Margin/VBox/RaccoonRow"]
+[node name="Raccoon" type="Control" parent="Margin/VBox/RaccoonRow" unique_id=1784161338]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(320, 320)
 layout_mode = 2
 script = ExtResource("3_raccoon")
 
-[node name="Spacer2" type="Control" parent="Margin/VBox"]
+[node name="Spacer2" type="Control" parent="Margin/VBox" unique_id=1573404490]
 custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 
-[node name="PlayButton" type="Button" parent="Margin/VBox"]
+[node name="PlayButton" type="Button" parent="Margin/VBox" unique_id=383094329]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 124)
 layout_mode = 2
+theme_override_colors/font_color = Color(0.22745098, 0.16470589, 0.12156863, 1)
+theme_override_colors/font_focus_color = Color(0.22745098, 0.16470589, 0.12156863, 1)
+theme_override_colors/font_pressed_color = Color(0.22745098, 0.16470589, 0.12156863, 1)
+theme_override_colors/font_hover_color = Color(0.22745098, 0.16470589, 0.12156863, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.22745098, 0.16470589, 0.12156863, 1)
+theme_override_colors/font_disabled_color = Color(0.22745098, 0.16470589, 0.12156863, 1)
+theme_override_colors/icon_normal_color = Color(0.22745098, 0.16470589, 0.12156863, 1)
+theme_override_colors/icon_focus_color = Color(0.22745098, 0.16470589, 0.12156863, 1)
+theme_override_colors/icon_pressed_color = Color(0.22745098, 0.16470589, 0.12156863, 1)
+theme_override_colors/icon_hover_color = Color(0.22745098, 0.16470589, 0.12156863, 1)
+theme_override_colors/icon_hover_pressed_color = Color(0.22745098, 0.16470589, 0.12156863, 1)
+theme_override_colors/icon_disabled_color = Color(0.22745098, 0.16470589, 0.12156863, 1)
+theme_override_constants/h_separation = 14
+theme_override_constants/icon_max_width = 56
 theme_override_font_sizes/font_size = 42
+theme_override_styles/normal = SubResource("StyleBoxFlat_o6xl0")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_tipki")
+theme_override_styles/hover = SubResource("StyleBoxFlat_85g3d")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_choun")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_ya4ey")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_eb6dy")
 text = "LET'S READ!"
-icon_alignment = 0
 script = ExtResource("2_chunky")
 face_color = Color(0.914, 0.502, 0.122, 1)
 lift = 9
@@ -138,7 +359,7 @@ radius = 30
 icon_name = "book"
 icon_px = 56
 
-[node name="SwitchButton" type="Button" parent="."]
+[node name="SwitchButton" type="Button" parent="." unique_id=2036818397]
 unique_name_in_owner = true
 visible = false
 custom_minimum_size = Vector2(0, 96)
@@ -151,10 +372,33 @@ offset_top = 20.0
 offset_right = -20.0
 offset_bottom = 116.0
 grow_horizontal = 0
+theme_override_colors/font_color = Color(0.22745098, 0.16470589, 0.12156863, 1)
+theme_override_colors/font_focus_color = Color(0.22745098, 0.16470589, 0.12156863, 1)
+theme_override_colors/font_pressed_color = Color(0.22745098, 0.16470589, 0.12156863, 1)
+theme_override_colors/font_hover_color = Color(0.22745098, 0.16470589, 0.12156863, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.22745098, 0.16470589, 0.12156863, 1)
+theme_override_colors/font_disabled_color = Color(0.22745098, 0.16470589, 0.12156863, 1)
+theme_override_colors/icon_normal_color = Color(0.22745098, 0.16470589, 0.12156863, 1)
+theme_override_colors/icon_focus_color = Color(0.22745098, 0.16470589, 0.12156863, 1)
+theme_override_colors/icon_pressed_color = Color(0.22745098, 0.16470589, 0.12156863, 1)
+theme_override_colors/icon_hover_color = Color(0.22745098, 0.16470589, 0.12156863, 1)
+theme_override_colors/icon_hover_pressed_color = Color(0.22745098, 0.16470589, 0.12156863, 1)
+theme_override_colors/icon_disabled_color = Color(0.22745098, 0.16470589, 0.12156863, 1)
+theme_override_constants/h_separation = 14
+theme_override_constants/icon_max_width = 44
 theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_trceg")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_a8y0u")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jkv2x")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_jbj1t")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_muem4")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_dp3eg")
 text = "Switch student"
 script = ExtResource("2_chunky")
 card_style = true
 lift = 4
 radius = 48
 tap_sound = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=529961218]
+libraries/ = SubResource("AnimationLibrary_jscy8")

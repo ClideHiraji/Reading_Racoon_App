@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racoon's Closet: Basketball (silver, paws). FR-07, D-026.
+     Drawn to fit Racoon at rest: the bottom layer links ../../parts/racoon_C_inkscape.svg (locked).
+     Draw on the "Item" layer. The file's name is the item's id; its name, tier, price and how it's
+     earned are in reading-racoon/content/closet.json. motion-demo/build_racoon.py reads this file
+     and never writes it. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-basketball"
+   sodipodi:docname="basketball.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>Basketball</title>
+  <sodipodi:namedview
+     id="namedview-basketball"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="2"
+     inkscape:cx="200"
+     inkscape:cy="200"
+     inkscape:current-layer="layer-item" />
+  <defs id="defs-basketball">
+    <radialGradient id="gr-basketball-1" cx="0.38" cy="0.32" r="0.75"><stop offset="0" style="stop-color:#ffb06a" /><stop offset="1" style="stop-color:#d9661f" /></radialGradient>
+    <radialGradient id="gr-basketball-2" cx="0.38" cy="0.32" r="0.75"><stop offset="0" style="stop-color:#ffb06a" /><stop offset="1" style="stop-color:#d9661f" /></radialGradient>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="../../parts/racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-item" inkscape:label="Item">
+   <g id="item-basketball" inkscape:label="basketball">
+     <title>Basketball: an orange basketball (silver)</title>
+     <circle id="basketball-1" inkscape:label="Ball" cx="200.6" cy="320" r="52" style="fill:url(#gr-basketball-1);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="basketball-2" inkscape:label="Seam" d="M 200.6 268 L 200.6 372" style="fill:none;stroke:#3b2d3a;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="basketball-3" inkscape:label="Seam" d="M 148.6 320 L 252.6 320" style="fill:none;stroke:#3b2d3a;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="basketball-4" inkscape:label="Seam" d="M 165 282 C 184 300 184 340 165 358" style="fill:none;stroke:#3b2d3a;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="basketball-5" inkscape:label="Seam" d="M 236.2 282 C 217.2 300 217.2 340 236.2 358" style="fill:none;stroke:#3b2d3a;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="basketball-6" inkscape:label="Shine" d="M 168 290 C 174 282 182 277 190 275" style="fill:none;stroke:#ffffff;stroke-width:5;stroke-linejoin:round;stroke-linecap:round;opacity:0.45" />
+     <g id="basketball-7" inkscape:label="Back view" style="display:none">
+     <circle id="basketball-8" inkscape:label="Ball" cx="200.6" cy="320" r="52" style="fill:url(#gr-basketball-2);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="basketball-9" inkscape:label="Seam" d="M 200.6 268 L 200.6 372" style="fill:none;stroke:#3b2d3a;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="basketball-10" inkscape:label="Seam" d="M 148.6 320 L 252.6 320" style="fill:none;stroke:#3b2d3a;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="basketball-11" inkscape:label="Seam" d="M 165 282 C 184 300 184 340 165 358" style="fill:none;stroke:#3b2d3a;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="basketball-12" inkscape:label="Seam" d="M 236.2 282 C 217.2 300 217.2 340 236.2 358" style="fill:none;stroke:#3b2d3a;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="basketball-13" inkscape:label="Shine" d="M 168 290 C 174 282 182 277 190 275" style="fill:none;stroke:#ffffff;stroke-width:5;stroke-linejoin:round;stroke-linecap:round;opacity:0.45" />
+     </g>
+   </g>
+  </g>
+</svg>

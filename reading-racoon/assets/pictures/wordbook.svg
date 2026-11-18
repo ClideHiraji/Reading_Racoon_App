@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="13 10.88 109.5 109.5" width="128" height="128">
+<g opacity="0.22" transform="translate(0 2.4)">
+<rect x="34" y="18" width="66" height="92" rx="8" fill="#3b2d3a"/>
+</g>
+<g opacity="0.18">
+<rect x="34" y="18" width="66" height="92" rx="8" fill="#3b2d3a" stroke="#3b2d3a" stroke-width="3" stroke-linejoin="round"/>
+</g>
+<rect x="34" y="18" width="66" height="92" rx="8" fill="#fef6e4"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<rect x="22" y="14" width="70" height="94" rx="9" fill="#3b2d3a"/>
+</g>
+<rect x="22" y="14" width="70" height="94" rx="9" fill="#e18834"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<rect x="36" y="28" width="44" height="26" rx="6" fill="#3b2d3a"/>
+</g>
+<g opacity="0.18">
+<rect x="36" y="28" width="44" height="26" rx="6" fill="#3b2d3a" stroke="#3b2d3a" stroke-width="3" stroke-linejoin="round"/>
+</g>
+<rect x="36" y="28" width="44" height="26" rx="6" fill="#fef6e4"/>
+<path d="M 43 37 L 73 37 M 43 45 L 64 45" fill="none" stroke="#d9c39a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<path d="M 57.41 70.39 Q 58 69 58.59 70.39 L 60.65 75.26 Q 60.94 75.95 61.69 76.02 L 66.96 76.47 Q 68.46 76.6 67.32 77.59 L 63.33 81.05 Q 62.76 81.55 62.93 82.28 L 64.12 87.43 Q 64.47 88.9 63.17 88.12 L 58.65 85.39 Q 58 85 57.35 85.39 L 52.83 88.12 Q 51.53 88.9 51.88 87.43 L 53.07 82.28 Q 53.24 81.55 52.67 81.05 L 48.68 77.59 Q 47.54 76.6 49.04 76.47 L 54.31 76.02 Q 55.06 75.95 55.35 75.26 Z" fill="#3b2d3a"/>
+</g>
+<path d="M 57.41 70.39 Q 58 69 58.59 70.39 L 60.65 75.26 Q 60.94 75.95 61.69 76.02 L 66.96 76.47 Q 68.46 76.6 67.32 77.59 L 63.33 81.05 Q 62.76 81.55 62.93 82.28 L 64.12 87.43 Q 64.47 88.9 63.17 88.12 L 58.65 85.39 Q 58 85 57.35 85.39 L 52.83 88.12 Q 51.53 88.9 51.88 87.43 L 53.07 82.28 Q 53.24 81.55 52.67 81.05 L 48.68 77.59 Q 47.54 76.6 49.04 76.47 L 54.31 76.02 Q 55.06 75.95 55.35 75.26 Z" fill="#f4c62f"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<circle cx="22" cy="26" r="5" fill="#3b2d3a"/>
+</g>
+<g opacity="0.18">
+<circle cx="22" cy="26" r="5" fill="#3b2d3a" stroke="#3b2d3a" stroke-width="3" stroke-linejoin="round"/>
+</g>
+<circle cx="22" cy="26" r="5" fill="#e9e4d6"/>
+<circle cx="22" cy="26" r="1.8" fill="#8f8273"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<circle cx="22" cy="40" r="5" fill="#3b2d3a"/>
+</g>
+<g opacity="0.18">
+<circle cx="22" cy="40" r="5" fill="#3b2d3a" stroke="#3b2d3a" stroke-width="3" stroke-linejoin="round"/>
+</g>
+<circle cx="22" cy="40" r="5" fill="#e9e4d6"/>
+<circle cx="22" cy="40" r="1.8" fill="#8f8273"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<circle cx="22" cy="54" r="5" fill="#3b2d3a"/>
+</g>
+<g opacity="0.18">
+<circle cx="22" cy="54" r="5" fill="#3b2d3a" stroke="#3b2d3a" stroke-width="3" stroke-linejoin="round"/>
+</g>
+<circle cx="22" cy="54" r="5" fill="#e9e4d6"/>
+<circle cx="22" cy="54" r="1.8" fill="#8f8273"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<circle cx="22" cy="68" r="5" fill="#3b2d3a"/>
+</g>
+<g opacity="0.18">
+<circle cx="22" cy="68" r="5" fill="#3b2d3a" stroke="#3b2d3a" stroke-width="3" stroke-linejoin="round"/>
+</g>
+<circle cx="22" cy="68" r="5" fill="#e9e4d6"/>
+<circle cx="22" cy="68" r="1.8" fill="#8f8273"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<circle cx="22" cy="82" r="5" fill="#3b2d3a"/>
+</g>
+<g opacity="0.18">
+<circle cx="22" cy="82" r="5" fill="#3b2d3a" stroke="#3b2d3a" stroke-width="3" stroke-linejoin="round"/>
+</g>
+<circle cx="22" cy="82" r="5" fill="#e9e4d6"/>
+<circle cx="22" cy="82" r="1.8" fill="#8f8273"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<circle cx="22" cy="96" r="5" fill="#3b2d3a"/>
+</g>
+<g opacity="0.18">
+<circle cx="22" cy="96" r="5" fill="#3b2d3a" stroke="#3b2d3a" stroke-width="3" stroke-linejoin="round"/>
+</g>
+<circle cx="22" cy="96" r="5" fill="#e9e4d6"/>
+<circle cx="22" cy="96" r="1.8" fill="#8f8273"/>
+<g transform="rotate(-48 96 92)">
+<g opacity="0.22" transform="translate(0 2.4)">
+<path d="M 78 86 L 64 92 L 78 98 Z" fill="#3b2d3a"/>
+</g>
+<g opacity="0.18">
+<path d="M 78 86 L 64 92 L 78 98 Z" fill="#3b2d3a" stroke="#3b2d3a" stroke-width="3" stroke-linejoin="round"/>
+</g>
+<path d="M 78 86 L 64 92 L 78 98 Z" fill="#f3d7ad"/>
+<path d="M 68.5 90 L 64 92 L 68.5 94 Z" fill="#55474d"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<rect x="77" y="86" width="34" height="12" rx="2" fill="#3b2d3a"/>
+</g>
+<rect x="77" y="86" width="34" height="12" rx="2" fill="#f6c84f"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<rect x="111" y="85.5" width="7" height="13" rx="1.5" fill="#3b2d3a"/>
+</g>
+<g opacity="0.18">
+<rect x="111" y="85.5" width="7" height="13" rx="1.5" fill="#3b2d3a" stroke="#3b2d3a" stroke-width="3" stroke-linejoin="round"/>
+</g>
+<rect x="111" y="85.5" width="7" height="13" rx="1.5" fill="#cdd2da"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<rect x="117" y="86" width="8" height="12" rx="4" fill="#3b2d3a"/>
+</g>
+<g opacity="0.18">
+<rect x="117" y="86" width="8" height="12" rx="4" fill="#3b2d3a" stroke="#3b2d3a" stroke-width="3" stroke-linejoin="round"/>
+</g>
+<rect x="117" y="86" width="8" height="12" rx="4" fill="#faa9ba"/>
+</g>
+</svg>

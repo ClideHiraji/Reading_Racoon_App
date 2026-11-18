@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racoon's Closet: Parol lantern (violet, paws). FR-07, D-026.
+     Drawn to fit Racoon at rest: the bottom layer links ../../parts/racoon_C_inkscape.svg (locked).
+     Draw on the "Item" layer. The file's name is the item's id; its name, tier, price and how it's
+     earned are in reading-racoon/content/closet.json. motion-demo/build_racoon.py reads this file
+     and never writes it.
+     In his paws, in the open book's place. The hidden "Back view" group shows when he turns his back. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-parol"
+   sodipodi:docname="parol.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>Parol lantern</title>
+  <sodipodi:namedview
+     id="namedview-parol"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="2"
+     inkscape:cx="200"
+     inkscape:cy="320"
+     inkscape:current-layer="layer-item" />
+  <defs id="defs-parol">
+    <linearGradient id="gr-parol-paper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ffd36e" /><stop offset="0.5" style="stop-color:#ff8a5c" /><stop offset="1" style="stop-color:#e2603f" /></linearGradient>
+    <linearGradient id="gr-parol-glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#fffbe0" /><stop offset="1" style="stop-color:#ffd36e" /></linearGradient>
+    <linearGradient id="gr-parol-centre" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#d6b3f0" /><stop offset="1" style="stop-color:#7d55a0" /></linearGradient>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="../../parts/racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-item" inkscape:label="Item">
+   <g id="item-parol" inkscape:label="parol">
+     <title>Parol lantern: a Filipino Christmas star lantern that glows (violet)</title>
+     <path id="parol-1" inkscape:label="Tail" d="M 164.68 371.3 C 173.68 379.3 165.68 385.3 171.68 393.3 L 164.68 394.3 C 158.68 385.3 166.68 379.3 170.68 371.3 Z" style="fill:#ffd84d;stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="parol-2" inkscape:label="Tail" d="M 230.52 371.3 C 227.52 379.3 235.52 385.3 229.52 393.3 L 236.52 394.3 C 242.52 385.3 234.52 379.3 236.52 371.3 Z" style="fill:#c9a2e6;stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="parol-3" inkscape:label="Star" d="M 200.6 270 L 216.07 304.71 L 253.86 308.7 L 225.63 334.13 L 233.52 371.3 L 200.6 352.32 L 167.68 371.3 L 175.57 334.13 L 147.34 308.7 L 185.13 304.71 Z" style="fill:url(#gr-parol-paper);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="parol-4" inkscape:label="Glow star" d="M 200.6 295.64 L 209.49 314.77 L 230.43 317.31 L 214.98 331.67 L 219.03 352.37 L 200.6 342.12 L 182.17 352.37 L 186.22 331.67 L 170.77 317.31 L 191.71 314.77 Z" style="fill:url(#gr-parol-glow);stroke:#e9801f;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="parol-5" inkscape:label="Crease" d="M 200.6 327 L 200.6 270" style="fill:none;stroke:#e9801f;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round;opacity:0.6" />
+     <path id="parol-6" inkscape:label="Crease" d="M 200.6 327 L 253.86 308.7" style="fill:none;stroke:#e9801f;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round;opacity:0.6" />
+     <path id="parol-7" inkscape:label="Crease" d="M 200.6 327 L 233.52 371.3" style="fill:none;stroke:#e9801f;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round;opacity:0.6" />
+     <path id="parol-8" inkscape:label="Crease" d="M 200.6 327 L 167.68 371.3" style="fill:none;stroke:#e9801f;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round;opacity:0.6" />
+     <path id="parol-9" inkscape:label="Crease" d="M 200.6 327 L 147.34 308.7" style="fill:none;stroke:#e9801f;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round;opacity:0.6" />
+     <circle id="parol-10" inkscape:label="Centre" cx="200.6" cy="327" r="7.5" style="fill:url(#gr-parol-centre);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="parol-11" inkscape:label="Twinkle" d="M 156 282 Q 157.68 286.32 162 288 Q 157.68 289.68 156 294 Q 154.32 289.68 150 288 Q 154.32 286.32 156 282 Z" style="fill:#fffbe0;stroke:#d08ad8;stroke-width:1.1;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="parol-12" inkscape:label="Twinkle" d="M 246 284.5 Q 247.54 288.46 251.5 290 Q 247.54 291.54 246 295.5 Q 244.46 291.54 240.5 290 Q 244.46 288.46 246 284.5 Z" style="fill:#fffbe0;stroke:#d08ad8;stroke-width:1.1;stroke-linejoin:round;stroke-linecap:round" />
+     <g id="parol-13" inkscape:label="Back view" style="display:none">
+     <path id="parol-14" inkscape:label="Star" d="M 200.6 270 L 216.07 304.71 L 253.86 308.7 L 225.63 334.13 L 233.52 371.3 L 200.6 352.32 L 167.68 371.3 L 175.57 334.13 L 147.34 308.7 L 185.13 304.71 Z" style="fill:url(#gr-parol-paper);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="parol-15" inkscape:label="Centre" cx="200.6" cy="327" r="7.5" style="fill:#7d55a0;stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+   </g>
+  </g>
+</svg>

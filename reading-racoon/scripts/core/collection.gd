@@ -57,7 +57,7 @@ const STICKERS := {
 	"gift": {"name": "Gift", "group": "goals"},
 	"cake": {"name": "Cake", "group": "goals"},
 	"chest": {"name": "Treasure", "group": "goals"},
-	"raccoon": {"name": "Racoon", "group": "goals"},
+	"raccoon": {"name": "Raccoon", "group": "goals"},
 }
 
 ## Today's goals: one story, one game, and one lesson or song.
@@ -79,6 +79,9 @@ var goals := {"date": "", "done": []}
 var daily := {}
 ## Book or song id -> date first finished.
 var finished := {}
+## Counts the Closet's earned items need that nothing else keeps (D-026): "games" (Practice
+## games finished) and "goal_days" (days all of today's goals were done).
+var counts := {}
 
 
 # --- Stickers ---------------------------------------------------------------------------
@@ -244,7 +247,7 @@ func is_finished(id: String) -> bool:
 
 func to_dict() -> Dictionary:
 	return {"stickers": stickers, "words": words, "days": days, "goals": goals, "daily": daily,
-			"finished": finished}
+			"finished": finished, "counts": counts}
 
 
 func from_dict(d: Dictionary) -> void:
@@ -255,3 +258,4 @@ func from_dict(d: Dictionary) -> void:
 	goals = {"date": str(g.get("date", "")), "done": g.get("done", [])}
 	daily = d.get("daily", {})
 	finished = d.get("finished", {})
+	counts = d.get("counts", {})

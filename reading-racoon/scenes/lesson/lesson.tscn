@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://ui/close_button.gd" id="7_close"]
 [ext_resource type="Texture2D" path="res://assets/icons/heart_plus.svg" id="8_heart_plus"]
 [ext_resource type="Texture2D" path="res://assets/icons/check.svg" id="9_check"]
+[ext_resource type="Script" path="res://ui/fit_box.gd" id="10_fit"]
 
 [sub_resource type="ShaderMaterial" id="Paper"]
 resource_local_to_scene = true
@@ -226,10 +227,11 @@ radius = 48
 icon_name = "stories"
 icon_px = 50
 
-[node name="TaskHolder" type="MarginContainer" parent="Margin/VBox"]
+[node name="TaskHolder" type="Container" parent="Margin/VBox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+script = ExtResource("10_fit")
 
 [node name="CompanionRow" type="HBoxContainer" parent="Margin/VBox"]
 layout_mode = 2

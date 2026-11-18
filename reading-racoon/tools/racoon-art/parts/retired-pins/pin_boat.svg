@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racoon's Closet: Balangay pin (violet, pins). FR-07, D-026.
+     Drawn to fit Racoon at rest: the bottom layer links ../../parts/racoon_C_inkscape.svg (locked).
+     Draw on the "Item" layer. The file's name is the item's id; its name, tier, price and how it's
+     earned are in reading-racoon/content/closet.json. motion-demo/build_racoon.py reads this file
+     and never writes it. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-pin_boat"
+   sodipodi:docname="pin_boat.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>Balangay pin</title>
+  <sodipodi:namedview
+     id="namedview-pin_boat"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="2"
+     inkscape:cx="200"
+     inkscape:cy="312"
+     inkscape:current-layer="layer-item" />
+  <defs id="defs-pin_boat">
+    <linearGradient id="gr-pinboat-rim" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:#ffe680" /><stop offset="1" style="stop-color:#c98a00" /></linearGradient>
+    <linearGradient id="gr-pinboat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#c7a3e8" /><stop offset="1" style="stop-color:#5f3f80" /></linearGradient>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="../../parts/racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-item" inkscape:label="Item">
+   <g id="item-pin-boat" inkscape:label="pin_boat" transform="matrix(1.35 0 0 1.35 -60.9 -109.2)">
+     <title>Balangay pin: Butuan's balangay boat on violet enamel (violet)</title>
+     <circle id="pin-boat-1" inkscape:label="Rim" cx="174" cy="312" r="17.5" style="fill:url(#gr-pinboat-rim);stroke:#3b2d3a;stroke-width:3.2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="pin-boat-2" inkscape:label="Enamel" cx="174" cy="312" r="13.5" style="fill:url(#gr-pinboat);stroke:#c98a00;stroke-width:1.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pin-boat-3" inkscape:label="Sail" d="M 175 302 L 175 314 L 166 314 Z" style="fill:#fff3d6;stroke:#3b2d3a;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pin-boat-4" inkscape:label="Hull" d="M 163 314 Q 174 316 185 313 Q 178 321 168 320 Z" style="fill:#a8693d;stroke:#3b2d3a;stroke-width:1.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pin-boat-5" inkscape:label="Waves" d="M 163 322 Q 168 319 173 322 Q 178 325 184 322" style="fill:none;stroke:#7fe3d6;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="pin-boat-6" inkscape:label="Twinkle" d="M 183 300.4 Q 184.01 302.99 186.6 304 Q 184.01 305.01 183 307.6 Q 181.99 305.01 179.4 304 Q 181.99 302.99 183 300.4 Z" style="fill:#ffffff" />
+   </g>
+  </g>
+</svg>

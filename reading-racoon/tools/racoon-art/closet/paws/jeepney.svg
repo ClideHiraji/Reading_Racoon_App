@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racoon's Closet: Toy jeepney (gold, paws). FR-07, D-026.
+     Drawn to fit Racoon at rest: the bottom layer links ../../parts/racoon_C_inkscape.svg (locked).
+     Draw on the "Item" layer. The file's name is the item's id; its name, tier, price and how it's
+     earned are in reading-racoon/content/closet.json. motion-demo/build_racoon.py reads this file
+     and never writes it. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-jeepney"
+   sodipodi:docname="jeepney.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>Toy jeepney</title>
+  <sodipodi:namedview
+     id="namedview-jeepney"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="2"
+     inkscape:cx="200"
+     inkscape:cy="200"
+     inkscape:current-layer="layer-item" />
+  <defs id="defs-jeepney">
+    <linearGradient id="gr-jeepney-1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#fffaf0" /><stop offset="1" style="stop-color:#e8e2d6" /></linearGradient>
+    <linearGradient id="gr-jeepney-2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ff6f61" /><stop offset="1" style="stop-color:#d6453a" /></linearGradient>
+    <linearGradient id="gr-jeepney-3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#f4f6fa" /><stop offset="1" style="stop-color:#a9b1c0" /></linearGradient>
+    <linearGradient id="gr-jeepney-4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#fffaf0" /><stop offset="1" style="stop-color:#e8e2d6" /></linearGradient>
+    <linearGradient id="gr-jeepney-5" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ff6f61" /><stop offset="1" style="stop-color:#d6453a" /></linearGradient>
+    <linearGradient id="gr-jeepney-6" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#f4f6fa" /><stop offset="1" style="stop-color:#a9b1c0" /></linearGradient>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="../../parts/racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-item" inkscape:label="Item">
+   <g id="item-jeepney" inkscape:label="jeepney">
+     <title>Toy jeepney: a bright toy jeepney with gold trims (gold)</title>
+     <path id="jeepney-1" inkscape:label="Roof" d="M 140 302 C 140 293 146 289 156 289 L 230 289 C 236 289 242 293 242 302 Z" style="fill:url(#gr-jeepney-1);stroke:#3b2d3a;stroke-width:4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="jeepney-2" inkscape:label="Roof rack" d="M 150 285 L 234 285 M 158 285 L 158 290 M 182 285 L 182 290 M 206 285 L 206 290 M 230 285 L 230 290" style="fill:none;stroke:#e3a50d;stroke-width:3;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="jeepney-3" inkscape:label="Flag" d="M 236 285 L 236 270 L 248 274 L 236 278" style="fill:#e2574c;stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="jeepney-4" inkscape:label="Body" d="M 144 302 L 238 302 C 242 302 244 305 245 309 L 253 312 C 258 314 260 318 260 324 L 260 344 C 260 348 257 350 253 350 L 146 350 C 142 350 140 347 140 343 L 140 306 C 140 303 142 302 144 302 Z" style="fill:url(#gr-jeepney-2);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="jeepney-5" inkscape:label="Window" d="M 147 308 L 160 308 L 160 320 L 147 320 Z" style="fill:#bfe6f7;stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="jeepney-6" inkscape:label="Window" d="M 165 308 L 178 308 L 178 320 L 165 320 Z" style="fill:#bfe6f7;stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="jeepney-7" inkscape:label="Window" d="M 183 308 L 196 308 L 196 320 L 183 320 Z" style="fill:#bfe6f7;stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="jeepney-8" inkscape:label="Window" d="M 201 308 L 214 308 L 214 320 L 201 320 Z" style="fill:#bfe6f7;stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="jeepney-9" inkscape:label="Window" d="M 219 308 L 232 308 L 232 320 L 219 320 Z" style="fill:#bfe6f7;stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="jeepney-10" inkscape:label="Windshield" d="M 241 310 L 251 313 L 251 321 L 241 321 Z" style="fill:#bfe6f7;stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="jeepney-11" inkscape:label="Stripe" d="M 141 326 L 259 326 L 259 332 L 141 332 Z" style="fill:#ffc918" />
+     <path id="jeepney-12" inkscape:label="Stripe" d="M 141 334 L 259 334 L 259 338 L 141 338 Z" style="fill:#3f86c8" />
+     <path id="jeepney-13" inkscape:label="Gold trim" d="M 142 323 L 258 323" style="fill:none;stroke:#f2c94c;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="jeepney-14" inkscape:label="Bumper" d="M 238 344 L 262 344 L 262 351 L 238 351 Z" style="fill:url(#gr-jeepney-3);stroke:#3b2d3a;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="jeepney-15" inkscape:label="Headlight" cx="255.5" cy="330" r="3.6" style="fill:#fff3b0;stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="jeepney-16" inkscape:label="Wheel" cx="166" cy="352" r="12.5" style="fill:#3a3346;stroke:#3b2d3a;stroke-width:3.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="jeepney-17" inkscape:label="Hub" cx="166" cy="352" r="5" style="fill:#c9cfdb;stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="jeepney-18" inkscape:label="Wheel" cx="232" cy="352" r="12.5" style="fill:#3a3346;stroke:#3b2d3a;stroke-width:3.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="jeepney-19" inkscape:label="Hub" cx="232" cy="352" r="5" style="fill:#c9cfdb;stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="jeepney-20" inkscape:label="Shine" d="M 150 296 C 170 292 196 292 216 292" style="fill:none;stroke:#ffffff;stroke-width:3;stroke-linejoin:round;stroke-linecap:round;opacity:0.55" />
+     <g id="jeepney-21" inkscape:label="Back view" style="display:none">
+     <path id="jeepney-22" inkscape:label="Roof" d="M 140 302 C 140 293 146 289 156 289 L 230 289 C 236 289 242 293 242 302 Z" style="fill:url(#gr-jeepney-4);stroke:#3b2d3a;stroke-width:4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="jeepney-23" inkscape:label="Roof rack" d="M 150 285 L 234 285 M 158 285 L 158 290 M 182 285 L 182 290 M 206 285 L 206 290 M 230 285 L 230 290" style="fill:none;stroke:#e3a50d;stroke-width:3;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="jeepney-24" inkscape:label="Flag" d="M 236 285 L 236 270 L 248 274 L 236 278" style="fill:#e2574c;stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="jeepney-25" inkscape:label="Body" d="M 144 302 L 238 302 C 242 302 244 305 245 309 L 253 312 C 258 314 260 318 260 324 L 260 344 C 260 348 257 350 253 350 L 146 350 C 142 350 140 347 140 343 L 140 306 C 140 303 142 302 144 302 Z" style="fill:url(#gr-jeepney-5);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="jeepney-26" inkscape:label="Window" d="M 147 308 L 160 308 L 160 320 L 147 320 Z" style="fill:#bfe6f7;stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="jeepney-27" inkscape:label="Window" d="M 165 308 L 178 308 L 178 320 L 165 320 Z" style="fill:#bfe6f7;stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="jeepney-28" inkscape:label="Window" d="M 183 308 L 196 308 L 196 320 L 183 320 Z" style="fill:#bfe6f7;stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="jeepney-29" inkscape:label="Window" d="M 201 308 L 214 308 L 214 320 L 201 320 Z" style="fill:#bfe6f7;stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="jeepney-30" inkscape:label="Window" d="M 219 308 L 232 308 L 232 320 L 219 320 Z" style="fill:#bfe6f7;stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="jeepney-31" inkscape:label="Windshield" d="M 241 310 L 251 313 L 251 321 L 241 321 Z" style="fill:#bfe6f7;stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="jeepney-32" inkscape:label="Stripe" d="M 141 326 L 259 326 L 259 332 L 141 332 Z" style="fill:#ffc918" />
+     <path id="jeepney-33" inkscape:label="Stripe" d="M 141 334 L 259 334 L 259 338 L 141 338 Z" style="fill:#3f86c8" />
+     <path id="jeepney-34" inkscape:label="Gold trim" d="M 142 323 L 258 323" style="fill:none;stroke:#f2c94c;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="jeepney-35" inkscape:label="Bumper" d="M 238 344 L 262 344 L 262 351 L 238 351 Z" style="fill:url(#gr-jeepney-6);stroke:#3b2d3a;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="jeepney-36" inkscape:label="Headlight" cx="255.5" cy="330" r="3.6" style="fill:#fff3b0;stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="jeepney-37" inkscape:label="Wheel" cx="166" cy="352" r="12.5" style="fill:#3a3346;stroke:#3b2d3a;stroke-width:3.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="jeepney-38" inkscape:label="Hub" cx="166" cy="352" r="5" style="fill:#c9cfdb;stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="jeepney-39" inkscape:label="Wheel" cx="232" cy="352" r="12.5" style="fill:#3a3346;stroke:#3b2d3a;stroke-width:3.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="jeepney-40" inkscape:label="Hub" cx="232" cy="352" r="5" style="fill:#c9cfdb;stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="jeepney-41" inkscape:label="Shine" d="M 150 296 C 170 292 196 292 216 292" style="fill:none;stroke:#ffffff;stroke-width:3;stroke-linejoin:round;stroke-linecap:round;opacity:0.55" />
+     </g>
+   </g>
+  </g>
+</svg>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racoon's Closet: Flower crown (violet, hats). FR-07, D-026.
+     Drawn to fit Racoon at rest: the bottom layer links ../../parts/racoon_C_inkscape.svg (locked).
+     Draw on the "Item" layer. The file's name is the item's id; its name, tier, price and how it's
+     earned are in reading-racoon/content/closet.json. motion-demo/build_racoon.py reads this file
+     and never writes it. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-flower_crown"
+   sodipodi:docname="flower_crown.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>Flower crown</title>
+  <sodipodi:namedview
+     id="namedview-flower_crown"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="2"
+     inkscape:cx="200"
+     inkscape:cy="80"
+     inkscape:current-layer="layer-item" />
+  <defs id="defs-flower_crown">
+    <linearGradient id="gr-crown-leaf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#8fd16a" /><stop offset="1" style="stop-color:#4f8f37" /></linearGradient>
+    <radialGradient id="gr-sampaguita" cx="0.5" cy="0.5" r="0.5"><stop offset="0" style="stop-color:#ffffff" /><stop offset="1" style="stop-color:#eef0e6" /></radialGradient>
+    <linearGradient id="gr-crown-yellow-158" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#fff3a6" /><stop offset="1" style="stop-color:#ffc918" /></linearGradient>
+    <linearGradient id="gr-crown-yellow-243" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#fff3a6" /><stop offset="1" style="stop-color:#ffc918" /></linearGradient>
+    <radialGradient id="gr-orchid" cx="0.5" cy="0.45" r="0.6"><stop offset="0" style="stop-color:#ffd1f0" /><stop offset="0.55" style="stop-color:#d98ad0" /><stop offset="1" style="stop-color:#9a5bb8" /></radialGradient>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="../../parts/racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-item" inkscape:label="Item">
+   <g id="item-flower-crown" inkscape:label="flower_crown">
+     <title>Flower crown: sampaguita and a waling-waling orchid (violet)</title>
+     <path id="flower-crown-1" inkscape:label="Vine" d="M 106 126 C 124 84 160 64 200.5 64 C 241 64 277 84 295 126" style="fill:none;stroke:#487f33;stroke-width:9;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="flower-crown-2" inkscape:label="Vine light" d="M 108 122 C 126 84 160 66 200.5 66 C 241 66 275 84 293 122" style="fill:none;stroke:#7cc05a;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="flower-crown-3" inkscape:label="Leaf" d="M 113.23 111.83 Q 128.06 111.82 135.35 96.34 Q 118.31 97.9 113.23 111.83 Z" style="fill:url(#gr-crown-leaf);stroke:#3b2d3a;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="flower-crown-4" inkscape:label="Leaf" d="M 214.86 64.87 Q 219.94 78.8 236.98 80.35 Q 229.69 64.87 214.86 64.87 Z" style="fill:url(#gr-crown-leaf);stroke:#3b2d3a;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="flower-crown-5" inkscape:label="Leaf" d="M 137.21 84.57 Q 132.13 70.64 115.09 69.09 Q 122.38 84.57 137.21 84.57 Z" style="fill:url(#gr-crown-leaf);stroke:#3b2d3a;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="flower-crown-6" inkscape:label="Leaf" d="M 248.15 74.73 Q 233.32 74.74 226.03 90.22 Q 243.07 88.66 248.15 74.73 Z" style="fill:url(#gr-crown-leaf);stroke:#3b2d3a;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="flower-crown-7" inkscape:label="Leaf" d="M 171.18 67.78 Q 186.01 67.78 193.3 52.29 Q 176.26 53.85 171.18 67.78 Z" style="fill:url(#gr-crown-leaf);stroke:#3b2d3a;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="flower-crown-8" inkscape:label="Leaf" d="M 278.34 98.59 Q 283.41 112.53 300.45 114.08 Q 293.16 98.6 278.34 98.59 Z" style="fill:url(#gr-crown-leaf);stroke:#3b2d3a;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <g id="flower-crown-9" inkscape:label="Sampaguita">
+     <ellipse id="flower-crown-10" inkscape:label="Petal" cx="108.83" cy="108.86" rx="11.6" ry="6.96" transform="rotate(-90 108.83 108.86)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-11" inkscape:label="Petal" cx="119.29" cy="116.47" rx="11.6" ry="6.96" transform="rotate(-18 119.29 116.47)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-12" inkscape:label="Petal" cx="115.3" cy="128.76" rx="11.6" ry="6.96" transform="rotate(54 115.3 128.76)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-13" inkscape:label="Petal" cx="102.37" cy="128.76" rx="11.6" ry="6.96" transform="rotate(126 102.37 128.76)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-14" inkscape:label="Petal" cx="98.37" cy="116.47" rx="11.6" ry="6.96" transform="rotate(198 98.37 116.47)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="flower-crown-15" inkscape:label="Centre" cx="108.83" cy="119.86" r="6" style="fill:#ffd84d;stroke:#3b2d3a;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <g id="flower-crown-16" inkscape:label="Sampaguita">
+     <ellipse id="flower-crown-17" inkscape:label="Petal" cx="126.7" cy="83.09" rx="11.6" ry="6.96" transform="rotate(-90 126.7 83.09)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-18" inkscape:label="Petal" cx="137.16" cy="90.69" rx="11.6" ry="6.96" transform="rotate(-18 137.16 90.69)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-19" inkscape:label="Petal" cx="133.16" cy="102.99" rx="11.6" ry="6.96" transform="rotate(54 133.16 102.99)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-20" inkscape:label="Petal" cx="120.23" cy="102.99" rx="11.6" ry="6.96" transform="rotate(126 120.23 102.99)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-21" inkscape:label="Petal" cx="116.23" cy="90.69" rx="11.6" ry="6.96" transform="rotate(198 116.23 90.69)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="flower-crown-22" inkscape:label="Centre" cx="126.7" cy="94.09" r="6" style="fill:#ffd84d;stroke:#3b2d3a;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <g id="flower-crown-23" inkscape:label="Sampaguita">
+     <ellipse id="flower-crown-24" inkscape:label="Petal" cx="152.85" cy="63.73" rx="11.6" ry="6.96" transform="rotate(-90 152.85 63.73)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-25" inkscape:label="Petal" cx="163.31" cy="71.33" rx="11.6" ry="6.96" transform="rotate(-18 163.31 71.33)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-26" inkscape:label="Petal" cx="159.32" cy="83.63" rx="11.6" ry="6.96" transform="rotate(54 159.32 83.63)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-27" inkscape:label="Petal" cx="146.39" cy="83.63" rx="11.6" ry="6.96" transform="rotate(126 146.39 83.63)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-28" inkscape:label="Petal" cx="142.39" cy="71.33" rx="11.6" ry="6.96" transform="rotate(198 142.39 71.33)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="flower-crown-29" inkscape:label="Centre" cx="152.85" cy="74.73" r="6" style="fill:#ffd84d;stroke:#3b2d3a;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <g id="flower-crown-30" inkscape:label="Sampaguita">
+     <ellipse id="flower-crown-31" inkscape:label="Petal" cx="248.15" cy="63.73" rx="11.6" ry="6.96" transform="rotate(-90 248.15 63.73)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-32" inkscape:label="Petal" cx="258.61" cy="71.33" rx="11.6" ry="6.96" transform="rotate(-18 258.61 71.33)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-33" inkscape:label="Petal" cx="254.61" cy="83.63" rx="11.6" ry="6.96" transform="rotate(54 254.61 83.63)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-34" inkscape:label="Petal" cx="241.68" cy="83.63" rx="11.6" ry="6.96" transform="rotate(126 241.68 83.63)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-35" inkscape:label="Petal" cx="237.69" cy="71.33" rx="11.6" ry="6.96" transform="rotate(198 237.69 71.33)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="flower-crown-36" inkscape:label="Centre" cx="248.15" cy="74.73" r="6" style="fill:#ffd84d;stroke:#3b2d3a;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <g id="flower-crown-37" inkscape:label="Sampaguita">
+     <ellipse id="flower-crown-38" inkscape:label="Petal" cx="274.3" cy="83.09" rx="11.6" ry="6.96" transform="rotate(-90 274.3 83.09)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-39" inkscape:label="Petal" cx="284.77" cy="90.69" rx="11.6" ry="6.96" transform="rotate(-18 284.77 90.69)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-40" inkscape:label="Petal" cx="280.77" cy="102.99" rx="11.6" ry="6.96" transform="rotate(54 280.77 102.99)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-41" inkscape:label="Petal" cx="267.84" cy="102.99" rx="11.6" ry="6.96" transform="rotate(126 267.84 102.99)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-42" inkscape:label="Petal" cx="263.84" cy="90.69" rx="11.6" ry="6.96" transform="rotate(198 263.84 90.69)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="flower-crown-43" inkscape:label="Centre" cx="274.3" cy="94.09" r="6" style="fill:#ffd84d;stroke:#3b2d3a;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <g id="flower-crown-44" inkscape:label="Sampaguita">
+     <ellipse id="flower-crown-45" inkscape:label="Petal" cx="292.17" cy="108.86" rx="11.6" ry="6.96" transform="rotate(-90 292.17 108.86)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-46" inkscape:label="Petal" cx="302.63" cy="116.47" rx="11.6" ry="6.96" transform="rotate(-18 302.63 116.47)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-47" inkscape:label="Petal" cx="298.63" cy="128.76" rx="11.6" ry="6.96" transform="rotate(54 298.63 128.76)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-48" inkscape:label="Petal" cx="285.7" cy="128.76" rx="11.6" ry="6.96" transform="rotate(126 285.7 128.76)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-49" inkscape:label="Petal" cx="281.71" cy="116.47" rx="11.6" ry="6.96" transform="rotate(198 281.71 116.47)" style="fill:url(#gr-sampaguita);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="flower-crown-50" inkscape:label="Centre" cx="292.17" cy="119.86" r="6" style="fill:#ffd84d;stroke:#3b2d3a;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <g id="flower-crown-51" inkscape:label="Yellow bloom">
+     <ellipse id="flower-crown-52" inkscape:label="Petal" cx="158" cy="63.2" rx="9.28" ry="6.5" transform="rotate(-90 158 63.2)" style="fill:url(#gr-crown-yellow-158);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-53" inkscape:label="Petal" cx="165.62" cy="67.6" rx="9.28" ry="6.5" transform="rotate(-30 165.62 67.6)" style="fill:url(#gr-crown-yellow-158);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-54" inkscape:label="Petal" cx="165.62" cy="76.4" rx="9.28" ry="6.5" transform="rotate(30 165.62 76.4)" style="fill:url(#gr-crown-yellow-158);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-55" inkscape:label="Petal" cx="158" cy="80.8" rx="9.28" ry="6.5" transform="rotate(90 158 80.8)" style="fill:url(#gr-crown-yellow-158);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-56" inkscape:label="Petal" cx="150.38" cy="76.4" rx="9.28" ry="6.5" transform="rotate(150 150.38 76.4)" style="fill:url(#gr-crown-yellow-158);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-57" inkscape:label="Petal" cx="150.38" cy="67.6" rx="9.28" ry="6.5" transform="rotate(210 150.38 67.6)" style="fill:url(#gr-crown-yellow-158);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="flower-crown-58" inkscape:label="Centre" cx="158" cy="72" r="4.8" style="fill:#e9801f;stroke:#3b2d3a;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <g id="flower-crown-59" inkscape:label="Yellow bloom">
+     <ellipse id="flower-crown-60" inkscape:label="Petal" cx="243" cy="63.2" rx="9.28" ry="6.5" transform="rotate(-90 243 63.2)" style="fill:url(#gr-crown-yellow-243);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-61" inkscape:label="Petal" cx="250.62" cy="67.6" rx="9.28" ry="6.5" transform="rotate(-30 250.62 67.6)" style="fill:url(#gr-crown-yellow-243);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-62" inkscape:label="Petal" cx="250.62" cy="76.4" rx="9.28" ry="6.5" transform="rotate(30 250.62 76.4)" style="fill:url(#gr-crown-yellow-243);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-63" inkscape:label="Petal" cx="243" cy="80.8" rx="9.28" ry="6.5" transform="rotate(90 243 80.8)" style="fill:url(#gr-crown-yellow-243);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-64" inkscape:label="Petal" cx="235.38" cy="76.4" rx="9.28" ry="6.5" transform="rotate(150 235.38 76.4)" style="fill:url(#gr-crown-yellow-243);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-65" inkscape:label="Petal" cx="235.38" cy="67.6" rx="9.28" ry="6.5" transform="rotate(210 235.38 67.6)" style="fill:url(#gr-crown-yellow-243);stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="flower-crown-66" inkscape:label="Centre" cx="243" cy="72" r="4.8" style="fill:#e9801f;stroke:#3b2d3a;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <g id="flower-crown-67" inkscape:label="Waling-waling orchid">
+     <ellipse id="flower-crown-68" inkscape:label="Petal" cx="200.5" cy="46" rx="17" ry="11" transform="rotate(-90 200.5 46)" style="fill:url(#gr-orchid);stroke:#3b2d3a;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-69" inkscape:label="Petal" cx="215.72" cy="57.06" rx="17" ry="11" transform="rotate(-18 215.72 57.06)" style="fill:url(#gr-orchid);stroke:#3b2d3a;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-70" inkscape:label="Petal" cx="209.9" cy="74.94" rx="17" ry="11" transform="rotate(54 209.9 74.94)" style="fill:url(#gr-orchid);stroke:#3b2d3a;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-71" inkscape:label="Petal" cx="191.1" cy="74.94" rx="17" ry="11" transform="rotate(126 191.1 74.94)" style="fill:url(#gr-orchid);stroke:#3b2d3a;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="flower-crown-72" inkscape:label="Petal" cx="185.28" cy="57.06" rx="17" ry="11" transform="rotate(198 185.28 57.06)" style="fill:url(#gr-orchid);stroke:#3b2d3a;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="flower-crown-73" inkscape:label="Lip" d="M 189 62 C 189 76 212 76 212 62 C 206 70 195 70 189 62 Z" style="fill:#7b3f99;stroke:#3b2d3a;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="flower-crown-74" inkscape:label="Spot" cx="195" cy="56" r="2.2" style="fill:#7b3f99" />
+     <circle id="flower-crown-75" inkscape:label="Spot" cx="206" cy="56" r="2.2" style="fill:#7b3f99" />
+     <circle id="flower-crown-76" inkscape:label="Spot" cx="200.5" cy="51" r="2.2" style="fill:#7b3f99" />
+     <circle id="flower-crown-77" inkscape:label="Centre" cx="200.5" cy="58" r="5.2" style="fill:#fff3b0;stroke:#3b2d3a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+     <path id="flower-crown-78" inkscape:label="Twinkle" d="M 128 58 Q 130.24 63.76 136 66 Q 130.24 68.24 128 74 Q 125.76 68.24 120 66 Q 125.76 63.76 128 58 Z" style="fill:#ffffff;stroke:#b98ad6;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="flower-crown-79" inkscape:label="Twinkle" d="M 274 57 Q 275.96 62.04 281 64 Q 275.96 65.96 274 71 Q 272.04 65.96 267 64 Q 272.04 62.04 274 57 Z" style="fill:#ffffff;stroke:#b98ad6;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="flower-crown-80" inkscape:label="Twinkle" d="M 176 34.5 Q 177.54 38.46 181.5 40 Q 177.54 41.54 176 45.5 Q 174.46 41.54 170.5 40 Q 174.46 38.46 176 34.5 Z" style="fill:#ffffff;stroke:#b98ad6;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+   </g>
+  </g>
+</svg>

@@ -1,4 +1,4 @@
-extends VBoxContainer
+extends BoxContainer
 ## Tap-one-card task: rhyme, picture-word match, letter sounds, syllable claps.
 ## Answers on tap, no "Check" step (D-007). 2-4 big paper cards (NFR-02) with
 ## tinted SVG pictures and Andika letters (D-009).
@@ -35,10 +35,16 @@ func setup(item: Dictionary) -> void:
 		card.custom_minimum_size = Vector2(310 if wide else 210, 250 if has_pictures else 180)
 		if long:
 			card.custom_minimum_size = Vector2(640, 110 if not has_pictures else 130)
+			if Kit.landscape():   # NFR-02's 96 px still holds (D-023)
+				card.custom_minimum_size.y = 96 if not has_pictures else 110
 		card.pressed.connect(_on_card.bind(str(c.id)))
 		card.add_child(_row_content(c) if long else _card_content(c, has_pictures))
 		grid.add_child(card)
 		_cards[str(c.id)] = card
+	# On a laptop the picture stands beside the choices (D-023).
+	if Kit.landscape() and %Stage.visible:
+		vertical = false
+		add_theme_constant_override("separation", 48)
 
 
 func _card_content(c: Dictionary, has_pictures: bool) -> Control:
@@ -56,7 +62,7 @@ func _card_content(c: Dictionary, has_pictures: bool) -> Control:
 		row.add_theme_constant_override("separation", -6)
 		var px := (130.0 if not c.has("label") else 116.0) / (1.0 if count == 1 else 1.7)
 		for i in count:
-			var icon := Icons.rect(c.picture, px, Icons.picture_color(c.picture))
+			var icon := Icons.picture_rect(c.picture, px)
 			icon.name = "Icon%d" % i
 			row.add_child(icon)
 		box.add_child(row)
@@ -83,7 +89,7 @@ func _row_content(c: Dictionary) -> Control:
 	row.offset_bottom = -8
 	row.add_theme_constant_override("separation", 18)
 	if c.has("picture"):
-		var icon := Icons.rect(c.picture, 72, Icons.picture_color(c.picture))
+		var icon := Icons.picture_rect(c.picture, 72)
 		icon.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		row.add_child(icon)
 	var l := Label.new()
@@ -113,7 +119,7 @@ func try_again(chosen: String) -> void:
 	if _cards.has(chosen):
 		var card: ChunkyButton = _cards[chosen]
 		card.disabled = true
-		var sb: StyleBoxFlat = card.get_theme_stylebox("disabled").duplicate()
+		var sb: PaperBox = card.get_theme_stylebox("disabled").duplicate()
 		sb.border_color = Palette.ALMOST
 		sb.set_border_width_all(5)
 		card.add_theme_stylebox_override("disabled", sb)

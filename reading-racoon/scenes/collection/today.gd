@@ -11,6 +11,20 @@ func _ready() -> void:
 		return
 	var column := Kit.page(self, "home", 300)
 	Kit.header(column, "Today", GameState.go_home)
+	# On a laptop Racoon and the week stand beside today's goals (D-023).
+	var side: Control = column
+	var main: Control = column
+	if Kit.landscape():
+		var body := HBoxContainer.new()
+		body.add_theme_constant_override("separation", 24)
+		column.add_child(body)
+		side = VBoxContainer.new()
+		side.custom_minimum_size = Vector2(440, 0)
+		side.add_theme_constant_override("separation", 18)
+		body.add_child(side)
+		main = VBoxContainer.new()
+		main.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		body.add_child(main)
 	var talk := HBoxContainer.new()
 	talk.add_theme_constant_override("separation", 12)
 	var raccoon := Raccoon.new()
@@ -20,12 +34,12 @@ func _ready() -> void:
 	bubble.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	bubble.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	talk.add_child(bubble)
-	column.add_child(talk)
+	side.add_child(talk)
 
 	var today := GameState.today()
 	var done: Array = GameState.collection.goals_done(today)
 	var card := Kit.card(24)
-	column.add_child(card)
+	main.add_child(card)
 	var v := VBoxContainer.new()
 	v.add_theme_constant_override("separation", 18)
 	card.add_child(v)
@@ -36,7 +50,7 @@ func _ready() -> void:
 	v.add_child(_prize_row(Collection.GOALS.size() - left, left == 0))
 
 	var week := Kit.card(24)
-	column.add_child(week)
+	side.add_child(week)
 	var w := VBoxContainer.new()
 	w.add_theme_constant_override("separation", 14)
 	week.add_child(w)
@@ -44,7 +58,7 @@ func _ready() -> void:
 	w.add_child(_week_row())
 
 	await get_tree().process_frame
-	var say := "You did everything today!" if left == 0 else "Here's what we can do today!"
+	var say := GameState.talk("today_all_done") if left == 0 else GameState.talk("today_hello")
 	raccoon.set_mood("celebrate" if left == 0 else "happy")
 	bubble.say(say)
 	Speech.say(say)
@@ -55,7 +69,7 @@ func _ready() -> void:
 func _goal_row(g: Dictionary, done: bool) -> Control:
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 16)
-	row.custom_minimum_size = Vector2(0, 112)
+	row.custom_minimum_size = Vector2(0, 96 if Kit.landscape() else 112)   # D-023
 	row.add_child(Kit.disc(g.icon, Palette.YELLOW, 84))
 	var t := Kit.label(g.text, 30, Palette.INK, true)
 	t.size_flags_horizontal = Control.SIZE_EXPAND_FILL

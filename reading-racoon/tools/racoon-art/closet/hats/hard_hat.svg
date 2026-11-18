@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racoon's Closet: Builder's hard hat (silver, hats). FR-07, D-026.
+     Drawn to fit Racoon at rest: the bottom layer links ../../parts/racoon_C_inkscape.svg (locked).
+     Draw on the "Item" layer. The file's name is the item's id; its name, tier, price and how it's
+     earned are in reading-racoon/content/closet.json. motion-demo/build_racoon.py reads this file
+     and never writes it. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-hard-hat"
+   sodipodi:docname="hard_hat.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>Builder's hard hat</title>
+  <sodipodi:namedview
+     id="namedview-hard-hat"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="2"
+     inkscape:cx="200"
+     inkscape:cy="200"
+     inkscape:current-layer="layer-item" />
+  <defs id="defs-hard-hat">
+    <linearGradient id="gr-hard-hat-1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ffe27a" /><stop offset="1" style="stop-color:#f2ae0b" /></linearGradient>
+    <linearGradient id="gr-hard-hat-2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ffd23f" /><stop offset="1" style="stop-color:#e39b0d" /></linearGradient>
+    <linearGradient id="gr-hard-hat-3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ffd23f" /><stop offset="1" style="stop-color:#d99307" /></linearGradient>
+    <linearGradient id="gr-hard-hat-4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#9aa3b5" /><stop offset="1" style="stop-color:#5c6475" /></linearGradient>
+    <radialGradient id="gr-hard-hat-5" cx="0.35" cy="0.3" r="0.8"><stop offset="0" style="stop-color:#ffffff" /><stop offset="1" style="stop-color:#fff0a8" /></radialGradient>
+    <linearGradient id="gr-hard-hat-6" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ffe27a" /><stop offset="1" style="stop-color:#f2ae0b" /></linearGradient>
+    <linearGradient id="gr-hard-hat-7" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ffd23f" /><stop offset="1" style="stop-color:#e39b0d" /></linearGradient>
+    <linearGradient id="gr-hard-hat-8" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ffd23f" /><stop offset="1" style="stop-color:#d99307" /></linearGradient>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="../../parts/racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-item" inkscape:label="Item">
+   <g id="item-hard-hat" inkscape:label="hard_hat">
+     <title>Builder's hard hat: a yellow builder's helmet with a headlamp (silver)</title>
+     <path id="hard-hat-1" inkscape:label="Dome" d="M 116 118 C 112 68 152 38 200.5 38 C 249 38 289 68 285 118 C 245 110 156 110 116 118 Z" style="fill:url(#gr-hard-hat-1);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="hard-hat-2" inkscape:label="Ridge" d="M 188 41 C 186 68 186 94 188 112 L 213 112 C 215 94 215 68 213 41 C 205 38 196 38 188 41 Z" style="fill:url(#gr-hard-hat-2);stroke:#3b2d3a;stroke-width:3.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="hard-hat-3" inkscape:label="Rib" d="M 158 52 C 150 72 148 94 150 113" style="fill:none;stroke:#d18c08;stroke-width:3;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="hard-hat-4" inkscape:label="Rib" d="M 243 52 C 251 72 253 94 251 113" style="fill:none;stroke:#d18c08;stroke-width:3;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="hard-hat-5" inkscape:label="Brim" d="M 100 120 C 130 105 271 105 301 120 C 295 133 262 138 200.5 138 C 139 138 106 133 100 120 Z" style="fill:url(#gr-hard-hat-3);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="hard-hat-6" inkscape:label="Lamp" cx="200.5" cy="84" rx="15" ry="12" style="fill:url(#gr-hard-hat-4);stroke:#3b2d3a;stroke-width:3.6;stroke-linejoin:round;stroke-linecap:round" />
+     <ellipse id="hard-hat-7" inkscape:label="Lamp light" cx="200.5" cy="84" rx="9.5" ry="7.5" style="fill:url(#gr-hard-hat-5);stroke:#3b2d3a;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="hard-hat-8" inkscape:label="Shine" d="M 138 74 C 150 56 168 46 184 44" style="fill:none;stroke:#ffffff;stroke-width:5;stroke-linejoin:round;stroke-linecap:round;opacity:0.55" />
+     <g id="hard-hat-9" inkscape:label="Back view" style="display:none">
+     <path id="hard-hat-10" inkscape:label="Dome" d="M 116 118 C 112 68 152 38 200.5 38 C 249 38 289 68 285 118 C 245 110 156 110 116 118 Z" style="fill:url(#gr-hard-hat-6);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="hard-hat-11" inkscape:label="Ridge" d="M 188 41 C 186 68 186 94 188 112 L 213 112 C 215 94 215 68 213 41 C 205 38 196 38 188 41 Z" style="fill:url(#gr-hard-hat-7);stroke:#3b2d3a;stroke-width:3.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="hard-hat-12" inkscape:label="Rib" d="M 158 52 C 150 72 148 94 150 113" style="fill:none;stroke:#d18c08;stroke-width:3;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="hard-hat-13" inkscape:label="Rib" d="M 243 52 C 251 72 253 94 251 113" style="fill:none;stroke:#d18c08;stroke-width:3;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="hard-hat-14" inkscape:label="Brim" d="M 100 120 C 130 105 271 105 301 120 C 295 133 262 138 200.5 138 C 139 138 106 133 100 120 Z" style="fill:url(#gr-hard-hat-8);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+   </g>
+  </g>
+</svg>

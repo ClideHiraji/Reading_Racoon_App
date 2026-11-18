@@ -120,7 +120,7 @@ func _finish() -> void:
 	_leaves.clear()
 	var seconds := (Time.get_ticks_msec() - _started) / 1000.0
 	var result := GameState.finish_practice("word_catch", _first_try, _targets.size(), seconds)
-	Kit.reward(self, "Great catching!", result, _back)
+	Kit.reward(self, GameState.talk("reward_catch"), result, _back)
 
 
 func _back() -> void:

@@ -90,7 +90,7 @@ func _next() -> void:
 func _say_round() -> void:
 	var r: Dictionary = _rounds[_round] if _round < _rounds.size() else {}
 	if not r.is_empty():
-		Speech.say("Pop the balloon that rhymes with %s!" % r.word)
+		Speech.say("Pop the balloon that rhymes with %s!" % r.word, "en")
 
 
 func _add_balloon(o: Dictionary, i: int, n: int, right: bool) -> void:
@@ -114,7 +114,7 @@ func _tap(b: Balloon, o: Dictionary, right: bool) -> void:
 	if not right:
 		_missed = true
 		Sfx.play("wrong")
-		Speech.say(o.word)
+		Speech.say(o.word, "en")
 		Kit.shake(b, 14.0)
 		return
 	if not _missed:
@@ -123,7 +123,7 @@ func _tap(b: Balloon, o: Dictionary, right: bool) -> void:
 	Kit.show_rounds(_dots, _rounds.size(), _results)
 	Sfx.play("pop")
 	var r: Dictionary = _rounds[_round]
-	Speech.say("%s and %s. They rhyme!" % [r.word, o.word])
+	Speech.say("%s and %s. They rhyme!" % [r.word, o.word], "en")
 	GameState.learn_words([{"word": o.word, "picture": o.picture, "lang": "en"}], "game")
 	for other in _balloons:
 		if other != b:
@@ -143,7 +143,7 @@ func _finish() -> void:
 	_balloons.clear()
 	var seconds := (Time.get_ticks_msec() - _started) / 1000.0
 	var result := GameState.finish_practice("rhyme_pop", _first_try, _rounds.size(), seconds)
-	Kit.reward(self, "Pop, pop, hooray!", result, _back)
+	Kit.reward(self, GameState.talk("reward_pop"), result, _back)
 
 
 func _back() -> void:

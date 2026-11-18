@@ -13,6 +13,9 @@ const LOCKED := Color("c9c0b2")
 const TABS_H := 112.0
 const PLAY_H := 152.0
 const TILE_H := 196.0
+## On a laptop (D-023) the tiles and PLAY stand in a column this wide on the
+## right, and Racoon stands on his mat to the left of it.
+const SIDE_W := 640.0
 
 @onready var raccoon: Raccoon = %Raccoon
 @onready var bubble: SpeechBubble = %Bubble
@@ -33,13 +36,19 @@ var _play_sub: Label
 var _status: PanelContainer
 var _status_icon: TextureRect
 var _status_text: Label
+var _lift := 0.0   # the phone's home indicator, under the bottom tabs (D-023)
 
 
 func _ready() -> void:
 	if not GameState.guard_hub():   # FR-12: asleep at night
 		return
 	_build()
-	raccoon.gui_input.connect(_on_raccoon_input)
+	AnimatedStar.warm()   # for Today's goals and the reward card (D-022)
+	raccoon.react_to_taps = true   # a tap: giggle, spin, peekaboo, jump, dance... (D-024)
+	raccoon.lively = true          # and moves of his own when nobody taps for a while
+	bubble.speaker = raccoon       # his bubble walks with him and points at him
+	raccoon.tapped.connect(_on_raccoon_tapped)   # only taps he takes (not while he's busy)
+	raccoon.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND   # D-023
 	GameState.wallet_changed.connect(_refresh)
 	_refresh()
 	var timer := Timer.new()
@@ -56,22 +65,25 @@ func _ready() -> void:
 		_greet()
 	# The first visit of a day earns a days sticker (D-017).
 	var day := GameState.new_day()
-	if day != "":
+	if day != "" or not GameState.new_day_items.is_empty():
 		await get_tree().create_timer(1.6).timeout
 		if is_inside_tree():
-			Kit.reward(self, "Hello, new day!", {"coins": 0, "stickers": [day]}, _refresh)
+			Kit.reward(self, GameState.talk("reward_new_day"), {"coins": 0, "stickers": [day] if day != "" else [],
+					"items": GameState.new_day_items}, _refresh)
 
 
 func _greet() -> void:
 	var child := GameState.student_name()
 	if not AccessPolicy.is_open(GameState.access_decision()):
-		_say("Adventure is resting now. Let's read a story or play!", "encourage")
+		_say(GameState.talk("hub_resting"), "encourage")
 	elif GameState.post_test_ready():
-		_say("It's Big Reading Day! Show me how much you've grown!", "happy")
+		_say(GameState.talk("hub_big_day"), "happy")
 	elif child != "":
-		_say("Hi, %s! Shall we read today?" % child, "happy")
+		_say(GameState.talk("hub_hi_name", [child]), "happy")
+		raccoon.moment("greet")
 	else:
-		_say("Hi! Shall we read today?", "happy")
+		_say(GameState.talk("hub_hi"), "happy")
+		raccoon.moment("greet")
 
 
 ## GameState sent the child here instead of a section; Racoon says why (D-015).
@@ -79,24 +91,26 @@ func show_notice() -> void:
 	match GameState.notice:
 		"adventure_closed":
 			var at := GameState.adventure_opens_text()
-			_say("Adventure is resting now%s. Let's read or play!" % (
-					", it opens at %s" % at if at != "" else ""), "encourage")
+			_say(GameState.talk("hub_closed_at", [at]) if at != "" else GameState.talk("hub_closed"), "encourage")
 		"free_limit":
-			_say("Free play is done for today. Great job! See you tomorrow.", "happy")
+			_say(GameState.talk("hub_free_done"), "happy")
 	GameState.notice = ""
 	_refresh()
 
 
 func _say(text: String, mood: String) -> void:
 	raccoon.set_mood(mood)
+	raccoon.talk(clampf(text.split(" ", false).size() * 0.3, 0.8, 4.0))
 	bubble.say(text)
 	Speech.say(text)
 
 
-func _on_raccoon_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		var text := GameState.line("path_hello")
-		_say(text if text != "" else "Let's read together!", "happy")
+func _on_raccoon_tapped() -> void:
+	var text := GameState.line("path_hello")
+	text = text if text != "" else GameState.talk("read_together")
+	bubble.say(text)   # he reacts to the tap himself
+	raccoon.talk(1.2)
+	Speech.say(text)
 
 
 # --- Actions ---------------------------------------------------------------------------
@@ -106,8 +120,7 @@ func _on_play() -> void:
 	if not open:
 		_shake(_play)
 		var at := GameState.adventure_opens_text()
-		_say("Adventure is resting%s. Try the Library!" % (" until %s" % at if at != "" else ""),
-				"thinking")
+		_say(GameState.talk("hub_play_closed_until", [at]) if at != "" else GameState.talk("hub_play_closed"), "thinking")
 		return
 	Speech.stop()
 	if GameState.post_test_ready():
@@ -119,19 +132,18 @@ func _on_play() -> void:
 func _on_tile(id: String) -> void:
 	if not AccessPolicy.is_open(GameState.free_play_decision()):
 		_shake(_tiles[id])
-		_say("Free play is done for today. See you tomorrow!", "encourage")
+		_say(GameState.talk("hub_free_done_short"), "encourage")
 		return
 	Speech.stop()
 	GameState.open_section(id)
 
 
-## The profile is for grown-ups too: a tap saves answers to school now.
+## The profile chip opens the buddy and language screen (D-033), which also says whether the stars
+## have reached school; the tap saves answers to school now, as before.
 func _on_profile() -> void:
 	Sync.request_soon()
-	if GameState.store.queue_size() == 0:
-		_say("All your stars are saved at school!", "happy")
-	else:
-		_say("I'll save your stars to school when there's Wi-Fi.", "thinking")
+	Speech.stop()
+	get_tree().change_scene_to_file(GameState.BUDDY_SCENE)
 
 
 func _shake(node: Control) -> void:
@@ -224,14 +236,17 @@ func _update_status(open: bool, d: Dictionary, free: Dictionary, level: int) -> 
 # --- Building the screen (D-022 layout) ------------------------------------------------
 
 func _build() -> void:
+	var wide := Kit.landscape()
+	var safe := Kit.insets()
+	_lift = safe.bottom
 	# Top bar: the child, Today, coins.
 	var top := HBoxContainer.new()
 	top.add_theme_constant_override("separation", 12)
 	top.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
-	top.offset_left = 16
-	top.offset_right = -16
-	top.offset_top = 18
-	top.offset_bottom = 114
+	top.offset_left = (40.0 if wide else 16.0) + safe.left
+	top.offset_right = -(40.0 if wide else 16.0) - safe.right
+	top.offset_top = 18 + safe.top
+	top.offset_bottom = 114 + safe.top
 	add_child(top)
 	top.add_child(_profile())
 	var gap := Control.new()
@@ -262,8 +277,13 @@ func _build() -> void:
 			Vector4(16, 8, 20, 8)))
 	_status.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM)
 	_status.grow_horizontal = Control.GROW_DIRECTION_BOTH
-	_status.offset_top = -(TABS_H + 28 + PLAY_H + 32 + TILE_H + 70)
+	_status.offset_top = -(TABS_H + 28 + PLAY_H + 32 + TILE_H + 70) - _lift
 	_status.offset_bottom = _status.offset_top + 56
+	if wide:   # centered over the column
+		_status.anchor_left = 1.0
+		_status.anchor_right = 1.0
+		_status.offset_left = -(40 + SIDE_W / 2)
+		_status.offset_right = _status.offset_left
 	_status.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var sh := HBoxContainer.new()
 	sh.add_theme_constant_override("separation", 10)
@@ -281,7 +301,7 @@ func _build() -> void:
 
 	# My things.
 	var bar := PanelContainer.new()
-	var sb := Kit.box(Palette.CARD, 0, 0, Vector4(16, 4, 16, 8))
+	var sb := Kit.box(Palette.CARD, 0, 0, Vector4(16, 4, 16, 8 + _lift))
 	sb.corner_radius_top_left = 28
 	sb.corner_radius_top_right = 28
 	sb.shadow_color = Color(Palette.SHADOW, 0.25)
@@ -289,14 +309,14 @@ func _build() -> void:
 	sb.shadow_size = 1
 	bar.add_theme_stylebox_override("panel", sb)
 	bar.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
-	bar.offset_top = -TABS_H
+	bar.offset_top = -TABS_H - _lift
 	add_child(bar)
 	var tabs := HBoxContainer.new()
 	tabs.add_theme_constant_override("separation", 8)
 	bar.add_child(tabs)
 	for t in [["ClosetTab", "Closet", "hat", Palette.BAY_DEEP, "closet"],
-			["StickersTab", "Stickers", "star", Palette.MANGO_DEEP, "stickers"],
-			["WordsTab", "Words", "pencil", Palette.CORAL_DEEP, "words"]]:
+			["StickersTab", "Stickers", "sticker", Palette.MANGO_DEEP, "stickers"],
+			["WordsTab", "Words", "wordbook", Palette.CORAL_DEEP, "words"]]:
 		var b := _tab(t[1], t[2], t[3])
 		b.name = t[0]
 		b.unique_name_in_owner = true
@@ -306,16 +326,47 @@ func _build() -> void:
 	for n in find_children("*", "", true, false):
 		if n.unique_name_in_owner:
 			n.owner = self
+	if wide:
+		_place_racoon()
+
+
+## Laptop (D-023): Racoon on his mat in the middle of the left side, his bubble
+## above him growing upward, clear of the top bar.
+func _place_racoon() -> void:
+	var cx := 40.0 + (1280.0 - 80.0 - SIDE_W - 24.0) / 2.0
+	var feet := TABS_H + _lift + 44.0
+	_pin(raccoon, cx - 150, cx + 150, -(feet + 300), -feet)
+	_pin($Mat, cx - 160, cx + 160, -(feet + 32), -(feet - 32))
+	_pin(bubble, 40, 1280.0 - 80.0 - SIDE_W, -(feet + 410), -(feet + 320))
+	bubble.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	bubble.tail_x = cx - 60
+
+
+## Anchors `node` to the bottom-left corner at these offsets.
+func _pin(node: Control, left: float, right: float, top: float, bottom: float) -> void:
+	node.anchor_left = 0.0
+	node.anchor_right = 0.0
+	node.anchor_top = 1.0
+	node.anchor_bottom = 1.0
+	node.offset_left = left
+	node.offset_right = right
+	node.offset_top = top
+	node.offset_bottom = bottom
 
 
 ## Puts `node` in a full-width band whose top is `from_bottom` px above the
-## bottom edge, `h` px tall, with 24 px side margins.
+## bottom edge, `h` px tall, with 24 px side margins; on a laptop, in the
+## column on the right (D-023).
 func _bottom(node: Control, from_bottom: float, h: float) -> void:
 	node.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
 	node.offset_left = 24
 	node.offset_right = -24
-	node.offset_top = -from_bottom
-	node.offset_bottom = -from_bottom + h
+	if Kit.landscape():
+		node.anchor_left = 1.0
+		node.offset_left = -(40 + SIDE_W)
+		node.offset_right = -40
+	node.offset_top = -from_bottom - _lift
+	node.offset_bottom = -from_bottom - _lift + h
 	add_child(node)
 
 
@@ -327,7 +378,7 @@ func _profile() -> ChunkyButton:
 	b.lift = 5
 	b.radius = 48
 	b.tap_sound = false
-	b.tooltip_text = "Save to school"
+	b.tooltip_text = "My buddy"
 	b.custom_minimum_size = Vector2(292, 96)
 	b.pressed.connect(_on_profile)
 	var h := HBoxContainer.new()
@@ -426,6 +477,9 @@ func _tile(title: String, icon: String, color: Color) -> ChunkyButton:
 	var b := ChunkyButton.new()
 	b.text = title
 	b.face_color = color
+	b.full_color = true   # the Home tiles show their pictures in full colour (D-027)
+	b.stitched = true     # and are sewn round like felt patches (D-028)
+	b.tilt = {"book": -2.0, "bulb": 1.5, "speaker": -1.5}.get(icon, 0.0)
 	b.icon_name = icon
 	b.icon_px = 84
 	b.lift = 8
@@ -500,7 +554,7 @@ func _tab(title: String, icon: String, tint: Color) -> Button:
 	h.add_theme_constant_override("separation", 10)
 	h.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	c.add_child(h)
-	h.add_child(Icons.rect(icon, 52, tint))
+	h.add_child(Icons.picture_rect(icon, 56, tint))   # in full paper colour (D-027)
 	var l := Kit.label(title, 26, Palette.INK, true)
 	l.autowrap_mode = TextServer.AUTOWRAP_OFF
 	l.size_flags_vertical = Control.SIZE_SHRINK_CENTER
@@ -508,5 +562,5 @@ func _tab(title: String, icon: String, tint: Color) -> Button:
 	return b
 
 
-func _disc(col: Color) -> StyleBoxFlat:
+func _disc(col: Color) -> PaperBox:
 	return Kit.box(col, 60)

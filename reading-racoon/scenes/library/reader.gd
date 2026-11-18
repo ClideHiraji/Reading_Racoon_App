@@ -19,7 +19,7 @@ var _photo: TextureRect
 var _photo_edge: Panel
 var _pictures: HBoxContainer
 var _text: ReadAlong
-var _body: VBoxContainer
+var _body: BoxContainer
 var _controls: HBoxContainer
 var _read_btn: ChunkyButton
 var _prev: ChunkyButton
@@ -38,12 +38,15 @@ func _ready() -> void:
 	card.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	card.clip_children = CanvasItem.CLIP_CHILDREN_AND_DRAW
 	_column.add_child(card)
-	_body = VBoxContainer.new()
+	# On a laptop the page's picture stands beside its words (D-023).
+	var wide := Kit.landscape()
+	_body = BoxContainer.new()
+	_body.vertical = not wide
 	_body.add_theme_constant_override("separation", 12)
 	card.add_child(_body)
 	_art = PanelContainer.new()
 	_art.add_theme_stylebox_override("panel", Kit.box(Palette.SKY, 0))
-	_art.custom_minimum_size = Vector2(0, 420)
+	_art.custom_minimum_size = Vector2(540, 0) if wide else Vector2(0, 420)
 	_body.add_child(_art)
 	_scene = PaperScenery.new()
 	_scene.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -55,6 +58,10 @@ func _ready() -> void:
 	_photo.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_art.add_child(_photo)
 	_photo_edge = Kit.photo_edge(26, 0)   # the card's corner
+	if wide:   # the card's left corners instead
+		var edge: StyleBoxFlat = _photo_edge.get_theme_stylebox("panel")
+		edge.corner_radius_top_right = 0
+		edge.corner_radius_bottom_left = 26
 	_art.add_child(_photo_edge)
 	_pictures = HBoxContainer.new()
 	_pictures.alignment = BoxContainer.ALIGNMENT_CENTER
@@ -66,6 +73,7 @@ func _ready() -> void:
 	for side in ["left", "right", "top", "bottom"]:
 		m.add_theme_constant_override("margin_" + side, 24)
 	m.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	m.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_body.add_child(m)
 	var words := VBoxContainer.new()
 	words.alignment = BoxContainer.ALIGNMENT_CENTER
@@ -196,6 +204,7 @@ func _on_page_read() -> void:
 func _questions() -> void:
 	_reading = false
 	_controls.visible = false
+	_body.vertical = true
 	for c in _body.get_children():
 		c.queue_free()
 	var qs: Array = _book.get("questions", [])
@@ -245,6 +254,7 @@ func _ask(qs: Array, i: int) -> void:
 		buttons[str(c.id)] = b
 	for id in buttons:
 		buttons[id].pressed.connect(_answer.bind(qs, i, id, buttons))
+	Speech.new_question()   # (D-032)
 	Speech.say(str(q.prompt), _lang)
 
 
@@ -276,7 +286,7 @@ func _done(total: int) -> void:
 	m.add_child(credit)
 	var seconds := (Time.get_ticks_msec() - _started) / 1000.0
 	var result := GameState.finish_book(str(_book.get("id", "")), _right, total, seconds)
-	Kit.reward(self, "You read a whole book!", result, _back)
+	Kit.reward(self, GameState.talk("reward_book"), result, _back)
 
 
 func _back() -> void:

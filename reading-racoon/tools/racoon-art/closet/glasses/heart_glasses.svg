@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racoon's Closet: Golden hearts (gold, glasses). FR-07, D-026.
+     Drawn to fit Racoon at rest: the bottom layer links ../../parts/racoon_C_inkscape.svg (locked).
+     Draw on the "Item" layer. The file's name is the item's id; its name, tier, price and how it's
+     earned are in reading-racoon/content/closet.json. motion-demo/build_racoon.py reads this file
+     and never writes it. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-heart_glasses"
+   sodipodi:docname="heart_glasses.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>Golden hearts</title>
+  <sodipodi:namedview
+     id="namedview-heart_glasses"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="2"
+     inkscape:cx="200"
+     inkscape:cy="170"
+     inkscape:current-layer="layer-item" />
+  <defs id="defs-heart_glasses">
+    <linearGradient id="gr-heart-rim" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:#fff6b8" /><stop offset="0.45" style="stop-color:#ffd84d" /><stop offset="1" style="stop-color:#c98a00" /></linearGradient>
+    <linearGradient id="gr-heart-lens" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:#ffc4da" /><stop offset="1" style="stop-color:#ff5d8f" /></linearGradient>
+    <linearGradient id="gr-heart-gem128" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#b8fff4" /><stop offset="1" style="stop-color:#1d9d8f" /></linearGradient>
+    <linearGradient id="gr-heart-gem273" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#b8fff4" /><stop offset="1" style="stop-color:#1d9d8f" /></linearGradient>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="../../parts/racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-item" inkscape:label="Item">
+   <g id="item-heart-glasses" inkscape:label="heart_glasses">
+     <title>Golden hearts: heart lenses in gold rims with gems (gold)</title>
+     <path id="heart-glasses-1" inkscape:label="Rim" d="M 158.3 189.36 C 151.55 182.94 131.3 172.24 131.3 159.4 C 131.3 148.7 140.3 143.36 148.18 143.36 C 153.8 143.36 157.18 146.57 158.3 150.84 C 159.43 146.57 162.8 143.36 168.43 143.36 C 176.3 143.36 185.3 148.7 185.3 159.4 C 185.3 172.24 165.05 182.94 158.3 189.36 Z" style="fill:url(#gr-heart-rim);stroke:#3b2d3a;stroke-width:4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="heart-glasses-2" inkscape:label="Lens" d="M 158.3 184.41 C 153.3 179.81 138.3 172.13 138.3 162.93 C 138.3 155.25 144.97 151.41 150.8 151.41 C 154.97 151.41 157.47 153.72 158.3 156.79 C 159.13 153.72 161.63 151.41 165.8 151.41 C 171.63 151.41 178.3 155.25 178.3 162.93 C 178.3 172.13 163.3 179.81 158.3 184.41 Z" style="fill:url(#gr-heart-lens);stroke:#c98a00;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round;fill-opacity:0.9" />
+     <path id="heart-glasses-3" inkscape:label="Glint" d="M 146.3 161 Q 150.3 157 154.3 158" style="fill:none;stroke:#ffffff;stroke-width:2.8;stroke-linejoin:round;stroke-linecap:round;opacity:0.9" />
+     <path id="heart-glasses-4" inkscape:label="Rim" d="M 242.9 189.36 C 236.15 182.94 215.9 172.24 215.9 159.4 C 215.9 148.7 224.9 143.36 232.78 143.36 C 238.4 143.36 241.78 146.57 242.9 150.84 C 244.03 146.57 247.4 143.36 253.03 143.36 C 260.9 143.36 269.9 148.7 269.9 159.4 C 269.9 172.24 249.65 182.94 242.9 189.36 Z" style="fill:url(#gr-heart-rim);stroke:#3b2d3a;stroke-width:4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="heart-glasses-5" inkscape:label="Lens" d="M 242.9 184.41 C 237.9 179.81 222.9 172.13 222.9 162.93 C 222.9 155.25 229.57 151.41 235.4 151.41 C 239.57 151.41 242.07 153.72 242.9 156.79 C 243.73 153.72 246.23 151.41 250.4 151.41 C 256.23 151.41 262.9 155.25 262.9 162.93 C 262.9 172.13 247.9 179.81 242.9 184.41 Z" style="fill:url(#gr-heart-lens);stroke:#c98a00;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round;fill-opacity:0.9" />
+     <path id="heart-glasses-6" inkscape:label="Glint" d="M 230.9 161 Q 234.9 157 238.9 158" style="fill:none;stroke:#ffffff;stroke-width:2.8;stroke-linejoin:round;stroke-linecap:round;opacity:0.9" />
+     <path id="heart-glasses-7" inkscape:label="Bridge" d="M 184 160 Q 200.5 151 217 160" style="fill:none;stroke:#c98a00;stroke-width:4.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="heart-glasses-8" inkscape:label="Gem" d="M 128 151 L 134 157 L 128 163 L 122 157 Z" style="fill:url(#gr-heart-gem128);stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="heart-glasses-9" inkscape:label="Gem" d="M 273 151 L 279 157 L 273 163 L 267 157 Z" style="fill:url(#gr-heart-gem273);stroke:#3b2d3a;stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="heart-glasses-10" inkscape:label="Glint star" d="M 122 133.5 Q 123.82 138.18 128.5 140 Q 123.82 141.82 122 146.5 Q 120.18 141.82 115.5 140 Q 120.18 138.18 122 133.5 Z" style="fill:#fffbe0;stroke:#e0a20c;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="heart-glasses-11" inkscape:label="Glint star" d="M 280 133.5 Q 281.82 138.18 286.5 140 Q 281.82 141.82 280 146.5 Q 278.18 141.82 273.5 140 Q 278.18 138.18 280 133.5 Z" style="fill:#fffbe0;stroke:#e0a20c;stroke-width:1.2;stroke-linejoin:round;stroke-linecap:round" />
+   </g>
+  </g>
+</svg>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="218 125 47 21" width="47" height="21">
+<title>Face · Brow right</title>
+<defs>
+<radialGradient id="rr-fur" cx="0.38" cy="0.3" r="0.8"><stop offset="0" stop-color="#aaa4b6"/><stop offset="0.55" stop-color="#8e8899"/><stop offset="1" stop-color="#716a80"/></radialGradient>
+<radialGradient id="rr-cream" cx="0.4" cy="0.3" r="0.85"><stop offset="0" stop-color="#fffbf2"/><stop offset="0.7" stop-color="#fbf3e4"/><stop offset="1" stop-color="#ead8c0"/></radialGradient>
+<linearGradient id="rr-mask" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a3e52"/><stop offset="1" stop-color="#3a2f40"/></linearGradient>
+<linearGradient id="rr-teal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#45b8a9"/><stop offset="1" stop-color="#2a9d8f"/></linearGradient>
+<radialGradient id="rr-dark" cx="0.4" cy="0.3" r="0.8"><stop offset="0" stop-color="#6f6879"/><stop offset="1" stop-color="#5d5766"/></radialGradient>
+</defs>
+<g id="brow_right">
+<path d="M 263.1 139 C 263 140 262.3 140.9 261.3 141.6 C 260.3 142.3 258.9 142.9 257.1 143.4 C 255.4 143.8 253.3 144.1 251 144.2 C 248.8 144.3 246.2 144.2 243.8 143.9 C 241.3 143.6 238.6 143.2 236.2 142.6 C 233.8 142 231.3 141.2 229.3 140.3 C 227.2 139.5 225.3 138.5 223.8 137.5 C 222.4 136.5 221.2 135.4 220.5 134.4 C 219.8 133.4 219.5 132.3 219.7 131.4 C 219.8 130.4 220.5 129.5 221.5 128.8 C 222.5 128.1 223.9 127.5 225.7 127 C 227.4 126.6 229.5 126.3 231.8 126.2 C 234 126.1 236.6 126.2 239 126.5 C 241.5 126.8 244.2 127.2 246.6 127.8 C 249 128.4 251.5 129.2 253.5 130.1 C 255.6 130.9 257.5 131.9 259 132.9 C 260.4 133.9 261.6 135 262.3 136 C 263 137 263.3 138.1 263.1 139 Z" fill="#fbf3e4"/>
+</g>
+</svg>

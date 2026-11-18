@@ -2,8 +2,9 @@
 
 [ext_resource type="Script" path="res://scenes/tasks/tap_choice_task.gd" id="1_tap"]
 
-[node name="TapChoiceTask" type="VBoxContainer"]
+[node name="TapChoiceTask" type="BoxContainer"]
 size_flags_vertical = 3
+vertical = true
 theme_override_constants/separation = 40
 alignment = 1
 script = ExtResource("1_tap")

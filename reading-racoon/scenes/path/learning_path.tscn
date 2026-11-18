@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scenes/path/learning_path.gd" id="1_path"]
 [ext_resource type="Shader" path="res://ui/paper.gdshader" id="2_paper"]
 [ext_resource type="Texture2D" path="res://assets/icons/waves.svg" id="3_world"]
-[ext_resource type="Texture2D" path="res://assets/icons/coins.svg" id="4_coins"]
+[ext_resource type="Texture2D" path="res://assets/pictures/coin.svg" id="4_coins"]
 [ext_resource type="Texture2D" path="res://assets/icons/bolt.svg" id="5_bolt"]
 [ext_resource type="Texture2D" path="res://assets/icons/repeat.svg" id="6_repeat"]
 [ext_resource type="Script" path="res://ui/chunky_button.gd" id="7_chunky"]
@@ -154,9 +154,8 @@ layout_mode = 2
 theme_override_constants/separation = 8
 
 [node name="Icon" type="TextureRect" parent="TopBar/Row/CoinsPill/Row"]
-self_modulate = Color(0.8, 0.541, 0, 1)
 texture_filter = 4
-custom_minimum_size = Vector2(42, 42)
+custom_minimum_size = Vector2(44, 44)
 layout_mode = 2
 texture = ExtResource("4_coins")
 expand_mode = 1

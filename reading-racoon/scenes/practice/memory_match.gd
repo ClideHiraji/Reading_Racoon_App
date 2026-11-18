@@ -56,12 +56,22 @@ func _ready() -> void:
 	grid.add_theme_constant_override("v_separation", 16)
 	grid.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	grid.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	column.add_child(grid)
+	if Kit.landscape():
+		# Two long rows across the laptop screen, a little smaller if needed (D-023).
+		grid.columns = ceili(deck.size() / 2.0)
+		var fit := FitBox.new()
+		fit.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		column.add_child(fit)
+		var center := CenterContainer.new()
+		fit.add_child(center)
+		center.add_child(grid)
+	else:
+		column.add_child(grid)
 	for d in deck:
 		grid.add_child(_card(d))
 	_update_count()
 	await get_tree().process_frame
-	_say("Find the word that goes with each picture!", "happy")
+	_say(GameState.talk("mm_hello"), "happy")
 
 
 func _card(d: Dictionary) -> Control:
@@ -70,6 +80,7 @@ func _card(d: Dictionary) -> Control:
 	holder.custom_minimum_size = Vector2(196, 196)
 	var b := ChunkyButton.new()
 	b.face_color = BACK_COLOR
+	b.full_color = true   # Racoon in full colour on every card's back (D-027)
 	b.icon_name = "raccoon"
 	b.icon_px = 80
 	b.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -155,12 +166,12 @@ func _say(text: String, mood: String) -> void:
 
 
 func _finish() -> void:
-	_say("You matched them all!", "celebrate")
+	_say(GameState.talk("mm_done"), "celebrate")
 	var seconds := (Time.get_ticks_msec() - _started) / 1000.0
 	var result := GameState.finish_practice("memory_match", _pairs, _pairs, seconds)
 	await get_tree().create_timer(0.8).timeout
 	if is_inside_tree():
-		Kit.reward(self, "You matched them all!", result, _back)
+		Kit.reward(self, GameState.talk("mm_done"), result, _back)
 
 
 func _back() -> void:

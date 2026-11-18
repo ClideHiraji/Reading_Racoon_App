@@ -1,0 +1,1873 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Racoon in the game</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&amp;display=swap">
+<style>
+body{margin:0}
+.ig-mo{transition:transform 80ms ease-out,box-shadow 80ms ease-out}
+.ig-mo:hover{background:#fffbea}
+.ig-mo:active{transform:translateY(4px);box-shadow:0 1px 0 #e3d6b4}
+.ig-card{transition:transform 90ms ease-out}
+.ig-card:hover{transform:translateY(-3px)}
+.ig-card:active{transform:translateY(5px)}
+.ig-ok{transition:transform 80ms ease-out,box-shadow 80ms ease-out}
+.ig-ok:active{transform:translateY(5px);box-shadow:0 1px 0 #cc8a00}
+.ig-mo:focus-visible,.ig-card:focus-visible,.ig-ok:focus-visible{outline:3px solid #1d7166;outline-offset:3px}
+</style>
+</helmet>
+<div style="width: 1712px; height: 800px; box-sizing: border-box; padding: 40px; background: #fefde0; font-family: 'Andika', sans-serif; color: #3a2a1f; display: flex; gap: 32px">
+
+<div onPointerMove="{{ h.move }}" onPointerDown="{{ h.down }}" onPointerLeave="{{ h.leave }}" style="position: relative; width: 1280px; height: 720px; flex-shrink: 0; overflow: hidden; border-radius: 8px; background: radial-gradient(ellipse at 55% 25%, #fffdf2, #f6eccd); box-shadow: 0 0 0 10px #3b3340, 0 16px 0 10px rgba(58, 42, 31, 0.16); user-select: none">
+
+<svg viewBox="0 0 1280 720" width="1280" height="720" aria-hidden="true" style="position: absolute; left: 0; top: 0; display: block">
+<defs>
+<linearGradient id="ig-river" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#63c5b8"></stop><stop offset="1" stop-color="#2a9d8f"></stop></linearGradient>
+<linearGradient id="ig-hill-back" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d4e8b8"></stop><stop offset="1" stop-color="#c2dca2"></stop></linearGradient>
+<linearGradient id="ig-hill-front" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a6cf84"></stop><stop offset="1" stop-color="#8fbe6c"></stop></linearGradient>
+<symbol id="ig-icon-hat" viewBox="0 0 120 120"><ellipse cx="60" cy="88" rx="46" ry="11" fill="#5b4a66" stroke="#3a2a1f" stroke-width="5"></ellipse><path d="M 34 86 L 39 34 Q 60 25 81 34 L 86 86 Z" fill="#6e5a7c" stroke="#3a2a1f" stroke-width="5" stroke-linejoin="round"></path><path d="M 36 70 L 84 70 L 85 80 L 35 80 Z" fill="#e9801f" stroke="#3a2a1f" stroke-width="4" stroke-linejoin="round"></path></symbol>
+<symbol id="ig-icon-dog" viewBox="0 0 120 120"><ellipse cx="29" cy="54" rx="13" ry="25" transform="rotate(18 29 54)" fill="#8a5a3b" stroke="#3a2a1f" stroke-width="5"></ellipse><ellipse cx="91" cy="54" rx="13" ry="25" transform="rotate(-18 91 54)" fill="#8a5a3b" stroke="#3a2a1f" stroke-width="5"></ellipse><circle cx="60" cy="64" r="33" fill="#d8a874" stroke="#3a2a1f" stroke-width="5"></circle><ellipse cx="60" cy="80" rx="17" ry="13" fill="#f6dfc1"></ellipse><ellipse cx="60" cy="73" rx="7" ry="5" fill="#3a2a1f"></ellipse><circle cx="47" cy="58" r="4.5" fill="#3a2a1f"></circle><circle cx="73" cy="58" r="4.5" fill="#3a2a1f"></circle><path d="M 53 86 Q 60 91 67 86" fill="none" stroke="#3a2a1f" stroke-width="3.5" stroke-linecap="round"></path></symbol>
+<symbol id="ig-icon-sun" viewBox="0 0 120 120"><g stroke="#f0a51a" stroke-width="8" stroke-linecap="round"><path d="M 60 8 L 60 22 M 60 98 L 60 112 M 8 60 L 22 60 M 98 60 L 112 60 M 23 23 L 33 33 M 87 87 L 97 97 M 97 23 L 87 33 M 33 87 L 23 97"></path></g><circle cx="60" cy="60" r="27" fill="#ffc918" stroke="#3a2a1f" stroke-width="5"></circle><path d="M 48 64 Q 60 74 72 64" fill="none" stroke="#3a2a1f" stroke-width="4" stroke-linecap="round"></path></symbol>
+<symbol id="ig-icon-cat" viewBox="0 0 120 120"><path d="M 30 56 L 30 18 L 56 40 Z M 90 56 L 90 18 L 64 40 Z" fill="#f2a65a" stroke="#3a2a1f" stroke-width="5" stroke-linejoin="round"></path><circle cx="60" cy="66" r="33" fill="#f2a65a" stroke="#3a2a1f" stroke-width="5"></circle><circle cx="47" cy="60" r="4.5" fill="#3a2a1f"></circle><circle cx="73" cy="60" r="4.5" fill="#3a2a1f"></circle><path d="M 55 72 L 65 72 L 60 78 Z" fill="#e8738a"></path><path d="M 22 72 L 42 74 M 22 82 L 42 79 M 98 72 L 78 74 M 98 82 L 78 79" stroke="#3a2a1f" stroke-width="3" stroke-linecap="round"></path></symbol>
+<symbol id="ig-icon-tree" viewBox="0 0 120 120"><path d="M 51 68 L 69 68 L 71 108 L 49 108 Z" fill="#8a5a3b" stroke="#3a2a1f" stroke-width="5" stroke-linejoin="round"></path><circle cx="60" cy="50" r="36" fill="#6aab4c" stroke="#3a2a1f" stroke-width="5"></circle><circle cx="48" cy="40" r="8" fill="#8cc46b"></circle></symbol>
+<symbol id="ig-icon-car" viewBox="0 0 120 120"><path d="M 12 82 L 14 64 Q 16 58 24 56 L 34 42 Q 38 38 46 38 L 74 38 Q 82 38 88 46 L 96 56 L 104 58 Q 110 60 110 68 L 110 82 Z" fill="#74a6cb" stroke="#3a2a1f" stroke-width="5" stroke-linejoin="round"></path><path d="M 40 54 L 46 45 L 58 45 L 58 54 Z M 66 54 L 66 45 L 76 45 L 84 54 Z" fill="#e6f2fa" stroke="#3a2a1f" stroke-width="3.5" stroke-linejoin="round"></path><circle cx="36" cy="84" r="12" fill="#3a2a1f"></circle><circle cx="36" cy="84" r="4.5" fill="#d9d4cc"></circle><circle cx="86" cy="84" r="12" fill="#3a2a1f"></circle><circle cx="86" cy="84" r="4.5" fill="#d9d4cc"></circle></symbol>
+<symbol id="ig-icon-moon" viewBox="0 0 120 120"><path d="M 74 16 A 44 44 0 1 0 104 88 A 36 36 0 1 1 74 16 Z" fill="#ffd34d" stroke="#3a2a1f" stroke-width="5" stroke-linejoin="round"></path><circle cx="48" cy="70" r="5" fill="#f0b92c"></circle><circle cx="58" cy="90" r="3.5" fill="#f0b92c"></circle></symbol>
+<symbol id="ig-icon-fish" viewBox="0 0 120 120"><path d="M 84 60 L 110 40 L 108 80 Z" fill="#e9801f" stroke="#3a2a1f" stroke-width="5" stroke-linejoin="round"></path><ellipse cx="54" cy="60" rx="38" ry="24" fill="#f39a45" stroke="#3a2a1f" stroke-width="5"></ellipse><path d="M 62 44 Q 70 60 62 76" fill="none" stroke="#e9801f" stroke-width="4" stroke-linecap="round"></path><circle cx="36" cy="54" r="6" fill="#ffffff" stroke="#3a2a1f" stroke-width="3"></circle><circle cx="37" cy="55" r="2.6" fill="#3a2a1f"></circle></symbol>
+<clipPath id="ig-head-clip"><path d="M 311.25 194.62 C 301.48 196.18 305.98 203.7 309.63 208.41 C 296.37 221.48 273.85 234.97 257.04 243.77 C 217.91 264.26 178.38 260.16 138.24 241.49 C 127.54 236.51 102.54 222.58 94.58 214.42 C 102.43 209.55 96.33 202.54 89.77 198.8 C 92.84 191.77 93.09 179.25 92.73 170.09 C 88.82 69.06 239.55 40.53 293.17 117.91 C 303.52 132.85 309.21 150.25 308.57 168.49 C 308.24 177.73 308 186.77 311.25 194.62 Z"></path></clipPath>
+<clipPath id="ig-body-clip"><path d="{{ r.bodyD }}"></path></clipPath>
+<linearGradient id="ig-earL-fade" gradientUnits="userSpaceOnUse" x1="-1.41" y1="14" x2="-3.45" y2="5.24"><stop offset="0" stop-color="#000000"></stop><stop offset="1" stop-color="#ffffff"></stop></linearGradient>
+<mask id="ig-earL-cut" maskUnits="userSpaceOnUse" x="-300" y="-300" width="600" height="600"><path d="M -390.95 104.88 L 388.14 -76.87 L 297.26 -466.41 L -481.82 -284.66 Z" fill="url(#ig-earL-fade)" transform="translate({{ r.earL.cx }} {{ r.earL.cy }})"></path></mask>
+<radialGradient id="ig-g-earL" cx="-10.40081" cy="-21.39997" r="69.33876" fx="-10.40081" fy="-21.39997" gradientTransform="matrix(0.0126 0 0 0.012506 0.5 0.550898)"><stop offset="0" stop-color="#aaa4b6"></stop><stop offset="0.55" stop-color="#8e8899"></stop><stop offset="1" stop-color="#716a80"></stop></radialGradient>
+<linearGradient id="ig-earR-fade" gradientUnits="userSpaceOnUse" x1="1.51" y1="14.02" x2="3.7" y2="5.29"><stop offset="0" stop-color="#000000"></stop><stop offset="1" stop-color="#ffffff"></stop></linearGradient>
+<mask id="ig-earR-cut" maskUnits="userSpaceOnUse" x="-300" y="-300" width="600" height="600"><path d="M -386.48 -83.27 L 389.5 111.31 L 486.79 -276.68 L -289.19 -471.26 Z" fill="url(#ig-earR-fade)" transform="translate({{ r.earR.cx }} {{ r.earR.cy }})"></path></mask>
+<radialGradient id="ig-g-earR" cx="-10.40081" cy="-21.39997" r="69.33876" fx="-10.40081" fy="-21.39997" gradientTransform="matrix(0.0126 0 0 0.012506 0.5 0.550898)"><stop offset="0" stop-color="#aaa4b6"></stop><stop offset="0.55" stop-color="#8e8899"></stop><stop offset="1" stop-color="#716a80"></stop></radialGradient>
+<radialGradient id="ig-g-footL" cx="125.01356" cy="478.91544" r="34.6964" fx="125.01356" fy="478.91544" gradientTransform="matrix(0.026285 0 0 0.029265 -2.9 -13.769231)"><stop offset="0" stop-color="#6f6879"></stop><stop offset="1" stop-color="#5d5766"></stop></radialGradient>
+<radialGradient id="ig-g-footR" cx="170.66672" cy="478.91544" r="34.6964" fx="170.66672" fy="478.91544" gradientTransform="matrix(0.026285 0 0 0.029265 -4.1 -13.769231)"><stop offset="0" stop-color="#6f6879"></stop><stop offset="1" stop-color="#5d5766"></stop></radialGradient>
+<radialGradient id="ig-g-tail0" cx="316.0751" cy="206.66537" r="120.57545" fx="316.0751" fy="206.66537" gradientTransform="matrix(0.006635 0 0 0.006635 -1.717114 -1.07125)"><stop offset="0" stop-color="#aaa4b6"></stop><stop offset="0.55" stop-color="#8e8899"></stop><stop offset="1" stop-color="#716a80"></stop></radialGradient>
+<linearGradient id="ig-g-tail1" x1="276.79895" y1="285.83835" x2="276.79895" y2="346.65369" gradientTransform="matrix(0.016443 0 0 0.016443 -4.551465 -4.700102)"><stop offset="0" stop-color="#4a3e52"></stop><stop offset="1" stop-color="#3a2f40"></stop></linearGradient>
+<linearGradient id="ig-g-tail2" x1="212.5248" y1="350.10602" x2="212.5248" y2="406.55145" gradientTransform="matrix(0.017716 0 0 0.017716 -3.765139 -6.20256)"><stop offset="0" stop-color="#4a3e52"></stop><stop offset="1" stop-color="#3a2f40"></stop></linearGradient>
+<linearGradient id="ig-g-tail3" x1="330.84714" y1="166.8042" x2="330.84714" y2="221.02631" gradientTransform="matrix(0.018443 0 0 0.018443 -6.101732 -3.076327)"><stop offset="0" stop-color="#4a3e52"></stop><stop offset="1" stop-color="#3a2f40"></stop></linearGradient>
+<clipPath id="ig-armL-clip"><path d="{{ r.armL.d0 }}"></path></clipPath>
+<mask id="ig-armL-band" maskUnits="userSpaceOnUse" x="-300" y="-300" width="1000" height="1000"><rect x="-300" y="-300" width="1000" height="1000" fill="#ffffff"></rect><circle cx="{{ r.armL.mx }}" cy="{{ r.armL.my }}" r="{{ r.armL.mr }}" fill="#000000"></circle></mask>
+<clipPath id="ig-armR-clip"><path d="{{ r.armR.d0 }}"></path></clipPath>
+<mask id="ig-armR-band" maskUnits="userSpaceOnUse" x="-300" y="-300" width="1000" height="1000"><rect x="-300" y="-300" width="1000" height="1000" fill="#ffffff"></rect><circle cx="{{ r.armR.mx }}" cy="{{ r.armR.my }}" r="{{ r.armR.mr }}" fill="#000000"></circle></mask>
+<mask id="ig-out-body" maskUnits="userSpaceOnUse" x="-300" y="-300" width="1000" height="1000"><rect x="-300" y="-300" width="1000" height="1000" fill="#ffffff"></rect><path d="{{ r.bodyD }}" fill="#000000"></path></mask>
+<linearGradient id="ig-g-scarf0" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)"><stop offset="0" stop-color="#45b8a9"></stop><stop offset="1" stop-color="#2a9d8f"></stop></linearGradient>
+<linearGradient id="ig-g-knot0" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)"><stop offset="0" stop-color="#45b8a9"></stop><stop offset="1" stop-color="#2a9d8f"></stop></linearGradient>
+<linearGradient id="ig-g-knot1" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)"><stop offset="0" stop-color="#2a9d8f"></stop><stop offset="1" stop-color="#1d7166"></stop></linearGradient>
+<linearGradient id="ig-g-knot2" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)"><stop offset="0" stop-color="#2a9d8f"></stop><stop offset="1" stop-color="#1d7166"></stop></linearGradient>
+<linearGradient id="ig-g-book1" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)"><stop offset="0" stop-color="#f39a45"></stop><stop offset="1" stop-color="#e9801f"></stop></linearGradient>
+<linearGradient id="ig-g-book2" x1="0" y1="0" x2="1" y2="0" gradientTransform="matrix(1 0 0 1 0 0)"><stop offset="0" stop-color="#fffbf2"></stop><stop offset="0.7" stop-color="#fbf3e4"></stop><stop offset="1" stop-color="#ecdcc0"></stop></linearGradient>
+<linearGradient id="ig-g-book3" x1="1" y1="0" x2="0" y2="0" gradientTransform="matrix(1 0 0 1 0 0)"><stop offset="0" stop-color="#fffbf2"></stop><stop offset="0.7" stop-color="#fbf3e4"></stop><stop offset="1" stop-color="#ecdcc0"></stop></linearGradient>
+<linearGradient id="ig-g-bookback0" x1="0" y1="0" x2="0" y2="1" gradientTransform="matrix(1 0 0 1 0 0)"><stop offset="0" stop-color="#f39a45"></stop><stop offset="1" stop-color="#e9801f"></stop></linearGradient>
+<radialGradient id="ig-g-head" cx="159.22519" cy="143.52773" r="165.69289" fx="159.22519" fy="143.52773" gradientTransform="matrix(0.001327 0.003773 -0.003826 0.001957 0.716308 -0.589409)"><stop offset="0" stop-color="#aaa4b6"></stop><stop offset="0.55" stop-color="#8e8899"></stop><stop offset="1" stop-color="#716a80"></stop></radialGradient>
+<linearGradient id="ig-g-mask" x1="57.7449" y1="283.20859" x2="57.7449" y2="381.70493" gradientTransform="matrix(0.010153 0 0 0.010153 -0.586342 -2.875513)"><stop offset="0" stop-color="#4a3e52"></stop><stop offset="1" stop-color="#3a2f40"></stop></linearGradient>
+<radialGradient id="ig-g-muzzle" cx="157.22144" cy="240.48883" r="59.02575" fx="157.22144" fy="240.48883" gradientTransform="matrix(0.0144 0 0 0.0144 -1.864066 -3.163158)"><stop offset="0" stop-color="#fffbf2"></stop><stop offset="0.7" stop-color="#fbf3e4"></stop><stop offset="1" stop-color="#ead8c0"></stop></radialGradient>
+</defs>
+
+<!-- the river world's paper-cut landscape (Scenery, bottom 190 px on a laptop) -->
+<path d="M 0 604 C 150 556 290 572 420 598 C 560 626 690 566 830 574 C 980 582 1110 548 1280 580 L 1280 720 L 0 720 Z" fill="#3a2a1f" opacity="0.07" transform="translate(0 6)"></path>
+<path d="M 0 604 C 150 556 290 572 420 598 C 560 626 690 566 830 574 C 980 582 1110 548 1280 580 L 1280 720 L 0 720 Z" fill="url(#ig-hill-back)"></path>
+<path d="M 0 652 C 230 632 420 668 640 654 C 860 640 1050 668 1280 650 L 1280 694 C 1050 708 860 682 640 694 C 420 706 230 672 0 690 Z" fill="#3a2a1f" opacity="0.08" transform="translate(0 5)"></path>
+<path d="M 0 652 C 230 632 420 668 640 654 C 860 640 1050 668 1280 650 L 1280 694 C 1050 708 860 682 640 694 C 420 706 230 672 0 690 Z" fill="url(#ig-river)"></path>
+<path d="M 470 666 Q 490 660 510 666 M 760 656 Q 780 650 800 656 M 1010 666 Q 1030 660 1050 666" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" opacity="0.7"></path>
+<path d="M 0 688 C 200 674 380 698 600 690 C 820 682 1040 702 1280 688 L 1280 720 L 0 720 Z" fill="#3a2a1f" opacity="0.09" transform="translate(0 -5)"></path>
+<path d="M 0 688 C 200 674 380 698 600 690 C 820 682 1040 702 1280 688 L 1280 720 L 0 720 Z" fill="url(#ig-hill-front)"></path>
+
+<!-- hearts (FR-13): an empty slot under each, the heart on top cracks away or pops back -->
+<g transform="translate(1117 64)"><path d="M 0 15 C -7 10 -21 1 -21 -9 C -21 -16 -15 -21 -8.5 -21 C -4 -21 -1 -18 0 -15 C 1 -18 4 -21 8.5 -21 C 15 -21 21 -16 21 -9 C 21 1 7 10 0 15 Z" fill="#efe3c4" stroke="#d6c493" stroke-width="3" stroke-linejoin="round"></path><g transform="{{ g.h0.t }}" opacity="{{ g.h0.op }}"><path d="M 0 15 C -7 10 -21 1 -21 -9 C -21 -16 -15 -21 -8.5 -21 C -4 -21 -1 -18 0 -15 C 1 -18 4 -21 8.5 -21 C 15 -21 21 -16 21 -9 C 21 1 7 10 0 15 Z" fill="#f05a5a" stroke="#3a2a1f" stroke-width="3" stroke-linejoin="round"></path><ellipse cx="-10" cy="-10" rx="4.5" ry="3" transform="rotate(-35 -10 -10)" fill="#ffffff" opacity="0.6"></ellipse></g></g>
+<g transform="translate(1167 64)"><path d="M 0 15 C -7 10 -21 1 -21 -9 C -21 -16 -15 -21 -8.5 -21 C -4 -21 -1 -18 0 -15 C 1 -18 4 -21 8.5 -21 C 15 -21 21 -16 21 -9 C 21 1 7 10 0 15 Z" fill="#efe3c4" stroke="#d6c493" stroke-width="3" stroke-linejoin="round"></path><g transform="{{ g.h1.t }}" opacity="{{ g.h1.op }}"><path d="M 0 15 C -7 10 -21 1 -21 -9 C -21 -16 -15 -21 -8.5 -21 C -4 -21 -1 -18 0 -15 C 1 -18 4 -21 8.5 -21 C 15 -21 21 -16 21 -9 C 21 1 7 10 0 15 Z" fill="#f05a5a" stroke="#3a2a1f" stroke-width="3" stroke-linejoin="round"></path><ellipse cx="-10" cy="-10" rx="4.5" ry="3" transform="rotate(-35 -10 -10)" fill="#ffffff" opacity="0.6"></ellipse></g></g>
+<g transform="translate(1217 64)"><path d="M 0 15 C -7 10 -21 1 -21 -9 C -21 -16 -15 -21 -8.5 -21 C -4 -21 -1 -18 0 -15 C 1 -18 4 -21 8.5 -21 C 15 -21 21 -16 21 -9 C 21 1 7 10 0 15 Z" fill="#efe3c4" stroke="#d6c493" stroke-width="3" stroke-linejoin="round"></path><g transform="{{ g.h2.t }}" opacity="{{ g.h2.op }}"><path d="M 0 15 C -7 10 -21 1 -21 -9 C -21 -16 -15 -21 -8.5 -21 C -4 -21 -1 -18 0 -15 C 1 -18 4 -21 8.5 -21 C 15 -21 21 -16 21 -9 C 21 1 7 10 0 15 Z" fill="#f05a5a" stroke="#3a2a1f" stroke-width="3" stroke-linejoin="round"></path><ellipse cx="-10" cy="-10" rx="4.5" ry="3" transform="rotate(-35 -10 -10)" fill="#ffffff" opacity="0.6"></ellipse></g></g>
+
+<!-- Racoon, in his 200 px box at the foot of the left column (D-023) -->
+<g transform="{{ r.place }}">
+<ellipse cx="{{ r.shadow.cx }}" cy="{{ r.shadow.cy }}" rx="{{ r.shadow.rx }}" ry="{{ r.shadow.ry }}" fill="#3a2a1f" opacity="{{ r.shadow.op }}"></ellipse>
+<g transform="{{ r.bodyT }}" onPointerDown="{{ h.tap }}" style="cursor: pointer">
+<g display="{{ r.tailBack }}"><path d="{{ r.tail.d0 }}" fill="url(#ig-g-tail0)" stroke="#3b2d3a" stroke-width="5" stroke-linejoin="round"></path><path d="{{ r.tail.d1 }}" fill="url(#ig-g-tail1)"></path><path d="{{ r.tail.d2 }}" fill="url(#ig-g-tail2)"></path><path d="{{ r.tail.d3 }}" fill="url(#ig-g-tail3)"></path></g>
+<g display="{{ r.book.bb }}" transform="{{ r.book.t }}"><path d="M 143.6 284.5 C 161.27 285.67 178.93 286.83 196.6 288 C 199.27 289.67 201.93 289.67 204.6 288 C 222.27 286.83 239.93 285.67 257.6 284.5 C 258.93 284.5 259.6 285.17 259.6 286.5 C 259.6 309.5 259.6 332.5 259.6 355.5 C 259.6 356.83 258.93 357.5 257.6 357.5 C 239.93 358.33 222.27 359.17 204.6 360 C 201.93 361.67 199.27 361.67 196.6 360 C 178.93 359.17 161.27 358.33 143.6 357.5 C 142.27 357.5 141.6 356.83 141.6 355.5 C 141.6 332.5 141.6 309.5 141.6 286.5 C 141.6 285.17 142.27 284.5 143.6 284.5 Z" fill="url(#ig-g-bookback0)" stroke="#3b2d3a" stroke-width="4.85" stroke-linejoin="round"></path></g>
+<g display="{{ r.armL.b }}"><path d="{{ r.armL.d0 }}" fill="#9791a2"></path><path d="{{ r.armL.d1 }}" fill="#3b2d3a" stroke="#3b2d3a" stroke-width="0.34" stroke-linejoin="round"></path><g mask="url(#ig-armL-band)"><path d="{{ r.armL.d2 }}" fill="#3b2d3a"></path></g><g clip-path="url(#ig-armL-clip)" mask="url(#ig-out-body)"><path d="{{ r.armL.d0 }}" fill="none" stroke="#3b2d3a" stroke-width="8.86" stroke-linejoin="round"></path></g></g>
+<g display="{{ r.armR.b }}"><path d="{{ r.armR.d0 }}" fill="#9791a2"></path><path d="{{ r.armR.d1 }}" fill="#3b2d3a" stroke="#3b2d3a" stroke-width="0.34" stroke-linejoin="round"></path><g mask="url(#ig-armR-band)"><path d="{{ r.armR.d2 }}" fill="#3b2d3a"></path></g><g clip-path="url(#ig-armR-clip)" mask="url(#ig-out-body)"><path d="{{ r.armR.d0 }}" fill="none" stroke="#3b2d3a" stroke-width="8.86" stroke-linejoin="round"></path></g></g>
+<ellipse display="{{ r.footL.back }}" cx="{{ r.footL.cx }}" cy="{{ r.footL.cy }}" rx="{{ r.footL.rx }}" ry="13" fill="url(#ig-g-footL)" stroke="#3b2d3a" stroke-width="4.8"></ellipse>
+<ellipse cx="{{ r.footR.cx }}" cy="{{ r.footR.cy }}" rx="{{ r.footR.rx }}" ry="13" fill="url(#ig-g-footR)" stroke="#3b2d3a" stroke-width="4.8"></ellipse>
+<ellipse display="{{ r.footL.front }}" cx="{{ r.footL.cx }}" cy="{{ r.footL.cy }}" rx="{{ r.footL.rx }}" ry="13" fill="url(#ig-g-footL)" stroke="#3b2d3a" stroke-width="4.8"></ellipse>
+<path d="{{ r.bodyD }}" fill="#9791a2" stroke="#3b2d3a" stroke-width="4.85"></path>
+<g clip-path="url(#ig-body-clip)"><path d="{{ r.bellyD }}" display="{{ r.bellyDisp }}" fill="#fdf6e9"></path></g>
+<g display="{{ r.armL.mb }}"><path d="{{ r.armL.d0 }}" fill="#9791a2"></path><path d="{{ r.armL.d1 }}" fill="#3b2d3a" stroke="#3b2d3a" stroke-width="0.34" stroke-linejoin="round"></path><g mask="url(#ig-armL-band)"><path d="{{ r.armL.d2 }}" fill="#3b2d3a"></path></g><g clip-path="url(#ig-armL-clip)" mask="url(#ig-out-body)"><path d="{{ r.armL.d0 }}" fill="none" stroke="#3b2d3a" stroke-width="8.86" stroke-linejoin="round"></path></g></g>
+<g display="{{ r.armR.mb }}"><path d="{{ r.armR.d0 }}" fill="#9791a2"></path><path d="{{ r.armR.d1 }}" fill="#3b2d3a" stroke="#3b2d3a" stroke-width="0.34" stroke-linejoin="round"></path><g mask="url(#ig-armR-band)"><path d="{{ r.armR.d2 }}" fill="#3b2d3a"></path></g><g clip-path="url(#ig-armR-clip)" mask="url(#ig-out-body)"><path d="{{ r.armR.d0 }}" fill="none" stroke="#3b2d3a" stroke-width="8.86" stroke-linejoin="round"></path></g></g>
+<g display="{{ r.tailFront }}"><path d="{{ r.tail.d0 }}" fill="url(#ig-g-tail0)" stroke="#3b2d3a" stroke-width="5" stroke-linejoin="round"></path><path d="{{ r.tail.d1 }}" fill="url(#ig-g-tail1)"></path><path d="{{ r.tail.d2 }}" fill="url(#ig-g-tail2)"></path><path d="{{ r.tail.d3 }}" fill="url(#ig-g-tail3)"></path></g>
+<g display="{{ r.scarf.disp }}"><g transform="{{ r.scarf.bandT }}"><path d="M 147.5 247 C 165 259.5 236.22 259.5 253.72 247 C 259.72 252 259.72 262 255.72 267.5 C 236.22 284.5 165 284.5 145.5 267.5 C 141.5 262 141.5 252 147.5 247 Z" fill="url(#ig-g-scarf0)" stroke="#3b2d3a" stroke-width="4.85" stroke-linejoin="round"></path><path d="M 151 257.43 C 151.67 258.02 153.67 260.13 155 260.97 C 156.33 261.81 157.67 262.31 159 262.47 C 160.33 262.63 161.67 262.13 163 261.92 C 164.33 261.72 165.67 261.17 167 261.24 C 168.33 261.31 169.67 261.67 171 262.33 C 172.33 262.98 173.67 264.25 175 265.18 C 176.33 266.11 177.67 267.33 179 267.9 C 180.33 268.46 181.67 268.69 183 268.57 C 184.33 268.46 185.67 267.68 187 267.2 C 188.33 266.73 189.67 265.91 191 265.7 C 192.33 265.49 193.67 265.58 195 265.96 C 196.33 266.34 197.67 267.34 199 267.99 C 200.33 268.64 201.67 269.59 203 269.88 C 204.33 270.17 205.67 270.12 207 269.73 C 208.33 269.34 209.67 268.29 211 267.54 C 212.33 266.78 213.67 265.69 215 265.21 C 216.33 264.72 217.67 264.53 219 264.64 C 220.33 264.75 221.67 265.47 223 265.85 C 224.33 266.22 225.67 266.9 227 266.91 C 228.33 266.93 229.67 266.6 231 265.94 C 232.33 265.27 233.67 263.95 235 262.92 C 236.33 261.89 237.67 260.52 239 259.76 C 240.33 259.01 241.67 258.54 243 258.37 C 244.33 258.21 246.33 258.69 247 258.75" fill="none" stroke="#b5e6dc" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"></path></g><g transform="{{ r.scarf.knotT }}" display="{{ r.scarf.knotDisp }}"><path d="M 215.5 285 C 212 296 208.5 307 205.5 319 C 206.83 317.83 208.17 316.67 209.5 315.5 C 210.67 317.33 211.83 319.17 213 321 C 214.17 319.17 215.33 317.33 216.5 315.5 C 217.83 317.17 219.17 318.83 220.5 320.5 C 221.17 318.67 221.83 316.83 222.5 315 C 223 305 224.5 295 226.5 286.5 C 222.83 286 219.17 285.5 215.5 285 Z" fill="url(#ig-g-knot0)" stroke="#3b2d3a" stroke-width="4" stroke-linejoin="round"></path><path d="M 224.5 287 C 228.5 296.5 233 306.5 235.5 317.5 C 236.83 316 238.17 314.5 239.5 313 C 241 314.67 242.5 316.33 244 318 C 244.83 315.83 245.67 313.67 246.5 311.5 C 243 301.5 238.5 292.5 233 284 C 230.17 285 227.33 286 224.5 287 Z" fill="url(#ig-g-knot1)" stroke="#3b2d3a" stroke-width="4" stroke-linejoin="round"></path><path d="M 234.23 276.9 C 235.43 282.57 230.94 288.34 224.18 289.77 C 217.43 291.21 210.98 287.77 209.77 282.1 C 208.57 276.43 213.06 270.66 219.82 269.23 C 226.57 267.79 233.02 271.23 234.23 276.9 Z" fill="url(#ig-g-knot2)" stroke="#3b2d3a" stroke-width="4.85" stroke-linejoin="round"></path><path d="M 215.5 276.5 C 219.5 280.17 223.83 280.5 228.5 277.5" fill="none" stroke="#1d7166" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"></path></g></g>
+<g display="{{ r.book.bm }}" transform="{{ r.book.t }}"><path d="M 203.6 357 C 203.6 362.33 203.6 367.67 203.6 373 C 204.77 371.67 205.93 370.33 207.1 369 C 208.27 370.33 209.43 371.67 210.6 373 C 210.6 367.5 210.6 362 210.6 356.5 C 208.27 356.67 205.93 356.83 203.6 357 Z" fill="#2a9d8f" stroke="#3b2d3a" stroke-width="2.6" stroke-linejoin="round"></path><path d="M 143.6 284.5 C 161.27 285.67 178.93 286.83 196.6 288 C 199.27 289.67 201.93 289.67 204.6 288 C 222.27 286.83 239.93 285.67 257.6 284.5 C 258.93 284.5 259.6 285.17 259.6 286.5 C 259.6 309.5 259.6 332.5 259.6 355.5 C 259.6 356.83 258.93 357.5 257.6 357.5 C 239.93 358.33 222.27 359.17 204.6 360 C 201.93 361.67 199.27 361.67 196.6 360 C 178.93 359.17 161.27 358.33 143.6 357.5 C 142.27 357.5 141.6 356.83 141.6 355.5 C 141.6 332.5 141.6 309.5 141.6 286.5 C 141.6 285.17 142.27 284.5 143.6 284.5 Z" fill="url(#ig-g-book1)" stroke="#3b2d3a" stroke-width="4.85" stroke-linejoin="round"></path><path d="M 149.5 288 C 164 283 184.5 283.5 199.4 290.5 C 199.4 311.5 199.4 332.5 199.4 353.5 C 184.5 348 164 348 149.5 351 C 149.5 330 149.5 309 149.5 288 Z" fill="url(#ig-g-book2)" stroke="#3b2d3a" stroke-width="3.4" stroke-linejoin="round"></path><path d="M 251.72 288 C 237.22 283 216.72 283.5 201.82 290.5 C 201.82 311.5 201.82 332.5 201.82 353.5 C 216.72 348 237.22 348 251.72 351 C 251.72 330 251.72 309 251.72 288 Z" fill="url(#ig-g-book3)" stroke="#3b2d3a" stroke-width="3.4" stroke-linejoin="round"></path><path d="M 156.5 298 C 168.17 296.33 180 296.83 192 299.5 M 156.5 308.5 C 168.17 306.83 180 307.33 192 310 M 156.5 319 C 168.17 317.33 180 317.83 192 320.5 M 156.5 329.5 C 168.17 327.83 180 328.33 192 331 M 156.5 340 C 168.17 338.33 175.67 338.83 179 341.5" fill="none" stroke="#c9bfd3" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"></path><path d="M 244.72 298 C 233.05 296.33 221.22 296.83 209.22 299.5 M 244.72 308.5 C 233.05 306.83 221.22 307.33 209.22 310 M 244.72 319 C 233.05 317.33 221.22 317.83 209.22 320.5 M 244.72 329.5 C 233.05 327.83 221.22 328.33 209.22 331 M 244.72 340 C 233.05 338.33 225.55 338.83 222.22 341.5" fill="none" stroke="#c9bfd3" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"></path><path d="M 200.6 290 C 200.6 312.33 200.6 334.67 200.6 357" fill="none" stroke="#3b2d3a" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"></path></g>
+<g display="{{ r.armL.m }}"><path d="{{ r.armL.d0 }}" fill="#9791a2"></path><path d="{{ r.armL.d1 }}" fill="#3b2d3a" stroke="#3b2d3a" stroke-width="0.34" stroke-linejoin="round"></path><g mask="url(#ig-armL-band)"><path d="{{ r.armL.d2 }}" fill="#3b2d3a"></path></g><g clip-path="url(#ig-armL-clip)" mask="url(#ig-out-body)"><path d="{{ r.armL.d0 }}" fill="none" stroke="#3b2d3a" stroke-width="8.86" stroke-linejoin="round"></path></g></g>
+<g display="{{ r.armR.m }}"><path d="{{ r.armR.d0 }}" fill="#9791a2"></path><path d="{{ r.armR.d1 }}" fill="#3b2d3a" stroke="#3b2d3a" stroke-width="0.34" stroke-linejoin="round"></path><g mask="url(#ig-armR-band)"><path d="{{ r.armR.d2 }}" fill="#3b2d3a"></path></g><g clip-path="url(#ig-armR-clip)" mask="url(#ig-out-body)"><path d="{{ r.armR.d0 }}" fill="none" stroke="#3b2d3a" stroke-width="8.86" stroke-linejoin="round"></path></g></g>
+<g transform="{{ r.headT }}">
+<g transform="{{ r.earL.t }}" display="{{ r.earL.back }}"><path d="M -38 30 C -34 -8 -16 -40 0 -46 C 16 -40 34 -8 38 30 C 14 40 -14 40 -38 30 Z" fill="url(#ig-g-earL)" stroke="#3b2d3a" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"></path><path d="M -20 24 C -18 0 -9 -20 0 -25 C 9 -20 18 0 20 24 C 8 30 -8 30 -20 24 Z" fill="#eab3a3" opacity="{{ r.earL.inner }}" transform="{{ r.earL.innerT }}"></path></g>
+<g transform="{{ r.earR.t }}"><path d="M -38 30 C -34 -8 -16 -40 0 -46 C 16 -40 34 -8 38 30 C 14 40 -14 40 -38 30 Z" fill="url(#ig-g-earR)" stroke="#3b2d3a" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"></path><path d="M -20 24 C -18 0 -9 -20 0 -25 C 9 -20 18 0 20 24 C 8 30 -8 30 -20 24 Z" fill="#eab3a3" opacity="{{ r.earR.inner }}" transform="{{ r.earR.innerT }}"></path></g>
+<g transform="{{ r.earL.t }}" display="{{ r.earL.front }}"><path d="M -38 30 C -34 -8 -16 -40 0 -46 C 16 -40 34 -8 38 30 C 14 40 -14 40 -38 30 Z" fill="url(#ig-g-earL)" stroke="#3b2d3a" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"></path><path d="M -20 24 C -18 0 -9 -20 0 -25 C 9 -20 18 0 20 24 C 8 30 -8 30 -20 24 Z" fill="#eab3a3" opacity="{{ r.earL.inner }}" transform="{{ r.earL.innerT }}"></path></g>
+<ellipse cx="{{ r.muz.cx }}" cy="{{ r.muz.cy }}" rx="{{ r.muz.rx }}" ry="28.5" fill="none" stroke="#3b2d3a" stroke-width="10" display="{{ r.muz.disp }}"></ellipse>
+<path d="M 311.25 194.62 C 301.48 196.18 305.98 203.7 309.63 208.41 C 296.37 221.48 273.85 234.97 257.04 243.77 C 217.91 264.26 178.38 260.16 138.24 241.49 C 127.54 236.51 102.54 222.58 94.58 214.42 C 102.43 209.55 96.33 202.54 89.77 198.8 C 92.84 191.77 93.09 179.25 92.73 170.09 C 88.82 69.06 239.55 40.53 293.17 117.91 C 303.52 132.85 309.21 150.25 308.57 168.49 C 308.24 177.73 308 186.77 311.25 194.62 Z" fill="url(#ig-g-head)" stroke="#3b2d3a" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"></path>
+<path d="M 179.32 98.56 C 181.6 104.19 172.65 113.12 159.34 118.5 C 146.02 123.88 133.39 123.67 131.11 118.04 C 128.84 112.41 137.78 103.48 151.1 98.1 C 164.41 92.72 177.05 92.93 179.32 98.56 Z" fill="#ffffff" opacity="0.28"></path>
+<g clip-path="url(#ig-head-clip)">
+<path d="{{ r.browL }}" fill="#fbf3e4"></path>
+<path d="{{ r.browR }}" fill="#fbf3e4"></path>
+<path d="{{ r.maskD }}" fill="url(#ig-g-mask)"></path>
+<g opacity="{{ r.eyeL.op }}"><g display="{{ r.eyeL.openDisp }}"><ellipse cx="{{ r.eyeL.cx }}" cy="{{ r.eyeL.cy }}" rx="{{ r.eyeL.rx }}" ry="15.6" fill="#fbf3e4"></ellipse><ellipse cx="{{ r.eyeL.px }}" cy="{{ r.eyeL.py }}" rx="{{ r.eyeL.prx }}" ry="9.7" fill="#221a26"></ellipse><ellipse cx="{{ r.eyeL.g0x }}" cy="{{ r.eyeL.g0y }}" rx="{{ r.eyeL.g0r }}" ry="3.5" fill="#ffffff"></ellipse><ellipse cx="{{ r.eyeL.g1x }}" cy="{{ r.eyeL.g1y }}" rx="{{ r.eyeL.g1r }}" ry="1.5" fill="#ffffff" opacity="0.8"></ellipse></g><path d="{{ r.eyeL.closed }}" display="{{ r.eyeL.closedDisp }}" fill="none" stroke="#fbf3e4" stroke-width="4.99" stroke-linecap="round"></path><path d="{{ r.eyeL.happy }}" display="{{ r.eyeL.happyDisp }}" fill="none" stroke="#fbf3e4" stroke-width="5.49" stroke-linecap="round"></path></g>
+<g opacity="{{ r.eyeR.op }}"><g display="{{ r.eyeR.openDisp }}"><ellipse cx="{{ r.eyeR.cx }}" cy="{{ r.eyeR.cy }}" rx="{{ r.eyeR.rx }}" ry="15.6" fill="#fbf3e4"></ellipse><ellipse cx="{{ r.eyeR.px }}" cy="{{ r.eyeR.py }}" rx="{{ r.eyeR.prx }}" ry="9.7" fill="#221a26"></ellipse><ellipse cx="{{ r.eyeR.g0x }}" cy="{{ r.eyeR.g0y }}" rx="{{ r.eyeR.g0r }}" ry="3.5" fill="#ffffff"></ellipse><ellipse cx="{{ r.eyeR.g1x }}" cy="{{ r.eyeR.g1y }}" rx="{{ r.eyeR.g1r }}" ry="1.5" fill="#ffffff" opacity="0.8"></ellipse></g><path d="{{ r.eyeR.closed }}" display="{{ r.eyeR.closedDisp }}" fill="none" stroke="#fbf3e4" stroke-width="4.99" stroke-linecap="round"></path><path d="{{ r.eyeR.happy }}" display="{{ r.eyeR.happyDisp }}" fill="none" stroke="#fbf3e4" stroke-width="5.49" stroke-linecap="round"></path></g>
+<ellipse cx="{{ r.blushL.cx }}" cy="{{ r.blushL.cy }}" rx="{{ r.blushL.rx }}" ry="8.3" fill="#f08c78" opacity="{{ r.blushL.op }}"></ellipse>
+<ellipse cx="{{ r.blushR.cx }}" cy="{{ r.blushR.cy }}" rx="{{ r.blushR.rx }}" ry="8.3" fill="#f08c78" opacity="{{ r.blushR.op }}"></ellipse>
+</g>
+<path d="M 311.25 194.62 C 301.48 196.18 305.98 203.7 309.63 208.41 C 296.37 221.48 273.85 234.97 257.04 243.77 C 217.91 264.26 178.38 260.16 138.24 241.49 C 127.54 236.51 102.54 222.58 94.58 214.42 C 102.43 209.55 96.33 202.54 89.77 198.8 C 92.84 191.77 93.09 179.25 92.73 170.09 C 88.82 69.06 239.55 40.53 293.17 117.91 C 303.52 132.85 309.21 150.25 308.57 168.49 C 308.24 177.73 308 186.77 311.25 194.62 Z" fill="none" stroke="#3b2d3a" stroke-width="5" stroke-linejoin="round"></path>
+<g transform="{{ r.earL.t }}" opacity="{{ r.earL.fo }}" display="{{ r.earL.fd }}"><g mask="url(#ig-earL-cut)"><path d="M -38 30 C -34 -8 -16 -40 0 -46 C 16 -40 34 -8 38 30 C 14 40 -14 40 -38 30 Z" fill="url(#ig-g-earL)" stroke="#3b2d3a" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"></path><path d="M -20 24 C -18 0 -9 -20 0 -25 C 9 -20 18 0 20 24 C 8 30 -8 30 -20 24 Z" fill="#eab3a3" opacity="{{ r.earL.inner }}" transform="{{ r.earL.innerT }}"></path></g></g><g transform="{{ r.earR.t }}" opacity="{{ r.earR.fo }}" display="{{ r.earR.fd }}"><g mask="url(#ig-earR-cut)"><path d="M -38 30 C -34 -8 -16 -40 0 -46 C 16 -40 34 -8 38 30 C 14 40 -14 40 -38 30 Z" fill="url(#ig-g-earR)" stroke="#3b2d3a" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"></path><path d="M -20 24 C -18 0 -9 -20 0 -25 C 9 -20 18 0 20 24 C 8 30 -8 30 -20 24 Z" fill="#eab3a3" opacity="{{ r.earR.inner }}" transform="{{ r.earR.innerT }}"></path></g></g>
+<ellipse cx="{{ r.muz.cx }}" cy="{{ r.muz.cy }}" rx="{{ r.muz.rx }}" ry="28.5" fill="url(#ig-g-muzzle)" display="{{ r.muz.disp }}"></ellipse>
+<g display="{{ r.nose.disp }}">
+<ellipse cx="{{ r.nose.cx }}" cy="{{ r.nose.cy }}" rx="{{ r.nose.rx }}" ry="9.2" fill="#2d2430"></ellipse>
+<ellipse cx="{{ r.nose.sx }}" cy="{{ r.nose.sy }}" rx="{{ r.nose.srx }}" ry="2.8" fill="#ffffff" opacity="0.55"></ellipse>
+</g>
+<g opacity="{{ r.mouth.op }}">
+<path d="{{ r.mouth.w }}" display="{{ r.mouth.wDisp }}" fill="none" stroke="#2d2430" stroke-width="3.7" stroke-linejoin="round" stroke-linecap="round"></path>
+<g display="{{ r.mouth.happyDisp }}"><path d="{{ r.mouth.happy }}" fill="#6b2f36" stroke="#2d2430" stroke-width="2.8" stroke-linejoin="round"></path><ellipse cx="{{ r.mouth.tx }}" cy="{{ r.mouth.ty }}" rx="{{ r.mouth.trx }}" ry="3.7" fill="#e9801f"></ellipse></g>
+<g display="{{ r.mouth.openDisp }}"><path d="{{ r.mouth.open }}" fill="#6b2f36" stroke="#2d2430" stroke-width="2.8" stroke-linejoin="round"></path><ellipse cx="{{ r.mouth.ox }}" cy="{{ r.mouth.oy }}" rx="{{ r.mouth.orx }}" ry="2.6" fill="#e9801f"></ellipse></g>
+<ellipse cx="{{ r.mouth.ocx }}" cy="{{ r.mouth.ocy }}" rx="{{ r.mouth.ocrx }}" ry="5.5" fill="#6b2f36" display="{{ r.mouth.oDisp }}"></ellipse>
+</g>
+</g>
+<g display="{{ r.book.bf }}" transform="{{ r.book.t }}"><path d="M 203.6 357 C 203.6 362.33 203.6 367.67 203.6 373 C 204.77 371.67 205.93 370.33 207.1 369 C 208.27 370.33 209.43 371.67 210.6 373 C 210.6 367.5 210.6 362 210.6 356.5 C 208.27 356.67 205.93 356.83 203.6 357 Z" fill="#2a9d8f" stroke="#3b2d3a" stroke-width="2.6" stroke-linejoin="round"></path><path d="M 143.6 284.5 C 161.27 285.67 178.93 286.83 196.6 288 C 199.27 289.67 201.93 289.67 204.6 288 C 222.27 286.83 239.93 285.67 257.6 284.5 C 258.93 284.5 259.6 285.17 259.6 286.5 C 259.6 309.5 259.6 332.5 259.6 355.5 C 259.6 356.83 258.93 357.5 257.6 357.5 C 239.93 358.33 222.27 359.17 204.6 360 C 201.93 361.67 199.27 361.67 196.6 360 C 178.93 359.17 161.27 358.33 143.6 357.5 C 142.27 357.5 141.6 356.83 141.6 355.5 C 141.6 332.5 141.6 309.5 141.6 286.5 C 141.6 285.17 142.27 284.5 143.6 284.5 Z" fill="url(#ig-g-book1)" stroke="#3b2d3a" stroke-width="4.85" stroke-linejoin="round"></path><path d="M 149.5 288 C 164 283 184.5 283.5 199.4 290.5 C 199.4 311.5 199.4 332.5 199.4 353.5 C 184.5 348 164 348 149.5 351 C 149.5 330 149.5 309 149.5 288 Z" fill="url(#ig-g-book2)" stroke="#3b2d3a" stroke-width="3.4" stroke-linejoin="round"></path><path d="M 251.72 288 C 237.22 283 216.72 283.5 201.82 290.5 C 201.82 311.5 201.82 332.5 201.82 353.5 C 216.72 348 237.22 348 251.72 351 C 251.72 330 251.72 309 251.72 288 Z" fill="url(#ig-g-book3)" stroke="#3b2d3a" stroke-width="3.4" stroke-linejoin="round"></path><path d="M 156.5 298 C 168.17 296.33 180 296.83 192 299.5 M 156.5 308.5 C 168.17 306.83 180 307.33 192 310 M 156.5 319 C 168.17 317.33 180 317.83 192 320.5 M 156.5 329.5 C 168.17 327.83 180 328.33 192 331 M 156.5 340 C 168.17 338.33 175.67 338.83 179 341.5" fill="none" stroke="#c9bfd3" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"></path><path d="M 244.72 298 C 233.05 296.33 221.22 296.83 209.22 299.5 M 244.72 308.5 C 233.05 306.83 221.22 307.33 209.22 310 M 244.72 319 C 233.05 317.33 221.22 317.83 209.22 320.5 M 244.72 329.5 C 233.05 327.83 221.22 328.33 209.22 331 M 244.72 340 C 233.05 338.33 225.55 338.83 222.22 341.5" fill="none" stroke="#c9bfd3" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"></path><path d="M 200.6 290 C 200.6 312.33 200.6 334.67 200.6 357" fill="none" stroke="#3b2d3a" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"></path></g>
+<g display="{{ r.armL.f }}"><path d="{{ r.armL.d0 }}" fill="#9791a2"></path><path d="{{ r.armL.d1 }}" fill="#3b2d3a" stroke="#3b2d3a" stroke-width="0.34" stroke-linejoin="round"></path><g mask="url(#ig-armL-band)"><path d="{{ r.armL.d2 }}" fill="#3b2d3a"></path></g><g clip-path="url(#ig-armL-clip)" mask="url(#ig-out-body)"><path d="{{ r.armL.d0 }}" fill="none" stroke="#3b2d3a" stroke-width="8.86" stroke-linejoin="round"></path></g></g>
+<g display="{{ r.armR.f }}"><path d="{{ r.armR.d0 }}" fill="#9791a2"></path><path d="{{ r.armR.d1 }}" fill="#3b2d3a" stroke="#3b2d3a" stroke-width="0.34" stroke-linejoin="round"></path><g mask="url(#ig-armR-band)"><path d="{{ r.armR.d2 }}" fill="#3b2d3a"></path></g><g clip-path="url(#ig-armR-clip)" mask="url(#ig-out-body)"><path d="{{ r.armR.d0 }}" fill="none" stroke="#3b2d3a" stroke-width="8.86" stroke-linejoin="round"></path></g></g>
+</g>
+</g>
+</svg>
+
+<!-- top row: close, progress, (hearts are drawn above) -->
+<div aria-hidden="true" style="position: absolute; left: 40px; top: 16px; width: 96px; height: 96px; box-sizing: border-box; border-radius: 50%; background: #fffef4; border: 3px solid #e3d6b4; box-shadow: 0 6px 0 #e3d6b4; display: flex; align-items: center; justify-content: center">
+<svg width="38" height="38" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="#7d6857" stroke-width="3.2" stroke-linecap="round"></path></svg>
+</div>
+<div aria-hidden="true" style="position: absolute; left: 152px; top: 50px; width: 926px; height: 28px; border-radius: 14px; background: #efe4c3; box-shadow: inset 0 3px 0 rgba(58, 42, 31, 0.1); overflow: hidden">
+<div style="width: {{ g.progW }}px; height: 28px; border-radius: 14px; background: #ffc918; box-shadow: inset 0 -5px 0 #e6a800, inset 0 4px 0 rgba(255, 255, 255, 0.45)"></div>
+</div>
+
+<!-- Racoon's Rescue banner -->
+<div aria-hidden="true" style="position: absolute; left: 364px; top: 92px; width: 876px; display: {{ g.rb.css }}; justify-content: center; pointer-events: none">
+<div style="display: flex; align-items: center; gap: 10px; padding: 6px 18px; border-radius: 999px; background: #dcebf0; box-shadow: 0 4px 0 #b5cfd8; font-size: 26px; font-weight: 700">
+<svg width="30" height="30" viewBox="-24 -24 48 48"><path d="M 0 15 C -7 10 -21 1 -21 -9 C -21 -16 -15 -21 -8.5 -21 C -4 -21 -1 -18 0 -15 C 1 -18 4 -21 8.5 -21 C 15 -21 21 -16 21 -9 C 21 1 7 10 0 15 Z" fill="#f05a5a" stroke="#3a2a1f" stroke-width="3"></path><path d="M -7 -4 L 7 -4 M 0 -11 L 0 3" stroke="#ffffff" stroke-width="4" stroke-linecap="round"></path></svg>
+<span>{{ g.rb.text }}</span>
+</div>
+</div>
+
+<!-- the question on its paper card, with the speaker -->
+<div style="position: absolute; left: 364px; top: 128px; width: 876px; height: 128px; box-sizing: border-box; border-radius: 26px; background: #fffef4; border: 3px solid #efe3c4; box-shadow: 0 6px 0 #e3d6b4; display: flex; align-items: center; gap: 18px; padding: 0 16px">
+<div aria-hidden="true" style="flex-shrink: 0; width: 96px; height: 96px; border-radius: 50%; background: #74a6cb; box-shadow: 0 6px 0 #4a7ea6; display: flex; align-items: center; justify-content: center; transform: scale({{ g.spk }})">
+<svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="#ffffff"></path><path d="M16.5 8.5a5 5 0 0 1 0 7"></path><path d="M19 6a8.5 8.5 0 0 1 0 12"></path></svg>
+</div>
+<div style="font-size: 36px; font-weight: 700; line-height: 1.2; white-space: nowrap">
+<span style="padding: 0 6px; border-radius: 8px; background: {{ g.w0.bg }}">{{ g.w0.t }}</span><span style="padding: 0 6px; border-radius: 8px; background: {{ g.w1.bg }}">{{ g.w1.t }}</span><span style="padding: 0 6px; border-radius: 8px; background: {{ g.w2.bg }}">{{ g.w2.t }}</span><span style="padding: 0 6px; border-radius: 8px; background: {{ g.w3.bg }}">{{ g.w3.t }}</span><span style="padding: 0 6px; border-radius: 8px; background: {{ g.w4.bg }}">{{ g.w4.t }}</span>
+</div>
+</div>
+
+<!-- the task: three picture cards (tap_choice) -->
+<button type="button" class="ig-card" aria-label="{{ g.c0.label }}" onClick="{{ h.ans0 }}" style="position: absolute; left: 397px; top: 300px; width: 250px; height: 250px; padding: 0; border: none; background: none; cursor: {{ g.c0.cur }}; font-family: 'Andika', sans-serif">
+<div style="width: 250px; height: 250px; box-sizing: border-box; border-radius: 28px; border: 4px solid {{ g.c0.bd }}; background: {{ g.c0.bg }}; box-shadow: 0 8px 0 {{ g.c0.sh }}; opacity: {{ g.c0.op }}; transform: scale({{ g.c0.sc }}); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px">
+<svg width="132" height="132" viewBox="0 0 120 120" aria-hidden="true"><use href="{{ g.c0.icon }}"></use></svg>
+<span style="font-size: 56px; font-weight: 700; line-height: 1; color: {{ g.c0.ink }}">{{ g.c0.label }}</span>
+</div>
+</button>
+<button type="button" class="ig-card" aria-label="{{ g.c1.label }}" onClick="{{ h.ans1 }}" style="position: absolute; left: 677px; top: 300px; width: 250px; height: 250px; padding: 0; border: none; background: none; cursor: {{ g.c1.cur }}; font-family: 'Andika', sans-serif">
+<div style="width: 250px; height: 250px; box-sizing: border-box; border-radius: 28px; border: 4px solid {{ g.c1.bd }}; background: {{ g.c1.bg }}; box-shadow: 0 8px 0 {{ g.c1.sh }}; opacity: {{ g.c1.op }}; transform: scale({{ g.c1.sc }}); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px">
+<svg width="132" height="132" viewBox="0 0 120 120" aria-hidden="true"><use href="{{ g.c1.icon }}"></use></svg>
+<span style="font-size: 56px; font-weight: 700; line-height: 1; color: {{ g.c1.ink }}">{{ g.c1.label }}</span>
+</div>
+</button>
+<button type="button" class="ig-card" aria-label="{{ g.c2.label }}" onClick="{{ h.ans2 }}" style="position: absolute; left: 957px; top: 300px; width: 250px; height: 250px; padding: 0; border: none; background: none; cursor: {{ g.c2.cur }}; font-family: 'Andika', sans-serif">
+<div style="width: 250px; height: 250px; box-sizing: border-box; border-radius: 28px; border: 4px solid {{ g.c2.bd }}; background: {{ g.c2.bg }}; box-shadow: 0 8px 0 {{ g.c2.sh }}; opacity: {{ g.c2.op }}; transform: scale({{ g.c2.sc }}); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px">
+<svg width="132" height="132" viewBox="0 0 120 120" aria-hidden="true"><use href="{{ g.c2.icon }}"></use></svg>
+<span style="font-size: 56px; font-weight: 700; line-height: 1; color: {{ g.c2.ink }}">{{ g.c2.label }}</span>
+</div>
+</button>
+
+<!-- Racoon's speech bubble, above him in the column (tail down) -->
+<div aria-hidden="true" style="position: absolute; left: 40px; bottom: 240px; width: 300px; display: {{ g.bub.css }}; transform: scale({{ g.bub.sc }}); transform-origin: 110px calc(100% + 16px); pointer-events: none">
+<div style="position: relative; box-sizing: border-box; border-radius: 22px; background: #ffffff; border: 3px solid #e3d6b4; box-shadow: 0 5px 0 #e3d6b4; padding: 12px 18px; font-size: 22px; font-weight: 700; line-height: 1.3">
+<div style="display: grid"><span style="grid-area: 1 / 1; visibility: hidden">{{ g.bub.said }}</span><span style="grid-area: 1 / 1">{{ g.bub.text }}</span></div>
+<div style="position: absolute; left: 98px; bottom: -14px; width: 22px; height: 22px; background: #ffffff; border-right: 3px solid #e3d6b4; border-bottom: 3px solid #e3d6b4; transform: rotate(45deg)"></div>
+</div>
+</div>
+<div aria-live="polite" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap">{{ g.bub.said }}</div>
+
+<!-- after a wrong second try: the answer and why, on a paper sheet over the task's side -->
+<div style="position: absolute; left: 352px; top: 520px; width: 928px; height: 200px; box-sizing: border-box; display: {{ g.sheet.css }}; transform: translateY({{ g.sheet.y }}px); border-radius: 30px 30px 0 0; background: #fffef4; border: 3px solid #efe3c4; border-bottom: none; box-shadow: 0 -6px 0 rgba(58, 42, 31, 0.07); padding: 24px 34px">
+<div style="display: flex; align-items: center; gap: 14px">
+<div aria-hidden="true" style="width: 48px; height: 48px; border-radius: 50%; background: #6aab4c; box-shadow: 0 4px 0 #487f33; display: flex; align-items: center; justify-content: center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></div>
+<span style="font-size: 34px; font-weight: 700">{{ g.sheet.title }}</span>
+</div>
+<p style="margin: 14px 0 0 62px; font-size: 26px; line-height: 1.35; color: #5d4a3a">{{ g.sheet.why }}</p>
+</div>
+
+<!-- Level up! -->
+<div aria-hidden="true" style="position: absolute; left: 364px; top: 150px; width: 876px; display: {{ g.lv.css }}; justify-content: center; pointer-events: none">
+<div style="transform: scale({{ g.lv.sc }}) rotate(-3deg); padding: 10px 34px; border-radius: 999px; background: #ffc918; border: 4px solid #3a2a1f; box-shadow: 0 8px 0 #cc8a00; font-size: 58px; font-weight: 700">Level up!</div>
+</div>
+
+<!-- overlays: Racoon's Rescue, Lesson complete (over the task's side, so Racoon stays in view) -->
+<div style="position: absolute; left: 352px; top: 0; width: 928px; height: 720px; display: {{ g.ov.css }}; align-items: center; justify-content: center; background: rgba(58, 42, 31, {{ g.ov.scrim }})">
+<div role="dialog" aria-label="{{ g.ov.title }}" style="width: 520px; box-sizing: border-box; transform: scale({{ g.ov.sc }}); border-radius: 30px; background: #fffef4; border: 3px solid #efe3c4; box-shadow: 0 10px 0 rgba(58, 42, 31, 0.18); padding: 26px 34px 30px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
+<svg width="160" height="140" viewBox="0 0 160 140" aria-hidden="true" style="overflow: visible">
+<g display="{{ g.ov.starDisp }}"><g transform="{{ g.ov.starT }}"><path d="M 80 13 L 96.46 52.35 L 138.97 55.84 L 106.63 83.65 L 116.44 125.16 L 80 103 L 43.56 125.16 L 53.37 83.65 L 21.03 55.84 L 63.54 52.35 Z" fill="#ffc918" stroke="#3a2a1f" stroke-width="6" stroke-linejoin="round"></path><path d="M 66 50 L 80 30" stroke="#fff6c8" stroke-width="7" stroke-linecap="round"></path></g>
+<g opacity="{{ g.ov.spark }}" stroke="#ffc918" stroke-width="5" stroke-linecap="round"><path d="M 16 20 L 24 28 M 144 20 L 136 28 M 8 92 L 20 90 M 152 92 L 140 90 M 80 -6 L 80 4"></path></g></g>
+<g display="{{ g.ov.heartDisp }}" transform="translate(80 72) scale(2.6)"><path d="M 0 15 C -7 10 -21 1 -21 -9 C -21 -16 -15 -21 -8.5 -21 C -4 -21 -1 -18 0 -15 C 1 -18 4 -21 8.5 -21 C 15 -21 21 -16 21 -9 C 21 1 7 10 0 15 Z" fill="#f05a5a" stroke="#3a2a1f" stroke-width="2.4" stroke-linejoin="round"></path><path d="M -7 -4 L 7 -4 M 0 -11 L 0 3" stroke="#ffffff" stroke-width="3.4" stroke-linecap="round"></path></g>
+</svg>
+<span style="font-size: 44px; font-weight: 700; line-height: 1.1">{{ g.ov.title }}</span>
+<span style="font-size: 24px; line-height: 1.35; color: #5d4a3a">{{ g.ov.text }}</span>
+<button type="button" class="ig-ok" onClick="{{ h.ok }}" style="margin-top: 10px; min-width: 220px; min-height: 84px; padding: 0 30px; border: none; border-radius: 24px; background: #ffc918; box-shadow: 0 7px 0 #cc8a00; font-family: 'Andika', sans-serif; font-size: 32px; font-weight: 700; color: #3a2a1f; cursor: pointer">{{ g.ov.btn }}</button>
+</div>
+</div>
+
+<!-- on top: confetti, a clap's spark, z z z -->
+<svg viewBox="0 0 1280 720" width="1280" height="720" aria-hidden="true" style="position: absolute; left: 0; top: 0; display: block; pointer-events: none">
+<path d="{{ g.cf0 }}" fill="#ffc918"></path>
+<path d="{{ g.cf1 }}" fill="#2a9d8f"></path>
+<path d="{{ g.cf2 }}" fill="#e9801f"></path>
+<path d="{{ g.cf3 }}" fill="#74a6cb"></path>
+<path d="{{ g.clap.d }}" fill="none" stroke="#ffc918" stroke-width="4" stroke-linecap="round" opacity="{{ g.clap.op }}"></path>
+<text x="{{ g.z0.x }}" y="{{ g.z0.y }}" font-size="{{ g.z0.s }}" font-weight="700" fill="#4a7ea6" opacity="{{ g.z0.op }}" style="font-family: 'Andika', sans-serif">z</text>
+<text x="{{ g.z1.x }}" y="{{ g.z1.y }}" font-size="{{ g.z1.s }}" font-weight="700" fill="#4a7ea6" opacity="{{ g.z1.op }}" style="font-family: 'Andika', sans-serif">z</text>
+<text x="{{ g.z2.x }}" y="{{ g.z2.y }}" font-size="{{ g.z2.s }}" font-weight="700" fill="#4a7ea6" opacity="{{ g.z2.op }}" style="font-family: 'Andika', sans-serif">z</text>
+</svg>
+</div>
+
+<div style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px">
+<h1 style="margin: 0; font-size: 30px; font-weight: 700; line-height: 1.1">Racoon in the game</h1>
+<p style="margin: 0 0 4px; font-size: 16px; line-height: 1.4; color: #6b5646">The lesson screen on a laptop, at its real size. Tap a picture to answer, or play a moment:</p>
+<button type="button" class="ig-mo" data-act="start" onClick="{{ h.mStart }}" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; min-height: 44px; padding: 0 12px; border: 2px solid #e3d6b4; border-radius: 14px; background: #fffef4; box-shadow: 0 4px 0 #e3d6b4; font-family: 'Andika', sans-serif; font-size: 18px; font-weight: 700; color: #3a2a1f; text-align: left; cursor: pointer"><span>Lesson starts</span><span style="font-size: 13px; color: #1d7166; background: #e2f3ee; border-radius: 999px; padding: 3px 9px">happy</span></button>
+<button type="button" class="ig-mo" data-act="read" onClick="{{ h.mRead }}" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; min-height: 44px; padding: 0 12px; border: 2px solid #e3d6b4; border-radius: 14px; background: #fffef4; box-shadow: 0 4px 0 #e3d6b4; font-family: 'Andika', sans-serif; font-size: 18px; font-weight: 700; color: #3a2a1f; text-align: left; cursor: pointer"><span>Reading the question</span><span style="font-size: 13px; color: #4a7ea6; background: #e6eff7; border-radius: 999px; padding: 3px 9px">calm</span></button>
+<button type="button" class="ig-mo" data-act="right" onClick="{{ h.mRight }}" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; min-height: 44px; padding: 0 12px; border: 2px solid #e3d6b4; border-radius: 14px; background: #fffef4; box-shadow: 0 4px 0 #e3d6b4; font-family: 'Andika', sans-serif; font-size: 18px; font-weight: 700; color: #3a2a1f; text-align: left; cursor: pointer"><span>Right answer</span><span style="font-size: 13px; color: #1d7166; background: #e2f3ee; border-radius: 999px; padding: 3px 9px">happy</span></button>
+<button type="button" class="ig-mo" data-act="hint" onClick="{{ h.mHint }}" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; min-height: 44px; padding: 0 12px; border: 2px solid #e3d6b4; border-radius: 14px; background: #fffef4; box-shadow: 0 4px 0 #e3d6b4; font-family: 'Andika', sans-serif; font-size: 18px; font-weight: 700; color: #3a2a1f; text-align: left; cursor: pointer"><span>Wrong, first try: a hint</span><span style="font-size: 13px; color: #684c7a; background: #f1eaf5; border-radius: 999px; padding: 3px 9px">thinking</span></button>
+<button type="button" class="ig-mo" data-act="again" onClick="{{ h.mAgain }}" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; min-height: 44px; padding: 0 12px; border: 2px solid #e3d6b4; border-radius: 14px; background: #fffef4; box-shadow: 0 4px 0 #e3d6b4; font-family: 'Andika', sans-serif; font-size: 18px; font-weight: 700; color: #3a2a1f; text-align: left; cursor: pointer"><span>Wrong again</span><span style="font-size: 13px; color: #bd6212; background: #fdeede; border-radius: 999px; padding: 3px 9px">encourage</span></button>
+<button type="button" class="ig-mo" data-act="rescue" onClick="{{ h.mRescue }}" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; min-height: 44px; padding: 0 12px; border: 2px solid #e3d6b4; border-radius: 14px; background: #fffef4; box-shadow: 0 4px 0 #e3d6b4; font-family: 'Andika', sans-serif; font-size: 18px; font-weight: 700; color: #3a2a1f; text-align: left; cursor: pointer"><span>Racoon's Rescue</span><span style="font-size: 13px; color: #bd6212; background: #fdeede; border-radius: 999px; padding: 3px 9px">encourage</span></button>
+<button type="button" class="ig-mo" data-act="level" onClick="{{ h.mLevel }}" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; min-height: 44px; padding: 0 12px; border: 2px solid #e3d6b4; border-radius: 14px; background: #fffef4; box-shadow: 0 4px 0 #e3d6b4; font-family: 'Andika', sans-serif; font-size: 18px; font-weight: 700; color: #3a2a1f; text-align: left; cursor: pointer"><span>Level up</span><span style="font-size: 13px; color: #8a6a00; background: #fff4cc; border-radius: 999px; padding: 3px 9px">celebrate</span></button>
+<button type="button" class="ig-mo" data-act="done" onClick="{{ h.mDone }}" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; min-height: 44px; padding: 0 12px; border: 2px solid #e3d6b4; border-radius: 14px; background: #fffef4; box-shadow: 0 4px 0 #e3d6b4; font-family: 'Andika', sans-serif; font-size: 18px; font-weight: 700; color: #3a2a1f; text-align: left; cursor: pointer"><span>Lesson complete</span><span style="font-size: 13px; color: #8a6a00; background: #fff4cc; border-radius: 999px; padding: 3px 9px">celebrate</span></button>
+<button type="button" class="ig-mo" data-act="nudge" onClick="{{ h.mNudge }}" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; min-height: 44px; padding: 0 12px; border: 2px solid #e3d6b4; border-radius: 14px; background: #fffef4; box-shadow: 0 4px 0 #e3d6b4; font-family: 'Andika', sans-serif; font-size: 18px; font-weight: 700; color: #3a2a1f; text-align: left; cursor: pointer"><span>Waiting for an answer</span><span style="font-size: 13px; color: #4a7ea6; background: #e6eff7; border-radius: 999px; padding: 3px 9px">helps</span></button>
+<button type="button" class="ig-mo" data-act="rest" onClick="{{ h.mRest }}" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; min-height: 44px; padding: 0 12px; border: 2px solid #e3d6b4; border-radius: 14px; background: #fffef4; box-shadow: 0 4px 0 #e3d6b4; font-family: 'Andika', sans-serif; font-size: 18px; font-weight: 700; color: #3a2a1f; text-align: left; cursor: pointer"><span>Time to rest</span><span style="font-size: 13px; color: #6b5646; background: #efebe4; border-radius: 999px; padding: 3px 9px">sleepy</span></button>
+<p style="margin: 6px 0 0; font-size: 14px; line-height: 1.4; color: #7d6857">His lines, hints and rules are the game's own (companion lines, HintText, FR-13, FR-14).</p>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1712,"height":800}}'>
+
+// Racoon as a 2.5D puppet. His shapes come from the hand-edited Inkscape drawing
+// (parts/racoon_C_inkscape.svg, put here by build_racoon.py as ART). Each part has a place on his
+// round head and body, so turning him moves the parts around instead of needing a drawing per angle.
+const ART = {"ax":200.51,"head":{"c":[200.51,165.57],"r":[108.0,92.0],"pivot":[200.51,253.57]},"ears":[{"side":-1,"off":[-71.19,-75.67],"lam0":-1.2558,"R":74.88,"tilt":-24.0,"cut":[-0.2272,-0.9739,8.74],"cutLine":[-1.41,14.0,0.9739,-0.2272]},{"side":1,"off":[71.41,-75.67],"lam0":1.2567,"R":75.08,"tilt":24.0,"cut":[0.2432,-0.97,8.53],"cutLine":[1.51,14.02,0.97,0.2432]}],"mask":{"pts":[[-91.89,15.83],[-91.8,14.73],[-91.41,13.41],[-90.68,11.56],[-89.75,9.67],[-88.66,7.8],[-87.44,5.97],[-86.13,4.24],[-84.75,2.64],[-83.34,1.21],[-81.51,-0.49],[-79.73,-2.09],[-78.01,-3.6],[-76.33,-5.01],[-74.66,-6.33],[-73.0,-7.56],[-71.33,-8.72],[-69.64,-9.81],[-67.91,-10.83],[-66.13,-11.79],[-64.28,-12.69],[-62.35,-13.54],[-60.29,-14.34],[-58.14,-15.09],[-55.93,-15.76],[-53.68,-16.38],[-51.42,-16.92],[-49.18,-17.4],[-46.98,-17.81],[-44.84,-18.14],[-42.79,-18.41],[-40.86,-18.6],[-39.08,-18.72],[-37.46,-18.76],[-36.04,-18.73],[-33.87,-18.59],[-31.7,-18.4],[-29.53,-18.17],[-27.36,-17.91],[-25.19,-17.61],[-23.03,-17.27],[-20.88,-16.9],[-18.73,-16.49],[-16.59,-16.06],[-14.46,-15.6],[-12.34,-15.12],[-10.53,-14.63],[-8.32,-13.98],[-5.94,-13.27],[-3.6,-12.62],[-1.51,-12.15],[0.11,-11.97],[1.72,-12.15],[3.81,-12.62],[6.15,-13.27],[8.53,-13.98],[10.74,-14.63],[12.56,-15.12],[14.68,-15.6],[16.81,-16.06],[18.95,-16.49],[21.09,-16.9],[23.25,-17.27],[25.41,-17.61],[27.58,-17.91],[29.74,-18.17],[31.91,-18.4],[34.09,-18.59],[36.26,-18.73],[37.81,-18.76],[39.58,-18.69],[41.53,-18.52],[43.64,-18.27],[45.87,-17.93],[48.18,-17.52],[50.54,-17.02],[52.91,-16.45],[55.26,-15.82],[57.56,-15.12],[59.76,-14.35],[61.84,-13.54],[63.67,-12.74],[65.44,-11.9],[67.16,-11.02],[68.84,-10.09],[70.49,-9.11],[72.11,-8.07],[73.72,-6.97],[75.32,-5.8],[76.93,-4.56],[78.55,-3.25],[80.18,-1.85],[81.85,-0.36],[83.56,1.21],[84.97,2.64],[86.34,4.24],[87.66,5.97],[88.87,7.8],[89.96,9.67],[90.89,11.56],[91.63,13.41],[92.01,14.73],[92.11,15.83],[91.99,16.92],[91.63,18.05],[90.63,19.93],[89.34,21.64],[87.9,23.2],[86.74,24.4],[85.52,25.56],[84.21,26.56],[82.77,27.31],[80.97,28.01],[78.94,28.65],[76.8,29.22],[74.69,29.73],[72.75,30.17],[71.09,30.53],[69.54,30.85],[67.75,31.18],[65.75,31.52],[63.59,31.86],[61.3,32.19],[58.91,32.51],[56.47,32.81],[54.02,33.09],[51.58,33.34],[49.21,33.55],[46.93,33.72],[44.78,33.84],[42.8,33.9],[41.03,33.9],[39.51,33.83],[37.38,33.6],[35.25,33.25],[33.1,32.8],[30.97,32.27],[28.83,31.68],[26.71,31.06],[24.61,30.43],[22.52,29.8],[20.47,29.21],[19.02,28.79],[17.08,28.18],[14.76,27.45],[12.21,26.65],[9.56,25.84],[6.94,25.07],[4.48,24.39],[2.33,23.86],[0.6,23.53],[-0.55,23.46],[-2.53,23.8],[-4.52,24.35],[-6.51,25.03],[-8.47,25.74],[-10.39,26.37],[-12.44,26.98],[-14.49,27.59],[-16.54,28.21],[-18.6,28.83],[-20.67,29.44],[-22.74,30.04],[-24.81,30.63],[-26.89,31.19],[-28.97,31.73],[-31.06,32.25],[-33.15,32.73],[-35.24,33.17],[-37.34,33.57],[-39.27,33.83],[-41.23,33.93],[-43.23,33.9],[-45.23,33.78],[-47.24,33.59],[-49.24,33.38],[-51.21,33.16],[-53.14,32.98],[-54.67,32.84],[-56.46,32.65],[-58.47,32.42],[-60.67,32.14],[-63.0,31.82],[-65.42,31.46],[-67.89,31.06],[-70.36,30.62],[-72.79,30.14],[-75.13,29.63],[-77.35,29.08],[-79.38,28.49],[-81.2,27.88],[-82.75,27.24],[-83.99,26.56],[-85.45,25.51],[-86.91,24.24],[-88.31,22.81],[-89.56,21.26],[-90.62,19.66],[-91.41,18.05],[-91.78,16.92]],"lam":0.001},"brows":[{"pts":[[-19.55,-38.9],[-19.55,-37.76],[-19.94,-36.6],[-20.7,-35.43],[-21.79,-34.26],[-23.2,-33.12],[-24.9,-32.01],[-26.87,-30.96],[-29.08,-29.96],[-31.5,-29.05],[-34.13,-28.23],[-36.92,-27.51],[-39.85,-26.91],[-42.82,-26.47],[-45.69,-26.19],[-48.43,-26.06],[-51.03,-26.09],[-53.44,-26.27],[-55.65,-26.59],[-57.63,-27.05],[-59.34,-27.64],[-60.77,-28.36],[-61.88,-29.2],[-62.64,-30.16],[-63.04,-31.23],[-63.03,-32.38],[-62.64,-33.54],[-61.89,-34.71],[-60.79,-35.87],[-59.38,-37.02],[-57.68,-38.12],[-55.72,-39.18],[-53.51,-40.17],[-51.08,-41.09],[-48.46,-41.91],[-45.67,-42.63],[-42.73,-43.22],[-39.77,-43.67],[-36.9,-43.95],[-34.15,-44.07],[-31.56,-44.04],[-29.14,-43.87],[-26.93,-43.55],[-24.96,-43.09],[-23.24,-42.5],[-21.82,-41.78],[-20.71,-40.93],[-19.94,-39.97]],"lam":-0.4264},{"pts":[[63.25,-31.23],[62.86,-30.16],[62.09,-29.2],[60.98,-28.36],[59.56,-27.64],[57.84,-27.05],[55.87,-26.59],[53.66,-26.27],[51.24,-26.09],[48.65,-26.06],[45.9,-26.19],[43.03,-26.47],[40.07,-26.91],[37.13,-27.51],[34.34,-28.23],[31.72,-29.05],[29.29,-29.96],[27.08,-30.96],[25.12,-32.01],[23.42,-33.12],[22.01,-34.26],[20.91,-35.43],[20.16,-36.6],[19.77,-37.76],[19.76,-38.9],[20.16,-39.97],[20.92,-40.93],[22.03,-41.78],[23.46,-42.5],[25.17,-43.09],[27.15,-43.55],[29.36,-43.87],[31.77,-44.04],[34.37,-44.07],[37.11,-43.95],[39.98,-43.67],[42.95,-43.22],[45.88,-42.63],[48.67,-41.91],[51.3,-41.09],[53.72,-40.17],[55.93,-39.18],[57.9,-38.12],[59.6,-37.02],[61.01,-35.87],[62.1,-34.71],[62.86,-33.54],[63.25,-32.38]],"lam":0.4287}],"eyes":[{"c":[-42.19,3.53],"r":15.6,"pupil":[0.0,1.0,9.7],"glints":[[-3.2,-3.7,3.5],[3.2,3.2,1.5]]},{"c":[42.41,3.53],"r":15.6,"pupil":[0.0,1.0,9.7],"glints":[[-3.2,-3.7,3.5],[3.2,3.2,1.5]]}],"blush":[{"c":[-69.79,34.83],"rx":13.8,"ry":8.3,"op":0.5},{"c":[70.01,34.83],"rx":13.8,"ry":8.3,"op":0.5}],"muzzle":{"c":[0.11,38.53],"rx":42.3,"ry":28.5},"nose":{"c":[0.11,24.73],"rx":12.9,"ry":9.2,"shine":[-3.7,-3.7,4.6,2.8]},"mouth":[[-13.69,40.33],[-12.16,41.97],[-10.63,43.2],[-9.09,44.02],[-7.56,44.43],[-6.03,44.43],[-4.49,44.02],[-2.96,43.2],[-1.43,41.97],[0.11,40.33],[1.64,41.97],[3.17,43.2],[4.71,44.02],[6.24,44.43],[7.77,44.43],[9.31,44.02],[10.84,43.2],[12.37,41.97],[13.91,40.33]],"body":{"m":[203.82,236.7],"c":[[186.03,236.5,165.73,242.08,156.07,252.08],[141.38,267.3,149.82,313.53,144.02,333.89],[134.92,365.89,157.81,370.32,174.49,375.76],[191.17,381.21,216.56,379.67,232.19,375.76],[255.36,369.98,269.75,362.89,261.36,330.81],[254.53,304.63,259.84,272.74,252.58,257.59],[251.61,255.57,250.42,253.85,248.95,252.48],[236.44,240.81,220.47,236.88,203.82,236.7]]},"bodyHalf":63.26,"bodyLine":4.85,"belly":{"cx":1.56,"hw":42.95,"shape":{"m":[202.74,269.44],"c":[[190.2,269.31,175.88,273.01,169.08,279.62],[158.71,289.7,164.66,320.29,160.58,333.76],[154.16,354.93,170.3,357.86,182.06,361.46],[193.82,365.07,211.73,364.05,222.75,361.46],[239.09,357.64,249.23,352.95,243.32,331.72],[237.86,312.09,243.39,287.62,234.57,279.89],[225.74,272.16,214.49,269.57,202.74,269.44]]}},"feet":[{"x":-39.77,"y":379.23,"rx":25.0},{"x":37.72,"y":378.2,"rx":25.0}],"ground":386.23,"shadowRx":96,"tail":{"spine":[[232.07,325.17],[340.44,341.11],[322.53,205.62]],"z":[-40.0,-100.0,-72.0],"radii":[20.61,40.21,24.02],"parts":[[[0.0038,0.04,20.54],[0.005,0.13,22.22],[0.01,-0.11,23.59],[0.015,0.03,23.29],[0.0213,-0.11,22.14],[0.0263,-0.09,21.22],[0.0325,0.1,21.04],[0.0413,-0.04,21.31],[0.0488,-0.08,21.62],[0.0563,0.13,21.85],[0.0651,0.06,22.1],[0.0738,0.0,22.36],[0.0826,-0.05,22.63],[0.0914,-0.09,22.91],[0.1001,-0.13,23.2],[0.1076,0.13,23.5],[0.1164,0.1,23.8],[0.1252,0.09,24.1],[0.1339,0.07,24.41],[0.1427,0.06,24.73],[0.1514,0.06,25.04],[0.1602,0.06,25.35],[0.169,0.06,25.66],[0.1777,0.07,25.97],[0.1865,0.08,26.28],[0.1952,0.1,26.59],[0.2053,-0.06,26.92],[0.214,0.03,27.27],[0.2228,0.09,27.63],[0.2315,0.12,28.01],[0.2403,0.11,28.41],[0.2491,0.08,28.81],[0.2578,0.02,29.23],[0.2666,-0.08,29.67],[0.2741,0.09,30.11],[0.2829,-0.06,30.57],[0.2904,0.06,31.04],[0.2991,-0.13,31.52],[0.3066,-0.06,32.01],[0.3141,-0.0,32.51],[0.3217,0.03,33.02],[0.3292,0.06,33.54],[0.3367,0.07,34.07],[0.3442,0.06,34.62],[0.3517,0.05,35.18],[0.3592,0.03,35.75],[0.3667,-0.01,36.33],[0.3742,-0.04,36.93],[0.3817,-0.09,37.55],[0.3892,-0.14,38.19],[0.3955,0.13,38.84],[0.403,0.08,39.52],[0.4105,0.03,40.21],[0.418,-0.02,40.93],[0.4255,-0.06,41.67],[0.433,-0.11,42.45],[0.438,-0.15,42.85],[0.4443,0.13,43.35],[0.4543,-0.14,43.91],[0.4631,0.16,44.51],[0.4743,-0.14,45.11],[0.4831,0.1,45.63],[0.4919,0.04,46.01],[0.4994,-0.15,46.13],[0.5031,0.03,45.89],[0.5044,0.07,45.2],[0.5044,0.05,43.26],[0.5056,0.05,41.61],[0.5081,0.06,40.22],[0.5119,0.06,39.08],[0.5169,0.03,38.17],[0.5232,-0.05,37.48],[0.5294,0.08,37.0],[0.5369,0.1,36.69],[0.5457,-0.03,36.56],[0.5544,-0.04,36.57],[0.5632,0.05,36.71],[0.5732,-0.11,36.96],[0.582,0.06,37.29],[0.592,-0.06,37.67],[0.6008,0.11,38.07],[0.6108,-0.06,38.46],[0.6195,0.02,38.82],[0.6283,0.03,39.09],[0.637,-0.04,39.26],[0.6446,0.03,39.35],[0.6521,0.09,39.44],[0.6596,0.15,39.52],[0.6683,-0.1,39.6],[0.6758,-0.05,39.67],[0.6834,-0.01,39.73],[0.6909,0.04,39.78],[0.6984,0.08,39.83],[0.7059,0.12,39.87],[0.7134,0.15,39.9],[0.7222,-0.13,39.92],[0.7309,0.06,40.21],[0.7372,-0.01,40.66],[0.7422,0.15,40.74],[0.7509,0.07,39.96],[0.7547,0.07,38.23],[0.7584,0.0,36.46],[0.7622,-0.09,34.68],[0.7647,0.13,32.89],[0.7685,0.06,31.11],[0.7722,0.05,29.35],[0.776,0.11,27.63],[0.7797,0.06,27.03],[0.7835,0.12,26.63],[0.7897,-0.01,26.7],[0.7947,0.13,27.04],[0.801,-0.02,27.22],[0.8085,-0.01,27.15],[0.816,-0.01,27.04],[0.8235,-0.01,26.91],[0.831,-0.02,26.77],[0.8385,-0.04,26.64],[0.8461,-0.09,26.52],[0.8536,-0.12,26.42],[0.8598,0.16,26.31],[0.8673,0.11,26.2],[0.8748,0.05,26.09],[0.8824,-0.03,25.97],[0.8899,-0.11,25.86],[0.8961,0.13,25.74],[0.9036,0.03,25.62],[0.9111,-0.09,25.51],[0.9174,0.12,25.39],[0.9249,-0.02,25.27],[0.9312,0.16,25.15],[0.9387,-0.01,25.03],[0.9449,0.16,24.91],[0.9524,-0.04,24.8],[0.9587,0.1,24.68],[0.9662,-0.13,24.57],[0.9725,-0.02,24.46],[0.9787,0.13,24.35],[0.9862,-0.05,24.27],[0.9925,0.13,24.17],[1.0,-0.05,24.04],[1.0,1.94,23.85],[1.0,3.91,23.56],[1.0,5.85,23.16],[1.0,7.73,22.61],[1.0,9.54,21.9],[1.0,11.49,20.92],[1.0,13.3,19.81],[1.0,14.96,18.57],[1.0,16.48,17.23],[1.0,17.86,15.78],[1.0,19.09,14.24],[1.0,20.18,12.62],[1.0,21.13,10.93],[1.0,21.92,9.18],[1.0,22.58,7.37],[1.0,23.08,5.53],[1.0,23.45,3.66],[1.0,23.66,1.77],[1.0,23.73,-0.14],[1.0,23.65,-2.04],[1.0,23.42,-3.93],[1.0,23.04,-5.81],[1.0,22.52,-7.65],[1.0,21.85,-9.45],[1.0,21.03,-11.2],[1.0,20.05,-12.89],[1.0,18.93,-14.51],[1.0,17.66,-16.05],[1.0,16.24,-17.5],[1.0,14.66,-18.84],[1.0,12.94,-20.08],[1.0,11.06,-21.19],[1.0,9.36,-22.0],[1.0,7.62,-22.64],[1.0,5.84,-23.13],[1.0,4.03,-23.51],[1.0,2.2,-23.78],[1.0,0.36,-23.99],[0.9937,0.09,-24.14],[0.9862,0.11,-24.25],[0.9787,0.11,-24.34],[0.9712,0.1,-24.45],[0.9637,-0.02,-24.57],[0.9549,0.13,-24.71],[0.9474,-0.03,-24.85],[0.9387,0.07,-24.99],[0.9312,-0.14,-25.13],[0.9224,-0.09,-25.28],[0.9136,-0.07,-25.43],[0.9049,-0.09,-25.57],[0.8961,-0.13,-25.72],[0.8861,0.06,-25.86],[0.8773,-0.06,-26.0],[0.8673,0.05,-26.13],[0.8573,0.12,-26.26],[0.8498,-0.06,-26.42],[0.8398,-0.1,-26.67],[0.8285,-0.09,-26.93],[0.8173,-0.08,-27.15],[0.8073,-0.1,-27.25],[0.7985,0.06,-27.2],[0.791,0.07,-26.77],[0.7835,0.05,-26.57],[0.776,0.1,-27.56],[0.771,0.08,-30.0],[0.7672,-0.07,-32.17],[0.7622,0.05,-34.11],[0.7584,0.03,-35.84],[0.7547,0.08,-37.43],[0.7522,-0.01,-38.9],[0.7497,-0.05,-40.29],[0.7472,-0.06,-41.65],[0.7359,0.01,-41.75],[0.7209,0.01,-40.64],[0.7059,-0.02,-40.11],[0.6896,0.03,-39.64],[0.6733,-0.03,-39.22],[0.6546,0.02,-38.83],[0.6345,-0.02,-38.43],[0.6158,0.01,-38.07],[0.5932,0.03,-37.6],[0.567,0.02,-37.02],[0.5369,0.02,-36.33],[0.5044,-0.03,-35.54],[0.4693,-0.03,-34.65],[0.4343,-0.01,-33.72],[0.4018,0.03,-32.81],[0.3742,-0.0,-32.01],[0.3504,-0.03,-31.41],[0.3379,0.03,-32.02],[0.3254,-0.01,-33.78],[0.3104,-0.02,-35.86],[0.2941,-0.0,-37.47],[0.2804,0.04,-37.83],[0.2628,-0.03,-37.03],[0.2403,0.04,-36.19],[0.219,0.02,-35.31],[0.199,0.06,-34.38],[0.1827,0.03,-33.47],[0.1702,0.03,-32.63],[0.1539,-0.03,-31.15],[0.1402,0.06,-29.68],[0.1302,-0.02,-28.24],[0.1214,-0.07,-26.88],[0.1126,-0.01,-25.62],[0.1039,0.05,-24.47],[0.0951,0.03,-23.46],[0.0851,0.04,-22.59],[0.0738,0.01,-21.87],[0.0601,0.06,-21.28],[0.0526,-0.07,-20.95],[0.0413,-0.11,-20.49],[0.03,-0.04,-20.14],[0.0225,0.08,-20.19],[0.0175,0.07,-21.06],[0.0125,-0.12,-22.19],[0.0063,-0.04,-22.46],[0.0025,-0.12,-21.02],[0.0013,-0.11,-19.37],[0.0,0.05,-18.07],[0.0,-0.03,-16.78],[0.0,-0.1,-15.02],[0.0,-0.14,-13.26],[0.0,-0.16,-11.85],[0.0,-0.18,-10.43],[0.0,-0.2,-9.03],[0.0,-0.2,-7.46],[0.0,-0.2,-5.89],[0.0,-0.18,-4.33],[0.0,-0.17,-2.68],[0.0,-0.15,-1.04],[0.0,-0.12,0.61],[0.0,-0.09,2.26],[0.0,-0.06,3.9],[0.0,-0.01,5.54],[0.0,0.03,7.11],[0.0,0.09,8.67],[0.0013,-0.14,10.24],[0.0013,-0.07,11.65],[0.0013,-0.01,13.05],[0.0013,0.07,14.46],[0.0025,-0.11,16.22],[0.0025,0.03,17.97],[0.0038,-0.11,19.26]],[[0.3517,-0.1,32.6],[0.3592,-0.09,33.27],[0.3655,0.1,33.91],[0.373,-0.04,34.53],[0.3805,-0.09,35.14],[0.388,0.03,35.75],[0.3967,0.11,36.4],[0.4018,0.08,36.8],[0.4105,-0.08,37.57],[0.4193,0.12,38.56],[0.4293,-0.02,39.58],[0.4368,0.05,40.41],[0.4418,-0.03,40.81],[0.4468,0.0,41.02],[0.4506,0.14,41.25],[0.4556,0.1,41.56],[0.4631,-0.13,42.02],[0.4718,0.1,42.73],[0.4731,0.02,41.32],[0.4743,-0.07,39.68],[0.4743,0.13,37.84],[0.4756,-0.02,35.8],[0.4756,0.09,33.58],[0.4756,0.14,32.06],[0.4768,-0.07,30.19],[0.4768,0.02,28.21],[0.4768,0.09,26.34],[0.4768,0.12,24.81],[0.4781,-0.1,22.9],[0.4781,-0.08,20.98],[0.4781,-0.06,19.06],[0.4781,-0.05,17.15],[0.4781,-0.03,15.43],[0.4781,-0.02,13.72],[0.4781,-0.01,12.01],[0.4781,-0.01,10.3],[0.4781,-0.01,8.59],[0.4781,-0.01,6.8],[0.4781,-0.01,5.0],[0.4781,-0.01,3.2],[0.4781,-0.02,1.4],[0.4781,-0.02,-0.4],[0.4781,-0.03,-2.19],[0.4781,-0.04,-3.99],[0.4781,-0.05,-5.79],[0.4781,-0.06,-7.58],[0.4781,-0.08,-9.38],[0.4768,0.06,-11.09],[0.4768,0.04,-12.81],[0.4768,0.02,-14.52],[0.4768,-0.01,-16.23],[0.4768,-0.03,-17.94],[0.4768,-0.05,-19.85],[0.4756,0.04,-21.77],[0.4756,0.0,-23.69],[0.4756,-0.03,-25.61],[0.4743,0.03,-27.24],[0.4743,-0.01,-28.91],[0.4731,0.04,-30.57],[0.4731,-0.01,-32.2],[0.4431,-0.02,-31.3],[0.4193,0.03,-30.6],[0.4005,-0.03,-30.11],[0.3817,0.03,-29.66],[0.363,-0.04,-29.18],[0.3417,-0.0,-28.99],[0.3417,0.02,-27.47],[0.3429,-0.04,-25.86],[0.3429,-0.01,-24.24],[0.3429,0.02,-22.73],[0.3429,0.04,-21.01],[0.3429,0.06,-19.3],[0.3442,-0.05,-17.58],[0.3442,-0.04,-15.87],[0.3442,-0.01,-13.97],[0.3442,0.01,-12.06],[0.3442,0.04,-10.15],[0.3442,0.07,-8.25],[0.3454,-0.07,-6.25],[0.3454,-0.05,-4.25],[0.3454,-0.02,-2.25],[0.3454,0.01,-0.25],[0.3454,0.04,1.35],[0.3454,0.06,2.95],[0.3454,0.09,4.55],[0.3467,-0.09,6.15],[0.3467,-0.06,7.75],[0.3467,-0.02,9.66],[0.3467,0.01,11.57],[0.3467,0.05,13.47],[0.3467,0.1,15.37],[0.3479,-0.1,17.08],[0.3479,-0.06,18.8],[0.3479,-0.01,20.51],[0.3479,0.05,22.22],[0.3479,0.12,24.12],[0.3492,-0.08,26.02],[0.3492,0.01,27.92],[0.3492,0.1,29.44],[0.3504,-0.05,31.08]],[[0.6233,0.05,36.69],[0.6295,-0.04,36.8],[0.637,-0.08,36.88],[0.6446,0.09,36.95],[0.6533,0.0,37.02],[0.6608,0.12,37.08],[0.6683,-0.03,37.14],[0.6733,0.03,37.18],[0.6871,-0.01,37.29],[0.6959,0.15,37.4],[0.7034,-0.11,37.47],[0.7084,-0.14,37.51],[0.7121,0.08,37.53],[0.7184,-0.07,37.54],[0.7259,0.03,37.58],[0.7259,0.08,36.17],[0.7259,0.15,34.4],[0.7272,-0.08,32.46],[0.7272,-0.01,30.51],[0.7272,0.05,28.74],[0.7272,0.08,27.32],[0.7272,0.12,25.63],[0.7284,-0.14,23.94],[0.7284,-0.12,22.24],[0.7284,-0.09,20.55],[0.7284,-0.07,18.86],[0.7284,-0.04,16.97],[0.7284,-0.03,15.08],[0.7284,-0.01,13.19],[0.7284,0.0,11.31],[0.7284,0.01,9.42],[0.7284,0.02,7.44],[0.7284,0.03,5.45],[0.7284,0.03,3.47],[0.7284,0.03,1.49],[0.7284,0.03,-0.5],[0.7284,0.03,-2.48],[0.7284,0.03,-4.46],[0.7284,0.03,-6.44],[0.7284,0.02,-8.43],[0.7284,0.02,-10.41],[0.7284,0.0,-12.3],[0.7284,-0.01,-14.18],[0.7284,-0.02,-16.07],[0.7284,-0.03,-17.96],[0.7284,-0.05,-19.85],[0.7284,-0.07,-21.54],[0.7284,-0.08,-23.24],[0.7272,0.09,-24.93],[0.7272,0.07,-26.62],[0.7272,0.04,-28.32],[0.7272,0.01,-30.08],[0.7272,-0.02,-31.84],[0.7272,-0.05,-33.6],[0.7259,0.08,-35.36],[0.7272,-0.07,-37.47],[0.7272,-0.02,-38.3],[0.7222,0.01,-38.12],[0.7096,-0.05,-37.67],[0.6896,0.04,-37.09],[0.6658,0.02,-36.53],[0.6483,0.01,-36.19],[0.6308,-0.03,-35.82],[0.6133,-0.04,-35.45],[0.5957,0.05,-35.09],[0.597,-0.04,-33.06],[0.597,0.01,-31.27],[0.5982,-0.05,-29.49],[0.5982,-0.04,-27.49],[0.5982,-0.06,-25.84],[0.597,0.07,-24.19],[0.597,0.06,-22.54],[0.597,0.05,-20.89],[0.597,0.04,-19.24],[0.597,0.04,-17.41],[0.597,0.03,-15.57],[0.597,0.02,-13.74],[0.597,0.02,-11.91],[0.597,0.01,-10.07],[0.597,0.01,-8.15],[0.597,0.01,-6.22],[0.597,0.02,-4.3],[0.597,0.02,-2.37],[0.597,0.03,-0.44],[0.597,0.03,1.48],[0.597,0.04,3.4],[0.597,0.05,5.33],[0.597,0.06,7.26],[0.597,0.07,9.18],[0.597,0.09,11.01],[0.597,0.1,12.85],[0.5982,-0.12,14.68],[0.5982,-0.1,16.51],[0.5982,-0.09,18.35],[0.5982,-0.06,19.99],[0.5982,-0.04,21.64],[0.5982,-0.01,23.28],[0.5982,0.02,24.93],[0.5982,0.05,26.58],[0.5982,0.1,28.13],[0.5995,-0.09,29.95],[0.5995,0.01,31.9],[0.5995,0.14,33.83],[0.6008,-0.04,35.6],[0.607,-0.03,35.98],[0.6145,-0.15,36.36]],[[0.8748,-0.05,23.62],[0.8798,0.02,23.53],[0.8874,-0.14,23.43],[0.8949,-0.04,23.33],[0.9024,0.15,23.24],[0.9111,-0.04,23.16],[0.9186,-0.1,23.08],[0.9237,0.14,23.0],[0.9299,0.15,22.91],[0.9374,-0.11,22.82],[0.9437,0.04,22.74],[0.9512,-0.11,22.66],[0.9574,0.12,22.57],[0.965,0.02,22.47],[0.9725,-0.08,22.36],[0.9787,0.15,22.23],[0.9862,0.01,22.08],[0.9937,-0.18,21.9],[1.0,-0.06,21.69],[1.0,1.81,21.44],[1.0,3.61,21.13],[1.0,5.33,20.76],[1.0,6.94,20.33],[1.0,8.85,19.67],[1.0,10.63,18.88],[1.0,12.27,17.96],[1.0,13.77,16.92],[1.0,15.15,15.76],[1.0,16.39,14.49],[1.0,17.5,13.1],[1.0,18.48,11.61],[1.0,19.33,10.01],[1.0,20.06,8.31],[1.0,20.65,6.51],[1.0,21.12,4.62],[1.0,21.46,2.63],[1.0,21.58,1.07],[1.0,21.55,-0.76],[1.0,21.4,-2.72],[1.0,21.14,-4.69],[1.0,20.78,-6.53],[1.0,20.32,-8.1],[1.0,19.57,-9.96],[1.0,18.72,-11.59],[1.0,17.74,-13.05],[1.0,16.61,-14.4],[1.0,15.3,-15.7],[1.0,13.77,-17.0],[1.0,12.02,-18.3],[1.0,10.27,-19.4],[1.0,8.5,-20.33],[1.0,6.71,-21.09],[1.0,4.9,-21.71],[1.0,3.08,-22.2],[1.0,1.23,-22.59],[0.9975,-0.0,-22.88],[0.99,0.0,-23.09],[0.9825,-0.04,-23.24],[0.975,-0.14,-23.33],[0.9662,0.02,-23.39],[0.9574,0.11,-23.44],[0.9487,0.14,-23.48],[0.9399,0.1,-23.54],[0.9312,-0.01,-23.62],[0.9249,-0.01,-23.65],[0.9174,0.09,-23.6],[0.9099,0.05,-23.53],[0.9024,-0.11,-23.47],[0.8936,-0.1,-23.45],[0.8836,0.09,-23.52],[0.8748,-0.07,-23.71],[0.8661,0.02,-23.84],[0.8573,0.06,-23.87],[0.8498,-0.11,-23.92],[0.8486,0.04,-21.87],[0.8486,-0.03,-19.62],[0.8486,-0.08,-17.31],[0.8486,-0.12,-15.11],[0.8473,0.11,-13.16],[0.8473,0.09,-11.61],[0.8473,0.07,-10.62],[0.8473,0.05,-9.69],[0.8473,0.03,-8.13],[0.8473,0.0,-6.1],[0.8473,-0.02,-3.76],[0.8473,-0.05,-1.26],[0.8473,-0.08,1.25],[0.8473,-0.1,3.59],[0.8473,-0.12,5.62],[0.8473,-0.14,7.18],[0.8461,0.15,8.11],[0.8461,0.12,10.13],[0.8461,0.11,11.82],[0.8461,0.12,13.34],[0.8461,0.14,14.85],[0.8473,-0.13,16.51],[0.8473,-0.08,18.49],[0.8473,-0.03,20.94],[0.8473,0.04,24.03],[0.8536,-0.05,23.97],[0.8586,-0.04,23.91],[0.8648,-0.01,23.81],[0.8748,-0.05,23.62]]]},"arms":[{"side":-1,"S":[-46.54,269.24],"len":79.42,"elev":1.2656,"uPaw":50.42,"uPc":63.46,"half":13.38,"parts":[[[0.96,12.99],[2.55,13.38],[4.2,13.74],[5.91,14.07],[7.69,14.38],[9.51,14.66],[11.39,14.91],[13.31,15.14],[15.28,15.33],[17.28,15.5],[19.31,15.64],[21.37,15.76],[23.46,15.85],[25.57,15.91],[27.7,15.95],[29.84,15.96],[31.99,15.95],[34.14,15.9],[36.29,15.84],[38.44,15.75],[40.58,15.63],[42.71,15.49],[44.83,15.32],[46.92,15.13],[48.99,14.91],[51.04,14.67],[53.05,14.4],[55.02,14.11],[56.95,13.8],[58.84,13.46],[60.68,13.1],[62.47,12.71],[64.2,12.3],[65.87,11.87],[67.47,11.42],[69.01,10.94],[70.47,10.44],[72.61,9.5],[74.45,8.37],[75.99,7.07],[77.23,5.62],[78.19,4.05],[78.85,2.39],[79.24,0.67],[79.34,-1.1],[79.17,-2.88],[78.72,-4.64],[78.0,-6.36],[77.02,-8.01],[75.77,-9.57],[74.26,-11.01],[72.49,-12.29],[70.47,-13.41],[68.2,-14.32],[66.31,-14.84],[64.46,-15.16],[62.64,-15.29],[60.84,-15.27],[59.06,-15.13],[57.29,-14.89],[55.52,-14.58],[53.76,-14.23],[51.98,-13.88],[50.19,-13.54],[47.28,-13.04],[44.55,-12.62],[42.01,-12.28],[39.64,-12.02],[37.42,-11.82],[35.33,-11.68],[33.36,-11.6],[31.5,-11.57],[29.74,-11.59],[28.05,-11.64],[26.42,-11.74],[24.85,-11.86],[23.3,-12.01],[21.77,-12.17],[20.25,-12.36],[18.72,-12.55],[17.16,-12.74],[15.56,-12.94],[13.91,-13.12],[12.18,-13.3],[10.37,-13.46],[8.47,-13.59],[6.44,-13.7],[4.29,-13.78],[2.0,-13.82],[0.27,-13.74],[-1.44,-13.48],[-3.09,-13.08],[-4.66,-12.55],[-6.85,-11.55],[-8.71,-10.39],[-10.24,-9.12],[-11.46,-7.73],[-12.37,-6.25],[-12.98,-4.71],[-13.32,-3.11],[-13.37,-1.48],[-13.17,0.16],[-12.71,1.79],[-12.02,3.4],[-11.09,4.96],[-9.94,6.45],[-8.58,7.87],[-7.03,9.17],[-5.29,10.36],[-3.37,11.4],[-1.28,12.28]],[[76.33,-3.1],[76.51,-1.36],[76.37,0.32],[75.92,1.93],[75.19,3.43],[74.17,4.79],[72.88,6.0],[71.34,7.02],[70.37,7.49],[69.19,7.97],[67.8,8.46],[66.19,8.94],[64.37,9.43],[62.34,9.92],[60.1,10.42],[57.64,10.92],[56.53,9.36],[55.47,7.83],[54.48,6.31],[53.58,4.8],[52.77,3.26],[52.06,1.7],[51.47,0.1],[50.98,-1.58],[50.67,-3.11],[50.5,-4.65],[50.43,-6.37],[50.42,-8.44],[50.43,-11.03],[52.15,-11.37],[53.86,-11.72],[55.58,-12.07],[57.31,-12.38],[59.05,-12.64],[60.81,-12.81],[62.59,-12.89],[64.4,-12.83],[66.26,-12.51],[68.06,-11.96],[69.77,-11.2],[71.35,-10.24],[72.78,-9.11],[74.03,-7.81],[75.05,-6.36],[75.83,-4.79],[76.33,-3.1]],[[-12.6,2.23],[-11.72,4.05],[-10.66,5.69],[-9.44,7.15],[-8.08,8.46],[-6.59,9.61],[-4.99,10.62],[-3.3,11.5],[-1.53,12.26],[0.3,12.91],[2.17,13.45],[4.07,13.91],[5.98,14.29],[7.88,14.6],[9.75,14.85],[11.58,15.05],[13.36,15.21],[15.07,15.35],[17.01,15.5],[19.05,15.65],[21.1,15.78],[23.03,15.9],[24.75,15.98],[26.73,16.05],[28.7,16.08],[30.66,16.1],[32.63,16.08],[34.58,16.04],[36.54,15.98],[38.48,15.89],[40.42,15.78],[42.35,15.64],[44.27,15.48],[46.18,15.3],[48.08,15.1],[49.96,14.87],[51.84,14.63],[53.7,14.36],[55.54,14.07],[57.24,13.8],[59.16,13.49],[61.18,13.15],[63.2,12.78],[65.1,12.4],[66.77,12.0],[68.67,11.44],[70.5,10.75],[72.24,9.92],[73.86,8.95],[75.32,7.81],[76.61,6.5],[77.7,5.01],[78.54,3.33],[79.13,1.44],[79.42,-0.68],[79.31,-2.72],[78.9,-4.64],[78.22,-6.44],[77.3,-8.11],[76.17,-9.63],[74.84,-10.99],[73.34,-12.18],[71.7,-13.2],[69.94,-14.03],[68.09,-14.66],[66.16,-15.09],[64.2,-15.29],[62.32,-15.22],[60.44,-15.1],[58.56,-14.94],[56.67,-14.74],[54.8,-14.51],[52.93,-14.25],[51.06,-13.98],[49.21,-13.68],[47.37,-13.38],[45.55,-13.07],[43.75,-12.77],[41.97,-12.47],[40.06,-12.18],[38.23,-11.96],[36.46,-11.81],[34.74,-11.72],[33.05,-11.69],[31.38,-11.7],[29.7,-11.76],[28.0,-11.86],[26.27,-11.99],[24.49,-12.15],[22.64,-12.33],[20.7,-12.53],[18.66,-12.74],[16.51,-12.95],[14.22,-13.17],[11.78,-13.38],[9.99,-13.54],[8.13,-13.69],[6.23,-13.81],[4.28,-13.87],[2.32,-13.85],[0.34,-13.71],[-1.62,-13.42],[-3.57,-12.97],[-5.48,-12.32],[-4.3,-11.01],[-3.22,-9.47],[-1.44,-10.01],[0.53,-10.36],[2.62,-10.56],[4.77,-10.61],[6.93,-10.56],[9.04,-10.43],[11.05,-10.24],[12.89,-10.01],[14.52,-9.79],[15.88,-9.58],[16.91,-9.42],[19.39,-9.07],[21.76,-8.79],[24.02,-8.58],[26.2,-8.42],[28.29,-8.32],[30.31,-8.27],[32.26,-8.27],[34.16,-8.32],[36.02,-8.41],[37.84,-8.53],[39.63,-8.7],[41.42,-8.89],[43.19,-9.12],[44.97,-9.36],[46.76,-9.63],[48.58,-9.92],[50.43,-10.23],[51.06,-10.34],[52.71,-10.64],[55.03,-11.04],[57.66,-11.49],[60.25,-11.9],[62.44,-12.21],[63.88,-12.34],[66.18,-12.15],[68.31,-11.51],[70.24,-10.52],[71.94,-9.26],[73.4,-7.85],[74.58,-6.35],[75.46,-4.88],[76.01,-3.51],[76.21,-2.35],[76.07,-0.16],[75.58,1.7],[74.77,3.25],[73.7,4.53],[72.39,5.57],[70.9,6.41],[69.25,7.09],[67.49,7.63],[65.66,8.08],[63.79,8.47],[61.94,8.83],[60.13,9.19],[58.23,9.57],[56.31,9.91],[54.39,10.2],[52.46,10.45],[50.52,10.67],[48.57,10.86],[46.62,11.02],[44.66,11.15],[42.69,11.25],[40.71,11.33],[38.73,11.39],[36.75,11.43],[34.76,11.46],[32.76,11.48],[30.77,11.48],[28.77,11.48],[26.76,11.47],[24.76,11.46],[22.75,11.44],[20.74,11.43],[18.74,11.43],[18.45,11.42],[17.65,11.4],[16.41,11.33],[14.78,11.22],[12.86,11.04],[10.69,10.78],[8.36,10.42],[5.94,9.95],[3.49,9.36],[1.09,8.62],[-1.2,7.73],[-3.29,6.67],[-5.13,5.43],[-6.65,3.98],[-7.76,2.32],[-9.49,2.5],[-11.56,2.35],[-12.56,2.22]]],"rim":8.86,"sleeve":0},{"side":1,"S":[51.17,270.56],"len":79.42,"elev":1.2656,"uPaw":50.42,"uPc":63.46,"half":13.38,"parts":[[[0.96,-12.99],[2.55,-13.38],[4.2,-13.74],[5.91,-14.07],[7.69,-14.38],[9.51,-14.66],[11.39,-14.91],[13.31,-15.14],[15.28,-15.33],[17.28,-15.5],[19.31,-15.64],[21.37,-15.76],[23.46,-15.85],[25.57,-15.91],[27.7,-15.95],[29.84,-15.96],[31.99,-15.95],[34.14,-15.9],[36.29,-15.84],[38.44,-15.75],[40.58,-15.63],[42.71,-15.49],[44.83,-15.32],[46.92,-15.13],[48.99,-14.91],[51.04,-14.67],[53.05,-14.4],[55.02,-14.11],[56.95,-13.8],[58.84,-13.46],[60.68,-13.1],[62.47,-12.71],[64.2,-12.3],[65.87,-11.87],[67.47,-11.42],[69.01,-10.94],[70.47,-10.44],[72.61,-9.5],[74.45,-8.37],[75.99,-7.07],[77.23,-5.62],[78.19,-4.05],[78.85,-2.39],[79.24,-0.67],[79.34,1.1],[79.17,2.88],[78.72,4.64],[78.0,6.36],[77.02,8.01],[75.77,9.57],[74.26,11.01],[72.49,12.29],[70.47,13.41],[68.2,14.32],[66.31,14.84],[64.46,15.16],[62.64,15.29],[60.84,15.27],[59.06,15.13],[57.29,14.89],[55.52,14.58],[53.76,14.23],[51.98,13.88],[50.19,13.54],[47.28,13.04],[44.55,12.62],[42.01,12.28],[39.64,12.02],[37.42,11.82],[35.33,11.68],[33.36,11.6],[31.5,11.57],[29.74,11.59],[28.05,11.64],[26.42,11.74],[24.85,11.86],[23.3,12.01],[21.77,12.17],[20.25,12.36],[18.72,12.55],[17.16,12.74],[15.56,12.94],[13.91,13.12],[12.18,13.3],[10.37,13.46],[8.47,13.59],[6.44,13.7],[4.29,13.78],[2.0,13.82],[0.27,13.74],[-1.44,13.48],[-3.09,13.08],[-4.66,12.55],[-6.85,11.55],[-8.71,10.39],[-10.24,9.12],[-11.46,7.73],[-12.37,6.25],[-12.98,4.71],[-13.32,3.11],[-13.37,1.48],[-13.17,-0.16],[-12.71,-1.79],[-12.02,-3.4],[-11.09,-4.96],[-9.94,-6.45],[-8.58,-7.87],[-7.03,-9.17],[-5.29,-10.36],[-3.37,-11.4],[-1.28,-12.28]],[[76.33,3.1],[76.51,1.36],[76.37,-0.32],[75.92,-1.93],[75.19,-3.43],[74.17,-4.79],[72.88,-6.0],[71.34,-7.02],[70.37,-7.49],[69.19,-7.97],[67.8,-8.46],[66.19,-8.94],[64.37,-9.43],[62.34,-9.92],[60.1,-10.42],[57.64,-10.92],[56.53,-9.36],[55.47,-7.83],[54.48,-6.31],[53.58,-4.8],[52.77,-3.26],[52.06,-1.7],[51.47,-0.1],[50.98,1.58],[50.67,3.11],[50.5,4.65],[50.43,6.37],[50.42,8.44],[50.43,11.03],[52.15,11.37],[53.86,11.72],[55.58,12.07],[57.31,12.38],[59.05,12.64],[60.81,12.81],[62.59,12.89],[64.4,12.83],[66.26,12.51],[68.06,11.96],[69.77,11.2],[71.35,10.24],[72.78,9.11],[74.03,7.81],[75.05,6.36],[75.83,4.79],[76.33,3.1]],[[-12.6,-2.23],[-11.72,-4.05],[-10.66,-5.69],[-9.44,-7.15],[-8.08,-8.46],[-6.59,-9.61],[-4.99,-10.62],[-3.3,-11.5],[-1.53,-12.26],[0.3,-12.91],[2.17,-13.45],[4.07,-13.91],[5.98,-14.29],[7.88,-14.6],[9.75,-14.85],[11.58,-15.05],[13.36,-15.21],[15.07,-15.35],[17.01,-15.5],[19.05,-15.65],[21.1,-15.78],[23.03,-15.9],[24.75,-15.98],[26.73,-16.05],[28.7,-16.08],[30.66,-16.1],[32.63,-16.08],[34.58,-16.04],[36.54,-15.98],[38.48,-15.89],[40.42,-15.78],[42.35,-15.64],[44.27,-15.48],[46.18,-15.3],[48.08,-15.1],[49.96,-14.87],[51.84,-14.63],[53.7,-14.36],[55.54,-14.07],[57.24,-13.8],[59.16,-13.49],[61.18,-13.15],[63.2,-12.78],[65.1,-12.4],[66.77,-12.0],[68.67,-11.44],[70.5,-10.75],[72.24,-9.92],[73.86,-8.95],[75.32,-7.81],[76.61,-6.5],[77.7,-5.01],[78.54,-3.33],[79.13,-1.44],[79.42,0.68],[79.31,2.72],[78.9,4.64],[78.22,6.44],[77.3,8.11],[76.17,9.63],[74.84,10.99],[73.34,12.18],[71.7,13.2],[69.94,14.03],[68.09,14.66],[66.16,15.09],[64.2,15.29],[62.32,15.22],[60.44,15.1],[58.56,14.94],[56.67,14.74],[54.8,14.51],[52.93,14.25],[51.06,13.98],[49.21,13.68],[47.37,13.38],[45.55,13.07],[43.75,12.77],[41.97,12.47],[40.06,12.18],[38.23,11.96],[36.46,11.81],[34.74,11.72],[33.05,11.69],[31.38,11.7],[29.7,11.76],[28.0,11.86],[26.27,11.99],[24.49,12.15],[22.64,12.33],[20.7,12.53],[18.66,12.74],[16.51,12.95],[14.22,13.17],[11.78,13.38],[9.99,13.54],[8.13,13.69],[6.23,13.81],[4.28,13.87],[2.32,13.85],[0.34,13.71],[-1.62,13.42],[-3.57,12.97],[-5.48,12.32],[-4.3,11.01],[-3.22,9.47],[-1.44,10.01],[0.53,10.36],[2.62,10.56],[4.77,10.61],[6.93,10.56],[9.04,10.43],[11.05,10.24],[12.89,10.01],[14.52,9.79],[15.88,9.58],[16.91,9.42],[19.39,9.07],[21.76,8.79],[24.02,8.58],[26.2,8.42],[28.29,8.32],[30.31,8.27],[32.26,8.27],[34.16,8.32],[36.02,8.41],[37.84,8.53],[39.63,8.7],[41.42,8.89],[43.19,9.12],[44.97,9.36],[46.76,9.63],[48.58,9.92],[50.43,10.23],[51.06,10.34],[52.71,10.64],[55.03,11.04],[57.66,11.49],[60.25,11.9],[62.44,12.21],[63.88,12.34],[66.18,12.15],[68.31,11.51],[70.24,10.52],[71.94,9.26],[73.4,7.85],[74.58,6.35],[75.46,4.88],[76.01,3.51],[76.21,2.35],[76.07,0.16],[75.58,-1.7],[74.77,-3.25],[73.7,-4.53],[72.39,-5.57],[70.9,-6.41],[69.25,-7.09],[67.49,-7.63],[65.66,-8.08],[63.79,-8.47],[61.94,-8.83],[60.13,-9.19],[58.23,-9.57],[56.31,-9.91],[54.39,-10.2],[52.46,-10.45],[50.52,-10.67],[48.57,-10.86],[46.62,-11.02],[44.66,-11.15],[42.69,-11.25],[40.71,-11.33],[38.73,-11.39],[36.75,-11.43],[34.76,-11.46],[32.76,-11.48],[30.77,-11.48],[28.77,-11.48],[26.76,-11.47],[24.76,-11.46],[22.75,-11.44],[20.74,-11.43],[18.74,-11.43],[18.45,-11.42],[17.65,-11.4],[16.41,-11.33],[14.78,-11.22],[12.86,-11.04],[10.69,-10.78],[8.36,-10.42],[5.94,-9.95],[3.49,-9.36],[1.09,-8.62],[-1.2,-7.73],[-3.29,-6.67],[-5.13,-5.43],[-6.65,-3.98],[-7.76,-2.32],[-9.49,-2.5],[-11.56,-2.35],[-12.56,-2.22]]],"rim":8.86,"sleeve":0}],"scarf":{"knot":[21.49,279.5],"neckR":50.0,"pivot":[200.51,263.62]},"book":{"x0":141.6,"x1":259.6,"y":322.87,"h":76.73,"z":70.0}};
+const TAU = Math.PI * 2;
+const AX = ART.ax, GY = ART.ground, HC = ART.head.c, HRX = ART.head.r[0], HRY = ART.head.r[1];
+const DEPTH = 0.886;      // his body's depth as a share of its width
+const ARM_Z = 6, FOOT_Z = 12;
+const HOME = { x: 330, y: 652, s: 1.05 };
+const NEAR = { x: 500, y: 935, s: 2.5 };
+const PLAY_PT = { x: 700, y: 578 };
+function restTip(A) { return [AX + A.S[0] + A.side * A.len * Math.cos(A.elev), A.S[1] + A.len * Math.sin(A.elev)]; }
+const TIP_L = restTip(ART.arms[0]), TIP_R = restTip(ART.arms[1]);
+const REST = { near: 0, yaw: 0, headYaw: 0, pitch: 0, roll: 0, hop: 0, sq: 1, lean: 0, lookX: 0, lookY: 0,
+  armL: 0, armR: 0, tLx: TIP_L[0], tLy: TIP_L[1], tRx: TIP_R[0], tRy: TIP_R[1], liftL: 0, liftR: 0, freeR: 0, pawS: 1, knock: 0,
+  earL: 0, earR: 0, tailLag: 0, walk: 0, scrim: 0, glow: 0, press: 0, wiggle: 0, bubbleS: 0 };
+// How wide each of his lines is in Andika bold 28 px, so the bubble fits the words.
+const BUBBLE_W = { 'Hmm?': 83.7, 'Ta-da!': 91.8, 'Tap PLAY to start!': 253.5, 'Hi! Ready to read with me?': 365.8,
+  "Let's read!": 146.8, 'Hee hee! That tickles!': 294.1, 'Wheee!': 102.3, 'Peekaboo!': 139.5, 'Boing!': 87.4,
+  'My river scarf!': 202.2, 'Story time!': 151.9 };
+// Closet items (FR-07): how much he wears each. They're tweened on their own, so a move never
+// cuts a put-on or take-off short.
+const WEAR_KEYS = ['hold', 'bookS', 'scarfS'];
+const EASE = {
+  out: function (t) { return 1 - Math.pow(1 - t, 3); },
+  inc: function (t) { return t * t * t; },
+  in2: function (t) { return t * t; },
+  out2: function (t) { return 1 - (1 - t) * (1 - t); },
+  inOut: function (t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; },
+  back: function (t) { const c = 1.6, u = t - 1; return 1 + (c + 1) * u * u * u + c * u * u; },
+};
+
+function clamp(v, a, b) { return v < a ? a : v > b ? b : v; }
+function lerp(a, b, t) { return a + (b - a) * t; }
+function r1(v) { return Math.round(v * 10) / 10; }
+function r3(v) { return Math.round(v * 1000) / 1000; }
+function sstep(a, b, x) { const t = clamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); }
+function wrapPi(a) { let b = (a + Math.PI) % TAU; if (b < 0) b += TAU; return b - Math.PI; }
+function pt(q) { return r1(q[0]) + ' ' + r1(q[1]); }
+
+// A drawn outline as a path: the points are close enough together to read as a curve.
+function polyD(pts, open) {
+  let d = 'M ' + pt(pts[0]);
+  for (let i = 1; i < pts.length; i++) d += ' L ' + pt(pts[i]);
+  return open ? d : d + ' Z';
+}
+
+// A drawn shape (Bezier curves) with every x passed through f: squeezes or slides it sideways.
+function pathX(sh, f) {
+  let d = 'M ' + r1(f(sh.m[0])) + ' ' + sh.m[1];
+  for (const c of sh.c) d += ' C ' + r1(f(c[0])) + ' ' + c[1] + ' ' + r1(f(c[2])) + ' ' + c[3] + ' ' + r1(f(c[4])) + ' ' + c[5];
+  return d + ' Z';
+}
+
+// A point drawn on the front of his head, turned by th (yaw) and tilted by the pitch: it slides
+// around the head and squeezes as it nears the edge, then folds onto the edge behind it.
+// lamC, the shape's own centre, keeps a shape in one piece when it turns past the back.
+function headDecal(x, y, th, cp, sp, lamC) {
+  const q = clamp(y / HRY, -0.995, 0.995), ring = HRX * Math.sqrt(1 - q * q);
+  const lam = Math.asin(clamp(x / ring, -1, 1));
+  const l2 = lamC === undefined ? wrapPi(lam + th) : wrapPi(lamC + th) + lam - lamC, v = Math.cos(l2);
+  const lc = clamp(l2, -Math.PI / 2, Math.PI / 2), zz = ring * Math.cos(lc);
+  return { x: HC[0] + ring * Math.sin(lc), y: HC[1] + y * cp - zz * sp, v: v, fs: Math.max(0, v) / Math.max(0.05, Math.cos(lam)) };
+}
+
+// A whole shape on his face (mask, brow), or nothing once it has turned out of sight.
+function decalPath(D, th, cp, sp) {
+  let seen = false;
+  const out = D.pts.map(function (q) {
+    const d = headDecal(q[0], q[1], th, cp, sp, D.lam);
+    if (d.v > 0.02) seen = true;
+    return [d.x, d.y];
+  });
+  return seen ? polyD(out) : 'M 0 0';
+}
+
+// A point on his muzzle, which sticks out from his face and shows in profile.
+function onMuzzle(x, y, ch, shh, cp, sp) {
+  const M = ART.muzzle, u = (x - M.c[0]) / M.rx, w = (y - M.c[1]) / M.ry;
+  const zz = HRY + 30 * Math.sqrt(Math.max(0, 1 - u * u - w * w)), z1 = -x * shh + zz * ch;
+  return [HC[0] + x * ch + zz * shh, HC[1] + y * cp - z1 * sp];
+}
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.p = Object.assign({}, REST, { hold: 0, bookS: 0, scarfS: 0 });
+    this.wear = { scarf: false, book: false };
+    this.tweens = {};
+    this.timers = [];
+    this.now = performance.now();
+    this.last = 0;
+    this.runId = 0;
+    this.busy = false;
+    this.eyes = 'open';
+    this.mouth = 'w';
+    this.bubble = { full: '', shown: 0, start: 0, hold: 0, hideAt: 0 };
+    this.mouse = { x: 500, y: 300 };
+    this.mouseIn = false;
+    this.touch = false;
+    this.mouseT = 0;
+    this.walkPhase = 0;
+    this.shakeAmp = 0;
+    this.ripples = [];
+    this.tapN = 0;
+    this.blinkAt = this.now + 1800;
+    this.blinkUntil = 0;
+    this.pl = HOME;
+    this.tipR = TIP_R;
+    this.earS = [{ ang: 0, vel: 0 }, { ang: 0, vel: 0 }];
+    this.earLag = { ang: 0, vel: 0 };
+    this.twitchAt = this.now + 3000;
+    this.prevTh = 0;
+    this.prevHop = 0;
+    this.reduce = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.tick = this.tick.bind(this);
+    const self = this;
+    this.h = {
+      look: function () { self.run(self.aLook); },
+      turn: function () { self.run(self.aTurn); },
+      point: function () { self.run(self.aPoint); },
+      hi: function () { self.run(self.aHi); },
+      tapBtn: function () { self.react(); },
+      tap: function (e) { if (e && e.stopPropagation) e.stopPropagation(); self.react(); },
+      play: function (e) { if (e && e.stopPropagation) e.stopPropagation(); self.run(self.aPlay); },
+      move: function (e) { self.pointer(e); },
+      down: function (e) { self.pointer(e); },
+      leave: function () { if (!self.touch) self.mouseIn = false; },
+      wearScarf: function () { self.toggle('scarf'); },
+      wearBook: function () { self.toggle('book'); },
+    };
+  }
+
+  componentDidMount() { this.raf = requestAnimationFrame(this.tick); }
+
+  componentWillUnmount() { cancelAnimationFrame(this.raf); }
+
+  tick(now) {
+    this.raf = requestAnimationFrame(this.tick);
+    const dt = this.last ? Math.min(0.05, (now - this.last) / 1000) : 0.016;
+    this.last = now;
+    this.now = now;
+    const p = this.p;
+    for (const k in this.tweens) {
+      const t = this.tweens[k], u = clamp((now - t.t0) / t.dur, 0, 1);
+      p[k] = t.from + (t.to - t.from) * t.ease(u);
+      if (u >= 1) { delete this.tweens[k]; t.done(); }
+    }
+    if (this.timers.length) {
+      const due = this.timers.filter(function (q) { return q.at <= now; });
+      this.timers = this.timers.filter(function (q) { return q.at > now; });
+      due.forEach(function (q) { q.done(); });
+    }
+    if (this.touch && now - this.mouseT > 1600) this.mouseIn = false;
+    if (!this.busy) {
+      // between moves he watches your pointer: eyes quickly, head more slowly
+      const pl = this.pl, hx = pl.x, hy = pl.y + (HC[1] - GY) * pl.s;
+      let tx = 0, ty = 0, hyw = 0, hp = 0;
+      if (this.mouseIn) {
+        const dx = this.mouse.x - hx, dy = this.mouse.y - hy;
+        tx = clamp(dx / 170, -1, 1);
+        ty = clamp(dy / 170, -1, 1);
+        hyw = clamp(dx / 700, -0.45, 0.45);
+        hp = clamp(-dy / 1300, -0.17, 0.17);
+      }
+      this.spring('lookX', tx, dt, 0.06);
+      this.spring('lookY', ty, dt, 0.06);
+      this.spring('headYaw', hyw, dt, 0.2);
+      this.spring('pitch', hp, dt, 0.24);
+    }
+    // ears trail behind quick turns and hops, bounce back, and twitch now and then
+    const thNow = p.yaw + p.headYaw, hopNow = p.hop - Math.abs(Math.sin(this.walkPhase)) * 7 * p.walk;
+    const yawRate = wrapPi(thNow - this.prevTh) / dt, hopRate = (hopNow - this.prevHop) / dt;
+    this.prevTh = thNow;
+    this.prevHop = hopNow;
+    if (!this.busy && now > this.twitchAt) {
+      const j = Math.random() < 0.5 ? 0 : 1;
+      this.earS[j].vel += ART.ears[j].side * (480 + Math.random() * 140);
+      if (Math.random() < 0.4) this.twitch2 = { j: j, at: now + 150 };
+      this.twitchAt = now + 3500 + Math.random() * 5000;
+    }
+    if (this.twitch2 && now > this.twitch2.at) {
+      this.earS[this.twitch2.j].vel += ART.ears[this.twitch2.j].side * 420;
+      this.twitch2 = null;
+    }
+    for (let j = 0; j < 2; j++) {
+      const e = this.earS[j], side = ART.ears[j].side;
+      const target = clamp(-side * hopRate * 0.03 + side * (1 - p.sq) * 60, -24, 24);
+      e.vel += (576 * (target - e.ang) - 18 * e.vel) * dt;
+      e.ang += e.vel * dt;
+    }
+    // in a head turn the ears lag a little and catch up, swinging round his head (in depth)
+    // rather than leaning sideways together
+    const lg = this.earLag, lagT = clamp(-yawRate * 0.1, -0.3, 0.3);
+    lg.vel += (110 * (lagT - lg.ang) - 12 * lg.vel) * dt;
+    lg.ang += lg.vel * dt;
+    if (p.walk > 0.01) this.walkPhase += dt * TAU * 1.7;
+    if (now > this.blinkAt) {
+      this.blinkUntil = now + 120;
+      this.blinkAt = now + (Math.random() < 0.18 ? 280 : 2400 + Math.random() * 3200);
+    }
+    const b = this.bubble;
+    if (b.full) {
+      if (b.shown < b.full.length) {
+        b.shown = Math.min(b.full.length, Math.floor((now - b.start) / 42) + 1);
+        if (b.shown >= b.full.length) b.hideAt = now + b.hold;
+      } else if (b.hideAt && now > b.hideAt) {
+        b.hideAt = 0;
+        this.tw({ bubbleS: 0 }, 200, EASE.out);
+      } else if (!b.hideAt && !this.tweens.bubbleS && p.bubbleS < 0.02) {
+        b.full = '';
+      }
+    }
+    this.shakeAmp *= Math.exp(-dt * 10);
+    // idle (only breathing and the tail sway): draw every other frame
+    const idle = !this.busy && !this.mouseIn && !b.full && !Object.keys(this.tweens).length;
+    this.frameN = (this.frameN || 0) + 1;
+    if (idle && this.frameN % 2) return;
+    this.forceUpdate();
+  }
+
+  spring(k, target, dt, tau) {
+    if (this.tweens[k]) return;
+    this.p[k] += (target - this.p[k]) * (1 - Math.exp(-dt / tau));
+  }
+
+  // Tween some values from where they are now. A newer tween of the same value takes over.
+  tw(props, ms, ease) {
+    const self = this, keys = Object.keys(props);
+    ease = ease || EASE.inOut;
+    return new Promise(function (resolve) {
+      let left = keys.length;
+      if (!left) { resolve(); return; }
+      const done = function () { left -= 1; if (left === 0) resolve(); };
+      keys.forEach(function (k) {
+        const old = self.tweens[k];
+        self.tweens[k] = { from: self.p[k], to: props[k], t0: performance.now(), dur: Math.max(16, ms), ease: ease, done: done };
+        if (old) old.done();
+      });
+    });
+  }
+
+  wait(ms) {
+    const self = this;
+    return new Promise(function (resolve) { self.timers.push({ at: performance.now() + ms, done: resolve }); });
+  }
+
+  // Start a move. Any move in progress stops where it is, and the new one carries on from there.
+  run(fn) {
+    const keep = {};
+    for (const k of WEAR_KEYS) if (this.tweens[k]) keep[k] = this.tweens[k];
+    this.tweens = keep;
+    this.timers = [];
+    this.p.yaw = wrapPi(this.p.yaw);
+    this.busy = true;
+    this.eyes = 'open';
+    this.mouth = 'w';
+    const self = this, id = ++this.runId;
+    Promise.resolve().then(function () { return fn.call(self); }).then(
+      function () { if (self.runId === id) self.busy = false; },
+      function (err) { if (self.runId === id) self.busy = false; console.error(err); });
+  }
+
+  toRest(ms, keep) {
+    const t = {};
+    for (const k in REST) {
+      if ((!keep || keep.indexOf(k) < 0) && Math.abs(this.p[k] - REST[k]) > 0.001) t[k] = REST[k];
+    }
+    return this.tw(t, ms, EASE.inOut);
+  }
+
+  say(text, hold) {
+    this.bubble = { full: text, shown: 0, start: performance.now(), hold: hold || 1200, hideAt: 0 };
+    this.tw({ bubbleS: 1 }, 260, EASE.back);
+  }
+
+  pointer(e) {
+    const el = e && e.currentTarget;
+    if (!el || !el.getBoundingClientRect) return;
+    const rc = el.getBoundingClientRect();
+    if (!rc.width || !rc.height) return;
+    this.mouse = { x: (e.clientX - rc.left) / rc.width * (this.stageW || 1000), y: (e.clientY - rc.top) / rc.height * (this.stageH || 780) };
+    this.mouseIn = true;
+    this.touch = e.pointerType === 'touch';
+    this.mouseT = performance.now();
+  }
+
+  // Put a Closet item on or take it off. Putting one on gets a happy little reaction.
+  toggle(item) {
+    if (!ART[item]) return;
+    const on = !this.wear[item];
+    this.wear[item] = on;
+    if (item === 'scarf') {
+      this.tw({ scarfS: on ? 1 : 0 }, on ? 380 : 240, on ? EASE.back : EASE.out);
+    } else {
+      this.tw({ bookS: on ? 1 : 0 }, on ? 380 : 240, on ? EASE.back : EASE.out);
+      this.tw({ hold: on ? 1 : 0 }, 320, EASE.inOut);
+    }
+    if (on) this.run(item === 'scarf' ? this.rScarf : this.rBook);
+  }
+
+  async rScarf() {
+    this.toRest(200, ['sq']);
+    this.eyes = 'happy';
+    this.mouth = 'happy';
+    this.say('My river scarf!', 1000);
+    await this.tw({ sq: 0.92 }, 110, EASE.out);
+    await this.tw({ sq: 1 }, 260, EASE.back);
+    await this.wait(1000);
+    this.eyes = 'open';
+    this.mouth = 'w';
+  }
+
+  async rBook() {
+    this.toRest(200, ['lookY', 'pitch']);
+    this.say('Story time!', 1000);
+    // a glance down at the pages, then a happy look back up at you
+    await this.tw({ lookY: 0.9, pitch: -0.12 }, 320, EASE.inOut);
+    await this.wait(800);
+    this.eyes = 'happy';
+    this.mouth = 'happy';
+    await this.tw({ lookY: 0, pitch: 0 }, 360, EASE.inOut);
+    await this.wait(500);
+    this.eyes = 'open';
+    this.mouth = 'w';
+  }
+
+  // Where an arm's paw tip goes so that the middle of the paw lands on E (a book edge).
+  holdTip(A, S, E) {
+    const dx = E[0] - S[0], dy = E[1] - S[1], D = Math.hypot(dx, dy) || 1, back = A.len - A.uPc;
+    let len = D + back;
+    if (len * 1.6 < A.len) {
+      // a short reach shrinks the paw a little (see arm), so it needs a little further to go
+      len = D / (1 - 1.6 * back / A.len);
+      if (len * 1.6 / A.len < 0.6) len = D + 0.6 * back;
+    }
+    return [S[0] + dx / D * len, S[1] + dy / D * len];
+  }
+
+  tipFor(j, E) { return this.holdTip(ART.arms[j], this.shoulder(j, 0), E); }
+
+  // The lift that brings arm j up to deg below level (negative: above it), or down to it.
+  // Moves use these, so they work from whatever pose his arms are drawn in.
+  raiseTo(j, deg) { return Math.max(0, ART.arms[j].elev - deg * Math.PI / 180); }
+  dropTo(j, deg) { return Math.min(0, ART.arms[j].elev - deg * Math.PI / 180); }
+
+  react() {
+    const list = [this.rGiggle, this.rSpin, this.rPeek, this.rJump];
+    this.run(list[this.tapN % list.length]);
+    this.tapN += 1;
+  }
+
+  knockFx() {
+    const pl = this.pl, t = performance.now();
+    const x = pl.x + (this.tipR[0] - AX) * pl.s, y = pl.y + (this.tipR[1] - GY) * pl.s;
+    this.ripples = [{ x: x, y: y, t0: t }, { x: x, y: y, t0: t + 110 }];
+    if (!this.reduce) this.shakeAmp = 5;
+  }
+
+  toLocal(X, Y) { const pl = this.pl; return [(X - pl.x) / pl.s + AX, (Y - pl.y) / pl.s + GY]; }
+
+  shoulder(j, yaw) { const A = ART.arms[j]; return [AX + A.S[0] * Math.cos(yaw) + ARM_Z * Math.sin(yaw), A.S[1]]; }
+
+  // Where an arm's paw tip is when the arm points at an angle (degrees, 0 = level, up is negative).
+  reach(j, deg, stretch) {
+    const A = ART.arms[j], S = this.shoulder(j, 0), a = deg * Math.PI / 180;
+    return [S[0] + A.side * Math.cos(a) * A.len * stretch, S[1] + Math.sin(a) * A.len * stretch];
+  }
+
+  async aLook() {
+    this.toRest(260, ['headYaw', 'pitch', 'roll', 'lookX', 'lookY']);
+    this.tw({ lookX: -1, lookY: 0.1 }, 140, EASE.out);
+    await this.wait(110);
+    await this.tw({ headYaw: -0.62, roll: -4, pitch: 0.02 }, 420, EASE.out);
+    await this.wait(520);
+    this.tw({ lookX: 1 }, 140, EASE.out);
+    await this.wait(110);
+    await this.tw({ headYaw: 0.62, roll: 4 }, 560, EASE.inOut);
+    await this.wait(520);
+    this.tw({ lookX: 0.4, lookY: -1 }, 160, EASE.out);
+    this.say('Hmm?', 900);
+    // a curious ear: one perks up, the other tips out
+    this.tw({ earR: -14, earL: -5 }, 280, EASE.back);
+    await this.tw({ headYaw: 0.18, pitch: 0.2, roll: -3 }, 420, EASE.inOut);
+    await this.wait(900);
+    await this.tw({ headYaw: 0, pitch: 0, roll: 0, lookX: 0, lookY: 0, earL: 0, earR: 0 }, 480, EASE.inOut);
+  }
+
+  async aTurn() {
+    this.toRest(220, ['yaw', 'headYaw', 'sq', 'tailLag', 'hop']);
+    await this.tw({ yaw: -0.25, headYaw: -0.08, sq: 0.93, tailLag: 0.1 }, 230, EASE.out);
+    // his head leads and his tail trails behind
+    this.tw({ sq: 1 }, 300, EASE.out);
+    this.tw({ headYaw: 0.38, tailLag: -0.5 }, 380, EASE.out).then(() => this.tw({ headYaw: 0, tailLag: 0 }, 420, EASE.inOut));
+    await this.tw({ yaw: Math.PI }, 800, EASE.inOut);
+    // a beat with his back to you, and a tail wag
+    this.tw({ tailLag: 0.35 }, 180, EASE.inOut).then(() => this.tw({ tailLag: -0.3 }, 200, EASE.inOut))
+      .then(() => this.tw({ tailLag: 0 }, 180, EASE.inOut));
+    await this.wait(560);
+    this.tw({ headYaw: 0.38, tailLag: -0.5 }, 380, EASE.out).then(() => this.tw({ headYaw: 0, tailLag: 0 }, 420, EASE.inOut));
+    this.tw({ hop: -16 }, 380, EASE.out).then(() => this.tw({ hop: 0 }, 380, EASE.inc));
+    await this.tw({ yaw: TAU + 0.12 }, 800, EASE.inOut);
+    await this.tw({ yaw: TAU }, 220, EASE.out);
+    this.p.yaw = 0;
+    this.eyes = 'happy';
+    this.mouth = 'happy';
+    this.say('Ta-da!', 1000);
+    // arms thrown up for the ta-da
+    this.tw({ liftL: this.raiseTo(0, -23), liftR: this.raiseTo(1, -23) }, 260, EASE.back);
+    this.tw({ sq: 0.94 }, 120, EASE.out).then(() => this.tw({ sq: 1 }, 260, EASE.back));
+    await this.wait(1300);
+    this.eyes = 'open';
+    this.mouth = 'w';
+    await this.tw({ liftL: 0, liftR: 0 }, 380, EASE.inOut);
+  }
+
+  async aPoint() {
+    this.toRest(260, ['lookX', 'lookY', 'headYaw', 'pitch', 'yaw', 'armR', 'tRx', 'tRy', 'glow', 'liftL', 'liftR', 'freeR']);
+    const tgt = this.toLocal(PLAY_PT.x, PLAY_PT.y);
+    this.tw({ lookX: 1, lookY: 0.25 }, 130, EASE.out);
+    await this.wait(130);
+    this.tw({ headYaw: 0.42, pitch: -0.04 }, 330, EASE.out);
+    await this.wait(140);
+    // his other arm drops, and the pointing arm winds up...
+    this.tw({ yaw: 0.32, liftL: this.dropTo(0, 54) }, 380, EASE.out);
+    await this.tw({ liftR: this.raiseTo(1, -20), freeR: 1 }, 220, EASE.out);
+    // ...then stretches, cartoon-style, toward the button
+    const A = ART.arms[1], S = this.shoulder(1, 0.32);
+    const dx = tgt[0] - S[0], dy = tgt[1] - S[1], dl = Math.hypot(dx, dy) || 1, reach = Math.min(A.len * 1.45, dl);
+    this.p.tRx = S[0] + dx / dl * reach;
+    this.p.tRy = S[1] + dy / dl * reach;
+    await this.tw({ armR: 1 }, 380, EASE.back);
+    this.tw({ glow: 1 }, 260, EASE.out);
+    this.say('Tap PLAY to start!', 1700);
+    await this.wait(2300);
+    this.tw({ glow: 0 }, 300, EASE.inOut);
+    await this.tw({ armR: 0, liftR: 0, liftL: 0, freeR: 0 }, 380, EASE.inOut);
+    await this.tw({ yaw: 0, headYaw: 0, pitch: 0, lookX: 0, lookY: 0 }, 460, EASE.inOut);
+  }
+
+  async aHi() {
+    this.toRest(240, ['near', 'walk', 'scrim', 'yaw', 'headYaw', 'lookX', 'lookY', 'armR', 'tRx', 'tRy', 'liftL', 'liftR', 'freeR']);
+    await this.tw({ yaw: 0, headYaw: 0, lookX: 0, lookY: 0.1 }, 220, EASE.out);
+    // he walks toward you, arms swinging low: he grows faster as he gets close, like coming toward a camera
+    this.tw({ walk: 1, liftL: this.dropTo(0, 37), liftR: this.dropTo(1, 37) }, 240, EASE.out);
+    this.tw({ scrim: 1 }, 1500, EASE.inOut);
+    await this.tw({ near: 1 }, 1700, EASE.in2);
+    this.tw({ walk: 0 }, 160, EASE.out);
+    await this.tw({ sq: 0.93 }, 110, EASE.out);
+    await this.tw({ sq: 1 }, 240, EASE.back);
+    const kn = this.reach(1, -57, 1), w1 = this.reach(1, -44, 1.04), w2 = this.reach(1, -72, 1.04);
+    this.p.tRx = kn[0];
+    this.p.tRy = kn[1];
+    await this.tw({ armR: 1, freeR: 1 }, 380, EASE.back);
+    // knock knock on the glass
+    for (let i = 0; i < 2; i++) {
+      await this.tw({ knock: 1 }, 110, EASE.inc);
+      this.knockFx();
+      await this.tw({ knock: 0 }, 170, EASE.out);
+    }
+    await this.wait(160);
+    this.say('Hi! Ready to read with me?', 1600);
+    for (let i = 0; i < 3; i++) {
+      await this.tw({ tRx: w1[0], tRy: w1[1] }, 230, EASE.inOut);
+      await this.tw({ tRx: w2[0], tRy: w2[1] }, 230, EASE.inOut);
+    }
+    this.eyes = 'happy';
+    await this.tw({ armR: 0, freeR: 0 }, 360, EASE.inOut);
+    await this.wait(1100);
+    this.eyes = 'open';
+    // back to his mat: turn around, walk away, turn to face you again
+    await this.tw({ yaw: Math.PI }, 420, EASE.inOut);
+    this.tw({ walk: 1 }, 160, EASE.out);
+    this.tw({ scrim: 0 }, 1300, EASE.inOut);
+    await this.tw({ near: 0 }, 1400, EASE.out2);
+    this.tw({ walk: 0, liftL: 0, liftR: 0 }, 300, EASE.out);
+    await this.tw({ yaw: TAU }, 420, EASE.inOut);
+    this.p.yaw = 0;
+  }
+
+  async aPlay() {
+    this.p.press = 1;
+    this.tw({ press: 0 }, 300, EASE.out);
+    this.toRest(200, ['press', 'lookX', 'lookY', 'headYaw']);
+    this.tw({ lookX: 1, lookY: 0.4, headYaw: 0.3 }, 160, EASE.out);
+    this.eyes = 'happy';
+    this.mouth = 'happy';
+    this.say("Let's read!", 900);
+    await this.tw({ sq: 0.88 }, 120, EASE.out);
+    this.tw({ sq: 1.06 }, 150, EASE.out).then(() => this.tw({ sq: 1 }, 260, EASE.inOut));
+    await this.tw({ hop: -36 }, 240, EASE.out);
+    await this.tw({ hop: 0 }, 240, EASE.inc);
+    await this.tw({ sq: 0.9 }, 80, EASE.out);
+    await this.tw({ sq: 1 }, 240, EASE.back);
+    await this.wait(500);
+    this.eyes = 'open';
+    this.mouth = 'w';
+    await this.tw({ lookX: 0, lookY: 0, headYaw: 0 }, 400, EASE.inOut);
+  }
+
+  async rGiggle() {
+    this.toRest(200, ['sq', 'wiggle']);
+    this.eyes = 'happy';
+    this.mouth = 'happy';
+    this.say('Hee hee! That tickles!', 1100);
+    this.p.wiggle = 1;
+    this.tw({ wiggle: 0 }, 1000, EASE.out);
+    await this.tw({ sq: 0.9 }, 90, EASE.out);
+    await this.tw({ sq: 1.05 }, 140, EASE.out);
+    await this.tw({ sq: 1 }, 220, EASE.back);
+    await this.wait(1100);
+    this.eyes = 'open';
+    this.mouth = 'w';
+  }
+
+  async rSpin() {
+    this.toRest(160, ['yaw', 'hop', 'sq', 'headYaw', 'tailLag']);
+    await this.tw({ sq: 0.9 }, 120, EASE.out);
+    this.tw({ sq: 1.06 }, 160, EASE.out).then(() => this.tw({ sq: 1 }, 300, EASE.inOut));
+    this.tw({ hop: -46 }, 380, EASE.out).then(() => this.tw({ hop: 0 }, 360, EASE.inc));
+    this.tw({ tailLag: -0.6 }, 300, EASE.out).then(() => this.tw({ tailLag: 0 }, 500, EASE.inOut));
+    this.say('Wheee!', 700);
+    await this.tw({ yaw: TAU }, 760, EASE.inOut);
+    this.p.yaw = 0;
+    await this.tw({ sq: 0.92 }, 90, EASE.out);
+    await this.tw({ sq: 1 }, 240, EASE.back);
+  }
+
+  // With the book, he hides behind it instead of his paws.
+  async rPeekBook() {
+    this.toRest(200, ['armL', 'armR', 'tLx', 'tLy', 'tRx', 'tRy', 'lookX', 'lookY', 'earL', 'earR', 'liftL', 'liftR']);
+    const BK = ART.book, ey = HC[1] + ART.eyes[0].c[1];
+    const hL = this.tipFor(0, [BK.x0, ey + 6]), hR = this.tipFor(1, [BK.x1, ey + 6]);
+    Object.assign(this.p, { tLx: hL[0], tLy: hL[1], tRx: hR[0], tRy: hR[1] });
+    this.tw({ earL: -10, earR: 10 }, 300, EASE.out);
+    await this.tw({ armL: 1, armR: 1 }, 380, EASE.out);
+    await this.wait(600);
+    // a peek over the top of the pages
+    const pL = this.tipFor(0, [BK.x0, ey + 66]), pR = this.tipFor(1, [BK.x1, ey + 66]);
+    this.tw({ tLx: pL[0], tLy: pL[1], tRx: pR[0], tRy: pR[1] }, 280, EASE.inOut);
+    await this.wait(280);
+    await this.tw({ lookX: -1 }, 160, EASE.out);
+    await this.wait(220);
+    await this.tw({ lookX: 1 }, 200, EASE.inOut);
+    await this.wait(200);
+    // the book swings up out of the way: peekaboo!
+    this.tw({ lookX: 0, earL: 6, earR: -6 }, 160, EASE.out);
+    this.eyes = 'happy';
+    this.mouth = 'happy';
+    this.say('Peekaboo!', 900);
+    await this.tw({ armL: 0, armR: 0, liftL: 0.5, liftR: 0.5 }, 340, EASE.back);
+    await this.wait(900);
+    await this.tw({ liftL: 0, liftR: 0, earL: 0, earR: 0 }, 380, EASE.inOut);
+    this.eyes = 'open';
+    this.mouth = 'w';
+  }
+
+  async rPeek() {
+    if (this.wear.book && ART.book) return this.rPeekBook();
+    this.toRest(200, ['armL', 'armR', 'tLx', 'tLy', 'tRx', 'tRy', 'pawS', 'lookX', 'lookY', 'earL', 'earR', 'liftL', 'liftR']);
+    // both paws over his eyes, ears folded back
+    const eL = [HC[0] + ART.eyes[0].c[0], HC[1] + ART.eyes[0].c[1]], eR = [HC[0] + ART.eyes[1].c[0], HC[1] + ART.eyes[1].c[1]];
+    Object.assign(this.p, { tLx: eL[0], tLy: eL[1] - 16, tRx: eR[0], tRy: eR[1] - 16 });
+    this.tw({ pawS: 1.35, earL: -10, earR: 10 }, 300, EASE.out);
+    await this.tw({ armL: 1, armR: 1 }, 360, EASE.out);
+    await this.wait(600);
+    // a peek between his paws
+    this.tw({ tLx: eL[0] - 24, tRx: eR[0] + 24, tLy: eL[1] + 6, tRy: eR[1] + 6 }, 260, EASE.inOut);
+    await this.wait(260);
+    await this.tw({ lookX: -1 }, 160, EASE.out);
+    await this.wait(220);
+    await this.tw({ lookX: 1 }, 200, EASE.inOut);
+    await this.wait(200);
+    // arms thrown wide: peekaboo!
+    this.tw({ lookX: 0, earL: 6, earR: -6, pawS: 1 }, 160, EASE.out);
+    this.eyes = 'happy';
+    this.mouth = 'happy';
+    this.say('Peekaboo!', 900);
+    await this.tw({ armL: 0, armR: 0, liftL: this.raiseTo(0, -20), liftR: this.raiseTo(1, -20) }, 340, EASE.back);
+    await this.wait(900);
+    await this.tw({ liftL: 0, liftR: 0, earL: 0, earR: 0 }, 380, EASE.inOut);
+    this.eyes = 'open';
+    this.mouth = 'w';
+  }
+
+  async rJump() {
+    this.toRest(160, ['sq', 'hop']);
+    await this.tw({ sq: 0.84 }, 160, EASE.out);
+    this.eyes = 'happy';
+    this.mouth = 'o';
+    this.tw({ sq: 1.1 }, 140, EASE.out);
+    await this.tw({ hop: -80 }, 300, EASE.out);
+    this.tw({ sq: 1 }, 200, EASE.inOut);
+    this.say('Boing!', 700);
+    await this.tw({ hop: 0 }, 280, EASE.inc);
+    await this.tw({ sq: 0.86 }, 80, EASE.out);
+    await this.tw({ sq: 1 }, 300, EASE.back);
+    this.eyes = 'open';
+    this.mouth = 'w';
+  }
+
+  // One arm: its drawn shapes laid along the line from his shoulder to where the paw should be.
+  // a = 0 leaves it as drawn (raised by `lift`); a = 1 points the paw tip at T. ps scales the paw.
+  // h = how much it holds the book, E = the book edge it holds ([x, y, depth]).
+  arm(A, a, T, lift, cb, sb, ps, h, E) {
+    // (an arm never drops past hanging straight down, so it can't swing in across his body)
+    const flip = cb >= 0 ? 1 : -1, e = clamp(A.elev - lift, -1.3, Math.max(A.elev, 1.5));
+    const S = [AX + A.S[0] * cb + ARM_Z * sb, A.S[1]];
+    const tx = A.S[0] + A.side * A.len * Math.cos(e);
+    let R = [AX + tx * cb + ARM_Z * sb, A.S[1] + A.len * Math.sin(e)], z = -tx * sb + ARM_Z * cb;
+    if (h > 0.001) {
+      const G = this.holdTip(A, S, E);
+      R = [lerp(R[0], G[0], h), lerp(R[1], G[1], h)];
+      z = lerp(z, E[2], h);
+    }
+    let ang = Math.atan2(R[1] - S[1], R[0] - S[0]), len = Math.hypot(R[0] - S[0], R[1] - S[1]);
+    if (a > 0.001) {
+      // swing round the shoulder, like a real arm, instead of sliding the paw straight across
+      ang += wrapPi(Math.atan2(T[1] - S[1], T[0] - S[0]) - ang) * a;
+      len = lerp(len, Math.hypot(T[0] - S[0], T[1] - S[1]), a);
+    }
+    // reaching further stretches the sleeve and keeps the paw's size; turned toward you, the
+    // sleeve shortens to nothing and the paw stays, a little smaller: a round paw at his shoulder
+    const pawLen = A.len - A.uPaw, kp = clamp(len / A.len * 1.6, 0.6, 1), ks = Math.max(0.02, (len - pawLen * kp) / A.uPaw);
+    const L = A.uPaw * ks + pawLen * kp, upc = A.uPaw * ks + (A.uPc - A.uPaw) * kp;
+    const dx = Math.cos(ang), dy = Math.sin(ang), bend = 10 * a * A.side;
+    const P = [S[0] + dx * L, S[1] + dy * L];
+    const C = [(S[0] + P[0]) / 2 - dy * flip * bend, (S[1] + P[1]) / 2 + dx * flip * bend];
+    const t0 = [C[0] - S[0], C[1] - S[1]], t1 = [P[0] - C[0], P[1] - C[1]];
+    const l0 = Math.hypot(t0[0], t0[1]) || 1, l1 = Math.hypot(t1[0], t1[1]) || 1;
+    const place = function (q) {
+      const u = q[0];
+      let uu = u <= 0 ? u : (u <= A.uPaw ? u * ks : A.uPaw * ks + (u - A.uPaw) * kp), v = q[1];
+      if (ps !== 1) {
+        const sc = 1 + (ps - 1) * sstep(A.uPaw - 10, A.uPaw + 6, u);
+        uu = upc + (uu - upc) * sc;
+        v *= sc;
+      }
+      const t = uu / L;
+      let bx, by, tx2, ty2;
+      if (t <= 0) {
+        tx2 = t0[0] / l0; ty2 = t0[1] / l0; bx = S[0] + tx2 * uu; by = S[1] + ty2 * uu;
+      } else if (t >= 1) {
+        tx2 = t1[0] / l1; ty2 = t1[1] / l1; bx = P[0] + tx2 * (uu - L); by = P[1] + ty2 * (uu - L);
+      } else {
+        const w = 1 - t;
+        bx = w * w * S[0] + 2 * w * t * C[0] + t * t * P[0];
+        by = w * w * S[1] + 2 * w * t * C[1] + t * t * P[1];
+        tx2 = w * t0[0] + t * t1[0]; ty2 = w * t0[1] + t * t1[1];
+        const ln = Math.hypot(tx2, ty2) || 1;
+        tx2 /= ln; ty2 /= ln;
+      }
+      return [bx - ty2 * flip * v, by + tx2 * flip * v];
+    };
+    // Where it's drawn: an arm reaching for something counts as in front of him (he faces what he
+    // points at). Over his head (pointing up, a paw pump, a paw at his chin) it goes in front of
+    // the head until the paw has cleared it, so a paw never slips behind his face.
+    const zf = a > 0.001 ? lerp(z, Math.max(z, ARM_Z + 12), Math.min(1, a * 2)) : z;
+    const raised = a > 0.02 && S[1] - P[1] > 14;
+    // (the paw end of the arm, as wide as the arm: the root by his shoulder stays under his jaw)
+    const near = A.half;
+    const overHead = [A.uPaw * 0.8, A.uPaw, A.uPc].some(function (u) {
+      const q = place([u, 0]);
+      return Math.pow((q[0] - HC[0]) / (HRX + near), 2) + Math.pow((q[1] - HC[1]) / (HRY + near), 2) < 1;
+    });
+    // how far the arm has swung from its drawn pose: past a little, its drawn outline is hidden
+    // near the shoulder, so the arm grows out of the body without seams or stray lines
+    const tx0 = A.S[0] + A.side * A.len * Math.cos(A.elev);
+    const ang0 = Math.atan2(A.S[1] + A.len * Math.sin(A.elev) - S[1], AX + tx0 * cb + ARM_Z * sb - S[0]);
+    const swung = sstep(0.08, 0.45, Math.abs(wrapPi(ang - ang0)));
+    const slot = zf < -18 ? 'b' : (raised || overHead ? 'f' : 'm');
+    const o = { tip: P, pc: place([A.uPc, 0]), b: slot === 'b' ? 'inline' : 'none', m: slot === 'm' ? 'inline' : 'none', f: slot === 'f' ? 'inline' : 'none',
+      mx: r1(S[0]), my: r1(S[1]), mr: r1(A.half * 1.4 * swung), z: zf, mb: 'none' };
+    A.parts.forEach(function (pp, j) { o['d' + j] = polyD(pp.map(place)); });
+    return o;
+  }
+
+  rig() {
+    const p = this.p, now = this.now, out = {};
+    // placement on the stage (another board can give its own: home, nearP)
+    const H0 = this.home || HOME, N0 = this.nearP || NEAR, nr = clamp(p.near, 0, 1);
+    const s = 1 / (1 / H0.s + (1 / N0.s - 1 / H0.s) * nr);
+    const k = N0.s === H0.s ? 0 : (s - H0.s) / (N0.s - H0.s);
+    const X = lerp(H0.x, N0.x, k), Y = lerp(H0.y, N0.y, k);
+    this.pl = { x: X, y: Y, s: s };
+    out.shakeT = 'translate(' + r1(this.shakeAmp * Math.sin(now * 0.12)) + ' 0)';
+    out.scrimOp = r3(0.38 * p.scrim);
+    const pulse = 0.5 + 0.5 * Math.sin(now * 0.011);
+    out.playT = 'translate(650 560) translate(145 53) scale(' + r3(1 + 0.035 * p.glow * pulse) + ') translate(-145 -53)';
+    out.playPress = 'translate(0 ' + r1(7 * p.press) + ')';
+    out.glowOp = r3(p.glow * (0.45 + 0.55 * pulse));
+    out.place = 'translate(' + r1(X) + ' ' + r1(Y) + ') scale(' + r3(s) + ') translate(' + (-AX) + ' ' + (-GY) + ')';
+
+    // body: hop, squash and stretch, breathing, the walk bob
+    const ph = this.walkPhase, wk = p.walk;
+    const breathe = Math.sin(now / 1000 * TAU / 3.4);
+    const hop = p.hop - Math.abs(Math.sin(ph)) * 7 * wk;
+    const wig = p.wiggle * Math.sin(now * 0.05) * (this.reduce ? 3 : 6);
+    const sqX = 1 + (1 - p.sq) * 0.7, sqY = p.sq * (1 + 0.012 * breathe);
+    out.bodyT = 'translate(' + AX + ' ' + r1(GY + hop) + ') rotate(' + r1(p.lean + Math.sin(ph) * 3 * wk + wig * 0.4) +
+      ') scale(' + r3(sqX) + ' ' + r3(sqY) + ') translate(' + (-AX) + ' ' + (-GY) + ')';
+    const hs = clamp(1 + hop / 220, 0.55, 1);
+    out.shadow = { cx: AX, cy: GY + 2, rx: r1(ART.shadowRx * hs), ry: r1(12 * hs), op: r3(0.14 * hs) };
+    const yb = p.yaw, cb = Math.cos(yb), sb = Math.sin(yb);
+
+    // tail: every outline point rides on the tail's centre line, which turns with him (a little
+    // behind when he spins), so the tail keeps its thickness from every side
+    const T = ART.tail;
+    const tt = yb + p.tailLag + 0.06 * Math.sin(now / 1000 * TAU / 2.6) * (1 - wk) + Math.sin(ph) * 0.12 * wk;
+    const ct = Math.cos(tt), st = Math.sin(tt);
+    let tz = 0;
+    const sp3 = T.spine.map(function (q, j) {
+      tz += -(q[0] - AX) * st + T.z[j] * ct;
+      return [AX + (q[0] - AX) * ct + T.z[j] * st, q[1]];
+    });
+    const skin = function (q) {
+      const t = q[0], u = 1 - t;
+      const x = u * u * sp3[0][0] + 2 * u * t * sp3[1][0] + t * t * sp3[2][0];
+      const y = u * u * sp3[0][1] + 2 * u * t * sp3[1][1] + t * t * sp3[2][1];
+      let tx = u * (sp3[1][0] - sp3[0][0]) + t * (sp3[2][0] - sp3[1][0]), ty = u * (sp3[1][1] - sp3[0][1]) + t * (sp3[2][1] - sp3[1][1]);
+      const ln = Math.hypot(tx, ty) || 1;
+      tx /= ln; ty /= ln;
+      return [x + q[1] * tx - q[2] * ty, y + q[1] * ty + q[2] * tx];
+    };
+    out.tail = {};
+    T.parts.forEach(function (pp, j) { out.tail['d' + j] = polyD(pp.map(skin)); });
+    out.tailBack = tz <= 0 ? 'inline' : 'none';
+    out.tailFront = tz > 0 ? 'inline' : 'none';
+
+    // feet
+    const foot = function (F, i) {
+      const lift = -Math.max(0, Math.sin(ph + (i > 0 ? 0 : Math.PI))) * 9 * wk;
+      return { z: -F.x * sb + FOOT_Z * cb, cx: r1(AX + F.x * cb + FOOT_Z * sb), cy: r1(F.y + lift), rx: r1(Math.hypot(F.rx * cb, F.rx * 1.28 * sb)) };
+    };
+    const fL = foot(ART.feet[0], -1), fR = foot(ART.feet[1], 1);
+    fL.back = fL.z <= fR.z ? 'inline' : 'none';
+    fL.front = fL.z > fR.z ? 'inline' : 'none';
+    out.footL = fL;
+    out.footR = fR;
+
+    // body: a little narrower from the side; the belly is a patch on its front that slides round
+    const bsx = Math.hypot(cb, DEPTH * sb), Rb = ART.bodyHalf, silX = Rb * bsx, B = ART.belly;
+    out.bodyD = pathX(ART.body, function (x) { return AX + (x - AX) * bsx; });
+    // the patch covers an arc around his body; only the part of the arc that faces you shows
+    const lL = Math.asin(clamp((B.cx - B.hw) / Rb, -1, 1)), lR = Math.asin(clamp((B.cx + B.hw) / Rb, -1, 1)), Q = Math.PI / 2;
+    let a0 = wrapPi(lL + yb), a1 = a0 + lR - lL;
+    if (Math.min(a1, Q) <= Math.max(a0, -Q)) { a0 -= TAU; a1 -= TAU; }
+    const lo = Math.max(a0, -Q), hi = Math.min(a1, Q);
+    const edgeX = function (a) {
+      if (a <= -Q + 1e-6) return -silX;
+      if (a >= Q - 1e-6) return silX;
+      return Rb * Math.sin(a - yb) * cb + Rb * DEPTH * Math.cos(a - yb) * sb;
+    };
+    const xl = edgeX(lo), xr = edgeX(hi);
+    const nc = AX + (xl + xr) / 2, nh = Math.max(0.5, (xr - xl) / 2);
+    out.bellyD = pathX(B.shape, function (x) { return nc + (x - AX - B.cx) * nh / B.hw; });
+    out.bellyDisp = hi > lo + 0.02 ? 'inline' : 'none';
+
+    // Closet scarf: the band hugs his neck and narrows with it as he turns; the knot travels round
+    const SC = ART.scarf;
+    out.scarf = { disp: 'none', bandT: '', knotT: '', knotDisp: 'none' };
+    if (SC && p.scarfS > 0.01) {
+      const s = p.scarfS, pv = SC.pivot, l = Math.asin(clamp(SC.knot[0] / SC.neckR, -1, 1));
+      const kx = SC.neckR * (Math.sin(l) * cb + DEPTH * Math.cos(l) * sb);
+      const kz = SC.neckR * (-Math.sin(l) * sb + DEPTH * Math.cos(l) * cb), kz0 = SC.neckR * DEPTH * Math.cos(l);
+      out.scarf = {
+        disp: 'inline',
+        bandT: 'translate(' + pv[0] + ' ' + pv[1] + ') scale(' + r3(bsx * s) + ' ' + r3(s) + ') translate(' + (-pv[0]) + ' ' + (-pv[1]) + ')',
+        knotT: 'translate(' + r1(AX + kx) + ' ' + r1(SC.knot[1] + 10 * (kz - kz0) / SC.neckR) + ') scale(' + r3(clamp(kz / kz0, 0.3, 1.1) * s) +
+          ' ' + r3(s) + ') translate(' + r1(-(AX + SC.knot[0])) + ' ' + (-SC.knot[1]) + ')',
+        knotDisp: kz > -2 ? 'inline' : 'none',
+      };
+    }
+
+    // arms: out to his sides as drawn; they sway as he breathes, fly up when he hops, press down
+    // when he lands, swing as he walks, and reach when a move asks (point, knock, wave, peekaboo)
+    const lift = function (i, own) {
+      return own + 0.035 * breathe + 0.5 * clamp(-hop / 80, 0, 1) - (1 - p.sq) * 0.9 +
+        wk * 0.12 * Math.sin(ph + (i > 0 ? Math.PI : 0)) + p.wiggle * 0.14 * Math.sin(now * 0.05 + i);
+    };
+    const liftL = lift(-1, p.liftL), liftR = lift(1, p.liftR);
+    // Closet book: held in front of his belly by its edges; lifting his arms lifts the book
+    const BK = ART.book, BW = BK ? BK.x1 - BK.x0 : 1;
+    const bookEdge = function (x, l) {
+      return [AX + (x - AX) * cb + BK.z * sb, BK.y - clamp(l, -1, 0.6) * (l > 0 ? 90 : 30), -(x - AX) * sb + BK.z * cb];
+    };
+    const EL = BK ? bookEdge(BK.x0, liftL) : null, ER = BK ? bookEdge(BK.x1, liftR) : null, hold = BK ? p.hold : 0;
+    out.armL = this.arm(ART.arms[0], p.armL, [p.tLx, p.tLy], liftL, cb, sb, p.pawS, hold, EL);
+    out.armR = this.arm(ART.arms[1], p.armR, [p.tRx, p.tRy], liftR, cb, sb, p.pawS * (1 + 0.32 * p.knock), hold * (1 - p.freeR), ER);
+    this.tipR = out.armR.tip;
+    // facing away, his tail sticks out toward you: an arm further back than the tail goes behind it
+    if (tz > 0) {
+      for (const o of [out.armL, out.armR]) {
+        if (o.m === 'inline' && o.z < tz / 3) { o.m = 'none'; o.mb = 'inline'; }
+      }
+    }
+    out.book = { t: 'matrix(1 0 0 1 0 0)', bb: 'none', bm: 'none', bf: 'none' };
+    if (BK && p.bookS > 0.01) {
+      // the book sits between his paws; with his right paw busy it hangs from his left
+      const k = sstep(0.6, 1, p.hold), fr = sstep(0, 1, p.freeR), s = p.bookS;
+      const L = [lerp(EL[0], out.armL.pc[0], k), lerp(EL[1], out.armL.pc[1], k)];
+      let Rt = [lerp(ER[0], out.armR.pc[0], k), lerp(ER[1], out.armR.pc[1], k)];
+      Rt = [lerp(Rt[0], L[0] + BW * cb, fr), lerp(Rt[1], L[1] + 12, fr)];
+      let ba = (Rt[0] - L[0]) / BW;
+      const bq = (Rt[1] - L[1]) / BW, C = [(L[0] + Rt[0]) / 2, (L[1] + Rt[1]) / 2], c0 = (BK.x0 + BK.x1) / 2;
+      if (Math.abs(ba) < 0.06) ba = cb >= 0 ? 0.06 : -0.06;
+      const facing = cb > 0, front = facing && C[1] - BK.h / 2 < HC[1] + 80;
+      out.book = {
+        t: 'matrix(' + r3(ba * s) + ' ' + r3(bq * s) + ' 0 ' + r3(s) + ' ' + r1(C[0] - s * ba * c0) + ' ' + r1(C[1] - s * (bq * c0 + BK.y)) + ')',
+        bb: facing ? 'none' : 'inline', bm: facing && !front ? 'inline' : 'none', bf: front ? 'inline' : 'none',
+      };
+      // held up in front of his face: the book, and the paws on it, come in front of his head
+      if (front && p.hold > 0.5) {
+        for (const o of p.freeR > 0.5 ? [out.armL] : [out.armL, out.armR]) { o.b = 'none'; o.m = 'none'; o.mb = 'none'; o.f = 'inline'; }
+      }
+    }
+    const chip = function (on) { return on ? ['true', '#e2f3ee', '#2a9d8f', '✓'] : ['false', '#fffef4', '#e3d6b4', '']; };
+    const cs = chip(this.wear.scarf), cbk = chip(this.wear.book);
+    out.wear = { scarf: cs[0], scarfBg: cs[1], scarfBd: cs[2], scarfMark: cs[3], book: cbk[0], bookBg: cbk[1], bookBd: cbk[2], bookMark: cbk[3] };
+
+    // head: everything on his face slides around the round head as he turns or looks up
+    const th = yb + p.headYaw, ch = Math.cos(th), shh = Math.sin(th), cp = Math.cos(p.pitch), sp = Math.sin(p.pitch);
+    out.headT = 'rotate(' + r1(p.roll + wig) + ' ' + ART.head.pivot[0] + ' ' + ART.head.pivot[1] + ') translate(0 ' +
+      r1(-Math.abs(Math.cos(ph)) * 2.5 * wk) + ')';
+    // ears: set a little forward on his head, so the near one slides along with his face as he
+    // turns; cones, so they stay wide from the side; springy (see tick); perky when he's happy
+    // turned toward the front, an ear comes in front of his head, cut where it meets the fur
+    const perk = this.eyes === 'happy' ? 5 : 0, earS = this.earS, lag = this.earLag.ang;
+    const ear = function (j) {
+      const E = ART.ears[j], lam = E.lam0 + th + lag, x = E.R * Math.sin(lam), z0 = E.R * Math.cos(lam);
+      const tilt = E.tilt * Math.sin(lam) / Math.sin(E.lam0) - 5 * shh + earS[j].ang + (E.side < 0 ? p.earL : p.earR) - perk * E.side;
+      // the copy in front shows the ear down to a cut line that slides from the dome's edge to
+      // the ear's base as it comes forward, so it grows over the head instead of fading in
+      // (only while his face is turned toward you: seen from behind, the ears stay behind his head)
+      const sx = Math.sqrt(ch * ch + 0.49 * shh * shh), zr = E.R * Math.cos(E.lam0);
+      const k = sstep(zr + 2, zr + 20, z0 * cp) * sstep(-0.1, 0.35, ch);
+      const off = (1 - k) * E.cut[2];
+      return {
+        fo: 1,
+        fd: k > 0.01 ? 'inline' : 'none',
+        cx: r1(E.cut[0] * off),
+        cy: r1(E.cut[1] * off),
+        z: E.off[1] * sp + z0 * cp,
+        t: 'translate(' + r1(HC[0] + x) + ' ' + r1(HC[1] + E.off[1] * cp - z0 * sp) + ') rotate(' + r1(tilt) + ') scale(' + r3(sx) + ' ' + (perk ? 1.05 : 1) + ')',
+        innerT: 'translate(' + r1(7 * shh) + ' 0) scale(' + r3(clamp(ch / sx, 0.2, 1)) + ' 1)',
+        inner: r3(sstep(0.05, 0.35, ch)),
+      };
+    };
+    const earL = ear(0), earR = ear(1);
+    earL.back = earL.z <= earR.z ? 'inline' : 'none';
+    earL.front = earL.z > earR.z ? 'inline' : 'none';
+    out.earL = earL;
+    out.earR = earR;
+    const M = ART.muzzle, N = ART.nose, nz = HRY + 26.3;
+    out.muz = { cx: r1(HC[0] + M.c[0] * ch + HRY * shh), cy: r1(HC[1] + M.c[1] * cp - HRY * ch * sp), rx: r1(Math.hypot(M.rx * ch, 30 * shh)), disp: ch > -0.3 ? 'inline' : 'none' };
+    out.nose = { cx: r1(HC[0] + N.c[0] * ch + nz * shh), cy: r1(HC[1] + N.c[1] * cp - nz * ch * sp), rx: r1(Math.hypot(N.rx * ch, 8 * shh)), disp: ch > -0.15 ? 'inline' : 'none' };
+    out.nose.sx = r1(out.nose.cx + N.shine[0] * ch);
+    out.nose.sy = r1(out.nose.cy + N.shine[1]);
+    out.nose.srx = r1(Math.max(1.2, N.shine[2] * Math.abs(ch)));
+    out.browL = decalPath(ART.brows[0], th, cp, sp);
+    out.browR = decalPath(ART.brows[1], th, cp, sp);
+    out.maskD = decalPath(ART.mask, th, cp, sp);
+    const blush = function (Bl) {
+      const d = headDecal(Bl.c[0], Bl.c[1], th, cp, sp);
+      return { cx: r1(d.x), cy: r1(d.y), rx: r1(Math.max(0.3, Bl.rx * d.fs)), op: r3(Bl.op * sstep(0.02, 0.3, d.v)) };
+    };
+    out.blushL = blush(ART.blush[0]);
+    out.blushR = blush(ART.blush[1]);
+    let eyes = this.eyes;
+    if (eyes === 'open' && now < this.blinkUntil) eyes = 'closed';
+    const lookX = p.lookX, lookY = p.lookY;
+    const eye = function (E) {
+      const d = headDecal(E.c[0], E.c[1], th, cp, sp), fs = d.fs, ks = E.r / 15.64;
+      const px = d.x + E.pupil[0] * fs + lookX * 4.6 * ks * fs, py = d.y + E.pupil[1] + lookY * 4.2 * ks;
+      const arc = function (a, m, c) {
+        return 'M ' + pt([d.x + a[0] * ks * fs, d.y + a[1] * ks]) + ' Q ' + pt([d.x + m[0] * ks * fs, d.y + m[1] * ks]) + ' ' + pt([d.x + c[0] * ks * fs, d.y + c[1] * ks]);
+      };
+      const o = {
+        op: r3(sstep(0.02, 0.3, d.v)),
+        cx: r1(d.x), cy: r1(d.y), rx: r1(Math.max(0.3, E.r * fs)),
+        px: r1(px), py: r1(py), prx: r1(Math.max(0.2, E.pupil[2] * fs)),
+        closed: arc([-11, -0.92], [0, 9.2], [11, -0.92]),
+        happy: arc([-11, 4.6], [0, -11.96], [11, 4.6]),
+        openDisp: eyes === 'open' ? 'inline' : 'none',
+        closedDisp: eyes === 'closed' ? 'inline' : 'none',
+        happyDisp: eyes === 'happy' ? 'inline' : 'none',
+      };
+      E.glints.forEach(function (g, j) {
+        o['g' + j + 'x'] = r1(px + g[0] * fs);
+        o['g' + j + 'y'] = r1(py + g[1]);
+        o['g' + j + 'r'] = r1(Math.max(0.1, g[2] * fs));
+      });
+      return o;
+    };
+    out.eyeL = eye(ART.eyes[0]);
+    out.eyeR = eye(ART.eyes[1]);
+
+    // mouth: it flaps while a line is being typed into his speech bubble
+    const bb = this.bubble, talking = !!bb.full && bb.shown < bb.full.length;
+    let mouth = this.mouth;
+    if (talking) mouth = Math.sin(now * 0.05) + Math.sin(now * 0.021) > 0.1 ? 'open' : 'w';
+    const m = function (q) { return onMuzzle(q[0], q[1], ch, shh, cp, sp); };
+    const mx = M.c[0], my = M.c[1];
+    const md = [[mx - 13.8, my], [mx, my + 20.24], [mx + 13.8, my]].map(m);
+    const mo = [[mx - 9.5, my + 2.7], [mx, my + 17.2], [mx + 9.5, my + 2.7]].map(m);
+    const tH = m([mx, my + 10.12]), tO = m([mx, my + 8.8]), oC = m([mx, my + 6.44]), aw = Math.abs(ch);
+    out.mouth = {
+      op: r3(sstep(0.12, 0.4, ch)),
+      w: polyD(ART.mouth.map(m), true),
+      wDisp: mouth === 'w' ? 'inline' : 'none',
+      happy: 'M ' + pt(md[0]) + ' Q ' + pt(md[1]) + ' ' + pt(md[2]) + ' Z',
+      happyDisp: mouth === 'happy' ? 'inline' : 'none',
+      tx: r1(tH[0]), ty: r1(tH[1]), trx: r1(Math.max(0.5, 6.44 * aw)),
+      open: 'M ' + pt(mo[0]) + ' Q ' + pt(mo[1]) + ' ' + pt(mo[2]) + ' Z',
+      openDisp: mouth === 'open' ? 'inline' : 'none',
+      ox: r1(tO[0]), oy: r1(tO[1]), orx: r1(Math.max(0.5, 4.5 * aw)),
+      ocx: r1(oC[0]), ocy: r1(oC[1]), ocrx: r1(Math.max(0.5, 4.6 * aw)),
+      oDisp: mouth === 'o' ? 'inline' : 'none',
+    };
+
+    // knock ripples on the glass
+    const rip = function (q, i) {
+      if (!q) return { cx: 0, cy: 0, r: 0, op: 0 };
+      const u = clamp((now - q.t0) / 560, 0, 1);
+      return { cx: r1(q.x), cy: r1(q.y), r: r1(12 + 70 * EASE.out(u)), op: now < q.t0 ? 0 : r3((1 - u) * (i ? 0.7 : 0.95)) };
+    };
+    out.rip1 = rip(this.ripples[0], 0);
+    out.rip2 = rip(this.ripples[1], 1);
+    const r0 = this.ripples[0], tu = r0 ? clamp((now - r0.t0) / 700, 0, 1) : 1;
+    out.tok = { x: r0 ? r1(r0.x + 40) : 0, y: r0 ? r1(r0.y - 46 - 20 * tu) : 0, op: r3(1 - tu) };
+
+    // speech bubble: above his head, or in the corner when he's up close
+    if (!bb.full || p.bubbleS < 0.02) {
+      out.bub = { disp: 'none', t: '', d: 'M 0 0', text: '', said: '', css: 'none', lx: 0, ly: 0, ox: 0, oy: 0, sx: 0, sc: 0 };
+    } else {
+      const tw = BUBBLE_W[bb.full] || bb.full.length * 14.5, w = Math.round(tw + 44), h = 64, rr = 24;
+      const hx = X, hy = Y + (HC[1] - GY + hop) * s, close = s > 1.8;
+      const dir = close ? [-0.5, -0.86] : [0.6, -0.8];
+      const tipX = hx + dir[0] * (108 * s + 6), tipY = hy + dir[1] * (100 * s + 6);
+      let bx = close ? 40 : tipX + 10, by = close ? 40 : tipY - h - 34;
+      bx = clamp(bx, 24, 1000 - w - 24);
+      by = clamp(by, 24, 780 - h - 24);
+      const baseL = clamp(tipX - 22, bx + rr + 2, bx + w - rr - 34), baseR = baseL + 30;
+      out.bub = {
+        disp: 'inline',
+        d: 'M ' + (bx + rr) + ' ' + by + ' H ' + (bx + w - rr) + ' A ' + rr + ' ' + rr + ' 0 0 1 ' + (bx + w) + ' ' + (by + rr) +
+          ' V ' + (by + h - rr) + ' A ' + rr + ' ' + rr + ' 0 0 1 ' + (bx + w - rr) + ' ' + (by + h) +
+          ' H ' + r1(baseR) + ' L ' + r1(tipX) + ' ' + r1(tipY) + ' L ' + r1(baseL) + ' ' + (by + h) +
+          ' H ' + (bx + rr) + ' A ' + rr + ' ' + rr + ' 0 0 1 ' + bx + ' ' + (by + h - rr) + ' V ' + (by + rr) +
+          ' A ' + rr + ' ' + rr + ' 0 0 1 ' + (bx + rr) + ' ' + by + ' Z',
+        t: 'translate(' + r1(tipX) + ' ' + r1(tipY) + ') scale(' + r3(p.bubbleS) + ') translate(' + r1(-tipX) + ' ' + r1(-tipY) + ')',
+        // the words sit on the bubble as HTML (SVG can't show live text here) and scale with it
+        text: bb.full.slice(0, bb.shown),
+        said: bb.full,
+        css: 'block',
+        lx: r1(bx + 22),
+        ly: by,
+        ox: r1(tipX - bx - 22),
+        oy: r1(tipY - by),
+        sx: r1(this.shakeAmp * Math.sin(now * 0.12)),
+        sc: r3(p.bubbleS),
+      };
+    }
+    return out;
+  }
+
+  renderVals() {
+    return { r: this.rig(), h: this.h };
+  }
+}
+
+
+// ===== Racoon in the game ==========================================================================
+// The laptop lesson screen (D-007 layout, D-023 laptop column) at its real size, 1280 x 720, with
+// Racoon in his 200 px box. The moments are the game's (scenes/lesson/lesson.gd,
+// scripts/core/lesson_session.gd): his lines come from content/companion_lines.json, hints and
+// explanations are built the way HintText builds them, and the rules are the game's: a heart lost per
+// wrong try and one back for a right answer (FR-13), a hint after a wrong first try (FR-14), the
+// answer and why after a second, and Racoon's Rescue when the hearts run out. He stays calm while the
+// question is read (06-game-design, companion guardrails).
+const STAGE = { w: 1280, h: 720 };
+const BOX = { x: 90, y: 510, size: 200 };
+const SPEAKER = [428, 192], PROMPT_X = 494, PROMPT_Y = 192;
+function CARD(i) { return [522 + i * 280, 425]; }
+const QUESTIONS = [
+  { prompt: 'Which one rhymes with cat?', word: 'cat', choices: ['hat', 'dog', 'sun'], answer: 0 },
+  { prompt: 'Which one rhymes with bee?', word: 'bee', choices: ['cat', 'tree', 'car'], answer: 1 },
+  { prompt: 'Which one rhymes with star?', word: 'star', choices: ['moon', 'fish', 'car'], answer: 2 },
+];
+const LINES = {
+  intro: ["Let's play!", "Ready? Let's go!", "I'm here with you!", "Let's read together!"],
+  correct: ['Great job!', 'You got it!', 'Yay! Super!', 'Wow, nice work!', 'High five!', "You're a reading star!"],
+  retry: ['Yes! You figured it out!', 'You did it!', "That's it! Good thinking!"],
+  incorrect: ["Good try! Here's how it works.", "That's okay! Let's learn it together.", "Nice try! Here's the answer."],
+  rescueStart: ["Oh no, no hearts! Let's do Racoon's Rescue together!"],
+  rescueCorrect: ['A heart came back!', 'Yay, one more heart!'],
+  rescueFull: ['All your hearts are back!', 'You did it! Hearts are full!'],
+  levelUp: ["Level up! You're amazing!", 'You unlocked a new world!'],
+  done: ['You finished the lesson!', 'What a reader you are!'],
+  rest: ["Let's rest and try again tomorrow!"],
+  nudge: ['Tap the speaker to hear it again.'],
+};
+function pick(list) { return list[Math.floor(Math.random() * list.length)]; }
+// HintText.rime / hint / explain, for "rhymes with" questions
+function rime(w) { for (let i = 0; i < w.length; i++) { if ('aeiou'.indexOf(w[i]) >= 0) return w.slice(i); } return w; }
+function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+function hintFor(q) { return 'Say ' + q.word + ' slowly. Listen to the end: ' + rime(q.word) + '. Which word ends the same way?'; }
+function explainFor(q) { return cap(q.word) + ' and ' + q.choices[q.answer] + ' rhyme. They both end with ' + rime(q.word) + '.'; }
+// confetti pieces, the same every time (a small seeded random)
+const CONFETTI = (function () {
+  let seed = 7;
+  const rnd = function () { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
+  const out = [];
+  for (let i = 0; i < 44; i++) {
+    out.push({ x: 802 + (rnd() - 0.5) * 300, y: 250, vx: (rnd() - 0.5) * 820, vy: -420 - rnd() * 520,
+      r: rnd() * TAU, vr: (rnd() - 0.5) * 14, w: 8 + rnd() * 7, h: 5 + rnd() * 4, c: i % 4 });
+  }
+  return out;
+})();
+
+Component = (function (Base) {
+  return class extends Base {
+    constructor(props) {
+      super(props);
+      this.g = this.fresh();
+      this.gTimers = [];
+      this.gLast = 0;
+      this.sleeping = false;
+      this.glanceAt = performance.now() + 6000;
+      const self = this, h = this.h;
+      [0, 1, 2].forEach(function (i) { h['ans' + i] = function () { self.answer(i); }; });
+      h.mStart = function () { self.mStart(); };
+      h.mRead = function () { self.prep(false); self.run(self.gRead); };
+      h.mRight = function () { const g = self.prep(false); self.answer(QUESTIONS[g.q].answer); };
+      h.mHint = function () { self.prep(true); self.answer(self.wrongs()[0]); };
+      h.mAgain = function () {
+        const g = self.prep(true), w = self.wrongs();
+        g.cards[w[0]] = 'grey';
+        g.tries = 1;
+        self.loseHeart();
+        self.answer(w[1]);
+      };
+      h.mRescue = function () {
+        const g = self.prep(false);
+        g.locked = true;
+        let k = 0;
+        for (let i = 2; i >= 0; i--) {
+          if (g.hearts[i]) { self.later(k * 200, function () { self.loseHeart(); }); k += 1; }
+        }
+        self.later(k * 200 + 500, function () { self.startRescue(); });
+      };
+      h.mLevel = function () { const now = performance.now(); self.g.banner = now; self.g.conf = now; self.run(self.gLevelUp); };
+      h.mDone = function () { self.prep(false); self.finish(); };
+      h.mNudge = function () { self.prep(false); self.run(self.gNudge); };
+      h.mRest = function () { self.run(self.gRest); };
+      h.ok = function () { self.okOverlay(); };
+    }
+
+    // Racoon's 200 px box (the 400 px drawing at half size), and this stage's size
+    get home() { const s = BOX.size / 400; return { x: BOX.x + AX * s, y: BOX.y + GY * s, s: s }; }
+    get nearP() { return this.home; }
+    get stageW() { return STAGE.w; }
+    get stageH() { return STAGE.h; }
+
+    fresh() {
+      return { q: 0, tries: 0, hearts: [1, 1, 1], hfx: [null, null, null], cards: ['idle', 'idle', 'idle'], pop: [0, 0, 0],
+        locked: false, done: false, word: -1, reading: false, sheet: null, overlay: null, rescue: null,
+        prog: 0, progT: 0, banner: 0, conf: 0, star: 0, nudge: 0, clap: 0 };
+    }
+
+    later(ms, fn) { this.gTimers.push({ at: performance.now() + ms, fn: fn }); }
+
+    run(fn) {
+      this.sleeping = false;
+      this.g.word = -1;
+      this.g.reading = false;
+      super.run(fn);
+    }
+
+    tick(now) {
+      super.tick(now);
+      const g = this.g, dt = this.gLast ? Math.min(0.05, (now - this.gLast) / 1000) : 0.016;
+      this.gLast = now;
+      if (this.gTimers.length) {
+        const due = this.gTimers.filter(function (q) { return q.at <= now; });
+        this.gTimers = this.gTimers.filter(function (q) { return q.at > now; });
+        due.forEach(function (q) { q.fn(); });
+      }
+      g.prog += (g.progT - g.prog) * (1 - Math.exp(-dt / 0.22));
+      // while the child thinks, now and then a calm glance at the pictures (no words)
+      if (!this.busy && !this.mouseIn && !this.sleeping && !g.locked && !g.overlay && now > this.glanceAt) {
+        this.glanceAt = now + 6000 + Math.random() * 4000;
+        this.run(this.gGlance);
+      }
+    }
+
+    // --- the lesson's rules ---------------------------------------------------------------------------
+
+    heartsLeft() { return this.g.hearts.reduce(function (a, b) { return a + b; }, 0); }
+
+    // the rightmost heart cracks away first; a heart comes back into the leftmost empty slot
+    loseHeart() {
+      const g = this.g;
+      for (let i = 2; i >= 0; i--) {
+        if (g.hearts[i]) { g.hearts[i] = 0; g.hfx[i] = { k: 'break', t0: performance.now() }; return; }
+      }
+    }
+
+    gainHeart() {
+      const g = this.g;
+      for (let i = 0; i < 3; i++) {
+        if (!g.hearts[i]) { g.hearts[i] = 1; g.hfx[i] = { k: 'regain', t0: performance.now() }; return; }
+      }
+    }
+
+    wrongs() { const q = QUESTIONS[this.g.q]; return [0, 1, 2].filter(function (i) { return i !== q.answer; }); }
+
+    // A clean question for a moment button: closes sheets and overlays, keeps the lesson where it is.
+    prep(fullHearts) {
+      this.gTimers = [];
+      if (this.g.done) this.g = this.fresh();
+      const g = this.g;
+      Object.assign(g, { overlay: null, sheet: null, rescue: null, locked: false, tries: 0, banner: 0, cards: ['idle', 'idle', 'idle'] });
+      if (fullHearts) { while (this.heartsLeft() < 3) this.gainHeart(); }
+      return g;
+    }
+
+    answer(i) {
+      const g = this.g, q = QUESTIONS[g.q], self = this;
+      if (!q || g.locked || g.done || g.overlay || g.cards[i] !== 'idle') return;
+      g.tries += 1;
+      if (i === q.answer) {
+        g.cards = g.cards.map(function (c, k) { return k === i ? 'right' : (c === 'grey' ? 'grey' : 'dim'); });
+        g.pop[i] = performance.now();
+        this.gainHeart();
+        g.locked = true;
+        const line = pick(g.tries === 1 ? LINES.correct : LINES.retry);
+        this.run(function () { return this.gRight(line, i); });
+        this.later(2400, function () { self.nextQuestion(); });
+        return;
+      }
+      g.cards[i] = 'grey';
+      this.loseHeart();
+      if (this.heartsLeft() === 0) {
+        g.locked = true;
+        this.later(700, function () { self.startRescue(); });
+        return;
+      }
+      if (g.tries === 1) {
+        const hint = hintFor(q);
+        this.run(function () { return this.gHint(hint); });
+        return;
+      }
+      // a wrong second try: the right picture lights up, and the answer and why come up on a sheet
+      g.cards = g.cards.map(function (c, k) { return k === q.answer ? 'right' : (c === 'grey' ? 'grey' : 'dim'); });
+      g.sheet = { t0: performance.now(), title: 'The answer is ' + q.choices[q.answer] + '.', why: explainFor(q) };
+      g.locked = true;
+      const line = pick(LINES.incorrect);
+      this.run(function () { return this.gAnswer(q.answer, line); });
+      this.later(4200, function () { if (self.g.sheet) self.g.sheet.out = performance.now(); });
+      this.later(4500, function () { self.nextQuestion(); });
+    }
+
+    nextQuestion() {
+      const g = this.g;
+      g.sheet = null;
+      if (g.q + 1 >= QUESTIONS.length) { this.finish(); return; }
+      g.q += 1;
+      g.progT = g.q / QUESTIONS.length;
+      Object.assign(g, { tries: 0, cards: ['idle', 'idle', 'idle'], locked: false });
+      this.run(this.gRead);
+    }
+
+    finish() {
+      const g = this.g, now = performance.now();
+      Object.assign(g, { done: true, locked: true, progT: 1, sheet: null, overlay: { kind: 'complete', t0: now + 200 }, star: now + 450, conf: now + 300 });
+      this.run(this.gComplete);
+    }
+
+    startRescue() {
+      this.g.overlay = { kind: 'rescue', t0: performance.now() };
+      this.run(this.gRescue);
+    }
+
+    okOverlay() {
+      const g = this.g, self = this;
+      if (!g.overlay) return;
+      if (g.overlay.kind === 'complete') { this.mStart(); return; }
+      // Racoon's Rescue: three easy ones, a heart back for each (shown here as the hearts returning)
+      g.overlay = null;
+      g.rescue = { n: 0 };
+      [0, 1, 2].forEach(function (k) {
+        self.later(400 + k * 800, function () { self.gainHeart(); if (self.g.rescue) self.g.rescue.n = k + 1; });
+      });
+      this.run(this.gRescueWin);
+      this.later(3600, function () {
+        const h = self.g;
+        Object.assign(h, { rescue: null, tries: 0, cards: ['idle', 'idle', 'idle'], locked: false });
+        self.run(self.gRead);
+      });
+    }
+
+    mStart() {
+      this.gTimers = [];
+      this.g = this.fresh();
+      this.run(async function () { await this.gGreet(); await this.gRead(); });
+    }
+
+    // --- Racoon's moves for the game's moments ----------------------------------------------------------
+
+    // how to look at a point on the screen: eyes, head turn and tilt
+    lookVals(X, Y) {
+      const pl = this.pl, hx = pl.x, hy = pl.y + (HC[1] - GY) * pl.s, dx = X - hx, dy = Y - hy;
+      return { lookX: clamp(dx / 170, -1, 1), lookY: clamp(dy / 170, -1, 1), headYaw: clamp(dx / 900, -0.42, 0.42), pitch: clamp(-dy / 1500, -0.16, 0.16) };
+    }
+
+    look(X, Y, ms, ease) { return this.tw(this.lookVals(X, Y), ms || 260, ease || EASE.out); }
+
+    lookHome(ms) { return this.tw({ lookX: 0, lookY: 0, headYaw: 0, pitch: 0 }, ms || 380, EASE.inOut); }
+
+    // where arm j's paw tip goes to point at a point on the screen
+    aim(j, X, Y) {
+      const A = ART.arms[j], t = this.toLocal(X, Y), S = this.shoulder(j, this.p.yaw);
+      const dx = t[0] - S[0], dy = t[1] - S[1], dl = Math.hypot(dx, dy) || 1, r = Math.min(A.len * 1.45, dl);
+      return [S[0] + dx / dl * r, S[1] + dy / dl * r];
+    }
+
+    async pointAt(X, Y) {
+      const t = this.aim(1, X, Y);
+      Object.assign(this.p, { tRx: t[0], tRy: t[1] });
+      this.tw({ freeR: 1 }, 200, EASE.out);
+      this.look(X, Y, 300, EASE.out);
+      await this.tw({ armR: 1 }, 380, EASE.back);
+    }
+
+    async jump(h) {
+      await this.tw({ sq: 0.86 }, 130, EASE.out);
+      this.tw({ sq: 1.08 }, 130, EASE.out).then(() => this.tw({ sq: 1 }, 240, EASE.inOut));
+      this.tw({ liftL: this.raiseTo(0, -35), liftR: this.raiseTo(1, -35) }, 200, EASE.back);
+      await this.tw({ hop: h }, 280, EASE.out);
+      await this.tw({ hop: 0 }, 260, EASE.inc);
+      this.tw({ liftL: 0, liftR: 0 }, 320, EASE.inOut);
+      await this.tw({ sq: 0.88 }, 80, EASE.out);
+      await this.tw({ sq: 1 }, 260, EASE.back);
+    }
+
+    // Lesson starts (happy): a wave hello and the intro line
+    async gGreet() {
+      this.toRest(220);
+      this.eyes = 'happy';
+      this.mouth = 'happy';
+      this.say(pick(LINES.intro), 1300);
+      const w1 = this.reach(1, -44, 1.04), w2 = this.reach(1, -72, 1.04);
+      Object.assign(this.p, { tRx: w1[0], tRy: w1[1] });
+      this.tw({ freeR: 1 }, 200, EASE.out);
+      this.tw({ hop: -12 }, 200, EASE.out).then(() => this.tw({ hop: 0 }, 220, EASE.inc));
+      await this.tw({ armR: 1 }, 320, EASE.back);
+      for (let i = 0; i < 3; i++) {
+        await this.tw({ tRx: w2[0], tRy: w2[1] }, 210, EASE.inOut);
+        await this.tw({ tRx: w1[0], tRy: w1[1] }, 210, EASE.inOut);
+      }
+      await this.tw({ armR: 0, freeR: 0 }, 320, EASE.inOut);
+      this.eyes = 'open';
+      this.mouth = 'w';
+      await this.wait(300);
+    }
+
+    // Reading the question (calm, FR-20 read-aloud): his eyes follow each word as it's read, with a
+    // small nod; then a look at the pictures and back at you: your turn. No words of his own.
+    async gRead() {
+      const g = this.g, q = QUESTIONS[Math.min(g.q, QUESTIONS.length - 1)], words = q.prompt.split(' ');
+      this.toRest(200, ['lookX', 'lookY', 'headYaw', 'pitch']);
+      g.reading = true;
+      let x = PROMPT_X;
+      const xs = words.map(function (w) { const c = x + 6 + w.length * 9.4; x += w.length * 18.8 + 12; return c; });
+      await this.look(xs[0], PROMPT_Y, 320, EASE.inOut);
+      for (let i = 0; i < words.length; i++) {
+        g.word = i;
+        const v = this.lookVals(xs[i], PROMPT_Y);
+        this.tw({ lookX: v.lookX, headYaw: v.headYaw }, 200, EASE.inOut);
+        this.tw({ pitch: v.pitch - 0.04 }, 130, EASE.out).then(() => this.tw({ pitch: v.pitch }, 170, EASE.inOut));
+        await this.wait(330 + words[i].length * 30);
+      }
+      g.word = -1;
+      g.reading = false;
+      const c = CARD(1);
+      await this.look(c[0], c[1], 380, EASE.inOut);
+      await this.wait(500);
+      await this.tw({ lookX: 0, lookY: 0.1, headYaw: 0, pitch: 0 }, 400, EASE.inOut);
+    }
+
+    // a calm glance at the pictures while the child thinks
+    async gGlance() {
+      const c = CARD(Math.floor(Math.random() * 3));
+      await this.look(c[0], c[1], 420, EASE.inOut);
+      await this.wait(900);
+      await this.lookHome(480);
+    }
+
+    // Right answer (happy): a look at the picture, a hop and a paw pump
+    async gRight(line, i) {
+      this.toRest(160, ['lookX', 'lookY', 'headYaw', 'pitch']);
+      this.eyes = 'happy';
+      this.mouth = 'happy';
+      this.say(line, 1000);
+      const c = CARD(i);
+      this.look(c[0], c[1], 200, EASE.out);
+      await this.tw({ sq: 0.88 }, 100, EASE.out);
+      this.tw({ sq: 1.05 }, 140, EASE.out).then(() => this.tw({ sq: 1 }, 220, EASE.inOut));
+      this.tw({ liftR: this.raiseTo(1, -65) }, 160, EASE.out);
+      await this.tw({ hop: -26 }, 220, EASE.out);
+      await this.tw({ hop: 0 }, 220, EASE.inc);
+      this.tw({ sq: 0.92 }, 80, EASE.out).then(() => this.tw({ sq: 1 }, 220, EASE.back));
+      await this.tw({ liftR: this.raiseTo(1, -20) }, 140, EASE.inOut);
+      await this.tw({ liftR: this.raiseTo(1, -65) }, 140, EASE.out);
+      this.lookHome(320);
+      await this.tw({ liftR: 0 }, 300, EASE.back);
+      await this.wait(400);
+      this.eyes = 'open';
+      this.mouth = 'w';
+    }
+
+    // Wrong, first try (thinking): eyes up, paw on his chin, then the hint and a point at the question
+    async gHint(text) {
+      this.toRest(200, ['lookX', 'lookY', 'headYaw', 'pitch', 'roll']);
+      const chin = [AX + ART.muzzle.c[0] - 2, HC[1] + ART.muzzle.c[1] + ART.muzzle.ry + 2];
+      const t = this.tipFor(0, chin);
+      Object.assign(this.p, { tLx: t[0], tLy: t[1] });
+      this.tw({ lookX: 0.35, lookY: -1, roll: -6, headYaw: -0.1 }, 260, EASE.out);
+      await this.tw({ armL: 1 }, 340, EASE.out);
+      this.say(text, 1400);
+      await this.wait(900);
+      this.tw({ armL: 0, roll: 0 }, 320, EASE.inOut);
+      await this.pointAt(PROMPT_X + 200, PROMPT_Y);
+      await this.wait(Math.max(900, text.length * 42 - 1300));
+      await this.tw({ armR: 0, freeR: 0 }, 360, EASE.inOut);
+      const c = CARD(1);
+      await this.look(c[0], c[1], 360, EASE.inOut);   // back to the pictures: your turn
+      await this.wait(500);
+    }
+
+    // Wrong again (encourage): a gentle nod, a point at the right picture, an encouraging smile
+    async gAnswer(i, line) {
+      this.toRest(200, ['lookX', 'lookY', 'headYaw', 'pitch']);
+      this.say(line, 1800);
+      await this.tw({ pitch: -0.1 }, 180, EASE.inOut);
+      await this.tw({ pitch: 0.02 }, 200, EASE.inOut);
+      await this.tw({ pitch: -0.1 }, 180, EASE.inOut);
+      await this.tw({ pitch: 0 }, 200, EASE.inOut);
+      const c = CARD(i);
+      await this.pointAt(c[0], c[1]);
+      await this.wait(1500);
+      await this.tw({ armR: 0, freeR: 0 }, 360, EASE.inOut);
+      this.eyes = 'happy';
+      await this.tw({ lookX: 0, lookY: 0, headYaw: 0, pitch: 0, sq: 0.95 }, 300, EASE.inOut);
+      await this.tw({ sq: 1 }, 260, EASE.back);
+      await this.wait(500);
+      this.eyes = 'open';
+    }
+
+    // Racoon's Rescue (encourage): a surprised start, then he's ready to help, arms up
+    async gRescue() {
+      this.toRest(160);
+      this.mouth = 'o';
+      await this.tw({ sq: 1.06, hop: -8 }, 140, EASE.out);
+      await this.tw({ sq: 1, hop: 0 }, 200, EASE.inc);
+      this.eyes = 'happy';
+      this.mouth = 'happy';
+      this.say(pick(LINES.rescueStart), 2200);
+      await this.tw({ sq: 0.88 }, 120, EASE.out);
+      this.tw({ liftL: this.raiseTo(0, -30), liftR: this.raiseTo(1, -30) }, 260, EASE.back);
+      await this.tw({ hop: -34, sq: 1.05 }, 240, EASE.out);
+      await this.tw({ hop: 0, sq: 1 }, 240, EASE.inc);
+      await this.tw({ sq: 0.92 }, 80, EASE.out);
+      await this.tw({ sq: 1 }, 220, EASE.back);
+      await this.wait(900);
+      await this.tw({ liftL: 0, liftR: 0 }, 360, EASE.inOut);
+      this.eyes = 'open';
+      this.mouth = 'w';
+    }
+
+    // the rescue won: a hop for each heart that comes back, and a big jump
+    async gRescueWin() {
+      this.toRest(160);
+      for (let k = 0; k < 3; k++) {
+        await this.wait(k ? 560 : 400);
+        this.eyes = 'happy';
+        this.mouth = 'happy';
+        if (k < 2) this.say(pick(LINES.rescueCorrect), 300);
+        this.tw({ liftR: this.raiseTo(1, -60) }, 140, EASE.out).then(() => this.tw({ liftR: 0 }, 300, EASE.back));
+        await this.tw({ hop: -18, sq: 1.04 }, 120, EASE.out);
+        await this.tw({ hop: 0, sq: 1 }, 120, EASE.inc);
+      }
+      this.say(pick(LINES.rescueFull), 900);
+      await this.jump(-56);
+      await this.wait(500);
+      this.eyes = 'open';
+      this.mouth = 'w';
+    }
+
+    // Level up (celebrate): a crouch, a big spinning jump with his arms up
+    async gLevelUp() {
+      this.toRest(160, ['yaw', 'hop', 'sq']);
+      this.eyes = 'happy';
+      this.mouth = 'happy';
+      this.say(pick(LINES.levelUp), 1200);
+      await this.tw({ sq: 0.84 }, 160, EASE.out);
+      this.tw({ sq: 1.1 }, 140, EASE.out).then(() => this.tw({ sq: 1 }, 260, EASE.inOut));
+      this.tw({ liftL: this.raiseTo(0, -40), liftR: this.raiseTo(1, -40) }, 220, EASE.back);
+      const spin = this.tw({ yaw: TAU }, 720, EASE.inOut);
+      await this.tw({ hop: -72 }, 340, EASE.out);
+      await this.tw({ hop: 0 }, 320, EASE.inc);
+      await spin;
+      this.p.yaw = 0;
+      await this.tw({ sq: 0.86 }, 80, EASE.out);
+      await this.tw({ sq: 1 }, 300, EASE.back);
+      await this.wait(700);
+      await this.tw({ liftL: 0, liftR: 0 }, 360, EASE.inOut);
+      this.eyes = 'open';
+      this.mouth = 'w';
+    }
+
+    // Lesson complete (celebrate): three claps, a little dance, arms up
+    async gComplete() {
+      this.toRest(200);
+      this.eyes = 'happy';
+      this.mouth = 'happy';
+      this.say(pick(LINES.done), 1500);
+      const inL = this.tipFor(0, [AX - 9, 292]), inR = this.tipFor(1, [AX + 9, 292]);
+      const outL = this.tipFor(0, [AX - 46, 282]), outR = this.tipFor(1, [AX + 46, 282]);
+      Object.assign(this.p, { tLx: outL[0], tLy: outL[1], tRx: outR[0], tRy: outR[1] });
+      this.tw({ freeR: 1 }, 160, EASE.out);
+      await this.tw({ armL: 1, armR: 1 }, 260, EASE.out);
+      for (let i = 0; i < 3; i++) {
+        await this.tw({ tLx: inL[0], tLy: inL[1], tRx: inR[0], tRy: inR[1] }, 110, EASE.inc);
+        this.g.clap = performance.now();
+        this.tw({ sq: 0.96 }, 60, EASE.out).then(() => this.tw({ sq: 1 }, 140, EASE.out));
+        await this.tw({ tLx: outL[0], tLy: outL[1], tRx: outR[0], tRy: outR[1] }, 160, EASE.out);
+      }
+      await this.tw({ armL: 0, armR: 0 }, 260, EASE.inOut);
+      for (let i = 0; i < 2; i++) {
+        this.tw({ yaw: 0.3, liftL: this.raiseTo(0, -35), liftR: 0 }, 260, EASE.inOut);
+        await this.tw({ hop: -16 }, 130, EASE.out);
+        await this.tw({ hop: 0 }, 130, EASE.inc);
+        this.tw({ yaw: -0.3, liftR: this.raiseTo(1, -35), liftL: 0 }, 260, EASE.inOut);
+        await this.tw({ hop: -16 }, 130, EASE.out);
+        await this.tw({ hop: 0 }, 130, EASE.inc);
+      }
+      await this.tw({ yaw: 0, liftL: this.raiseTo(0, -23), liftR: this.raiseTo(1, -23) }, 280, EASE.back);
+      await this.wait(900);
+      await this.tw({ liftL: 0, liftR: 0, freeR: 0 }, 380, EASE.inOut);
+      this.eyes = 'open';
+      this.mouth = 'w';
+    }
+
+    // Waiting for an answer (helps): a look at you, then a point at the speaker, which bounces
+    async gNudge() {
+      this.toRest(200, ['lookX', 'lookY', 'headYaw', 'pitch']);
+      await this.tw({ lookX: 0, lookY: 0.15, headYaw: 0, pitch: 0 }, 260, EASE.out);
+      this.say(pick(LINES.nudge), 1400);
+      this.g.nudge = performance.now();
+      await this.pointAt(SPEAKER[0], SPEAKER[1]);
+      for (let i = 0; i < 2; i++) {
+        await this.tw({ knock: 1 }, 110, EASE.inc);
+        await this.tw({ knock: 0 }, 170, EASE.out);
+      }
+      await this.wait(1100);
+      await this.tw({ armR: 0, freeR: 0 }, 360, EASE.inOut);
+      await this.lookHome(320);
+    }
+
+    // Time to rest (sleepy): the kind goodbye, a yawn and a stretch, then off to sleep, z z z
+    async gRest() {
+      this.toRest(240);
+      this.say(pick(LINES.rest), 1500);
+      await this.wait(1700);
+      this.mouth = 'o';
+      this.eyes = 'closed';
+      // (up and out: straight up, his arms would hide behind his big head)
+      this.tw({ liftL: this.raiseTo(0, -28), liftR: this.raiseTo(1, -28), sq: 1.06, pitch: 0.1 }, 700, EASE.inOut);
+      await this.wait(1100);
+      await this.tw({ liftL: 0, liftR: 0, sq: 1, pitch: 0 }, 600, EASE.inOut);
+      this.mouth = 'w';
+      this.sleeping = true;
+      this.sleepT0 = performance.now();
+      await this.tw({ pitch: -0.14, roll: 7, headYaw: 0.08 }, 900, EASE.inOut);
+      for (;;) {   // slow breaths until another move wakes him (it drops these tweens)
+        await this.tw({ sq: 0.97 }, 1400, EASE.inOut);
+        await this.tw({ sq: 1.01 }, 1400, EASE.inOut);
+      }
+    }
+
+    // --- the screen -------------------------------------------------------------------------------------
+
+    toStage(x, y) { const pl = this.pl; return [pl.x + (x - AX) * pl.s, pl.y + (y - GY) * pl.s]; }
+
+    gview() {
+      const g = this.g, now = this.now, q = QUESTIONS[Math.min(g.q, QUESTIONS.length - 1)], out = {};
+      // hearts
+      for (let i = 0; i < 3; i++) {
+        const fx = g.hfx[i];
+        let sc = g.hearts[i] ? 1 : 0, op = g.hearts[i] ? 1 : 0, dy = 0, dx = 0, rot = 0;
+        if (fx) {
+          const t = (now - fx.t0) / 1000;
+          if (fx.k === 'break' && t < 0.6) {
+            if (t < 0.14) { sc = 1 + 0.22 * (t / 0.14); op = 1; dx = Math.sin(t * 90) * 2.5; }
+            else { const u = (t - 0.14) / 0.46; sc = 1.22 - 0.6 * u; dy = 28 * u * u; rot = 28 * u; op = 1 - u; }
+          } else if (fx.k === 'regain' && t < 0.45) {
+            const u = clamp(t / 0.45, 0, 1);
+            sc = EASE.back(u);
+            op = Math.min(1, u * 3);
+          }
+        }
+        out['h' + i] = { t: 'translate(' + r1(dx) + ' ' + r1(dy) + ') rotate(' + r1(rot) + ') scale(' + r3(Math.max(0.001, sc)) + ')', op: r3(op) };
+      }
+      out.progW = r1(clamp(g.prog, 0, 1) * 926);
+      out.rb = g.rescue ? { css: 'flex', text: "Racoon's Rescue  " + g.rescue.n + ' / 3' } : { css: 'none', text: '' };
+      // the question, each word lit as it's read
+      const words = q.prompt.split(' ');
+      for (let k = 0; k < 5; k++) {
+        out['w' + k] = { t: words[k] || '', bg: k === g.word ? '#ffe27a' : (g.reading && k < g.word ? '#fff3c4' : 'transparent') };
+      }
+      const nt = (now - g.nudge) / 1000;
+      out.spk = g.reading ? r3(1 + 0.05 * (0.5 + 0.5 * Math.sin(now * 0.012))) : (g.nudge && nt < 2.6 ? r3(1 + 0.12 * Math.abs(Math.sin(nt * 7))) : 1);
+      // the picture cards
+      for (let i = 0; i < 3; i++) {
+        const st = g.cards[i], c = { bg: '#fffef4', bd: '#e3d6b4', sh: '#e3d6b4', op: 1, ink: '#3a2a1f', cur: 'pointer', label: q.choices[i], icon: '#ig-icon-' + q.choices[i] };
+        if (st === 'grey') Object.assign(c, { bd: '#e9801f', sh: 'transparent', op: 0.5, cur: 'default' });
+        if (st === 'right') Object.assign(c, { bg: '#6aab4c', bd: '#487f33', sh: '#487f33' });
+        if (st === 'dim') Object.assign(c, { op: 0.45, cur: 'default' });
+        if (g.locked || g.done || g.overlay) c.cur = 'default';
+        const pt = (now - g.pop[i]) / 1000;
+        c.sc = g.pop[i] && pt < 0.45 ? r3(1 + 0.08 * Math.sin(Math.PI * pt / 0.45)) : 1;
+        c.op = r3(c.op);
+        out['c' + i] = c;
+      }
+      // his bubble (typed by the shared rig)
+      const bb = this.bubble, on = !!bb.full && this.p.bubbleS > 0.02;
+      out.bub = { css: on ? 'block' : 'none', sc: r3(this.p.bubbleS), text: on ? bb.full.slice(0, bb.shown) : '', said: on ? bb.full : '' };
+      // the answer sheet
+      if (g.sheet) {
+        let y = 200 * (1 - EASE.out(clamp((now - g.sheet.t0) / 350, 0, 1)));
+        if (g.sheet.out) y = Math.max(y, 200 * EASE.inc(clamp((now - g.sheet.out) / 250, 0, 1)));
+        out.sheet = { css: 'block', y: r1(y), title: g.sheet.title, why: g.sheet.why };
+      } else {
+        out.sheet = { css: 'none', y: 200, title: '', why: '' };
+      }
+      // Level up!
+      const lt = (now - g.banner) / 1000;
+      out.lv = g.banner && lt < 2.4 ? { css: 'flex', sc: r3(lt < 2 ? EASE.back(clamp(lt / 0.32, 0, 1)) : 1 - EASE.inc(clamp((lt - 2) / 0.4, 0, 1))) } : { css: 'none', sc: 0 };
+      // overlays
+      const ov = g.overlay;
+      if (ov) {
+        const t = (now - ov.t0) / 1000, done = ov.kind === 'complete';
+        const st = (now - g.star) / 1000, sp = clamp(st / 0.5, 0, 1);
+        out.ov = {
+          css: t >= 0 ? 'flex' : 'none', sc: r3(EASE.back(clamp(t / 0.35, 0, 1))), scrim: r3(0.22 * clamp(t / 0.3, 0, 1)),
+          title: done ? 'Lesson complete!' : "Racoon's Rescue!",
+          text: done ? 'You earned a star!' : 'Answer 3 easy ones to get your hearts back.',
+          btn: done ? 'Play again' : 'OK!',
+          starDisp: done ? 'inline' : 'none', heartDisp: done ? 'none' : 'inline',
+          starT: 'translate(80 70) rotate(' + r1(-40 * (1 - sp) + (sp >= 1 ? 6 * Math.sin(now * 0.004) : 0)) + ') scale(' + r3(Math.max(0.001, EASE.back(sp))) + ') translate(-80 -70)',
+          spark: r3(sp >= 1 ? 0.5 + 0.5 * Math.sin(now * 0.008) : 0),
+        };
+      } else {
+        out.ov = { css: 'none', sc: 0, scrim: 0, title: '', text: '', btn: '', starDisp: 'none', heartDisp: 'none', starT: '', spark: 0 };
+      }
+      // confetti
+      const ct = (now - g.conf) / 1000, paths = ['', '', '', ''];
+      if (g.conf && ct >= 0 && ct < 2.6) {
+        CONFETTI.forEach(function (c) {
+          const x = c.x + c.vx * ct, y = c.y + c.vy * ct + 450 * ct * ct, r = c.r + c.vr * ct;
+          const cr = Math.cos(r), sr = Math.sin(r), hw = c.w / 2, hh = c.h / 2 * Math.abs(Math.cos(r * 1.7));
+          const pts = [[-hw, -hh], [hw, -hh], [hw, hh], [-hw, hh]].map(function (q2) { return pt([x + q2[0] * cr - q2[1] * sr, y + q2[0] * sr + q2[1] * cr]); });
+          paths[c.c] += 'M ' + pts.join(' L ') + ' Z ';
+        });
+      }
+      for (let k = 0; k < 4; k++) out['cf' + k] = paths[k] || 'M 0 0';
+      // a spark where his paws clap
+      const kt = (now - g.clap) / 1000;
+      if (g.clap && kt < 0.3) {
+        const c = this.toStage(AX, 284), r0 = 10 + 30 * kt, r2 = r0 + 8;
+        let d = '';
+        for (let k = 0; k < 6; k++) {
+          const a = -Math.PI / 2 + (k - 2.5) * 0.5;
+          d += 'M ' + pt([c[0] + Math.cos(a) * r0, c[1] + Math.sin(a) * r0]) + ' L ' + pt([c[0] + Math.cos(a) * r2, c[1] + Math.sin(a) * r2]) + ' ';
+        }
+        out.clap = { d: d, op: r3(1 - kt / 0.3) };
+      } else {
+        out.clap = { d: 'M 0 0', op: 0 };
+      }
+      // z z z while he sleeps
+      for (let k = 0; k < 3; k++) {
+        if (this.sleeping) {
+          const ph = (((now - this.sleepT0) / 1000 + k * 0.8) % 2.4) / 2.4, base = this.toStage(AX + 70, HC[1] - 70);
+          out['z' + k] = { x: r1(base[0] + ph * 24), y: r1(base[1] - ph * 56), s: r1(18 + ph * 12), op: r3(Math.sin(ph * Math.PI)) };
+        } else {
+          out['z' + k] = { x: 0, y: 0, s: 18, op: 0 };
+        }
+      }
+      return out;
+    }
+
+    renderVals() {
+      const v = super.renderVals();
+      v.g = this.gview();
+      return v;
+    }
+  };
+})(Component);
+</script>
+</body>
+</html>

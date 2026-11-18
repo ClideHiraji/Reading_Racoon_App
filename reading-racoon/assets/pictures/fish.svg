@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="1.75 2.25 121 121" width="128" height="128">
+<defs>
+<clipPath id="fish-1"><path d="M 18 64 C 18 44, 42 34, 62 34 C 84 34, 98 50, 100 64 C 98 78, 84 94, 62 94 C 42 94, 18 84, 18 64 Z"/></clipPath>
+</defs>
+<g opacity="0.22" transform="translate(0 2.4)">
+<path d="M 92 64 L 114 45 Q 121 41 120 49 L 113 64 L 120 79 Q 121 87 114 83 Z" fill="#3b2d3a"/>
+</g>
+<path d="M 92 64 L 114 45 Q 121 41 120 49 L 113 64 L 120 79 Q 121 87 114 83 Z" fill="#4298ba"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<path d="M 50 38 Q 62 17 82 30 L 80 40 Z" fill="#3b2d3a"/>
+</g>
+<path d="M 50 38 Q 62 17 82 30 L 80 40 Z" fill="#4298ba"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<path d="M 58 88 Q 62 104 76 99 L 74 88 Z" fill="#3b2d3a"/>
+</g>
+<path d="M 58 88 Q 62 104 76 99 L 74 88 Z" fill="#4298ba"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<path d="M 18 64 C 18 44, 42 34, 62 34 C 84 34, 98 50, 100 64 C 98 78, 84 94, 62 94 C 42 94, 18 84, 18 64 Z" fill="#3b2d3a"/>
+</g>
+<path d="M 18 64 C 18 44, 42 34, 62 34 C 84 34, 98 50, 100 64 C 98 78, 84 94, 62 94 C 42 94, 18 84, 18 64 Z" fill="#5db8d2"/>
+<g clip-path="url(#fish-1)">
+<ellipse cx="56" cy="88" rx="40" ry="16" fill="#e5f5f8"/>
+</g>
+<path d="M 70 42 Q 79 64 70 86" fill="none" stroke="#299abb" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 82 45 Q 90 64 82 83" fill="none" stroke="#299abb" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 50 46 Q 56 64 50 82" fill="none" stroke="#1e6174" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+<ellipse cx="36" cy="58" rx="3.78" ry="4.84" fill="#3b2d3a"/>
+<circle cx="34.77" cy="56.02" r="1.58" fill="#ffffff"/>
+<path d="M 21 69 Q 25 72.6 29 69" fill="none" stroke="#3b2d3a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+<ellipse cx="38" cy="71" rx="4.12" ry="2.38" fill="#ff8a9c" opacity="0.55"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<circle cx="10" cy="40" r="4.2" fill="#3b2d3a"/>
+</g>
+<g opacity="0.18">
+<circle cx="10" cy="40" r="4.2" fill="#3b2d3a" stroke="#3b2d3a" stroke-width="3" stroke-linejoin="round"/>
+</g>
+<circle cx="10" cy="40" r="4.2" fill="#e2f4f8"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<circle cx="16" cy="27" r="2.8" fill="#3b2d3a"/>
+</g>
+<g opacity="0.18">
+<circle cx="16" cy="27" r="2.8" fill="#3b2d3a" stroke="#3b2d3a" stroke-width="3" stroke-linejoin="round"/>
+</g>
+<circle cx="16" cy="27" r="2.8" fill="#e2f4f8"/>
+</svg>

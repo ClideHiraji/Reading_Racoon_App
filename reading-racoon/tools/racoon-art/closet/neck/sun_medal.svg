@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racoon's Closet: Sun medal (gold, neck). FR-07, D-026.
+     Drawn to fit Racoon at rest: the bottom layer links ../../parts/racoon_C_inkscape.svg (locked).
+     Draw on the "Item" layer. The file's name is the item's id; its name, tier, price and how it's
+     earned are in reading-racoon/content/closet.json. motion-demo/build_racoon.py reads this file
+     and never writes it. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-sun_medal"
+   sodipodi:docname="sun_medal.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>Sun medal</title>
+  <sodipodi:namedview
+     id="namedview-sun_medal"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="2"
+     inkscape:cx="200"
+     inkscape:cy="280"
+     inkscape:current-layer="layer-item" />
+  <defs id="defs-sun_medal">
+    <linearGradient id="gr-medal-teal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#4fc2b2" /><stop offset="1" style="stop-color:#1d7166" /></linearGradient>
+    <linearGradient id="gr-medal-coral" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ffb48f" /><stop offset="1" style="stop-color:#d95f3d" /></linearGradient>
+    <linearGradient id="gr-medal-rays" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#ffe680" /><stop offset="1" style="stop-color:#d99a06" /></linearGradient>
+    <radialGradient id="gr-medal-disc" cx="0.4" cy="0.35" r="0.7"><stop offset="0" style="stop-color:#fff6b8" /><stop offset="0.55" style="stop-color:#ffd84d" /><stop offset="1" style="stop-color:#e0a20c" /></radialGradient>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="../../parts/racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-item" inkscape:label="Item">
+   <g id="item-sun-medal" inkscape:label="sun_medal">
+     <title>Sun medal: a gold sunburst medal on a teal and coral ribbon (gold)</title>
+     <path id="sun-medal-1" inkscape:label="Ribbon left" d="M 166 252 L 189 292 L 199 288 L 180 249 Z" style="fill:url(#gr-medal-teal);stroke:#3b2d3a;stroke-width:3;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="sun-medal-2" inkscape:label="Ribbon right" d="M 235 252 L 212 292 L 202 288 L 221 249 Z" style="fill:url(#gr-medal-coral);stroke:#3b2d3a;stroke-width:3;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="sun-medal-3" inkscape:label="Ribbon stripe" d="M 173 251 L 193 290 M 228 251 L 208 290" style="fill:none;stroke:#ffffff;stroke-width:2;stroke-linejoin:round;stroke-linecap:round;opacity:0.7" />
+     <path id="sun-medal-4" inkscape:label="Sunburst" d="M 200.5 271 L 205.68 278.68 L 214 274.62 L 214.64 283.86 L 223.88 284.5 L 219.82 292.82 L 227.5 298 L 219.82 303.18 L 223.88 311.5 L 214.64 312.14 L 214 321.38 L 205.68 317.32 L 200.5 325 L 195.32 317.32 L 187 321.38 L 186.36 312.14 L 177.12 311.5 L 181.18 303.18 L 173.5 298 L 181.18 292.82 L 177.12 284.5 L 186.36 283.86 L 187 274.62 L 195.32 278.68 Z" style="fill:url(#gr-medal-rays);stroke:#3b2d3a;stroke-width:2.8;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sun-medal-5" inkscape:label="Medal" cx="200.5" cy="298" r="18" style="fill:url(#gr-medal-disc);stroke:#3b2d3a;stroke-width:3.2;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sun-medal-6" inkscape:label="Rim" cx="200.5" cy="298" r="13.5" style="fill:none;stroke:#c98a00;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="sun-medal-7" inkscape:label="Star" d="M 200.12 289.38 Q 200.5 288.5 200.88 289.38 L 202.83 293.9 Q 203.2 294.78 204.16 294.87 L 209.06 295.32 Q 210.01 295.41 209.29 296.04 L 205.59 299.29 Q 204.87 299.92 205.09 300.86 L 206.17 305.66 Q 206.38 306.59 205.55 306.1 L 201.32 303.59 Q 200.5 303.1 199.68 303.59 L 195.45 306.1 Q 194.62 306.59 194.83 305.66 L 195.91 300.86 Q 196.13 299.92 195.41 299.29 L 191.71 296.04 Q 190.99 295.41 191.94 295.32 L 196.84 294.87 Q 197.8 294.78 198.17 293.9 Z" style="fill:#fffbe0;stroke:#c98a00;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="sun-medal-8" inkscape:label="Ruby" cx="200.5" cy="298.5" r="2.6" style="fill:#e2603f" />
+     <path id="sun-medal-9" inkscape:label="Shine" d="M 189 290 Q 192 285 198 284" style="fill:none;stroke:#ffffff;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round;opacity:0.85" />
+     <path id="sun-medal-10" inkscape:label="Glint" d="M 170 294 Q 171.68 298.32 176 300 Q 171.68 301.68 170 306 Q 168.32 301.68 164 300 Q 168.32 298.32 170 294 Z" style="fill:#fffbe0;stroke:#e0a20c;stroke-width:1.1;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="sun-medal-11" inkscape:label="Glint" d="M 232 280.5 Q 233.54 284.46 237.5 286 Q 233.54 287.54 232 291.5 Q 230.46 287.54 226.5 286 Q 230.46 284.46 232 280.5 Z" style="fill:#fffbe0;stroke:#e0a20c;stroke-width:1.1;stroke-linejoin:round;stroke-linecap:round" />
+   </g>
+  </g>
+</svg>

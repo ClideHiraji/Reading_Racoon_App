@@ -94,7 +94,9 @@ func _on_word_reached(index: int) -> void:
 
 
 func _on_speech_finished() -> void:
-	if _playing and _voiced:
+	# The voice is cut when the child leaves the screen; by then this text is gone, and its
+	# screen mustn't move on to a next line (it has no tree left to wait on).
+	if _playing and _voiced and is_inside_tree():
 		_finish()
 
 
@@ -109,7 +111,7 @@ func _light(index: int) -> void:
 	_lit = index
 	for i in _labels.size():
 		var on := i == index
-		var sb := StyleBoxFlat.new()
+		var sb := PaperBox.new()
 		sb.bg_color = Palette.YELLOW if on else Color(0, 0, 0, 0)
 		sb.set_corner_radius_all(12)
 		sb.content_margin_left = 6

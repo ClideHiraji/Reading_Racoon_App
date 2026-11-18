@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racoon's Closet: Open book (copper, paws). FR-07, D-026.
+     Drawn to fit Racoon at rest: the bottom layer links ../../parts/racoon_C_inkscape.svg (locked).
+     Draw on the "Item" layer. The file's name is the item's id; its name, tier, price and how it's
+     earned are in reading-racoon/content/closet.json. motion-demo/build_racoon.py reads this file
+     and never writes it.
+     In his paws: the Cover's left and right edges are where his paws hold it, and the Cover alone
+     is what shows when he turns his back. Other paws items fit this place. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-open_book"
+   sodipodi:docname="open_book.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>Open book</title>
+  <sodipodi:namedview
+     id="namedview-open_book"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="2"
+     inkscape:cx="200"
+     inkscape:cy="320"
+     inkscape:current-layer="layer-item" />
+  <defs id="defs-open_book">
+    <linearGradient id="g-cover" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" style="stop-color:#f39a45" id="s-cover-0" />
+      <stop offset="1" style="stop-color:#e9801f" id="s-cover-1" />
+    </linearGradient>
+    <linearGradient id="g-page-left" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" style="stop-color:#fffbf2" id="s-pagel-0" />
+      <stop offset="0.7" style="stop-color:#fbf3e4" id="s-pagel-1" />
+      <stop offset="1" style="stop-color:#ecdcc0" id="s-pagel-2" />
+    </linearGradient>
+    <linearGradient id="g-page-right" x1="1" y1="0" x2="0" y2="0">
+      <stop offset="0" style="stop-color:#fffbf2" id="s-pager-0" />
+      <stop offset="0.7" style="stop-color:#fbf3e4" id="s-pager-1" />
+      <stop offset="1" style="stop-color:#ecdcc0" id="s-pager-2" />
+    </linearGradient>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="../../parts/racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-item" inkscape:label="Item">
+   <g id="open-book" inkscape:label="Open book">
+    <path id="book-ribbon" inkscape:label="Ribbon" d="M 203.6 357 L 203.6 373 L 207.1 369 L 210.6 373 L 210.6 356.5 Z" style="fill:#2a9d8f;stroke:#3b2d3a;stroke-width:2.6;stroke-linejoin:round" />
+    <path id="book-cover" inkscape:label="Cover" d="M 143.6 284.5 L 196.6 288 Q 200.6 290.5 204.6 288 L 257.6 284.5 Q 259.6 284.5 259.6 286.5 L 259.6 355.5 Q 259.6 357.5 257.6 357.5 L 204.6 360 Q 200.6 362.5 196.6 360 L 143.6 357.5 Q 141.6 357.5 141.6 355.5 L 141.6 286.5 Q 141.6 284.5 143.6 284.5 Z" style="fill:url(#g-cover);stroke:#3b2d3a;stroke-width:4.85;stroke-linejoin:round" />
+    <path id="book-page-left" inkscape:label="Page left" d="M 149.5 288 C 164 283 184.5 283.5 199.4 290.5 L 199.4 353.5 C 184.5 348 164 348 149.5 351 Z" style="fill:url(#g-page-left);stroke:#3b2d3a;stroke-width:3.4;stroke-linejoin:round" />
+    <path id="book-page-right" inkscape:label="Page right" d="M 251.72 288 C 237.22 283 216.72 283.5 201.82 290.5 L 201.82 353.5 C 216.72 348 237.22 348 251.72 351 Z" style="fill:url(#g-page-right);stroke:#3b2d3a;stroke-width:3.4;stroke-linejoin:round" />
+    <path id="book-lines-left" inkscape:label="Lines left" d="M 156.5 298 Q 174 295.5 192 299.5 M 156.5 308.5 Q 174 306 192 310 M 156.5 319 Q 174 316.5 192 320.5 M 156.5 329.5 Q 174 327 192 331 M 156.5 340 Q 174 337.5 179 341.5" style="fill:none;stroke:#c9bfd3;stroke-width:3.2;stroke-linecap:round" />
+    <path id="book-lines-right" inkscape:label="Lines right" d="M 244.72 298 Q 227.22 295.5 209.22 299.5 M 244.72 308.5 Q 227.22 306 209.22 310 M 244.72 319 Q 227.22 316.5 209.22 320.5 M 244.72 329.5 Q 227.22 327 209.22 331 M 244.72 340 Q 227.22 337.5 222.22 341.5" style="fill:none;stroke:#c9bfd3;stroke-width:3.2;stroke-linecap:round" />
+    <path id="book-spine" inkscape:label="Spine" d="M 200.6 290 L 200.6 357" style="fill:none;stroke:#3b2d3a;stroke-width:3;stroke-linecap:round" />
+   </g>
+  </g>
+</svg>

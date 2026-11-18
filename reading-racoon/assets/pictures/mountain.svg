@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="1.5 7.25 125 125" width="128" height="128">
+<g opacity="0.22" transform="translate(0 2.4)">
+<path d="M 50 108 L 84 44 Q 88 37 92 44 L 124 108 Z" fill="#3b2d3a"/>
+</g>
+<path d="M 50 108 L 84 44 Q 88 37 92 44 L 124 108 Z" fill="#baa3ce"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<path d="M 76.6 58 L 84 44 Q 88 37 92 44 L 99 58 Q 95 54 91 59 Q 87 53 83 59 Q 79.5 54 76.6 58 Z" fill="#3b2d3a"/>
+</g>
+<g opacity="0.18">
+<path d="M 76.6 58 L 84 44 Q 88 37 92 44 L 99 58 Q 95 54 91 59 Q 87 53 83 59 Q 79.5 54 76.6 58 Z" fill="#3b2d3a" stroke="#3b2d3a" stroke-width="3" stroke-linejoin="round"/>
+</g>
+<path d="M 76.6 58 L 84 44 Q 88 37 92 44 L 99 58 Q 95 54 91 59 Q 87 53 83 59 Q 79.5 54 76.6 58 Z" fill="#fffffd"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<path d="M 4 108 L 44 32 Q 48 25 52 32 L 96 108 Z" fill="#3b2d3a"/>
+</g>
+<path d="M 4 108 L 44 32 Q 48 25 52 32 L 96 108 Z" fill="#9476a1"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<path d="M 33.5 52 L 44 32 Q 48 25 52 32 L 63.6 52 Q 59 48 54.5 54 Q 49 47 43.5 54 Q 38 48 33.5 52 Z" fill="#3b2d3a"/>
+</g>
+<g opacity="0.18">
+<path d="M 33.5 52 L 44 32 Q 48 25 52 32 L 63.6 52 Q 59 48 54.5 54 Q 49 47 43.5 54 Q 38 48 33.5 52 Z" fill="#3b2d3a" stroke="#3b2d3a" stroke-width="3" stroke-linejoin="round"/>
+</g>
+<path d="M 33.5 52 L 44 32 Q 48 25 52 32 L 63.6 52 Q 59 48 54.5 54 Q 49 47 43.5 54 Q 38 48 33.5 52 Z" fill="#fffffd"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<path d="M 8 110 Q 34 88 64 104 Q 94 88 120 110 Z" fill="#3b2d3a"/>
+</g>
+<path d="M 8 110 Q 34 88 64 104 Q 94 88 120 110 Z" fill="#75ab5a"/>
+</svg>

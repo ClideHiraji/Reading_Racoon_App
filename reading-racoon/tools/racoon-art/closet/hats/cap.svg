@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Racoon's Closet: River cap (copper, hats). FR-07, D-026.
+     Drawn to fit Racoon at rest: the bottom layer links ../../parts/racoon_C_inkscape.svg (locked).
+     Draw on the "Item" layer. The file's name is the item's id; its name, tier, price and how it's
+     earned are in reading-racoon/content/closet.json. motion-demo/build_racoon.py reads this file
+     and never writes it. -->
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg-cap"
+   sodipodi:docname="cap.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg">
+  <title>River cap</title>
+  <sodipodi:namedview
+     id="namedview-cap"
+     pagecolor="#fefde0"
+     bordercolor="#666666"
+     inkscape:document-units="px"
+     inkscape:zoom="2"
+     inkscape:cx="200"
+     inkscape:cy="80"
+     inkscape:current-layer="layer-item" />
+  <defs id="defs-cap">
+    <linearGradient id="gr-cap-dome" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#4fc2b2" /><stop offset="1" style="stop-color:#2a9d8f" /></linearGradient>
+    <linearGradient id="gr-cap-brim" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#2a9d8f" /><stop offset="1" style="stop-color:#1d7166" /></linearGradient>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-reference"
+     inkscape:label="Racoon (reference)"
+     sodipodi:insensitive="true">
+    <image
+       id="racoon-reference"
+       inkscape:label="Racoon (linked from racoon_C_inkscape.svg)"
+       xlink:href="../../parts/racoon_C_inkscape.svg"
+       x="0"
+       y="0"
+       width="400"
+       height="400"
+       preserveAspectRatio="none" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer-item" inkscape:label="Item">
+   <g id="item-cap" inkscape:label="cap">
+     <title>River cap: a teal cap with a river stripe (copper)</title>
+     <path id="cap-1" inkscape:label="Dome" d="M 112 117 C 106 70 148 38 200.5 38 C 253 38 295 70 289 117 C 248 105 153 105 112 117 Z" style="fill:url(#gr-cap-dome);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="cap-2" inkscape:label="Seam" d="M 200.5 42 C 194 62 190 84 191 106" style="fill:none;stroke:#1d7166;stroke-width:2.8;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="cap-3" inkscape:label="Seam" d="M 200.5 42 C 214 60 222 82 224 105" style="fill:none;stroke:#1d7166;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round;opacity:0.6" />
+     <path id="cap-4" inkscape:label="Wave" d="M 117 96 C 132 88 143 102 158 94 C 173 86 184 102 199 94 C 214 86 225 102 240 94 C 255 86 266 100 285 97" style="fill:none;stroke:#c7f0e8;stroke-width:3.8;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="cap-5" inkscape:label="Brim" d="M 126 116 C 158 103 243 103 275 116 C 267 128 237 132 200.5 132 C 164 132 134 128 126 116 Z" style="fill:url(#gr-cap-brim);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+     <circle id="cap-6" inkscape:label="Button" cx="200.5" cy="40" r="7" style="fill:#1d7166;stroke:#3b2d3a;stroke-width:3.6;stroke-linejoin:round;stroke-linecap:round" />
+     <path id="cap-7" inkscape:label="Shine" d="M 140 72 C 154 56 172 48 188 46" style="fill:none;stroke:#ffffff;stroke-width:5;stroke-linejoin:round;stroke-linecap:round;opacity:0.5" />
+     <g id="cap-back" inkscape:label="Back view" style="display:none">
+      <path id="cap-back-1" inkscape:label="Dome" d="M 112 117 C 106 70 148 38 200.5 38 C 253 38 295 70 289 117 C 248 105 153 105 112 117 Z" style="fill:url(#gr-cap-dome);stroke:#3b2d3a;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+      <path id="cap-back-2" inkscape:label="Seam" d="M 200.5 42 C 200.5 62 200.5 84 200.5 101" style="fill:none;stroke:#1d7166;stroke-width:2.8;stroke-linejoin:round;stroke-linecap:round" />
+      <path id="cap-back-3" inkscape:label="Wave" d="M 117 96 C 132 88 143 102 158 94 C 173 86 184 102 199 94 C 214 86 225 102 240 94 C 255 86 266 100 285 97" style="fill:none;stroke:#c7f0e8;stroke-width:3.8;stroke-linejoin:round;stroke-linecap:round" />
+      <path id="cap-back-4" inkscape:label="Opening" d="M 182 112 C 184 99 217 99 219 112 Z" style="fill:#8e8899;stroke:#3b2d3a;stroke-width:3.2;stroke-linejoin:round;stroke-linecap:round" />
+      <path id="cap-back-5" inkscape:label="Strap" d="M 178 111 L 223 111" style="fill:none;stroke:#1d7166;stroke-width:4.4;stroke-linejoin:round;stroke-linecap:round" />
+      <circle id="cap-back-6" inkscape:label="Button" cx="200.5" cy="40" r="7" style="fill:#1d7166;stroke:#3b2d3a;stroke-width:3.6;stroke-linejoin:round;stroke-linecap:round" />
+     </g>
+   </g>
+  </g>
+</svg>

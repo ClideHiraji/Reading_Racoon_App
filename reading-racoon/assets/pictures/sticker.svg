@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="9.5 10 109 109" width="128" height="128">
+<g opacity="0.22" transform="translate(0 2.4)">
+<path d="M 30 14 L 98 14 Q 114 14 114 30 L 114 80 L 80 114 L 30 114 Q 14 114 14 98 L 14 30 Q 14 14 30 14 Z" fill="#3b2d3a"/>
+</g>
+<g opacity="0.18">
+<path d="M 30 14 L 98 14 Q 114 14 114 30 L 114 80 L 80 114 L 30 114 Q 14 114 14 98 L 14 30 Q 14 14 30 14 Z" fill="#3b2d3a" stroke="#3b2d3a" stroke-width="3" stroke-linejoin="round"/>
+</g>
+<path d="M 30 14 L 98 14 Q 114 14 114 30 L 114 80 L 80 114 L 30 114 Q 14 114 14 98 L 14 30 Q 14 14 30 14 Z" fill="#fef6e5"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<path d="M 114 80 L 80 114 Q 84 92 90 88 Q 96 84 114 80 Z" fill="#3b2d3a"/>
+</g>
+<g opacity="0.18">
+<path d="M 114 80 L 80 114 Q 84 92 90 88 Q 96 84 114 80 Z" fill="#3b2d3a" stroke="#3b2d3a" stroke-width="3" stroke-linejoin="round"/>
+</g>
+<path d="M 114 80 L 80 114 Q 84 92 90 88 Q 96 84 114 80 Z" fill="#e6d6bc"/>
+<g opacity="0.22" transform="translate(0 2.4)">
+<path d="M 58 28.45 Q 60 24 62 28.45 L 68.99 44.02 Q 69.99 46.25 72.42 46.51 L 89.39 48.35 Q 94.24 48.88 90.62 52.15 L 77.97 63.62 Q 76.17 65.25 76.67 67.64 L 80.16 84.35 Q 81.16 89.12 76.93 86.7 L 62.12 78.21 Q 60 77 57.88 78.21 L 43.07 86.7 Q 38.84 89.12 39.84 84.35 L 43.33 67.64 Q 43.83 65.25 42.03 63.62 L 29.38 52.15 Q 25.76 48.88 30.61 48.35 L 47.58 46.51 Q 50.01 46.25 51.01 44.02 Z" fill="#3b2d3a"/>
+</g>
+<path d="M 58 28.45 Q 60 24 62 28.45 L 68.99 44.02 Q 69.99 46.25 72.42 46.51 L 89.39 48.35 Q 94.24 48.88 90.62 52.15 L 77.97 63.62 Q 76.17 65.25 76.67 67.64 L 80.16 84.35 Q 81.16 89.12 76.93 86.7 L 62.12 78.21 Q 60 77 57.88 78.21 L 43.07 86.7 Q 38.84 89.12 39.84 84.35 L 43.33 67.64 Q 43.83 65.25 42.03 63.62 L 29.38 52.15 Q 25.76 48.88 30.61 48.35 L 47.58 46.51 Q 50.01 46.25 51.01 44.02 Z" fill="#f4c62f"/>
+<ellipse cx="53" cy="64" rx="2.41" ry="3.08" fill="#3b2d3a"/>
+<circle cx="52.22" cy="62.74" r="1.01" fill="#ffffff"/>
+<ellipse cx="67" cy="64" rx="2.41" ry="3.08" fill="#3b2d3a"/>
+<circle cx="66.22" cy="62.74" r="1.01" fill="#ffffff"/>
+<path d="M 56.64 68.34 Q 60 71.36 63.36 68.34" fill="none" stroke="#3b2d3a" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"/>
+<ellipse cx="50" cy="68" rx="3.5" ry="2.02" fill="#ff8a9c" opacity="0.55"/>
+<ellipse cx="70" cy="68" rx="3.5" ry="2.02" fill="#ff8a9c" opacity="0.55"/>
+</svg>

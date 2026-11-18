@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://scenes/companion/raccoon.gd" id="5_raccoon"]
 [ext_resource type="Script" path="res://scenes/companion/speech_bubble.gd" id="6_bubble"]
 [ext_resource type="Script" path="res://ui/paper_scenery.gd" id="7_scenery"]
-[ext_resource type="Texture2D" path="res://assets/icons/coins.svg" id="8_coins"]
+[ext_resource type="Texture2D" path="res://assets/pictures/coin.svg" id="8_coins"]
 
 [sub_resource type="ShaderMaterial" id="Paper"]
 shader = ExtResource("2_paper")
@@ -88,6 +88,7 @@ icon_px = 50
 icon_tint = Color(0.290196, 0.494118, 0.65098, 1)
 
 [node name="Title" type="Label" parent="Margin/VBox/TopRow"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"TitleLabel"
@@ -105,9 +106,8 @@ layout_mode = 2
 theme_override_constants/separation = 8
 
 [node name="Icon" type="TextureRect" parent="Margin/VBox/TopRow/CoinsPill/Row"]
-self_modulate = Color(0.8, 0.541, 0, 1)
 texture_filter = 4
-custom_minimum_size = Vector2(42, 42)
+custom_minimum_size = Vector2(44, 44)
 layout_mode = 2
 texture = ExtResource("8_coins")
 expand_mode = 1

@@ -40,7 +40,7 @@ func set_hint(text: String) -> void:
 func _draw() -> void:
 	var r := Rect2(Vector2(3, 3), size - Vector2(6, 6))
 	if _filled:
-		var sb := StyleBoxFlat.new()
+		var sb := PaperBox.new()
 		sb.bg_color = Palette.pale(_color, 0.75)
 		sb.set_corner_radius_all(20)
 		sb.shadow_color = Color(Palette.SHADOW, 0.16)
@@ -48,7 +48,7 @@ func _draw() -> void:
 		sb.shadow_size = 1
 		draw_style_box(sb, r)
 		return
-	var bg := StyleBoxFlat.new()
+	var bg := PaperBox.new()
 	bg.bg_color = Color(Palette.MANGO, 0.12)
 	bg.set_corner_radius_all(20)
 	draw_style_box(bg, r)

@@ -4,13 +4,20 @@ namespace App\Enums;
 
 /**
  * Event types the game client queues for POST /api/sync (FR-11). Payloads are
- * built in reading-racoon/scripts/core/lesson_session.gd and
- * reading-racoon/scripts/autoload/game_state.gd. App\Support\StudentReplay
- * documents which fields the server-side replay reads.
+ * built in reading-racoon/scripts/core/lesson_session.gd,
+ * reading-racoon/scripts/core/assessment_session.gd and
+ * reading-racoon/scripts/autoload/game_state.gd. A type missing here is
+ * rejected as `invalid`, so add each new `queue_event()` type to this list.
+ * App\Support\StudentReplay documents which fields the server-side replay
+ * reads; the other types are stored for the teacher views and research.
  */
 enum SyncEventType: string
 {
-    // {item_id, skill, level, answer, correct, response_ms, rescue, num_choices?, assessment?: pre|post}
+    // Lesson and assessment (lesson_session.gd, assessment_session.gd)
+
+    // {item_id, skill, level, answer, correct, response_ms, rescue, num_choices, low_pl}
+    // in a lesson; {item_id, skill, level, answer, correct, response_ms, assessment} in
+    // the pre/post-test (FR-02, FR-10)
     case Response = 'response';
     // {skill, level, p, posterior, attempts, mastered} after each BKT update (FR-03)
     case BktState = 'bkt_state';
@@ -22,37 +29,46 @@ enum SyncEventType: string
     case RescueEnd = 'rescue_end';
     // {to_level} (FR-04)
     case LevelUp = 'level_up';
-    // {type, skill, level, ...}: teacher intervention flag (FR-17); type clock_jump {from, to} is an admin anomaly
+    // {type, skill, level, ...}: teacher intervention flag (FR-17); also
+    // {type: clock_jump, from, to} when the device clock went backwards (an admin anomaly)
     case Flag = 'flag';
-    // {level, node, correct, total, stars, ended_early?} (FR-15)
+    // {level, node, correct, total, stars, second_try, ended_early?} (FR-15)
     case LessonEnd = 'lesson_end';
+    // {start_level}: where the pre-test placed the child (FR-02)
+    case Placement = 'placement';
+    // {kind: pre|post, scores, correct, total}: a finished pre/post-test (FR-02, FR-10)
+    case Assessment = 'assessment';
+
+    // Rewards and the Closet (game_state.gd)
+
     // {level, coins}: treasure chest opened on the path (D-007)
     case Chest = 'chest';
-    // {start_level}: pre-test placement done by StudentModel.place() (FR-02)
-    case Placement = 'placement';
-    // {kind: pre|post, scores: {skill: {correct, total}}, correct, total}: raw test scores (FR-02, FR-10)
-    case Assessment = 'assessment';
-    // {date, minutes}: after-school minutes played that day so far (FR-12)
-    case Usage = 'usage';
-    // {item, price, coins_left}: raccoon shop purchase (FR-07)
+    // {item, price, coins_left}: bought in the shop (FR-07)
     case Purchase = 'purchase';
-    // {equipped: {slot: item}}: what the raccoon wears now (FR-07)
+    // {equipped}: slot => item id after Racoon's outfit changed (FR-07)
     case Outfit = 'outfit';
-    // {status, time}: the device showed a lock screen (FR-12), for the admin logs
-    case Access = 'access';
+    // {item, tier}: a Closet item earned by reaching its goal (D-026)
+    case ItemEarned = 'item_earned';
+    // {id, group}: a sticker added to the collection
+    case Sticker = 'sticker';
+    // {date, goal, all_done}: a daily goal reached
+    case Goal = 'goal';
 
-    // Hub sections (game D-017). Stored only for now: the replay ignores them
-    // and Practice never changes BKT.
+    // Free play (game_state.gd)
+
+    // {id, first, questions_right, questions_total, seconds}: a Library book read
+    case Book = 'book';
+    // {id, first, check_right, seconds}: a Watch & Listen video or song finished
+    case Media = 'media';
     // {game, correct, total, seconds}: a Practice game finished
     case Practice = 'practice';
-    // {id, first, questions_right, questions_total, seconds}: a Library book read to the end
-    case Book = 'book';
-    // {id, first, check_right, seconds}: a song, read-along or video finished
-    case Media = 'media';
-    // {id, group}: a sticker earned (adventure, books, games, watch, days, goals)
-    case Sticker = 'sticker';
-    // {word, lang, from}: a word added to My Word Book (lang en|fil|bis, from lesson|book|game)
+    // {word, lang, from}: a word added to the child's word collection
     case Word = 'word';
-    // {date, goal, all_done}: one of today's goals done (goal story|game|lesson)
-    case Goal = 'goal';
+
+    // Access and screen time (game_state.gd)
+
+    // {status, time}: a section was closed by the schedule or free-play limit (FR-12, D-015)
+    case Access = 'access';
+    // {date, minutes, free_minutes}: today's play minutes, about once a minute (FR-12)
+    case Usage = 'usage';
 }

@@ -1,6 +1,6 @@
 # 04 — Data Model
 
-> **Built so far (2026-10-20):** `users` (role), `sections`, `students`, `bkt_states`, `path_progress`, `student_wallets`, `intervention_flags` and `sync_events`, in `backend/database/migrations/`. Summary table in `backend/README.md`; sync rules in [D-008](../../brain/decisions/D-008%20Offline%20sync%20contract.md). Everything else below is still to design (open issue 8).
+> **Built so far (2026-10-20):** `users` (role, admin TOTP), `teacher_registrations`, `sections` (owned by a teacher), `students` (pseudonymous `code`, consent record), `bkt_states`, `path_progress`, `student_wallets`, `student_items`, `intervention_flags`, `access_schedules`, `daily_usage`, `sync_events`, `audit_logs` (append-only) and `system_logs`, in `backend/database/migrations/`. Projections are rebuilt by replaying `sync_events` ([D-011](../../brain/decisions/D-011%20Server-side%20BKT%20replay.md)). Summary table in `backend/README.md`; sync rules in [D-008](../../brain/decisions/D-008%20Offline%20sync%20contract.md). Everything else below is still to design (open issue 8).
 
 Target: **PostgreSQL 16+ via Laravel migrations** (backend decision, open issue 1). Use `uuid` keys for anything created offline on the device (sessions, responses, sync events), `jsonb` for payloads and AI logs, and `timestamptz` for all times. The thesis ERD text says "Firebase Realtime Database… hierarchical JSON". Rewrite it as relational tables.
 
@@ -17,7 +17,7 @@ Target: **PostgreSQL 16+ via Laravel migrations** (backend decision, open issue 
 | `responses` | response_id, session_id, question_id, is_correct (bool), response_ms (int) | FK session_id, question_id |
 | `questions` | question_id, sub_skill, difficulty_level (int), correct_answer | |
 | `bkt_states` | bkt_id, student_id, sub_skill, mastery_prob (float), updated_at | One row per student per sub-skill, updated after every response |
-| `ai_reports` | report_id, ai_summary, generated_at, student_id, session_id | Built from sessions + responses |
+| `ai_reports` | report_id, ai_summary, generated_at, student_id, session_id | Built from sessions + responses. As built (D-018): one row per set of numbers (`facts_hash`) instead of per session |
 
 The text calls these "eight principal entities", but the diagram shows 10 tables.
 
@@ -45,5 +45,5 @@ The text calls these "eight principal entities", but the diagram shows 10 tables
 | `intervention_flags` | Low P(L), failed heart recovery, status (open/resolved) |
 | `teacher_registrations` | Status: pending/approved/denied, reviewed_by, reviewed_at |
 | `system_logs` / `audit_logs` | Actor, action, timestamp, IP/device, anomaly flag |
-| `ai_logs` | Prompt type, input JSON, output, model, latency, timestamp |
+| `ai_logs` | Prompt type, input JSON, output, model, latency, timestamp (built 2026-10-21, plus prompt version, status, reason, tokens; D-018) |
 | `consents` | Parental consent record per student (RA 10173) |

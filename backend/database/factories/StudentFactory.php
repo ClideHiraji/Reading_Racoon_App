@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Section;
 use App\Models\Student;
 use App\Models\User;
+use App\Support\StudentCode;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -23,6 +24,7 @@ class StudentFactory extends Factory
         return [
             'user_id' => User::factory()->student(),
             'section_id' => Section::factory(),
+            'code' => StudentCode::generate(),
         ];
     }
 }

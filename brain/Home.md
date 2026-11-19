@@ -28,11 +28,15 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 - [[D-008 Offline sync contract]]
 - [[D-009 Art direction Butuan storybook]]
 - [[D-010 Student login and automatic sync]]
-- D-011 to D-014: teacher dashboard and admin portal (branch `claude/cranky-dhawan-dfb068`, PR #2)
+- [[D-011 Server-side BKT replay]]
+- [[D-012 Teacher web dashboard]]
+- [[D-013 Hidden admin portal]]
+- [[D-014 Time-restricted access rules]]
 - [[D-015 Home hub and Adventure-only time locks]]
 - [[D-016 Thesis color palette]]
 - [[D-017 Practice Library Watch and collections]]
-- D-018: Gemini teacher report (renumbered on its branch); D-019: teacher content manifest (dashboard branch)
+- [[D-018 Gemini teacher report]]
+- [[D-019 Teacher content manifest]]
 - [[D-020 Teacher content download in the game]]
 - [[D-021 Second try hints and finished-only progress]]
 - [[D-022 Full UI redesign]]
@@ -47,25 +51,28 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 - [[D-031 Windblown scarves and the Star halo]]
 - [[D-032 A new question stops the voice]]
 - [[D-033 Buddies Roco and Rina and talk language]]
+- D-034: sounds (planned on the game branch); D-035: recorded buddy voices (game branch)
+- [[D-036 Internet hosting from the home laptop]]
 
 ## Still open (from [[10-open-issues]])
 - 🔴 **Before the final release: delete the developer menu** (issue 30). It's debug-build-only, but it must go: `reading-racoon/ui/dev_menu.gd` (and its `.uid`), its lines in `scripts/autoload/screen.gd`, and its check at the end of `tests/ui_smoke.gd`.
 - 🔴 Timeline: a 4-month evaluation doesn't fit before November. Re-plan with the adviser (issue 11).
-- 🔴 Finish the database design (issue 8, [[04-data-model]]). The first 8 tables are built in `backend/`.
+- 🔴 Finish the database design (issue 8, [[04-data-model]]). 16 tables are built in `backend/` (incl. `ai_logs`, `ai_reports`); content and `bkt_parameters` are left.
 - 🟡 How 6-year-olds log in: interim login code on a kid keypad (D-010); picture PIN or QR card still possible (issue 9).
-- 🟡 Where the Laravel + PostgreSQL server is hosted.
+- 🟡 Hosting is decided (D-036, issue 40): the user still sets up the domain, Cloudflare Tunnel, Apache with OPcache, startup tasks and off-site backups (`docs/deploy/home-server.md`).
 - 🟡 Re-check Grade 1 competencies with teachers (issue 13), and which Mother Tongue for levels 1–2 (issue 15).
 
 ## Devlog
 - [[2026-10-17]]: thesis analyzed, knowledge base, decisions D-001 to D-005, GitHub, Godot project.
-- [[2026-10-20]]: blueprint page, Obsidian + Graphify brain, first playable game slice (D-007), first Laravel backend slice (D-008).
-- [[2026-10-21]]: hub wireframes approved; game-lobby home hub, diamond Play picker, Adventure-only time locks (D-015); thesis color palette with dark text (D-016); Practice, Library, Watch & Listen, stickers, word book and daily goals (D-017); teacher books and videos downloaded on Wi-Fi (D-020).
+- [[2026-10-20]]: blueprint page, Obsidian + Graphify brain, first playable game slice (D-007), first Laravel backend slice (D-008), server BKT replay, teacher dashboard and hidden admin portal (D-011 to D-014).
+- [[2026-10-21]]: hub wireframes approved; game-lobby home hub, diamond Play picker, Adventure-only time locks (D-015); thesis color palette with dark text (D-016); Practice, Library, Watch & Listen, stickers, word book and daily goals (D-017); teacher books and videos downloaded on Wi-Fi (D-020); Gemini teacher report with output checks and `ai_logs` (D-018).
 - [[2026-10-22]]: play-test fixes (D-021): two tries with a hint for every question, answer and explanation after the second, -1/+1 hearts, no CONTINUE taps, nothing saved from a stopped lesson, Adventure opens the map, pre/post-test results by skill then home. Then the full UI redesign from the canvas, except Racoon (D-022): Home with PLAY built in, one meaning per color, 96/120 px sizes, the animated earned star.
 - [[2026-10-24]]: product record (`PRODUCT.md`); the editor freezes fixed (short Lottie lines, a guard hook); laptop and phone layouts started (D-023).
 - [[2026-10-26]]: laptop and phone layouts finished (D-023); the star baked; Racoon drawn as moving layers and the main screens warmed up; Racoon redesign, option C (D-024): its 3D model, refined in a seven-round loop, and a 2D motion demo in which the drawing turns, points and walks up to the screen.
 - [[2026-11-16]]: the user redrew Racoon in Inkscape (bean body, no scarf; arms at his sides after a second edit); the motion demo and parts board are now built from that drawing, and the River scarf and open book are drawn as Closet items you can try on; a second board shows his animations for the game's lesson moments; then the new Racoon went into the game: the rig ported to `raccoon.gd`, his moments in the lesson, and the book in a new Closet slot (D-024).
 - [[2026-11-17]]: Racoon's arm outline joins his body's, and a raised paw never slips behind his head (D-024; canvas version 43). Then Racoon became a Godot scene: one node per part of the drawing, and his 21 moves as AnimationPlayer animations you can edit in the editor (D-024). Then the freezes were found and fixed (D-025): a lesson's end, Windows read-aloud cut-offs, the Closet and first visits. Then his 27 part files became one texture sheet, and he got 8 new moves he plays on his own on Home, the start screen and the Closet (walking about, hops, a big jump, a dance...), fitted to the box he stands in (D-024). Then the Closet got five tiers, copper to diamond, with 27 drawn items on their own sheet, effects that grow with the tier, and items earned by reading (D-026).
 - [[2026-11-18]]: the pictures redrawn in one soft storybook style, judged on the canvas (Icons page), then put in the game: full-colour pictures for words, stickers, Home tiles and practice games (D-027). In the game the glossy sticker look was out of place, so the 60 pictures were redrawn as flat paper cut-outs on crisp shadows, like the rest of the game. A read-along no longer moves its screen on once the child has left it. Then the game files nothing uses were cleaned out: 24 old silhouettes, a font, the old Home tile and two empty scenes; the team's animated SVGs moved to `tools/team-animations/`. Then the UI was cut from paper (D-028): hand-cut edges on cards and buttons (circles stay round), stitches on the special pieces, tilted Home tiles, washi tape, paper confetti and a crayon underline. Then the UI's own icons went to paper colours: a gold paper coin everywhere, a sticker and a word book on the Home bar, and the sticker and Closet tabs. Then a debug-only developer menu (delete before release, issue 30), and 12 more Closet items with sports, builder, explorer and space themes (39 in all, D-026).
+- [[2026-11-19]]: quality areas (CAP, ACID, ISO/IEC 25010) mapped to tools; seven skills and plugins reviewed, then installed (Google-SRE skills, event-store design, GDPR checklist, webapp-testing with Playwright, four Trail of Bits security plugins, GodotPrompter, Laravel Boost with a project `.mcp.json`); the 9 advisories `composer audit` found are cleared by patch updates (Laravel 12.73.0, Symfony 7.4.23; 34 tests pass); the gaps between the game and the server listed.
 
 ## Learnings
 - [[Judge new art inside the game, not on a board]]
@@ -78,6 +85,7 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 - [[Godot headless tests need an import first]]
 - [[Laravel timestamptz needs a UTC session]]
 - [[Laravel rewrites JSON strings by default]]
+- [[Vet the ref a plugin marketplace installs]]
 - [[Composer picks Laravel 12 on PHP 8.2]]
 - [[Laravel API guests need a null redirect]]
 - [[Reset a lost postgres password]]
@@ -108,6 +116,13 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 - [[A saved Godot scene keeps a sheet's old UVs]]
 - [[Godot canvas COLOR already holds the texture]]
 - [[Git Bash sed -i drops CRLF]]
+- [[Laravel needs config cache under threaded Apache]]
+- [[PHP built-in server drops connections on Windows]]
+- [[Blade inline php swallows a later php block]]
+- [[migrate fresh keeps PostgreSQL functions]]
+- [[A hidden route needs a catch-all against 405]]
+- [[Dotenv overwrites what it loaded itself]]
+- [[A unique delayed job debounces syncs]]
 
 ## Links
 - Visual blueprint (private page): https://claude.ai/artifact/TPcwMuVYMvR9gx8ypBMYB9

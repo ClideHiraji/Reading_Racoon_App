@@ -63,12 +63,14 @@ Status key: 🔴 blocks coding · 🟡 decide during build · 📝 manuscript-on
 - Offline mode is called "non-negotiable" in one place and "medium-priority" in another, and isn't an FR.
 - Time-restricted access, the heart system, hints, PDF export, roster management and remote config aren't FRs either.
 - See proposed FR-11…FR-22 in [02-requirements.md](02-requirements.md).
+- **Progress (2026-10-20):** built in `backend/`: FR-12 time-restricted access ([D-014](../../brain/decisions/D-014%20Time-restricted%20access%20rules.md)), FR-16 roster, FR-17 intervention flags, FR-18 PDF export in a Laravel teacher dashboard ([D-012](../../brain/decisions/D-012%20Teacher%20web%20dashboard.md)), FR-22 privacy audit in the hidden admin portal ([D-013](../../brain/decisions/D-013%20Hidden%20admin%20portal.md)). FR-21 AI output logging in `ai_logs` with the Gemini report (2026-10-21, [D-018](../../brain/decisions/D-018%20Gemini%20teacher%20report.md)).
 
 ### 8. ERD gaps 🔴
 - The `students.session_id` FK is backwards. The ERD has no tables for content, choices, competencies, BKT params, assessments, shop/wallet, schedules, usage, flags, registrations, logs, or consent.
 - Credentials are inconsistent: the ERD has `username` + `hashed_pin`, but flows say "email & password" (teacher) and "student & password" or "student ID" (student).
 - See [04-data-model.md](04-data-model.md).
 - **Progress (2026-10-20):** the first tables are built in `backend/database/migrations/` for the data the game already produces: `users` (role), `sections`, `students`, `bkt_states` (14 per student), `path_progress`, `student_wallets`, `intervention_flags`, `sync_events`. `students.session_id` is dropped; age and gender are left out until the study justifies them (RA 10173). Sync rules: [D-008](../../brain/decisions/D-008%20Offline%20sync%20contract.md). Still to design: content/questions/choices, competencies, `bkt_parameters`, sessions/responses, assessments, shop, schedules, usage, registrations, logs, consent.
+- **Progress (2026-10-20, evening):** added `teacher_registrations`, `access_schedules`, `daily_usage`, `student_items`, `audit_logs` (append-only trigger), `system_logs`, `sections.teacher_id`, `students.code` (pseudonym for exports and AI prompts) and a parental-consent record on `students`. The server replays `sync_events` into the projections ([D-011](../../brain/decisions/D-011%20Server-side%20BKT%20replay.md)); pre/post-test scores come from the synced `assessment` events, so separate `assessments` tables aren't needed yet. Still to design: content/questions/choices, competencies, versioned `bkt_parameters`, `ai_logs`, `ai_reports`.
 
 ### 9. Student login method 🟡 (interim decided: D-010)
 - 6–7-year-olds can't reliably type passwords. **Decide:** picture password / PIN, a teacher-issued QR code, or tap-your-name on a teacher-managed device.
@@ -79,6 +81,7 @@ Status key: 🔴 blocks coding · 🟡 decide during build · 📝 manuscript-on
 - The access check is server-side, so offline the app can't verify the schedule. **Decide:** cache the schedule + last server time and enforce it locally using the device clock, with tamper detection.
 - **Groundwork (2026-10-20):** `GET /api/config` and `POST /api/sync` return `server_time`, and every synced event keeps both `device_time` and `received_at`, so the client can track its clock offset and the server can spot clock jumps.
 - **Built in the game (2026-10-20):** `AccessPolicy` (class window open, other school hours locked, after-school 30-min daily cap with a countdown, weekends off unless opened, nights asleep). The schedule comes from `GET /api/access/student/status` and is cached; the device clock is corrected by the server offset; a clock that jumps backwards raises a `clock_jump` flag. With no schedule yet, the game stays open. Lock screens never close the app. Server endpoint: teacher dashboard session (in progress).
+- **Built (2026-10-20, evening):** `GET /api/access/student/status` returns the section's schedule (with its time zone) and today's decision ([D-014](../../brain/decisions/D-014%20Time-restricted%20access%20rules.md)); the game caches it for offline play. Device clocks that jump backwards (`flag` clock_jump) or run more than 5 minutes ahead, and lock screens shown offline (`access` events), land in the admin system log. Still open: what the game does when its cached schedule is old.
 - **Changed (2026-10-21, [D-015](../../brain/decisions/D-015%20Home%20hub%20and%20Adventure-only%20time%20locks.md)):** only Adventure (lessons, tests) follows that schedule. Practice, Library and Watch & Listen stay open with a shared 45-minute daily free-play timer outside Reading time; the hub sleeps only at night (9 PM–6 AM). New optional schedule keys: `free_play_minutes`, `day_start`, `day_end`.
 
 ### 11. Timeline vs reality 🔴
@@ -305,3 +308,18 @@ Status key: 🔴 blocks coding · 🟡 decide during build · 📝 manuscript-on
   - Where and when the regular section plays.
   - Reduce Motion on iOS.
 
+
+### 38. Holidays and the post-test switch 🟡
+- DepEd holidays and suspensions aren't modelled: on a weekday holiday the schedule still says `class_lock`/`after_school`. **Decide:** an admin-managed holiday list (treated like a weekend), or leave it to the weekend toggle.
+- `post_test_open` in `GET /api/config` is global (`POST_TEST_OPEN` in `.env`). If sections finish the evaluation at different times, it needs a per-section switch on the teacher's schedule page (the config would then need the student's token).
+
+### 39. Gemini teacher report ✅ BUILT (2026-10-21)
+- **Decision:** [D-018](../../brain/decisions/D-018%20Gemini%20teacher%20report.md). Gemini writes the report's two paragraphs; the lists and table stay rule-based. A queued job (`WriteAiReport`) writes it 10 minutes after a sync, for **consented learners only**, and stores it in `ai_reports` per set of numbers. Temperature 0.3, prompt `report-v1` with the student code and numbers only (no names, ages or dates). Each reply is checked against the facts (two paragraphs, length, no other learner code, every number in the facts, every needs-support sub-skill named); up to 3 calls, then the template. Every call is in `ai_logs` (FR-21) and the admin portal's **AI calls** tab.
+- **Still to do:** set a real key and pinned model in `backend/.env` and run `php artisan report:write <code>` (not yet tested against the live API); a queue worker on the server; teachers rate sample reports (MLDLC Stage 4, accept at WM ≥ 4.0) and the prompt is revised by bumping `ReportPrompt::VERSION`; the consent form must say that anonymised scores go to Google.
+- **Manuscript to update:** §3.4.3.3 Stage 5: the report is generated by a background job on the server after the session syncs, not by the client; Stage 6: `ai_logs` in PostgreSQL. Describe the output checks (numbers must match the input) as the guardrail.
+- The server's P(L) matches the device's for choice items because the game sends `num_choices` in gameplay `response` payloads (added 2026-10-20; 0 for order-tiles items keeps the Table 3.5 guess), see [D-011](../../brain/decisions/D-011%20Server-side%20BKT%20replay.md).
+
+### 40. Hosting the server from the home laptop ✅ DECIDED (2026-11-19)
+- The server runs on the developer's laptop at home, reached over the internet at one https address through a Cloudflare Tunnel, behind Apache (never `php artisan serve`). Decision and reasons: [D-036](../../brain/decisions/D-036%20Internet%20hosting%20from%20the%20home%20laptop.md); setup, failure modes and restore: [home-server.md](../deploy/home-server.md).
+- **Still to do (the user):** buy a domain and add it to Cloudflare; turn on OPcache; include the Apache config; run `install-tasks.ps1`; set up the tunnel and an uptime monitor; set `BACKUP_COPY_TO`; a restore drill; `server_url.release` in the game.
+- **Manuscript to update:** §3 deployment (the server is self-hosted behind a tunnel, not Firebase or a cloud host); NFR evidence: the measured load test (150 simultaneous uploads, 0 errors, no lost or duplicated event).

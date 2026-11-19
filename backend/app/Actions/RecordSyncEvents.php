@@ -5,9 +5,9 @@ namespace App\Actions;
 use App\Enums\SyncEventType;
 use App\Models\Student;
 use Carbon\CarbonImmutable;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
 use stdClass;
 
 /**
@@ -30,8 +30,9 @@ final class RecordSyncEvents
      * @param  array<int, mixed>  $events  [{id, type, payload, device_time}, ...] in queue order
      * @return array{
      *     acknowledged: list<string>,
-     *     rejected: list<array{index: int, id: string|null, reason: string, errors?: array<string, list<string>>}>
-     * }
+     *     rejected: list<array{index: int, id: string|null, reason: string, errors?: array<string, list<string>>}>,
+     *     stored: list<array{uuid: string, type: string, payload: string}>
+     * }  `stored` = events this call inserted (not in the JSON reply; used for logging once)
      */
     public function handle(Student $student, array $events): array
     {
@@ -63,8 +64,13 @@ final class RecordSyncEvents
             $accepted[$index] = [$uuid, $event['id']];
         }
 
+        // INSERT ... ON CONFLICT DO NOTHING RETURNING uuid: exactly the rows this
+        // call stored, even when two syncs from one device race.
+        $inserted = [];
         foreach (array_chunk(array_values($rows), 500) as $chunk) {
-            DB::table('sync_events')->insertOrIgnore($chunk);
+            $query = DB::table('sync_events');
+            $sql = $query->getGrammar()->compileInsertOrIgnore($query, $chunk).' returning uuid';
+            $inserted = [...$inserted, ...array_column(DB::select($sql, $query->cleanBindings(Arr::flatten($chunk, 1))), 'uuid')];
         }
 
         $owners = $rows === [] ? collect() : DB::table('sync_events')
@@ -88,7 +94,11 @@ final class RecordSyncEvents
 
         usort($rejected, fn (array $a, array $b) => $a['index'] <=> $b['index']);
 
-        return ['acknowledged' => $acknowledged, 'rejected' => $rejected];
+        return [
+            'acknowledged' => $acknowledged,
+            'rejected' => $rejected,
+            'stored' => array_values(array_intersect_key($rows, array_flip($inserted))),
+        ];
     }
 
     /**
@@ -104,14 +114,25 @@ final class RecordSyncEvents
             return ['event' => ['Each event must be a JSON object.']];
         }
 
-        $validator = Validator::make($event, [
-            'id' => ['required', 'string', 'uuid'],
-            'type' => ['required', 'string', Rule::enum(SyncEventType::class)],
-            'payload' => ['present', 'array'],
-            'device_time' => ['required', 'string', 'regex:'.self::DEVICE_TIME, 'date'],
-        ]);
-        if ($validator->fails()) {
-            return $validator->errors()->toArray();
+        // Checked by hand, not with a Validator per event: that cost 1.3 ms an
+        // event, a third of a 100-event sync's time (measured 2026-11-19, D-036).
+        $errors = [];
+        $id = $event['id'] ?? null;
+        if (! is_string($id) || ! Str::isUuid($id)) {
+            $errors['id'] = ['The id field must be a valid UUID.'];
+        }
+        $type = $event['type'] ?? null;
+        if (! is_string($type) || SyncEventType::tryFrom($type) === null) {
+            $errors['type'] = ['The selected type is invalid.'];
+        }
+        if (! array_key_exists('payload', $event) || ! is_array($event['payload'])) {
+            $errors['payload'] = ['The payload field must be an array.'];
+        }
+        if (! self::isDeviceTime($event['device_time'] ?? null)) {
+            $errors['device_time'] = ['The device time must be an ISO 8601 time with an offset, e.g. 2026-10-20T04:34:56Z.'];
+        }
+        if ($errors !== []) {
+            return $errors;
         }
 
         $payload = $event['payload'];
@@ -134,6 +155,17 @@ final class RecordSyncEvents
         $payloadJson = $json;
 
         return [];
+    }
+
+    /** DEVICE_TIME's shape, and a real calendar date and clock time. */
+    private static function isDeviceTime(mixed $value): bool
+    {
+        if (! is_string($value) || preg_match(self::DEVICE_TIME, $value) !== 1) {
+            return false;
+        }
+        [$y, $mo, $d, $h, $mi, $s] = array_map('intval', sscanf($value, '%4d-%2d-%2dT%2d:%2d:%2d'));
+
+        return checkdate($mo, $d, $y) && $h < 24 && $mi < 60 && $s < 60;
     }
 
     /**

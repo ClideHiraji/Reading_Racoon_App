@@ -2,9 +2,12 @@
 
 namespace App\Providers;
 
+use App\Reports\DiagnosticReportWriter;
+use App\Reports\StoredReportWriter;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -14,7 +17,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // The report seam (FR-05, D-012, D-018): pages show the stored Gemini
+        // paragraphs; App\Jobs\WriteAiReport calls GeminiReportWriter.
+        $this->app->bind(DiagnosticReportWriter::class, StoredReportWriter::class);
     }
 
     /**
@@ -22,6 +27,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // On the internet the server is reached only at its https APP_URL
+        // through the tunnel (D-036). Build every link and redirect from APP_URL,
+        // never from the request's Host header, so a forged Host can't poison them.
+        $url = (string) config('app.url');
+        if ($this->app->isProduction() && str_starts_with($url, 'https://')) {
+            URL::forceRootUrl($url);
+            URL::forceScheme('https');
+        }
+
         // A whole class signs in from one school Wi-Fi address (NAT), so the
         // per-IP login limit must fit ~40 children plus typos. Guessing one of
         // 31^8 codes at this rate is still hopeless. NFR-04.
@@ -30,5 +44,9 @@ class AppServiceProvider extends ServiceProvider
         RateLimiter::for('api', fn (Request $request) => Limit::perMinute(120)->by($request->user()?->id ?: $request->ip()));
 
         RateLimiter::for('sync', fn (Request $request) => Limit::perMinute(60)->by($request->user()?->id ?: $request->ip()));
+
+        // Teacher web forms. The login controller also locks an email after 5 misses.
+        RateLimiter::for('teacher-login', fn (Request $request) => Limit::perMinute(20)->by($request->ip()));
+        RateLimiter::for('teacher-register', fn (Request $request) => Limit::perHour(10)->by($request->ip()));
     }
 }

@@ -1256,6 +1256,19 @@ func test_buddy_lines_cover_every_state() -> void:
 			check(d.has(state) and d[state] is Array and not d[state].is_empty(), "%s has '%s'" % [path, state])
 
 
+## D-035: recorded clips are named as the voice lab names them, and a known line has its clip.
+func test_recorded_voice_clips() -> void:
+	var speech = load("res://scripts/autoload/speech.gd")
+	check(speech.clip_key("roco", "en", "A heart came back!") == "07fff55d98f1723e", "clip names match the voice lab's")
+	check(ResourceLoader.exists("res://assets/voice/07fff55d98f1723e.mp3"), "Roco's 'A heart came back!' is recorded")
+	var bad := 0
+	for f in DirAccess.get_files_at("res://assets/voice"):
+		var key := f.get_basename()
+		if f.ends_with(".mp3") and not (key.length() == 16 and key.is_valid_hex_number()):
+			bad += 1
+	check(bad == 0, "every clip is named by its key")
+
+
 ## Rina's inner ears are pink; Roco's keep the drawing's own color.
 func test_rina_has_her_details() -> void:
 	var pp: RacoonPuppet = load("res://scenes/companion/racoon_puppet.tscn").instantiate()

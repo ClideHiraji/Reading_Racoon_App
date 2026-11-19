@@ -169,6 +169,18 @@ Status key: 🔴 blocks coding · 🟡 decide during build · 📝 manuscript-on
 - **Animated star and hearts (2026-10-22):** the team's Lottie files play live in the game (`ui/lottie_player.gd`): the earned star, Regain Heart for a heart that comes back, Broken Heart for a lost one, the hearts in the lesson hearts' colors.
 - **Manuscript to update:** the screens in §3.4.2.4 and the color and size rules in §3.4.2.2; NFR-02 can quote the 96 px / 48 dp minimum.
 
+### 36. Recorded voices for Roco and Rina 🟡 IN PROGRESS (2026-11-19)
+- The user asked for Gemini's child voices for every line, compressed to keep the app small. The scope is the buddy's lines and menus, not lessons, tests, books or videos. It's made on AI Studio's free tier, in a lively, chatty style, with "reader" in place of the student's name.
+- **Decision (D-035):**
+  - Zeno is Roco and Cleo is Rina: one MP3 per sentence in `assets/voice/`, named by a hash of buddy, language and sentence.
+  - `Speech.say()` plays the clips when every sentence of a line is recorded; otherwise the system voice reads it.
+  - About 7 KB a line, about 11 MB when done.
+  - Details: [D-035](../../brain/decisions/D-035%20Recorded%20buddy%20voices.md).
+- **Still open:**
+  - 1,296 of 1,465 sentences still to record (about 5 days at AI Studio's free limit).
+  - A teacher's check of the Filipino and Bisaya lines before recording them (issue 35).
+  - Lines with a clock time stay with the system voice.
+
 ### 35. A girl buddy, and a choice of language ✅ DECIDED (2026-11-18)
 - The user asked for both genders for students to choose from, a girl version of the companion for girl students, and a choice of language.
 - **Decision (D-033):**

@@ -2,7 +2,7 @@ extends Control
 ## Start screen: the raccoon waves from the riverbank, one big button plays.
 ## No reading needed: the button is read aloud too (D-007, D-009).
 ## First time on a device: the login screen (FR-01, D-010). After that it greets
-## the child by name and opens the home hub (the pre-test first, FR-02, D-015).
+## the child ("reader": a recorded line can't say a name) and opens the home hub (the pre-test first, FR-02, D-015).
 
 var _confirm_switch := false
 
@@ -15,11 +15,10 @@ func _ready() -> void:
 	%Raccoon.set_mood("happy")
 	%Raccoon.lively = true   # moves of his own while the start screen waits (D-024)
 	%Bubble.speaker = %Raccoon   # his bubble walks with him and points at him
-	var child := GameState.student_name()
 	# For grown-ups, in the corner and out of the child's way (D-022).
 	%SwitchButton.visible = GameState.signed_in()
 	if GameState.signed_in():
-		%Bubble.say(GameState.talk("start_hi_name", [child]))
+		%Bubble.say(GameState.talk("start_hi_name"))   # "reader", not the name (recorded voice)
 	else:
 		%Bubble.say(GameState.talk("start_hi"))
 

@@ -79,7 +79,7 @@ func _greet() -> void:
 	elif GameState.post_test_ready():
 		_say(GameState.talk("hub_big_day"), "happy")
 	elif child != "":
-		_say(GameState.talk("hub_hi_name", [child]), "happy")
+		_say(GameState.talk("hub_hi_name"), "happy")   # "reader", not the name: every line can be recorded
 		raccoon.moment("greet")
 	else:
 		_say(GameState.talk("hub_hi"), "happy")

@@ -43,7 +43,7 @@ func _ready() -> void:
 	%Raccoon.set_mood("happy")
 	var hello := "Hi! Type the code on your card."
 	if GameState.student_name() != "":
-		hello = "Welcome back, %s! Type your code again." % GameState.student_name()
+		hello = "Welcome back, reader! Type your code again."   # no name: the line is recorded
 	%Bubble.say(hello)
 	Speech.say(hello, "en")
 
@@ -175,8 +175,8 @@ func _submit() -> void:
 	%GoButton.text = "LET'S GO!"
 	if err == "":
 		%Raccoon.set_mood("celebrate")
-		%Bubble.say("Hi, %s!" % GameState.student_name())
-		Speech.say("Hi, %s!" % GameState.student_name(), "en")
+		%Bubble.say("Hi, reader!")
+		Speech.say("Hi, reader!", "en")
 		await get_tree().create_timer(1.0).timeout
 		_continue()
 		return

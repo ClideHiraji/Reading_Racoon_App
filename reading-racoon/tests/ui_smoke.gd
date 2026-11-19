@@ -476,7 +476,7 @@ func _run() -> void:
 	check(is_equal_approx(root.get_node("Speech").pitch, 1.4) and root.get_node("Speech").girl_voice, "Rina's higher voice")
 	check(not gs.line("rescue_start").contains("{buddy}"), "a buddy line names the buddy")
 	check(gs.line("hint_phonics") in gs.lines.hint_phonics, "hints stay in the lesson's language")
-	check(gs.talk("hub_hi_name", ["Ana"]).contains("Ana"), "a menu line fills its slot")
+	check(gs.talk("path_soon", ["Mango Grove"]).contains("Mango Grove"), "a menu line fills its slot")
 	check(gs.talk("no_such_line") == "no_such_line", "an unknown menu line shows its key")
 	check(gs.talk_as("choose_hi", "en", "roco") == "Hi! I'm Roco!", "the chooser previews any buddy")
 	gs.buddy = {}
@@ -484,6 +484,22 @@ func _run() -> void:
 	check(gs.buddy.who == "rina" and gs.buddy.lang == "bis", "the buddy and language come back with the profile")
 	gs.set_buddy(str(had_buddy.get("who", "roco")), str(had_buddy.get("lang", "en")))
 	check(is_equal_approx(root.get_node("Speech").pitch, 1.1) or gs.buddy_id() == "rina", "the voice follows the buddy back")
+
+	# Recorded voices (D-035): a recorded line plays from its clips; a line with any sentence not recorded
+	# is read by the system voice instead, so one line never mixes two voices.
+	var voice = root.get_node("Speech")
+	var had: Dictionary = gs.buddy.duplicate()
+	gs.set_buddy("roco", "en")
+	check(voice.buddy == "roco" and not voice.recorded("Great job!", "en").is_empty(), "Roco's 'Great job!' is recorded")
+	check(voice.recorded("Great job! Zebras eat purple clouds.", "en").is_empty(), "a line with an unrecorded sentence isn't")
+	check(voice.recorded("Great job!", "fil").is_empty(), "the clip belongs to its language")
+	voice.say("Great job!")
+	check(voice.speaking(), "a recorded line plays")
+	voice.cut()
+	check(not voice.speaking(), "cut stops a recorded line at once")
+	gs.set_buddy("rina", "en")
+	check(voice.buddy == "rina", "the recorded voice follows the buddy")
+	gs.set_buddy(str(had.get("who", "roco")), str(had.get("lang", "en")))
 
 	# The developer menu (issue 30, debug builds only; DELETE BEFORE THE FINAL RELEASE with it).
 	if DevMenu.allowed():

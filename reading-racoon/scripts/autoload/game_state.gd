@@ -817,6 +817,7 @@ func use_buddy_voice(who: String = "") -> void:
 	if speech:
 		speech.pitch = float(BUDDIES[id].pitch)
 		speech.girl_voice = id == "rina"
+		speech.buddy = id   # whose recorded clips play (D-035)
 
 
 # --- Debug hooks (desktop testing only) ---------------------------------------

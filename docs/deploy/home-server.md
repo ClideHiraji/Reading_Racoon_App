@@ -15,7 +15,7 @@ Runbook for [[D-036 Internet hosting from the home laptop]]. The Laravel API, te
 Tablet (Godot) ─https─▶ Cloudflare edge ◀═ outbound tunnel ═ cloudflared (laptop)
                                                               │ http, loopback only
                                                               ▼
-                                         Apache 127.0.0.1:8080 (mod_php, 80 threads)
+                                         Apache 127.0.0.1:8090 (mod_php, 80 threads)
                                                               │
                                                               ▼
                        Laravel ──▶ PostgreSQL 127.0.0.1:5432 ◀── queue worker (replay, reports)
@@ -61,7 +61,7 @@ Tablet (Godot) ─https─▶ Cloudflare edge ◀═ outbound tunnel ═ cloudfl
   Define RR_BACKEND "C:/ReadingRacoon/backend"
   Include "C:/ReadingRacoon/backend/ops/windows/apache-reading-racoon.conf"
   ```
-  It listens on `127.0.0.1:8080` only, hides the version, drops slow clients, rotates its logs daily (7 kept) and serves only `backend/public`.
+  It listens on `127.0.0.1:8090` only (not 8080, which the PostgreSQL installer's Enterprise Manager often holds; set `Define RR_PORT` before the `Include` to choose another), hides the version, drops slow clients, rotates its logs daily (7 kept) and serves only `backend/public`.
 - Install it as a service (XAMPP Control Panel, "Svc" box, or `httpd.exe -k install`), startup type Automatic. In `services.msc` → Apache2.4 → Recovery, set all three failures to "Restart the Service". Do the same for the PostgreSQL service and, later, Cloudflared.
 
 ### 4. Laravel
@@ -102,7 +102,7 @@ It registers `ReadingRacoon-Queue` and `ReadingRacoon-Scheduler`: they start at 
    - Never turn on "Under Attack" mode for this hostname (it blocks the game).
 5. Set `APP_URL=https://racoon.example.org` and `TRUSTED_PROXIES=127.0.0.1,::1`, then `php artisan config:cache`.
 
-**Fallback without a domain:** install Tailscale, sign in, then `tailscale funnel --bg 8080`. The address is `https://<laptop>.<tailnet>.ts.net`. Use it as `APP_URL`.
+**Fallback without a domain:** install Tailscale, sign in, then `tailscale funnel --bg 8090`. The address is `https://<laptop>.<tailnet>.ts.net`. Use it as `APP_URL`.
 
 ### 7. The laptop itself
 - Power (plugged in): never sleep, never hibernate, lid close does nothing: `powercfg /change standby-timeout-ac 0`, `powercfg /change hibernate-timeout-ac 0`, and Control Panel → Power Options → "Choose what closing the lid does" → Do nothing.

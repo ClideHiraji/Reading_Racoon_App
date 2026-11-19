@@ -25,6 +25,7 @@ $ErrorActionPreference = "Continue"
 $backend = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
 $name = ($Command -split " ")[0] -replace "[^a-z]", "-"
 $logDir = Join-Path $backend "storage\logs"
+New-Item -ItemType Directory -Force -Path $logDir | Out-Null   # a fresh checkout may not have it yet
 $wait = 5
 
 while ($true) {

@@ -25,6 +25,48 @@ static func handle_reply(code: int, body: Variant) -> Dictionary:
 	return {"ack": body.get("acknowledged", []), "rejected": body.get("rejected", [])}
 
 
+## Seconds to wait after `failures` failed rounds in a row (D-036): doubling from
+## `base` up to `cap`, with "equal jitter" (half fixed, half random) so a
+## classroom of tablets doesn't retry in lockstep when the server comes back.
+## A server that asked for longer (Retry-After on 429/503) gets its wish, up to
+## an hour. `r` is a random number in [0, 1).
+static func backoff(failures: int, server_wait: float, r: float,
+		base := 30.0, cap := 600.0) -> float:
+	var ceiling := minf(base * pow(2.0, maxi(failures, 1) - 1), cap)
+	var wait := ceiling * (0.5 + 0.5 * clampf(r, 0.0, 1.0))
+	return minf(maxf(wait, server_wait), 3600.0)
+
+
+## The Retry-After header's seconds (0 if absent or a date: then backoff decides).
+static func retry_after(headers: PackedStringArray) -> float:
+	for h in headers:
+		if h.to_lower().begins_with("retry-after:"):
+			var value := h.substr(12).strip_edges()
+			return maxf(float(value), 0.0) if value.is_valid_float() else 0.0
+	return 0.0
+
+
+## Release builds talk to the server only over https (D-036): the token and the
+## children's answers cross school Wi-Fi and the internet, and Android refuses
+## plain http anyway. Loopback stays allowed for a server on the same machine.
+static func is_allowed_server(url: String, debug_build: bool) -> bool:
+	if url.is_empty():
+		return false
+	if debug_build or url.begins_with("https://"):
+		return true
+	var host := url.trim_prefix("http://").get_slice("/", 0).get_slice(":", 0)
+	return url.begins_with("http://") and host in ["127.0.0.1", "localhost"]
+
+
+## A 206 reply's Content-Range must start exactly where the downloaded part
+## ends, or appending it would corrupt the file (D-036).
+static func range_starts_at(headers: PackedStringArray, offset: int) -> bool:
+	for h in headers:
+		if h.to_lower().begins_with("content-range:"):
+			return h.substr(14).strip_edges().begins_with("bytes %d-" % offset)
+	return false
+
+
 ## Seconds the server clock is ahead of this device (for the play-time limits).
 static func clock_offset(server_time: String, device_unix: float) -> int:
 	if server_time.is_empty():

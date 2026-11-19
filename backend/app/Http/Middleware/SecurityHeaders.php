@@ -60,7 +60,12 @@ class SecurityHeaders
                 $response->headers->set($name, $value);
             }
         }
+        // PHP itself adds X-Powered-By with its exact version (expose_php);
+        // php.ini expose_php=Off is the real fix (docs/deploy/home-server.md).
         $response->headers->remove('X-Powered-By');
+        if (! headers_sent()) {
+            header_remove('X-Powered-By');
+        }
 
         return $response;
     }

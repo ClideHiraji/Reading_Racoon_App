@@ -20,6 +20,9 @@ func _init(profile_name: String = "") -> void:
 	if profile_name != "":
 		profile_path = "user://profile_%s.json" % profile_name
 		queue_path = "user://event_queue_%s.jsonl" % profile_name
+	# A crash in the middle of replace_file() can leave only the .bak copy.
+	recover(profile_path)
+	recover(queue_path)
 
 
 func load_profile() -> Dictionary:
@@ -80,6 +83,16 @@ func _write_pending() -> bool:
 	if f == null:
 		return false
 	f.seek_end()
+	# A crash mid-append can leave the last line without its newline. Start a
+	# fresh line, or the next event would be glued onto the broken one and lost
+	# with it (D-036).
+	var length := f.get_length()
+	if length > 0:
+		f.seek(length - 1)
+		var last := f.get_8()
+		f.seek_end()
+		if last != 10:
+			f.store_8(10)
 	for line in _pending:
 		f.store_line(line)
 	f.close()
@@ -120,6 +133,10 @@ func queue_size() -> int:
 
 ## Removes events the server acknowledged or rejected (D-008). Rejected ones are
 ## kept in a side file for debugging. Everything else stays queued, in order.
+## The trimmed queue is written to a temp file and then moved over the old one,
+## so a crash or power cut mid-write can never empty the queue (D-036): at
+## worst the old queue survives and already-acknowledged events are sent again,
+## which the server acknowledges without storing twice.
 func remove_events(ids: Array, rejected: Array = []) -> void:
 	if ids.is_empty() and rejected.is_empty():
 		return
@@ -129,16 +146,27 @@ func remove_events(ids: Array, rejected: Array = []) -> void:
 	for r in rejected:
 		drop[str(r.get("id", ""))] = true
 	_lock.lock()
+	var broken := PackedStringArray()
 	if FileAccess.file_exists(queue_path):
 		var kept := PackedStringArray()
 		for line in FileAccess.get_file_as_string(queue_path).split("\n", false):
-			if not drop.has(_line_id(line)):
+			if not line.ends_with("}"):
+				broken.append(line)   # cut off by a crash mid-append; unreadable
+			elif not drop.has(_line_id(line)):
 				kept.append(line)
-		var f := FileAccess.open(queue_path, FileAccess.WRITE)
+		var tmp := queue_path + ".tmp"
+		var f := FileAccess.open(tmp, FileAccess.WRITE)
+		var written := false
 		if f:
 			for line in kept:
 				f.store_line(line)
+			written = f.get_error() == OK
 			f.close()
+		if not (written and replace_file(tmp, queue_path)):
+			DirAccess.remove_absolute(tmp)   # keep the old queue; nothing is lost
+			broken.clear()
+	for line in broken:
+		rejected = rejected + [{"id": _line_id(line), "reason": "truncated", "line": line}]
 	if not rejected.is_empty():
 		var rp := queue_path.get_basename() + "_rejected.jsonl"
 		var r := FileAccess.open(rp, FileAccess.READ_WRITE if FileAccess.file_exists(rp) else FileAccess.WRITE)
@@ -174,11 +202,39 @@ static func write_json(path: String, data: Dictionary) -> bool:
 		return false
 	f.store_string(JSON.stringify(data, "", true, true))
 	f.close()
-	if DirAccess.rename_absolute(tmp, path) == OK:
-		return true
-	# Some platforms refuse to rename over an existing file.
-	DirAccess.remove_absolute(path)
-	return DirAccess.rename_absolute(tmp, path) == OK
+	return replace_file(tmp, path)
+
+
+## Moves `tmp` over `path` so there is never a moment with neither file (D-036).
+## Where the platform won't rename over an existing file, the old one becomes
+## <path>.bak until the new one is in place; recover() brings it back after a
+## crash between the two moves.
+static func replace_file(tmp: String, path: String) -> bool:
+	# On Windows an antivirus or the search indexer can hold a file that was just
+	# written for a moment; a short retry rides that out.
+	for _attempt in 3:
+		if DirAccess.rename_absolute(tmp, path) == OK:
+			return true
+		if not FileAccess.file_exists(path):
+			OS.delay_msec(100)   # nothing to move aside: the source was busy
+		else:
+			break
+	var bak := path + ".bak"
+	if FileAccess.file_exists(bak):
+		DirAccess.remove_absolute(bak)
+	if FileAccess.file_exists(path) and DirAccess.rename_absolute(path, bak) != OK:
+		return false
+	if DirAccess.rename_absolute(tmp, path) != OK:
+		DirAccess.rename_absolute(bak, path)
+		return false
+	DirAccess.remove_absolute(bak)
+	return true
+
+
+## After a crash inside replace_file(), only <path>.bak may be left: restore it.
+static func recover(path: String) -> void:
+	if not FileAccess.file_exists(path) and FileAccess.file_exists(path + ".bak"):
+		DirAccess.rename_absolute(path + ".bak", path)
 
 
 static func read_json(path: String) -> Dictionary:

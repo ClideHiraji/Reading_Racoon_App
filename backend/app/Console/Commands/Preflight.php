@@ -45,6 +45,13 @@ class Preflight extends Command
         $this->check(config('queue.default') !== 'sync' || ! $prod,
             'Queue: '.config('queue.default'), 'QUEUE_CONNECTION is sync: replays and reports run inside requests', fail: false);
         $this->check(AdminPortal::path() !== null, 'Admin portal is on (secret path set)', 'Admin portal is off (ADMIN_PATH unset or shorter than '.config('admin.min_path_length').')', fail: false);
+        // Apache runs PHP in threads on Windows; reading .env on every request
+        // there lost the database password under load (load test 2026-11-19).
+        $this->check($this->laravel->configurationIsCached() || ! $prod, 'Configuration is cached',
+            'Configuration is not cached: run php artisan config:cache (and again after every .env change)');
+        $this->check($this->laravel->routesAreCached() || ! $prod, 'Routes are cached', 'Routes are not cached: php artisan route:cache', fail: false);
+        $this->check(extension_loaded('Zend OPcache') && (bool) ini_get('opcache.enable'), 'OPcache is on',
+            'OPcache is off in php.ini: every request recompiles Laravel (290 ms instead of 75 ms)', fail: false);
         $this->check(PHP_VERSION_ID >= 80300, 'PHP '.PHP_VERSION, 'PHP '.PHP_VERSION.': security support for 8.2 ends 31 Dec 2026, plan PHP 8.3+', fail: false);
         $this->check(is_writable(storage_path('logs')) && is_writable(storage_path('app')), 'storage/ is writable', 'storage/ is not writable');
 

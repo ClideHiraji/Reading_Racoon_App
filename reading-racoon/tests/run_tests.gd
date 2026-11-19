@@ -495,6 +495,84 @@ func test_queue_removal() -> void:
 	store.wipe()
 
 
+# --- Lossless queue and retries over the internet (D-036) ------------------------------------
+
+## A crash between the two moves of SaveStore.replace_file() leaves only the
+## .bak copy; the next start brings the queue back with every event.
+func test_queue_survives_a_crash_mid_rewrite() -> void:
+	var store := SaveStore.new("unit_test")
+	store.wipe()
+	var ids := []
+	for i in 4:
+		ids.append(store.queue_event("response", {"n": i}))
+	DirAccess.rename_absolute(store.queue_path, store.queue_path + ".bak")
+	check(not FileAccess.file_exists(store.queue_path), "crash: the queue file is gone")
+	var reopened := SaveStore.new("unit_test")
+	check(reopened.read_queue().map(func(e): return e.id) == ids, "recovered from .bak, order kept")
+	check(not FileAccess.file_exists(store.queue_path + ".bak"), "the .bak is used up")
+	check(SaveStore.write_json(store.profile_path, {"a": 1}) and SaveStore.write_json(store.profile_path, {"a": 2}),
+			"atomic profile writes over an existing file")
+	check(store.load_profile().get("a") == 2, "the newer profile wins")
+	check(not FileAccess.file_exists(store.profile_path + ".tmp"), "no temp file left behind")
+	store.wipe()
+
+
+## An app killed mid-append leaves half a line. The next event must still be
+## readable, and the broken line is moved aside (not left at the head forever).
+func test_a_half_written_line_never_swallows_the_next_event() -> void:
+	var store := SaveStore.new("unit_test")
+	store.wipe()
+	var first := store.queue_event("response", {"n": 0})
+	var f := FileAccess.open(store.queue_path, FileAccess.READ_WRITE)
+	f.seek_end()
+	f.store_string('{"device_time":"2026-11-19T01:00:00Z","id":"00000000-0000-4000-8000-0000000000')
+	f.close()
+	var second := store.queue_event("response", {"n": 1})
+	var queued := store.read_queue().map(func(e): return e.id)
+	check(queued == [first, second], "both whole events read; the broken line skipped")
+	store.remove_events([first])
+	check(store.read_queue().map(func(e): return e.id) == [second], "only the unsent event stays")
+	check(store.queue_size() == 1, "the broken line left the queue")
+	var side := FileAccess.get_file_as_string(store.queue_path.get_basename() + "_rejected.jsonl")
+	check(side.contains("truncated"), "and was kept in the side file for debugging")
+	store.wipe()
+
+
+func test_retry_policy() -> void:
+	check(is_equal_approx(SyncProtocol.backoff(1, 0.0, 0.0), 15.0), "first retry: 15-30 s")
+	check(is_equal_approx(SyncProtocol.backoff(1, 0.0, 1.0), 30.0), "first retry ceiling 30 s")
+	check(is_equal_approx(SyncProtocol.backoff(3, 0.0, 1.0), 120.0), "doubles each time")
+	for n in [8, 20, 1000]:
+		var w := SyncProtocol.backoff(n, 0.0, 0.7)
+		check(w >= 300.0 and w <= 600.0, "capped at 10 min after %d failures (%.0f s)" % [n, w])
+	check(SyncProtocol.backoff(2, 0.0, 0.1) != SyncProtocol.backoff(2, 0.0, 0.9), "jitter spreads a classroom")
+	check(is_equal_approx(SyncProtocol.backoff(1, 900.0, 0.5), 900.0), "Retry-After asks for longer: wait that long")
+	check(is_equal_approx(SyncProtocol.backoff(1, 99999.0, 0.5), 3600.0), "but never more than an hour")
+	check(is_equal_approx(SyncProtocol.retry_after(PackedStringArray(["Content-Type: x", "Retry-After: 45"])), 45.0),
+			"Retry-After seconds read")
+	check(SyncProtocol.retry_after(PackedStringArray(["retry-after: Wed, 21 Oct 2026 07:28:00 GMT"])) == 0.0,
+			"a date form falls back to backoff")
+	check(SyncProtocol.retry_after(PackedStringArray()) == 0.0, "no header")
+
+
+func test_release_builds_talk_https_only() -> void:
+	check(SyncProtocol.is_allowed_server("https://racoon.example.org", false), "https in release")
+	check(not SyncProtocol.is_allowed_server("http://racoon.example.org", false), "plain http to the internet refused")
+	check(not SyncProtocol.is_allowed_server("http://192.168.1.20:8000", false), "plain http on Wi-Fi refused")
+	check(SyncProtocol.is_allowed_server("http://127.0.0.1:8000", false), "a server on this machine")
+	check(SyncProtocol.is_allowed_server("http://localhost:8000/", false), "localhost")
+	check(not SyncProtocol.is_allowed_server("http://localhost.evil.example", false), "not a lookalike host")
+	check(SyncProtocol.is_allowed_server("http://192.168.1.20:8000", true), "anything in a debug build")
+	check(not SyncProtocol.is_allowed_server("", true), "no server")
+
+
+func test_download_chunks_must_continue_the_part() -> void:
+	var h := PackedStringArray(["Content-Type: video/ogg", "Content-Range: bytes 4194304-8388607/9000000"])
+	check(SyncProtocol.range_starts_at(h, 4194304), "the chunk starts where the part ends")
+	check(not SyncProtocol.range_starts_at(h, 0), "a chunk from elsewhere is refused")
+	check(not SyncProtocol.range_starts_at(PackedStringArray(["Content-Length: 5"]), 0), "no Content-Range")
+
+
 # --- Play-time limits (FR-12) ---------------------------------------------------------------
 
 func _at(weekday: int, hhmm: String) -> Dictionary:

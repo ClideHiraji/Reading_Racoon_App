@@ -13,7 +13,9 @@ extends Node
 ## /api/access/student/status, POST /api/sync (SyncProtocol, D-008), and for
 ## teacher-picked books and videos GET /api/content/manifest and
 ## /api/content/files/{id} (D-020, server D-019): only on Wi-Fi, never during a
-## lesson, every file checked against its SHA-256 before it's used.
+## lesson, in resumable 4 MB Range requests, every file checked against its
+## SHA-256 before it's used. Release builds talk https only, and failures back
+## off with jitter and honour Retry-After (D-036).
 
 signal status_changed(text: String)
 signal synced(remaining: int)
@@ -27,8 +29,10 @@ const BATCH := 100           # small batches: short requests on slow school Wi-F
 ## Teacher content (D-020): look for changes every 15 minutes, first after 20 s.
 const CONTENT_INTERVAL := 900.0
 const CONTENT_FIRST := 20.0
-## A download stuck this long (s) is dropped and tried again later.
-const DOWNLOAD_TIMEOUT := 900.0
+## Teacher videos come in 4 MB Range requests, so a dropped connection costs one
+## chunk, never the whole file (D-036). A chunk stuck this long (s) is retried later.
+const CHUNK := 4 * 1024 * 1024
+const CHUNK_TIMEOUT := 120.0
 
 var busy := false
 var online := false
@@ -72,11 +76,14 @@ func request_soon() -> void:
 	_wait = minf(_wait, 2.0)
 
 
+## The server's base URL, or "" when there is none or it isn't allowed: release
+## builds only talk https (SyncProtocol.is_allowed_server, D-036).
 func server() -> String:
 	var url: String = ProjectSettings.get_setting(SERVER_SETTING, "")
 	if OS.is_debug_build() and GameState._args.has("server"):
 		url = GameState._args.server
-	return url.strip_edges().trim_suffix("/")
+	url = url.strip_edges().trim_suffix("/")
+	return url if SyncProtocol.is_allowed_server(url, OS.is_debug_build()) else ""
 
 
 func connected() -> bool:
@@ -114,7 +121,7 @@ func sync_now() -> void:
 	var cfg := await _request("/api/config", HTTPClient.METHOD_GET, "", false)
 	online = cfg.code == 200
 	if not online:
-		_offline()
+		_offline(SyncProtocol.retry_after(cfg.headers))
 		return
 	if typeof(cfg.body) == TYPE_DICTIONARY:
 		GameState.apply_server_config(cfg.body)
@@ -151,7 +158,9 @@ func _upload(max_batch: int) -> void:
 			return
 		var reply := SyncProtocol.handle_reply(res.code, res.body)
 		if reply.ack.is_empty() and reply.rejected.is_empty():
-			_offline()
+			# No answer, a busy server (429/503 with Retry-After) or an error:
+			# nothing leaves the queue; wait and try again (D-036).
+			_offline(SyncProtocol.retry_after(res.headers))
 			return
 		await _on_worker(func():
 			store.remove_events(reply.ack, reply.rejected)
@@ -212,44 +221,72 @@ func sync_content() -> void:
 	_content_busy = false
 
 
-## One file to <local>.part, checked, then moved into place. A lesson starting
-## cancels it (and deletes the part). True if the file was saved.
+## One file to <local>.part in CHUNK-sized Range requests, checked against its
+## SHA-256, then moved into place (D-036). A dropped connection, a lesson
+## starting or the app closing costs at most one chunk: the part stays and the
+## next round carries on from its size. True once the file is saved.
 func _download(f: Dictionary) -> bool:
 	var part: String = f.local + ".part"
-	var http := HTTPRequest.new()
-	http.use_threads = true
-	http.timeout = DOWNLOAD_TIMEOUT
-	http.download_file = part
-	http.download_chunk_size = 65536
-	if int(f.size) > 0:
-		http.body_size_limit = int(f.size) + 4096
-	add_child(http)
-	var done := [false, 0, 0]
-	http.request_completed.connect(func(result: int, code: int, _h: PackedStringArray, _b: PackedByteArray):
-		done[0] = true
-		done[1] = result
-		done[2] = code)
-	var headers := PackedStringArray(["Authorization: Bearer %s" % GameState.device.get("token", "")])
-	if http.request(server() + str(f.url), headers) != OK:
-		http.queue_free()
-		return false
-	while not done[0]:
-		if GameState.in_lesson():
-			http.cancel_request()
-			http.queue_free()
-			DirAccess.remove_absolute(part)
+	var size := int(f.get("size", 0))
+	var have := _file_size(part)
+	if size > 0 and have > size:
+		DirAccess.remove_absolute(part)   # not this file: start again
+		have = 0
+	var auth := "Authorization: Bearer %s" % GameState.device.get("token", "")
+	while size <= 0 or have < size:
+		if GameState.in_lesson() or not unmetered():
+			return false   # keep the part for later
+		var last := have + CHUNK - 1
+		if size > 0:
+			last = mini(last, size - 1)
+		var res := await _http(str(f.url), HTTPClient.METHOD_GET, "",
+				PackedStringArray([auth, "Range: bytes=%d-%d" % [have, last]]), CHUNK_TIMEOUT, CHUNK + 65536)
+		var body: PackedByteArray = res.body
+		var whole: bool = res.code == 200 and have == 0   # a server that ignores Range
+		if res.code == 416 and size <= 0 and have > 0:
+			break   # size unknown (page pictures) and the part already ends where the file does
+		if res.code == 206 and not SyncProtocol.range_starts_at(res.headers, have):
+			DirAccess.remove_absolute(part)   # not the bytes we asked for
 			return false
-		await get_tree().process_frame
-	http.queue_free()
-	var ok: bool = done[1] == HTTPRequest.RESULT_SUCCESS and done[2] == 200
-	if ok:
-		ok = await _on_worker(func(): return ContentPlan.file_sha256(part) == str(f.sha256))
+		if res.code != 206 and not whole:
+			return false   # offline or an error: the part waits for the next round
+		if not await _on_worker(func(): return _append(part, body, whole)):
+			return false
+		have += body.size()
+		if whole or (size <= 0 and body.size() < CHUNK):
+			break
+	var ok: bool = await _on_worker(func(): return ContentPlan.file_sha256(part) == str(f.sha256))
 	if not ok:
 		DirAccess.remove_absolute(part)
 		return false
-	if FileAccess.file_exists(f.local):
-		DirAccess.remove_absolute(f.local)   # the teacher replaced it
-	return DirAccess.rename_absolute(part, f.local) == OK
+	# Over a file the teacher replaced; on the worker, as it may wait out a file lock.
+	return await _on_worker(func(): return SaveStore.replace_file(part, f.local))
+
+
+static func _file_size(path: String) -> int:
+	if not FileAccess.file_exists(path):
+		return 0
+	var f := FileAccess.open(path, FileAccess.READ)
+	return f.get_length() if f else 0
+
+
+## Appends one downloaded chunk (or writes the whole file when `fresh`).
+static func _append(path: String, bytes: PackedByteArray, fresh: bool) -> bool:
+	var mode := FileAccess.READ_WRITE if FileAccess.file_exists(path) and not fresh else FileAccess.WRITE
+	var f := FileAccess.open(path, mode)
+	for _attempt in 2:   # a file lock (antivirus, indexer) usually clears in a moment
+		if f != null:
+			break
+		OS.delay_msec(150)
+		f = FileAccess.open(path, mode)
+	if f == null:
+		return false
+	f.seek_end()
+	f.store_buffer(bytes)
+	var ok := f.get_error() == OK
+	f.close()
+	return ok
+
 
 
 
@@ -273,17 +310,17 @@ func unmetered() -> bool:
 	return not bool(cm.call("isActiveNetworkMetered"))
 
 
-func _offline() -> void:
+func _offline(retry_after := 0.0) -> void:
 	online = false
 	_failures += 1
-	_wait = minf(MIN_BACKOFF * pow(2.0, _failures - 1), MAX_BACKOFF)
+	_wait = SyncProtocol.backoff(_failures, retry_after, randf(), MIN_BACKOFF, MAX_BACKOFF)
 	busy = false
 	_set_status("Offline, will try again")
 
 
 func _done(text: String, remaining: int) -> void:
 	_failures = 0
-	_wait = INTERVAL
+	_wait = INTERVAL * randf_range(0.8, 1.2)   # spread a classroom's syncs (D-036)
 	busy = false
 	_set_status(text)
 	if remaining >= 0:
@@ -305,24 +342,43 @@ func _on_worker(work: Callable) -> Variant:
 	return result[0]
 
 
-## Returns {code, body}; code 0 = no connection. HTTP runs on its own thread.
+## Returns {code, body, headers}; code 0 = no connection. HTTP runs on its own thread.
 func _request(path: String, method: int, data: String, auth: bool,
 		extra := PackedStringArray()) -> Dictionary:
-	var http := HTTPRequest.new()
-	http.timeout = 20.0
-	http.use_threads = true
-	add_child(http)
 	var headers := PackedStringArray(["Accept: application/json", "Content-Type: application/json"])
 	if auth:
 		headers.append("Authorization: Bearer %s" % GameState.device.get("token", ""))
 	headers.append_array(extra)
+	var res := await _http(path, method, data, headers, 20.0, 0)
+	# Wi-Fi that drops a connection mid-reply: a read is safe to repeat at once
+	# (D-036). Uploads aren't repeated here; the sync loop's backoff handles them.
+	if method == HTTPClient.METHOD_GET and res.result in [HTTPRequest.RESULT_CONNECTION_ERROR,
+			HTTPRequest.RESULT_NO_RESPONSE]:
+		await get_tree().create_timer(1.5, true).timeout
+		res = await _http(path, method, data, headers, 20.0, 0)
+	var text: String = (res.body as PackedByteArray).get_string_from_utf8()
+	res.body = JSON.parse_string(text) if text != "" else null
+	return res
+
+
+## One HTTP exchange: {code, result, headers, body: PackedByteArray}; code 0 =
+## no connection or timed out (`result` says which, HTTPRequest.Result). TLS
+## certificates are checked (HTTPRequest's default).
+func _http(path: String, method: int, data: String, headers: PackedStringArray,
+		timeout: float, body_limit: int) -> Dictionary:
+	var http := HTTPRequest.new()
+	http.timeout = timeout
+	http.use_threads = true
+	if body_limit > 0:
+		http.body_size_limit = body_limit
+	add_child(http)
 	var err := http.request(server() + path, headers, method, data)
 	if err != OK:
 		http.queue_free()
-		return {"code": 0, "body": null}
+		return {"code": 0, "result": HTTPRequest.RESULT_CANT_CONNECT, "headers": PackedStringArray(),
+				"body": PackedByteArray()}
 	var result: Array = await http.request_completed
 	http.queue_free()
 	if result[0] != HTTPRequest.RESULT_SUCCESS:
-		return {"code": 0, "body": null}
-	var text: String = (result[3] as PackedByteArray).get_string_from_utf8()
-	return {"code": int(result[1]), "body": JSON.parse_string(text) if text != "" else null}
+		return {"code": 0, "result": result[0], "headers": PackedStringArray(), "body": PackedByteArray()}
+	return {"code": int(result[1]), "result": result[0], "headers": result[2], "body": result[3]}

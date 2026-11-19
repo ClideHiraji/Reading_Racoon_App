@@ -1,0 +1,26 @@
+# Cloudflare Tunnel for Reading Racoon (D-036, docs/deploy/home-server.md).
+# cloudflared makes an OUTBOUND connection to Cloudflare, so the home router
+# needs no open port and works behind CGNAT. Cloudflare serves the public
+# https address and passes requests to Apache on 127.0.0.1:8080.
+#
+# Copy to C:\Windows\System32\config\systemprofile\.cloudflared\config.yml
+# (the Windows service runs as SYSTEM), fill in the tunnel id and hostname,
+# then: cloudflared.exe service install
+tunnel: <TUNNEL-UUID>
+credentials-file: C:\Windows\System32\config\systemprofile\.cloudflared\<TUNNEL-UUID>.json
+
+# Reconnect forever if the home internet drops; cloudflared keeps 4 connections
+# to two Cloudflare data centres, so one failing doesn't take the site down.
+retries: 1000000
+
+originRequest:
+  connectTimeout: 10s
+  keepAliveTimeout: 90s
+  # Apache answers plain http on loopback only; TLS ends at Cloudflare.
+  noTLSVerify: false
+
+ingress:
+  - hostname: racoon.example.org
+    service: http://127.0.0.1:8080
+  # Anything else that reaches this tunnel is refused.
+  - service: http_status:404

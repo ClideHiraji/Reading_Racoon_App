@@ -51,13 +51,15 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 - [[D-031 Windblown scarves and the Star halo]]
 - [[D-032 A new question stops the voice]]
 - [[D-033 Buddies Roco and Rina and talk language]]
+- D-034: sounds (planned on the game branch); D-035: recorded buddy voices (game branch)
+- [[D-036 Internet hosting from the home laptop]]
 
 ## Still open (from [[10-open-issues]])
 - 🔴 **Before the final release: delete the developer menu** (issue 30). It's debug-build-only, but it must go: `reading-racoon/ui/dev_menu.gd` (and its `.uid`), its lines in `scripts/autoload/screen.gd`, and its check at the end of `tests/ui_smoke.gd`.
 - 🔴 Timeline: a 4-month evaluation doesn't fit before November. Re-plan with the adviser (issue 11).
 - 🔴 Finish the database design (issue 8, [[04-data-model]]). 16 tables are built in `backend/` (incl. `ai_logs`, `ai_reports`); content and `bkt_parameters` are left.
 - 🟡 How 6-year-olds log in: interim login code on a kid keypad (D-010); picture PIN or QR card still possible (issue 9).
-- 🟡 Where the Laravel + PostgreSQL server is hosted.
+- 🟡 Hosting is decided (D-036, issue 40): the user still sets up the domain, Cloudflare Tunnel, Apache with OPcache, startup tasks and off-site backups (`docs/deploy/home-server.md`).
 - 🟡 Re-check Grade 1 competencies with teachers (issue 13), and which Mother Tongue for levels 1–2 (issue 15).
 
 ## Devlog
@@ -114,6 +116,8 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 - [[A saved Godot scene keeps a sheet's old UVs]]
 - [[Godot canvas COLOR already holds the texture]]
 - [[Git Bash sed -i drops CRLF]]
+- [[Laravel needs config cache under threaded Apache]]
+- [[PHP built-in server drops connections on Windows]]
 - [[Blade inline php swallows a later php block]]
 - [[migrate fresh keeps PostgreSQL functions]]
 - [[A hidden route needs a catch-all against 405]]

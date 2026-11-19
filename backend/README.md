@@ -362,3 +362,7 @@ All times are `timestamptz`; the connection runs in UTC. `App\Actions\EnrollStud
 | `routes/web.php`, `routes/admin.php`, `routes/api.php` | Teacher pages, hidden admin portal, game API |
 | `database/migrations/` | Schema (PostgreSQL only) |
 | `tests/` | PHPUnit feature and unit tests |
+
+## Internet hosting (D-036)
+
+The production setup (Cloudflare Tunnel, Apache, queue worker, scheduler, backups, health checks) is in [docs/deploy/home-server.md](../docs/deploy/home-server.md). Start from `.env.production.example` and run `php artisan app:preflight`.

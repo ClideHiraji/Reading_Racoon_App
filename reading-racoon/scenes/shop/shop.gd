@@ -35,7 +35,7 @@ func _ready() -> void:
 		# Just the slot's paper picture, big, with no word (the user asked; D-027). Racoon says
 		# the slot's name when it's tapped and it's the tooltip, so a child who can't read yet
 		# still knows it (D-022). Five fit a phone's width, 110 px tall (NFR-02).
-		tab.tooltip_text = Wardrobe.SLOT_NAMES[slot]
+		tab.tooltip_text = Wardrobe.slot_name(slot, GameState.buddy_id())   # Rina's: "In her paws" (D-033)
 		tab.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		tab.vertical_icon_alignment = VERTICAL_ALIGNMENT_CENTER
 		tab.full_color = true
@@ -50,8 +50,6 @@ func _ready() -> void:
 		tab.pressed.connect(_on_tab.bind(slot))
 		tab.set_meta("slot", slot)
 		%Tabs.add_child(tab)
-	%Title.text = GameState.talk("closet_title")   # the buddy's own Closet (D-033)
-	%Title.text = GameState.talk("closet_title")   # the buddy's own Closet (D-033)
 	%Title.text = GameState.talk("closet_title")   # the buddy's own Closet (D-033)
 	_update_coins()
 	_show_slot("hat")
@@ -89,7 +87,7 @@ func _fit_shape() -> void:
 
 ## A tab tapped: Racoon says its name (the tabs have no words), then its items show.
 func _on_tab(slot: String) -> void:
-	_speak(Wardrobe.SLOT_NAMES[slot], "en")
+	_speak(Wardrobe.slot_name(slot, GameState.buddy_id()), "en")
 	_show_slot(slot)
 
 

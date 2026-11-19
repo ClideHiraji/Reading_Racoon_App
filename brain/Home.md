@@ -109,6 +109,7 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 - [[A saved Godot scene keeps a sheet's old UVs]]
 - [[Godot canvas COLOR already holds the texture]]
 - [[Git Bash sed -i drops CRLF]]
+- [[Cut TTS batches by aligning sentence lengths]]
 
 ## Links
 - Visual blueprint (private page): https://claude.ai/artifact/TPcwMuVYMvR9gx8ypBMYB9

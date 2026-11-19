@@ -176,9 +176,13 @@ Status key: 🔴 blocks coding · 🟡 decide during build · 📝 manuscript-on
   - `Speech.say()` plays the clips when every sentence of a line is recorded; otherwise the system voice reads it.
   - About 7 KB a line, about 11 MB when done.
   - Details: [D-035](../../brain/decisions/D-035%20Recorded%20buddy%20voices.md).
+- **Progress (2026-11-19, second session):** 1,449 of 1,465 sentences recorded.
+  - Roco is complete in all three languages. Rina lacks 16 lines: 15 short ones, plus "In her paws", her Closet tab's new name.
+  - 15 generations went through in one day, with no limit reached. Batches of up to 126 lines worked, and a batch can mix languages by using one speech block per style.
+  - The batch cutter now aligns by sentence length (it had shifted clips in a Filipino batch). All earlier clips were checked again.
 - **Still open:**
-  - 1,296 of 1,465 sentences still to record (about 5 days at AI Studio's free limit).
-  - A teacher's check of the Filipino and Bisaya lines before recording them (issue 35).
+  - 16 lines for Rina (13 Bisaya, 1 Filipino, 2 English). Two small retries failed their check; these lines use the system voice until they're recorded.
+  - A teacher's check of the Filipino and Bisaya lines (issue 35). They're recorded now, so a changed line has to be recorded again.
   - Lines with a clock time stay with the system voice.
 
 ### 35. A girl buddy, and a choice of language ✅ DECIDED (2026-11-18)

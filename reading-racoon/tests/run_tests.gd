@@ -582,6 +582,10 @@ func test_wardrobe() -> void:
 	check(w.owns("open_book") and w.equipped.is_empty(), "owns the open book; wears nothing at first")
 	check(w.wear("open_book") and w.equipped.get("paws", "") == "open_book", "the book goes in his paws")
 	w.take_off("paws")
+	check(Wardrobe.slot_name("paws", "roco") == "In his paws" and Wardrobe.slot_name("paws", "rina") == "In her paws",
+			"the paws tab follows the buddy (D-033)")
+	check(Wardrobe.slot_name("hat", "rina") == "Hats" and Wardrobe.slot_name("pet", "roco") == "Pets",
+			"the other tabs are the same for both buddies")
 	var wallet := {"coins": 10, "xp": 0}
 	check(w.buy("party_hat", wallet) == "poor" and wallet.coins == 10, "can't buy without coins")
 	wallet.coins = 100

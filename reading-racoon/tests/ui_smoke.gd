@@ -255,6 +255,8 @@ func _run() -> void:
 	await _frames(5)
 	var shop := current_scene
 	check(shop.name == "Shop", "shop opens from the hub's Closet tab")
+	var paws_tab: Control = shop.get_node("%Tabs").get_children().filter(func(t): return t.get_meta("slot") == "paws")[0]
+	check(paws_tab.tooltip_text == Wardrobe.slot_name("paws", gs.buddy_id()), "the paws tab is named for the buddy")
 	shop._show_slot("hat")
 	check(gs.wardrobe.owns("cap"), "the Closet gives the River cap a finished lesson earned (D-026)")
 	shop._select("salakot")
@@ -473,6 +475,12 @@ func _run() -> void:
 	await _frames(5)
 	check(gs.buddy.who == "rina" and gs.buddy.lang == "bis", "Let's go saves Rina and Bisaya")
 	check(gs.talk("closet_title") == "Closet ni Rina", "the menus follow the buddy and language")
+	change_scene_to_file("res://scenes/shop/shop.tscn")
+	await _frames(5)
+	var rina_paws: Control = current_scene.get_node("%Tabs").get_children().filter(func(t): return t.get_meta("slot") == "paws")[0]
+	check(rina_paws.tooltip_text == "In her paws", "Rina's Closet says what she holds is in her paws")
+	change_scene_to_file(gs.HUB_SCENE)   # back where Let's go left it, for the checks below
+	await _frames(5)
 	check(is_equal_approx(root.get_node("Speech").pitch, 1.4) and root.get_node("Speech").girl_voice, "Rina's higher voice")
 	check(not gs.line("rescue_start").contains("{buddy}"), "a buddy line names the buddy")
 	check(gs.line("hint_phonics") in gs.lines.hint_phonics, "hints stay in the lesson's language")

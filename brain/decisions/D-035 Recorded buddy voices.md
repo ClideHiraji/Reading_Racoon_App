@@ -22,11 +22,14 @@ tags: [decision, voice, tts, gemini, fr-14, fr-20, d-033]
 - **Style:** lively and chatty (the user's choice), "a bubbly, playful seven-year-old Filipino boy (girl) chatting happily with a younger friend who loves to read and play". English has a light Filipino accent, Filipino is from Manila, Bisaya from Mindanao. Measured pitch is about 230 Hz, in a 6–8-year-old's range.
 - **No names in spoken lines:** greetings say "reader" ("mambabasa" in Filipino, "magbabasa" in Bisaya) instead of the student's name, so every greeting can be recorded (the user's choice). Home's profile chip still shows the name.
   - Lines with a clock time ("opens at 3:00 PM") stay with the system voice.
-- **Size:** each clip is mono, 24 kHz, about 44 kb/s MP3, roughly 7 KB a line. Loudness is evened across clips and edges fade over 15 ms. The 169 clips so far take 1.25 MB, and all 1,465 should come to about 11 MB.
+- **Size:** each clip is mono, 24 kHz, about 44 kb/s MP3, roughly 7 KB a line. Loudness is evened across clips and edges fade over 15 ms. The 1,450 clips recorded take 11.9 MB (108 MB as WAV).
   - MP3, not Ogg: for clips about a second long, an Ogg Vorbis file's ~4 KB header made it bigger.
 - **Made with the voice lab**, outside the repo, in `racoon-voice-lab/`:
   - `manifest.py` lists every sentence.
-  - `studio.py` prepares each batch of up to 50 sentences joined by `<long pause>`, then cuts the downloaded audio at the pauses and checks each piece's length against its sentence.
+  - `studio.py` prepares each batch (80 to 126 sentences work) joined by `<long pause>`. `--buddy` and `--lang` pick one voice and language, so small leftovers can share a generation as extra speech blocks.
+  - `record.py split()` then cuts the download. It aligns all the cuts at once (dynamic programming), so each piece's length fits its sentence and longer pauses count as likelier breaks.
+    - A piece is kept only if its length is plausible and no other pause would fit its cut almost as well.
+    - It replaced cutting at the n−1 longest pauses: in a Filipino batch, pauses inside sentences (0.38 s) rivalled the breaks (0.40 s) and shifted a run of clips by one line.
   - `compress.py` makes the MP3s, and `to_game.py` copies them into `assets/voice/`.
   - `voice_hooks.py` holds the game changes.
 
@@ -34,8 +37,9 @@ tags: [decision, voice, tts, gemini, fr-14, fr-20, d-033]
 - The user wanted natural kid voices and chose Gemini's Zeno and Cleo after the voice tests (D-033). They chose the free tier, the AI Studio website, and the lively style.
 
 **Consequences**
-- **Partly recorded so far:** 169 of 1,465 sentences, all Roco in English. Every other line still uses the system voice until it's recorded.
-- **AI Studio's free limit is about 6 generations a day**, about 300 sentences, so finishing takes about 5 more days. The limit resets at midnight Pacific time, which is 4 PM in the Philippines.
+- **Recorded:** 1,449 of 1,465 sentences (11.9 MB of MP3). Roco is complete. Rina lacks 16 lines (15 short ones, and her Closet tab's "In her paws"), which use the system voice until they're recorded.
+- **AI Studio's free limit isn't a fixed 6 a day.** The first day stopped after 6 generations. The next session (from 4 PM, after the reset at midnight Pacific) ran 15 generations, about 50 minutes of audio, with no limit reached.
+- **Very small batches (15 lines) failed twice:** the model skipped or shortened pauses, and the check rejected every piece. Short exclamations at the start of a generation fail most often.
 - **Changing a line's wording means recording it again.** The key changes with the text, and the old clip is simply not used.
 - Read-along in books (FR-20) still uses the system voice and its word timings.
 - **Tests:**

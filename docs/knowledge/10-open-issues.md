@@ -169,6 +169,16 @@ Status key: 🔴 blocks coding · 🟡 decide during build · 📝 manuscript-on
 - **Animated star and hearts (2026-10-22):** the team's Lottie files play live in the game (`ui/lottie_player.gd`): the earned star, Regain Heart for a heart that comes back, Broken Heart for a lost one, the hearts in the lesson hearts' colors.
 - **Manuscript to update:** the screens in §3.4.2.4 and the color and size rules in §3.4.2.2; NFR-02 can quote the 96 px / 48 dp minimum.
 
+### 37. Full screen for teacher videos ✅ DECIDED (2026-11-19)
+- The user asked for a full-screen video in Watch & Listen, with a phone turning sideways for it.
+- **Decision (D-036):**
+  - A corner button on the video (or a tap on it) opens full screen: the same video over the whole player, in its own shape, with a big Pause and a close button that fade while it plays.
+  - On a phone the screen turns to landscape while it's open, and back afterwards. Laptops don't turn.
+  - Back, the close button and the video's end close it. Songs and read-alongs have none.
+  - Details: [D-036](../../brain/decisions/D-036%20Full%20screen%20for%20teacher%20videos.md).
+- **Fixed the same day:** the Videos chip's empty message showed one letter per line, and teacher videos were stretched to the stage (a 16:9 clip squeezed about 12% on a phone). Both have `ui_smoke` checks.
+- **Still open:** the sideways turn is untested on a real phone or tablet (only simulated on a laptop).
+
 ### 36. Recorded voices for Roco and Rina 🟡 IN PROGRESS (2026-11-19)
 - The user asked for Gemini's child voices for every line, compressed to keep the app small. The scope is the buddy's lines and menus, not lessons, tests, books or videos. It's made on AI Studio's free tier, in a lively, chatty style, with "reader" in place of the student's name.
 - **Decision (D-035):**

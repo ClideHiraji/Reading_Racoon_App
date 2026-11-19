@@ -393,6 +393,26 @@ func _run() -> void:
 	gs.open_section("watch")
 	await _frames(5)
 	check(current_scene.name == "Watch" and current_scene._list.get_child_count() >= 6, "Watch & Listen lists songs")
+	# Every chip's cards, and the "Nothing here yet" message, fill their grid column.
+	# The empty Videos message was once 1 px wide, one letter per line: an
+	# autowrapped label in a grid cell asks for no width (NFR-02). Bundled videos
+	# are set aside first, so the empty message is always what Videos shows here.
+	var wl := current_scene
+	var all_media: Array = gs.media.watch
+	gs.media.watch = all_media.filter(func(m): return m.kind != "video")
+	for chip_name in ["Videos", "Songs", "Stories", "All"]:
+		var chip: Button = wl._chips.get_children().filter(func(b): return b.text == chip_name)[0]
+		chip.pressed.emit()
+		await _frames(5)
+		var cells: Array = wl._list.get_children()
+		var sep: int = wl._list.get_theme_constant("h_separation")
+		var col_w: float = (wl._list.size.x - sep * (wl._list.columns - 1)) / wl._list.columns
+		check(not cells.is_empty() and cells.all(func(c): return c.size.x >= col_w - 1.0),
+				"Watch & Listen's %s chip: every card and message fills its column" % chip_name)
+		if chip_name == "Videos":
+			check(cells.size() == 1 and cells[0] is Label and cells[0].size.x >= wl._list.size.x - 1.0
+					and cells[0].get_line_count() <= 2, "no videos yet: one readable message across the list")
+	gs.media.watch = all_media
 	gs.open_media = "abc-chant"
 	change_scene_to_file("res://scenes/watch/player.tscn")
 	await _frames(6)
@@ -407,6 +427,70 @@ func _run() -> void:
 	check(gs.collection.is_finished("abc-chant") and gs.collection.count("watch") == 1, "the song is finished")
 	check(gs.collection.goals_left(gs.today()) == 0 and gs.collection.count("goals") == 1,
 			"a story, a game and a song: all of today's goals and a goals sticker")
+
+	# A teacher video keeps its own shape on the stage, with bands on two sides. It
+	# was once stretched to the stage, squeezing a 16:9 clip by about 12% on a phone
+	# (D-017). tests/fixtures/wide_clip.ogv: 1 s of 320x180 Ogg Theora.
+	gs.media.watch.append({"id": "tv-shape01", "kind": "video", "title": "Wide clip", "language": "en",
+			"minutes": 1, "file": "res://tests/fixtures/wide_clip.ogv", "teacher": true,
+			"check": {"prompt": "Which one is a bee?", "answer": "bee",
+					"choices": [{"id": "bee", "label": "bee", "picture": "bee"}, {"id": "cat", "label": "cat", "picture": "cat"}]}})
+	gs.open_media = "tv-shape01"
+	change_scene_to_file("res://scenes/watch/player.tscn")
+	await _frames(8)
+	var vp := current_scene
+	var shown: Vector2 = vp._video.size
+	var stage: Vector2 = vp._stage.size
+	check(vp._video.is_playing() and absf(shown.aspect() - 16.0 / 9.0) < 0.02,
+			"a teacher video keeps its 16:9 shape (shown %s on a %s stage)" % [shown, stage])
+	check(shown.x <= stage.x + 0.5 and shown.y <= stage.y + 0.5 and maxf(shown.x / stage.x, shown.y / stage.y) > 0.9,
+			"and fits the stage, filling it one way")
+	# Full screen: the corner button opens the video over the whole player, and it
+	# plays on (on a phone the screen also turns sideways, which a laptop can't test).
+	# Pause works there, Back closes it, and the video ending closes it before the
+	# quick check. The video is paused between steps, so the 1 s clip can't end early.
+	var fs_btns := vp.find_children("*", "Button", true, false) \
+			.filter(func(b): return b.tooltip_text == "Full screen")
+	check(fs_btns.size() == 1, "a teacher video has a full-screen button")
+	if fs_btns.size() == 1:
+		fs_btns[0].pressed.emit()
+		await _frames(3)
+		var full: Control = vp.get_node_or_null("FullScreen")
+		check(full != null and full.get_global_rect().is_equal_approx(vp.get_viewport_rect())
+				and vp._video.is_playing() and not vp._video.paused, "full screen covers the screen and the video plays on")
+		var fs_pause: Array = full.find_children("*", "Button", true, false) \
+				.filter(func(b): return b.tooltip_text == "Pause") if full else []
+		var pics: Array = full.find_children("*", "TextureRect", true, false) \
+				.filter(func(t): return t.texture == vp._video.get_video_texture()) if full else []
+		check(pics.size() == 1 and pics[0].stretch_mode == TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+				and pics[0].get_global_rect().is_equal_approx(full.get_global_rect()),
+				"it shows the video as big as the screen allows, in its own shape")
+		check(fs_pause.size() == 1, "full screen has its own Pause")
+		if fs_pause.size() == 1:
+			fs_pause[0].pressed.emit()
+			check(vp._video.paused and fs_pause[0].tooltip_text == "Play", "Pause works in full screen")
+		var screen := root.get_node("Screen")
+		screen._last_back = -100000
+		screen.back()
+		await _frames(3)
+		check(current_scene == vp and vp.get_node_or_null("FullScreen") == null, "Back closes full screen, still in the player")
+		fs_btns[0].pressed.emit()
+		await _frames(3)
+		full = vp.get_node_or_null("FullScreen")
+		var fs_play: Array = full.find_children("*", "Button", true, false) \
+				.filter(func(b): return b.tooltip_text == "Play") if full else []
+		if fs_play.size() == 1:
+			fs_play[0].pressed.emit()
+		check(full != null and not vp._video.paused, "full screen opens again, and Play goes on")
+		for i in 40:
+			if vp.get_node_or_null("FullScreen") == null:
+				break
+			await create_timer(0.1).timeout
+		check(vp.get_node_or_null("FullScreen") == null and vp.find_children("*", "Button", true, false)
+				.any(func(b): return b.tooltip_text == "bee"), "the video's end closes full screen for the quick check")
+	vp._back()
+	await _frames(5)
+	gs.media.watch.pop_back()
 
 	gs.open_section("stickers")
 	await _frames(5)

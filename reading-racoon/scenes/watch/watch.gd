@@ -25,7 +25,6 @@ func _ready() -> void:
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	_list = GridContainer.new()
-	_list.columns = 2 if Kit.landscape() else 1   # D-023
 	_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_list.add_theme_constant_override("h_separation", 16)
 	_list.add_theme_constant_override("v_separation", 16)
@@ -52,14 +51,21 @@ func _build() -> void:
 	for c in _list.get_children():
 		c.queue_free()
 	var items := GameState.media.watch_in(_kind)
+	var cells: Array[Control] = []
 	if items.is_empty():
 		var empty := Kit.label("Nothing here yet. Your teacher can add videos.", 28, Palette.INK_SOFT)
 		empty.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		_list.add_child(empty)
+		cells.append(empty)
 	for m in items:
-		var row := _row(m)
-		row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		_list.add_child(row)
+		cells.append(_row(m))
+	# Two cards to a row on a laptop (D-023); the message alone gets the whole width.
+	_list.columns = 2 if Kit.landscape() and not items.is_empty() else 1
+	# A grid column is only as wide as its cells ask, and an autowrapped label asks
+	# for 1 px: the empty Videos message came out one letter per line until every
+	# cell, the message too, was set to fill its column (NFR-02).
+	for c in cells:
+		c.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		_list.add_child(c)
 
 
 func _pick_kind(kind: String) -> void:

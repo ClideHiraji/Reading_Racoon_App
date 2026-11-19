@@ -52,6 +52,14 @@ class ConfigTest extends TestCase
         );
     }
 
+    public function test_the_post_test_opens_only_when_configured(): void
+    {
+        $this->getJson('/api/config')->assertJsonPath('post_test_open', false);
+
+        config(['reading_racoon.post_test_open' => true]);
+        $this->getJson('/api/config')->assertJsonPath('post_test_open', true);
+    }
+
     public function test_content_version_comes_from_the_environment(): void
     {
         config(['reading_racoon.content_version' => 7]);

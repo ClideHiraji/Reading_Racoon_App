@@ -5,6 +5,7 @@ namespace App\Actions;
 use App\Enums\SyncEventType;
 use App\Models\Student;
 use Carbon\CarbonImmutable;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -30,8 +31,9 @@ final class RecordSyncEvents
      * @param  array<int, mixed>  $events  [{id, type, payload, device_time}, ...] in queue order
      * @return array{
      *     acknowledged: list<string>,
-     *     rejected: list<array{index: int, id: string|null, reason: string, errors?: array<string, list<string>>}>
-     * }
+     *     rejected: list<array{index: int, id: string|null, reason: string, errors?: array<string, list<string>>}>,
+     *     stored: list<array{uuid: string, type: string, payload: string}>
+     * }  `stored` = events this call inserted (not in the JSON reply; used for logging once)
      */
     public function handle(Student $student, array $events): array
     {
@@ -63,8 +65,13 @@ final class RecordSyncEvents
             $accepted[$index] = [$uuid, $event['id']];
         }
 
+        // INSERT ... ON CONFLICT DO NOTHING RETURNING uuid: exactly the rows this
+        // call stored, even when two syncs from one device race.
+        $inserted = [];
         foreach (array_chunk(array_values($rows), 500) as $chunk) {
-            DB::table('sync_events')->insertOrIgnore($chunk);
+            $query = DB::table('sync_events');
+            $sql = $query->getGrammar()->compileInsertOrIgnore($query, $chunk).' returning uuid';
+            $inserted = [...$inserted, ...array_column(DB::select($sql, $query->cleanBindings(Arr::flatten($chunk, 1))), 'uuid')];
         }
 
         $owners = $rows === [] ? collect() : DB::table('sync_events')
@@ -88,7 +95,11 @@ final class RecordSyncEvents
 
         usort($rejected, fn (array $a, array $b) => $a['index'] <=> $b['index']);
 
-        return ['acknowledged' => $acknowledged, 'rejected' => $rejected];
+        return [
+            'acknowledged' => $acknowledged,
+            'rejected' => $rejected,
+            'stored' => array_values(array_intersect_key($rows, array_flip($inserted))),
+        ];
     }
 
     /**

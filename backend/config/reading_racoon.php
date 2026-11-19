@@ -17,6 +17,10 @@ return [
     // content when this is newer than its cached copy (FR-11).
     'content_version' => (int) env('CONTENT_VERSION', 1),
 
+    // The game offers the post-test (FR-10) only while this is true. Turn it on
+    // at the end of the evaluation period.
+    'post_test_open' => (bool) env('POST_TEST_OPEN', false),
+
     'bkt' => [
         // Bump when any value below changes, e.g. after EM recalibration
         // (the versioned bkt_parameters table replaces this file later).
@@ -49,6 +53,104 @@ return [
 
         // Largest JSON payload accepted for one event. Real payloads are under 300 bytes.
         'max_payload_bytes' => 8192,
+
+        // A device clock this far ahead of the server is logged as an anomaly
+        // (someone may be moving the clock to get round the schedule, open issue 10).
+        'clock_ahead_minutes' => 5,
+    ],
+
+    // Rewards the server recomputes when it replays lesson_end and chest events
+    // (FR-07, FR-15). Mirror LessonSession and PathProgress in the client.
+    'rewards' => [
+        'xp_per_correct' => 10,
+        'coins_per_star' => 5,
+        'level_up_coins' => 20,
+        'chest_coins' => 15,
+        'lessons_per_world' => 5,
+    ],
+
+    // Raccoon shop (FR-07), mirroring reading-racoon/scripts/core/wardrobe.gd:
+    // id => slot and price. Starter items are owned and worn from the start.
+    'shop' => [
+        'starter' => ['scarf_teal'],
+        'items' => [
+            'cap' => ['slot' => 'hat', 'price' => 30],
+            'party_hat' => ['slot' => 'hat', 'price' => 40],
+            'flower_crown' => ['slot' => 'hat', 'price' => 50],
+            'salakot' => ['slot' => 'hat', 'price' => 60],
+            'gold_crown' => ['slot' => 'hat', 'price' => 120],
+            'scarf_teal' => ['slot' => 'neck', 'price' => 0],
+            'scarf_coral' => ['slot' => 'neck', 'price' => 25],
+            'scarf_mango' => ['slot' => 'neck', 'price' => 25],
+            'bow_tie' => ['slot' => 'neck', 'price' => 35],
+            'lei' => ['slot' => 'neck', 'price' => 45],
+            'round_glasses' => ['slot' => 'eyes', 'price' => 40],
+            'sunglasses' => ['slot' => 'eyes', 'price' => 50],
+            'star_glasses' => ['slot' => 'eyes', 'price' => 60],
+            'pin_star' => ['slot' => 'badge', 'price' => 20],
+            'pin_heart' => ['slot' => 'badge', 'price' => 20],
+            'pin_book' => ['slot' => 'badge', 'price' => 30],
+        ],
+    ],
+
+    // Map levels: world name (D-009), level name and the ARAL band teachers see
+    // (docs/knowledge/05-bkt-engine.md, replaces thesis Table 3.6).
+    'levels' => [
+        1 => ['world' => 'Agusan River', 'name' => 'Foundational', 'band' => 'ARAL Basic'],
+        2 => ['world' => 'Mango Grove', 'name' => 'Emerging', 'band' => 'ARAL Basic / Plus'],
+        3 => ['world' => 'Bahay Kubo Village', 'name' => 'Developing', 'band' => 'ARAL Plus'],
+        4 => ['world' => 'Balangay Bay', 'name' => 'Approaching', 'band' => 'Approaching Proficient'],
+        5 => ['world' => 'Mount Mayapay', 'name' => 'Proficient', 'band' => 'Grade-Level Proficient'],
+    ],
+
+    // Teacher-picked Library books and Watch & Listen videos (game D-017,
+    // D-019). The game shows them as "From your teacher". Only openly licensed
+    // material; files are private and reached only through the API.
+    'content' => [
+        'languages' => ['en' => 'English', 'fil' => 'Filipino', 'bis' => 'Bisaya'],
+        'levels' => ['easy', 'medium', 'hard'],
+        // Paper-cut scenes the game can draw (D-009).
+        'scenes' => ['river', 'grove', 'village', 'bay', 'mountain', 'home'],
+        'licences' => ['CC BY 4.0', 'CC BY-SA 4.0', 'CC BY-NC 4.0', 'CC BY-NC-SA 4.0', 'CC BY 3.0', 'CC0 1.0', 'Public domain'],
+        // Picture names the game has icons for (reading-racoon/assets/icons).
+        'pictures' => ['ant', 'apple', 'bag', 'ball', 'banana', 'bear', 'bee', 'boat', 'bolt', 'book', 'box', 'bulb', 'bus',
+            'butterfly', 'cake', 'car', 'cat', 'check', 'chest', 'chest_open', 'cloud', 'coins', 'crown', 'dog', 'ear',
+            'elephant', 'fish', 'fox', 'frog', 'gift', 'goat', 'grapes', 'hand', 'hat', 'heart', 'heart_plus', 'hen',
+            'house', 'hut', 'lock', 'moon', 'mountain', 'mouse', 'night', 'palm', 'pear', 'pencil', 'rabbit', 'raccoon',
+            'repeat', 'scissors', 'snake', 'sparkles', 'speaker', 'star', 'stories', 'sun', 'talk', 'tree', 'trophy', 'waves'],
+        'max_pages' => 12,
+        'max_video_mb' => (int) env('CONTENT_MAX_VIDEO_MB', 50),
+        'max_image_kb' => 2048,
+        // Laravel's private "local" disk (storage/app/private): never web-served.
+        'disk' => 'local',
+    ],
+
+    // Teacher-facing sub-skill names (MATATAG competency areas, FR-09).
+    'skill_labels' => [
+        'phonological_awareness' => 'Phonological Awareness',
+        'phonics' => 'Phonics',
+        'vocabulary' => 'Vocabulary',
+        'fluency' => 'Reading Fluency',
+        'literal_comprehension' => 'Literal Comprehension',
+    ],
+
+    // Time-restricted access (FR-12, docs/knowledge/06-game-design.md). A section
+    // without its own schedule uses these defaults.
+    'access' => [
+        'timezone' => env('SCHOOL_TIMEZONE', 'Asia/Manila'),
+        'defaults' => [
+            'class_start' => '07:30',
+            'class_end' => '08:30',
+            'after_school_start' => '15:00',
+            'after_school_end' => '17:00',
+            'daily_minutes' => 30,
+            'weekends_open' => false,
+            // Game D-015: free-play minutes for Practice, Library and Watch &
+            // Listen outside the class window, and the hours the game is awake.
+            'free_play_minutes' => 45,
+            'day_start' => '06:00',
+            'day_end' => '21:00',
+        ],
     ],
 
 ];

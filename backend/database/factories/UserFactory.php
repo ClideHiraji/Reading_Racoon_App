@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\RegistrationStatus;
 use App\Enums\UserRole;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -55,6 +56,19 @@ class UserFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'role' => UserRole::Admin,
         ]);
+    }
+
+    /**
+     * A teacher with a registration in the given state (FR-08).
+     */
+    public function registered(RegistrationStatus $status = RegistrationStatus::Approved): static
+    {
+        return $this->afterCreating(function (User $user) use ($status) {
+            $user->registration()->make(['school' => 'Butuan Central ES'])->forceFill([
+                'status' => $status,
+                'reviewed_at' => $status === RegistrationStatus::Pending ? null : now(),
+            ])->save();
+        });
     }
 
     /**

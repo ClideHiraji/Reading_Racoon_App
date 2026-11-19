@@ -42,6 +42,13 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        // Hidden admin portal (D-013): its own session guard, so a teacher
+        // sign-in never counts as an admin one and the other way round.
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
     ],
 
     /*

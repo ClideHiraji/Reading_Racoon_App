@@ -15,8 +15,12 @@ use stdClass;
  * conflict; the client adopts it from GET /api/student/me.
  *
  * A full replay (not incremental) keeps it simple and lets new BKT parameters
- * be applied to old answers. A whole study is ~1,500 events per student, which
- * replays in milliseconds.
+ * be applied to old answers. It costs about 43 µs per stored event (measured
+ * 2026-11-19: 1,500 events 76 ms, 10,000 events 0.43 s; `usage` events arrive
+ * once a minute of play), so it runs in a debounced queued job,
+ * App\Jobs\ReplayStudent, never inside POST /api/sync (D-036). Reading the
+ * events is cheap next to that: 1-7 ms per 1,000-event page at 300,000 rows
+ * with the existing indexes (EXPLAIN ANALYZE, same day).
  */
 final class ReplayStudentEvents
 {

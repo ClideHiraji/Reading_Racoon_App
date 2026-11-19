@@ -57,6 +57,12 @@ return [
         // A device clock this far ahead of the server is logged as an anomaly
         // (someone may be moving the clock to get round the schedule, open issue 10).
         'clock_ahead_minutes' => 5,
+
+        // The server replay (D-011) runs in a queued job this many seconds after
+        // a sync, not inside the request (D-036): a device uploading a backlog in
+        // many batches costs one replay, and a replay error never blocks the
+        // acknowledgement the device needs to empty its queue.
+        'replay_delay_seconds' => (int) env('SYNC_REPLAY_DELAY_SECONDS', 5),
     ],
 
     // Rewards the server recomputes when it replays lesson_end and chest events
@@ -170,4 +176,35 @@ return [
         ],
     ],
 
+    // Internet hosting from the home laptop (NFR-04, D-036, docs/deploy/home-server.md).
+    'security' => [
+        // Strict-Transport-Security max-age on https responses (180 days).
+        'hsts_seconds' => (int) (env('HSTS_SECONDS') ?: 15552000),
+        // Secret for the login-code HMAC. Empty: derived from APP_KEY. Changing
+        // it (or APP_KEY while this is empty) invalidates every login code.
+        'login_code_key' => env('LOGIN_CODE_KEY', ''),
+    ],
+
+    // How long rows stay in the admin system log (FR-08). Anomalies and
+    // warnings are kept longer than routine info lines (access checks).
+    // The audit log (FR-22) is never pruned.
+    'logs' => [
+        'system_info_days' => (int) (env('SYSTEM_LOG_INFO_DAYS') ?: 90),
+        'system_anomaly_days' => (int) (env('SYSTEM_LOG_ANOMALY_DAYS') ?: 365),
+    ],
+
+    // Nightly PostgreSQL backup (`php artisan app:backup`, scheduled in routes/console.php).
+    'backup' => [
+        // Folder for the dumps. Keep it off the system drive if you can.
+        'path' => env('BACKUP_PATH') ?: storage_path('app/backups'),
+        // Optional second copy, e.g. a Google Drive or USB folder (off-site copy).
+        'copy_to' => env('BACKUP_COPY_TO', ''),
+        // How many dumps to keep in each folder.
+        'keep' => (int) env('BACKUP_KEEP') ?: 14,
+        // pg_dump / pg_restore, by full path if they aren't on PATH, e.g.
+        // C:\Program Files\PostgreSQL8in\pg_dump.exe
+        'pg_dump' => env('BACKUP_PG_DUMP') ?: 'pg_dump',
+        'pg_restore' => env('BACKUP_PG_RESTORE') ?: 'pg_restore',
+        'timeout_seconds' => 900,
+    ],
 ];

@@ -5,6 +5,7 @@ namespace Tests\Feature\Api;
 use App\Actions\EnrollStudent;
 use App\Models\Section;
 use App\Models\Student;
+use App\Support\LoginCode;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use Tests\TestCase;
@@ -85,8 +86,40 @@ class LoginTest extends TestCase
         $normalized = str_replace('-', '', $code);
 
         $hash = $student->user->getRawOriginal('login_code_hash');
-        $this->assertSame(hash('sha256', $normalized), $hash);
+        $this->assertSame(LoginCode::hash($normalized), $hash);
         $this->assertDatabaseMissing('users', ['login_code_hash' => $normalized]);
+        // Keyed (D-036): the plain SHA-256 a leaked backup could be brute-forced from is not stored.
+        $this->assertNotSame(hash('sha256', $normalized), $hash);
+        $this->assertSame(hash_hmac('sha256', $normalized, hash_hmac('sha256', 'reading-racoon/login-code/v2', config('app.key'), true)), $hash);
+    }
+
+    public function test_an_account_with_the_old_unkeyed_hash_signs_in_once_and_is_upgraded(): void
+    {
+        ['student' => $student, 'login_code' => $code] = $this->enroll();
+        $student->user->forceFill(['login_code_hash' => LoginCode::legacyHash($code)])->save();
+
+        $this->postJson('/api/auth/login', ['login_code' => $code])->assertOk();
+
+        $this->assertSame(LoginCode::hash($code), $student->user->fresh()->getRawOriginal('login_code_hash'));
+        $this->postJson('/api/auth/login', ['login_code' => $code])->assertOk();
+    }
+
+    public function test_a_new_login_code_key_retires_every_old_code(): void
+    {
+        ['login_code' => $code] = $this->enroll();
+        config(['reading_racoon.security.login_code_key' => 'a-different-secret']);
+
+        $this->postJson('/api/auth/login', ['login_code' => $code])->assertUnprocessable();
+    }
+
+    public function test_the_reply_says_when_the_token_expires(): void
+    {
+        ['login_code' => $code] = $this->enroll();
+
+        $expires = $this->postJson('/api/auth/login', ['login_code' => $code])->assertOk()->json('expires_at');
+
+        $this->assertNotNull($expires);
+        $this->assertTrue(now()->addMinutes(config('sanctum.expiration'))->subMinute()->lessThan($expires));
     }
 
     public function test_login_is_rate_limited_per_address(): void

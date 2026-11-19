@@ -35,7 +35,7 @@
     @include('partials.flash')
     @yield('content')
 </main>
-<script>
+<script nonce="{{ Vite::cspNonce() }}">
     // Confirm dialogs read their text from data-confirm (escaped HTML, never inline JS).
     document.querySelectorAll('form[data-confirm]').forEach(function (form) {
         form.addEventListener('submit', function (event) {

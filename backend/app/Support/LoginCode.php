@@ -40,9 +40,32 @@ final class LoginCode
             && strspn($code, self::ALPHABET) === self::LENGTH;
     }
 
+    /**
+     * What users.login_code_hash stores: an HMAC-SHA256 keyed with a server
+     * secret (D-036). There are only 31^8 codes, so a plain SHA-256 from a
+     * leaked database or backup could be reversed for every child in minutes
+     * on one graphics card; without the key the hashes are useless.
+     */
     public static function hash(string $input): string
     {
+        return hash_hmac('sha256', self::normalize($input), self::key());
+    }
+
+    /**
+     * The unkeyed SHA-256 used before D-036. Only for finding a not-yet-upgraded
+     * account at sign-in (App\Http\Controllers\Api\LoginController).
+     */
+    public static function legacyHash(string $input): string
+    {
         return hash('sha256', self::normalize($input));
+    }
+
+    /** A sub-key for login codes only, from LOGIN_CODE_KEY or else APP_KEY. */
+    private static function key(): string
+    {
+        $secret = (string) config('reading_racoon.security.login_code_key') ?: (string) config('app.key');
+
+        return hash_hmac('sha256', 'reading-racoon/login-code/v2', $secret, true);
     }
 
     /** "K7PM3QXA" → "K7PM-3QXA", easier to read off a card. */

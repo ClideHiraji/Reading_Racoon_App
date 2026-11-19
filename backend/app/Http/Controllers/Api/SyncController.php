@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Actions\RecordSyncEvents;
-use App\Actions\ReplayStudentEvents;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SyncRequest;
+use App\Jobs\ReplayStudent;
 use App\Jobs\WriteAiReport;
 use App\Models\SystemLog;
 use Carbon\CarbonImmutable;
@@ -19,28 +19,38 @@ use Throwable;
  * every id in `rejected` (will never be accepted; keep a local copy for
  * debugging) from its queue. Anything else stays queued and is retried.
  *
- * After storing, the server replays the student's events through BKT and
- * updates the official state (D-011); the client reads it from /api/student/me.
+ * After storing, a queued job (App\Jobs\ReplayStudent, a few seconds later)
+ * replays the student's events through BKT and updates the official state
+ * (D-011, D-036); the client reads it from /api/student/me.
  */
 class SyncController extends Controller
 {
-    public function __invoke(SyncRequest $request, RecordSyncEvents $record, ReplayStudentEvents $replay): JsonResponse
+    public function __invoke(SyncRequest $request, RecordSyncEvents $record): JsonResponse
     {
         $student = $request->user()->student;
         abort_if($student === null, 403);
 
+        // The acknowledgement depends on one thing only: the events are
+        // committed to sync_events (D-008). Everything after this is
+        // best-effort and must never turn a stored batch into an error the
+        // device would retry forever (D-036).
         $events = $request->validated('events');
         $result = $record->handle($student, $events);
 
         if ($result['acknowledged'] !== []) {
-            $replay->handle($student);
+            // Server BKT replay (D-011), debounced in a queued job.
+            ReplayStudent::after($student);
         }
-        if ($result['stored'] !== []) {
-            // The Gemini teacher report, a few minutes later (D-018).
-            WriteAiReport::queueFor($student, afterSync: true);
+        try {
+            if ($result['stored'] !== []) {
+                // The Gemini teacher report, a few minutes later (D-018).
+                WriteAiReport::queueFor($student, afterSync: true);
+            }
+            $this->logNewEvents($student->code, $result['stored'], $request->user()->id);
+            $this->logAnomalies($student->code, $events, $result['rejected']);
+        } catch (Throwable $e) {
+            report($e);
         }
-        $this->logNewEvents($student->code, $result['stored'], $request->user()->id);
-        $this->logAnomalies($student->code, $events, $result['rejected']);
 
         return response()->json([
             'acknowledged' => $result['acknowledged'],

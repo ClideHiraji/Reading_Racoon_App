@@ -37,4 +37,4 @@ tags: [decision, ai, backend, teacher]
 
 **Rejected:** calling Gemini on every page view (slow, costly, rate limits); letting the AI write the lists too (harder to check, more to lose on a refusal); JSON output mode (uses more of the token budget and gets cut off more).
 
-Details: `backend/README.md` ("Gemini teacher report"), [[D-002 AI model Gemini]], [[D-012 Teacher web dashboard]], [[10-open-issues]] issue 37.
+Details: `backend/README.md` ("Gemini teacher report"), [[D-002 AI model Gemini]], [[D-012 Teacher web dashboard]], [[10-open-issues]] issue 39.

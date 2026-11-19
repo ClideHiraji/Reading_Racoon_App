@@ -1,0 +1,85 @@
+<?php
+
+namespace App\Jobs;
+
+use App\Actions\ReplayStudentEvents;
+use App\Models\Student;
+use App\Models\SystemLog;
+use Illuminate\Contracts\Queue\ShouldBeUniqueUntilProcessing;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Queue\Queueable;
+use Throwable;
+
+/**
+ * Replays one learner's synced events into the official state (FR-03, FR-11,
+ * D-011), off the request path (D-036).
+ *
+ * POST /api/sync acknowledges events as soon as they are stored, then queues
+ * this job a few seconds later. While one is waiting, further syncs from the
+ * same learner don't queue another (unique until processing), so a device
+ * uploading a 5,000-event backlog in 50 batches costs one replay instead of
+ * 50. Once the job starts, the lock is released: a sync that lands during the
+ * replay queues the next one, so no stored event is ever left unreplayed.
+ *
+ * A failure is retried with backoff and never touches the device's queue,
+ * which only waits for the acknowledgement.
+ */
+final class ReplayStudent implements ShouldBeUniqueUntilProcessing, ShouldQueue
+{
+    use Queueable;
+
+    public int $tries = 5;
+
+    public int $timeout = 120;
+
+    /** A lock left by a lost job expires after ten minutes. */
+    public int $uniqueFor = 600;
+
+    public function __construct(public readonly int $studentId) {}
+
+    public function uniqueId(): string
+    {
+        return (string) $this->studentId;
+    }
+
+    /** @return list<int> seconds between attempts */
+    public function backoff(): array
+    {
+        return [10, 60, 300, 900];
+    }
+
+    /** Queues a replay for after the sync burst; never throws into the sync request. */
+    public static function after(Student $student): void
+    {
+        try {
+            self::dispatch($student->id)
+                ->delay(now()->addSeconds(config('reading_racoon.sync.replay_delay_seconds')));
+        } catch (Throwable $e) {
+            // With the "sync" queue (tests, a dev server without a worker) the
+            // replay runs right here; its failure must not cost the device its
+            // acknowledgement. The next sync tries again.
+            report($e);
+        }
+    }
+
+    public function handle(ReplayStudentEvents $replay): void
+    {
+        $student = Student::find($this->studentId);
+        if ($student !== null) {
+            $replay->handle($student);
+        }
+    }
+
+    public function failed(?Throwable $e): void
+    {
+        try {
+            SystemLog::record('sync.replay_failed', 'error', [
+                'student_id' => $this->studentId,
+                'exception' => $e ? $e::class : null,
+                'message' => $e ? mb_substr($e->getMessage(), 0, 300) : null,
+            ], anomaly: true);
+        } catch (Throwable) {
+            // The database may be what failed; the file log has the exception.
+        }
+    }
+}

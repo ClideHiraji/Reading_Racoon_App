@@ -4,6 +4,7 @@ use App\Http\Middleware\AuthenticateAdmin;
 use App\Http\Middleware\ConcealAdminPortal;
 use App\Http\Middleware\EnsureApprovedTeacher;
 use App\Http\Middleware\EnsureUserHasRole;
+use App\Http\Middleware\SecurityHeaders;
 use App\Models\SystemLog;
 use App\Support\AdminPortal;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
@@ -33,6 +34,18 @@ return Application::configure(basePath: dirname(__DIR__))
         },
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // The tunnel connector on this laptop (cloudflared or tailscaled) is the
+        // only proxy trusted to say who the client is and that it used https
+        // (config/trustedproxy.php, D-036). Without it every school shares one
+        // rate-limit bucket (127.0.0.1) and the admin IP allowlist can't work.
+        $middleware->trustProxies(headers: Request::HEADER_X_FORWARDED_FOR
+            | Request::HEADER_X_FORWARDED_HOST
+            | Request::HEADER_X_FORWARDED_PORT
+            | Request::HEADER_X_FORWARDED_PROTO);
+
+        // CSP, HSTS and friends on every response (NFR-04, D-036).
+        $middleware->append(SecurityHeaders::class);
+
         $middleware->alias([
             'role' => EnsureUserHasRole::class,
             'teacher' => EnsureApprovedTeacher::class,

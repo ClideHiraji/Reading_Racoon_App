@@ -50,7 +50,10 @@ return [
     |
     */
 
-    'expiration' => null,
+    // A device's sign-in lasts one school year (D-036), then the child types
+    // their code again. A lost tablet is cut off sooner by giving the learner a
+    // new code (that deletes their tokens). Expired tokens are pruned nightly.
+    'expiration' => (int) env('SANCTUM_EXPIRATION_MINUTES', 60 * 24 * 365) ?: null,
 
     /*
     |--------------------------------------------------------------------------
@@ -65,7 +68,8 @@ return [
     |
     */
 
-    'token_prefix' => env('SANCTUM_TOKEN_PREFIX', ''),
+    // A recognisable prefix lets secret scanners spot a leaked token (D-036).
+    'token_prefix' => env('SANCTUM_TOKEN_PREFIX', 'rr_'),
 
     /*
     |--------------------------------------------------------------------------

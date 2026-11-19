@@ -7,6 +7,7 @@ use App\Reports\StoredReportWriter;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -26,6 +27,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // On the internet the server is reached only at its https APP_URL
+        // through the tunnel (D-036). Build every link and redirect from APP_URL,
+        // never from the request's Host header, so a forged Host can't poison them.
+        $url = (string) config('app.url');
+        if ($this->app->isProduction() && str_starts_with($url, 'https://')) {
+            URL::forceRootUrl($url);
+            URL::forceScheme('https');
+        }
+
         // A whole class signs in from one school Wi-Fi address (NAT), so the
         // per-IP login limit must fit ~40 children plus typos. Guessing one of
         // 31^8 codes at this rate is still hopeless. NFR-04.

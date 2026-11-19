@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\MassPrunable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -12,6 +14,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class SystemLog extends Model
 {
+    use MassPrunable;
+
     public const UPDATED_AT = null;
 
     /** Failed sign-ins from one IP within this many minutes ... */
@@ -64,6 +68,25 @@ class SystemLog extends Model
             ->count();
 
         return static::record($event, 'warning', $context, $recent + 1 >= self::BURST_COUNT);
+    }
+
+    /**
+     * Retention (D-036, data minimisation under RA 10173): routine info rows go
+     * after `system_info_days`, everything after `system_anomaly_days`. Run
+     * nightly by `model:prune` (routes/console.php). The audit log is kept.
+     *
+     * @return Builder<SystemLog>
+     */
+    public function prunable(): Builder
+    {
+        $days = config('reading_racoon.logs');
+
+        return static::query()
+            ->where(fn (Builder $q) => $q
+                ->where('anomaly', false)
+                ->where('level', 'info')
+                ->where('created_at', '<', now()->subDays(max(1, (int) $days['system_info_days']))))
+            ->orWhere('created_at', '<', now()->subDays(max(1, (int) $days['system_anomaly_days'])));
     }
 
     /**

@@ -285,7 +285,8 @@ class AiReportTest extends TestCase
             ->expectsOutputToContain('no parental consent on file')->assertSuccessful();
 
         Http::assertNothingSent();
-        Queue::assertNothingPushed();
+        // The sync queues only the BKT replay (D-036), never a report.
+        Queue::assertNotPushed(WriteAiReport::class);
         $this->assertSame(0, AiLog::count());
     }
 

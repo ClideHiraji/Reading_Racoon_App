@@ -65,7 +65,7 @@ class PrivacyController extends Controller
             'inventory' => [
                 ['Learner first name or nickname', 'users.name (students)', Student::count(), 'Shown to the learner\'s own teacher only.'],
                 ['Pseudonymous student code', 'students.code', $students, 'Used in exports, logs and AI prompts instead of names.'],
-                ['Login code', 'users.login_code_hash', $students, 'SHA-256 hash only; the code is shown once.'],
+                ['Login code', 'users.login_code_hash', $students, 'Keyed HMAC-SHA256 hash only (D-036); the code is shown once.'],
                 ['Gameplay events', 'sync_events', DB::table('sync_events')->count(), 'Answers, scores, play minutes; no free text, age or gender.'],
                 ['AI calls', 'ai_logs', AiLog::count(), 'Student code and scores sent to Gemini, with the reply (FR-21). Consented learners only; deleted with the learner.'],
                 ['AI report paragraphs', 'ai_reports', AiReport::count(), 'Gemini\'s summary text per set of numbers; deleted with the learner.'],

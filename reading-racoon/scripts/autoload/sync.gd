@@ -239,10 +239,14 @@ func _download(f: Dictionary) -> bool:
 		var last := have + CHUNK - 1
 		if size > 0:
 			last = mini(last, size - 1)
+		# Room for the whole file too, in case a proxy ignores Range and sends it all.
+		var limit := maxi(CHUNK, size) + 65536
 		var res := await _http(str(f.url), HTTPClient.METHOD_GET, "",
-				PackedStringArray([auth, "Range: bytes=%d-%d" % [have, last]]), CHUNK_TIMEOUT, CHUNK + 65536)
+				PackedStringArray([auth, "Range: bytes=%d-%d" % [have, last]]), CHUNK_TIMEOUT, limit)
 		var body: PackedByteArray = res.body
-		var whole: bool = res.code == 200 and have == 0   # a server that ignores Range
+		var whole: bool = res.code == 200   # a server or proxy that ignores Range: start over with it
+		if whole:
+			have = 0
 		if res.code == 416 and size <= 0 and have > 0:
 			break   # size unknown (page pictures) and the part already ends where the file does
 		if res.code == 206 and not SyncProtocol.range_starts_at(res.headers, have):

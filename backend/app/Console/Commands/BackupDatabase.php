@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\SystemLog;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use RuntimeException;
 use Symfony\Component\Process\Process;
@@ -40,7 +41,7 @@ class BackupDatabase extends Command
         try {
             File::ensureDirectoryExists($dir);
             $this->runTool([$cfg['pg_dump'], '--format=custom', '--compress=6', '--no-owner', '--no-privileges',
-                '--file='.$part, ...$this->connectionArgs(), (string) config('database.connections.pgsql.database')]);
+                '--file='.$part, ...$this->connectionArgs(), (string) DB::connection('pgsql')->getConfig('database')]);
 
             $list = $this->runTool([$cfg['pg_restore'], '--list', $part]);
             if (! str_contains($list, 'TABLE DATA public sync_events')) {
@@ -85,7 +86,8 @@ class BackupDatabase extends Command
     /** @return list<string> */
     private function connectionArgs(): array
     {
-        $db = config('database.connections.pgsql');
+        // The connection's resolved settings, so DB_URL is honoured too.
+        $db = DB::connection('pgsql')->getConfig();
 
         return ['--host='.$db['host'], '--port='.$db['port'], '--username='.$db['username'], '--no-password'];
     }
@@ -94,7 +96,7 @@ class BackupDatabase extends Command
     private function runTool(array $command): string
     {
         $process = new Process($command, null, [
-            'PGPASSWORD' => (string) config('database.connections.pgsql.password'),
+            'PGPASSWORD' => (string) DB::connection('pgsql')->getConfig('password'),
             'PGCONNECT_TIMEOUT' => '10',
         ], null, (float) config('reading_racoon.backup.timeout_seconds'));
         $process->run();

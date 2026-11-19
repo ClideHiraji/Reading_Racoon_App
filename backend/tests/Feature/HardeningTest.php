@@ -165,6 +165,34 @@ class HardeningTest extends TestCase
             ->where('level', 1)->value('attempts'));
     }
 
+    public function test_with_the_queue_worker_down_the_sync_replays_right_away(): void
+    {
+        config(['queue.default' => 'database']);
+        DB::table('jobs')->insert(['queue' => 'default', 'payload' => '{}', 'attempts' => 0,
+            'available_at' => now()->subMinutes(10)->getTimestamp(), 'created_at' => now()->subMinutes(10)->getTimestamp()]);
+        $student = Student::factory()->create();
+        Sanctum::actingAs($student->user);
+
+        $this->postJson('/api/sync', ['events' => [$this->event(['skill' => 'phonics', 'level' => 1,
+            'correct' => true, 'num_choices' => 3, 'rescue' => false], 'response')]])->assertOk();
+
+        $this->assertSame(1, BktState::where('student_id', $student->id)->where('sub_skill', 'phonics')
+            ->where('level', 1)->value('attempts'), 'replayed inline, not left waiting for a dead worker');
+        $this->assertSame(1, DB::table('jobs')->count(), 'and no replay job was added to the stuck queue');
+    }
+
+    public function test_preflight_reads_the_level_of_the_channels_a_stack_writes_to(): void
+    {
+        $this->app['env'] = 'production';
+        config(['app.debug' => false, 'app.url' => 'https://racoon.example', 'session.secure' => true,
+            'logging.default' => 'stack', 'logging.channels.stack.channels' => ['daily'],
+            'logging.channels.daily.level' => 'warning']);
+        $this->artisan('app:preflight')->expectsOutputToContain('Log level is not debug');
+
+        config(['logging.channels.daily.level' => 'debug']);
+        $this->artisan('app:preflight')->expectsOutputToContain('LOG_LEVEL is debug in production');
+    }
+
     public function test_a_replay_that_keeps_failing_is_logged_for_the_admin(): void
     {
         (new ReplayStudent(42))->failed(new RuntimeException('lock timeout'));

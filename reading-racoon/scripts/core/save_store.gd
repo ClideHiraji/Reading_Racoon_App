@@ -149,7 +149,10 @@ func remove_events(ids: Array, rejected: Array = []) -> void:
 	var broken := PackedStringArray()
 	if FileAccess.file_exists(queue_path):
 		var kept := PackedStringArray()
-		for line in FileAccess.get_file_as_string(queue_path).split("\n", false):
+		for raw_line in FileAccess.get_file_as_string(queue_path).split("\n", false):
+			var line := raw_line.strip_edges()   # a CR from a Windows copy is not damage
+			if line.is_empty():
+				continue
 			if not line.ends_with("}"):
 				broken.append(line)   # cut off by a crash mid-append; unreadable
 			elif not drop.has(_line_id(line)):
@@ -215,10 +218,11 @@ static func replace_file(tmp: String, path: String) -> bool:
 	for _attempt in 3:
 		if DirAccess.rename_absolute(tmp, path) == OK:
 			return true
-		if not FileAccess.file_exists(path):
-			OS.delay_msec(100)   # nothing to move aside: the source was busy
-		else:
+		# Only wait off the main thread (a frame must never stall, NFR-01);
+		# the main thread goes straight to the .bak route below.
+		if FileAccess.file_exists(path) or OS.get_thread_caller_id() == OS.get_main_thread_id():
 			break
+		OS.delay_msec(100)   # the source was busy
 	var bak := path + ".bak"
 	if FileAccess.file_exists(bak):
 		DirAccess.remove_absolute(bak)

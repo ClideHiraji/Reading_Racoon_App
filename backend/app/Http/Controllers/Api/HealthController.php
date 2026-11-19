@@ -21,7 +21,8 @@ class HealthController extends Controller
     {
         $db = Ops::databaseUp();
         $lag = $db ? Ops::queueLag() : null;
-        $scheduler = Ops::sinceBeat('scheduler');
+        // The beat lives in the cache, which is the database: don't ask it when that's down.
+        $scheduler = $db ? Ops::sinceBeat('scheduler') : null;
 
         $workerOk = $lag === null || $lag <= Ops::QUEUE_LAG_LIMIT;
         $schedulerOk = $scheduler !== null && $scheduler <= Ops::SCHEDULER_LIMIT;

@@ -37,7 +37,7 @@ class Preflight extends Command
         $this->check(str_starts_with($url, 'https://'), "APP_URL is https ({$url})", "APP_URL is not https ({$url})", fail: $prod);
         $this->check((bool) config('session.secure'), 'Session cookies are https-only', 'SESSION_SECURE_COOKIE is not true', fail: $prod);
         $this->check((bool) config('session.encrypt'), 'Sessions are encrypted at rest', 'SESSION_ENCRYPT is not true', fail: false);
-        $this->check(config('logging.channels.'.config('logging.default').'.level', 'debug') !== 'debug' || ! $prod,
+        $this->check(! in_array('debug', $this->logLevels(), true) || ! $prod,
             'Log level is not debug', 'LOG_LEVEL is debug in production', fail: false);
         $proxies = (array) config('trustedproxy.proxies');
         $this->check(array_intersect($proxies, ['*', '**', '0.0.0.0/0', '::/0']) === [],
@@ -99,6 +99,16 @@ class Preflight extends Command
         $this->counts[$status]++;
         $color = ['PASS' => 'green', 'WARN' => 'yellow', 'FAIL' => 'red'][$status];
         $this->line("  <fg={$color}>{$status}</> ".($ok ? $pass : $problem));
+    }
+
+    /** @return list<string> the levels of the default log channel, or of each channel a stack writes to */
+    private function logLevels(): array
+    {
+        $default = (string) config('logging.default');
+        $channels = config("logging.channels.{$default}.driver") === 'stack'
+            ? (array) config("logging.channels.{$default}.channels") : [$default];
+
+        return array_map(fn ($c) => (string) config("logging.channels.{$c}.level", 'debug'), $channels);
     }
 
     private function migrationsCurrent(): bool

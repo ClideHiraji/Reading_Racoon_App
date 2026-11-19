@@ -35,12 +35,13 @@ while ($true) {
     $started = Get-Date
     Add-Content $log ("{0:s} starting: php artisan {1}" -f $started, $Command)
     $arguments = @("artisan") + ($Command -split " ")
-    $p = Start-Process -FilePath $Php -ArgumentList $arguments -WorkingDirectory $backend `
-        -NoNewWindow -PassThru -RedirectStandardOutput "$log.out" -RedirectStandardError "$log.err"
-    $p.WaitForExit()
-    Get-Content "$log.out", "$log.err" -ErrorAction SilentlyContinue | Add-Content $log
-    Remove-Item "$log.out", "$log.err" -ErrorAction SilentlyContinue
-    Add-Content $log ("{0:s} stopped with exit code {1}" -f (Get-Date), $p.ExitCode)
+    # Each line reaches the log as it is printed, so a stuck worker shows
+    # what it was doing (not only after it exits).
+    Push-Location $backend
+    & $Php @arguments 2>&1 | ForEach-Object { "$_" } | Add-Content -Path $log -Encoding UTF8
+    $code = $LASTEXITCODE
+    Pop-Location
+    Add-Content $log ("{0:s} stopped with exit code {1}" -f (Get-Date), $code)
 
     # A run that lasted a while was healthy: restart quickly. Repeated quick
     # failures back off, so a broken database doesn't spin the laptop's CPU.

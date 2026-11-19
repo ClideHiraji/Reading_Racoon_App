@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\Actions\ReplayStudentEvents;
 use App\Models\Student;
 use App\Models\SystemLog;
+use App\Support\Ops;
 use Illuminate\Contracts\Queue\ShouldBeUniqueUntilProcessing;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
@@ -48,10 +49,21 @@ final class ReplayStudent implements ShouldBeUniqueUntilProcessing, ShouldQueue
         return [10, 60, 300, 900];
     }
 
-    /** Queues a replay for after the sync burst; never throws into the sync request. */
+    /**
+     * Queues a replay for after the sync burst; never throws into the sync
+     * request. If the queue worker has stopped (a job has waited longer than
+     * Ops::QUEUE_LAG_LIMIT), the replay runs right here instead, so the
+     * official state never goes stale just because the worker is down.
+     */
     public static function after(Student $student): void
     {
         try {
+            $lag = Ops::queueLag();
+            if ($lag !== null && $lag > Ops::QUEUE_LAG_LIMIT) {
+                app(ReplayStudentEvents::class)->handle($student);
+
+                return;
+            }
             self::dispatch($student->id)
                 ->delay(now()->addSeconds(config('reading_racoon.sync.replay_delay_seconds')));
         } catch (Throwable $e) {

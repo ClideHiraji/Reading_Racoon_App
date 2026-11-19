@@ -538,6 +538,21 @@ func test_a_half_written_line_never_swallows_the_next_event() -> void:
 	store.wipe()
 
 
+## A queue copied through a Windows tool can gain CR line ends: still whole events.
+func test_crlf_lines_are_not_mistaken_for_damage() -> void:
+	var store := SaveStore.new("unit_test")
+	store.wipe()
+	var a := store.queue_event("response", {"n": 0})
+	var b := store.queue_event("response", {"n": 1})
+	var text := FileAccess.get_file_as_string(store.queue_path).replace("\n", "\r\n")
+	var f := FileAccess.open(store.queue_path, FileAccess.WRITE)
+	f.store_string(text)
+	f.close()
+	store.remove_events([a])
+	check(store.read_queue().map(func(e): return e.id) == [b], "the unsent CRLF event stays queued")
+	store.wipe()
+
+
 func test_retry_policy() -> void:
 	check(is_equal_approx(SyncProtocol.backoff(1, 0.0, 0.0), 15.0), "first retry: 15-30 s")
 	check(is_equal_approx(SyncProtocol.backoff(1, 0.0, 1.0), 30.0), "first retry ceiling 30 s")

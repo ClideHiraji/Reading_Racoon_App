@@ -179,7 +179,7 @@ Status key: 🔴 blocks coding · 🟡 decide during build · 📝 manuscript-on
 - **Fixed the same day:** the Videos chip's empty message showed one letter per line, and teacher videos were stretched to the stage (a 16:9 clip squeezed about 12% on a phone). Both have `ui_smoke` checks.
 - **Still open:** the sideways turn is untested on a real phone or tablet (only simulated on a laptop).
 
-### 36. Recorded voices for Roco and Rina 🟡 IN PROGRESS (2026-11-19)
+### 36. Recorded voices for Roco and Rina ✅ RECORDED (2026-11-20), teacher check still open
 - The user asked for Gemini's child voices for every line, compressed to keep the app small. The scope is the buddy's lines and menus, not lessons, tests, books or videos. It's made on AI Studio's free tier, in a lively, chatty style, with "reader" in place of the student's name.
 - **Decision (D-035):**
   - Zeno is Roco and Cleo is Rina: one MP3 per sentence in `assets/voice/`, named by a hash of buddy, language and sentence.
@@ -190,8 +190,9 @@ Status key: 🔴 blocks coding · 🟡 decide during build · 📝 manuscript-on
   - Roco is complete in all three languages. Rina lacks 16 lines: 15 short ones, plus "In her paws", her Closet tab's new name.
   - 15 generations went through in one day, with no limit reached. Batches of up to 126 lines worked, and a batch can mix languages by using one speech block per style.
   - The batch cutter now aligns by sentence length (it had shifted clips in a Filipino batch). All earlier clips were checked again.
+- **Done (2026-11-20):** all 1,465 sentences are recorded and in the game (12.0 MB).
+  - Rina's last 16 lines went in 4 generations. Each batch set the new lines among lines she already had, read again only to steady the cuts.
 - **Still open:**
-  - 16 lines for Rina (13 Bisaya, 1 Filipino, 2 English). Two small retries failed their check; these lines use the system voice until they're recorded.
   - A teacher's check of the Filipino and Bisaya lines (issue 35). They're recorded now, so a changed line has to be recorded again.
   - Lines with a clock time stay with the system voice.
 

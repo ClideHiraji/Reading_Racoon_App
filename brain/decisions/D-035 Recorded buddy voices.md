@@ -37,7 +37,9 @@ tags: [decision, voice, tts, gemini, fr-14, fr-20, d-033]
 - The user wanted natural kid voices and chose Gemini's Zeno and Cleo after the voice tests (D-033). They chose the free tier, the AI Studio website, and the lively style.
 
 **Consequences**
-- **Recorded:** 1,449 of 1,465 sentences (11.9 MB of MP3). Roco is complete. Rina lacks 16 lines (15 short ones, and her Closet tab's "In her paws"), which use the system voice until they're recorded.
+- **Recorded: all 1,465 sentences** (12.0 MB of MP3), finished on 2026-11-20.
+  - Rina's last 16 were mostly short exclamations ("Wow!", "Shh..."), and they kept failing in batches of their own.
+  - What worked was setting them among 20–35 lines she already had. Those lines were read again only to steady the cuts and weren't saved (`anchor:` keys in `current_batch.json`).
 - **AI Studio's free limit isn't a fixed 6 a day.** The first day stopped after 6 generations. The next session (from 4 PM, after the reset at midnight Pacific) ran 15 generations, about 50 minutes of audio, with no limit reached.
 - **Very small batches (15 lines) failed twice:** the model skipped or shortened pauses, and the check rejected every piece. Short exclamations at the start of a generation fail most often.
 - **Changing a line's wording means recording it again.** The key changes with the text, and the old clip is simply not used.

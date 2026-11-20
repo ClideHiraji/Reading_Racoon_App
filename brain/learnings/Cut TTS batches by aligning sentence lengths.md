@@ -22,4 +22,5 @@ When many sentences are read in one text-to-speech generation and the audio is c
   - moving either of its cuts to another pause would cost more than 2.0;
   - it isn't next to an off piece across an unclear cut.
 - **If under 60% of a batch passes, keep none.** Small batches (15 lines) failed this way twice, when the model skipped pauses.
+- **Re-recording a few short lines:** don't send them alone. Set each between lines already recorded in the same voice and language, 20–35 lines in all, starting and ending with recorded ones. Read the recorded ones again only to steady the cuts, and don't save them (`anchor:` keys in `studio.py`). That finished Rina's last 16 lines after four failed tries on their own (2026-11-20).
 - **To check old clips without the batch's text order:** each clip is an exact slice of its download, so `bytes.find` locates it and gives back the real order.

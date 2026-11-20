@@ -25,12 +25,31 @@
     </div>
 </div>
 
-@if ($new = session('new_code'))
-    <div class="card" style="border-color: var(--teal);">
-        <h2>Login code for {{ $new['name'] }}</h2>
-        <p><span class="code-card">{{ $new['login_code'] }}</span></p>
-        <p class="muted small">Write this code on {{ $new['name'] }}'s login card now. For privacy it is stored only in scrambled form and <strong>won't be shown again</strong>. Lost it? Use "New code" in the roster. Student code for reports: {{ $new['student_code'] }}.</p>
-    </div>
+@if ($cards = session('login_cards'))
+    {{-- Shown once (FR-16, D-036): only a scrambled copy of each code is kept. --}}
+    <section id="login-cards" class="card" aria-labelledby="cards-title" style="border-color: var(--teal);">
+        <div class="page-head no-print" style="margin-bottom: .5rem;">
+            <h2 id="cards-title">{{ count($cards) === 1 ? 'Login card for '.$cards[0]['name'] : 'Login cards for '.count($cards).' learners' }}</h2>
+            <button class="btn" type="button" data-print>Print {{ count($cards) === 1 ? 'card' : 'cards' }}</button>
+        </div>
+        <p class="muted small no-print">Print them now, or copy each code onto the child's card. For privacy the codes are stored only in scrambled form and <strong>won't be shown again</strong>: once you leave or reload this page, a lost card needs "New login code". Student IDs (RR-...) are only for reports and are not login codes.</p>
+        <div class="login-cards">
+            @foreach ($cards as $card)
+                <div class="login-card">
+                    <div class="login-card-head"><span class="brand-mark" aria-hidden="true">RR</span> Reading Racoon &middot; {{ $section->name }}</div>
+                    <div class="login-card-name">{{ $card['name'] }}</div>
+                    <div class="login-card-code" aria-label="Login code {{ $card['login_code'] }}">
+                        @foreach (str_split(str_replace('-', '', $card['login_code'])) as $i => $char)
+                            @if ($i === 4)<span class="gap" aria-hidden="true"></span>@endif
+                            <span class="box">{{ $char }}</span>
+                        @endforeach
+                    </div>
+                    <div class="login-card-plain">{{ $card['login_code'] }}</div>
+                    <div class="login-card-help">Type these 8 letters and numbers in the game, then tap LET'S GO!</div>
+                </div>
+            @endforeach
+        </div>
+    </section>
 @endif
 
 <div class="grid grid-4" style="margin-bottom: 1rem;">
@@ -104,14 +123,14 @@
 <section class="card" aria-labelledby="roster-title">
     <div class="page-head" style="margin-bottom: .5rem;">
         <h2 id="roster-title">Roster</h2>
-        <form method="POST" action="{{ route('teacher.students.store', $section) }}" class="row">
-            @csrf
-            <label for="new-name" class="small" style="margin: 0;">Add learner</label>
-            <input id="new-name" type="text" name="name" required maxlength="50" placeholder="First name or nickname" style="width: 220px;">
-            <button class="btn" type="submit">Add</button>
-        </form>
     </div>
-    <p class="muted small">Use a first name or nickname only (RA 10173). Reports and exports use the student code instead.</p>
+    <form method="POST" action="{{ route('teacher.students.store', $section) }}" class="add-learners">
+        @csrf
+        <label for="new-names" class="small">Add learners: one first name or nickname per line (up to {{ \App\Http\Controllers\Teacher\RosterController::MAX_NAMES }} at once)</label>
+        <textarea id="new-names" name="names" rows="3" required placeholder="One first name per line">{{ old('names') }}</textarea>
+        <button class="btn" type="submit">Add and make login cards</button>
+    </form>
+    <p class="muted small">Use a first name or nickname only (RA 10173). Reports and exports use the student ID instead.</p>
     @if ($count === 0)
         <p class="muted">No learners yet. Add your class above; each learner gets a login code for the tablet.</p>
     @else
@@ -126,7 +145,7 @@
                     <tr>
                         <td>
                             <a href="{{ route('teacher.students.show', $student) }}"><strong>{{ $student->displayName() }}</strong></a>
-                            <div class="muted small">{{ $student->code }}</div>
+                            <div class="muted small" title="A private ID for reports and exports. Children sign in with their login code; New login code makes one.">Student ID {{ $student->code }} · not the login code</div>
                             @if ($student->open_flags_count > 0)
                                 <span class="badge badge-red">{{ $student->open_flags_count }} {{ Str::plural('flag', $student->open_flags_count) }}</span>
                             @endif
@@ -162,7 +181,7 @@
                                 <a class="btn btn-light btn-sm" href="{{ route('teacher.students.report', $student) }}">Report</a>
                                 <form method="POST" action="{{ route('teacher.students.code', $student) }}" data-confirm="Give {{ $student->displayName() }} a new login code? The old code stops working.">
                                     @csrf
-                                    <button class="btn btn-light btn-sm" type="submit">New code</button>
+                                    <button class="btn btn-light btn-sm" type="submit">New login code</button>
                                 </form>
                                 <form method="POST" action="{{ route('teacher.students.destroy', $student) }}" data-confirm="Remove {{ $student->displayName() }} and delete all their reading data? This cannot be undone.">
                                     @csrf

@@ -61,11 +61,18 @@ class TeacherDashboardTest extends TestCase
     {
         $response = $this->post(route('teacher.students.store', $this->section), ['name' => 'Ana'])
             ->assertRedirect(route('teacher.sections.show', $this->section));
-        $code = session('new_code')['login_code'];
+        $code = session('login_cards')[0]['login_code'];
         $this->assertMatchesRegularExpression('/^[A-HJKMNP-Z2-9]{4}-[A-HJKMNP-Z2-9]{4}$/', $code);
 
         $this->get(route('teacher.sections.show', $this->section))->assertSee($code)->assertSee('won\'t be shown again', false);
         $this->get(route('teacher.sections.show', $this->section))->assertDontSee($code);
+
+        // The student ID is labelled so nobody types it into the game as a login code.
+        $student = $this->section->students()->sole();
+        $this->get(route('teacher.sections.show', $this->section))
+            ->assertSee('Student ID '.$student->code.' · not the login code', false)
+            ->assertSee('New login code');
+        $this->get(route('teacher.students.show', $student))->assertSee('(for reports, not the login code)', false);
 
         $this->postJson('/api/auth/login', ['login_code' => $code])->assertOk()->assertJsonPath('user.name', 'Ana');
         $this->assertSame(1, AuditLog::where('action', 'student.add')->count());
@@ -74,15 +81,71 @@ class TeacherDashboardTest extends TestCase
     public function test_a_new_code_replaces_the_old_one(): void
     {
         $this->post(route('teacher.students.store', $this->section), ['name' => 'Ana']);
-        $old = session('new_code')['login_code'];
+        $old = session('login_cards')[0]['login_code'];
         $student = Student::sole();
 
         $this->post(route('teacher.students.code', $student))->assertRedirect();
-        $new = session('new_code')['login_code'];
+        $new = session('login_cards')[0]['login_code'];
 
         $this->assertNotSame($old, $new);
         $this->postJson('/api/auth/login', ['login_code' => $old])->assertUnprocessable();
         $this->postJson('/api/auth/login', ['login_code' => $new])->assertOk();
+    }
+
+    public function test_a_whole_class_is_added_at_once_with_printable_login_cards(): void
+    {
+        $this->post(route('teacher.students.store', $this->section), ['names' => "Ana\n\n  Ben  \r\nCarlo\n"])
+            ->assertRedirect(route('teacher.sections.show', $this->section));
+        $cards = session('login_cards');
+        $this->assertSame(['Ana', 'Ben', 'Carlo'], array_column($cards, 'name'));
+
+        $page = $this->get(route('teacher.sections.show', $this->section))->assertOk()
+            ->assertSee('Login cards for 3 learners')
+            ->assertSee('data-print', false)
+            ->assertSee('won\'t be shown again', false);
+        foreach ($cards as $card) {
+            // The code in 8 boxes split 4 + 4, like the game's keypad.
+            [$left, $right] = explode('-', $card['login_code']);
+            $boxes = implode('', array_map(fn ($c) => '<span class="box">'.$c.'</span>', str_split($left)))
+                .'<span class="gap" aria-hidden="true"></span>'
+                .implode('', array_map(fn ($c) => '<span class="box">'.$c.'</span>', str_split($right)));
+            $this->assertStringContainsString($boxes, preg_replace('/>\s+</', '><', $page->getContent()));
+            $this->postJson('/api/auth/login', ['login_code' => $card['login_code']])->assertOk()
+                ->assertJsonPath('user.name', $card['name']);
+        }
+
+        // Shown once: a reload shows no codes.
+        $again = $this->get(route('teacher.sections.show', $this->section))->assertDontSee('Login cards for');
+        foreach ($cards as $card) {
+            $again->assertDontSee($card['login_code']);
+        }
+        $this->assertSame(3, AuditLog::where('action', 'student.add')->count());
+    }
+
+    public function test_a_bad_class_list_adds_nobody(): void
+    {
+        $tooMany = implode("\n", array_map(fn ($i) => "Learner {$i}", range(1, 61)));
+        $this->post(route('teacher.students.store', $this->section), ['names' => $tooMany])
+            ->assertSessionHasErrors('names');
+        $this->post(route('teacher.students.store', $this->section), ['names' => "Ana\n".str_repeat('x', 51)])
+            ->assertSessionHasErrors('names.1');
+        $this->post(route('teacher.students.store', $this->section), ['names' => "\n  \n"])
+            ->assertSessionHasErrors('names');
+
+        $this->assertSame(0, Student::count());
+    }
+
+    public function test_a_new_login_code_comes_as_a_card_to_print(): void
+    {
+        $this->post(route('teacher.students.store', $this->section), ['names' => 'Ana']);
+        $student = Student::sole();
+
+        $this->post(route('teacher.students.code', $student));
+
+        $this->assertSame('Ana', session('login_cards')[0]['name']);
+        $this->get(route('teacher.sections.show', $this->section))
+            ->assertSee('Login card for Ana')
+            ->assertSee('Print card');
     }
 
     public function test_removing_a_learner_deletes_their_data(): void

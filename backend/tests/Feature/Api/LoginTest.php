@@ -5,6 +5,7 @@ namespace Tests\Feature\Api;
 use App\Actions\EnrollStudent;
 use App\Models\Section;
 use App\Models\Student;
+use App\Models\SystemLog;
 use App\Support\LoginCode;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
@@ -120,6 +121,43 @@ class LoginTest extends TestCase
 
         $this->assertNotNull($expires);
         $this->assertTrue(now()->addMinutes(config('sanctum.expiration'))->subMinute()->lessThan($expires));
+    }
+
+    public function test_sign_ins_are_logged_for_the_admin_without_the_code(): void
+    {
+        ['student' => $student, 'login_code' => $code] = $this->enroll();
+
+        $this->postJson('/api/auth/login', ['login_code' => $code, 'device_name' => 'Tablet 3'])->assertOk();
+        $this->postJson('/api/auth/login', ['login_code' => 'ABCD-2345', 'device_name' => 'Tablet 3'])->assertUnprocessable();
+        $this->postJson('/api/auth/login', ['login_code' => 'hello', 'device_name' => 'Tablet 3'])->assertUnprocessable();
+
+        $ok = SystemLog::where('event', 'student.login')->sole();
+        $this->assertEquals(['student' => $student->code, 'device' => 'Tablet 3'], $ok->context);   // jsonb sorts keys
+        $this->assertSame(['unknown', 'malformed'], SystemLog::where('event', 'student.login_failed')
+            ->orderBy('id')->get()->map(fn (SystemLog $log) => $log->context['reason'])->all());
+        $logged = SystemLog::all()->toJson();
+        $this->assertStringNotContainsString(str_replace('-', '', $code), str_replace('-', '', $logged), 'never the code');
+        $this->assertStringNotContainsString('ABCD', $logged);
+    }
+
+    public function test_typing_the_student_id_is_recognised_in_the_log(): void
+    {
+        ['student' => $student] = $this->enroll();
+
+        // RR-K7P3QX fits the game's 8 boxes as RRK7P3QX, but it is not a login code.
+        $this->postJson('/api/auth/login', ['login_code' => str_replace('-', '', $student->code)])->assertUnprocessable();
+
+        $this->assertSame('student_id', SystemLog::where('event', 'student.login_failed')->sole()->context['reason']);
+    }
+
+    public function test_five_wrong_codes_from_one_tablet_are_an_anomaly(): void
+    {
+        for ($i = 0; $i < 5; $i++) {
+            $this->postJson('/api/auth/login', ['login_code' => 'ABCD-2345'])->assertUnprocessable();
+        }
+
+        $this->assertSame([false, false, false, false, true], SystemLog::where('event', 'student.login_failed')
+            ->orderBy('id')->pluck('anomaly')->all());
     }
 
     public function test_login_is_rate_limited_per_address(): void

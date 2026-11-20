@@ -42,6 +42,10 @@
             if (!window.confirm(form.dataset.confirm)) event.preventDefault();
         });
     });
+    // Print buttons (the login cards): data-print, never inline JS (CSP).
+    document.querySelectorAll('[data-print]').forEach(function (button) {
+        button.addEventListener('click', function () { window.print(); });
+    });
 </script>
 @stack('scripts')
 </body>

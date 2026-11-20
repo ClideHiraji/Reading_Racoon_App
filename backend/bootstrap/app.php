@@ -18,6 +18,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Route;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Symfony\Component\Console\Exception\ExceptionInterface as ConsoleException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -86,6 +87,12 @@ return Application::configure(basePath: dirname(__DIR__))
 
         // Server errors appear in the admin portal's system log as anomalies (FR-08).
         $exceptions->report(function (Throwable $e) {
+            // A mistyped artisan command (missing argument, unknown option or
+            // command) is someone at the keyboard, not a server fault: it stays
+            // in the terminal and laravel.log, not the admin's anomaly list.
+            if ($e instanceof ConsoleException) {
+                return;
+            }
             try {
                 SystemLog::record('server.error', 'error', [
                     'exception' => $e::class,

@@ -9,12 +9,14 @@ use App\Models\SyncEvent;
 use App\Models\SystemLog;
 use App\Models\User;
 use App\Support\Ops;
+use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\Sanctum;
 use RuntimeException;
+use Symfony\Component\Console\Exception\RuntimeException as ConsoleRuntimeException;
 use Tests\TestCase;
 
 /**
@@ -191,6 +193,19 @@ class HardeningTest extends TestCase
 
         config(['logging.channels.daily.level' => 'debug']);
         $this->artisan('app:preflight')->expectsOutputToContain('LOG_LEVEL is debug in production');
+    }
+
+    public function test_a_mistyped_artisan_command_is_not_a_server_anomaly(): void
+    {
+        $handler = app(ExceptionHandler::class);
+
+        // What `php artisan admin:create` without an email reports.
+        $handler->report(new ConsoleRuntimeException('Not enough arguments (missing: "email").'));
+        $this->assertSame(0, SystemLog::where('event', 'server.error')->count());
+
+        // A real failure still reaches the admin's anomaly list.
+        $handler->report(new RuntimeException('database went away'));
+        $this->assertTrue(SystemLog::where('event', 'server.error')->sole()->anomaly);
     }
 
     public function test_a_replay_that_keeps_failing_is_logged_for_the_admin(): void

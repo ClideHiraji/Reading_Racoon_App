@@ -7,19 +7,29 @@
 @endphp
 
 @section('content')
-<p class="small"><a href="{{ route('teacher.content.index') }}">&larr; Library &amp; Videos</a></p>
-<div class="narrow" style="max-width: 720px;">
-    <div class="card">
+<nav class="crumbs" aria-label="Breadcrumb">
+    <ol>
+        <li><a href="{{ route('teacher.content.index') }}">Library &amp; Videos</a></li>
+        <li aria-current="page">{{ $item ? 'Edit video' : 'Upload a video' }}</li>
+    </ol>
+</nav>
+<div class="page-head">
+    <div>
         <h1>{{ $item ? 'Edit video' : 'Upload a video' }}</h1>
-        <p class="muted">Tablets download the video on Wi-Fi and play it offline in Watch &amp; Listen. Use Ogg Theora (.ogv), at most {{ $c['max_video_mb'] }} MB; convert MP4 first, for example with <code>ffmpeg -i in.mp4 -c:v libtheora -q:v 6 -c:a libvorbis out.ogv</code>.</p>
-        <form method="POST" action="{{ $item ? route('teacher.content.update', $item) : route('teacher.content.videos.store') }}" enctype="multipart/form-data">
-            @csrf
-            @if ($item) @method('PUT') @endif
+        <p class="meta measure">Tablets download the video on Wi-Fi and play it offline in Watch &amp; Listen.</p>
+    </div>
+</div>
 
-            @include('teacher.content.partials.common')
+<div class="panel" style="max-width: 46rem;">
+    <form method="POST" action="{{ $item ? route('teacher.content.update', $item) : route('teacher.content.videos.store') }}" enctype="multipart/form-data">
+        @csrf
+        @if ($item) @method('PUT') @endif
 
-            <h2 style="margin-top: 1.25rem;">Video</h2>
-            <div class="grid grid-2">
+        @include('teacher.content.partials.common')
+
+        <div class="form-group">
+            <h2>Video</h2>
+            <div class="field-row">
                 <div>
                     <label for="scene">Background scene</label>
                     <select id="scene" name="scene" required>
@@ -31,20 +41,32 @@
                 <div>
                     <label for="minutes">Length (minutes)</label>
                     <input id="minutes" type="number" name="minutes" min="1" max="60" value="{{ old('minutes', $item?->minutes ?? 3) }}" required>
+                    @include('partials.field-error', ['field' => 'minutes'])
                 </div>
             </div>
-            <label for="file">Video file (.ogv){{ $item ? ', only to replace it' : '' }}</label>
-            <input id="file" type="file" name="file" accept=".ogv,video/ogg" {{ $item ? '' : 'required' }}>
+            <label for="file">Video file{{ $item ? ', only to replace it' : '' }}</label>
+            <input id="file" type="file" name="file" accept=".ogv,video/ogg" {{ $item ? '' : 'required' }} aria-describedby="file-hint">
+            <p class="hint" id="file-hint">An <strong>.ogv</strong> file (the format the game plays), at most {{ $c['max_video_mb'] }} MB. Have an MP4? Ask your school's ICT coordinator to convert it, or use a free online converter "to OGV".</p>
+            @include('partials.field-error', ['field' => 'file'])
+            <details class="disclosure">
+                <summary>For the ICT coordinator: converting MP4</summary>
+                <p class="disclosure-body small">With ffmpeg: <code>ffmpeg -i in.mp4 -c:v libtheora -q:v 6 -c:a libvorbis out.ogv</code></p>
+            </details>
             @if ($video)
-                <p class="small muted">Current file: {{ number_format($video->size_bytes / 1048576, 1) }} MB · SHA-256 {{ substr($video->sha256, 0, 12) }}… · <a href="{{ route('teacher.content.file', [$item, $video]) }}" target="_blank" rel="noopener">play</a></p>
+                <p class="small muted" style="margin-top: var(--s3);">Current file: {{ number_format($video->size_bytes / 1048576, 1) }} MB · <a href="{{ route('teacher.content.file', [$item, $video]) }}" target="_blank" rel="noopener">Play it</a></p>
             @endif
+        </div>
 
-            <h2 style="margin-top: 1.25rem;">Check question (optional)</h2>
-            <p class="muted small">One picture question after the video, like the songs have.</p>
+        <div class="form-group">
+            <h2>Check question</h2>
+            <p class="hint" style="margin-top: 0;">One picture question after the video, like the songs have.</p>
             @include('teacher.content.partials.question', ['name' => 'check', 'label' => 'Question', 'question' => $item?->body['check'] ?? null, 'required' => false])
+        </div>
 
-            <p style="margin-top: 1rem;"><button class="btn" type="submit">{{ $item ? 'Save video' : 'Upload video' }}</button></p>
-        </form>
-    </div>
+        <div class="form-actions">
+            <button class="btn" type="submit">{{ $item ? 'Save video' : 'Upload video' }}</button>
+            <a class="btn btn-quiet" href="{{ route('teacher.content.index') }}">Cancel</a>
+        </div>
+    </form>
 </div>
 @endsection

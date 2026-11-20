@@ -47,6 +47,8 @@ Route::middleware(['auth', 'teacher'])->prefix('teacher')->name('teacher.')->gro
 
     Route::post('/flags/{flag}/resolve', [StudentController::class, 'resolveFlag'])
         ->middleware('can:update,flag')->name('flags.resolve');
+    Route::post('/flags/{flag}/reopen', [StudentController::class, 'reopenFlag'])
+        ->middleware('can:update,flag')->name('flags.reopen');
 
     // Library & Videos (D-019): openly licensed books and Ogg videos for the game.
     Route::get('/content', [ContentController::class, 'index'])->name('content.index');

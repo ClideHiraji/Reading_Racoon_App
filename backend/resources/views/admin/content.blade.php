@@ -6,17 +6,17 @@
 @section('content')
 <div class="page-head">
     <div>
-        <h1>Library &amp; Videos</h1>
-        <p class="muted">Everything teachers added for the tablets. Unpublish anything unsuitable or not openly licensed; the teacher can fix it and publish again.</p>
+        <h1>Teacher library &amp; videos</h1>
+        <p class="meta measure">Everything teachers added for the tablets. Unpublish anything unsuitable or not openly licensed; the teacher can fix it and publish again.</p>
     </div>
 </div>
 
-<div class="card">
+<div class="panel">
     @if ($items->isEmpty())
         <p class="muted">No teacher content yet.</p>
     @else
         <div class="table-wrap">
-            <table class="small">
+            <table class="compact">
                 <thead><tr><th>Item</th><th>Teacher · sections</th><th>Licence · source</th><th>Status</th><th></th></tr></thead>
                 <tbody>
                 @foreach ($items as $item)
@@ -34,9 +34,9 @@
                         <td>@if ($item->published)<span class="badge badge-green">Published</span>@else<span class="badge">Draft</span>@endif</td>
                         <td>
                             @if ($item->published)
-                                <form method="POST" action="{{ route('admin.content.unpublish', $item) }}">
+                                <form method="POST" action="{{ route('admin.content.unpublish', $item) }}" data-confirm="Unpublish &quot;{{ $item->title }}&quot;? Tablets remove it at their next sync; the teacher can fix it and publish again.">
                                     @csrf
-                                    <button class="btn btn-danger btn-sm" type="submit">Unpublish</button>
+                                    <button class="btn btn-danger-outline btn-sm" type="submit">Unpublish<span class="sr-only"> {{ $item->title }}</span></button>
                                 </form>
                             @endif
                         </td>

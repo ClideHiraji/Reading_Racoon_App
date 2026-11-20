@@ -23,7 +23,7 @@ class RegistrationController extends Controller
 
         return view('admin.registrations', [
             'status' => $status,
-            'registrations' => TeacherRegistration::with(['user.sections', 'reviewer'])
+            'registrations' => TeacherRegistration::with(['user.sections' => fn ($q) => $q->withCount('students'), 'reviewer'])
                 ->where('status', $status)->orderBy($status === 'pending' ? 'created_at' : 'reviewed_at', $status === 'pending' ? 'asc' : 'desc')
                 ->paginate(25)->withQueryString(),
             'counts' => TeacherRegistration::selectRaw('status, count(*) as n')->groupBy('status')->pluck('n', 'status'),

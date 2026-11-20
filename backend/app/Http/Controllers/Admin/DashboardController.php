@@ -9,6 +9,7 @@ use App\Models\Section;
 use App\Models\Student;
 use App\Models\SystemLog;
 use App\Models\TeacherRegistration;
+use App\Support\PrivacyChecks;
 use Illuminate\View\View;
 
 /**
@@ -29,7 +30,10 @@ class DashboardController extends Controller
             'failedLogins24h' => SystemLog::whereIn('event', ['auth.failed', 'admin.login_failed'])->where('created_at', '>=', $since)->count(),
             'errors24h' => SystemLog::whereIn('level', ['error', 'critical'])->where('created_at', '>=', $since)->count(),
             'recentAnomalies' => SystemLog::where('anomaly', true)->latest('id')->limit(8)->get(),
-            'recentAudit' => AuditLog::where('action', '!=', 'admin.view')->latest('id')->limit(8)->get(),
+            // Decisions and changes only: page views (admin.view, section.view, ...) would bury them.
+            'recentAudit' => AuditLog::where('action', 'not like', '%.view')->latest('id')->limit(8)->get(),
+            // Privacy and security checks that aren't ok, worst first (FR-22).
+            'checks' => array_values(array_filter(PrivacyChecks::run(), fn ($c) => $c[1] !== 'ok')),
         ]);
     }
 }

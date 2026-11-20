@@ -94,18 +94,25 @@ class HardeningTest extends TestCase
         $this->assertNotSame($csp, $plain->headers->get('Content-Security-Policy'), 'each response gets its own nonce');
     }
 
-    public function test_the_dashboard_scripts_carry_the_nonce_and_chart_js_is_pinned(): void
+    public function test_the_dashboard_loads_scripts_only_from_this_site(): void
     {
         $teacher = User::factory()->registered()->create();
         $section = $teacher->sections()->create(['name' => 'Grade 1 - Sampaguita']);
 
         $page = $this->actingAs($teacher)->get(route('teacher.sections.show', $section))->assertOk();
 
-        preg_match("/'nonce-([A-Za-z0-9]{40})'/", $page->headers->get('Content-Security-Policy'), $m);
-        $html = $page->getContent();
-        $this->assertGreaterThanOrEqual(2, substr_count($html, '<script nonce="'.$m[1].'">'), 'the layout and chart scripts may run');
-        $this->assertStringNotContainsString('<script>', $html, 'no inline script without the nonce');
-        $this->assertStringContainsString('chart.umd.js" integrity="sha384-dug+JxfBvklEQdJ4AYuBBAIScUz0bVN73xpy273gcAwHjb3qI0fXmuYNaNfdyYJG" crossorigin="anonymous"', $html);
+        // Charts are drawn on the server (D-037): no CDN in the policy or the page.
+        $csp = $page->headers->get('Content-Security-Policy');
+        $this->assertMatchesRegularExpression("/script-src 'self' 'nonce-[A-Za-z0-9]{40}';/", $csp);
+        $this->assertStringNotContainsString('jsdelivr', $csp);
+
+        preg_match_all('/<script\b([^>]*)>/', $page->getContent(), $tags);
+        $this->assertNotEmpty($tags[1]);
+        foreach ($tags[1] as $attributes) {
+            preg_match("/'nonce-([A-Za-z0-9]{40})'/", $csp, $m);
+            $sameSite = preg_match('#src="'.preg_quote(url('/'), '#').'/js/[a-z]+\.js\?v=\d+"#', $attributes) === 1;
+            $this->assertTrue($sameSite || str_contains($attributes, 'nonce="'.$m[1].'"'), "script without the nonce or a same-site src: <script{$attributes}>");
+        }
     }
 
     public function test_other_websites_cannot_call_the_api_from_a_browser(): void

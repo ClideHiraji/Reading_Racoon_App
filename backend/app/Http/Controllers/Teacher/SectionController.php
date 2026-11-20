@@ -20,7 +20,10 @@ class SectionController extends Controller
 {
     public function index(Request $request): View|RedirectResponse
     {
-        $sections = $request->user()->sections()->withCount('students')->orderBy('name')->get();
+        $sections = $request->user()->sections()->withCount([
+            'students',
+            'students as flagged_count' => fn ($q) => $q->whereHas('interventionFlags', fn ($f) => $f->where('status', 'open')),
+        ])->orderBy('name')->get();
         if ($sections->count() === 1 && ! $request->has('all')) {
             return redirect()->route('teacher.sections.show', $sections->first());
         }

@@ -32,6 +32,30 @@ class AdminFeaturesTest extends AdminTestCase
         $this->signIn($this->root, $secret)->assertRedirect($this->admin('home'));
     }
 
+    public function test_the_overview_leads_with_what_needs_a_decision(): void
+    {
+        User::factory()->registered(RegistrationStatus::Pending)->create();
+        config(['app.debug' => true]);
+
+        $this->get($this->admin('home'))->assertOk()
+            ->assertSee('Needs your attention')
+            ->assertSee('Teacher registration waiting for a decision')
+            ->assertSee('Privacy or security check failing: Debug mode off')
+            ->assertSee('class="nav-count"', false) // the nav counts the waiting registration
+            ->assertDontSee('admin.view</span>', false); // page views don't bury decisions
+    }
+
+    public function test_revoking_a_teacher_asks_first_and_names_what_they_lose(): void
+    {
+        $teacher = User::factory()->registered()->create(['name' => 'Maria Santos']);
+        $section = $teacher->sections()->create(['name' => 'Grade 1 - Sampaguita']);
+        app(EnrollStudent::class)->handle($section, 'Ana');
+
+        $this->get($this->admin('registrations?status=approved'))->assertOk()
+            ->assertSee('data-confirm="Revoke Maria Santos? From their next click they can no longer see their 1 section and 1 learner. Their data stays."', false)
+            ->assertSee('Note for Maria Santos (optional)');
+    }
+
     public function test_approving_a_teacher_lets_them_sign_in_and_denying_revokes_it(): void
     {
         $teacher = User::factory()->registered(RegistrationStatus::Pending)->create(['name' => 'Maria Santos']);

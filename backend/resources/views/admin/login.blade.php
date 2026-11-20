@@ -3,7 +3,7 @@
 
 @section('content')
 <div class="narrow">
-    <div class="card">
+    <div class="panel">
         <h1>Sign in</h1>
         <form method="POST" action="{{ route('admin.login') }}" autocomplete="off">
             @csrf
@@ -12,8 +12,9 @@
             <label for="password">Password</label>
             <input id="password" type="password" name="password" required autocomplete="current-password">
             <label for="code">Authenticator code</label>
-            <input id="code" type="text" name="code" required inputmode="numeric" pattern="[0-9 ]{6,7}" maxlength="7" autocomplete="one-time-code" placeholder="6 digits">
-            <p><button class="btn" type="submit">Sign in</button></p>
+            <input id="code" type="text" name="code" required inputmode="numeric" pattern="[0-9 ]{6,7}" maxlength="7" autocomplete="one-time-code" placeholder="6 digits" aria-describedby="code-hint">
+            <p class="hint" id="code-hint">The 6-digit code from your authenticator app.</p>
+            <div class="form-actions" style="margin-top: var(--s3);"><button class="btn" type="submit">Sign in</button></div>
         </form>
     </div>
 </div>

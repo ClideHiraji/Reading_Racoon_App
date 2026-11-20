@@ -12,8 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
  * dashboard, the admin portal and the API once the server is on the internet.
  *
  * - A Content-Security-Policy with a per-request nonce: only scripts from this
- *   site, Chart.js from jsDelivr (pinned with Subresource Integrity in the
- *   views) and inline blocks that carry the nonce may run.
+ *   site and inline blocks that carry the nonce may run. Charts are drawn on
+ *   the server (D-037), so no page loads a script from another host.
  * - HSTS only on https requests (the tunnel's X-Forwarded-Proto, see
  *   config/trustedproxy.php), so plain-http local development keeps working.
  * - A header a route already set (the admin portal's stricter no-referrer,
@@ -38,7 +38,7 @@ class SecurityHeaders
             'Cross-Origin-Opener-Policy' => 'same-origin',
             'Content-Security-Policy' => implode('; ', [
                 "default-src 'self'",
-                "script-src 'self' 'nonce-{$nonce}' https://cdn.jsdelivr.net",
+                "script-src 'self' 'nonce-{$nonce}'",
                 // Blade views use style attributes; styles can't run code.
                 "style-src 'self' 'unsafe-inline'",
                 "img-src 'self' data: blob:",

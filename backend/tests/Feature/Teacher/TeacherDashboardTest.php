@@ -187,9 +187,12 @@ class TeacherDashboardTest extends TestCase
         $response = $this->get(route('teacher.sections.show', $this->section))->assertOk();
         $response->assertSee('Ana')->assertSee('Ben')->assertSee($ana->code);
         $response->assertSee('L2 · ARAL Basic / Plus')->assertSee('L1 · ARAL Basic');
-        $response->assertSee('Heart Recovery failed')->assertSee('badge-orange', false);
-        $response->assertSee('Low mastery (P(L) &lt; 0.30)', false)->assertSee('badge-amber', false);
-        $response->assertSee('chart.js@4.4.1', false);
+        // Flags in a teacher's words, grouped by child, and the class on the reading map (D-037).
+        $response->assertSee('Went back a level')->assertSee('badge-orange', false);
+        $response->assertSee('Keeps missing a skill')->assertSee('badge-amber', false);
+        $response->assertSee('class="map"', false)->assertSee('Mango Grove');
+        $response->assertDontSee('cdn.jsdelivr.net', false); // charts are drawn on the server
+        $this->assertSame(['Ben'], array_map(fn ($row) => $row['student']->displayName(), $response->viewData('stats')->needsHelp));
 
         // Two learners x 2 phonics levels... Ana mastered PA L1 (1 of 2 PA levels for 2 learners = 25%).
         $bands = $response->viewData('stats')->bands;
@@ -211,6 +214,58 @@ class TeacherDashboardTest extends TestCase
         $this->assertSame($this->teacher->id, $flag->resolved_by);
     }
 
+    public function test_a_resolved_flag_can_be_undone(): void
+    {
+        $student = $this->enroll('Ana');
+        $this->play($student, [['flag', ['type' => 'rescue_limit', 'skill' => 'phonics', 'level' => 1]]]);
+        $flag = InterventionFlag::sole();
+
+        $this->post(route('teacher.flags.resolve', $flag))->assertSessionHas('undo_flag', $flag->id);
+        $this->get(route('teacher.sections.show', $this->section))->assertSee('Undo')
+            ->assertSee(route('teacher.flags.reopen', $flag), false);
+
+        $this->post(route('teacher.flags.reopen', $flag))->assertRedirect();
+        $this->assertSame('open', $flag->fresh()->status);
+        $this->assertNull($flag->fresh()->resolved_by);
+        $this->assertSame(1, AuditLog::where('action', 'flag.reopen')->count());
+    }
+
+    public function test_a_low_mastery_flag_looks_better_once_the_child_recovers(): void
+    {
+        $ben = $this->enroll('Ben');
+        $this->play($ben, $this->answers('phonics', 1, 6, correct: false));
+        $this->assertSame('low_mastery', InterventionFlag::sole()->type);
+
+        $stats = $this->get(route('teacher.sections.show', $this->section))->viewData('stats');
+        $this->assertFalse($stats->needsHelp[0]['flags'][0]['better']);
+        $this->assertSame(1, $stats->needingHelpCount());
+        $this->assertSame('help', $stats->states[$ben->id]['phonics']['key']);
+
+        // Four right answers lift phonics L1 past 50%: still open, now marked "looks better".
+        $this->play($ben, $this->answers('phonics', 1, 4));
+        $response = $this->get(route('teacher.sections.show', $this->section))->assertSee('Looks better now');
+        $stats = $response->viewData('stats');
+        $this->assertTrue($stats->needsHelp[0]['flags'][0]['better']);
+        $this->assertSame(0, $stats->needingHelpCount());
+        $this->assertSame('open', InterventionFlag::sole()->status, 'flags never close by themselves');
+    }
+
+    public function test_risky_learner_actions_live_on_the_learner_page_with_confirmations(): void
+    {
+        $ana = $this->enroll('Ana');
+        $ana->forceFill(['consent_recorded_at' => now(), 'consent_recorded_by' => $this->teacher->id])->save();
+
+        $this->get(route('teacher.sections.show', $this->section))->assertOk()
+            ->assertDontSee('name="_method" value="DELETE"', false)
+            ->assertDontSee(route('teacher.students.code', $ana), false);
+        $this->get(route('teacher.students.show', $ana))->assertOk()
+            ->assertSee('name="_method" value="DELETE"', false)
+            ->assertSee(route('teacher.students.code', $ana), false)
+            ->assertSee('This cannot be undone.')
+            ->assertSee('Clear consent')
+            ->assertSee('left out of research exports');
+    }
+
     public function test_the_student_profile_has_the_bkt_chart_and_session_history(): void
     {
         $student = $this->enroll('Ana');
@@ -223,7 +278,7 @@ class TeacherDashboardTest extends TestCase
         ]);
 
         $response = $this->get(route('teacher.students.show', $student))->assertOk();
-        $response->assertSee('Mastery over time')->assertSee('bktChart', false);
+        $response->assertSee('Mastery over time')->assertSee('id="skill-history"', false)->assertSee('<svg class="history"', false);
         $response->assertSee('7/8 correct')->assertSee("Racoon's Rescue", false)->assertSee('12 min');
         $this->assertCount(3, $response->viewData('series')['phonics:1']);
         $this->assertSame(1, AuditLog::where('action', 'student.view')->count());

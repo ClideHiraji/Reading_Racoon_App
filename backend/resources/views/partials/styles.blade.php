@@ -82,4 +82,27 @@
     .report p { margin: 0 0 .8rem; }
     pre.json { background: var(--soft); padding: .5rem; border-radius: 8px; font-size: .78rem; white-space: pre-wrap; word-break: break-word; margin: 0; max-width: 420px; }
     @media (max-width: 640px) { .nav { margin-left: 0; } h1 { font-size: 1.35rem; } }
+
+    /* Add learners and their printable login cards (FR-16, D-036) */
+    .add-learners { display: grid; gap: .4rem; max-width: 420px; margin-bottom: .6rem; }
+    .add-learners textarea { width: 100%; }
+    .add-learners .btn { justify-self: start; }
+    .login-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 12px; }
+    .login-card { border: 2px dashed #9aa3a8; border-radius: 12px; padding: 14px 16px; background: #fff; break-inside: avoid; page-break-inside: avoid; }
+    .login-card-head { display: flex; align-items: center; gap: 8px; font-size: .8rem; color: var(--muted); }
+    .login-card-name { font-size: 1.5rem; font-weight: 800; margin: 8px 0 10px; overflow-wrap: anywhere; }
+    .login-card-code { display: flex; align-items: center; gap: 5px; }
+    .login-card-code .box { width: 30px; height: 40px; border: 2px solid var(--ink); border-radius: 7px; display: inline-flex; align-items: center; justify-content: center; font: 800 1.35rem/1 ui-monospace, Consolas, monospace; background: #fff; }
+    .login-card-code .gap { width: 12px; }
+    .login-card-plain { font: 700 .85rem ui-monospace, Consolas, monospace; color: var(--muted); margin-top: 6px; letter-spacing: .08em; }
+    .login-card-help { font-size: .8rem; color: var(--muted); margin-top: 8px; }
+    @media print {
+        @page { margin: 12mm; }
+        body { background: #fff !important; }
+        .topbar, main > :not(#login-cards), #login-cards .no-print { display: none !important; }
+        main { padding: 0 !important; max-width: none !important; }
+        #login-cards { border: 0 !important; padding: 0 !important; margin: 0 !important; box-shadow: none !important; }
+        .login-cards { grid-template-columns: 1fr 1fr; gap: 6mm; }
+        .login-card, .brand-mark { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
 </style>

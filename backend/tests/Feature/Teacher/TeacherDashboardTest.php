@@ -67,6 +67,13 @@ class TeacherDashboardTest extends TestCase
         $this->get(route('teacher.sections.show', $this->section))->assertSee($code)->assertSee('won\'t be shown again', false);
         $this->get(route('teacher.sections.show', $this->section))->assertDontSee($code);
 
+        // The student ID is labelled so nobody types it into the game as a login code.
+        $student = $this->section->students()->sole();
+        $this->get(route('teacher.sections.show', $this->section))
+            ->assertSee('Student ID '.$student->code.' · not the login code', false)
+            ->assertSee('New login code');
+        $this->get(route('teacher.students.show', $student))->assertSee('(for reports, not the login code)', false);
+
         $this->postJson('/api/auth/login', ['login_code' => $code])->assertOk()->assertJsonPath('user.name', 'Ana');
         $this->assertSame(1, AuditLog::where('action', 'student.add')->count());
     }

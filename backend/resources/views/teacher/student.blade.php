@@ -18,7 +18,7 @@
 <div class="page-head">
     <div>
         <h1>{{ $student->displayName() }}</h1>
-        <p class="muted">Student code {{ $student->code }} · {{ $band }}</p>
+        <p class="muted">Student ID {{ $student->code }} (for reports, not the login code) · {{ $band }}</p>
     </div>
     <div class="row">
         <a class="btn" href="{{ route('teacher.students.report', $student) }}">Diagnostic report</a>

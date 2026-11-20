@@ -29,7 +29,8 @@
     <div class="card" style="border-color: var(--teal);">
         <h2>Login code for {{ $new['name'] }}</h2>
         <p><span class="code-card">{{ $new['login_code'] }}</span></p>
-        <p class="muted small">Write this code on {{ $new['name'] }}'s login card now. For privacy it is stored only in scrambled form and <strong>won't be shown again</strong>. Lost it? Use "New code" in the roster. Student code for reports: {{ $new['student_code'] }}.</p>
+        <p class="muted small">This is what {{ $new['name'] }} types in the game: the 8 characters fill its 8 boxes (the dash is optional). Write it on their login card now. For privacy it is stored only in scrambled form and <strong>won't be shown again</strong>. Lost it? Use "New login code" in the class list.</p>
+        <p class="muted small">Student ID {{ $new['student_code'] }} is only for reports and exports: it is <strong>not</strong> a login code and won't work in the game.</p>
     </div>
 @endif
 
@@ -126,7 +127,7 @@
                     <tr>
                         <td>
                             <a href="{{ route('teacher.students.show', $student) }}"><strong>{{ $student->displayName() }}</strong></a>
-                            <div class="muted small">{{ $student->code }}</div>
+                            <div class="muted small" title="A private ID for reports and exports. Children sign in with their login code; New login code makes one.">Student ID {{ $student->code }} · not the login code</div>
                             @if ($student->open_flags_count > 0)
                                 <span class="badge badge-red">{{ $student->open_flags_count }} {{ Str::plural('flag', $student->open_flags_count) }}</span>
                             @endif
@@ -162,7 +163,7 @@
                                 <a class="btn btn-light btn-sm" href="{{ route('teacher.students.report', $student) }}">Report</a>
                                 <form method="POST" action="{{ route('teacher.students.code', $student) }}" data-confirm="Give {{ $student->displayName() }} a new login code? The old code stops working.">
                                     @csrf
-                                    <button class="btn btn-light btn-sm" type="submit">New code</button>
+                                    <button class="btn btn-light btn-sm" type="submit">New login code</button>
                                 </form>
                                 <form method="POST" action="{{ route('teacher.students.destroy', $student) }}" data-confirm="Remove {{ $student->displayName() }} and delete all their reading data? This cannot be undone.">
                                     @csrf

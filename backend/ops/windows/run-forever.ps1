@@ -37,9 +37,11 @@ while ($true) {
     Add-Content $log ("{0:s} starting: php artisan {1}" -f $started, $Command)
     $arguments = @("artisan") + ($Command -split " ")
     # Each line reaches the log as it is printed, so a stuck worker shows
-    # what it was doing (not only after it exits).
+    # what it was doing (not only after it exits). One Add-Content per line
+    # opens and closes the file each time: a single piped Add-Content holds it
+    # locked for the whole run, so nobody could read the log meanwhile.
     Push-Location $backend
-    & $Php @arguments 2>&1 | ForEach-Object { "$_" } | Add-Content -Path $log -Encoding UTF8
+    & $Php @arguments 2>&1 | ForEach-Object { Add-Content -Path $log -Value "$_" -Encoding UTF8 }
     $code = $LASTEXITCODE
     Pop-Location
     Add-Content $log ("{0:s} stopped with exit code {1}" -f (Get-Date), $code)

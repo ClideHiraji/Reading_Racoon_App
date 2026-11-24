@@ -20,15 +20,20 @@ class SectionController extends Controller
 {
     public function index(Request $request): View|RedirectResponse
     {
-        $sections = $request->user()->sections()->withCount([
-            'students',
-            'students as flagged_count' => fn ($q) => $q->whereHas('interventionFlags', fn ($f) => $f->where('status', 'open')),
-        ])->orderBy('name')->get();
+        $sections = $request->user()->sections()->withCount('students')->orderBy('name')->get();
         if ($sections->count() === 1 && ! $request->has('all')) {
             return redirect()->route('teacher.sections.show', $sections->first());
         }
 
-        return view('teacher.home', ['sections' => $sections]);
+        // The same counts as each class page, so the numbers always agree (D-037).
+        $summaries = $sections->mapWithKeys(function (Section $section) {
+            $stats = SectionStats::for($section);
+
+            return [$section->id => ['need' => $stats->needingHelpCount(), 'better' => count($stats->betterRows()),
+                'sync' => $stats->lastSectionSync()]];
+        });
+
+        return view('teacher.home', ['sections' => $sections, 'summaries' => $summaries]);
     }
 
     public function store(Request $request): RedirectResponse

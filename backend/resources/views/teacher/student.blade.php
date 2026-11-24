@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', $student->displayName())
+@section('title', $student->displayName().' · '.$student->section->name)
 
 @php
     use App\Support\SectionStats;
@@ -9,6 +9,9 @@
     $fmt = fn ($t) => $t->setTimezone($timezone)->format('M j, Y g:i A');
     $highest = SectionStats::highest($student);
     $openFlags = $flags->where('status', 'open')->map(fn ($f) => SectionStats::flagRow($student, $f));
+    $flagGroups = SectionStats::bySkill($openFlags->values()->all());
+    $skillStates = collect(SkillCatalog::skills())->mapWithKeys(fn ($skill) => [$skill => SectionStats::skillState($student, $skill)]);
+    $locked = $skillStates->filter(fn ($s) => $s['key'] === 'locked');
     $pastFlags = $flags->where('status', '!=', 'open');
     $mastered = $states->whereNotNull('mastered_at')->count();
     // Lessons and Racoon's Rescue outcomes, newest first. (Keep every @php block above
@@ -35,10 +38,11 @@
         <p class="meta">Student ID {{ $student->code }} (for reports, not the login code) · {{ $band }}</p>
         <dl class="facts">
             <div><dt>Map level</dt><dd>L{{ $highest }} <small>{{ SkillCatalog::level($highest)['world'] }}</small></dd></div>
-            <div><dt>Skill-levels got</dt><dd>{{ $mastered }} <small>of {{ $states->count() }}</small></dd></div>
-            <div><dt>Right answers</dt><dd>{{ $replay->responses ? round(100 * $replay->correctResponses / $replay->responses).'%' : '-' }} <small>of {{ $replay->responses }}</small></dd></div>
+            <div><dt>Skill-levels mastered</dt><dd>{{ $mastered }} <small>of {{ $states->count() }}</small></dd></div>
+            <div><dt>Right answers</dt><dd>@if ($replay->responses){{ round(100 * $replay->correctResponses / $replay->responses) }}% <small>of {{ $replay->responses }} {{ Str::plural('answer', $replay->responses) }}</small>@else<small>No answers yet</small>@endif</dd></div>
             <div><dt>Lessons played</dt><dd>{{ count($replay->lessons) }}</dd></div>
-            <div><dt>Last played</dt><dd>{{ $lastPlayed ? \Carbon\CarbonImmutable::parse($lastPlayed)->diffForHumans() : 'Not yet' }}</dd></div>
+            <div><dt>Last played</dt><dd>@if ($lastPlayed) @include('partials.when', ['at' => $lastPlayed]) @else <small>Never</small> @endif</dd></div>
+            <div><dt>Last synced</dt><dd>@if ($lastSynced) @include('partials.when', ['at' => $lastSynced]) @else <small>Never</small> @endif</dd></div>
             <div><dt>Rewards</dt><dd>{{ $student->wallet?->xp ?? 0 }} <small>XP · {{ $student->wallet?->coins ?? 0 }} coins</small></dd></div>
         </dl>
     </div>
@@ -61,8 +65,14 @@
     </nav>
 @endif
 
+@if (! $lastSynced)
+    <div class="alert alert-warn">
+        <p><strong>{{ $name }} hasn't played yet</strong>, or their tablet hasn't synced. Check that {{ $name }} has a login card, and that the tablet has been online since they played.</p>
+    </div>
+@endif
+
 @if ($openFlags->isNotEmpty())
-    <section class="panel" aria-labelledby="flags-title">
+    <section class="panel" id="flags" aria-labelledby="flags-title">
         <div class="panel-head">
             <div>
                 <h2 id="flags-title">Needs your help</h2>
@@ -70,8 +80,8 @@
             </div>
         </div>
         <ul class="flags">
-            @foreach ($openFlags as $f)
-                @include('teacher.partials.flag', ['f' => $f, 'name' => $name])
+            @foreach ($flagGroups as $g)
+                @include('teacher.partials.flag', ['g' => $g, 'name' => $name, 'anchor' => 'flags'])
             @endforeach
         </ul>
         <details class="disclosure">
@@ -83,6 +93,7 @@
                 @if ($openFlags->contains('better', true))
                     <li><strong>Looks better now:</strong> since the flag, {{ $name }} mastered that skill-level or climbed back to 50% or more.</li>
                 @endif
+                <li><strong>Mark resolved</strong> only clears the flag from your list; nothing changes in the game.</li>
             </ul>
         </details>
     </section>
@@ -93,27 +104,23 @@
     <div class="panel-head">
         <div>
             <h2 id="chart-title">Mastery over time</h2>
-            <p class="muted small measure">For each sub-skill: where {{ $name }} is now, and the game's estimate of mastery after each answer. The dashed green line is "Got it" (95% after at least 5 answers at a level).</p>
+            <p class="muted small measure">For each sub-skill: where {{ $name }} is now, and the game's estimate of mastery after each answer, oldest on the left. The dashed green line is "Got it" (95% after at least 5 answers at a level). "Slipping" means mastered earlier, but the estimate has fallen under 50%.</p>
         </div>
     </div>
     <ul class="skills" id="skill-history">
-        @foreach (SkillCatalog::skills() as $skill)
-            @php($s = SectionStats::skillState($student, $skill))
+        @foreach ($skillStates->reject(fn ($s) => $s['key'] === 'locked') as $skill => $s)
             @php($h = $histories[$skill] ?? null)
             @php($label = SkillCatalog::label($skill))
             <li class="skill-card">
                 <div class="top">
                     <h3>{{ $label }}</h3>
-                    @if ($s['key'] === 'locked')
-                        <span class="state state-locked">Not reached yet</span>
-                    @else
-                        <span class="state state-{{ $s['key'] }}">{{ $s['label'] }} <span class="lvl">L{{ $s['level'] }}</span></span>
-                    @endif
+                    @php($max = SkillCatalog::maxLevel($skill))
+                    <span class="state state-{{ $s['key'] }}">{{ $s['label'] }} <span class="lvl">{{ $s['key'] === 'got' && $s['level'] === $max ? 'all levels' : 'level '.$s['level'].' of '.$max }}</span></span>
                 </div>
-                @if ($s['key'] === 'locked')
-                    <p class="estimate">Opens at map level {{ SkillCatalog::minLevel($skill) }}.</p>
-                @elseif ($s['p'] !== null)
-                    <p class="estimate">Mastery estimate {{ round($s['p'] * 100) }}% at L{{ $s['level'] }}{{ $s['review'] ? ' (review after a rescue)' : '' }} · {{ $h['n'] ?? 0 }} {{ Str::plural('answer', $h['n'] ?? 0) }} in all</p>
+                @if ($s['attempts'] > 0 || in_array($s['key'], ['got', 'slip'], true))
+                    <p class="estimate">Mastery estimate {{ round($s['p'] * 100) }}% at level {{ $s['level'] }}{{ $s['review'] ? ' (review after a rescue)' : '' }} · {{ $h['n'] ?? 0 }} {{ Str::plural('answer', $h['n'] ?? 0) }} in all</p>
+                @elseif ($s['review'])
+                    <p class="estimate">Back at level {{ $s['level'] }} to review after a rescue; no answers yet.</p>
                 @endif
                 @if ($h)
                     <svg class="history" viewBox="0 0 {{ SkillHistory::WIDTH }} {{ SkillHistory::HEIGHT }}" role="img"
@@ -130,12 +137,15 @@
                         <circle class="end" cx="{{ $h['end']['x'] }}" cy="{{ $h['end']['y'] }}" r="4"/>
                         <text class="end-label" x="{{ $h['end']['x'] + 7 }}" y="{{ abs($h['end']['y'] - $h['goal']) < 12 ? $h['end']['y'] + 15 : min(SkillHistory::HEIGHT - 4, max(12, $h['end']['y'] + 4)) }}">{{ $h['end']['p'] }}%</text>
                     </svg>
-                @elseif ($s['key'] !== 'locked')
+                @else
                     <p class="muted small" style="margin: var(--s2) 0;">No answers yet.</p>
                 @endif
             </li>
         @endforeach
     </ul>
+    @if ($locked->isNotEmpty())
+        <p class="locked-line">Not reached yet: {{ $locked->keys()->map(fn ($skill) => SkillCatalog::label($skill).' (opens at map level '.SkillCatalog::minLevel($skill).')')->join(', ') }}.</p>
+    @endif
 
     <details class="disclosure">
         <summary>All {{ $states->count() }} skill-levels, with the numbers</summary>
@@ -278,7 +288,7 @@
             <form method="POST" action="{{ route('teacher.students.destroy', $student) }}" data-confirm="Remove {{ $name }} and delete all their reading data? This cannot be undone.">
                 @csrf
                 @method('DELETE')
-                <button class="btn btn-danger btn-sm" type="submit">Remove {{ $name }}</button>
+                <button class="btn btn-danger-outline btn-sm" type="submit">Remove {{ $name }}</button>
             </form>
         </div>
     </div>

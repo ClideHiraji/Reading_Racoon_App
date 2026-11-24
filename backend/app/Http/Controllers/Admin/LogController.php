@@ -35,6 +35,7 @@ class LogController extends Controller
             'from' => ['nullable', 'date_format:Y-m-d'],
             'to' => ['nullable', 'date_format:Y-m-d'],
             'q' => ['nullable', 'string', 'max:100'],
+            'views' => ['nullable', 'boolean'],
         ])->valid();
         $kind = $filters['kind'] ?? 'system';
         $tz = config('reading_racoon.access.timezone');
@@ -45,6 +46,8 @@ class LogController extends Controller
         if ($kind === 'audit') {
             $logs = $range(AuditLog::query())
                 ->when($filters['event'] ?? null, fn ($q, $e) => $q->where('action', $e))
+                // Page views (admin.view, section.view, ...) bury the decisions; shown only on request.
+                ->when(! ($filters['views'] ?? false) && ! ($filters['event'] ?? null), fn ($q) => $q->where('action', 'not like', '%.view'))
                 ->when($filters['anomaly'] ?? false, fn ($q) => $q->whereIn('action', self::SENSITIVE_ACTIONS))
                 ->when($filters['q'] ?? null, fn ($q, $s) => $q->where(fn ($w) => $w->where('actor_label', 'ilike', "%{$s}%")
                     ->orWhere('subject_id', 'ilike', "%{$s}%")->orWhere('ip', $s)))

@@ -9,7 +9,7 @@
     @include('partials.styles')
     @stack('head')
 </head>
-<body class="teacher">
+<body class="teacher" @auth data-idle-minutes="{{ (int) config('session.lifetime') }}" @endauth>
 <a class="skip-link" href="#main">Skip to main content</a>
 <header class="topbar">
     <div class="topbar-inner">

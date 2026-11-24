@@ -40,7 +40,7 @@ class AdminFeaturesTest extends AdminTestCase
         $this->get($this->admin('home'))->assertOk()
             ->assertSee('Needs your attention')
             ->assertSee('Teacher registration waiting for a decision')
-            ->assertSee('Privacy or security check failing: Debug mode off')
+            ->assertSee('Security check not met: Debug mode off')
             ->assertSee('class="nav-count"', false) // the nav counts the waiting registration
             ->assertDontSee('admin.view</span>', false); // page views don't bury decisions
     }
@@ -53,7 +53,9 @@ class AdminFeaturesTest extends AdminTestCase
 
         $this->get($this->admin('registrations?status=approved'))->assertOk()
             ->assertSee('data-confirm="Revoke Maria Santos? From their next click they can no longer see their 1 section and 1 learner. Their data stays."', false)
-            ->assertSee('Note for Maria Santos (optional)');
+            ->assertSee('Note for Maria Santos (optional)')
+            // Enter in the note must not submit: the form's default button is a disabled one.
+            ->assertSee('<button type="submit" disabled hidden aria-hidden="true" tabindex="-1"></button>', false);
     }
 
     public function test_approving_a_teacher_lets_them_sign_in_and_denying_revokes_it(): void

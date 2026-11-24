@@ -10,7 +10,7 @@
     <title>@yield('title', 'Console') · RR</title>
     @include('partials.styles')
 </head>
-<body class="admin">
+<body class="admin" @auth('admin') data-idle-minutes="{{ (int) config('admin.idle_minutes') }}" @endauth>
 <a class="skip-link" href="#main">Skip to main content</a>
 <header class="topbar">
     <div class="topbar-inner">
@@ -21,11 +21,11 @@
                 <a href="{{ route('admin.dashboard') }}" @if (request()->routeIs('admin.dashboard')) aria-current="page" @endif>Overview</a>
                 <a href="{{ route('admin.registrations') }}" @if (request()->routeIs('admin.registrations*')) aria-current="page" @endif>
                     Registrations
-                    @if (($navCounts['pending'] ?? 0) > 0)<span class="nav-count" aria-label="{{ $navCounts['pending'] }} waiting">{{ $navCounts['pending'] }}</span>@endif
+                    @if (($navCounts['pending'] ?? 0) > 0)<span class="nav-count">{{ $navCounts['pending'] }}<span class="sr-only"> waiting</span></span>@endif
                 </a>
                 <a href="{{ route('admin.logs') }}" @if (request()->routeIs('admin.logs')) aria-current="page" @endif>
                     Logs
-                    @if (($navCounts['anomalies'] ?? 0) > 0)<span class="nav-count is-red" aria-label="{{ $navCounts['anomalies'] }} anomalies in 24 hours">{{ $navCounts['anomalies'] }}</span>@endif
+                    @if (($navCounts['anomalies'] ?? 0) > 0)<span class="nav-count is-red">{{ $navCounts['anomalies'] }}<span class="sr-only"> anomalies in 7 days</span></span>@endif
                 </a>
                 <a href="{{ route('admin.content') }}" @if (request()->routeIs('admin.content*')) aria-current="page" @endif>Library</a>
                 <a href="{{ route('admin.privacy') }}" @if (request()->routeIs('admin.privacy')) aria-current="page" @endif>Privacy audit</a>

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Play schedule')
+@section('title', 'Play schedule · '.$section->name)
 
 @php
     // The saved day as a strip (FR-12, D-014): asleep, awake, reading class, after school.
@@ -36,13 +36,14 @@
 <div class="page-head">
     <div>
         <h1>Play schedule</h1>
-        <p class="meta measure">When {{ $section->name }} can use Reading Racoon. Times are {{ $timezone }} time. Tablets check this at sign-in and between screens, and show a friendly raccoon lock screen outside these times.</p>
+        <p class="meta measure">When {{ $section->name }} can use Reading Racoon. Times are Philippine time. Tablets check this at sign-in and between screens, and show a friendly Racoon lock screen outside these times. Changes reach each tablet at its next sync.</p>
     </div>
 </div>
 
 <div class="panel" style="max-width: 46rem;">
-    <h2 class="small" style="font-size: 1rem; margin-bottom: 0;">The saved day</h2>
-    <div class="day" role="img" aria-label="Awake {{ $schedule->hm('day_start') }} to {{ $schedule->hm('day_end') }}; reading class {{ $schedule->hm('class_start') }} to {{ $schedule->hm('class_end') }}; after school {{ $schedule->hm('after_school_start') }} to {{ $schedule->hm('after_school_end') }}.">
+    <h2 class="small" style="font-size: 1rem; margin-bottom: 0;">The day at a glance</h2>
+    <p class="hint" style="margin-top: 0;">Follows the times below as you change them; nothing is saved until you press Save schedule.</p>
+    <div class="day" data-day-strip role="img" aria-label="Awake {{ $schedule->hm('day_start') }} to {{ $schedule->hm('day_end') }}; reading class {{ $schedule->hm('class_start') }} to {{ $schedule->hm('class_end') }}; after school {{ $schedule->hm('after_school_start') }} to {{ $schedule->hm('after_school_end') }}.">
         @if ($awake)<span class="awake" style="left: {{ $awake['left'] }}%; width: {{ $awake['width'] }}%"></span>@endif
         @if ($after)<span class="after" style="left: {{ $after['left'] }}%; width: {{ $after['width'] }}%"></span>@endif
         @if ($class)<span class="class" style="left: {{ $class['left'] }}%; width: {{ $class['width'] }}%"></span>@endif

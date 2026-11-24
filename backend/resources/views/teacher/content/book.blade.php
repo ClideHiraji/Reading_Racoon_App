@@ -35,6 +35,10 @@
         @csrf
         @if ($item) @method('PUT') @endif
 
+        @if ($errors->any())
+            <div class="alert alert-warn"><p>Your typing is kept, but browsers can't keep chosen files after an error: <strong>choose any page pictures again</strong> before saving.</p></div>
+        @endif
+
         @include('teacher.content.partials.common')
 
         <div class="form-group">
@@ -57,9 +61,9 @@
                     </select>
                 </div>
             </div>
-            <label for="words">Key words, one per line</label>
-            <textarea id="words" name="words" rows="4" placeholder="bangka = boat&#10;isda = fish" aria-describedby="words-hint">{{ old('words', $words) }}</textarea>
-            <p class="hint" id="words-hint">Write <code>word = picture</code>; the picture is optional and comes from the game's picture list.</p>
+            <label for="words">Key words, one per line <span class="muted">(optional)</span></label>
+            <textarea id="words" name="words" rows="4" placeholder="word = picture" aria-describedby="words-hint">{{ old('words', $words) }}</textarea>
+            <p class="hint" id="words-hint">For example <code>bangka = boat</code>. The picture is optional and comes from the game's picture list.</p>
             @include('partials.field-error', ['field' => 'words'])
         </div>
 
@@ -74,7 +78,7 @@
                 <fieldset class="page-box">
                     <legend>Page {{ $i + 1 }}</legend>
                     <label for="page-text-{{ $i }}" class="sr-only">Page {{ $i + 1 }} text</label>
-                    <textarea id="page-text-{{ $i }}" name="pages[{{ $i }}][text]" rows="2" maxlength="400" aria-label="Page {{ $i + 1 }} text" placeholder="What this page says">{{ old("pages.$i.text", $pages[$i]['text'] ?? '') }}</textarea>
+                    <textarea id="page-text-{{ $i }}" name="pages[{{ $i }}][text]" rows="2" maxlength="400" placeholder="What this page says (up to 400 letters)" @error("pages.$i.text") aria-invalid="true" aria-describedby="page-text-{{ $i }}-error" @enderror>{{ old("pages.$i.text", $pages[$i]['text'] ?? '') }}</textarea>
                     @include('partials.field-error', ['field' => "pages.$i.text", 'id' => "page-text-$i"])
                     <div class="field-row">
                         <div>
@@ -86,12 +90,12 @@
                             </select>
                         </div>
                         <div>
-                            <label class="small" for="pictures-{{ $i }}">Pictures (comma-separated)</label>
+                            <label class="small" for="pictures-{{ $i }}">Pictures <span class="muted">(optional, comma-separated)</span></label>
                             <input id="pictures-{{ $i }}" type="text" name="pages[{{ $i }}][pictures]" list="picture-names" value="{{ old("pages.$i.pictures", implode(', ', $pages[$i]['pictures'] ?? [])) }}">
                         </div>
                     </div>
-                    <label class="small" for="image-{{ $i }}">Page picture (optional)</label>
-                    <input id="image-{{ $i }}" type="file" name="pages[{{ $i }}][image]" accept="image/png,image/jpeg">
+                    <label class="small" for="image-{{ $i }}">Page picture <span class="muted">(optional, PNG or JPG)</span></label>
+                    <input id="image-{{ $i }}" type="file" name="pages[{{ $i }}][image]" accept="image/png,image/jpeg" @error("pages.$i.image") aria-invalid="true" aria-describedby="image-{{ $i }}-error" @enderror>
                     @include('partials.field-error', ['field' => "pages.$i.image", 'id' => "image-$i"])
                     @if ($image = $images->get($i))
                         <div class="row small" style="margin-top: .3rem;">
@@ -114,7 +118,7 @@
         </div>
 
         <div class="form-actions">
-            <button class="btn" type="submit">Save book</button>
+            <button class="btn" type="submit" data-busy-label="Saving the book…">Save book</button>
             <a class="btn btn-quiet" href="{{ route('teacher.content.index') }}">Cancel</a>
         </div>
     </form>

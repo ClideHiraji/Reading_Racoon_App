@@ -49,6 +49,9 @@ Route::middleware(['auth', 'teacher'])->prefix('teacher')->name('teacher.')->gro
         ->middleware('can:update,flag')->name('flags.resolve');
     Route::post('/flags/{flag}/reopen', [StudentController::class, 'reopenFlag'])
         ->middleware('can:update,flag')->name('flags.reopen');
+    // Several flags at once (one skill-level, or "Close all that look better"); each is checked against the policy.
+    Route::post('/flags/resolve', [StudentController::class, 'resolveFlags'])->name('flags.resolve-many');
+    Route::post('/flags/reopen', [StudentController::class, 'reopenFlags'])->name('flags.reopen-many');
 
     // Library & Videos (D-019): openly licensed books and Ogg videos for the game.
     Route::get('/content', [ContentController::class, 'index'])->name('content.index');

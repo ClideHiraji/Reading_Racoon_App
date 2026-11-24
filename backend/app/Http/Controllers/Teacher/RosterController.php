@@ -79,9 +79,10 @@ class RosterController extends Controller
         ])->save();
         AuditLog::record($request->user(), $given ? 'student.consent_recorded' : 'student.consent_cleared', ['student', $student->code]);
 
-        return back()->with('status', $given
-            ? "Parental consent recorded for {$student->displayName()}."
-            : "Consent record cleared for {$student->displayName()}.");
+        // Recording is one tap on the class page, so it comes with an Undo (D-037).
+        return $given
+            ? back()->with('status', "Parental consent recorded for {$student->displayName()}.")->with('undo_consent', $student->id)
+            : back()->with('status', "Consent record cleared for {$student->displayName()}.");
     }
 
     public function destroy(Request $request, Student $student): RedirectResponse

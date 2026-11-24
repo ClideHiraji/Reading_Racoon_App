@@ -16,6 +16,7 @@
     </div>
     <div class="actions">
         <a class="btn" href="{{ route('teacher.students.report.pdf', $student) }}">Download PDF</a>
+        <button class="btn btn-secondary" type="button" data-print-page>Print</button>
     </div>
 </div>
 

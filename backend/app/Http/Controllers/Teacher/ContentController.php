@@ -88,6 +88,9 @@ class ContentController extends Controller
         if ($publish && ! $item->isBook() && $item->video() === null) {
             return back()->withErrors(['published' => 'Upload the video file before publishing.']);
         }
+        if ($publish && $item->sections()->doesntExist()) {
+            return back()->withErrors(['published' => "Choose at least one section for \"{$item->title}\" first: otherwise no tablet gets it."]);
+        }
         $item->forceFill(['published' => $publish, 'published_at' => $publish ? now() : null])->save();
         AuditLog::record($request->user(), $publish ? 'content.publish' : 'content.unpublish', ['content', $item->id]);
 

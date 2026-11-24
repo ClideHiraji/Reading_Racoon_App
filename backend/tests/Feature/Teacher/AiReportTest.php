@@ -206,7 +206,8 @@ class AiReportTest extends TestCase
 
         Queue::fake();
         $page = $this->get(route('teacher.students.report', $this->student))->assertOk();
-        $page->assertSee("Learner {$this->student->code} is on Map Level 1", false)->assertSee('written by the built-in template');
+        // The writer saw only the code; the teacher reads the name (D-037).
+        $page->assertSee("{$this->student->displayName()} is on Map Level 1", false)->assertSee($this->student->code)->assertSee('written by the built-in template');
         $this->assertSame('template', $page->viewData('report')->generatedBy);
         // These numbers already had their attempt: the page doesn't queue another.
         Queue::assertNothingPushed();

@@ -1,4 +1,4 @@
-{{-- One child in "Needs your help": who, where they are, their open flags. --}}
+{{-- One child in "Needs your help" or "Looks better": who, where they are, their open flags per skill. --}}
 @php($student = $row['student'])
 @php($name = $student->displayName())
 @php($last = $stats->lastActivity[$student->id] ?? null)
@@ -6,11 +6,11 @@
 <li class="need">
     <div class="need-who">
         <a href="{{ route('teacher.students.show', $student) }}">{{ $name }}</a>
-        <p class="muted small">L{{ $level }} · {{ \App\Support\SkillCatalog::level($level)['world'] }} · {{ $last ? 'played '.\Carbon\CarbonImmutable::parse($last)->diffForHumans() : 'not played yet' }}</p>
+        <p class="muted small">L{{ $level }} · {{ \App\Support\SkillCatalog::level($level)['world'] }} · @if ($last) played @include('partials.when', ['at' => $last]) @else never played @endif</p>
     </div>
     <ul class="flags">
-        @foreach ($row['flags'] as $f)
-            @include('teacher.partials.flag', ['f' => $f, 'name' => $name])
+        @foreach (\App\Support\SectionStats::bySkill($row['flags']) as $g)
+            @include('teacher.partials.flag', ['g' => $g, 'name' => $name, 'anchor' => $anchor ?? 'needs-help'])
         @endforeach
     </ul>
     <div class="need-go">

@@ -54,6 +54,7 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 - D-034: sounds (planned on the game branch); D-035: recorded buddy voices (game branch)
 - [[D-036 Internet hosting from the home laptop]]
 - [[D-037 Teacher dashboard needs-help first]]
+- [[D-038 Dashboard trust fixes]]
 
 ## Still open (from [[10-open-issues]])
 - 🔴 **Before the final release: delete the developer menu** (issue 30). It's debug-build-only, but it must go: `reading-racoon/ui/dev_menu.gd` (and its `.uid`), its lines in `scripts/autoload/screen.gd`, and its check at the end of `tests/ui_smoke.gd`.
@@ -76,6 +77,8 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 - [[2026-11-19]]: quality areas (CAP, ACID, ISO/IEC 25010) mapped to tools; seven skills and plugins reviewed, then installed (Google-SRE skills, event-store design, GDPR checklist, webapp-testing with Playwright, four Trail of Bits security plugins, GodotPrompter, Laravel Boost with a project `.mcp.json`); the 9 advisories `composer audit` found are cleared by patch updates (Laravel 12.73.0, Symfony 7.4.23; 34 tests pass); the gaps between the game and the server listed.
 
 - [[2026-11-20]]: the teacher dashboard and admin portal critiqued (20/40) and redesigned (D-037): needs-help first grouped by child, plain states with P(L) on demand, the class on the reading map, a filterable learner list, risky actions on the learner page with confirmations, server-drawn charts (no Chart.js or CDN), WCAG AA contrast and focus, phone layouts; 184 tests pass.
+
+- [[2026-11-24]]: a second critique of the dashboard (23/40) listed about 60 gaps from wording to whole flows; then the trust fixes (D-038): Slipping, two help groups with Close all, last-synced times, branded error pages, busy-locked forms, working map links, accessibility and print; 188 tests pass.
 
 ## Learnings
 - [[Judge new art inside the game, not on a board]]

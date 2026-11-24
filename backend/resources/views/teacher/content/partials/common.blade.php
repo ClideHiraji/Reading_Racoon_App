@@ -28,10 +28,10 @@
     </div>
 </div>
 <label for="source_url">Where you found it (link)</label>
-<input id="source_url" type="text" name="source_url" value="{{ old('source_url', $item?->source_url) }}" required maxlength="500" placeholder="https://storyweaver.org.in/..." {!! $invalid('source_url') !!}>
+<input id="source_url" type="url" inputmode="url" name="source_url" value="{{ old('source_url', $item?->source_url) }}" required maxlength="500" placeholder="https://storyweaver.org.in/..." {!! $invalid('source_url') !!}>
 @include('partials.field-error', ['field' => 'source_url'])
 <label for="credit">Credit line</label>
-<input id="credit" type="text" name="credit" value="{{ old('credit', $item?->credit) }}" required maxlength="500" placeholder="Title by Author, illustrated by Illustrator, Pratham Books, CC BY 4.0" aria-describedby="credit-hint" {!! $invalid('credit') !!}>
+<input id="credit" type="text" name="credit" value="{{ old('credit', $item?->credit) }}" required maxlength="500" placeholder="Title by Author, illustrated by Illustrator, Pratham Books, CC BY 4.0" aria-describedby="credit-hint @error('credit') credit-error @enderror" @error('credit') aria-invalid="true" @enderror>
 <p class="hint" id="credit-hint">Copy it from the book or video's own page. It is shown to the children with the item.</p>
 @include('partials.field-error', ['field' => 'credit'])
 

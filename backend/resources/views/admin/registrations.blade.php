@@ -19,7 +19,7 @@
 
 <div class="panel">
     @if ($registrations->isEmpty())
-        <p class="muted">{{ $status === 'pending' ? 'No registrations are waiting.' : 'Nothing here.' }}</p>
+        <p class="muted">{{ ['pending' => 'No registrations are waiting.', 'approved' => 'No approved teachers yet.', 'denied' => 'No denied registrations.'][$status] ?? 'Nothing here.' }}</p>
     @else
         <div class="table-wrap">
             <table class="table-cards">
@@ -44,6 +44,8 @@
                         <td data-label="Decision" style="min-width: 260px;">
                             <form method="POST" class="row">
                                 @csrf
+                                {{-- Enter in the note must not approve: a disabled first button makes implicit submission do nothing. --}}
+                                <button type="submit" disabled hidden aria-hidden="true" tabindex="-1"></button>
                                 <label for="note-{{ $registration->id }}" class="sr-only">Note for {{ $teacher->name }} (optional)</label>
                                 <input id="note-{{ $registration->id }}" type="text" name="note" maxlength="500" placeholder="Note (optional)" style="flex: 1; min-width: 120px;">
                                 @if ($status !== 'approved')

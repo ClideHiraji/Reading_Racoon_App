@@ -102,6 +102,18 @@ class ContentLibraryTest extends TestCase
         $this->assertDatabaseCount('content_items', 0);
     }
 
+    public function test_a_book_with_no_section_cannot_be_published(): void
+    {
+        $this->actingAs($this->teacher);
+        $payload = $this->bookPayload();
+        unset($payload['sections']);
+        $this->post(route('teacher.content.books.store'), $payload)->assertRedirect(route('teacher.content.index'));
+        $item = ContentItem::sole();
+
+        $this->post(route('teacher.content.publish', $item), ['published' => 1])->assertSessionHasErrors('published');
+        $this->assertFalse($item->fresh()->published);
+    }
+
     public function test_a_published_book_reaches_its_sections_tablets_in_the_games_shape(): void
     {
         $this->actingAs($this->teacher);

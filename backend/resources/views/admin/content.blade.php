@@ -1,12 +1,12 @@
 @extends('layouts.admin')
-@section('title', 'Content')
+@section('title', 'Library')
 
 @php($tz = config('reading_racoon.access.timezone'))
 
 @section('content')
 <div class="page-head">
     <div>
-        <h1>Teacher library &amp; videos</h1>
+        <h1>Library</h1>
         <p class="meta measure">Everything teachers added for the tablets. Unpublish anything unsuitable or not openly licensed; the teacher can fix it and publish again.</p>
     </div>
 </div>
@@ -24,7 +24,7 @@
                         <td>
                             <span class="badge {{ $item->isBook() ? 'badge-teal' : 'badge-orange' }}">{{ $item->isBook() ? 'Book' : 'Video' }}</span>
                             <strong>{{ $item->title }}</strong>
-                            <div class="muted">{{ $item->id }} · {{ $item->language }} · {{ $item->created_at->setTimezone($tz)->format('M j, Y') }}</div>
+                            <div class="muted">{{ config('reading_racoon.content.languages')[$item->language] ?? $item->language }} · added {{ $item->created_at->setTimezone($tz)->format('M j, Y') }}</div>
                             @foreach ($item->files as $file)
                                 <a href="{{ route('admin.content.file', [$item, $file]) }}" target="_blank" rel="noopener noreferrer">{{ $file->role === 'video' ? 'video' : 'page '.($file->page_index + 1).' picture' }}</a>
                             @endforeach

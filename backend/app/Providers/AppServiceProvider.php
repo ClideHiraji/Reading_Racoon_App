@@ -54,14 +54,14 @@ class AppServiceProvider extends ServiceProvider
         RateLimiter::for('teacher-register', fn (Request $request) => Limit::perHour(10)->by($request->ip()));
 
         // The admin nav shows what is waiting (FR-08): registrations to review
-        // and anomalies in the last 24 h. Two counts, signed-in admins only.
+        // and anomalies in the last 7 days. Two counts, signed-in admins only.
         View::composer('layouts.admin', function ($view) {
             if (! auth('admin')->check()) {
                 return;
             }
             $view->with('navCounts', [
                 'pending' => TeacherRegistration::where('status', RegistrationStatus::Pending)->count(),
-                'anomalies' => SystemLog::where('anomaly', true)->where('created_at', '>=', now()->subDay())->count(),
+                'anomalies' => SystemLog::where('anomaly', true)->where('created_at', '>=', now()->subDays(7))->count(),
             ]);
         });
     }

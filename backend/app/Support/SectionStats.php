@@ -40,6 +40,7 @@ final class SectionStats
      */
     public const STATES = [
         'got' => 'Got it',
+        'slip' => 'Slipping',
         'prac' => 'Practising',
         'help' => 'Needs help',
         'new' => 'Not started',
@@ -86,6 +87,12 @@ final class SectionStats
     /** @var array<int, int> student id => sort weight for "needs help first" */
     public array $severity = [];
 
+    /** @var array<int, string> student id => last time the server received events (server time) */
+    public array $lastSync = [];
+
+    /** @var array<int, array{active: int, better: int}> student id => open flags still needing help / looking better */
+    public array $flagCounts = [];
+
     public static function for(Section $section): self
     {
         $stats = new self;
@@ -102,6 +109,10 @@ final class SectionStats
             ->orderByDesc('raised_at')->get();
         $stats->lastActivity = DB::table('sync_events')->whereIn('student_id', $ids)
             ->groupBy('student_id')->selectRaw('student_id, max(device_time) as last')
+            ->pluck('last', 'student_id')->all();
+        // When the server last heard from each tablet: its own clock, not the device's (D-037).
+        $stats->lastSync = DB::table('sync_events')->whereIn('student_id', $ids)
+            ->groupBy('student_id')->selectRaw('student_id, max(received_at) as last')
             ->pluck('last', 'student_id')->all();
 
         $stats->computeSkills();
@@ -129,6 +140,8 @@ final class SectionStats
         $low = (float) config('reading_racoon.bkt.hint_p', 0.30);
         $min = (int) config('reading_racoon.bkt.mastery_min_attempts', 5);
         $key = match (true) {
+            // Mastery latches, but the estimate keeps moving: say so when it has fallen.
+            $state->mastered_at !== null && $state->p_mastery < self::BETTER_P => 'slip',
             $state->mastered_at !== null => 'got',
             $state->attempts === 0 && ! $state->review => 'new',
             $state->p_mastery < $low && $state->attempts >= $min => 'help',
@@ -195,6 +208,7 @@ final class SectionStats
                 ])->values();
 
             $active = $flags->where('better', false);
+            $this->flagCounts[$student->id] = ['active' => $active->count(), 'better' => $flags->count() - $active->count()];
             $helpState = collect($this->states[$student->id] ?? [])->contains(fn ($s) => $s['key'] === 'help');
             $top = $active->max(fn ($f) => self::FLAG_SEVERITY[$f['flag']->type] ?? 0) ?? 0;
             $this->severity[$student->id] = $top * 10 + $active->count() + ($helpState ? 1 : 0);
@@ -222,6 +236,62 @@ final class SectionStats
             'help' => self::FLAG_HELP[$flag->type] ?? '',
             'skill' => $flag->sub_skill ? SkillCatalog::label($flag->sub_skill) : null,
             'better' => $flag->status === 'open' && self::looksBetter($student, $flag)];
+    }
+
+    /** Children whose open flags all look better: the "check and close" group. */
+    public function betterRows(): array
+    {
+        return array_values(array_filter($this->needsHelp, fn ($row) => $row['active'] === 0));
+    }
+
+    /** Children with at least one open flag that doesn't look better yet. */
+    public function activeRows(): array
+    {
+        return array_values(array_filter($this->needsHelp, fn ($row) => $row['active'] > 0));
+    }
+
+    /** Ids of every open flag in the section that looks better (for "Close all"). */
+    public function betterFlagIds(): array
+    {
+        $ids = [];
+        foreach ($this->needsHelp as $row) {
+            foreach ($row['flags'] as $f) {
+                if ($f['better']) {
+                    $ids[] = $f['flag']->id;
+                }
+            }
+        }
+
+        return $ids;
+    }
+
+    /** The newest time the server heard from any tablet in the section. */
+    public function lastSectionSync(): ?string
+    {
+        return $this->lastSync === [] ? null : max($this->lastSync);
+    }
+
+    /**
+     * A child's open flags merged per skill-level (one row, one "Mark resolved"
+     * for all its flags), most urgent first.
+     *
+     * @return list<array{skill: ?string, level: ?int, flags: list<array>, ids: list<string>, better: bool, raised: mixed}>
+     */
+    public static function bySkill(array $flags): array
+    {
+        $groups = [];
+        foreach ($flags as $f) {
+            $key = ($f['flag']->sub_skill ?? '-').':'.($f['flag']->level ?? '-');
+            $groups[$key] ??= ['skill' => $f['skill'], 'level' => $f['flag']->level, 'flags' => [], 'ids' => [], 'better' => true, 'raised' => $f['flag']->raised_at];
+            $groups[$key]['flags'][] = $f;
+            $groups[$key]['ids'][] = $f['flag']->id;
+            $groups[$key]['better'] = $groups[$key]['better'] && $f['better'];
+            if ($f['flag']->raised_at < $groups[$key]['raised']) {
+                $groups[$key]['raised'] = $f['flag']->raised_at;
+            }
+        }
+
+        return array_values($groups);
     }
 
     /** Learners with at least one open flag that doesn't look better yet. */

@@ -25,6 +25,10 @@
         @csrf
         @if ($item) @method('PUT') @endif
 
+        @if ($errors->any())
+            <div class="alert alert-warn"><p>Your typing is kept, but browsers can't keep chosen files after an error: <strong>choose the video file again</strong> before saving.</p></div>
+        @endif
+
         @include('teacher.content.partials.common')
 
         <div class="form-group">
@@ -45,7 +49,7 @@
                 </div>
             </div>
             <label for="file">Video file{{ $item ? ', only to replace it' : '' }}</label>
-            <input id="file" type="file" name="file" accept=".ogv,video/ogg" {{ $item ? '' : 'required' }} aria-describedby="file-hint">
+            <input id="file" type="file" name="file" accept=".ogv,video/ogg" {{ $item ? '' : 'required' }} aria-describedby="file-hint @error('file') file-error @enderror" @error('file') aria-invalid="true" @enderror>
             <p class="hint" id="file-hint">An <strong>.ogv</strong> file (the format the game plays), at most {{ $c['max_video_mb'] }} MB. Have an MP4? Ask your school's ICT coordinator to convert it, or use a free online converter "to OGV".</p>
             @include('partials.field-error', ['field' => 'file'])
             <details class="disclosure">

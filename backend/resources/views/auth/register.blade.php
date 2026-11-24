@@ -16,14 +16,14 @@
             <label for="email">School email</label>
             <input id="email" type="email" name="email" value="{{ old('email') }}" required autocomplete="email" {!! $invalid('email') !!}>
             @include('partials.field-error', ['field' => 'email'])
-            <label for="school">School</label>
+            <label for="school">School <span class="muted">(optional)</span></label>
             <input id="school" type="text" name="school" value="{{ old('school') }}" maxlength="150" placeholder="e.g. Butuan Central Elementary School" {!! $invalid('school') !!}>
             @include('partials.field-error', ['field' => 'school'])
             <label for="section_name">Your Grade 1 section</label>
             <input id="section_name" type="text" name="section_name" value="{{ old('section_name') }}" required maxlength="100" placeholder="e.g. Grade 1 - Sampaguita" {!! $invalid('section_name') !!}>
             @include('partials.field-error', ['field' => 'section_name'])
             <label for="password">Password</label>
-            <input id="password" type="password" name="password" required autocomplete="new-password" aria-describedby="password-hint" {!! $invalid('password') !!}>
+            <input id="password" type="password" name="password" required autocomplete="new-password" aria-describedby="password-hint @error('password') password-error @enderror" @error('password') aria-invalid="true" @enderror>
             <p class="hint" id="password-hint">At least 10 characters.</p>
             @include('partials.field-error', ['field' => 'password'])
             <label for="password_confirmation">Repeat password</label>

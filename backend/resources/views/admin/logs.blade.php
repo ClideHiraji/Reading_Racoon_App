@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Logs')
+@section('title', ['audit' => 'Audit log', 'ai' => 'AI calls'][$kind] ?? 'System log')
 
 @section('content')
 <div class="page-head">
@@ -17,6 +17,7 @@
                     <span @class(['is-zero' => ($anomalyDays[$day] ?? 0) === 0]) title="{{ $day }}: {{ $anomalyDays[$day] ?? 0 }}" style="height: {{ round(100 * ($anomalyDays[$day] ?? 0) / $max) }}%"></span>
                 @endforeach
             </div>
+            <div class="day-hours" aria-hidden="true"><span>{{ \Carbon\Carbon::parse($days->first())->format('M j') }}</span><span>max {{ $max }}</span><span>today</span></div>
             <p class="sr-only" id="spark-values">{{ $days->filter(fn ($d) => ($anomalyDays[$d] ?? 0) > 0)->map(fn ($d) => $d.': '.$anomalyDays[$d])->join('; ') ?: 'None.' }}</p>
         </div>
     @endif
@@ -63,10 +64,13 @@
         @endif
         <div><label for="from">From</label><input id="from" type="date" name="from" value="{{ $filters['from'] ?? '' }}"></div>
         <div><label for="to">To</label><input id="to" type="date" name="to" value="{{ $filters['to'] ?? '' }}"></div>
-        <div><label for="q">Search</label><input id="q" type="text" name="q" value="{{ $filters['q'] ?? '' }}" placeholder="{{ ['audit' => 'Actor, subject or IP', 'ai' => 'Student code, model or error'][$kind] ?? 'IP or text' }}"></div>
+        <div><label for="q">Search</label><input id="q" type="text" name="q" value="{{ $filters['q'] ?? '' }}" placeholder="{{ ['audit' => 'Actor, subject or IP', 'ai' => 'Code, model or error'][$kind] ?? 'IP or text' }}"></div>
     </div>
     <div class="row" style="margin-top: .75rem;">
         <label class="check is-plain" style="margin: 0 var(--s3) 0 0;"><input type="checkbox" name="anomaly" value="1" @checked($filters['anomaly'] ?? false)> {{ ['audit' => 'Sensitive actions only', 'ai' => 'Failed calls only'][$kind] ?? 'Anomalies only' }}</label>
+        @if ($kind === 'audit')
+            <label class="check is-plain" style="margin: 0 var(--s3) 0 0;"><input type="checkbox" name="views" value="1" @checked($filters['views'] ?? false)> Include page views</label>
+        @endif
         <button class="btn" type="submit">Apply filters</button>
         <a class="btn btn-secondary" href="{{ route('admin.logs', ['kind' => $kind]) }}">Clear</a>
     </div>
@@ -74,7 +78,7 @@
 
 <div class="panel">
     @if ($logs->isEmpty())
-        <p class="muted">No entries.</p>
+        <p class="muted">{{ match ($kind) { 'ai' => \App\Support\LlmClient::enabled() ? 'No AI calls match.' : 'No AI calls: the AI is off, so reports use the built-in template.', 'audit' => 'No actions match.', default => 'No events match these filters.' } }}</p>
     @else
         <div class="table-wrap">
             <table class="compact">
@@ -83,7 +87,7 @@
                     <tbody>
                     @foreach ($logs as $log)
                         <tr @class(['anomaly' => in_array($log->action, $sensitive, true)])>
-                            <td style="white-space: nowrap;">{{ $log->created_at->setTimezone($timezone)->format('M j, H:i:s') }}</td>
+                            <td style="white-space: nowrap;">{{ $log->created_at->setTimezone($timezone)->format('M j, g:i:s A') }}</td>
                             <td>{{ $log->actor_label ?? 'console' }}<div class="muted">{{ $log->actor_role }}</div></td>
                             <td><span class="badge">{{ $log->action }}</span> @if (in_array($log->action, $sensitive, true))<span class="badge badge-red">sensitive</span>@endif</td>
                             <td>{{ $log->subject_type }} {{ $log->subject_id }}</td>
@@ -97,7 +101,7 @@
                     <tbody>
                     @foreach ($logs as $log)
                         <tr @class(['anomaly' => $log->status !== 'ok'])>
-                            <td style="white-space: nowrap;">{{ $log->created_at->setTimezone($timezone)->format('M j, H:i:s') }}</td>
+                            <td style="white-space: nowrap;">{{ $log->created_at->setTimezone($timezone)->format('M j, g:i:s A') }}</td>
                             <td>{{ $log->task }}<div class="muted">{{ $log->prompt_version }}</div></td>
                             <td>{{ $log->student?->code ?? '-' }}</td>
                             <td>{{ $log->model }}</td>
@@ -119,7 +123,7 @@
                     <tbody>
                     @foreach ($logs as $log)
                         <tr @class(['anomaly' => $log->anomaly])>
-                            <td style="white-space: nowrap;">{{ $log->created_at->setTimezone($timezone)->format('M j, H:i:s') }}</td>
+                            <td style="white-space: nowrap;">{{ $log->created_at->setTimezone($timezone)->format('M j, g:i:s A') }}</td>
                             <td><span @class(['badge', 'badge-red' => in_array($log->level, ['error', 'critical']), 'badge-amber' => $log->level === 'warning'])>{{ $log->level }}</span></td>
                             <td>{{ $log->event }} @if ($log->anomaly)<span class="badge badge-red">anomaly</span>@endif</td>
                             <td>@if ($log->context)<pre class="json">{{ json_encode($log->context, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) }}</pre>@endif</td>

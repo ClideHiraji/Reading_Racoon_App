@@ -230,6 +230,50 @@ class TeacherDashboardTest extends TestCase
         $this->assertSame(1, AuditLog::where('action', 'flag.reopen')->count());
     }
 
+    public function test_flags_that_look_better_close_together_and_never_touch_another_teachers(): void
+    {
+        $ana = $this->enroll('Ana');
+        $this->play($ana, [...$this->answers('phonics', 1, 6, correct: false), ...$this->answers('phonics', 1, 4)]);
+        $other = User::factory()->registered()->create();
+        $carlo = $this->enroll('Carlo', $other->sections()->create(['name' => 'Grade 1 - Rosal']));
+        $this->play($carlo, $this->answers('vocabulary', 2, 6, correct: false));
+        $theirs = InterventionFlag::where('student_id', $carlo->id)->sole();
+
+        $page = $this->get(route('teacher.sections.show', $this->section))->assertOk()
+            ->assertSee('Looks better: check and close')->assertSee('Close all 1 that look better');
+        $stats = $page->viewData('stats');
+        $this->assertSame(0, $stats->needingHelpCount());
+        $this->assertCount(1, $stats->betterRows());
+
+        $this->post(route('teacher.flags.resolve-many'), ['ids' => [...$stats->betterFlagIds(), $theirs->id], 'anchor' => 'needs-help'])
+            ->assertRedirect()->assertSessionHas('undo_flags');
+        $this->assertSame('resolved', InterventionFlag::where('student_id', $ana->id)->sole()->status);
+        $this->assertSame('open', $theirs->fresh()->status, "another teacher's flag is ignored");
+
+        $this->post(route('teacher.flags.reopen-many'), ['ids' => $stats->betterFlagIds()]);
+        $this->assertSame('open', InterventionFlag::where('student_id', $ana->id)->sole()->status);
+    }
+
+    public function test_a_mastered_skill_whose_estimate_falls_shows_as_slipping(): void
+    {
+        $ana = $this->enroll('Ana');
+        $this->play($ana, [...$this->answers('phonological_awareness', 1, 5), ...$this->answers('phonological_awareness', 1, 8, correct: false)]);
+
+        $stats = $this->get(route('teacher.sections.show', $this->section))->assertSee('Slipping')->viewData('stats');
+        $this->assertSame('slip', $stats->states[$ana->id]['phonological_awareness']['key']);
+        $this->get(route('teacher.students.show', $ana))->assertSee('Slipping');
+    }
+
+    public function test_recording_consent_can_be_undone_and_error_pages_offer_a_way_back(): void
+    {
+        $ana = $this->enroll('Ana');
+        $this->post(route('teacher.students.consent', $ana), ['consent' => 1])->assertSessionHas('undo_consent', $ana->id);
+        $this->get(route('teacher.sections.show', $this->section))->assertSee('Undo');
+
+        $this->get('/teacher/students/999999')->assertNotFound()
+            ->assertSee('<h1>We can&#039;t find that page</h1>', false)->assertSee('Go to Reading Racoon')->assertDontSee('@section', false);
+    }
+
     public function test_a_low_mastery_flag_looks_better_once_the_child_recovers(): void
     {
         $ben = $this->enroll('Ben');
@@ -328,7 +372,7 @@ class TeacherDashboardTest extends TestCase
         ]);
 
         $response = $this->get(route('teacher.students.report', $student))->assertOk();
-        $response->assertSee("Learner {$student->code} is on Map Level 1", false);
+        $response->assertSee("{$student->displayName()} is on Map Level 1", false)->assertDontSee("Learner {$student->code} is on", false);
         $response->assertSee('Mastered 1 of 14 skill-levels: Phonological Awareness L1.');
         $response->assertSee('Needs support in Phonics');
         $response->assertSee('word families');

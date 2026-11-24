@@ -72,8 +72,9 @@ final class TemplateReportWriter implements DiagnosticReportWriter
                 continue;
             }
             $isStrong = $s['mastered_levels'] !== [] || ($s['p'] !== null && $s['p'] >= 0.7 && ($s['recent_accuracy'] ?? 0) >= 80);
+            // An open flag on a level the child has since mastered isn't a need now (D-037).
             $isNeed = $s['review']
-                || in_array($skill, $flagged, true)
+                || (in_array($skill, $flagged, true) && ! $s['current_mastered'])
                 || (! $s['current_mastered'] && $s['p'] !== null && $s['p'] < 0.3 && $s['attempts'] >= 5)
                 || ($s['recent_accuracy'] !== null && $s['recent_accuracy'] < 60 && $s['recent_answers'] >= 5);
 

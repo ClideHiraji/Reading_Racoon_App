@@ -10,6 +10,7 @@ use App\Reports\DiagnosticReportWriter;
 use App\Reports\StudentFacts;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -33,7 +34,7 @@ class ReportController extends Controller
 
         return Pdf::loadView('teacher.report-pdf', $this->data($student, $replayer, $writer))
             ->setPaper('a4')
-            ->download("reading-racoon-report-{$student->code}.pdf");
+            ->download('reading-racoon-report-'.Str::slug($student->displayName()).'-'.$student->code.'.pdf');
     }
 
     /**

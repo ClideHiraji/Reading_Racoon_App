@@ -21,18 +21,27 @@
 @else
     <ul class="grid grid-2 grid-gap-bottom" style="list-style: none; padding: 0; margin-top: 0;">
         @foreach ($sections as $section)
+            @php($sum = $summaries[$section->id])
             <li class="panel" style="margin: 0;">
                 <h2 style="margin-bottom: var(--s2);"><a href="{{ route('teacher.sections.show', $section) }}">{{ $section->name }}</a></h2>
-                <ul class="summary" style="margin-top: 0;">
-                    <li><span class="n">{{ $section->students_count }}</span> {{ Str::plural('learner', $section->students_count) }}</li>
-                    <li>
-                        @if ($section->flagged_count > 0)
-                            <span class="badge badge-amber"><span class="n" style="font-size: inherit;">{{ $section->flagged_count }}</span>&nbsp;with open flags</span>
-                        @else
-                            <span class="badge badge-green">No open flags</span>
+                @if ($section->students_count === 0)
+                    <p class="muted" style="margin: 0;">No learners yet: open it to add your class and print their login cards.</p>
+                @else
+                    <ul class="summary" style="margin-top: 0;">
+                        <li><span class="n">{{ $section->students_count }}</span> {{ Str::plural('learner', $section->students_count) }}</li>
+                        <li>
+                            @if ($sum['need'] > 0)
+                                <span class="badge badge-red">{{ $sum['need'] }} {{ $sum['need'] === 1 ? 'needs' : 'need' }} your help</span>
+                            @else
+                                <span class="badge badge-green">Nobody needs extra help</span>
+                            @endif
+                        </li>
+                        @if ($sum['better'] > 0)
+                            <li><span class="badge badge-amber">{{ $sum['better'] }} to check and close</span></li>
                         @endif
-                    </li>
-                </ul>
+                    </ul>
+                    <p class="freshness">@if ($sum['sync']) Tablets last synced @include('partials.when', ['at' => $sum['sync']]). @else No tablet has synced yet. @endif</p>
+                @endif
                 <p style="margin: var(--s4) 0 0;"><a class="btn btn-secondary btn-sm" href="{{ route('teacher.sections.show', $section) }}">Open<span class="sr-only"> {{ $section->name }}</span></a></p>
             </li>
         @endforeach

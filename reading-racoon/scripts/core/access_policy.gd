@@ -1,27 +1,32 @@
 class_name AccessPolicy
 extends RefCounted
 ## Time-restricted access (FR-12, 06-game-design.md "Time-restricted access").
-## Only Adventure (lessons and the pre/post-test) follows the school schedule (D-015):
+## Only Adventure (lessons and the pre/post-test) follows the school schedule (D-015).
+## decide() mirrors the server's backend/app/Support/AccessDecider.php (D-014):
+## - before `day_start` or from `day_end` on an open day: the game is sleeping
+## - weekends: off unless the teacher opens them, then `daily_minutes` all day
 ## - class session (teacher-set window): everything allowed
-## - other school hours: locked ("Come back during Reading time")
-## - after school (configurable window): play up to `daily_minutes` (30) per day
-## - weekends: off unless the teacher opens them, then the same daily cap
-## - any other time (night, early morning): the game is sleeping
+## - after school (teacher-set window): play up to `daily_minutes` (30) per day
+## - any other weekday time: locked ("Come back during Reading time")
 ## The hub and its free sections stay open from `day_start` to `day_end` (hub()).
 ## Practice, Library and Watch & Listen share a daily free-play timer outside the
 ## class window (free_play()).
 ## The server decides when online (GET /api/access/student/status); offline the
-## device uses the cached schedule and its clock, corrected by the last known
-## server time offset (03-architecture.md "Offline and sync", open issue 10).
+## device uses the cached schedule and the school's clock (school_clock()),
+## corrected by the last known server time offset (03-architecture.md "Offline
+## and sync", open issue 10).
 ## No schedule yet (never synced) = open, so the app works before setup.
 
 const DEFAULTS := {
 	"class_start": "07:30", "class_end": "08:30",
-	"school_start": "07:00", "school_end": "15:00",
 	"after_school_start": "15:00", "after_school_end": "17:00",
 	"daily_minutes": 30, "weekends_open": false,
 	"day_start": "06:00", "day_end": "21:00", "free_play_minutes": 45,
 }
+
+## School time zones as minutes east of UTC; the server sends schedule.timezone.
+## shortcut: fixed offsets only (Asia/Manila has no daylight saving); add a zone here if a school outside the Philippines joins.
+const SCHOOL_TZ := {"Asia/Manila": 480}
 
 
 ## Adventure (lessons, tests).
@@ -33,26 +38,26 @@ static func decide(schedule: Dictionary, now: Dictionary, minutes_used: float) -
 		return {"status": "allowed", "minutes_left": -1, "message_key": ""}
 	var s := _merged(schedule)
 	var t := int(now.hour) * 60 + int(now.minute)
-	var cap := float(s.daily_minutes)
-	var left := maxf(0.0, cap - minutes_used)
 	var weekend: bool = int(now.weekday) == 0 or int(now.weekday) == 6
+	if weekend and not bool(s.weekends_open):
+		return {"status": "weekend_lock", "minutes_left": 0, "message_key": "locked_sleep"}
+	if _night(s, now):
+		return {"status": "sleeping", "minutes_left": 0, "message_key": "locked_sleep"}
+	var left := maxf(0.0, float(s.daily_minutes) - minutes_used)
 	if weekend:
-		if not bool(s.weekends_open):
-			return {"status": "weekend_lock", "minutes_left": 0, "message_key": "locked_sleep"}
-		return _capped(left)
+		return _capped(left, _min(s.day_end) - t)
 	if t >= _min(s.class_start) and t < _min(s.class_end):
 		return {"status": "allowed", "minutes_left": -1, "message_key": ""}
-	if t >= _min(s.school_start) and t < _min(s.school_end):
-		return {"status": "class_lock", "minutes_left": 0, "message_key": "locked_class"}
 	if t >= _min(s.after_school_start) and t < _min(s.after_school_end):
-		return _capped(left)
-	return {"status": "sleeping", "minutes_left": 0, "message_key": "locked_sleep"}
+		return _capped(left, _min(s.after_school_end) - t)
+	return {"status": "class_lock", "minutes_left": 0, "message_key": "locked_class"}
 
 
-static func _capped(left: float) -> Dictionary:
+## Like the server, the minutes left stop at the end of the open window.
+static func _capped(left: float, until_end: int) -> Dictionary:
 	if left <= 0.0:
 		return {"status": "daily_limit", "minutes_left": 0, "message_key": "locked_done"}
-	return {"status": "after_school", "minutes_left": ceili(left), "message_key": ""}
+	return {"status": "after_school", "minutes_left": ceili(minf(left, until_end)), "message_key": ""}
 
 
 ## The hub, Closet, Stickers and Word Book: open all day, asleep at night (D-015).
@@ -82,21 +87,32 @@ static func free_play(schedule: Dictionary, now: Dictionary, minutes_used: float
 	return {"status": "free_play", "minutes_left": ceili(left), "message_key": ""}
 
 
-## When Adventure opens next, as "07:30" (today's class or after-school window,
-## else tomorrow's class), for "Adventure opens at 7:30 AM". "" = no schedule.
+## When Adventure opens next, as "07:30" (a later window today, else tomorrow's
+## first one), for "Adventure opens at 7:30 AM". "" = no schedule. Same windows
+## as the server's AccessDecider::nextOpening().
 static func adventure_opens(schedule: Dictionary, now: Dictionary, minutes_used: float) -> String:
 	if schedule.is_empty():
 		return ""
 	var s := _merged(schedule)
 	var t := int(now.hour) * 60 + int(now.minute)
-	var weekend: bool = int(now.weekday) == 0 or int(now.weekday) == 6
-	if not weekend:
-		if t < _min(s.class_start):
-			return str(s.class_start)
-		var cap_left := float(s.daily_minutes) - minutes_used > 0.0
-		if t < _min(s.after_school_start) and cap_left:
-			return str(s.after_school_start)
-	return str(s.class_start)
+	var weekday := int(now.weekday)
+	var cap_left := float(s.daily_minutes) - minutes_used > 0.0
+	var starts: Array = []
+	if weekday == 0 or weekday == 6:
+		if bool(s.weekends_open) and cap_left:
+			starts = [s.day_start]
+	else:
+		starts = [s.class_start]
+		if cap_left:
+			starts.append(s.after_school_start)
+	var next := ""
+	for at in starts:
+		if _min(at) > t and (next == "" or _min(at) < _min(next)):
+			next = str(at)
+	if next != "":
+		return next
+	var weekend_tomorrow := weekday == 5 or weekday == 6
+	return str(s.day_start if weekend_tomorrow and bool(s.weekends_open) else s.class_start)
 
 
 ## "15:00" -> "3:00 PM"
@@ -113,6 +129,16 @@ static func is_open(decision: Dictionary) -> bool:
 ## Does playing time count against the daily cap right now?
 static func counts_minutes(decision: Dictionary) -> bool:
 	return decision.status in ["after_school", "free_play"]
+
+
+## The school's wall clock at `unix` (UTC seconds), as a datetime dict: the server
+## decides in the school's zone, so a tablet set to the wrong zone can't shift the
+## windows. No schedule yet = the device's own zone (`device_bias`, minutes).
+static func school_clock(unix: float, schedule: Dictionary, device_bias: int) -> Dictionary:
+	var bias := device_bias
+	if not schedule.is_empty():
+		bias = SCHOOL_TZ.get(str(schedule.get("timezone", "Asia/Manila")), device_bias)
+	return Time.get_datetime_dict_from_unix_time(int(unix + bias * 60.0))
 
 
 static func _merged(schedule: Dictionary) -> Dictionary:

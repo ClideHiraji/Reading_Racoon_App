@@ -596,9 +596,8 @@ func _at(weekday: int, hhmm: String) -> Dictionary:
 
 
 func test_access_policy() -> void:
-	var s := {"class_start": "07:30", "class_end": "08:30", "school_start": "07:00",
-			"school_end": "15:00", "after_school_start": "15:00", "after_school_end": "17:00",
-			"daily_minutes": 30, "weekends_open": false}
+	var s := {"class_start": "07:30", "class_end": "08:30", "after_school_start": "15:00",
+			"after_school_end": "17:00", "daily_minutes": 30, "weekends_open": false}
 	check(AccessPolicy.decide({}, _at(3, "10:00"), 0).status == "allowed", "no schedule yet = open")
 	check(AccessPolicy.decide(s, _at(1, "07:45"), 99).status == "allowed", "class window: open, no cap")
 	check(AccessPolicy.decide(s, _at(1, "10:00"), 0).status == "class_lock", "other subjects: locked")
@@ -612,6 +611,27 @@ func test_access_policy() -> void:
 	var sat := AccessPolicy.decide(s, _at(0, "10:00"), 5.0)
 	check(sat.status == "after_school" and sat.minutes_left == 25, "open weekend uses the daily cap")
 	check(not AccessPolicy.is_open(AccessPolicy.decide(s, _at(0, "10:00"), 30.0)), "weekend cap reached")
+	# Same answers as the server's AccessDecider for any schedule a teacher can save.
+	check(AccessPolicy.decide(s, _at(0, "22:00"), 0).status == "sleeping", "open weekend still sleeps at night")
+	check(AccessPolicy.decide(s, _at(3, "17:30"), 0).status == "class_lock", "awake weekday outside the windows: locked")
+	check(AccessPolicy.decide(s, _at(3, "16:50"), 0).minutes_left == 10, "minutes left stop at the window's end")
+	s.after_school_start = "14:00"
+	s.after_school_end = "16:00"
+	var early := AccessPolicy.decide(s, _at(3, "14:30"), 0)
+	check(early.status == "after_school" and early.minutes_left == 30, "after school from 14:00: 14:30 is open")
+	check(AccessPolicy.adventure_opens(s, _at(3, "10:00"), 0) == "14:00", "opens at the teacher's after-school time")
+	check(AccessPolicy.adventure_opens(s, _at(5, "18:00"), 0) == "06:00", "open weekend: Saturday opens at day start")
+	check(AccessPolicy.adventure_opens(s, _at(6, "05:00"), 0) == "06:00", "open weekend: opens at day start")
+	check(AccessPolicy.adventure_opens(s, _at(0, "18:00"), 30.0) == "07:30", "Sunday cap used: Monday's class")
+
+	# The tablet reads the school's clock: 06:30 UTC is 14:30 in Manila, even on a
+	# tablet set to New York (UTC-5).
+	var unix := Time.get_unix_time_from_datetime_string("2026-11-25T06:30:00")
+	s.timezone = "Asia/Manila"
+	var manila := AccessPolicy.school_clock(unix, s, -300)
+	check(manila.hour == 14 and manila.minute == 30 and manila.weekday == 3, "school clock is Manila time")
+	check(AccessPolicy.decide(s, manila, 0).status == "after_school", "wrong device zone: after school still open")
+	check(AccessPolicy.school_clock(unix, {}, -300).hour == 1, "no schedule yet: the device's own zone")
 
 
 ## D-016: everything the child taps on the core palette takes dark ink text that

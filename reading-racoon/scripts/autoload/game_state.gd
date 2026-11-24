@@ -511,14 +511,14 @@ func _pay(r: Dictionary) -> Dictionary:
 
 # --- Play-time limits (FR-12) --------------------------------------------------------
 
-## Local wall-clock time, corrected by the last known server offset so a wrong
-## device clock can't open the game early (open issue 10).
+## The school's wall-clock time (its zone, not the device's), corrected by the last
+## known server offset so a wrong device clock can't open the game early
+## (open issue 10, FR-12).
 func now_dict() -> Dictionary:
 	if not _debug_now.is_empty():
 		return _debug_now
-	var bias: int = Time.get_time_zone_from_system().get("bias", 0)
-	var unix := Time.get_unix_time_from_system() + float(access.server_offset) + bias * 60.0
-	return Time.get_datetime_dict_from_unix_time(int(unix))
+	var unix := Time.get_unix_time_from_system() + float(access.server_offset)
+	return AccessPolicy.school_clock(unix, access.schedule, Time.get_time_zone_from_system().get("bias", 0))
 
 
 func today() -> String:

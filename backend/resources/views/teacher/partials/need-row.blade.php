@@ -6,7 +6,7 @@
 <li class="need">
     <div class="need-who">
         <a href="{{ route('teacher.students.show', $student) }}">{{ $name }}</a>
-        <p class="muted small">L{{ $level }} · {{ \App\Support\SkillCatalog::level($level)['world'] }} · @if ($last) played @include('partials.when', ['at' => $last]) @else never played @endif</p>
+        <p class="muted small">L{{ $level }} · {{ \App\Support\SkillCatalog::level($level)['world'] }} · @if (isset($stats->activeNow[$student->id]))<span class="active-now">active now</span>@elseif ($last) played @include('partials.when', ['at' => $last]) @else never played @endif</p>
     </div>
     <ul class="flags">
         @foreach (\App\Support\SectionStats::bySkill($row['flags']) as $g)

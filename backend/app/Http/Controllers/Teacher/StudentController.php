@@ -48,6 +48,7 @@ class StudentController extends Controller
             'lastPlayed' => $student->syncEvents()->max('device_time'),
             // The server's own clock: tells "hasn't played" from "hasn't synced" (D-037).
             'lastSynced' => $student->syncEvents()->max('received_at'),
+            'activeNow' => $student->user->tokens()->where('last_used_at', '>=', now()->subMinutes(SectionStats::ACTIVE_MINUTES))->exists(),
             'band' => SectionStats::band($student),
             'states' => $student->bktStates->sortBy(fn ($s) => [array_search($s->sub_skill, SkillCatalog::skills(), true), $s->level]),
             'flags' => $student->interventionFlags()->orderByDesc('raised_at')->get(),

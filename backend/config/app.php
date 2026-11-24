@@ -67,6 +67,9 @@ return [
 
     'timezone' => 'UTC',
 
+    // Scheduled jobs ("02:30" backup, pruning) run on the school's clock, not UTC (D-036).
+    'schedule_timezone' => env('SCHOOL_TIMEZONE', 'Asia/Manila'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration

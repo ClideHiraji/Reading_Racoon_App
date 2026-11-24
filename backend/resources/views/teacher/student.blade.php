@@ -41,7 +41,7 @@
             <div><dt>Skill-levels mastered</dt><dd>{{ $mastered }} <small>of {{ $states->count() }}</small></dd></div>
             <div><dt>Right answers</dt><dd>@if ($replay->responses){{ round(100 * $replay->correctResponses / $replay->responses) }}% <small>of {{ $replay->responses }} {{ Str::plural('answer', $replay->responses) }}</small>@else<small>No answers yet</small>@endif</dd></div>
             <div><dt>Lessons played</dt><dd>{{ count($replay->lessons) }}</dd></div>
-            <div><dt>Last played</dt><dd>@if ($lastPlayed) @include('partials.when', ['at' => $lastPlayed]) @else <small>Never</small> @endif</dd></div>
+            <div><dt>{{ $activeNow ? 'Activity' : 'Last played' }}</dt><dd>@if ($activeNow)<span class="active-now">Active now</span>@elseif ($lastPlayed) @include('partials.when', ['at' => $lastPlayed]) @else <small>Never</small> @endif</dd></div>
             <div><dt>Last synced</dt><dd>@if ($lastSynced) @include('partials.when', ['at' => $lastSynced]) @else <small>Never</small> @endif</dd></div>
             <div><dt>Rewards</dt><dd>{{ $student->wallet?->xp ?? 0 }} <small>XP · {{ $student->wallet?->coins ?? 0 }} coins</small></dd></div>
         </dl>

@@ -299,7 +299,7 @@
                     <option value="name">Name (A to Z)</option>
                     <option value="need">Needs help first</option>
                     <option value="level">Map level (lowest first)</option>
-                    <option value="last">Last played (longest ago first)</option>
+                    <option value="last">Activity (longest ago first)</option>
                 </select>
             </div>
             <button class="btn btn-quiet btn-sm" type="button" data-roster-clear hidden>Clear filters</button>
@@ -321,7 +321,7 @@
                     @foreach ($skills as $skill)
                         <th scope="col" class="skill-col">{{ SkillCatalog::label($skill) }}</th>
                     @endforeach
-                    <th scope="col">Last played</th>
+                    <th scope="col">Activity</th>
                     <th scope="col">Consent</th>
                 </tr>
                 </thead>
@@ -335,7 +335,7 @@
                     @php($complete = str_ends_with(SectionStats::band($student), '(complete)'))
                     <tr data-name="{{ mb_strtolower($name) }}" data-level="{{ $level }}" data-help="{{ $stats->needsHelpNow($student) ? 1 : 0 }}"
                         data-played="{{ $last ? 1 : 0 }}" data-consent="{{ $student->consent_recorded_at ? 1 : 0 }}"
-                        data-last="{{ $last ? \Carbon\CarbonImmutable::parse($last)->getTimestamp() : 0 }}" data-severity="{{ $stats->severity[$student->id] ?? 0 }}"
+                        data-last="{{ isset($stats->activeNow[$student->id]) ? now()->getTimestamp() : ($last ? \Carbon\CarbonImmutable::parse($last)->getTimestamp() : 0) }}" data-severity="{{ $stats->severity[$student->id] ?? 0 }}"
                         data-help-skills="{{ collect($states)->filter(fn ($s) => $s['key'] === 'help')->keys()->join(' ') }}">
                         <td data-label="">
                             <a class="learner" href="{{ route('teacher.students.show', $student) }}">{{ $name }}</a>
@@ -361,7 +361,7 @@
                                 @endif
                             </td>
                         @endforeach
-                        <td data-label="Last played" class="small nowrap">@if ($last) @include('partials.when', ['at' => $last]) @else Never played @endif</td>
+                        <td data-label="Activity" class="small nowrap">@if (isset($stats->activeNow[$student->id]))<span class="active-now">Active now</span>@elseif ($last) Played @include('partials.when', ['at' => $last]) @else Never played @endif</td>
                         <td data-label="Consent">
                             @if ($student->consent_recorded_at)
                                 <span class="badge badge-green">On file</span>

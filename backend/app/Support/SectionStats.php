@@ -6,6 +6,7 @@ use App\Models\BktState;
 use App\Models\InterventionFlag;
 use App\Models\Section;
 use App\Models\Student;
+use App\Models\User;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -90,6 +91,12 @@ final class SectionStats
     /** @var array<int, string> student id => last time the server received events (server time) */
     public array $lastSync = [];
 
+    /** The game checks in every 2 minutes while open and online; 5 allows one missed round. */
+    public const ACTIVE_MINUTES = 5;
+
+    /** @var array<int, true> student id => playing right now (its sign-in token was used recently) */
+    public array $activeNow = [];
+
     /** @var array<int, array{active: int, better: int}> student id => open flags still needing help / looking better */
     public array $flagCounts = [];
 
@@ -111,6 +118,11 @@ final class SectionStats
             ->groupBy('student_id')->selectRaw('student_id, max(device_time) as last')
             ->pluck('last', 'student_id')->all();
         // When the server last heard from each tablet: its own clock, not the device's (D-037).
+        // "Active now" (D-038): Sanctum stamps last_used_at on every signed-in game request.
+        $byUser = $stats->students->pluck('id', 'user_id');
+        $stats->activeNow = DB::table('personal_access_tokens')->where('tokenable_type', User::class)
+            ->whereIn('tokenable_id', $byUser->keys())->where('last_used_at', '>=', now()->subMinutes(self::ACTIVE_MINUTES))
+            ->pluck('tokenable_id')->unique()->mapWithKeys(fn ($userId) => [$byUser[$userId] => true])->all();
         $stats->lastSync = DB::table('sync_events')->whereIn('student_id', $ids)
             ->groupBy('student_id')->selectRaw('student_id, max(received_at) as last')
             ->pluck('last', 'student_id')->all();

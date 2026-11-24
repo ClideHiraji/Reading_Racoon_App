@@ -287,6 +287,8 @@ details > summary::-webkit-details-marker { color: var(--muted); }
 .flag .what { font-weight: 700; display: flex; flex-wrap: wrap; align-items: center; gap: .25rem .5rem; }
 .flag .when { color: var(--muted); font-size: .875rem; white-space: nowrap; }
 .flag form { justify-self: end; }
+.active-now { display: inline-flex; align-items: center; gap: .35rem; font-weight: 700; color: var(--got-ink); white-space: nowrap; }
+.active-now::before { content: ""; width: .55rem; height: .55rem; border-radius: 50%; background: var(--got); box-shadow: 0 0 0 3px var(--got-bg); }
 .better { display: inline-flex; align-items: center; gap: .4rem; font-size: .8125rem; font-weight: 700; color: var(--got-ink); background: var(--got-bg); border-radius: 999px; padding: .05rem .55rem .05rem .5rem; white-space: nowrap; }
 .better::before { content: ""; width: .55rem; height: .3rem; border-left: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: translateY(-.1rem) rotate(-45deg); }
 .flag form { margin: 0; }

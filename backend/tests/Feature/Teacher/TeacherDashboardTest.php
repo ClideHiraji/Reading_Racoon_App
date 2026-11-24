@@ -274,6 +274,21 @@ class TeacherDashboardTest extends TestCase
             ->assertSee('<h1>We can&#039;t find that page</h1>', false)->assertSee('Go to Reading Racoon')->assertDontSee('@section', false);
     }
 
+    public function test_a_learner_whose_game_checked_in_lately_shows_as_active_now(): void
+    {
+        $ana = $this->enroll('Ana');
+        $this->play($ana, $this->answers('phonics', 1, 2));
+        $token = $ana->user->createToken('Tablet 1')->accessToken;
+
+        $token->forceFill(['last_used_at' => now()->subMinute()])->save();
+        $this->assertArrayHasKey($ana->id, $this->get(route('teacher.sections.show', $this->section))->assertSee('Active now')->viewData('stats')->activeNow);
+        $this->get(route('teacher.students.show', $ana))->assertSee('Active now');
+
+        // Offline for longer than one missed check-in: the last played time again.
+        $token->forceFill(['last_used_at' => now()->subMinutes(10)])->save();
+        $this->get(route('teacher.sections.show', $this->section))->assertDontSee('Active now')->assertSee('Played');
+    }
+
     public function test_a_low_mastery_flag_looks_better_once_the_child_recovers(): void
     {
         $ben = $this->enroll('Ben');

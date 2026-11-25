@@ -53,5 +53,5 @@
     @else
         Summary paragraphs written by AI ({{ $report->generatedBy }}) from the numbers in the table above and checked against them; the lists come from the numbers. The AI sees only the student code, never the name. It supports, not replaces, your own judgement.
     @endif
-    Mastery = P(L) of at least 0.95 after at least 5 answers at a level. ARAL band from the highest unlocked map level.
+    Mastered = a mastery estimate (P(L)) of at least 95% after at least 5 answers at a level. ARAL band from the highest unlocked map level.
 </p>

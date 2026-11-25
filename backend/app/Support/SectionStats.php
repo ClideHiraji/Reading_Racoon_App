@@ -262,11 +262,14 @@ final class SectionStats
         return array_values(array_filter($this->needsHelp, fn ($row) => $row['active'] > 0));
     }
 
-    /** Ids of every open flag in the section that looks better (for "Close all"). */
+    /**
+     * Ids of the flags of the children in "Looks better" (for "Close all"). A child still in
+     * "Needs your help" keeps every flag until the teacher closes it there (D-039).
+     */
     public function betterFlagIds(): array
     {
         $ids = [];
-        foreach ($this->needsHelp as $row) {
+        foreach ($this->betterRows() as $row) {
             foreach ($row['flags'] as $f) {
                 if ($f['better']) {
                     $ids[] = $f['flag']->id;

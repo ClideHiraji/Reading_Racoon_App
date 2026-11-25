@@ -70,7 +70,7 @@ class TeacherDashboardTest extends TestCase
         // The student ID is labelled so nobody types it into the game as a login code.
         $student = $this->section->students()->sole();
         $this->get(route('teacher.sections.show', $this->section))
-            ->assertSee('Student ID '.$student->code.' · not the login code', false)
+            ->assertSee('Student ID '.$student->code.'</div>', false)
             ->assertSee('New login code');
         $this->get(route('teacher.students.show', $student))->assertSee('(for reports, not the login code)', false);
 
@@ -240,7 +240,7 @@ class TeacherDashboardTest extends TestCase
         $theirs = InterventionFlag::where('student_id', $carlo->id)->sole();
 
         $page = $this->get(route('teacher.sections.show', $this->section))->assertOk()
-            ->assertSee('Looks better: check and close')->assertSee('Close all 1 that look better');
+            ->assertSee('Looks better: check and close')->assertSee('Close 1 flag');
         $stats = $page->viewData('stats');
         $this->assertSame(0, $stats->needingHelpCount());
         $this->assertCount(1, $stats->betterRows());
@@ -252,6 +252,29 @@ class TeacherDashboardTest extends TestCase
 
         $this->post(route('teacher.flags.reopen-many'), ['ids' => $stats->betterFlagIds()]);
         $this->assertSame('open', InterventionFlag::where('student_id', $ana->id)->sole()->status);
+    }
+
+    /** D-039: portal.js resolves in place; this is the markup it relies on before and after. */
+    public function test_in_place_actions_find_their_message_undo_and_counts_on_the_page_they_return_to(): void
+    {
+        $ana = $this->enroll('Ana');
+        $this->play($ana, $this->answers('phonics', 1, 6, correct: false));
+        $flag = InterventionFlag::sole();
+        $section = route('teacher.sections.show', $this->section);
+
+        $this->get($section)->assertOk()
+            ->assertSee('data-inline-scope', false)
+            ->assertSee('data-sync="need-title">(1)</span>', false)
+            ->assertSee('data-sync="learner-'.$ana->id.'"', false)
+            ->assertSee('<span class="state state-help">Needs help</span> Phonics', false);
+
+        // After the redirect: the message and its Undo inside <main>, and the new count.
+        $this->from($section)->followingRedirects()
+            ->post(route('teacher.flags.resolve-many'), ['ids' => [$flag->id], 'anchor' => 'needs-help'])
+            ->assertOk()
+            ->assertSee('<div class="alert alert-ok" role="status">', false)
+            ->assertSee(route('teacher.flags.reopen-many'), false)
+            ->assertSee('data-sync="need-title">(0)</span>', false);
     }
 
     public function test_a_mastered_skill_whose_estimate_falls_shows_as_slipping(): void

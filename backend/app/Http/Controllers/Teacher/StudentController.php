@@ -82,7 +82,10 @@ class StudentController extends Controller
         $children = $flags->pluck('student_id')->unique()->count();
         $message = match (true) {
             $flags->isEmpty() => 'Nothing to resolve: those flags were already closed.',
-            $children === 1 => 'Resolved: '.$flags->map(fn ($f) => $this->describe($f))->unique()->join('; ').'.',
+            // "Resolved for Jasmine: Phonics L1 (3 flags)." The name once, each skill-level once.
+            $children === 1 => 'Resolved for '.$flags->first()->student->displayName().': '
+                .$flags->map(fn ($f) => trim(($f->sub_skill ? SkillCatalog::label($f->sub_skill) : 'flag').($f->level ? ' L'.$f->level : '')))->unique()->join(', ')
+                .($flags->count() > 1 ? " ({$flags->count()} flags)" : '').'.',
             default => "Closed {$flags->count()} flags for {$children} children.",
         };
 

@@ -44,7 +44,7 @@
                 </div>
                 <div>
                     <label for="minutes">Length (minutes)</label>
-                    <input id="minutes" type="number" name="minutes" min="1" max="60" value="{{ old('minutes', $item?->minutes ?? 3) }}" required>
+                    <input id="minutes" type="number" inputmode="numeric" name="minutes" min="1" max="60" value="{{ old('minutes', $item?->minutes ?? 3) }}" required>
                     @include('partials.field-error', ['field' => 'minutes'])
                 </div>
             </div>

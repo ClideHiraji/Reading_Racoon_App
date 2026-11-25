@@ -58,7 +58,7 @@
 
 <div class="grid grid-2">
     <section class="panel" aria-labelledby="anomalies-title">
-        <div class="panel-head"><h2 id="anomalies-title">Latest anomalies</h2><a class="small" href="{{ route('admin.logs', ['anomaly' => 1]) }}">All anomalies</a></div>
+        <div class="panel-head"><h2 id="anomalies-title">Latest anomalies</h2><a class="small head-link" href="{{ route('admin.logs', ['anomaly' => 1]) }}">All anomalies</a></div>
         @forelse ($recentAnomalies as $log)
             <p class="small"><span class="badge badge-red">{{ $log->event }}</span> {{ $log->created_at->setTimezone($tz)->format('M j, g:i A') }}@if ($log->ip) · {{ $log->ip }}@endif</p>
         @empty
@@ -66,7 +66,7 @@
         @endforelse
     </section>
     <section class="panel" aria-labelledby="actions-title">
-        <div class="panel-head"><h2 id="actions-title">Latest decisions and changes</h2><a class="small" href="{{ route('admin.logs', ['kind' => 'audit']) }}">Audit log</a></div>
+        <div class="panel-head"><h2 id="actions-title">Latest decisions and changes</h2><a class="small head-link" href="{{ route('admin.logs', ['kind' => 'audit']) }}">Audit log</a></div>
         @forelse ($recentAudit as $log)
             <p class="small"><span class="badge">{{ $log->action }}</span> {{ $log->actor_label ?? 'system' }} · {{ $log->created_at->setTimezone($tz)->format('M j, g:i A') }}</p>
         @empty

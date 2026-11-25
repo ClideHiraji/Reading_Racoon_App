@@ -42,7 +42,7 @@
                             @endif
                         </td>
                         <td data-label="Decision" style="min-width: 260px;">
-                            <form method="POST" class="row">
+                            <form method="POST" class="row decision">
                                 @csrf
                                 {{-- Enter in the note must not approve: a disabled first button makes implicit submission do nothing. --}}
                                 <button type="submit" disabled hidden aria-hidden="true" tabindex="-1"></button>

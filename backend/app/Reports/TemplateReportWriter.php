@@ -35,7 +35,7 @@ final class TemplateReportWriter implements DiagnosticReportWriter
             $recent = $s['recent_accuracy'] === null ? '' : ", {$s['recent_accuracy']}% of the last {$s['recent_answers']} answers correct";
 
             if (in_array($skill, $groups['needs'], true)) {
-                $why = $s['review'] ? 'reviewing a lower level after Heart Recovery' : 'P(L) '.$this->pct($s['p'])." at level {$s['current_level']}";
+                $why = $s['review'] ? "reviewing a lower level after Racoon's Rescue" : 'a mastery estimate of '.$this->pct($s['p'])." at level {$s['current_level']}";
                 $needs[] = "{$s['label']}: {$why}{$recent}.";
                 $interventions[] = "{$s['label']}: ".self::INTERVENTIONS[$skill];
             } elseif (in_array($skill, $groups['strengths'], true)) {
@@ -141,7 +141,8 @@ final class TemplateReportWriter implements DiagnosticReportWriter
             $parts[] = 'No sub-skill needs intervention right now; keep the learner practising at the current level.';
         }
         if ($facts['rescues']['partial'] > 0) {
-            $parts[] = "Heart Recovery was not completed {$facts['rescues']['partial']} time(s), which moved a skill back one level for review.";
+            $times = $facts['rescues']['partial'] === 1 ? 'once' : "{$facts['rescues']['partial']} times";
+            $parts[] = "Racoon's Rescue (the heart recovery game) did not go well {$times}, which moved a skill back one level for review.";
         }
         $parts[] = 'This summary is built from the game\'s numbers and supports, not replaces, your own judgement.';
 

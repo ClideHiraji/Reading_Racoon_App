@@ -1,8 +1,8 @@
 /*
  * Small progressive enhancements for the teacher dashboard and admin portal.
  * Every page works without this file; it adds confirmations, busy states,
- * printing, the sign-out warning, the learner-list filters and the sticky
- * in-page navigation (CSP: 'self', D-037).
+ * in-place actions with Undo, printing, the sign-out warning, the learner-list
+ * filters, the phone menu and the sticky in-page navigation (CSP: 'self', D-037, D-039).
  */
 (function () {
     'use strict';
@@ -23,20 +23,73 @@
     }
     if (guarded) window.addEventListener('beforeunload', onBeforeUnload);
 
-    // ---- Forms: confirm risky actions, then show they're working and block a second submit.
-    document.addEventListener('submit', function (event) {
-        var form = event.target;
-        var submitter = event.submitter;
-        if (form.dataset.busy === '1') {
-            event.preventDefault();
-            return;
+    // ---- Idle sessions: the server ends one after body[data-idle-minutes]. A phone may sleep
+    // through the timers below, so the elapsed time is also checked on return and before a submit.
+    var idleMinutes = parseInt(document.body.dataset.idleMinutes || '0', 10);
+    var idleOn = idleMinutes > 2;
+    var lastActive = Date.now();
+    var banner = null;
+    var warnTimer = null;
+    var endTimer = null;
+
+    function showBanner(text, label, run) {
+        if (!banner) {
+            banner = document.createElement('div');
+            banner.className = 'session-banner';
+            banner.setAttribute('role', 'alert');
+            document.body.appendChild(banner);
+            document.body.classList.add('has-banner');
         }
-        var text = (submitter && submitter.dataset.confirm) || form.dataset.confirm;
-        if (text && !window.confirm(text)) {
-            event.preventDefault();
-            return;
-        }
-        guardOff();
+        banner.innerHTML = '';
+        var p = document.createElement('p');
+        p.textContent = text;
+        banner.appendChild(p);
+        var button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'btn btn-sm';
+        button.textContent = label;
+        button.addEventListener('click', run);
+        banner.appendChild(button);
+    }
+    function hideBanner() {
+        if (!banner) return;
+        banner.remove();
+        banner = null;
+        document.body.classList.remove('has-banner');
+    }
+    function sessionEnded() {
+        return idleOn && Date.now() - lastActive >= idleMinutes * 60000;
+    }
+    function showEnded() {
+        showBanner('This page timed out for safety. Copy anything you typed, then reload it. You may need to sign in again.',
+            'Reload page', function () { window.location.reload(); });
+    }
+    function startIdle() {
+        if (!idleOn) return;
+        window.clearTimeout(warnTimer);
+        window.clearTimeout(endTimer);
+        warnTimer = window.setTimeout(function () {
+            showBanner('For safety you will be signed out in 2 minutes. Anything you typed on this page will be lost.', 'Stay signed in', function () {
+                fetch(window.location.href, {credentials: 'same-origin', cache: 'no-store'}).then(function (res) {
+                    if (res.ok) touchSession();
+                });
+            });
+        }, (idleMinutes - 2) * 60000);
+        endTimer = window.setTimeout(showEnded, idleMinutes * 60000);
+    }
+    // A request reached the server: its idle clock starts again.
+    function touchSession() {
+        lastActive = Date.now();
+        hideBanner();
+        startIdle();
+    }
+    document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState === 'visible' && sessionEnded()) showEnded();
+    });
+    startIdle();
+
+    // ---- Busy state: show a form is working and block a second submit.
+    function setBusy(form, submitter) {
         form.dataset.busy = '1';
         form.setAttribute('aria-busy', 'true');
         var uploading = $$('input[type=file]', form).some(function (input) { return input.files && input.files.length; });
@@ -48,19 +101,173 @@
                 submitter.textContent = uploading ? 'Uploading… keep this page open' : (submitter.dataset.busyLabel || 'Working…');
             }
         }, 0);
+    }
+    function clearBusy(form) {
+        form.dataset.busy = '';
+        form.removeAttribute('aria-busy');
+        $$('button', form).forEach(function (button) {
+            if (button.hasAttribute('hidden')) return;
+            button.disabled = false;
+            if (button.dataset.label) {
+                button.innerHTML = button.dataset.label;
+                delete button.dataset.label;
+            }
+        });
+    }
+
+    // ---- Forms: confirm risky actions, then submit (in place where the form allows it).
+    var canInline = !!(window.fetch && window.DOMParser && window.FormData && window.WeakMap);
+    document.addEventListener('submit', function (event) {
+        var form = event.target;
+        var submitter = event.submitter;
+        if (form.dataset.busy === '1') {
+            event.preventDefault();
+            return;
+        }
+        // The server has already ended this session: say so instead of losing the tap to "page expired".
+        if (sessionEnded()) {
+            event.preventDefault();
+            showEnded();
+            return;
+        }
+        var text = (submitter && submitter.dataset.confirm) || form.dataset.confirm;
+        if (text && !window.confirm(text)) {
+            event.preventDefault();
+            return;
+        }
+        guardOff();
+        if (canInline && (form.hasAttribute('data-inline') || form.hasAttribute('data-inline-undo'))) {
+            event.preventDefault();
+            submitInPlace(form, submitter);
+            return;
+        }
+        setBusy(form, submitter);
     });
     // Coming back with the browser's Back button: undo the busy state.
     window.addEventListener('pageshow', function (event) {
         if (!event.persisted) return;
-        $$('form[data-busy="1"]').forEach(function (form) {
-            form.dataset.busy = '';
-            form.removeAttribute('aria-busy');
-            $$('button', form).forEach(function (button) {
-                button.disabled = false;
-                if (button.dataset.label) button.innerHTML = button.dataset.label;
-            });
-        });
+        $$('form[data-busy="1"]').forEach(clearBusy);
     });
+
+    // ---- In-place actions (D-039): Mark resolved, Close all and Record consent change only
+    // their own row, with the confirmation and Undo right there, so the teacher keeps her place.
+    // The server stays the source of truth: the page it redirects to is fetched, its message is
+    // shown in place and its counts are copied in ([data-sync]). If anything fails, the form posts
+    // the normal way; these actions are safe to repeat.
+    var saved = canInline ? new WeakMap() : null;
+    var live = null;
+
+    function announce(text) {
+        if (!live) {
+            live = document.createElement('div');
+            live.className = 'sr-only';
+            live.setAttribute('aria-live', 'polite');
+            document.body.appendChild(live);
+        }
+        live.textContent = '';
+        window.setTimeout(function () { live.textContent = text; }, 50);
+    }
+
+    function submitInPlace(form, submitter) {
+        var data = new FormData(form);
+        setBusy(form, submitter);
+        fetch(form.action, {method: 'POST', body: data, credentials: 'same-origin', headers: {Accept: 'text/html'}})
+            .then(function (res) {
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                return res.text();
+            })
+            .then(function (html) {
+                var doc = new DOMParser().parseFromString(html, 'text/html');
+                var alert = doc.querySelector('main .alert-ok');
+                if (!alert) throw new Error('No confirmation on the page');
+                touchSession();
+                if (form.hasAttribute('data-inline-undo')) undoInPlace(form, doc, alert);
+                else doneInPlace(form, doc, alert);
+            })
+            .catch(function () {
+                clearBusy(form);
+                form.submit();
+            });
+    }
+
+    function doneInPlace(form, doc, alert) {
+        var scope = form.closest('[data-inline-scope]');
+        var message = (alert.querySelector('p') || alert).textContent.trim();
+        if (!scope) {
+            window.location.reload();
+            return;
+        }
+        var note = document.createElement(scope.tagName === 'LI' ? 'li' : 'div');
+        note.className = 'done-note';
+        note.tabIndex = -1;
+        var text = document.createElement('span');
+        text.className = 'done-text';
+        if (form.dataset.doneLabel) {
+            text.textContent = form.dataset.doneLabel;
+            var full = document.createElement('span');
+            full.className = 'sr-only';
+            full.textContent = '. ' + message;
+            text.appendChild(full);
+        } else {
+            text.textContent = message;
+        }
+        note.appendChild(text);
+        var undo = alert.querySelector('form');
+        if (undo) {
+            undo = document.importNode(undo, true);
+            undo.setAttribute('data-inline-undo', '');
+            note.appendChild(undo);
+        }
+        saved.set(note, {scope: scope, form: form});
+        scope.parentNode.replaceChild(note, scope);
+        sync(doc, note);
+        note.focus({preventScroll: true});
+    }
+
+    function undoInPlace(form, doc, alert) {
+        var note = form.closest('.done-note');
+        var was = note && saved.get(note);
+        if (!was) {
+            window.location.reload();
+            return;
+        }
+        note.parentNode.replaceChild(was.scope, note);
+        clearBusy(was.form);
+        sync(doc, was.scope);
+        var button = was.form.querySelector('button[type=submit]:not([hidden])');
+        if (button) button.focus({preventScroll: true});
+        announce((alert.querySelector('p') || alert).textContent.trim());
+    }
+
+    // Copies the fresh page's counts and rows into this one. A part that holds the row just
+    // acted on (or an Undo still on offer) keeps its content and takes only the new data-*.
+    function sync(doc, keep) {
+        $$('[data-sync]').forEach(function (el) {
+            if (keep === el || keep.contains(el)) return;
+            var fresh = doc.querySelector('[data-sync="' + el.getAttribute('data-sync') + '"]');
+            if (el.contains(keep) || el.querySelector('.done-note')) {
+                if (fresh) {
+                    Array.prototype.forEach.call(fresh.attributes, function (a) {
+                        if (a.name.indexOf('data-') === 0) el.setAttribute(a.name, a.value);
+                    });
+                }
+                return;
+            }
+            if (!fresh) {
+                el.hidden = true;
+                return;
+            }
+            if (el.tagName === 'SELECT') {
+                $$('option', el).forEach(function (option) {
+                    var match = $$('option', fresh).filter(function (o) { return o.value === option.value; })[0];
+                    if (match) option.textContent = match.textContent;
+                });
+                return;
+            }
+            el.parentNode.replaceChild(document.importNode(fresh, true), el);
+        });
+        document.dispatchEvent(new CustomEvent('portal:synced'));
+    }
 
     // Links that download or leave with consequences ask first too.
     document.addEventListener('click', function (event) {
@@ -171,51 +378,6 @@
         mark();
     }
 
-    // ---- Sign-out warning: the server ends an idle session; say so before it happens.
-    var idleMinutes = parseInt(document.body.dataset.idleMinutes || '0', 10);
-    if (idleMinutes > 2) {
-        var banner = null;
-        var warnTimer = null;
-        var endTimer = null;
-        var show = function (html, withButton) {
-            if (!banner) {
-                banner = document.createElement('div');
-                banner.className = 'session-banner';
-                banner.setAttribute('role', 'alert');
-                document.body.appendChild(banner);
-            }
-            banner.innerHTML = '';
-            var p = document.createElement('p');
-            p.textContent = html;
-            banner.appendChild(p);
-            if (withButton) {
-                var button = document.createElement('button');
-                button.type = 'button';
-                button.className = 'btn btn-sm';
-                button.textContent = 'Stay signed in';
-                button.addEventListener('click', function () {
-                    fetch(window.location.href, {credentials: 'same-origin', cache: 'no-store'}).then(function () {
-                        banner.remove();
-                        banner = null;
-                        start();
-                    });
-                });
-                banner.appendChild(button);
-            }
-        };
-        var start = function () {
-            window.clearTimeout(warnTimer);
-            window.clearTimeout(endTimer);
-            warnTimer = window.setTimeout(function () {
-                show('For safety you will be signed out in 2 minutes. Anything you typed on this page will be lost.', true);
-            }, (idleMinutes - 2) * 60000);
-            endTimer = window.setTimeout(function () {
-                show('You were signed out for safety. Copy anything you typed, then reload the page and sign in again.', false);
-            }, idleMinutes * 60000);
-        };
-        start();
-    }
-
     // ---- The play schedule's day strip follows the time fields as they change.
     var day = document.querySelector('[data-day-strip]');
     if (day) {
@@ -245,6 +407,29 @@
         $$('input[type=time]').forEach(function (input) { input.addEventListener('input', redraw); });
     }
 
+    // ---- Phones: the admin links fold behind Menu (D-039).
+    var toggle = document.querySelector('[data-nav-toggle]');
+    var folded = toggle && document.getElementById(toggle.getAttribute('aria-controls'));
+    if (folded) {
+        document.documentElement.classList.add('has-nav-toggle');
+        toggle.hidden = false;
+        var setOpen = function (open) {
+            toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+            folded.classList.toggle('is-open', open);
+        };
+        toggle.addEventListener('click', function () { setOpen(toggle.getAttribute('aria-expanded') !== 'true'); });
+        folded.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+                setOpen(false);
+                toggle.focus();
+            }
+        });
+    }
+
+    // ---- Sign-in: focus the first field with a mouse; on a phone the keyboard would cover the page.
+    var first = document.querySelector('[data-autofocus]');
+    if (first && window.matchMedia && window.matchMedia('(pointer: fine)').matches) first.focus();
+
     // ---- Learner list: search, show and sort without a page load (FR-06).
     var roster = document.querySelector('table[data-roster]');
     if (!roster) return;
@@ -257,6 +442,7 @@
     var count = document.querySelector('[data-roster-count]');
     var empty = document.querySelector('[data-roster-empty]');
     var clears = $$('[data-roster-clear]');
+    var navCount = document.querySelector('[data-roster-navcount]');
     if (toolbar) toolbar.hidden = false;
 
     function matches(row, filter) {
@@ -273,7 +459,8 @@
         name: function (a, b) { return a.dataset.name.localeCompare(b.dataset.name); },
         need: function (a, b) { return (b.dataset.severity - a.dataset.severity) || sorters.name(a, b); },
         level: function (a, b) { return (a.dataset.level - b.dataset.level) || sorters.name(a, b); },
-        last: function (a, b) { return (a.dataset.last - b.dataset.last) || sorters.name(a, b); },
+        // Playing now first, then the most recent; never played last.
+        last: function (a, b) { return (b.dataset.last - a.dataset.last) || sorters.name(a, b); },
     };
 
     function apply(updateUrl) {
@@ -289,6 +476,7 @@
         });
         var filtered = filter !== 'all' || q !== '';
         if (count) count.textContent = !filtered ? 'Showing all ' + rows.length : 'Showing ' + visible + ' of ' + rows.length;
+        if (navCount) navCount.textContent = !filtered ? rows.length : visible + '/' + rows.length;
         if (empty) empty.hidden = visible !== 0;
         roster.hidden = visible === 0;
         clears.forEach(function (button) { button.hidden = !filtered; });
@@ -324,20 +512,26 @@
         });
     });
 
-    // Links elsewhere on the page ("3 need help", a map world) filter the list.
-    $$('[data-roster-filter]').forEach(function (link) {
-        link.addEventListener('click', function (event) {
-            if (!show || !hasOption(show, link.dataset.rosterFilter)) return;
-            event.preventDefault();
-            show.value = link.dataset.rosterFilter;
-            if (search) search.value = '';
-            apply(true);
-            var target = document.getElementById('learners');
-            if (target) {
-                target.scrollIntoView({block: 'start'});
-                show.focus({preventScroll: true});
-            }
-        });
+    // Links elsewhere on the page ("3 need help", a map world) filter the list. Delegated,
+    // because an in-place action can replace the summary that holds some of them.
+    document.addEventListener('click', function (event) {
+        var link = event.target.closest && event.target.closest('[data-roster-filter]');
+        if (!link || !show || !hasOption(show, link.dataset.rosterFilter)) return;
+        event.preventDefault();
+        show.value = link.dataset.rosterFilter;
+        if (search) search.value = '';
+        apply(true);
+        var target = document.getElementById('learners');
+        if (target) {
+            target.scrollIntoView({block: 'start'});
+            show.focus({preventScroll: true});
+        }
+    });
+
+    // An in-place action replaced some rows: filter and sort the new ones.
+    document.addEventListener('portal:synced', function () {
+        rows = Array.prototype.slice.call(body.rows);
+        apply(false);
     });
 
     apply(false);

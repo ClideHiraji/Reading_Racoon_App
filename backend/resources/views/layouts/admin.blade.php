@@ -16,8 +16,13 @@
     <div class="topbar-inner">
         <span class="brand"><span class="brand-mark" aria-hidden="true">RR</span> Console</span>
         @auth('admin')
-            {{-- Counts come from App\Providers\AppServiceProvider (a view composer). --}}
-            <nav class="nav" aria-label="Admin">
+            {{-- Counts come from App\Providers\AppServiceProvider (a view composer). On phones the
+                 links fold behind Menu (D-039); without JavaScript they stay visible and wrap. --}}
+            @php($alerts = ($navCounts['pending'] ?? 0) + ($navCounts['anomalies'] ?? 0))
+            <button class="btn btn-secondary nav-toggle" type="button" aria-expanded="false" aria-controls="admin-nav" data-nav-toggle hidden>
+                Menu @if ($alerts > 0)<span class="nav-count">{{ $alerts }}<span class="sr-only"> need attention</span></span>@endif
+            </button>
+            <nav class="nav nav-fold" id="admin-nav" aria-label="Admin">
                 <a href="{{ route('admin.dashboard') }}" @if (request()->routeIs('admin.dashboard')) aria-current="page" @endif>Overview</a>
                 <a href="{{ route('admin.registrations') }}" @if (request()->routeIs('admin.registrations*')) aria-current="page" @endif>
                     Registrations

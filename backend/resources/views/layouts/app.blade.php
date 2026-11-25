@@ -24,7 +24,7 @@
                 <a href="{{ route('teacher.home', ['all' => 1]) }}" @if ($inClass) aria-current="page" @endif>My sections</a>
                 <a href="{{ route('teacher.content.index') }}" @if (request()->routeIs('teacher.content.*')) aria-current="page" @endif>Library &amp; Videos</a>
                 <span class="who">{{ auth()->user()->name }}</span>
-                <form method="POST" action="{{ route('logout') }}" class="inline account">
+                <form method="POST" action="{{ route('logout') }}" class="inline account is-apart">
                     @csrf
                     <button type="submit">Sign out</button>
                 </form>

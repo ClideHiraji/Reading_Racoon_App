@@ -31,7 +31,7 @@
                         <li><span class="n">{{ $section->students_count }}</span> {{ Str::plural('learner', $section->students_count) }}</li>
                         <li>
                             @if ($sum['need'] > 0)
-                                <span class="badge badge-red">{{ $sum['need'] }} {{ $sum['need'] === 1 ? 'needs' : 'need' }} your help</span>
+                                <a class="badge badge-red" href="{{ route('teacher.sections.show', $section) }}#needs-help">{{ $sum['need'] }} {{ $sum['need'] === 1 ? 'needs' : 'need' }} your help<span class="sr-only"> in {{ $section->name }}</span></a>
                             @else
                                 <span class="badge badge-green">Nobody needs extra help</span>
                             @endif

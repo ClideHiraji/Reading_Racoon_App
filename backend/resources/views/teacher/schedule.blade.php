@@ -77,7 +77,7 @@
             <div class="field-row">
                 <div>
                     <label for="daily_minutes">Daily after-school limit (minutes)</label>
-                    <input id="daily_minutes" type="number" name="daily_minutes" min="0" max="240" value="{{ old('daily_minutes', $schedule->daily_minutes) }}" required {!! $field('daily_minutes') !!}>
+                    <input id="daily_minutes" type="number" inputmode="numeric" name="daily_minutes" min="0" max="240" value="{{ old('daily_minutes', $schedule->daily_minutes) }}" required {!! $field('daily_minutes') !!}>
                     @include('partials.field-error', ['field' => 'daily_minutes'])
                 </div>
                 <div></div>
@@ -90,7 +90,7 @@
             <div class="field-row">
                 <div>
                     <label for="free_play_minutes">Daily free-play limit (minutes)</label>
-                    <input id="free_play_minutes" type="number" name="free_play_minutes" min="0" max="240" value="{{ old('free_play_minutes', $schedule->free_play_minutes) }}" required {!! $field('free_play_minutes') !!}>
+                    <input id="free_play_minutes" type="number" inputmode="numeric" name="free_play_minutes" min="0" max="240" value="{{ old('free_play_minutes', $schedule->free_play_minutes) }}" required {!! $field('free_play_minutes') !!}>
                     @include('partials.field-error', ['field' => 'free_play_minutes'])
                 </div>
                 <div></div>

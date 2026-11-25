@@ -43,7 +43,8 @@
         <a class="btn" href="#add-learners" data-open="add-learners">Add learners</a>
     </div>
 </div>
-<ul class="summary" aria-label="Class summary" style="margin: var(--s2) 0 0;">
+{{-- data-sync: after an in-place action, portal.js copies these parts from the fresh page (D-039). --}}
+<ul class="summary" aria-label="Class summary" style="margin: var(--s2) 0 0;" data-sync="summary">
     <li><span class="n">{{ $count }}</span> {{ Str::plural('learner', $count) }}</li>
     @if ($count > 0)
         <li><a href="#needs-help"><span class="n">{{ $needCount }}</span> {{ $needCount === 1 ? 'needs' : 'need' }} your help</a></li>
@@ -55,7 +56,7 @@
 </ul>
 @if ($count > 0)
     {{-- How fresh the numbers are, from the server's own clock (D-037). --}}
-    <p class="freshness" style="margin-bottom: var(--s5);">
+    <p class="freshness" style="margin-bottom: var(--s5);" data-sync="freshness">
         @if ($lastSync) Tablets last synced @include('partials.when', ['at' => $lastSync]). @else No tablet has synced yet. @endif
         Page updated {{ now()->setTimezone($tz)->format('g:i A') }}.
     </p>
@@ -66,9 +67,9 @@
 @if ($count > 0)
 <nav class="local-nav" aria-label="On this page">
     <ul>
-        <li><a href="#needs-help">Needs your help <span class="count">{{ $needCount }}</span></a></li>
-        <li><a href="#progress">Class progress</a></li>
-        <li><a href="#learners">Learners <span class="count">{{ $count }}</span></a></li>
+        <li><a href="#needs-help">Needs <span class="wide-only">your </span>help <span class="count" data-sync="nav-need">{{ $needCount }}</span></a></li>
+        <li><a href="#progress"><span class="wide-only">Class progress</span><span class="phone-only">Progress</span></a></li>
+        <li><a href="#learners">Learners <span class="count" data-roster-navcount>{{ $count }}</span></a></li>
     </ul>
 </nav>
 
@@ -76,7 +77,7 @@
 <section id="needs-help" class="panel" aria-labelledby="needs-title">
     <div class="panel-head">
         <div>
-            <h2 id="needs-title">Needs your help <span class="muted">({{ $needCount }})</span></h2>
+            <h2 id="needs-title">Needs your help <span class="muted" data-sync="need-title">({{ $needCount }})</span></h2>
             <p class="muted small">Most urgent first. Open a child to see which skill to practise with them.</p>
         </div>
         <ul class="legend" aria-label="Flag types">
@@ -102,22 +103,24 @@
     @endif
 
     @if ($betterRows->isNotEmpty())
-        <div class="group-head" id="looks-better">
+        <div data-inline-scope>
+        <div class="group-head" data-sync="better-head">
             <div>
-                <h3>Looks better: check and close <span class="muted">({{ $betterRows->count() }})</span></h3>
+                <h3>Looks better: check and close <span class="muted">({{ $betterRows->count() }} {{ Str::plural('child', $betterRows->count()) }})</span></h3>
                 <p class="muted small" style="margin: .2rem 0 0;">These children have since done well on the flagged skill. Check with them, then close the flags.</p>
             </div>
-            <form method="POST" action="{{ route('teacher.flags.resolve-many') }}"
+            <form method="POST" action="{{ route('teacher.flags.resolve-many') }}" data-inline
                   data-confirm="Close {{ count($betterIds) }} {{ Str::plural('flag', count($betterIds)) }} for {{ $betterRows->count() }} {{ Str::plural('child', $betterRows->count()) }} who look better? You can undo this right after.">
                 @csrf
                 <input type="hidden" name="anchor" value="needs-help">
                 @foreach ($betterIds as $id)
                     <input type="hidden" name="ids[]" value="{{ $id }}">
                 @endforeach
-                <button class="btn btn-secondary btn-sm" type="submit">Close all {{ count($betterIds) }} that look better</button>
+                <button class="btn btn-secondary btn-sm" type="submit">{{ count($betterIds) === 1 ? 'Close 1 flag' : 'Close all '.count($betterIds).' flags' }}</button>
             </form>
         </div>
-        <details class="disclosure" @if ($activeRows->isEmpty()) open @endif>
+        {{-- The id sits on the <details>, so returning to #looks-better after a reload opens it again. --}}
+        <details class="disclosure" id="looks-better" @if ($activeRows->isEmpty()) open @endif>
             <summary><span class="when-closed">Show the {{ $betterRows->count() }} {{ Str::plural('child', $betterRows->count()) }}</span><span class="when-open">Hide them</span></summary>
             <ol class="need-list disclosure-body">
                 @foreach ($betterRows as $row)
@@ -125,6 +128,7 @@
                 @endforeach
             </ol>
         </details>
+        </div>
     @endif
 
     <details class="disclosure">
@@ -149,7 +153,7 @@
     </div>
 
     <h3 id="map-title">Where the class is on the reading map</h3>
-    <p class="muted small">Each learner is shown at the highest world they have unlocked. Each world is an ARAL band. Click a world to list its learners.</p>
+    <p class="muted small">Each learner is shown at the highest world they have unlocked. Each world is an ARAL band. Choose a world to list its learners.</p>
     <ol class="map" aria-labelledby="map-title">
         @foreach ($stats->levels as $level => $n)
             @php($world = SkillCatalog::level($level))
@@ -261,7 +265,7 @@
         <form method="POST" action="{{ route('teacher.students.store', $section) }}" class="add-learners disclosure-body">
             @csrf
             <label for="new-names" style="margin-top: 0;">First names or nicknames, one per line</label>
-            <textarea id="new-names" name="names" rows="4" required placeholder="One name per line" aria-describedby="names-hint @error('names') names-error @enderror" @error('names') aria-invalid="true" @enderror>{{ old('names') }}</textarea>
+            <textarea id="new-names" name="names" rows="4" required autocapitalize="words" spellcheck="false" placeholder="One name per line" aria-describedby="names-hint @error('names') names-error @enderror" @error('names') aria-invalid="true" @enderror>{{ old('names') }}</textarea>
             <p class="hint" id="names-hint">Up to {{ \App\Http\Controllers\Teacher\RosterController::MAX_NAMES }} at once. A first name or nickname only (RA 10173); reports and exports use the student ID instead. Each child gets a login card to print.</p>
             @include('partials.field-error', ['field' => 'names'])
             <div class="form-actions" style="margin-top: var(--s3);"><button class="btn" type="submit" data-busy-label="Adding and making cards…">Add and make login cards</button></div>
@@ -276,7 +280,7 @@
             </div>
             <div class="field">
                 <label for="roster-show">Show</label>
-                <select id="roster-show" data-roster-show>
+                <select id="roster-show" data-roster-show data-sync="roster-show">
                     <option value="all">All learners</option>
                     <option value="help">Need your help ({{ $needCount }})</option>
                     <option value="unplayed">Haven't played yet ({{ $notPlayed }})</option>
@@ -299,7 +303,7 @@
                     <option value="name">Name (A to Z)</option>
                     <option value="need">Needs help first</option>
                     <option value="level">Map level (lowest first)</option>
-                    <option value="last">Activity (longest ago first)</option>
+                    <option value="last">Activity (playing now first)</option>
                 </select>
             </div>
             <button class="btn btn-quiet btn-sm" type="button" data-roster-clear hidden>Clear filters</button>
@@ -333,25 +337,26 @@
                     @php($level = SectionStats::highest($student))
                     @php($flagCount = $stats->flagCounts[$student->id] ?? ['active' => 0, 'better' => 0])
                     @php($complete = str_ends_with(SectionStats::band($student), '(complete)'))
-                    <tr data-name="{{ mb_strtolower($name) }}" data-level="{{ $level }}" data-help="{{ $stats->needsHelpNow($student) ? 1 : 0 }}"
+                    @php($byState = collect($states)->reject(fn ($s) => $s['key'] === 'locked')->groupBy('key', true)->map->keys())
+                    <tr data-sync="learner-{{ $student->id }}" data-name="{{ mb_strtolower($name) }}" data-level="{{ $level }}" data-help="{{ $stats->needsHelpNow($student) ? 1 : 0 }}"
                         data-played="{{ $last ? 1 : 0 }}" data-consent="{{ $student->consent_recorded_at ? 1 : 0 }}"
                         data-last="{{ isset($stats->activeNow[$student->id]) ? now()->getTimestamp() : ($last ? \Carbon\CarbonImmutable::parse($last)->getTimestamp() : 0) }}" data-severity="{{ $stats->severity[$student->id] ?? 0 }}"
-                        data-help-skills="{{ collect($states)->filter(fn ($s) => $s['key'] === 'help')->keys()->join(' ') }}">
-                        <td data-label="">
+                        data-help-skills="{{ ($byState['help'] ?? collect())->join(' ') }}">
+                        <td data-label="" class="learner-cell">
                             <a class="learner" href="{{ route('teacher.students.show', $student) }}">{{ $name }}</a>
-                            <div class="id">Student ID {{ $student->code }} · not the login code</div>
+                            <div class="id">Student ID {{ $student->code }}</div>
                             @if ($flagCount['active'] > 0)
-                                <span class="badge badge-red" style="margin-top: .3rem;">{{ $flagCount['active'] }} open {{ Str::plural('flag', $flagCount['active']) }}</span>
+                                <span class="badge badge-red">{{ $flagCount['active'] }} open {{ Str::plural('flag', $flagCount['active']) }}</span>
                             @elseif ($flagCount['better'] > 0)
-                                <span class="badge badge-amber" style="margin-top: .3rem;">{{ $flagCount['better'] }} to check and close</span>
+                                <span class="badge badge-amber">{{ $flagCount['better'] }} to check and close</span>
                             @endif
-                            <div class="row-links"><a href="{{ route('teacher.students.report', $student) }}">Report<span class="sr-only"> for {{ $name }}</span></a></div>
+                            <div class="row-links wide-only"><a href="{{ route('teacher.students.report', $student) }}">Report<span class="sr-only"> for {{ $name }}</span></a></div>
                         </td>
                         <td data-label="Map level" class="level-cell"><div><strong>L{{ $level }}</strong> {{ SkillCatalog::level($level)['world'] }}<div class="muted xsmall">{{ SkillCatalog::level($level)['band'] }}{{ $complete ? ' (complete)' : '' }}</div></div></td>
                         @foreach ($skills as $skill)
                             @php($s = $states[$skill])
                             @php($max = SkillCatalog::maxLevel($skill))
-                            <td data-label="{{ SkillCatalog::label($skill) }}">
+                            <td data-label="{{ SkillCatalog::label($skill) }}" class="skill-cell">
                                 @if ($s['key'] === 'locked')
                                     <span class="state state-locked">Not reached</span>
                                 @elseif ($s['key'] === 'got' && $s['level'] === $max)
@@ -361,17 +366,30 @@
                                 @endif
                             </td>
                         @endforeach
-                        <td data-label="Activity" class="small nowrap">@if (isset($stats->activeNow[$student->id]))<span class="active-now">Active now</span>@elseif ($last) Played @include('partials.when', ['at' => $last]) @else Never played @endif</td>
-                        <td data-label="Consent">
+                        <td data-label="Activity" class="small nowrap activity-cell">@if (isset($stats->activeNow[$student->id]))<span class="active-now">Active now</span>@elseif ($last) Played @include('partials.when', ['at' => $last]) @else Never played @endif</td>
+                        <td data-label="Consent" @class(['consent-cell', 'is-on-file' => $student->consent_recorded_at])>
                             @if ($student->consent_recorded_at)
                                 <span class="badge badge-green">On file</span>
                             @else
-                                <form method="POST" action="{{ route('teacher.students.consent', $student) }}">
-                                    @csrf
-                                    <input type="hidden" name="consent" value="1">
-                                    <button class="btn btn-secondary btn-sm" type="submit">Record<span class="sr-only"> consent for {{ $name }}</span></button>
-                                </form>
+                                <div class="consent-missing" data-inline-scope>
+                                    <span class="phone-only small">Consent form missing</span>
+                                    <form method="POST" action="{{ route('teacher.students.consent', $student) }}" data-inline data-done-label="Consent on file">
+                                        @csrf
+                                        <input type="hidden" name="consent" value="1">
+                                        <button class="btn btn-secondary btn-sm" type="submit">Record<span class="sr-only"> consent for {{ $name }}</span></button>
+                                    </form>
+                                </div>
                             @endif
+                        </td>
+                        {{-- Phones (D-039): the skill columns fold into these lines; last, so hiding it on wide screens moves no column. --}}
+                        <td data-label="" class="phone-sum">
+                            <p>L{{ $level }} {{ SkillCatalog::level($level)['world'] }} · {{ count($byState['got'] ?? []) }} got it @if (isset($byState['prac'])) · {{ count($byState['prac']) }} practising @endif @if (isset($byState['new'])) · {{ count($byState['new']) }} not started @endif</p>
+                            @foreach (['help' => 'Needs help', 'slip' => 'Slipping'] as $key => $label)
+                                @if (isset($byState[$key]))
+                                    <p><span class="state state-{{ $key }}">{{ $label }}</span> {{ $byState[$key]->map(fn ($skill) => SkillCatalog::label($skill))->join(', ') }}</p>
+                                @endif
+                            @endforeach
+                            <p class="row-links"><a href="{{ route('teacher.students.report', $student) }}">Report<span class="sr-only"> for {{ $name }}</span></a></p>
                         </td>
                     </tr>
                 @endforeach

@@ -162,7 +162,7 @@ class LoginTest extends TestCase
 
     public function test_login_is_rate_limited_per_address(): void
     {
-        for ($i = 0; $i < 60; $i++) {
+        for ($i = 0; $i < 300; $i++) {
             $this->postJson('/api/auth/login', ['login_code' => 'ABCD-2345'])->assertUnprocessable();
         }
 

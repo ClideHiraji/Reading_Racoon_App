@@ -40,10 +40,10 @@ class AppServiceProvider extends ServiceProvider
             URL::forceScheme('https');
         }
 
-        // A whole class signs in from one school Wi-Fi address (NAT), so the
-        // per-IP login limit must fit ~40 children plus typos. Guessing one of
-        // 31^8 codes at this rate is still hopeless. NFR-04.
-        RateLimiter::for('login', fn (Request $request) => Limit::perMinute(60)->by($request->ip()));
+        // Every tablet at a school signs in from one address (NAT), so the
+        // per-IP login limit must fit two classes (~64 children) at once plus
+        // their typos. Guessing one of 31^8 codes at this rate is still hopeless. FR-01, NFR-04.
+        RateLimiter::for('login', fn (Request $request) => Limit::perMinute(300)->by($request->ip()));
 
         RateLimiter::for('api', fn (Request $request) => Limit::perMinute(120)->by($request->user()?->id ?: $request->ip()));
 

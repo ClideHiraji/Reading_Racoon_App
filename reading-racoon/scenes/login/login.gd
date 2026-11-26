@@ -111,6 +111,8 @@ func _fit_shape() -> void:
 		%Raccoon.reparent(side, false)
 		%GoButton.reparent(side, false)
 		%SkipButton.reparent(side, false)
+		# Its long debug-only line wraps: on one line it widened the column past the screen's edges.
+		%SkipButton.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		top.queue_free()
 		spacer.queue_free()
 		%Keys.columns = 8

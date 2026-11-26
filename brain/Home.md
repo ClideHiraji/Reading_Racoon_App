@@ -79,6 +79,7 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 - [[2026-11-20]]: the teacher dashboard and admin portal critiqued (20/40) and redesigned (D-037): needs-help first grouped by child, plain states with P(L) on demand, the class on the reading map, a filterable learner list, risky actions on the learner page with confirmations, server-drawn charts (no Chart.js or CDN), WCAG AA contrast and focus, phone layouts; 184 tests pass.
 
 - [[2026-11-24]]: a second critique of the dashboard (23/40) listed about 60 gaps from wording to whole flows; then the trust fixes (D-038): Slipping, two help groups with Close all, last-synced times, branded error pages, busy-locked forms, working map links, accessibility and print; 188 tests pass.
+- [[2026-11-26]]: a full bug hunt of the game, then a layout audit at 7 screen sizes (new `tests/layout_audit.gd`) that found a laptop crash in FitBox, the touch-scroll bug (buttons block drag-scroll) and about 12 layout bugs, all fixed the same day with tests: headless tests clean (5,161 checks, smoke, all 126 scripts load), then play-tests on the phone (adb) and the laptop (window messages) and a 3,200-action monkey test with no errors or leaks. Found: the committed project cannot export for Android (ETC2), answer pictures turn into black silhouettes on result cards, Practice tiles overflow on laptops, a tripled Closet title line; the laptop has no Filipino or Bisaya voice.
 
 ## Learnings
 - [[Judge new art inside the game, not on a board]]
@@ -101,6 +102,9 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 - [[Autoload names fail in static helpers under -s tests]]
 - [[Python write_text makes CRLF on Windows]]
 - [[Headless test runs hide GDScript warnings]]
+- [[Drive a Godot window by messages, not the mouse]]
+- [[Buttons in a scroll list must pass the touch]]
+- [[A fit-to-box scale can flip-flop with wrapped text]]
 - [[Two Godot editors on one project freeze the editor]]
 - [[Godot editor freezes on very long lines]]
 - [[Godot cannot play animated SVG]]

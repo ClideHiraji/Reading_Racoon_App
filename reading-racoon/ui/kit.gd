@@ -509,7 +509,9 @@ static func reward(root: Control, title: String, result: Dictionary, on_done: Ca
 		row.add_theme_constant_override("separation", 4)
 		row.add_child(AnimatedStar.make(96))
 		var g := label(_talk("reward_goals"), 28, Palette.readable(Palette.LEAF), true)
-		g.autowrap_mode = TextServer.AUTOWRAP_OFF
+		# It wraps beside the star: a longer Bisaya line pushed the card off a phone's screen.
+		g.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		g.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		row.add_child(g)
 		v.add_child(row)
 	var items: Array = result.get("items", [])

@@ -49,7 +49,7 @@ func set_text(text: String) -> void:
 		l.add_theme_font_override("font", ANDIKA)
 		l.add_theme_font_size_override("font_size", font_size)
 		l.add_theme_color_override("font_color", Palette.INK)
-		l.mouse_filter = Control.MOUSE_FILTER_STOP
+		l.mouse_filter = Control.MOUSE_FILTER_PASS   # a tap reads the word; a drag still scrolls a story
 		l.gui_input.connect(_on_word_input.bind(i))
 		add_child(l)
 		_labels.append(l)

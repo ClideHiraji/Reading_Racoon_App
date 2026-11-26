@@ -304,7 +304,7 @@ Status key: 🔴 blocks coding · 🟡 decide during build · 📝 manuscript-on
   - Details: [D-023](../../brain/decisions/D-023%20Laptop%20layouts%20Back%20and%20safe%20areas.md).
 - **Still open:**
   - The iOS build (needs a Mac with Xcode and an Apple developer account).
-  - Whether the Windows laptops have Filipino and Bisaya text-to-speech voices.
+  - Whether the Windows laptops have Filipino and Bisaya text-to-speech voices. **Checked 2026-11-26 on the team's HP laptop (Windows 10): only English voices (Microsoft David, Zira), so Filipino and Bisaya books highlight their words silently and the buddy's Filipino lines aren't spoken.** The school laptops still need checking. The Infinix phone (Android 15, Google TTS) spoke Filipino.
   - Where and when the regular section plays.
   - Reduce Motion on iOS.
 

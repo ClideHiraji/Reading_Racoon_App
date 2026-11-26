@@ -54,6 +54,24 @@ func _fit() -> void:
 func _on_node_added(node: Node) -> void:
 	if node is BaseButton:
 		(node as BaseButton).mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		var list := _scroll_of(node)
+		if list:
+			# A drag that starts on a card must still scroll its list: the card lets the touch
+			# through to the list, which cancels the card's press once the finger moves (NFR-02).
+			var b := node as BaseButton
+			b.mouse_filter = Control.MOUSE_FILTER_PASS
+			# A tap the card takes never reaches the list, which then thinks a finger is still down
+			# and would scroll with the next mouse move; setting its scroll ends that drag.
+			b.pressed.connect(func(): if is_instance_valid(list): list.scroll_vertical = list.scroll_vertical)
+
+
+static func _scroll_of(node: Node) -> ScrollContainer:
+	var p := node.get_parent()
+	while p != null:
+		if p is ScrollContainer:
+			return p
+		p = p.get_parent()
+	return null
 
 
 ## How much of each edge the notch, rounded corners and home indicator cover,

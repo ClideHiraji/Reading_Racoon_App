@@ -1381,3 +1381,29 @@ func test_rina_has_her_details() -> void:
 	var back: Dictionary = RacoonPuppet._head_decal(-44.0, -82.0, PI, 1.0, 0.0)
 	check(front.v > 0.3 and back.v < 0.0, "the bow faces you from the front and hides from behind")
 	pp.free()
+
+
+
+
+## The laptop crash (NFR-01): FitBox took turns between two scales forever. A story question's
+## cards wrap, so they are shorter when wider: the smaller scale made them wide enough to need
+## less height, the bigger scale then fit, and made them narrow and tall again.
+func test_fit_box_settles() -> void:
+	var box := Vector2(876, 442)
+	var need_at := func(width: float) -> Vector2: return Vector2(190, 452 if width > 1000.0 else 564)
+	var s := 1.0
+	var state := {}
+	var seen: Array[float] = []
+	for i in 8:
+		# A node keeps its scale as a float32, so feed it back the way the node does.
+		s = Vector2(FitBox.next_scale(s, need_at.call(box.x / s), box, state), 0).x
+		seen.append(s)
+	check(seen[5] == seen[6] and seen[6] == seen[7], "the scale settles (got %s)" % [seen])
+	check(need_at.call(box.x / s).y * s <= box.y + 0.5, "and the task fits")
+	# First laid out too narrow (its words stacked), then at its real width: it grows back.
+	state = {}
+	s = FitBox.next_scale(1.0, Vector2(190, 1400), box, state)
+	s = FitBox.next_scale(s, Vector2(190, 400), box, state)
+	check(s == 1.0, "a first guess made at the wrong width doesn't stick (got %s)" % s)
+	check(FitBox.next_scale(1.0, Vector2(300, 200), box, {}) == 1.0, "a task that fits stays full size")
+	check(FitBox.next_scale(0.5, Vector2.ZERO, box, {}) == 0.5, "an empty task keeps its scale")

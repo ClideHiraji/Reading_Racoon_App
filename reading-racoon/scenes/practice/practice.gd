@@ -56,7 +56,8 @@ func _card(g: Dictionary, open: bool) -> Control:
 	b.card_style = true
 	b.radius = 28
 	var wide := Kit.landscape()
-	b.custom_minimum_size = Vector2(0, 210 if wide else 286)
+	# On a laptop: disc, name and tag (about 200 px) inside the stitches, which sit 12 px in (D-028).
+	b.custom_minimum_size = Vector2(0, 224 if wide else 286)
 	b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	b.tooltip_text = g.name
 	b.pressed.connect(_open.bind(g, open))
@@ -73,11 +74,11 @@ func _card(g: Dictionary, open: bool) -> Control:
 	v.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	v.offset_left = 12
 	v.offset_right = -12
-	v.add_theme_constant_override("separation", 12)
+	v.add_theme_constant_override("separation", 8 if wide else 12)
 	b.add_child(v)
 	var disc := PanelContainer.new()
 	disc.add_theme_stylebox_override("panel", Kit.box(Palette.pale(color, 0.8) if open else LOCKED.darkened(0.06), 70))
-	disc.custom_minimum_size = Vector2(108, 108) if wide else Vector2(140, 140)
+	disc.custom_minimum_size = Vector2(96, 96) if wide else Vector2(140, 140)
 	disc.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	disc.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var icon_px := 72 if wide else 92

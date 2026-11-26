@@ -5,6 +5,9 @@ extends BoxContainer
 
 signal answered(answer: String, ms: int)
 
+const ROW_W := 640.0
+const ROW_PX := 36
+
 var _cards := {}
 var _started := 0
 var _locked := false
@@ -22,21 +25,25 @@ func setup(item: Dictionary) -> void:
 	var choices: Array = item.choices
 	var grid: GridContainer = %Choices
 	var has_pictures := choices.any(func(c): return c.has("picture"))
-	# Long answers (story questions, polite phrases) stack as full-width cards.
-	var long := choices.any(func(c): return str(c.get("label", "")).length() > 12 \
-			or (not has_pictures and str(c.get("label", "")).length() > 7))
-	grid.columns = 1 if long else (2 if choices.size() == 4 else choices.size())
 	var wide := choices.size() <= 2 or choices.size() == 4
+	var card_w := 310.0 if wide else 210.0
+	# Long answers (story questions, polite phrases) stack as full-width cards, and so do
+	# picture words too wide for their card ("a paper star").
+	var long := choices.any(func(c): return str(c.get("label", "")).length() > 12 \
+			or (not has_pictures and str(c.get("label", "")).length() > 7) \
+			or (has_pictures and _text_w(str(c.get("label", "")), 46) > card_w - 24.0))
+	grid.columns = 1 if long else (2 if choices.size() == 4 else choices.size())
 	for c in choices:
 		var card := ChunkyButton.new()
 		card.card_style = true
 		card.lift = 8
 		card.radius = 28
-		card.custom_minimum_size = Vector2(310 if wide else 210, 250 if has_pictures else 180)
+		card.custom_minimum_size = Vector2(card_w, 250 if has_pictures else 180)
 		if long:
-			card.custom_minimum_size = Vector2(640, 110 if not has_pictures else 130)
+			var base := 110.0 if not has_pictures else 130.0
 			if Kit.landscape():   # NFR-02's 96 px still holds (D-023)
-				card.custom_minimum_size.y = 96 if not has_pictures else 110
+				base = 96.0 if not has_pictures else 110.0
+			card.custom_minimum_size = Vector2(ROW_W, _row_height(c, base))
 		card.pressed.connect(_on_card.bind(str(c.id)))
 		card.add_child(_row_content(c) if long else _card_content(c, has_pictures))
 		grid.add_child(card)
@@ -79,6 +86,21 @@ func _card_content(c: Dictionary, has_pictures: bool) -> Control:
 	return box
 
 
+## How wide `text` is in the reading font at `px`.
+static func _text_w(text: String, px: int) -> float:
+	return ThemeDB.get_project_theme().get_font(&"font", &"ReadLabel").get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, px).x
+
+
+## A row card tall enough for its words on as many lines as they take at the row's narrowest
+## (a three-line story answer overflowed a one-line card).
+static func _row_height(c: Dictionary, base: float) -> float:
+	var font := ThemeDB.get_project_theme().get_font(&"font", &"ReadLabel")
+	var width := ROW_W - 46.0 - (90.0 if c.has("picture") else 0.0)   # the row's margins and picture
+	var h := font.get_multiline_string_size(str(c.get("label", c.id)), HORIZONTAL_ALIGNMENT_LEFT,
+			width, ROW_PX).y
+	return maxf(base, h + 30.0)
+
+
 ## A full-width answer row: optional small picture, then the words (Andika).
 func _row_content(c: Dictionary) -> Control:
 	var row := HBoxContainer.new()
@@ -96,7 +118,7 @@ func _row_content(c: Dictionary) -> Control:
 	l.name = "Word"
 	l.text = c.get("label", c.id)
 	l.theme_type_variation = &"ReadLabel"
-	l.add_theme_font_size_override("font_size", 36)
+	l.add_theme_font_size_override("font_size", ROW_PX)
 	l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -147,10 +169,11 @@ func show_result(chosen: String, answer: String) -> void:
 		t.tween_property(c, "scale", Vector2.ONE, 0.15)
 
 
-## Recolors the card's picture and words so they read on its new face (D-016).
+## Recolors the card's glyph and words so they read on its new face (D-016). A full-colour
+## picture is drawn untinted (D-027) and keeps its colours; tinting it made a black silhouette.
 func _ink(node: Node, col: Color) -> void:
 	for child in node.get_children():
-		if child is TextureRect:
+		if child is TextureRect and child.self_modulate != Color.WHITE:
 			child.self_modulate = col
 		elif child is Label:
 			child.add_theme_color_override("font_color", col)

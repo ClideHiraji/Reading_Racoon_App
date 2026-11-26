@@ -485,6 +485,29 @@ func _run() -> void:
 	gs.set_buddy(str(had_buddy.get("who", "roco")), str(had_buddy.get("lang", "en")))
 	check(is_equal_approx(root.get_node("Speech").pitch, 1.1) or gs.buddy_id() == "rina", "the voice follows the buddy back")
 
+	# After a wrong answer the green and orange cards keep their pictures' own colours (D-027):
+	# tinting them for the card's new face made black silhouettes.
+	var pick: Dictionary = {}
+	for it in gs.bank.items:
+		if it.task_type == "tap_choice" and it.choices.all(func(c): return c.has("picture")):
+			pick = it
+			break
+	var tap: Node = load("res://scenes/tasks/tap_choice_task.tscn").instantiate()
+	root.add_child(tap)
+	tap.setup(pick)
+	await _frames()
+	var wrong_id := ""
+	for c in pick.choices:
+		if str(c.id) != str(pick.answer):
+			wrong_id = str(c.id)
+			break
+	tap.show_result(wrong_id, str(pick.answer))
+	var pictures := tap.find_children("*", "TextureRect", true, false).filter(
+			func(t): return t.texture and str(t.texture.resource_path).contains("assets/pictures"))
+	check(not pictures.is_empty() and pictures.all(func(t): return t.self_modulate == Color.WHITE),
+			"answer pictures keep their colours after a wrong answer (%s)" % pick.get("id", "none"))
+	tap.free()
+
 	# The developer menu (issue 30, debug builds only; DELETE BEFORE THE FINAL RELEASE with it).
 	if DevMenu.allowed():
 		DevMenu.toggle(self)

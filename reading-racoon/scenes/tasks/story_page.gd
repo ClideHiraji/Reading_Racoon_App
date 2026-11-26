@@ -42,6 +42,7 @@ func setup(passage: Dictionary, button_text: String = "I READ IT!") -> void:
 	m.add_theme_constant_override("margin_top", 16)
 	m.add_theme_constant_override("margin_bottom", 20)
 	m.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	m.size_flags_horizontal = Control.SIZE_EXPAND_FILL   # beside the picture on a laptop, the words take the rest
 	v.add_child(m)
 	var scroll := ScrollContainer.new()
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED

@@ -106,6 +106,11 @@ func _cover(b: Dictionary) -> Control:
 	pad.add_child(text)
 	v.add_child(pad)
 	var t := Kit.label(b.title, 28, Palette.INK, true)
+	# A title on more lines makes the card that much taller (at its narrowest, 320 px less the
+	# padding), or the language tag falls out of its bottom.
+	var font := ThemeDB.get_project_theme().get_font(&"font", &"TitleLabel")
+	btn.custom_minimum_size.y += maxf(0.0, font.get_multiline_string_size(str(b.title),
+			HORIZONTAL_ALIGNMENT_LEFT, 320.0 - 36.0, 28).y - font.get_height(28))
 	t.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	t.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	t.resized.connect(Kit.balance.bind(t))

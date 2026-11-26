@@ -51,8 +51,6 @@ func _ready() -> void:
 		tab.set_meta("slot", slot)
 		%Tabs.add_child(tab)
 	%Title.text = GameState.talk("closet_title")   # the buddy's own Closet (D-033)
-	%Title.text = GameState.talk("closet_title")   # the buddy's own Closet (D-033)
-	%Title.text = GameState.talk("closet_title")   # the buddy's own Closet (D-033)
 	_update_coins()
 	_show_slot("hat")
 	await get_tree().process_frame
@@ -148,7 +146,10 @@ func _card(id: String) -> Control:
 	title.text = item.name
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	title.theme_type_variation = &"TitleLabel"
-	title.add_theme_font_size_override("font_size", 24)
+	# A long name ("Builder's hard hat") gets smaller to fit the 200 px card, not pushed out of it.
+	var w := ThemeDB.get_project_theme().get_font(&"font", &"TitleLabel").get_string_size(
+			str(item.name), HORIZONTAL_ALIGNMENT_LEFT, -1, 24).x
+	title.add_theme_font_size_override("font_size", 24 if w <= 184.0 else maxi(18, floori(24.0 * 184.0 / w)))
 	title.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	v.add_child(title)
 	v.add_child(_price_row(id))

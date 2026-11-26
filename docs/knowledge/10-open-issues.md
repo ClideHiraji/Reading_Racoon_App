@@ -16,6 +16,13 @@ Status key: 🔴 blocks coding · 🟡 decide during build · 📝 manuscript-on
   - Firebase Auth is replaced by Sanctum tokens. Firebase security rules are replaced by Laravel policies/middleware.
   - "Firebase log node" is replaced by PostgreSQL `system_logs` / `ai_logs` tables.
   - We need hosting for PHP + PostgreSQL with HTTPS, reachable from school Wi-Fi. Many cheap shared PHP hosts are MySQL-only.
+  - **Hosting for now (2026-11-25, the user's choice):** the user's laptop.
+    - `C:\ReadingRacoon\backend` (branch `main`) runs on XAMPP Apache port 8090 and PostgreSQL 18, both Windows services that start on their own.
+    - It's public through Tailscale Funnel at `https://<laptop>.<tailnet>.ts.net`, the address built into the game. The real address is set only in the local `project.godot` and kept out of git.
+    - It works only while the laptop is on, awake and online.
+  - **Later option:** Azure for Students (GitHub Student Pack: $100 plus free services) with a free `.me` or `.tech` domain, in the Singapore region.
+    - Not Heroku: teacher uploads live on the server's disk (`storage/app/private/content`), and Heroku's disk is wiped daily.
+    - Moving needs a Linux version of `backend/ops/windows`, and the game rebuilt with the new address.
 - **Manuscript to update:** Table 3.4 and §3.4.3.1 ("MySQL 8.x" → "PostgreSQL"), plus every "Firebase" mention: §2 none; §3.4.2.4 flow figures 3.11–3.15 and ERD text; NFR-05; §3.4.3 intro; §3.4.3.2 Step 2 and Step 4; §3.4.3.3 Stages 5–6; §3.4.4.1; §3.4.4.2 consent forms; §3.4.5 Activities 1–3 and checklist items 2, 4, 8, 9; §3.4.6.
 
 ### 2. AI model and hosting ✅ RESOLVED (2026-10-17)
@@ -171,6 +178,15 @@ Status key: 🔴 blocks coding · 🟡 decide during build · 📝 manuscript-on
   - **One texture sheet and 8 new moves (2026-11-17):** the 27 part files are packed onto one sheet (`assets/racoon/racoon_atlas.svg`). He has 8 new animations (walk around, hops, a big jump, look around, stretch, dance, tail wag, turn around), which he plays on his own after a quiet spell on Home, the start screen and the Closet. Taps on Home cycle through 8 reactions. His walks and jumps shrink to stay inside the box he's in. D-024, "One texture sheet, and a livelier Racoon".
 - **Animated star and hearts (2026-10-22):** the team's Lottie files play live in the game (`ui/lottie_player.gd`): the earned star, Regain Heart for a heart that comes back, Broken Heart for a lost one, the hearts in the lesson hearts' colors.
 - **Manuscript to update:** the screens in §3.4.2.4 and the color and size rules in §3.4.2.2; NFR-02 can quote the 96 px / 48 dp minimum.
+
+### 44. An opening instead of Godot's logo ✅ DECIDED (2026-11-20)
+- The user wanted the app to open with an animated logo and name, then a transition, not Godot's default boot look.
+- **Decision (D-044, first numbered D-037 on the game branch):**
+  - Godot's boot logo is off, and the boot screen is plain cream.
+  - On the first screen of a run, a paper sheet shows a sunburst; Racoon pops up and waves; "Reading Racoon" drops in letter by letter over a crayon squiggle.
+  - Then the sheet lifts away and shows the start screen. It takes about 3.3 s, and a tap skips it.
+  - A new app icon (Racoon from the user's drawing on mango) replaces Godot's.
+  - Details: [D-044](../../brain/decisions/D-044%20Animated%20opening%20and%20app%20icon.md).
 
 ### 37. Full screen for teacher videos ✅ DECIDED (2026-11-19)
 - The user asked for a full-screen video in Watch & Listen, with a phone turning sideways for it.

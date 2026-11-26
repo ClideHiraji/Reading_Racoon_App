@@ -1,5 +1,6 @@
 extends Control
-## Start screen: the raccoon waves from the riverbank, one big button plays.
+## Start screen: the raccoon waves from the riverbank, one big button plays. The first time it
+## opens, the opening (Intro, D-044) plays over it and lifts away.
 ## No reading needed: the button is read aloud too (D-007, D-009).
 ## First time on a device: the login screen (FR-01, D-010). After that it greets
 ## the child ("reader": a recorded line can't say a name) and opens the home hub (the pre-test first, FR-02, D-015).
@@ -17,6 +18,17 @@ func _ready() -> void:
 	%Bubble.speaker = %Raccoon   # his bubble walks with him and points at him
 	# For grown-ups, in the corner and out of the child's way (D-022).
 	%SwitchButton.visible = GameState.signed_in()
+	# The opening plays over the start screen the first time it opens (D-044); Racoon greets the
+	# child once its sheet has lifted, not over it.
+	if Intro.should_play(GameState._args):
+		var intro := Intro.new()
+		intro.finished.connect(_greet)
+		add_child(intro)
+	else:
+		_greet()
+
+
+func _greet() -> void:
 	if GameState.signed_in():
 		%Bubble.say(GameState.talk("start_hi_name"))   # "reader", not the name (recorded voice)
 	else:

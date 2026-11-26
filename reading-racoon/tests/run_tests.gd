@@ -695,6 +695,10 @@ func test_wardrobe() -> void:
 	check(w.owns("open_book") and w.equipped.is_empty(), "owns the open book; wears nothing at first")
 	check(w.wear("open_book") and w.equipped.get("paws", "") == "open_book", "the book goes in his paws")
 	w.take_off("paws")
+	check(Wardrobe.slot_name("paws", "roco") == "In his paws" and Wardrobe.slot_name("paws", "rina") == "In her paws",
+			"the paws tab follows the buddy (D-033)")
+	check(Wardrobe.slot_name("hat", "rina") == "Hats" and Wardrobe.slot_name("pet", "roco") == "Pets",
+			"the other tabs are the same for both buddies")
 	var wallet := {"coins": 10, "xp": 0}
 	check(w.buy("party_hat", wallet) == "poor" and wallet.coins == 10, "can't buy without coins")
 	wallet.coins = 100
@@ -1367,6 +1371,19 @@ func test_buddy_lines_cover_every_state() -> void:
 			if state == "note" or str(state).begins_with("hint_"):
 				continue
 			check(d.has(state) and d[state] is Array and not d[state].is_empty(), "%s has '%s'" % [path, state])
+
+
+## D-035: recorded clips are named as the voice lab names them, and a known line has its clip.
+func test_recorded_voice_clips() -> void:
+	var speech = load("res://scripts/autoload/speech.gd")
+	check(speech.clip_key("roco", "en", "A heart came back!") == "07fff55d98f1723e", "clip names match the voice lab's")
+	check(ResourceLoader.exists("res://assets/voice/07fff55d98f1723e.mp3"), "Roco's 'A heart came back!' is recorded")
+	var bad := 0
+	for f in DirAccess.get_files_at("res://assets/voice"):
+		var key := f.get_basename()
+		if f.ends_with(".mp3") and not (key.length() == 16 and key.is_valid_hex_number()):
+			bad += 1
+	check(bad == 0, "every clip is named by its key")
 
 
 ## Rina's inner ears are pink; Roco's keep the drawing's own color.

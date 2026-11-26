@@ -6,6 +6,11 @@ extends Node
 ## Library's local books. Recorded narration replaces this later.
 ## Needs audio/general/text_to_speech=true.
 ##
+## Recorded voices (D-035): the buddy's own lines and the menus, read by Gemini's Zeno (Roco) and Cleo (Rina),
+## one MP3 per sentence in assets/voice/, named clip_key(buddy, language, sentence). A line plays recorded when
+## every sentence of it has a clip; otherwise the system voice reads it, as before (lessons, books and videos,
+## and lines not recorded yet).
+##
 ## Windows (the school laptops): cutting a line off mid-sentence freezes the whole game for about
 ## 210 ms there (the system voice blocks while it stops; NFR-01). So on Windows a line is spoken a
 ## sentence at a time, and a new line, or stop(), drops the sentences not yet started and lets the
@@ -53,6 +58,14 @@ var _current_since := 0
 var _split := RegEx.new()
 var _spoken_in: Node = null   # the screen the voice is speaking for
 var _stopper: Thread = null   # Windows: the system voice being stopped, off the game's thread
+## Whose recorded voice plays: set with the pitch by GameState.use_buddy_voice() (D-035).
+var buddy := "roco"
+const VOICE_DIR := "res://assets/voice/"
+const CLIP_GAP := 0.15        # seconds between two recorded sentences of a line
+var _clip_player: AudioStreamPlayer
+var _clips: Array = []        # the recorded sentences still to play, in order
+var _clip_run := 0            # bumps on every new line or cut, so a late timer can't play an old one
+var _word := RegEx.new()
 
 
 func _ready() -> void:
@@ -69,6 +82,11 @@ func _ready() -> void:
 		DisplayServer.tts_set_utterance_callback(DisplayServer.TTS_UTTERANCE_CANCELED, _on_ended)
 	_gentle = OS.get_name() == "Windows" and not _voices.is_empty()
 	_split.compile("[^.!?]+[.!?]*\\s*")
+	_word.compile("\\w")
+	_clip_player = AudioStreamPlayer.new()
+	_clip_player.name = "RecordedVoice"
+	add_child(_clip_player)
+	_clip_player.finished.connect(_clip_done)
 	# GameState loads first: take its student's buddy voice now (D-033)
 	var gs := get_node_or_null("/root/GameState")
 	if gs and gs.has_method("use_buddy_voice"):
@@ -111,8 +129,19 @@ func _voice_for(lang: String) -> String:
 ## lesson content always names its own.
 func say(text: String, language: String = "") -> void:
 	var lang := base_lang(language if language != "" else _talk_lang())
-	if not _voices.has(lang) or text.is_empty():
+	if text.is_empty():
 		return
+	var clips := recorded(text, lang)
+	if not clips.is_empty():
+		_left_screen()
+		_spoken_in = get_tree().current_scene
+		if _voices.size() > 0 and speaking():
+			cut()   # the system voice was still talking
+		_play_clips(clips)
+		return
+	if not _voices.has(lang):
+		return
+	_stop_clips()
 	_left_screen()
 	_spoken_in = get_tree().current_scene
 	if _gentle:
@@ -131,6 +160,7 @@ func say_tracked(text: String, language: String = "en") -> bool:
 		return false
 	_left_screen()
 	_spoken_in = get_tree().current_scene
+	_stop_clips()
 	_next_id += 1
 	_tracked_id = _next_id
 	_tracked_starts = word_starts(text)
@@ -155,6 +185,8 @@ static func word_starts(text: String) -> PackedInt32Array:
 
 ## Racoon is still talking (the lesson waits before moving on, D-021).
 func speaking() -> bool:
+	if _clip_player and (_clip_player.playing or not _clips.is_empty()):
+		return true
 	if _voices.is_empty():
 		return false
 	if _gentle and (not _current.is_empty() or not _queue.is_empty()):
@@ -165,6 +197,7 @@ func speaking() -> bool:
 
 
 func stop() -> void:
+	_stop_clips()
 	if _voices.is_empty():
 		return
 	if _gentle:
@@ -183,6 +216,7 @@ func new_question() -> void:
 ## Stops everything at once, on every device: the line being spoken and any waiting. A read-along
 ## cut off this way reports `finished`.
 func cut() -> void:
+	_stop_clips()
 	if _voices.is_empty():
 		return
 	var was_tracked: bool = _tracked_id != -1 or (not _current.is_empty() and bool(_current.tracked))
@@ -265,6 +299,60 @@ func _on_ended(id: int) -> void:
 	if id == _tracked_id:
 		_tracked_id = -1
 		finished.emit.call_deferred()
+
+
+# --- Recorded voices (D-035) ------------------------------------------------------------------------
+
+## A recorded sentence's file name: the same key the voice lab's manifest.py gives it.
+static func clip_key(who: String, lang: String, sentence: String) -> String:
+	return ("%s|%s|%s" % [who, lang, sentence]).sha1_text().left(16)
+
+
+## The recorded clips for every sentence of `text` in the buddy's voice, or [] if any sentence has none
+## (then the system voice reads the whole line, so one line never mixes two voices).
+func recorded(text: String, lang: String) -> Array:
+	var out := []
+	for m in _split.search_all(text):
+		var s := m.get_string().strip_edges()
+		if s.is_empty() or _word.search(s) == null:
+			continue
+		var path := VOICE_DIR + clip_key(buddy, lang, s) + ".mp3"
+		if not ResourceLoader.exists(path):
+			return []
+		out.append(path)
+	return out
+
+
+func _play_clips(paths: Array) -> void:
+	_stop_clips()
+	for p in paths:
+		_clips.append(load(p))
+	_next_clip()
+
+
+func _next_clip() -> void:
+	if _clips.is_empty():
+		return
+	_clip_player.stream = _clips.pop_front()
+	_clip_player.volume_db = linear_to_db(maxf(volume, 1) / 100.0)
+	_clip_player.play()
+
+
+## A sentence ended: a short breath, then the next one (unless the line was cut meanwhile).
+func _clip_done() -> void:
+	if _clips.is_empty():
+		return
+	var run := _clip_run
+	get_tree().create_timer(CLIP_GAP).timeout.connect(func() -> void:
+		if run == _clip_run:
+			_next_clip())
+
+
+func _stop_clips() -> void:
+	_clip_run += 1
+	_clips.clear()
+	if _clip_player and _clip_player.playing:
+		_clip_player.stop()
 
 
 # --- Windows: a sentence at a time ---------------------------------------------------------------

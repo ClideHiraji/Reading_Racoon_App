@@ -16,6 +16,8 @@ extends RefCounted
 const SLOTS := ["hat", "neck", "eyes", "top", "paws", "pet"]
 const SLOT_NAMES := {"hat": "Hats", "neck": "Scarves", "eyes": "Glasses", "top": "Clothes",
 		"paws": "In his paws", "pet": "Pets"}
+## Rina's Closet (D-033): what she holds is "In her paws". Use slot_name(), not SLOT_NAMES.
+const SLOT_NAMES_RINA := {"paws": "In her paws"}
 
 ## Each tier: its name, its rank (1-5, shown as stars, so it doesn't rely on colour),
 ## its colours, and what it means for the child.
@@ -40,6 +42,14 @@ const CATALOG := "res://content/closet.json"
 ## id -> {name, slot, tier, price}, plus {earn: [what, how many]} for an item that's earned instead of
 ## bought (see earn_text()), {scarf: true} for a scarf, {recolor: {...}} for a colour of another item.
 static var ITEMS: Dictionary = _load_items()
+
+
+## A slot's name for the buddy whose Closet it is ("roco" or "rina", D-033). The tab says it
+## aloud and shows it as a tooltip (FR-07).
+static func slot_name(slot: String, who: String) -> String:
+	if who == "rina" and SLOT_NAMES_RINA.has(slot):
+		return str(SLOT_NAMES_RINA[slot])
+	return str(SLOT_NAMES.get(slot, slot))
 
 
 static func _load_items() -> Dictionary:

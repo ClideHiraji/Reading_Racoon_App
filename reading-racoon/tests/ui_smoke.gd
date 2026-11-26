@@ -255,6 +255,8 @@ func _run() -> void:
 	await _frames(5)
 	var shop := current_scene
 	check(shop.name == "Shop", "shop opens from the hub's Closet tab")
+	var paws_tab: Control = shop.get_node("%Tabs").get_children().filter(func(t): return t.get_meta("slot") == "paws")[0]
+	check(paws_tab.tooltip_text == Wardrobe.slot_name("paws", gs.buddy_id()), "the paws tab is named for the buddy")
 	shop._show_slot("hat")
 	check(gs.wardrobe.owns("cap"), "the Closet gives the River cap a finished lesson earned (D-026)")
 	shop._select("salakot")
@@ -391,6 +393,26 @@ func _run() -> void:
 	gs.open_section("watch")
 	await _frames(5)
 	check(current_scene.name == "Watch" and current_scene._list.get_child_count() >= 6, "Watch & Listen lists songs")
+	# Every chip's cards, and the "Nothing here yet" message, fill their grid column.
+	# The empty Videos message was once 1 px wide, one letter per line: an
+	# autowrapped label in a grid cell asks for no width (NFR-02). Bundled videos
+	# are set aside first, so the empty message is always what Videos shows here.
+	var wl := current_scene
+	var all_media: Array = gs.media.watch
+	gs.media.watch = all_media.filter(func(m): return m.kind != "video")
+	for chip_name in ["Videos", "Songs", "Stories", "All"]:
+		var chip: Button = wl._chips.get_children().filter(func(b): return b.text == chip_name)[0]
+		chip.pressed.emit()
+		await _frames(5)
+		var cells: Array = wl._list.get_children()
+		var sep: int = wl._list.get_theme_constant("h_separation")
+		var col_w: float = (wl._list.size.x - sep * (wl._list.columns - 1)) / wl._list.columns
+		check(not cells.is_empty() and cells.all(func(c): return c.size.x >= col_w - 1.0),
+				"Watch & Listen's %s chip: every card and message fills its column" % chip_name)
+		if chip_name == "Videos":
+			check(cells.size() == 1 and cells[0] is Label and cells[0].size.x >= wl._list.size.x - 1.0
+					and cells[0].get_line_count() <= 2, "no videos yet: one readable message across the list")
+	gs.media.watch = all_media
 	gs.open_media = "abc-chant"
 	change_scene_to_file("res://scenes/watch/player.tscn")
 	await _frames(6)
@@ -405,6 +427,70 @@ func _run() -> void:
 	check(gs.collection.is_finished("abc-chant") and gs.collection.count("watch") == 1, "the song is finished")
 	check(gs.collection.goals_left(gs.today()) == 0 and gs.collection.count("goals") == 1,
 			"a story, a game and a song: all of today's goals and a goals sticker")
+
+	# A teacher video keeps its own shape on the stage, with bands on two sides. It
+	# was once stretched to the stage, squeezing a 16:9 clip by about 12% on a phone
+	# (D-017). tests/fixtures/wide_clip.ogv: 1 s of 320x180 Ogg Theora.
+	gs.media.watch.append({"id": "tv-shape01", "kind": "video", "title": "Wide clip", "language": "en",
+			"minutes": 1, "file": "res://tests/fixtures/wide_clip.ogv", "teacher": true,
+			"check": {"prompt": "Which one is a bee?", "answer": "bee",
+					"choices": [{"id": "bee", "label": "bee", "picture": "bee"}, {"id": "cat", "label": "cat", "picture": "cat"}]}})
+	gs.open_media = "tv-shape01"
+	change_scene_to_file("res://scenes/watch/player.tscn")
+	await _frames(8)
+	var vp := current_scene
+	var shown: Vector2 = vp._video.size
+	var stage: Vector2 = vp._stage.size
+	check(vp._video.is_playing() and absf(shown.aspect() - 16.0 / 9.0) < 0.02,
+			"a teacher video keeps its 16:9 shape (shown %s on a %s stage)" % [shown, stage])
+	check(shown.x <= stage.x + 0.5 and shown.y <= stage.y + 0.5 and maxf(shown.x / stage.x, shown.y / stage.y) > 0.9,
+			"and fits the stage, filling it one way")
+	# Full screen: the corner button opens the video over the whole player, and it
+	# plays on (on a phone the screen also turns sideways, which a laptop can't test).
+	# Pause works there, Back closes it, and the video ending closes it before the
+	# quick check. The video is paused between steps, so the 1 s clip can't end early.
+	var fs_btns := vp.find_children("*", "Button", true, false) \
+			.filter(func(b): return b.tooltip_text == "Full screen")
+	check(fs_btns.size() == 1, "a teacher video has a full-screen button")
+	if fs_btns.size() == 1:
+		fs_btns[0].pressed.emit()
+		await _frames(3)
+		var full: Control = vp.get_node_or_null("FullScreen")
+		check(full != null and full.get_global_rect().is_equal_approx(vp.get_viewport_rect())
+				and vp._video.is_playing() and not vp._video.paused, "full screen covers the screen and the video plays on")
+		var fs_pause: Array = full.find_children("*", "Button", true, false) \
+				.filter(func(b): return b.tooltip_text == "Pause") if full else []
+		var pics: Array = full.find_children("*", "TextureRect", true, false) \
+				.filter(func(t): return t.texture == vp._video.get_video_texture()) if full else []
+		check(pics.size() == 1 and pics[0].stretch_mode == TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+				and pics[0].get_global_rect().is_equal_approx(full.get_global_rect()),
+				"it shows the video as big as the screen allows, in its own shape")
+		check(fs_pause.size() == 1, "full screen has its own Pause")
+		if fs_pause.size() == 1:
+			fs_pause[0].pressed.emit()
+			check(vp._video.paused and fs_pause[0].tooltip_text == "Play", "Pause works in full screen")
+		var screen := root.get_node("Screen")
+		screen._last_back = -100000
+		screen.back()
+		await _frames(3)
+		check(current_scene == vp and vp.get_node_or_null("FullScreen") == null, "Back closes full screen, still in the player")
+		fs_btns[0].pressed.emit()
+		await _frames(3)
+		full = vp.get_node_or_null("FullScreen")
+		var fs_play: Array = full.find_children("*", "Button", true, false) \
+				.filter(func(b): return b.tooltip_text == "Play") if full else []
+		if fs_play.size() == 1:
+			fs_play[0].pressed.emit()
+		check(full != null and not vp._video.paused, "full screen opens again, and Play goes on")
+		for i in 40:
+			if vp.get_node_or_null("FullScreen") == null:
+				break
+			await create_timer(0.1).timeout
+		check(vp.get_node_or_null("FullScreen") == null and vp.find_children("*", "Button", true, false)
+				.any(func(b): return b.tooltip_text == "bee"), "the video's end closes full screen for the quick check")
+	vp._back()
+	await _frames(5)
+	gs.media.watch.pop_back()
 
 	gs.open_section("stickers")
 	await _frames(5)
@@ -473,10 +559,16 @@ func _run() -> void:
 	await _frames(5)
 	check(gs.buddy.who == "rina" and gs.buddy.lang == "bis", "Let's go saves Rina and Bisaya")
 	check(gs.talk("closet_title") == "Closet ni Rina", "the menus follow the buddy and language")
+	change_scene_to_file("res://scenes/shop/shop.tscn")
+	await _frames(5)
+	var rina_paws: Control = current_scene.get_node("%Tabs").get_children().filter(func(t): return t.get_meta("slot") == "paws")[0]
+	check(rina_paws.tooltip_text == "In her paws", "Rina's Closet says what she holds is in her paws")
+	change_scene_to_file(gs.HUB_SCENE)   # back where Let's go left it, for the checks below
+	await _frames(5)
 	check(is_equal_approx(root.get_node("Speech").pitch, 1.4) and root.get_node("Speech").girl_voice, "Rina's higher voice")
 	check(not gs.line("rescue_start").contains("{buddy}"), "a buddy line names the buddy")
 	check(gs.line("hint_phonics") in gs.lines.hint_phonics, "hints stay in the lesson's language")
-	check(gs.talk("hub_hi_name", ["Ana"]).contains("Ana"), "a menu line fills its slot")
+	check(gs.talk("path_soon", ["Mango Grove"]).contains("Mango Grove"), "a menu line fills its slot")
 	check(gs.talk("no_such_line") == "no_such_line", "an unknown menu line shows its key")
 	check(gs.talk_as("choose_hi", "en", "roco") == "Hi! I'm Roco!", "the chooser previews any buddy")
 	gs.buddy = {}
@@ -507,6 +599,21 @@ func _run() -> void:
 	check(not pictures.is_empty() and pictures.all(func(t): return t.self_modulate == Color.WHITE),
 			"answer pictures keep their colours after a wrong answer (%s)" % pick.get("id", "none"))
 	tap.free()
+	# Recorded voices (D-035): a recorded line plays from its clips; a line with any sentence not recorded
+	# is read by the system voice instead, so one line never mixes two voices.
+	var voice = root.get_node("Speech")
+	var had: Dictionary = gs.buddy.duplicate()
+	gs.set_buddy("roco", "en")
+	check(voice.buddy == "roco" and not voice.recorded("Great job!", "en").is_empty(), "Roco's 'Great job!' is recorded")
+	check(voice.recorded("Great job! Zebras eat purple clouds.", "en").is_empty(), "a line with an unrecorded sentence isn't")
+	check(voice.recorded("Great job!", "fil").is_empty(), "the clip belongs to its language")
+	voice.say("Great job!")
+	check(voice.speaking(), "a recorded line plays")
+	voice.cut()
+	check(not voice.speaking(), "cut stops a recorded line at once")
+	gs.set_buddy("rina", "en")
+	check(voice.buddy == "rina", "the recorded voice follows the buddy")
+	gs.set_buddy(str(had.get("who", "roco")), str(had.get("lang", "en")))
 
 	# The developer menu (issue 30, debug builds only; DELETE BEFORE THE FINAL RELEASE with it).
 	if DevMenu.allowed():

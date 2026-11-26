@@ -79,7 +79,8 @@ func request_soon() -> void:
 ## The server's base URL, or "" when there is none or it isn't allowed: release
 ## builds only talk https (SyncProtocol.is_allowed_server, D-036).
 func server() -> String:
-	var url: String = ProjectSettings.get_setting(SERVER_SETTING, "")
+	# get_setting ignores feature overrides, so it would never see server_url.release.
+	var url := str(ProjectSettings.get_setting_with_override(SERVER_SETTING)) if ProjectSettings.has_setting(SERVER_SETTING) else ""
 	if OS.is_debug_build() and GameState._args.has("server"):
 		url = GameState._args.server
 	url = url.strip_edges().trim_suffix("/")

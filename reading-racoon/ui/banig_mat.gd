@@ -1,8 +1,8 @@
 @tool
 class_name BanigMat
 extends Control
-## A round woven banig mat for Racoon to stand on in the hub (D-015): a paper
-## oval with colored rings, like the patterned sleeping mats of Mindanao.
+## A round woven banig mat for Racoon to stand on in the hub: a paper oval with
+## coloured rings, like the patterned sleeping mats of Mindanao.
 
 @export var rings := PackedColorArray([Palette.ORANGE, Palette.BLUE, Palette.YELLOW]):
 	set(v):

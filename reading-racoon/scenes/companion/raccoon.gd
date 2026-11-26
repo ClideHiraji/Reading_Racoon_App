@@ -1,21 +1,20 @@
 @tool
 class_name Raccoon
 extends Control
-## Racoon, the companion (FR-14), on any screen. He's the Godot scene
-## scenes/companion/racoon_puppet.tscn (D-024): one node per part of the user's drawing, and an
-## AnimationPlayer with one animation per move (open it in the editor to see or edit them). This
-## Control fits him into its box and plays his moves.
-## Moods (the old API, kept): idle, happy, thinking, encourage, celebrate, sleepy. The lesson also
+## Racoon, the companion, on any screen. His body is the scene
+## scenes/companion/racoon_puppet.tscn: one node per part of the drawing, and an AnimationPlayer
+## with one animation per move (open it in the editor to see or edit them).
+## This Control fits him into its box and plays his moves.
+## Moods (old API, kept): idle, happy, thinking, encourage, celebrate, sleepy. The lesson also
 ## plays his moments: moment(), point_at(), look_at_point(), read_along(), talk().
-## Outfit (FR-07, Wardrobe): the scarves and the open book are drawn parts; the other Closet items
-## are drawn by the puppet in code, fitted to his head, neck and chest.
-## He stays calm while a child reads, and acts on Home, at results, or when a hint helps
-## (06-game-design, companion guardrails).
+## Outfit (Wardrobe): the scarves and the open book are drawn parts; other Closet items are
+## drawn by the puppet in code, fitted to his head, neck and chest.
+## He stays calm while a child reads, and acts on Home, at results, or when a hint helps.
 
 const PUPPET := preload("res://scenes/companion/racoon_puppet.tscn")
 const MOODS := {"happy": "happy", "celebrate": "celebrate", "thinking": "thinking", "encourage": "encourage",
 	"sleepy": "sleepy", "idle": "idle"}
-## The lesson's moments (the canvas board "Racoon in the game") and the animation each one plays.
+## The lesson's moments and the animation each one plays.
 const MOMENTS := {"greet": "greet", "right": "happy", "hint": "hint", "answer": "answer", "rescue": "rescue",
 	"rescue_won": "rescue_won", "level_up": "level_up", "complete": "celebrate", "nudge": "nudge", "rest": "sleepy"}
 ## A tap he took: not while he's still reacting or speaking, nor right after the last one.
@@ -27,39 +26,38 @@ const TAPS := ["giggle", "spin", "peek", "jump", "dance", "hop_around", "big_jum
 const AMBIENT := ["look_around", "tail_wag", "stretch", "look_around", "walk_around", "hop_around", "dance",
 	"tail_wag"]
 const BLEND := 0.18         # seconds to blend from one move into the next
-## His pet (D-029) circles his head when he makes one of these moves.
+## His pet circles his head when he makes one of these moves.
 const PET_ORBIT := ["dance", "celebrate", "big_jump", "level_up", "rescue_won", "hop_around", "spin", "jump"]
 ## A tap is taken only this long after the last one, and once he has finished reacting and speaking:
 ## rapid tapping can't pile up moves and lines.
 const TAP_REST_MS := 700
 const REACH_L := 190.0      # how far his drawing reaches left of where he stands, in any move,
 const REACH_R := 210.0      # right (his tail),
-const REACH_UP := 400.0     # and up from his feet (paws raised): drawing units, measured 2026-11-17
+const REACH_UP := 400.0     # and up from his feet (paws raised), in drawing units
 
 @export var mood := "idle"
-## What Racoon wears, {slot: item id} (FR-07, Wardrobe). By default it follows the
-## child's saved outfit; the shop sets it directly to try things on.
+## What Racoon wears, {slot: item id}. By default it follows the child's saved outfit;
+## the shop sets it directly to try things on.
 var _pet: Pet
 var outfit := {}:
 	set(v):
 		outfit = v
 		_apply_outfit()
 @export var follow_saved_outfit := true
-## Which buddy this is (D-033): "" follows the student's pick, Roco or Rina; the buddy chooser's cards
-## set "roco" or "rina".
+## Which buddy this is: "" follows the student's pick (Roco or Rina);
+## the buddy chooser's cards set "roco" or "rina".
 @export var buddy := "":
 	set(v):
 		buddy = v
 		_apply_buddy()
-## Taps on Racoon make him react (giggle, spin, peekaboo, jump, a dance, hops, a big jump, a tail
-## wag). Home turns it on (FR-14).
+## Taps on Racoon make him react (giggle, spin, peekaboo, jump, dance, hops, a big jump,
+## a tail wag). Home turns it on.
 @export var react_to_taps := false
-## His own little life: when nobody has touched the screen for 6-11 seconds he looks around, wags
-## his tail, stretches, walks about, hops or dances (the animations in
-## racoon_puppet.tscn). Home, the start screen and the Closet turn it on; never where a child
-## reads or answers (his guardrails: calm while a child reads).
+## His own little life: when nobody has touched the screen for 6-11 seconds he looks around,
+## wags his tail, stretches, walks about, hops or dances (animations in racoon_puppet.tscn).
+## Home, the start screen and the Closet turn it on; never where a child reads or answers.
 @export var lively := false
-## Drawn once at rest and not animated (the Closet's small item cards), so a screen of
+## Drawn once at rest and not animated (the Closet's small item cards), so a screen full of
 ## previews costs nothing per frame.
 @export var still := false:
 	set(v):
@@ -126,7 +124,7 @@ func _ready() -> void:
 	_fit()
 
 
-## Roco or Rina (D-033): Rina is the same raccoon with her girl details (eyelashes, rosy cheeks, a bow).
+## Roco or Rina: Rina is the same raccoon with her girl details (eyelashes, rosy cheeks, a bow).
 func _apply_buddy() -> void:
 	if puppet == null:
 		return
@@ -259,8 +257,8 @@ func set_mood(m: String) -> void:
 		_pet.set_asleep(MOODS.get(m, "") == "sleepy")
 
 
-## A lesson moment (D-024 board "Racoon in the game"): greet, right, hint, answer, rescue, rescue_won,
-## level_up, complete, nudge, rest. Some point at or look at a spot on screen (a global position).
+## A lesson moment: greet, right, hint, answer, rescue, rescue_won, level_up, complete, nudge, rest.
+## Some point at or look at a spot on screen (a global position).
 func moment(what: String, target := Vector2.INF) -> void:
 	if MOMENTS.has(what):
 		play(MOMENTS[what], _to_puppet(target))
@@ -335,7 +333,7 @@ func _apply_outfit() -> void:
 		_outfit_tween.tween_property(puppet, "hold_book", 1.0 if want_book else 0.0, 0.32)
 
 
-## His pet (D-029), from his outfit: a Pet inside his puppet, so it grows and shrinks with him.
+## His pet, from his outfit: a Pet inside his puppet, so it grows and shrinks with him.
 func _update_pet() -> void:
 	var id: String = outfit.get("pet", "")
 	if Engine.is_editor_hint() or not Pet.has_kind(id):

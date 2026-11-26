@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
 /**
- * A teacher edits only the books and videos they added (D-019). Others answer 404.
+ * A teacher edits only the books and videos they added. Others get 404.
  */
 class ContentItemPolicy
 {

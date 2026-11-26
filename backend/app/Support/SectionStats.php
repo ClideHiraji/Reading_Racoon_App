@@ -11,14 +11,14 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Class-wide numbers for the teacher dashboard (FR-06, FR-17), read from the
- * replayed projections (bkt_states, path_progress, intervention_flags).
+ * Class-wide numbers for the teacher dashboard, read from the replayed tables
+ * (bkt_states, path_progress, intervention_flags).
  */
 final class SectionStats
 {
     /**
-     * Flags in a teacher's words (FR-17): badge, dot colour, label. Red and
-     * orange come from Heart Recovery (Racoon's Rescue), amber from low P(L).
+     * Flags in a teacher's words: badge, dot colour, label. Red and orange come from
+     * Racoon's Rescue, amber from a low P(L).
      */
     public const FLAG_STYLES = [
         'rescue_limit' => ['badge-red', '#c8423b', 'Out of rescue tries'],
@@ -36,8 +36,8 @@ final class SectionStats
     public const FLAG_SEVERITY = ['rescue_limit' => 3, 'rescue_partial' => 2, 'low_mastery' => 1];
 
     /**
-     * A learner's state in one sub-skill, in plain words (D-037): the P(L)
-     * numbers stay one click away on the learner page and in the exports.
+     * A learner's state in one sub-skill, in plain words. The P(L) numbers stay one click
+     * away on the learner page and in the exports.
      */
     public const STATES = [
         'got' => 'Got it',
@@ -79,7 +79,7 @@ final class SectionStats
     public int $finished = 0;
 
     /**
-     * Open flags grouped by learner, most urgent first (FR-17).
+     * Open flags grouped by learner, most urgent first.
      *
      * @var list<array{student: Student, flags: list<array{flag: InterventionFlag, badge: string, color: string, label: string, help: string, skill: ?string, better: bool}>, active: int, severity: int}>
      */
@@ -117,8 +117,8 @@ final class SectionStats
         $stats->lastActivity = DB::table('sync_events')->whereIn('student_id', $ids)
             ->groupBy('student_id')->selectRaw('student_id, max(device_time) as last')
             ->pluck('last', 'student_id')->all();
-        // When the server last heard from each tablet: its own clock, not the device's (D-037).
-        // "Active now" (D-038): Sanctum stamps last_used_at on every signed-in game request.
+        // When the server last heard from each tablet, by the server's clock, not the device's.
+        // "Active now": Sanctum stamps last_used_at on every signed-in game request.
         $byUser = $stats->students->pluck('id', 'user_id');
         $stats->activeNow = DB::table('personal_access_tokens')->where('tokenable_type', User::class)
             ->whereIn('tokenable_id', $byUser->keys())->where('last_used_at', '>=', now()->subMinutes(self::ACTIVE_MINUTES))
@@ -264,7 +264,7 @@ final class SectionStats
 
     /**
      * Ids of the flags of the children in "Looks better" (for "Close all"). A child still in
-     * "Needs your help" keeps every flag until the teacher closes it there (D-039).
+     * "Needs your help" keeps every flag until the teacher closes it there.
      */
     public function betterFlagIds(): array
     {
@@ -348,7 +348,7 @@ final class SectionStats
         return $reachable->first(fn (BktState $s) => $s->mastered_at === null) ?? $reachable->last();
     }
 
-    /** ARAL band label of a learner (from the highest unlocked map level, D-003). */
+    /** ARAL band of a learner (from the highest unlocked map level). */
     public static function band(Student $student): string
     {
         $highest = self::highest($student);

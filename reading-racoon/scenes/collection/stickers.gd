@@ -1,8 +1,7 @@
 extends Control
-## The Sticker Album (D-017, wireframe "Sticker Album"): a page per kind of
-## sticker, the empty spots waiting with a "?", and how to earn them. Stickers
-## are a personal collection: no leaderboards, and none is ever taken away (D-007).
-## A row of picture tabs (Racoon says each name) and big round stickers (D-022).
+## The Sticker Album: a page per kind of sticker, empty spots with a "?", and how to earn them.
+## Stickers are personal: no leaderboards, and none is ever taken away.
+## Picture tabs on top (Racoon says each name) and big round stickers.
 
 const GROUP_ICONS := {"adventure": "waves", "books": "book", "games": "bulb", "watch": "speaker",
 		"days": "sun", "goals": "star"}
@@ -59,7 +58,7 @@ func _build() -> void:
 	title.add_child(got)
 	v.add_child(title)
 	var grid := GridContainer.new()
-	grid.columns = 7 if Kit.landscape() else 4   # D-023
+	grid.columns = 7 if Kit.landscape() else 4
 	grid.add_theme_constant_override("h_separation", 12)
 	grid.add_theme_constant_override("v_separation", 18)
 	v.add_child(grid)
@@ -82,7 +81,7 @@ func _tab(g: String) -> ChunkyButton:
 	var b := ChunkyButton.new()
 	b.card_style = not on
 	b.face_color = Palette.BLUE
-	b.full_color = true   # each group's paper picture (D-027)
+	b.full_color = true   # each group's paper picture
 	b.icon_name = GROUP_ICONS.get(g, "star")
 	b.icon_px = 54
 	b.icon_tint = Palette.INK if on else Palette.readable(Color(info.color).darkened(0.2))

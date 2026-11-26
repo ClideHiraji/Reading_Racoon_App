@@ -21,8 +21,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        // The report seam (FR-05, D-012, D-018): pages show the stored Gemini
-        // paragraphs; App\Jobs\WriteAiReport calls GeminiReportWriter.
+        // Report writer: pages show the saved Gemini paragraphs;
+        // App\Jobs\WriteAiReport calls GeminiReportWriter.
         $this->app->bind(DiagnosticReportWriter::class, StoredReportWriter::class);
     }
 
@@ -31,18 +31,18 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // On the internet the server is reached only at its https APP_URL
-        // through the tunnel (D-036). Build every link and redirect from APP_URL,
-        // never from the request's Host header, so a forged Host can't poison them.
+        // On the internet the server is reached only at its https APP_URL through the tunnel.
+        // Build every link and redirect from APP_URL, never from the request's Host header,
+        // so a forged Host can't poison them.
         $url = (string) config('app.url');
         if ($this->app->isProduction() && str_starts_with($url, 'https://')) {
             URL::forceRootUrl($url);
             URL::forceScheme('https');
         }
 
-        // Every tablet at a school signs in from one address (NAT), so the
-        // per-IP login limit must fit two classes (~64 children) at once plus
-        // their typos. Guessing one of 31^8 codes at this rate is still hopeless. FR-01, NFR-04.
+        // Every tablet at a school signs in from one address (NAT), so the per-IP login limit
+        // must fit two classes (~64 children) at once plus their typos.
+        // Guessing one of 31^8 codes at this rate is still hopeless.
         RateLimiter::for('login', fn (Request $request) => Limit::perMinute(300)->by($request->ip()));
 
         RateLimiter::for('api', fn (Request $request) => Limit::perMinute(120)->by($request->user()?->id ?: $request->ip()));
@@ -53,8 +53,8 @@ class AppServiceProvider extends ServiceProvider
         RateLimiter::for('teacher-login', fn (Request $request) => Limit::perMinute(20)->by($request->ip()));
         RateLimiter::for('teacher-register', fn (Request $request) => Limit::perHour(10)->by($request->ip()));
 
-        // The admin nav shows what is waiting (FR-08): registrations to review
-        // and anomalies in the last 7 days. Two counts, signed-in admins only.
+        // The admin menu shows what's waiting: registrations to review and anomalies in the
+        // last 7 days. Two counts, signed-in admins only.
         View::composer('layouts.admin', function ($view) {
             if (! auth('admin')->check()) {
                 return;

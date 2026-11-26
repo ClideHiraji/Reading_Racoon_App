@@ -10,8 +10,8 @@ use App\Http\Controllers\Teacher\SectionController;
 use App\Http\Controllers\Teacher\StudentController;
 use Illuminate\Support\Facades\Route;
 
-// Teacher web pages (FR-06, FR-08, FR-12, FR-16, FR-17, FR-18). The admin
-// portal is NOT here: it lives under a secret path from .env (routes/admin.php, D-013).
+// Teacher web pages. The admin portal is NOT here: it lives under a secret path
+// from .env (routes/admin.php).
 
 Route::redirect('/', '/login');
 
@@ -53,7 +53,7 @@ Route::middleware(['auth', 'teacher'])->prefix('teacher')->name('teacher.')->gro
     Route::post('/flags/resolve', [StudentController::class, 'resolveFlags'])->name('flags.resolve-many');
     Route::post('/flags/reopen', [StudentController::class, 'reopenFlags'])->name('flags.reopen-many');
 
-    // Library & Videos (D-019): openly licensed books and Ogg videos for the game.
+    // Library & Videos: openly licensed books and Ogg videos for the game.
     Route::get('/content', [ContentController::class, 'index'])->name('content.index');
     Route::get('/content/books/new', [ContentController::class, 'createBook'])->name('content.books.create');
     Route::post('/content/books', [ContentController::class, 'storeBook'])->name('content.books.store');

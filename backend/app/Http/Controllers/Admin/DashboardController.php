@@ -13,13 +13,13 @@ use App\Support\PrivacyChecks;
 use Illuminate\View\View;
 
 /**
- * Admin overview (FR-08): what needs a decision and what looks unusual.
+ * Admin overview: what needs a decision and what looks unusual.
  */
 class DashboardController extends Controller
 {
     public function __invoke(): View
     {
-        // The IT office looks in about once a week, so alerts cover 7 days (D-037).
+        // The IT office looks in about once a week, so alerts cover 7 days.
         $since = now()->subDays(7);
 
         return view('admin.dashboard', [
@@ -34,7 +34,7 @@ class DashboardController extends Controller
             // Decisions and changes only: page views (admin.view, section.view, ...) would bury them.
             'recentAudit' => AuditLog::where('action', 'not like', '%.view')->where('action', 'not like', '%.login%')
                 ->where('action', 'not like', '%.logout')->latest('id')->limit(8)->get(),
-            // Privacy and security checks that aren't ok, worst first (FR-22).
+            // Privacy and security checks that aren't ok, worst first.
             'checks' => array_values(array_filter(PrivacyChecks::run(), fn ($c) => $c[1] !== 'ok')),
         ]);
     }

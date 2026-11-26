@@ -16,6 +16,13 @@ Status key: 🔴 blocks coding · 🟡 decide during build · 📝 manuscript-on
   - Firebase Auth is replaced by Sanctum tokens. Firebase security rules are replaced by Laravel policies/middleware.
   - "Firebase log node" is replaced by PostgreSQL `system_logs` / `ai_logs` tables.
   - We need hosting for PHP + PostgreSQL with HTTPS, reachable from school Wi-Fi. Many cheap shared PHP hosts are MySQL-only.
+  - **Hosting for now (2026-11-25, the user's choice):** the user's laptop.
+    - `C:\ReadingRacoon\backend` (branch `main`) runs on XAMPP Apache port 8090 and PostgreSQL 18, both Windows services that start on their own.
+    - It's public through Tailscale Funnel at `https://<laptop>.<tailnet>.ts.net`, the address built into the game. The real address is set only in the local `project.godot` and kept out of git.
+    - It works only while the laptop is on, awake and online.
+  - **Later option:** Azure for Students (GitHub Student Pack: $100 plus free services) with a free `.me` or `.tech` domain, in the Singapore region.
+    - Not Heroku: teacher uploads live on the server's disk (`storage/app/private/content`), and Heroku's disk is wiped daily.
+    - Moving needs a Linux version of `backend/ops/windows`, and the game rebuilt with the new address.
 - **Manuscript to update:** Table 3.4 and §3.4.3.1 ("MySQL 8.x" → "PostgreSQL"), plus every "Firebase" mention: §2 none; §3.4.2.4 flow figures 3.11–3.15 and ERD text; NFR-05; §3.4.3 intro; §3.4.3.2 Step 2 and Step 4; §3.4.3.3 Stages 5–6; §3.4.4.1; §3.4.4.2 consent forms; §3.4.5 Activities 1–3 and checklist items 2, 4, 8, 9; §3.4.6.
 
 ### 2. AI model and hosting ✅ RESOLVED (2026-10-17)
@@ -171,6 +178,44 @@ Status key: 🔴 blocks coding · 🟡 decide during build · 📝 manuscript-on
   - **One texture sheet and 8 new moves (2026-11-17):** the 27 part files are packed onto one sheet (`assets/racoon/racoon_atlas.svg`). He has 8 new animations (walk around, hops, a big jump, look around, stretch, dance, tail wag, turn around), which he plays on his own after a quiet spell on Home, the start screen and the Closet. Taps on Home cycle through 8 reactions. His walks and jumps shrink to stay inside the box he's in. D-024, "One texture sheet, and a livelier Racoon".
 - **Animated star and hearts (2026-10-22):** the team's Lottie files play live in the game (`ui/lottie_player.gd`): the earned star, Regain Heart for a heart that comes back, Broken Heart for a lost one, the hearts in the lesson hearts' colors.
 - **Manuscript to update:** the screens in §3.4.2.4 and the color and size rules in §3.4.2.2; NFR-02 can quote the 96 px / 48 dp minimum.
+
+### 44. An opening instead of Godot's logo ✅ DECIDED (2026-11-20)
+- The user wanted the app to open with an animated logo and name, then a transition, not Godot's default boot look.
+- **Decision (D-044, first numbered D-037 on the game branch):**
+  - Godot's boot logo is off, and the boot screen is plain cream.
+  - On the first screen of a run, a paper sheet shows a sunburst; Racoon pops up and waves; "Reading Racoon" drops in letter by letter over a crayon squiggle.
+  - Then the sheet lifts away and shows the start screen. It takes about 3.3 s, and a tap skips it.
+  - A new app icon (Racoon from the user's drawing on mango) replaces Godot's.
+  - Details: [D-044](../../brain/decisions/D-044%20Animated%20opening%20and%20app%20icon.md).
+
+### 37. Full screen for teacher videos ✅ DECIDED (2026-11-19)
+- The user asked for a full-screen video in Watch & Listen, with a phone turning sideways for it.
+- **Decision (D-040, first numbered D-036 on the game branch):**
+  - A corner button on the video (or a tap on it) opens full screen: the same video over the whole player, in its own shape, with a big Pause and a close button that fade while it plays.
+  - On a phone the screen turns to landscape while it's open, and back afterwards. Laptops don't turn.
+  - Back, the close button and the video's end close it. Songs and read-alongs have none.
+  - Details: [D-040](../../brain/decisions/D-040%20Full%20screen%20for%20teacher%20videos.md).
+- **Fixed the same day:** the Videos chip's empty message showed one letter per line, and teacher videos were stretched to the stage (a 16:9 clip squeezed about 12% on a phone). Both have `ui_smoke` checks.
+- **Still open:** the sideways turn is untested on a real phone or tablet (only simulated on a laptop).
+
+### 36. Recorded voices for Roco and Rina ✅ RECORDED (2026-11-20), teacher check still open
+- The user asked for Gemini's child voices for every line, compressed to keep the app small. The scope is the buddy's lines and menus, not lessons, tests, books or videos. It's made on AI Studio's free tier, in a lively, chatty style, with "reader" in place of the student's name.
+- **Decision (D-035):**
+  - Zeno is Roco and Cleo is Rina: one MP3 per sentence in `assets/voice/`, named by a hash of buddy, language and sentence.
+  - `Speech.say()` plays the clips when every sentence of a line is recorded; otherwise the system voice reads it.
+  - About 7 KB a line, about 11 MB when done.
+  - Details: [D-035](../../brain/decisions/D-035%20Recorded%20buddy%20voices.md).
+- **Progress (2026-11-19, second session):** 1,449 of 1,465 sentences recorded.
+  - Roco is complete in all three languages. Rina lacks 16 lines: 15 short ones, plus "In her paws", her Closet tab's new name.
+  - 15 generations went through in one day, with no limit reached. Batches of up to 126 lines worked, and a batch can mix languages by using one speech block per style.
+  - The batch cutter now aligns by sentence length (it had shifted clips in a Filipino batch). All earlier clips were checked again.
+- **Done (2026-11-20):** all 1,465 sentences are recorded and in the game (12.0 MB).
+  - Rina's last 16 lines went in 4 generations. Each batch set the new lines among lines she already had, read again only to steady the cuts.
+- **Recorded voices only (2026-11-26, [D-041](../../brain/decisions/D-041%20Recorded%20voices%20only.md)):** the user had the device voice removed: it was often a woman's for Roco and talked over the recordings. A line now plays only in the buddy's own recorded voice and language, and an unrecorded line is silent (its words still show).
+- **Still open:**
+  - **Record lessons, tests, books and videos:** 937 sentences per buddy (1,874 clips), already in the voice lab's `manifest.json` (kinds `content` and `word`). Until then they're silent, and Word Catch can't be played.
+  - A teacher's check of the Filipino and Bisaya lines (issue 35). They're recorded now, so a changed line has to be recorded again.
+  - Lines with a clock time are silent ("opens at 3:00 PM").
 
 ### 35. A girl buddy, and a choice of language ✅ DECIDED (2026-11-18)
 - The user asked for both genders for students to choose from, a girl version of the companion for girl students, and a choice of language.
@@ -331,3 +376,14 @@ Status key: 🔴 blocks coding · 🟡 decide during build · 📝 manuscript-on
 - **Third pass, phones (2026-11-25):** [D-039](../../brain/decisions/D-039%20Dashboard%20on%20a%20phone.md) after a phone-only critique (24/40): compact learner cards, Mark resolved / Close all / consent in place with Undo, an admin Menu button, layouts that hold at 360 px and in landscape, 44 px targets and 16 px fields.
 - **Still to do:** teachers try it in orientation, including on their own phones; a help page, glossary, printable consent letter and first-day guide beyond the checklist; teacher password reset, renaming sections and moving learners; acknowledging admin anomalies; a Filipino interface; the PDF stays A4 (confirm the paper schools use).
 - **Manuscript to update:** the teacher dashboard figures and the description of intervention flags (plain labels, grouped by learner, "looks better" hint); the admin portal overview.
+
+### 42. Settings ✅ DECIDED (2026-11-26)
+- The user asked for volume, resolution or graphics, and a quick sign-out or exit on a PC.
+- **Decision:** [D-042](../../brain/decisions/D-042%20Settings%20card.md). A gear on Home opens Settings: Voice and Sounds volume (four chips each), Graphics High/Low (Low draws at the base size and scales up), Frame rate 60/30, Buddy and language, Full screen (laptops), Sign out (two taps, never while answers wait to upload), Close game (two taps, laptops). Saved for the device in `user://settings.cfg`.
+- **Not built:** a music slider (no music yet; it comes with the later sound work).
+- **Manuscript to update:** the screen list and the use-case diagram (a settings screen; sign out from Home).
+
+### 43. Practice games come from the adventure ✅ DECIDED (2026-11-26)
+- The user wanted every Practice game to be one the child has met in a level.
+- **Decision:** [D-043](../../brain/decisions/D-043%20Practice%20games%20come%20from%20the%20adventure.md). Rhyme Pop is a lesson task in World 1 and Word Catch in World 2 (a `variant` on tap-choice items, scored as before). Memory Match left Practice (it tests memory, not reading) and stays in My Word Book.
+- **Manuscript to update:** the Practice section's game list (five games) and the task types in Adventure.

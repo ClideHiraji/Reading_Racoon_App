@@ -1,23 +1,23 @@
 extends Node
-## Global game state (autoload "GameState"): the learner's model, path, wallet and
-## content, loaded from and saved to the device after every answer (FR-11).
-## A student signs in once per device with their login code (D-010); each student
-## has their own profile and event queue, so a shared tablet never mixes data.
+## Global game state (autoload "GameState"): the child's model, path, wallet and content.
+## Saved to the device after every answer.
+## A student signs in once per device with their login code. Each student has their
+## own profile and event queue, so a shared tablet never mixes data.
 
 signal wallet_changed
 signal outfit_changed
-## The student picked a different buddy or talk language (D-033).
+## The student picked a different buddy or talk language.
 signal buddy_changed
 
 const LINES_PATH := "res://content/companion_lines.json"
-## The buddy's lines in Filipino and Bisaya; English is companion_lines.json (D-033).
+## The buddy's lines in Filipino and Bisaya. English is companion_lines.json.
 const LINES_BY_LANG := {"fil": "res://content/companion_lines.fil.json", "bis": "res://content/companion_lines.bis.json"}
-## What the buddy says on the menus, in each talk language (D-033).
+## What the buddy says on the menus, in each talk language.
 const TALK_PATH := "res://content/talk.json"
-## The two buddies a student picks between (D-033): the boy Roco and the girl Rina. Rina's voice is
-## higher; both wear the same Closet items.
-const BUDDIES := {"roco": {"name": "Roco", "pitch": 1.1}, "rina": {"name": "Rina", "pitch": 1.4}}
-## The languages the buddy can talk in (D-033). Lessons keep their own (MATATAG bridge).
+## The two buddies: the boy Roco and the girl Rina, each with their own recorded voice.
+## Both wear the same Closet items.
+const BUDDIES := {"roco": {"name": "Roco"}, "rina": {"name": "Rina"}}
+## Languages the buddy can talk in. Lessons keep their own language.
 const TALK_LANGS := {"en": "English", "fil": "Filipino", "bis": "Bisaya"}
 
 var model := StudentModel.new()
@@ -25,33 +25,33 @@ var path := PathProgress.new()
 var bank := QuestionBank.new()
 var store: SaveStore
 var wallet := {"xp": 0, "coins": 0}
-## Closet items earned on today's first visit, for the hub's "Hello, new day!" card (D-026).
+## Closet items earned on today's first visit, for the hub's "Hello, new day!" card.
 var new_day_items: Array = []
 var flags: Array = []
 var lines := {}
 var _lines_by_lang := {}
 var _talk := {}
-## This student's buddy and talk language (D-033): {"who": "roco" | "rina" | "" (not picked yet),
+## This student's buddy and talk language: {"who": "roco" | "rina" | "" (not picked yet),
 ## "lang": "en" | "fil" | "bis"}. Saved in their profile.
 var buddy := {"who": "", "lang": "en"}
-## Racoon's outfit and the items bought in the shop (FR-07).
+## Racoon's outfit and the items bought in the shop.
 var wardrobe := Wardrobe.new()
 ## Pre/post-test records: {"pre": {date, correct, total, scores, placed_level}, "post": ...}
 var assessments := {}
 ## Flags the teacher controls on the server (GET /api/config), e.g. post_test_open.
 var settings := {"post_test_open": false}
-## Play-time limits (FR-12): the section schedule cached from the server, the
-## server-minus-device clock offset (seconds), and the last time the device saw.
+## Play-time limits: the schedule saved from the server, the server-minus-device
+## clock offset (seconds), and the last time the device saw.
 var access := {"schedule": {}, "server_offset": 0, "last_seen": 0}
 ## Minutes played today: Adventure after school (`minutes`, its daily cap) and
-## Practice, Library and Watch outside Reading time (`free_minutes`, D-015).
+## Practice, Library and Watch outside Reading time (`free_minutes`).
 var usage := {"date": "", "minutes": 0.0, "free_minutes": 0.0}
-## This device's sign-in with the Laravel API: {"token", "student_name", "student_id"}
-## (FR-01, D-010). Kept in its own file, outside any student's profile.
+## This device's sign-in with the server: {"token", "student_name", "student_id"}.
+## Kept in its own file, outside any student's profile.
 var device := {}
-## Stickers, My Word Book, days played, today's goals, finished books (D-017).
+## Stickers, My Word Book, days played, today's goals, finished books.
 var collection := Collection.new()
-## Library books and Watch & Listen items (bundled + teacher-picked, D-017).
+## Library books and Watch & Listen items (built-in + from the teacher).
 var media := MediaLibrary.new()
 ## Set before opening a screen inside a section: which game, book or song.
 var practice_game := ""
@@ -60,25 +60,24 @@ var practice_words: Array = []
 var open_book := ""
 var open_media := ""
 
-## Scenes whose time counts against Adventure's after-school cap and the
-## free-play timer (FR-12, D-015). Root node names.
+## Screens whose time counts against Adventure's after-school cap and the
+## free-play timer. Root node names.
 const ADVENTURE_SCENES := ["LearningPath", "Lesson", "LessonComplete"]
 const FREE_PLAY_SCENES := ["Practice", "MemoryMatch", "RhymePop", "WordCatch", "PracticeRound",
 		"Library", "Reader", "Watch", "Player"]
 const HUB_SCENE := "res://scenes/hub/hub.tscn"
-## Choose your buddy and language (D-033): before Home, until the student has picked.
+## Choose your buddy and language: shown before Home until the student has picked.
 const BUDDY_SCENE := "res://scenes/buddy/choose_buddy.tscn"
-## Loads the screens in the background (NFR-01); null in headless test runs.
+## Loads the screens in the background; null in headless test runs.
 var preloader: ScenePreloader
-## The screens a child opens first, most likely first. A screen's scripts compile
-## on its first visit in a run (Home about 0.5 s on a laptop, several seconds on
-## a low-end phone), so warm_scenes() loads them in the background while the
-## start screen waits for a tap. Later visits take about 40 ms either way.
+## The screens a child opens first, most likely first. A screen's scripts compile on
+## its first visit (Home takes about 0.5 s on a laptop, seconds on a cheap phone),
+## so warm_scenes() loads them while the start screen waits for a tap.
 const WARM_SCENES := [HUB_SCENE, "res://scenes/path/learning_path.tscn",
 		"res://scenes/lesson/lesson.tscn", "res://scenes/lesson/lesson_complete.tscn",
 		"res://scenes/practice/practice.tscn", "res://scenes/library/library.tscn",
 		"res://scenes/watch/watch.tscn"]
-var _warm: Array[Resource] = []   # kept, so they stay loaded for the run
+var _warm: Array[Resource] = []   # kept so they stay loaded for the run
 var _warming := false
 var _usage_tick := 0.0
 var _decision := {}
@@ -96,7 +95,7 @@ var soon_section := ""
 var lesson_world := 1
 var lesson_node := 0
 var lesson_as_bonus := false
-## "lesson", or "pre" / "post" for the Reading Adventure tests (FR-02, FR-10).
+## "lesson", or "pre" / "post" for the Reading Adventure tests.
 var lesson_mode := "lesson"
 ## Tests set this to make item picks repeatable; -1 = random.
 var lesson_seed := -1
@@ -123,8 +122,8 @@ func _ready() -> void:
 	if _args.has("fresh"):
 		reset_progress()
 	_debug_hooks()
-	# NFR-01: the screens load in the background once the start screen is up, so a first visit
-	# doesn't freeze (not in headless test runs).
+	# Load the screens in the background once the start screen is up,
+	# so a first visit doesn't freeze (not in headless test runs).
 	if DisplayServer.get_name() != "headless":
 		preloader = ScenePreloader.new()
 		preloader.name = "ScenePreloader"
@@ -179,7 +178,7 @@ func save_profile() -> void:
 	})
 
 
-# --- Sign-in (FR-01, D-010) -----------------------------------------------------------
+# --- Sign-in --------------------------------------------------------------------------
 
 func signed_in() -> bool:
 	return str(device.get("token", "")) != ""
@@ -189,7 +188,7 @@ func student_name() -> String:
 	return str(device.get("student_name", ""))
 
 
-## Called by Sync after a successful login: remember the device's student and
+## Called by Sync after a good login: remember the device's student and
 ## switch to that student's own profile and event queue.
 func sign_in(token: String, child_name: String, student_id: int) -> void:
 	device = {"token": token, "student_name": child_name, "student_id": student_id}
@@ -201,8 +200,8 @@ func sign_in(token: String, child_name: String, student_id: int) -> void:
 	wallet_changed.emit()
 
 
-## "Switch student": only when everything is saved to the server, so nothing
-## is lost. Returns false (and changes nothing) while answers are still waiting.
+## "Switch student": only when everything is saved to the server, so nothing is lost.
+## Returns false (and changes nothing) while answers are still waiting.
 func sign_out() -> bool:
 	if store.queue_size() > 0:
 		return false
@@ -214,8 +213,8 @@ func sign_out() -> bool:
 	return true
 
 
-## The server no longer accepts the token (401): ask for the code again, but keep
-## the same student's profile and unsent answers; they upload after signing in.
+## The server no longer accepts the token (401): ask for the code again, but keep the
+## same student's profile and unsent answers; they upload after signing in.
 func forget_token() -> void:
 	device.token = ""
 	SaveStore.write_json(_device_path(), device)
@@ -268,7 +267,7 @@ func start_lesson(world: int, node: int, as_bonus: bool) -> void:
 
 
 ## The Reading Adventure: "pre" before the first lesson, "post" when the teacher
-## opens it at the end of the study (FR-02, FR-10).
+## opens it at the end of the study.
 func start_assessment(kind: String) -> void:
 	if not guard():
 		return
@@ -286,20 +285,20 @@ func post_test_ready() -> bool:
 			and not assessments.has("post")
 
 
-## A LessonSession, or an AssessmentSession for the pre/post-test (same interface).
-## Both work on a copy of the model: a lesson or test stopped halfway leaves no
-## trace, and the child plays it again from the start (D-021).
+## A LessonSession, or an AssessmentSession for the pre/post-test (same functions).
+## Both work on a copy of the model: if the child stops halfway, nothing is kept
+## and they play it again from the start.
 func new_session() -> RefCounted:
 	if lesson_mode in ["pre", "post"]:
 		return AssessmentSession.new(model.copy(), lesson_mode)
 	return LessonSession.new(model.copy(), bank, lesson_world, lesson_seed)
 
 
-## A finished lesson or test: keep its BKT states and queue its events for sync
-## (FR-11). The model's parameters stay ours, in case /api/config changed them.
+## A finished lesson or test: keep its BKT states and queue its events for sync.
+## The model's BKT numbers stay ours, in case /api/config changed them.
 func record(session: RefCounted) -> void:
 	model.from_dict(session.model.to_dict())
-	store.hold()   # the session's events go to disk in one write (NFR-01)
+	store.hold()   # the session's events go to disk in one write
 	for ev in session.drain_events():
 		store.queue_event(ev.type, ev.payload)
 	store.release()
@@ -310,7 +309,7 @@ func finish_lesson(session: RefCounted) -> void:
 	if session is AssessmentSession:
 		_finish_assessment(session)
 		return
-	store.hold()   # the answers, words, sticker and goal: one write, not one each (NFR-01)
+	store.hold()   # the answers, words, sticker and goal: one write, not one each
 	record(session)
 	last_summary = session.summary()
 	if not session.ended_early:
@@ -322,7 +321,7 @@ func finish_lesson(session: RefCounted) -> void:
 	store.queue_event("lesson_end", {"level": lesson_world, "node": lesson_node,
 			"correct": last_summary.correct, "total": last_summary.total,
 			"stars": last_summary.stars, "second_try": last_summary.second_try})
-	# D-017: the words practiced go to My Word Book; a sticker a day; today's goal.
+	# The words practiced go to My Word Book; a sticker a day; today's goal.
 	var practiced := []
 	for r in session.results:
 		if r.solved:
@@ -341,14 +340,14 @@ func finish_lesson(session: RefCounted) -> void:
 	_sync_soon()
 
 
-## Upload right after a lesson or test while the Wi-Fi is likely still on (FR-11).
+## Upload right after a lesson or test while the Wi-Fi is likely still on.
 func _sync_soon() -> void:
 	var sync := get_node_or_null("/root/Sync")
 	if sync:
 		sync.request_soon()
 
 
-## A lesson or test is on screen: Sync waits so nothing can stutter (NFR-01).
+## A lesson or test is on screen: Sync waits so nothing stutters.
 func in_lesson() -> bool:
 	var scene := get_tree().current_scene
 	return scene != null and scene.name == "Lesson"
@@ -370,7 +369,7 @@ func _finish_assessment(session: AssessmentSession) -> void:
 	_sync_soon()
 
 
-# --- Practice, Library, Watch & Listen rewards (D-017) -------------------------------
+# --- Practice, Library, Watch & Listen rewards ---------------------------------------
 # Each finish_* returns {coins, stickers: [ids], goals_done} for Kit.reward().
 # Practice never changes BKT: its results are logged for the teacher only.
 
@@ -436,7 +435,7 @@ func new_day() -> String:
 	return r.stickers[0] if not r.stickers.is_empty() else ""
 
 
-## How far the child has come, for the Closet's earned items (D-026): lessons and worlds from the
+## How far the child has come, for the Closet's earned items: lessons and worlds from the
 ## path, books from the Library, days played, stickers, Practice games and all-goals days.
 func earn_progress() -> Dictionary:
 	var lessons := 0
@@ -455,7 +454,7 @@ func earn_progress() -> Dictionary:
 			"goal_days": maxi(int(collection.counts.get("goal_days", 0)), collection.count("goals"))}
 
 
-## Gives every earned Closet item whose goal is now reached (D-026). They're added to
+## Gives every earned Closet item whose goal is now reached. They're added to
 ## r.items for Kit.reward(), and returned.
 func grant_items(r: Dictionary = {}) -> Array:
 	var got := wardrobe.grant_earned(earn_progress())
@@ -509,11 +508,10 @@ func _pay(r: Dictionary) -> Dictionary:
 	return r
 
 
-# --- Play-time limits (FR-12) --------------------------------------------------------
+# --- Play-time limits ----------------------------------------------------------------
 
-## The school's wall-clock time (its zone, not the device's), corrected by the last
-## known server offset so a wrong device clock can't open the game early
-## (open issue 10, FR-12).
+## The school's clock time (its time zone, not the device's), fixed by the last known
+## server offset, so a wrong device clock can't open the game early.
 func now_dict() -> Dictionary:
 	if not _debug_now.is_empty():
 		return _debug_now
@@ -542,12 +540,12 @@ func access_decision() -> Dictionary:
 	return AccessPolicy.decide(access.schedule, now_dict(), minutes_used_today())
 
 
-## The hub and its collections: open unless it's night (D-015).
+## The hub and its collections: open unless it's night.
 func hub_decision() -> Dictionary:
 	return AccessPolicy.hub(access.schedule, now_dict())
 
 
-## Practice, Library and Watch & Listen: the shared free-play timer (D-015).
+## Practice, Library and Watch & Listen: the shared free-play timer.
 func free_play_decision() -> Dictionary:
 	return AccessPolicy.free_play(access.schedule, now_dict(), free_minutes_today())
 
@@ -559,7 +557,7 @@ func adventure_opens_text() -> String:
 
 
 ## Call before opening Adventure: true if it's open now. Otherwise Racoon explains
-## on the hub (other sections stay open, D-015), or the lock screen shows at night.
+## on the hub (other sections stay open), or the lock screen shows at night.
 ## Never closes the app.
 func guard() -> bool:
 	var d := access_decision()
@@ -601,9 +599,9 @@ func _bounce(reason: String) -> void:
 		get_tree().change_scene_to_file(HUB_SCENE)
 
 
-## Opens a hub section by HubSections id, applying its time rule. Adventure always
-## opens the map; before the pre-test the map offers it at the top and keeps the
-## lessons closed (FR-02, D-021). Unbuilt sections show the "coming soon" page.
+## Opens a hub section by HubSections id, using its time rule. Adventure always opens
+## the map; before the pre-test the map offers it at the top and keeps lessons closed.
+## Unbuilt sections show the "coming soon" page.
 func open_section(id: String) -> void:
 	var info := HubSections.get_info(id)
 	match str(info.get("kind", "")):
@@ -623,10 +621,9 @@ func open_section(id: String) -> void:
 		get_tree().change_scene_to_file("res://scenes/hub/coming_soon.tscn")
 
 
-## Loads WARM_SCENES one at a time on a background thread, so the start screen
-## stays smooth and Home is ready first. It starts once the start screen is up
-## (sooner, it slowed the start screen's first frames). Opening a screen that is
-## still loading just waits for it.
+## Loads WARM_SCENES one at a time on a background thread, so the start screen stays
+## smooth and Home is ready first. Starts once the start screen is up (starting sooner
+## made its first frames slow). Opening a screen that's still loading just waits for it.
 func warm_scenes() -> void:
 	if _warming:
 		return
@@ -680,7 +677,7 @@ func _process(delta: float) -> void:
 
 # --- Server data (Sync autoload) -------------------------------------------------------
 
-## GET /api/config (FR-19): BKT parameters and teacher-controlled flags.
+## GET /api/config: BKT numbers and flags the teacher controls.
 func apply_server_config(cfg: Dictionary) -> void:
 	model.params = SyncProtocol.params_from_config(cfg)
 	if cfg.has("post_test_open"):
@@ -689,7 +686,7 @@ func apply_server_config(cfg: Dictionary) -> void:
 	save_profile()
 
 
-## GET /api/access/student/status (FR-12): cache the schedule for offline use.
+## GET /api/access/student/status: save the schedule for offline use.
 func apply_access(body: Dictionary) -> void:
 	if typeof(body.get("schedule")) == TYPE_DICTIONARY:
 		access.schedule = body.schedule
@@ -702,7 +699,7 @@ func set_server_time(server_time: String) -> void:
 		access.server_offset = SyncProtocol.clock_offset(server_time, Time.get_unix_time_from_system())
 
 
-## A device clock that jumped backwards is logged for the admin (03-architecture.md).
+## Logs a device clock that jumped backwards, for the admin.
 func _check_clock() -> void:
 	var now := int(Time.get_unix_time_from_system())
 	var last := int(access.get("last_seen", 0))
@@ -711,7 +708,7 @@ func _check_clock() -> void:
 	access.last_seen = maxi(now, last)
 
 
-## Shop (FR-07). Returns Wardrobe.buy's result: bought, owned, poor or unknown.
+## Shop. Returns Wardrobe.buy's result: bought, owned, poor or unknown.
 func buy_item(id: String) -> String:
 	var result := wardrobe.buy(id, wallet)
 	if result == "bought":
@@ -748,9 +745,8 @@ func open_chest(world: int) -> int:
 	return PathProgress.CHEST_COINS
 
 
-## A random buddy line for a state, from the bundled fallback library
-## (docs/knowledge/08-ai-integration.md: offline companion dialogue), in the student's talk language
-## (English where a line isn't translated, like the hints, D-033).
+## A random buddy line for a state, from the built-in lines, in the student's
+## talk language (English where a line isn't translated yet).
 func line(state: String) -> String:
 	var options: Array = _lines_by_lang.get(talk_language(), {}).get(state, [])
 	if options.is_empty():
@@ -760,8 +756,8 @@ func line(state: String) -> String:
 	return _named(str(options[randi_range(0, options.size() - 1)]))
 
 
-## What the buddy says on a menu (content/talk.json), in the student's talk language, with %s / %d
-## filled from `args` (D-033).
+## What the buddy says on a menu (content/talk.json), in the student's talk language,
+## with %s / %d filled from `args`.
 func talk(key: String, args: Array = []) -> String:
 	var table: Dictionary = _talk.get(talk_language(), {})
 	var text := str(table.get(key, _talk.get("en", {}).get(key, key)))
@@ -773,14 +769,14 @@ func _named(text: String) -> String:
 	return text.replace("{buddy}", buddy_name())
 
 
-## A menu line in a chosen language, for a chosen buddy: the buddy chooser's previews (D-033).
+## A menu line in a chosen language for a chosen buddy (the buddy chooser's previews).
 func talk_as(key: String, lang: String, who: String) -> String:
 	var table: Dictionary = _talk.get(lang, {})
 	var text := str(table.get(key, _talk.get("en", {}).get(key, key)))
 	return text.replace("{buddy}", str(BUDDIES.get(who, BUDDIES.roco).name))
 
 
-# --- The buddy and talk language (D-033) ---------------------------------------------
+# --- The buddy and talk language -------------------------------------------------
 
 ## "roco" or "rina" (Roco until the student picks).
 func buddy_id() -> String:
@@ -807,16 +803,15 @@ func set_buddy(who: String, lang: String) -> void:
 	buddy_changed.emit()
 
 
-## The voice follows the buddy: Rina speaks higher. `who` lends another buddy's voice for a moment
-## (the buddy chooser's previews); empty is the student's own.
+## The voice follows the buddy: Roco's or Rina's recordings. `who` borrows another buddy's
+## voice for a moment (the buddy chooser's previews); empty = the student's own.
 func use_buddy_voice(who: String = "") -> void:
 	if not is_inside_tree():
 		return   # a unit test's own GameState
 	var id := who if BUDDIES.has(who) else buddy_id()
 	var speech := get_node_or_null("/root/Speech")
 	if speech:
-		speech.pitch = float(BUDDIES[id].pitch)
-		speech.girl_voice = id == "rina"
+		speech.buddy = id   # whose recorded clips play
 
 
 # --- Debug hooks (desktop testing only) ---------------------------------------

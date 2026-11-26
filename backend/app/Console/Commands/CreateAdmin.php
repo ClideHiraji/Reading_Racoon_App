@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
 
 /**
- * The only way to create an admin (FR-08, D-013): there is no admin
- * registration page. Prints the TOTP setup key once, for an authenticator app.
+ * The only way to create an admin: there is no admin sign-up page.
+ * Prints the TOTP setup key once, for an authenticator app.
  */
 class CreateAdmin extends Command
 {

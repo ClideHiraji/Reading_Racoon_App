@@ -1,9 +1,7 @@
 extends Control
-## Watch & Listen (D-017, wireframe "Watch & Listen"): songs and chants to sing
-## with Racoon, read-alongs of Library books, and videos the teacher picked.
-## No ads and no open internet (RA 10173): videos play only once downloaded.
-## Each kind has its own icon and color on the chips and rows; yellow stays with
-## Adventure (D-022).
+## Watch & Listen: songs and chants with Racoon, read-alongs of Library books,
+## and videos the teacher picked. No ads, no internet: videos play only once downloaded.
+## Each kind has its own icon and colour. Yellow is kept for Adventure.
 
 const KIND_ICONS := {"song": "speaker", "read_along": "book", "video": "play"}
 const KIND_COLORS := {"song": Palette.BLUE, "read_along": Palette.ORANGE, "video": Palette.TEAL}
@@ -25,7 +23,6 @@ func _ready() -> void:
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	_list = GridContainer.new()
-	_list.columns = 2 if Kit.landscape() else 1   # D-023
 	_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_list.add_theme_constant_override("h_separation", 16)
 	_list.add_theme_constant_override("v_separation", 16)
@@ -52,14 +49,21 @@ func _build() -> void:
 	for c in _list.get_children():
 		c.queue_free()
 	var items := GameState.media.watch_in(_kind)
+	var cells: Array[Control] = []
 	if items.is_empty():
 		var empty := Kit.label("Nothing here yet. Your teacher can add videos.", 28, Palette.INK_SOFT)
 		empty.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		_list.add_child(empty)
+		cells.append(empty)
 	for m in items:
-		var row := _row(m)
-		row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		_list.add_child(row)
+		cells.append(_row(m))
+	# Two cards to a row on a laptop; the message alone gets the whole width.
+	_list.columns = 2 if Kit.landscape() and not items.is_empty() else 1
+	# A grid column is only as wide as its cells ask, and a wrapping label asks for 1 px.
+	# The empty Videos message showed one letter per line until every cell, the message
+	# too, was set to fill its column.
+	for c in cells:
+		c.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		_list.add_child(c)
 
 
 func _pick_kind(kind: String) -> void:

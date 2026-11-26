@@ -1,16 +1,13 @@
 class_name AnimatedHeart
 extends LottiePlayer
-## A lesson heart (FR-13, D-021), drawn from the team's Lottie animations by
-## LottiePlayer (sharp at any size, no frames) in the lesson hearts' colors
-## (coral, and the pale empty heart; D-016):
-## - "regain": the empty heart fills red, squishes, bounces and gives off
-##   sparks after a right answer ("Regain Heart", 3.25 s, timed like the team's
-##   Regain Heart.mp4: the file's time stretch set to 1, and its black outline
-##   made the same grey heart Broken Heart ends on).
-## - "break": a full heart cracks and its halves fall away, leaving the empty
-##   heart, after a wrong try ("Broken Heart").
-## The still hearts in the row are these animations' end frames (still()), so
-## a full or empty heart looks the same before, during and after a change.
+## A lesson heart, drawn from the team's Lottie animations by LottiePlayer (sharp at any size)
+## in the lesson hearts' colours (coral, and the pale empty heart):
+## - "regain": the empty heart fills red, squishes, bounces and sparks after a right answer
+##   ("Regain Heart", 3.25 s, timed like the team's Regain Heart.mp4).
+## - "break": a full heart cracks and its halves fall away, leaving the empty heart,
+##   after a wrong try ("Broken Heart").
+## The still hearts in the row are these animations' end frames (still()), so a full or
+## empty heart looks the same before, during and after a change.
 ## Plays once and holds the last frame.
 
 ## Per kind: the animation, its colors swapped to the hearts', and where its

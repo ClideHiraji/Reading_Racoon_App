@@ -1,6 +1,5 @@
-{{-- Error pages in the paper style, with a way back (D-037). Static on purpose:
-     nothing here depends on the session or who is signed in, so a refused admin
-     request still looks exactly like any other 404 (D-013). --}}
+{{-- Error pages in the paper style, with a way back. Static on purpose: nothing here depends
+on the session or who is signed in, so a refused admin request looks exactly like any other 404. --}}
 <!DOCTYPE html>
 <html lang="en">
 <head>

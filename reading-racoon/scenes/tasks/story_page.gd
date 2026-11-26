@@ -1,9 +1,8 @@
 class_name StoryPage
 extends VBoxContainer
-## A story page (Literal Comprehension, levels 3-5): a paper card with the story's
-## setting drawn as a Butuan landscape, the title and the passage in Andika. The
-## child reads (or listens), then taps "I read it!". Passage word caps follow
-## 07-curriculum-content.md: 60 / 100 / 130 words for levels 3 / 4 / 5.
+## A story page (levels 3-5): a paper card with the story's setting as a Butuan landscape,
+## the title and the passage in Andika. The child reads (or listens), then taps "I read it!".
+## Passages are at most 60 / 100 / 130 words for levels 3 / 4 / 5.
 
 signal done
 
@@ -26,7 +25,7 @@ func setup(passage: Dictionary, button_text: String = "I READ IT!") -> void:
 	card.clip_children = CanvasItem.CLIP_CHILDREN_AND_DRAW
 	card.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	add_child(card)
-	# On a laptop the setting stands beside the words (D-023).
+	# On a laptop the picture stands beside the words.
 	var wide := Kit.landscape()
 	var v := BoxContainer.new()
 	v.vertical = not wide
@@ -59,7 +58,7 @@ func setup(passage: Dictionary, button_text: String = "I READ IT!") -> void:
 	title.add_theme_color_override("font_color", Palette.readable(Palette.CORAL_DEEP))
 	title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	body.add_child(title)
-	# The words light up as Racoon reads them, like the Library reader (FR-20, D-022).
+	# The words light up as Racoon reads them, like the Library reader.
 	var words := str(passage.get("text", "")).split(" ", false).size()
 	_text = ReadAlong.new()
 	_text.language = str(passage.get("language", "en"))
@@ -90,7 +89,7 @@ func setup(passage: Dictionary, button_text: String = "I READ IT!") -> void:
 	var go := ChunkyButton.new()
 	go.text = button_text
 	go.icon_name = "check"
-	go.face_color = Palette.ORANGE   # green only means a right answer (D-022)
+	go.face_color = Palette.ORANGE   # green only means a right answer
 	go.radius = 28
 	go.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	go.custom_minimum_size = Vector2(0, 120)

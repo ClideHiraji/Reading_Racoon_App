@@ -6,10 +6,9 @@ use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
 
 /**
- * Chat completions on an OpenAI-compatible endpoint: Gemini's today
- * (D-002, docs/knowledge/08-ai-integration.md). Changing provider means
- * changing LLM_BASE_URL, LLM_API_KEY and LLM_MODEL only. Laravel is the only
- * caller; the key never reaches the game.
+ * Chat completions on an OpenAI-compatible endpoint (Gemini's today, see
+ * docs/knowledge/08-ai-integration.md). To change provider, change only LLM_BASE_URL,
+ * LLM_API_KEY and LLM_MODEL. Only Laravel calls it; the key never reaches the game.
  */
 final class LlmClient
 {

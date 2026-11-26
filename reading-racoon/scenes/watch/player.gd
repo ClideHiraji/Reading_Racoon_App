@@ -1,10 +1,13 @@
 extends Control
-## The Watch & Listen player (D-017, wireframe "Video player"). Songs, chants and
-## read-alongs play line by line: the scene and pictures on the stage, the words
-## lighting up as Racoon sings them. Teacher videos (Ogg Theora, downloaded on
-## Wi-Fi) play in the same frame. Then a quick check with two pictures, and no
-## autoplay of anything else. The stage sits on the words card, and the controls
-## are listening blue: a round Again and a big Pause (D-022).
+## The Watch & Listen player. Songs, chants and read-alongs play line by line: the scene and
+## pictures on the stage, the words lighting up as Racoon sings them.
+## Teacher videos (Ogg Theora, downloaded on Wi-Fi) play in the same frame.
+## Then a quick check with two pictures, and nothing else plays by itself.
+## Controls are blue: a round Again and a big Pause. A teacher video can also go full screen,
+## and a phone turns sideways for it.
+
+## How long full screen's buttons stay after a tap while the video plays.
+const FULL_CONTROLS_FOR := 3.0
 
 var _item := {}
 var _lines: Array = []
@@ -20,6 +23,12 @@ var _text: ReadAlong
 var _bar: ProgressBar
 var _play_btn: ChunkyButton
 var _raccoon: Raccoon
+var _full: ColorRect            # full screen, while it's open (teacher videos only)
+var _full_controls: MarginContainer
+var _full_play: ChunkyButton
+var _controls_tween: Tween
+var _controls_id := 0           # the latest tap; an older tap's timer does nothing
+var _orientation_before := -1   # the phone's orientation before full screen turned it
 
 
 func _ready() -> void:
@@ -31,7 +40,7 @@ func _ready() -> void:
 	_lang = str(_item.get("language", "en"))
 	var column := Kit.page(self)
 	Kit.header(column, str(_item.get("title", "Watch")), _back, true)
-	# On a laptop the stage stands beside the words card (D-023).
+	# On a laptop the stage stands beside the words card.
 	var wide := Kit.landscape()
 	var sheet := BoxContainer.new()
 	sheet.vertical = not wide
@@ -166,8 +175,12 @@ func _toggle() -> void:
 	_paused = not _paused
 	_play_btn.text = "Play" if _paused else "Pause"
 	_play_btn.icon_name = "play" if _paused else "pause"
+	if _full_play:
+		_full_play.tooltip_text = _play_btn.text
+		_full_play.icon_name = _play_btn.icon_name
 	if _video:
 		_video.paused = _paused
+		_show_full_controls()
 		return
 	if _paused:
 		_text.stop()
@@ -200,7 +213,28 @@ func _setup_video() -> void:
 	_video.stream = stream
 	_video.expand = true
 	_video.finished.connect(_end)
-	_stage.add_child(_video)
+	# `expand` alone stretched the clip to fill the stage (a 16:9 clip lost width on a phone).
+	# The box keeps the clip's own shape, centred, with sky bands on two sides.
+	# Theora knows the frame size from the file's header.
+	var box := AspectRatioContainer.new()
+	box.stretch_mode = AspectRatioContainer.STRETCH_FIT
+	box.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var frame := _video.get_video_texture().get_size() if _video.get_video_texture() else Vector2.ZERO
+	box.ratio = frame.aspect() if frame.x > 0.0 and frame.y > 0.0 else 16.0 / 9.0
+	box.add_child(_video)
+	_stage.add_child(box)
+	# Full screen: the button in the stage's corner, or a tap on the picture.
+	_video.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	box.mouse_filter = Control.MOUSE_FILTER_STOP
+	box.gui_input.connect(_on_stage_input)
+	var corner := MarginContainer.new()
+	corner.size_flags_horizontal = Control.SIZE_SHRINK_END
+	corner.size_flags_vertical = Control.SIZE_SHRINK_END
+	corner.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	for side: String in ["left", "top", "right", "bottom"]:
+		corner.add_theme_constant_override("margin_" + side, 14)
+	corner.add_child(_round_button("full_screen", "Full screen", 96, _open_full_screen))
+	_stage.add_child(corner)
 	_video.play()
 
 
@@ -211,9 +245,145 @@ func _process(_delta: float) -> void:
 			_bar.value = _video.stream_position / length
 
 
+## A round white button with a blue icon, like Again. At least 96 px.
+func _round_button(icon: String, tip: String, px: int, on_press: Callable) -> ChunkyButton:
+	var b := ChunkyButton.new()
+	b.card_style = true
+	b.icon_name = icon
+	b.icon_px = int(px * 0.48)
+	b.icon_tint = Palette.BAY_DEEP
+	b.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	b.expand_icon = true
+	b.radius = roundi(px / 2.0)
+	b.tooltip_text = tip
+	b.custom_minimum_size = Vector2(px, px)
+	b.pressed.connect(on_press)
+	return b
+
+
+static func _is_tap(event: InputEvent) -> bool:
+	var mb := event as InputEventMouseButton
+	return mb != null and mb.pressed and mb.button_index == MOUSE_BUTTON_LEFT
+
+
+func _on_stage_input(event: InputEvent) -> void:
+	if _is_tap(event):
+		_open_full_screen()
+
+
+# --- Full screen (teacher videos) --------------------------------------------------------
+
+## The same video over the whole player, in its own shape on dark ink, so playback never stops
+## or restarts. A phone turns sideways for it. A tap shows a big Pause and the close button;
+## while the video plays they fade after a while.
+func _open_full_screen() -> void:
+	if _full or not _video:
+		return
+	_full = ColorRect.new()
+	_full.name = "FullScreen"
+	_full.color = Palette.INK
+	_full.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_full.gui_input.connect(_on_full_input)
+	add_child(_full)
+	var pic := TextureRect.new()
+	pic.texture = _video.get_video_texture()
+	pic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	pic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	pic.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	pic.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_full.add_child(pic)
+	_full_controls = MarginContainer.new()
+	_full_controls.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_full_controls.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_full.add_child(_full_controls)
+	var close := _round_button("full_screen_exit", "Small screen", 112, _close_full_screen)
+	close.size_flags_horizontal = Control.SIZE_SHRINK_END
+	close.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+	_full_controls.add_child(close)
+	_full_play = _round_button("play" if _paused else "pause", "Play" if _paused else "Pause", 160, _toggle)
+	_full_play.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	_full_play.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	_full_controls.add_child(_full_play)
+	# The notch moves to a side when the phone turns, so the margins follow the size.
+	_full.resized.connect(_fit_full_controls)
+	_fit_full_controls()
+	_turn(true)
+	_show_full_controls()
+
+
+func _fit_full_controls() -> void:
+	var safe := Kit.insets()
+	for side: String in ["left", "top", "right", "bottom"]:
+		_full_controls.add_theme_constant_override("margin_" + side, int(24 + safe[side]))
+
+
+func _on_full_input(event: InputEvent) -> void:
+	if _is_tap(event):
+		_show_full_controls()
+
+
+## Shows full screen's buttons. While the video plays they fade after
+## FULL_CONTROLS_FOR seconds; while it's paused they stay.
+func _show_full_controls() -> void:
+	if not _full:
+		return
+	_controls_id += 1
+	var id := _controls_id
+	if _controls_tween:
+		_controls_tween.kill()
+	_full_controls.visible = true
+	_full_controls.modulate.a = 1.0
+	if _paused:
+		return
+	await get_tree().create_timer(FULL_CONTROLS_FOR).timeout
+	if _full and id == _controls_id and not _paused:
+		_controls_tween = _full_controls.create_tween()
+		_controls_tween.tween_property(_full_controls, "modulate:a", 0.0, 0.3)
+		_controls_tween.tween_callback(_full_controls.hide)
+
+
+func _close_full_screen() -> void:
+	if not _full:
+		return
+	_controls_id += 1
+	remove_child(_full)
+	_full.queue_free()
+	_full = null
+	_full_controls = null
+	_full_play = null
+	_controls_tween = null
+	_turn(false)
+
+
+## A phone turns sideways for full screen, then back to how it was (the game is
+## portrait). Laptops and the editor don't turn: their window is already the screen.
+func _turn(sideways: bool) -> void:
+	if not OS.has_feature("mobile"):
+		return
+	if sideways and _orientation_before < 0:
+		_orientation_before = DisplayServer.screen_get_orientation()
+		DisplayServer.screen_set_orientation(DisplayServer.SCREEN_SENSOR_LANDSCAPE)
+	elif not sideways and _orientation_before >= 0:
+		DisplayServer.screen_set_orientation(_orientation_before as DisplayServer.ScreenOrientation)
+		_orientation_before = -1
+
+
+func _exit_tree() -> void:
+	_turn(false)   # leaving the player never leaves a phone sideways
+
+
+## Android Back (Screen.back): full screen closes first; otherwise it's the ✕.
+func go_back() -> void:
+	if _full:
+		_close_full_screen()
+	else:
+		_back()
+
+
 # --- The end: a quick check, then the reward --------------------------------------------
 
 func _end() -> void:
+	_close_full_screen()
 	_raccoon.set_mood("celebrate")
 	var check: Dictionary = _item.get("check", {})
 	if check.is_empty():
@@ -247,7 +417,7 @@ func _end() -> void:
 		buttons[str(c.id)] = b
 	for id in buttons:
 		buttons[id].pressed.connect(_check.bind(id, str(check.answer), buttons, v))
-	Speech.new_question()   # (D-032)
+	Speech.new_question()
 	Speech.say(str(check.prompt), _lang)
 
 

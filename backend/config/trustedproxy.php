@@ -2,7 +2,7 @@
 
 /*
 |--------------------------------------------------------------------------
-| Trusted proxies (NFR-04, D-036)
+| Trusted proxies
 |--------------------------------------------------------------------------
 |
 | On the home server, the internet reaches Laravel through a tunnel connector

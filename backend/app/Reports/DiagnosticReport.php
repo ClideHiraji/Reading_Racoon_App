@@ -5,8 +5,8 @@ namespace App\Reports;
 use Carbon\CarbonImmutable;
 
 /**
- * A plain-language diagnostic summary for the teacher (FR-05, FR-18):
- * two paragraphs plus strengths, needs and suggested interventions.
+ * A plain-language summary for the teacher: two paragraphs plus strengths, needs
+ * and suggested activities.
  */
 final class DiagnosticReport
 {
@@ -16,7 +16,7 @@ final class DiagnosticReport
      * @param  list<string>  $needs
      * @param  list<string>  $interventions
      * @param  string  $generatedBy  "template" or the LLM model id
-     * @param  ?int  $aiLogId  the ai_logs row the paragraphs came from (D-018)
+     * @param  ?int  $aiLogId  the ai_logs row the paragraphs came from
      */
     public function __construct(
         public readonly array $paragraphs,
@@ -28,7 +28,7 @@ final class DiagnosticReport
         public readonly ?int $aiLogId = null,
     ) {}
 
-    /** The same lists with AI-written paragraphs (D-018). */
+    /** The same lists with AI-written paragraphs. */
     public function withParagraphs(array $paragraphs, string $generatedBy, CarbonImmutable $generatedAt, ?int $aiLogId): self
     {
         return new self($paragraphs, $this->strengths, $this->needs, $this->interventions, $generatedBy, $generatedAt, $aiLogId);

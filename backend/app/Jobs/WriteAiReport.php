@@ -14,11 +14,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 
 /**
- * Writes the Gemini teacher report for one learner (FR-05, FR-21, D-018).
- * Queued delay_minutes after a sync (syncs meanwhile don't queue another, so
- * one play session gives one report), or when a teacher opens a report that
- * has no AI version for the current numbers. Facts that already have a
- * stored report are skipped, so a re-run costs nothing.
+ * Writes the Gemini teacher report for one learner. Queued delay_minutes after a sync
+ * (syncs meanwhile don't queue another, so one play session gives one report), or when a
+ * teacher opens a report with no AI version for the current numbers.
+ * Facts that already have a saved report are skipped, so running it again costs nothing.
  */
 final class WriteAiReport implements ShouldBeUnique, ShouldQueue
 {

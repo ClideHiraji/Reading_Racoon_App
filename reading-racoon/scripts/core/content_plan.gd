@@ -1,10 +1,9 @@
 class_name ContentPlan
 extends RefCounted
-## Teacher-picked content (D-020 game side, server D-019): checks the manifest from
-## GET /api/content/manifest and plans which files to download and delete. Pure
-## logic, unit-tested; Sync does the HTTP and the disk work.
-## The server is trusted with what to show, never with where to write: every
-## local path must sit directly in user://content/ with a plain file name.
+## Teacher content: checks the list from GET /api/content/manifest and plans
+## which files to download and delete. Only logic here; Sync does the HTTP and disk work.
+## Trust the server for what to show, never for where to write:
+## every local path must be a plain file name right inside user://content/.
 
 const DIR := "user://content/"
 const STATE := "user://content/state.json"
@@ -28,7 +27,7 @@ static func safe_local(path: String) -> bool:
 	return name.get_extension().to_lower() in EXTENSIONS
 
 
-## A server path for a file ("/api/content/files/<uuid>"), never another host.
+## True for a server file path ("/api/content/files/<uuid>"), never another host.
 static func safe_url(url: String) -> bool:
 	return url.begins_with("/api/content/files/") and not url.contains("..") and not url.contains("://")
 
@@ -44,10 +43,9 @@ static func _sha(value) -> String:
 	return s
 
 
-## The manifest's books and videos, keeping only well-formed items. A page picture
-## or video with an unsafe path or bad hash loses its file (the page still shows
-## its paper scene); a video without a safe file is dropped.
-## Returns {books: [], watch: []}.
+## The manifest's books and videos, keeping only good items.
+## A picture or video with a bad path or hash loses its file (the page still shows
+## its paper scene). A video with no good file is dropped. Returns {books, watch}.
 static func clean(manifest: Dictionary) -> Dictionary:
 	var books := []
 	for b in manifest.get("books", []):
@@ -72,7 +70,7 @@ static func clean(manifest: Dictionary) -> Dictionary:
 	return {"books": books, "watch": watch}
 
 
-## Every file the cleaned manifest needs: [{local, url, sha256, size}].
+## Every file the manifest needs: [{local, url, sha256, size}].
 static func files(cleaned: Dictionary) -> Array:
 	var out := []
 	for w in cleaned.get("watch", []):
@@ -86,13 +84,13 @@ static func files(cleaned: Dictionary) -> Array:
 	return out
 
 
-## Files to fetch: missing, or on disk with a different hash than the manifest's
-## (the teacher replaced it). `have` = {local path: sha256 of the verified copy}.
+## Files to fetch: missing, or with a different hash (the teacher replaced it).
+## `have` = {local path: sha256 of the checked copy}.
 static func to_download(needed: Array, have: Dictionary) -> Array:
 	return needed.filter(func(f): return have.get(f.local, "") != f.sha256)
 
 
-## SHA-256 of a file, read 1 MB at a time (Sync calls it on a worker for big videos).
+## SHA-256 of a file, read 1 MB at a time (Sync runs it on a thread for big videos).
 static func file_sha256(path: String) -> String:
 	var file := FileAccess.open(path, FileAccess.READ)
 	if file == null:
@@ -104,7 +102,7 @@ static func file_sha256(path: String) -> String:
 	return ctx.finish().hex_encode()
 
 
-## Verified files no longer in the manifest (the item was removed or unpublished).
+## Checked files that are no longer in the manifest (removed or unpublished).
 static func to_delete(needed: Array, have: Dictionary) -> Array:
 	var keep := {}
 	for f in needed:

@@ -10,8 +10,8 @@ use Illuminate\Validation\Rule;
 use Illuminate\Validation\Validator as ValidatorInstance;
 
 /**
- * Validates the teacher's book and video forms and turns them into the game's
- * JSON shapes (reading-racoon/content/library.json and watch.json), D-019.
+ * Checks the teacher's book and video forms and turns them into the game's JSON
+ * (reading-racoon/content/library.json and watch.json).
  * Only openly licensed material: licence and source are required.
  */
 final class ContentForm

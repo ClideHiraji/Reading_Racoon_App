@@ -2,7 +2,7 @@
 
 /*
 |--------------------------------------------------------------------------
-| Cross-origin requests (NFR-04, D-036)
+| Cross-origin requests
 |--------------------------------------------------------------------------
 |
 | The game is a native app (Android, Windows), so it needs no CORS at all,

@@ -14,8 +14,8 @@ use Illuminate\Validation\Rules\Password;
 use Illuminate\View\View;
 
 /**
- * Teacher self-registration (FR-01, FR-08). The account stays pending until an
- * admin approves it; the teacher can't sign in before that.
+ * Teacher sign-up. The account waits until an admin approves it; the teacher can't sign
+ * in before that.
  */
 class RegisterController extends Controller
 {

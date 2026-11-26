@@ -2,7 +2,7 @@
 @section('title', 'Play schedule · '.$section->name)
 
 @php
-    // The saved day as a strip (FR-12, D-014): asleep, awake, reading class, after school.
+    // The saved day as a strip: asleep, awake, reading class, after school.
     $min = function (?string $hm) {
         if (! $hm || ! str_contains($hm, ':')) {
             return null;

@@ -8,9 +8,8 @@ use App\Support\SkillCatalog;
 use App\Support\StudentReplay;
 
 /**
- * The numbers a diagnostic report is written from (FR-05, FR-18). Identified by
- * the student code only, never the name: this is the JSON block a Gemini
- * prompt will inject (docs/knowledge/08-ai-integration.md, RA 10173).
+ * The numbers a diagnostic report is written from. Uses the student code only, never the
+ * name: this is the JSON block sent in the Gemini prompt (RA 10173).
  */
 final class StudentFacts
 {

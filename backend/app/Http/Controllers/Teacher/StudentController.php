@@ -16,8 +16,8 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 /**
- * Student profile (FR-06, FR-17): BKT chart over time, the 14 states,
- * session history, Racoon's Rescue outcomes, flags and play time.
+ * Learner page: BKT chart over time, the 14 states, session history, Racoon's Rescue
+ * results, flags and play time.
  */
 class StudentController extends Controller
 {
@@ -46,7 +46,7 @@ class StudentController extends Controller
             'previous' => $index > 0 ? $siblings[$index - 1] : null,
             'next' => $siblings[$index + 1] ?? null,
             'lastPlayed' => $student->syncEvents()->max('device_time'),
-            // The server's own clock: tells "hasn't played" from "hasn't synced" (D-037).
+            // The server's own clock: tells "hasn't played" apart from "hasn't synced".
             'lastSynced' => $student->syncEvents()->max('received_at'),
             'activeNow' => $student->user->tokens()->where('last_used_at', '>=', now()->subMinutes(SectionStats::ACTIVE_MINUTES))->exists(),
             'band' => SectionStats::band($student),
@@ -67,9 +67,8 @@ class StudentController extends Controller
     }
 
     /**
-     * Resolves several flags at once (FR-17, D-037): one skill-level's flags,
-     * or every flag in a section that looks better. Only the teacher's own
-     * flags are touched; anything else is ignored.
+     * Resolves several flags at once: one skill level's flags, or every flag in a section that
+     * looks better. Only the teacher's own flags are touched; anything else is ignored.
      */
     public function resolveFlags(Request $request): RedirectResponse
     {
@@ -131,7 +130,7 @@ class StudentController extends Controller
         return redirect()->to(strtok(url()->previous(), '#').$anchor);
     }
 
-    /** Undo of "Mark resolved" (FR-17): the flag is open again. */
+    /** Undo of "Mark resolved": the flag is open again. */
     public function reopenFlag(Request $request, InterventionFlag $flag): RedirectResponse
     {
         $flag->forceFill(['status' => 'open', 'resolved_at' => null, 'resolved_by' => null])->save();

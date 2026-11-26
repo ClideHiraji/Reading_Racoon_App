@@ -1,12 +1,11 @@
 class_name QuestionBank
 extends RefCounted
-## Task items and story passages loaded from content/levels*.json (FR-09). Every
-## item is tagged with sub_skill, level, competency, language, task_type and answer
-## (docs/knowledge/07-curriculum-content.md). Comprehension items point at a
-## passage by id; passages carry the story text, its setting and language.
+## Task items and stories from content/levels*.json.
+## Each item has sub_skill, level, competency, language, task_type and answer.
+## Story questions point to a passage by id.
 
 const FILES := [
-	"res://content/levels.json",      # levels 1-2 (English placeholders, issue 15)
+	"res://content/levels.json",      # levels 1-2 (English placeholders)
 	"res://content/levels_3.json",    # level 3, Filipino
 	"res://content/levels_4.json",    # level 4, Filipino
 	"res://content/levels_5.json",    # level 5, English
@@ -56,7 +55,7 @@ func passage(id: String) -> Dictionary:
 	return passages.get(id, {})
 
 
-## An item by id ({} if unknown), e.g. to find the words a lesson practiced.
+## An item by id ({} if unknown).
 func item(id: String) -> Dictionary:
 	for it in items:
 		if it.id == id:
@@ -64,7 +63,7 @@ func item(id: String) -> Dictionary:
 	return {}
 
 
-## Highest map level that has any content (worlds above show "coming soon").
+## Highest map level with any content (higher worlds show "coming soon").
 func max_level() -> int:
 	var top := 0
 	for it in items:
@@ -72,11 +71,11 @@ func max_level() -> int:
 	return top
 
 
-## Picks an item for (skill, level). Prefers items not in `avoid` (already used
-## this lesson) and never returns `last_id` when another item exists. With
-## `prefer_passage`, unused questions about that story come first, so a child
-## answers a story's questions together instead of re-reading it.
-## Recovery picks fall back to normal items when no recovery-tagged ones exist.
+## Picks an item for (skill, level). Prefers items not in `avoid` (used this lesson)
+## and never repeats `last_id` if there is another choice.
+## With `prefer_passage`, that story's questions come first, so the child
+## answers them together instead of re-reading.
+## Rescue picks use normal items when there are no rescue items.
 func pick(skill: String, level: int, recovery: bool, avoid: Array = [], last_id: String = "",
 		rng: RandomNumberGenerator = null, prefer_passage: String = "") -> Dictionary:
 	var pool := _matching(skill, level, recovery)
@@ -97,13 +96,12 @@ func pick(skill: String, level: int, recovery: bool, avoid: Array = [], last_id:
 	return fresh[i]
 
 
-## Number of choices used for the guess rate (0 = not a choice-style item;
-## ordering tasks keep the table guess rate, D-003 rule 7).
+## Number of choices for the guess rate (0 = not a choice item; ordering tasks keep the table rate).
 static func num_choices(entry: Dictionary) -> int:
 	return entry.get("choices", []).size()
 
 
-## The key that identifies a tile in an ordering task: its id, or its text.
+## The key for a tile in an ordering task: its id, or its text.
 static func tile_key(tile) -> String:
 	return str(tile.id) if tile is Dictionary else str(tile)
 

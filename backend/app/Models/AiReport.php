@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * The AI-written summary paragraphs for one exact set of report facts
- * (FR-05, D-018), written by App\Jobs\WriteAiReport. `paragraphs` is null when
- * the AI output failed every check and the template was used instead.
+ * The AI-written report paragraphs for one exact set of report facts, written by
+ * App\Jobs\WriteAiReport. `paragraphs` is null when the AI output failed every check
+ * and the template was used instead.
  */
 class AiReport extends Model
 {

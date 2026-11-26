@@ -11,8 +11,8 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Teacher-picked Library books and videos for the game (D-019, game D-017).
- * Student token only; a learner sees only what their section was assigned.
+ * Teacher-picked Library books and videos for the game.
+ * Student token only; a learner sees only what their section was given.
  */
 class ContentController extends Controller
 {

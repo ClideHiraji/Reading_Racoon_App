@@ -1,8 +1,8 @@
 class_name PictureCard
 extends Control
-## The task's main picture and word: what the question is about (D-009).
-## D-022: it is flat and straight, not a tilted, lifted card, so it never looks
-## like one more answer; a tap reads the word aloud (a small speaker shows it).
+## The task's main picture and word: what the question is about.
+## It's flat and straight, not a tilted card, so it never looks like one more answer.
+## A tap reads the word aloud (a small speaker shows that).
 ## The card lives inside this plain Control so a tilt can still be passed in.
 
 var _card: PanelContainer
@@ -16,14 +16,14 @@ func setup(picture: String, word: String, px: float = 190.0, tilt: float = 0.0) 
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_card = PanelContainer.new()
 	var tint := Palette.pale(Icons.picture_color(picture), 0.84) if picture != "" else Palette.CARD
-	var sb := PaperBox.new()   # cut from paper and sewn round (D-028)
+	var sb := PaperBox.new()   # cut from paper and sewn round
 	sb.bg_color = tint
 	sb.set_corner_radius_all(28)
 	sb.set_content_margin_all(20)
 	sb.stitch = true
 	_card.add_theme_stylebox_override("panel", sb)
 	add_child(_card)
-	# a strip of washi tape holds the card to the page, like a scrapbook (D-028)
+	# a strip of washi tape holds the card to the page, like a scrapbook
 	_tape = WashiTape.new()
 	_tape.size = Vector2(84, 26)
 	_tape.pivot_offset = _tape.size / 2
@@ -52,9 +52,9 @@ func setup(picture: String, word: String, px: float = 190.0, tilt: float = 0.0) 
 		elif picture != "":
 			l.add_theme_font_size_override("font_size", 64)
 		v.add_child(l)
-		# Tap to hear the word (FR-20).
+		# Tap to hear the word.
 		_card.mouse_filter = Control.MOUSE_FILTER_STOP
-		_card.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND   # D-023
+		_card.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 		_card.tooltip_text = "Hear the word"
 		_card.gui_input.connect(func(e: InputEvent):
 			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:

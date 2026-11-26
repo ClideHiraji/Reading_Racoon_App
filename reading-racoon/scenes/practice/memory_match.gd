@@ -1,9 +1,8 @@
 extends Control
-## Memory Match (D-017, wireframe "Practice game: Memory Match"): find the word
-## that goes with each picture. Every card says its word when it flips. No timer
-## and no losing; matched words go to My Word Book. From My Word Book it plays
-## with the child's own words (GameState.practice_words). One dot per pair in
-## the header (D-022).
+## Memory Match: find the word that goes with each picture. Every card says its word when it flips.
+## No timer and no losing; matched words go to My Word Book.
+## From My Word Book it uses the child's own words (GameState.practice_words).
+## One dot per pair in the header.
 
 const PAIRS := 6
 const BACK_COLOR := Palette.BLUE
@@ -57,7 +56,7 @@ func _ready() -> void:
 	grid.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	grid.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	if Kit.landscape():
-		# Two long rows across the laptop screen, a little smaller if needed (D-023).
+		# Two long rows across the laptop screen, a little smaller if needed.
 		grid.columns = ceili(deck.size() / 2.0)
 		var fit := FitBox.new()
 		fit.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -75,12 +74,12 @@ func _ready() -> void:
 
 
 func _card(d: Dictionary) -> Control:
-	# A plain holder in the grid, so flipping (scale) isn't reset by the container.
+	# A plain holder in the grid, so the container doesn't reset the flip (scale).
 	var holder := Control.new()
 	holder.custom_minimum_size = Vector2(196, 196)
 	var b := ChunkyButton.new()
 	b.face_color = BACK_COLOR
-	b.full_color = true   # Racoon in full colour on every card's back (D-027)
+	b.full_color = true   # Racoon in full colour on every card's back
 	b.icon_name = "raccoon"
 	b.icon_px = 80
 	b.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER

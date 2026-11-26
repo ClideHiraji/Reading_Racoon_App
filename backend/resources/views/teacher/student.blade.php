@@ -99,7 +99,7 @@
     </section>
 @endif
 
-{{-- Skills: plain state first, the game's estimate and its history on demand (D-037). --}}
+{{-- Skills: plain state first, the game's estimate and its history on demand. --}}
 <section class="panel" id="skills" aria-labelledby="chart-title">
     <div class="panel-head">
         <div>
@@ -251,7 +251,7 @@
     </section>
 </div>
 
-{{-- Rare and risky actions live here, not on the class page (FR-16, RA 10173). --}}
+{{-- Rare and risky actions live here, not on the class page (RA 10173). --}}
 <section class="panel" id="manage" aria-labelledby="manage-title">
     <h2 id="manage-title">Manage {{ $name }}</h2>
     <div class="grid grid-2" style="gap: var(--s5);">

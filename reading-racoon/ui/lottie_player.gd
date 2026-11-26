@@ -1,16 +1,14 @@
 class_name LottiePlayer
 extends Control
-## Plays a Lottie animation (the JSON inside a .lottie file) as live vector
-## shapes drawn by Godot, so it stays sharp at any size and needs no frames
-## (D-022). It covers what the team's animations use: shape and precomp layers
-## (with start offset and time stretch), groups, animated bezier paths,
-## ellipses, solid and linear-gradient fills, strokes with butt or round caps,
-## trim paths, and eased keyframes. No masks, mattes, effects or text.
-## Plays once and holds the last frame, unless `loop`.
-## Kept light for low-end phones: paths are prepared once per file, and each
-## half-frame is worked out once (in the animation's own units, cut into
-## triangles) and shared by every player of that file at any size. Drawing a
-## frame is then just replaying those triangles, and only when the frame changes.
+## Plays a Lottie animation (the JSON inside a .lottie file) as live vector shapes drawn
+## by Godot, so it stays sharp at any size and needs no frames.
+## It covers what the team's animations use: shape and precomp layers (with start offset and
+## time stretch), groups, animated bezier paths, ellipses, solid and linear-gradient fills,
+## strokes with butt or round caps, trim paths, and eased keyframes.
+## No masks, mattes, effects or text. Plays once and holds the last frame, unless `loop`.
+## Light for cheap phones: paths are prepared once per file, and each half-frame is worked out
+## once (as triangles) and shared by every player of that file at any size. Drawing a frame
+## just replays those triangles, and only when the frame changes.
 
 ## Seconds to wait before it starts (to stagger a row).
 @export var delay := 0.0

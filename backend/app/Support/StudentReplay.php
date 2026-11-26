@@ -8,32 +8,30 @@ use DateTimeInterface;
 use Ramsey\Uuid\Uuid;
 
 /**
- * Replays one student's synced events, in arrival order, through the same
- * rules as the client (reading-racoon/scripts/core/student_model.gd,
- * lesson_session.gd, assessment_session.gd, wardrobe.gd) and produces the
- * official state: the 14 BKT states, highest unlocked map level, wallet,
- * flags, items and outfit, daily usage, path and pre/post-test scores.
- * The server is the BKT authority (docs/knowledge/03-architecture.md, D-008,
- * D-011). Pure PHP, no database: App\Actions\ReplayStudentEvents feeds it.
+ * Replays one student's synced events, in arrival order, with the same rules as the game
+ * (reading-racoon/scripts/core/student_model.gd, lesson_session.gd, assessment_session.gd,
+ * wardrobe.gd), and makes the official state: the 14 BKT states, highest unlocked map level,
+ * wallet, flags, items and outfit, daily usage, path and pre/post-test scores.
+ * The server has the final say on BKT. Pure PHP, no database: App\Actions\ReplayStudentEvents feeds it.
  *
  * Fields read per event type (anything else is stored but ignored):
  * - response: skill, level, correct, num_choices, rescue. With assessment
- *   "pre"/"post" it is a test item: scored, never a BKT observation.
- * - placement: start_level (BKT placed from the pre-test answers, like StudentModel.place())
- * - assessment: kind, scores {skill: {correct, total}} (raw test scores, FR-02/FR-10)
+ *   "pre"/"post" it's a test item: scored, never a BKT observation.
+ * - placement: start_level (placed from the pre-test answers, like StudentModel.place())
+ * - assessment: kind, scores {skill: {correct, total}} (raw test scores)
  * - rescue_start: skill, level · rescue_end: (none, the server counts the answers)
- * - flag: type, skill, level (+ details); type clock_jump is an admin anomaly, not a teacher flag
+ * - flag: type, skill, level (+ details); type clock_jump is for the admin, not the teacher
  * - lesson_end: level, node, correct, total, ended_early · chest: level
- * - usage: date, minutes (cumulative after-school minutes that day; the largest wins)
+ * - usage: date, minutes (after-school minutes so far that day; the largest wins)
  * - purchase: item, price · outfit: equipped {slot: item}
- * - bkt_state, level_up, hearts, access: stored only (the server computes the rest itself)
+ * - bkt_state, level_up, hearts, access: stored only (the server works the rest out itself)
  *
- * An event whose fields don't make sense (unknown skill, level out of range,
- * missing "correct") is skipped, never fatal: the raw event stays stored.
+ * An event with fields that make no sense (unknown skill, level out of range, missing
+ * "correct") is skipped, never fatal: the raw event stays stored.
  */
 final class StudentReplay
 {
-    /** Racoon's Rescue serves 3 items; 3/3 is a full recovery (D-004). */
+    /** Racoon's Rescue serves 3 items; 3/3 is a full recovery. */
     public const RESCUE_ITEMS = 3;
 
     /** Namespace for the deterministic ids of server-raised low-mastery flags. */
@@ -184,7 +182,7 @@ final class StudentReplay
         };
     }
 
-    /** Every sub-skill active at $level is mastered there (Level Up rule, D-003 rule 4). */
+    /** True when every sub-skill active at $level is mastered there (the Level Up rule). */
     public function isLevelComplete(int $level): bool
     {
         foreach (SkillCatalog::activeSkills($level) as $skill) {
@@ -212,7 +210,7 @@ final class StudentReplay
         return ['states' => $states, 'highest_unlocked' => $this->highestUnlocked];
     }
 
-    /** Stars for a lesson, as LessonSession.summary() (FR-15). */
+    /** Stars for a lesson, same as LessonSession.summary() in the game. */
     public static function stars(int $correct, int $total): int
     {
         $accuracy = $total > 0 ? $correct / $total : 0.0;
@@ -299,12 +297,11 @@ final class StudentReplay
     }
 
     /**
-     * Pre-test placement, exactly as StudentModel.place() (05-bkt-engine.md,
-     * FR-02): fresh states; each sub-skill's pre-test answers replayed on its
-     * lowest-level state from P(L0) with the Table 3.5 guess rate; mastered when
-     * the final posterior reaches 0.95 (no minimum attempts); start on the lowest
-     * map level that still has an unmastered skill. The server recomputes it from
-     * the answers it holds and only falls back to start_level without them.
+     * Pre-test placement, exactly like StudentModel.place() in the game: fresh states; each
+     * sub-skill's pre-test answers replayed from P(L0) with the table guess rate; mastered when
+     * the final value reaches 0.95 (no minimum tries); start on the lowest map level that still
+     * has an unmastered skill. Worked out from the answers the server has; uses start_level
+     * only without them.
      *
      * @param  array<string, mixed>  $p
      */
@@ -351,8 +348,8 @@ final class StudentReplay
     }
 
     /**
-     * Raw pre/post-test scores per sub-skill (FR-02, FR-10, RQ1). The first
-     * report of each test counts; they replace the server's own tally.
+     * Raw pre/post-test scores per sub-skill. The first report of each test counts;
+     * it replaces the server's own tally.
      *
      * @param  array<string, mixed>  $p
      */
@@ -377,10 +374,9 @@ final class StudentReplay
     }
 
     /**
-     * Server-raised flag (FR-17): P(L) < 0.30 after >= 5 attempts at a level. One
-     * flag per skill-level until it is mastered, however often P(L) bounces
-     * around 0.30, so the teacher isn't flooded. The id is derived from the
-     * triggering answer, so replaying again gives the same id.
+     * Server-raised flag: P(L) < 0.30 after >= 5 tries at a level. One flag per skill level
+     * until it's mastered, however often P(L) bounces around 0.30, so the teacher isn't flooded.
+     * The id comes from the answer that raised it, so replaying again gives the same id.
      */
     private function checkLowMastery(string $key, string $skill, int $level, CarbonImmutable $time, string $uuid): void
     {
@@ -415,7 +411,7 @@ final class StudentReplay
         $this->rescue = ['skill' => $skill, 'from_level' => $level, 'answered' => 0, 'correct' => 0];
     }
 
-    /** Partial recovery (< 3/3) drops the skill one tier: LessonSession._submit_rescue() (D-004). */
+    /** A partial rescue (< 3/3) drops the skill one level, like LessonSession._submit_rescue(). */
     private function rescueEnd(CarbonImmutable $time): void
     {
         if ($this->rescue === null) {
@@ -441,8 +437,8 @@ final class StudentReplay
     }
 
     /**
-     * Client-raised teacher flag (FR-17); its id is the event's UUID. A
-     * clock_jump is kept for the admin logs instead (open issue 10).
+     * A teacher flag raised by the game; its id is the event's UUID.
+     * A clock_jump goes to the admin logs instead.
      *
      * @param  array<string, mixed>  $p
      */
@@ -465,7 +461,7 @@ final class StudentReplay
     }
 
     /**
-     * XP and coins as GameState.finish_lesson(), recomputed by the server (FR-15).
+     * XP and coins like GameState.finish_lesson(), worked out again by the server.
      *
      * @param  array<string, mixed>  $p
      */
@@ -518,8 +514,8 @@ final class StudentReplay
     }
 
     /**
-     * After-school minutes played on a local date (FR-12). The client sends its
-     * running total for the day, so the largest value wins.
+     * After-school minutes played on a local date. The game sends its running total
+     * for the day, so the largest value wins.
      *
      * @param  array<string, mixed>  $p
      */
@@ -536,9 +532,9 @@ final class StudentReplay
     }
 
     /**
-     * A shop purchase (FR-07), as Wardrobe.buy(). Catalogue items cost the
-     * server's price; an unknown item costs what the client paid. Ignored when
-     * already owned or the replayed wallet can't pay: the server wins (D-008).
+     * A shop purchase, like Wardrobe.buy(). Catalogue items cost the server's price; an unknown
+     * item costs what the game paid. Ignored when already owned or the replayed wallet can't pay:
+     * the server wins.
      *
      * @param  array<string, mixed>  $p
      */

@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * One admin or teacher action (FR-08, FR-22, NFR-04). The table is
- * append-only: a PostgreSQL trigger refuses UPDATE and DELETE.
+ * One admin or teacher action. The table is append-only: a PostgreSQL trigger refuses
+ * UPDATE and DELETE.
  */
 class AuditLog extends Model
 {

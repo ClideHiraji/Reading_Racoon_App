@@ -5,12 +5,10 @@ namespace App\Reports;
 use App\Support\SkillCatalog;
 
 /**
- * The teacher-report prompt (FR-05, MLDLC Stage 3, D-018): a role definition,
- * the learner's numbers as a JSON block, and length and wording rules. It
- * lives on the server so it can be revised without a new APK.
+ * The teacher-report prompt: a role, the learner's numbers as a JSON block, and length
+ * and wording rules. It lives on the server so it can change without a new APK.
  *
- * The JSON holds the student code and numbers only: no name, age or dates
- * (RA 10173, docs/knowledge/08-ai-integration.md).
+ * The JSON holds the student code and numbers only: no name, age or dates (RA 10173).
  */
 final class ReportPrompt
 {
@@ -80,7 +78,7 @@ final class ReportPrompt
         ];
     }
 
-    /** Same JSON and prompt version: the stored report still fits (D-018). */
+    /** Same JSON and prompt version means the stored report still fits. */
     public static function hash(array $input): string
     {
         return hash('sha256', self::VERSION.'|'.self::json($input));

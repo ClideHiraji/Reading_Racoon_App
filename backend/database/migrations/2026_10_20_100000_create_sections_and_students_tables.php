@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Class sections and the students in them (FR-16). Server-created rows, so
-     * plain bigint keys. The ERD's students.session_id FK is dropped (issue 8),
-     * and age/gender wait until the study justifies them (RA 10173, NFR-04).
+     * Class sections and the students in them. The server makes these rows, so plain bigint keys.
+     * The thesis ERD's students.session_id foreign key is left out, and age/gender wait until
+     * the study needs them (RA 10173).
      */
     public function up(): void
     {

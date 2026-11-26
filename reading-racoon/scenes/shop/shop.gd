@@ -1,11 +1,10 @@
 extends Control
-## Racoon's Closet, the reward shop (FR-07): spend coins on hats, scarves, glasses
-## and pins. Tap an item to try it on, then buy or wear it with the big button.
-## Rewards are personal: no leaderboards (06-game-design.md reward cautions).
-## Home button like every section, picture tabs and a big Buy/Wear button (D-022).
-## Tiers (D-026): each card shows its item's tier (copper to diamond: a frame, a badge with 1-5
-## stars, and from silver up a shine); items to earn show how, read aloud; gold and diamond
-## items make Racoon show off when he tries them on. No timers, no random prizes.
+## Racoon's Closet, the reward shop: spend coins on hats, scarves, glasses and more.
+## Tap an item to try it on, then buy or wear it with the big button.
+## Rewards are personal: no leaderboards.
+## Each card shows its tier (copper to diamond: a frame, a badge with 1-5 stars, and a shine
+## from silver up). Earned items show how to earn them, read aloud. Gold and diamond items
+## make Racoon show off when he tries them on. No timers, no random prizes.
 
 const SLOT_ICONS := {"hat": "hat", "neck": "scarf", "eyes": "glasses", "top": "shirt", "paws": "book", "pet": "bird"}
 const TIER_CARD := preload("res://ui/tier_card.gdshader")
@@ -23,19 +22,19 @@ var _selected := ""
 func _ready() -> void:
 	_fit_shape()
 	%BackButton.pressed.connect(_back)
-	%BackButton.add_to_group("back_button")   # Android Back and Escape (D-023)
+	%BackButton.add_to_group("back_button")   # Android Back and Escape
 	%ActionButton.pressed.connect(_on_action)
 	GameState.wallet_changed.connect(_update_coins)
 	raccoon.follow_saved_outfit = false
 	raccoon.outfit = GameState.wardrobe.equipped.duplicate()
-	raccoon.lively = true   # he turns round, walks about, dances in what he's trying on (D-024)
+	raccoon.lively = true   # he turns, walks about and dances in what he's trying on
 	bubble.speaker = raccoon   # and his bubble walks with him, pointing at him
 	for slot in Wardrobe.SLOTS:
 		var tab := ChunkyButton.new()
-		# Just the slot's paper picture, big, with no word (the user asked; D-027). Racoon says
-		# the slot's name when it's tapped and it's the tooltip, so a child who can't read yet
-		# still knows it (D-022). Five fit a phone's width, 110 px tall (NFR-02).
-		tab.tooltip_text = Wardrobe.SLOT_NAMES[slot]
+		# Just the slot's paper picture, big, with no word. Racoon says the slot's name when it's
+		# tapped and it's also the tooltip, so a child who can't read still knows it.
+		# Five fit a phone's width, 110 px tall.
+		tab.tooltip_text = Wardrobe.slot_name(slot, GameState.buddy_id())   # Rina's says "In her paws"
 		tab.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		tab.vertical_icon_alignment = VERTICAL_ALIGNMENT_CENTER
 		tab.full_color = true
@@ -50,19 +49,19 @@ func _ready() -> void:
 		tab.pressed.connect(_on_tab.bind(slot))
 		tab.set_meta("slot", slot)
 		%Tabs.add_child(tab)
-	%Title.text = GameState.talk("closet_title")   # the buddy's own Closet (D-033)
+	%Title.text = GameState.talk("closet_title")   # the buddy's own Closet
 	_update_coins()
 	_show_slot("hat")
 	await get_tree().process_frame
 	bubble.say(GameState.line("shop_hello"))
-	# items earned since the last visit (D-026): show them first
+	# Show items earned since the last visit first.
 	var got := GameState.grant_items()
 	if not got.is_empty():
 		Kit.reward(self, GameState.talk("reward_new_for"), {"items": got}, func(): _show_slot(_slot))
 
 
-## Laptops (D-023): Racoon's stage on the left, the tabs, items and Buy/Wear on
-## the right. Both shapes keep clear of a notch.
+## Laptop layout: Racoon's stage on the left, the tabs, items and Buy/Wear on the right.
+## Both layouts keep clear of a notch.
 func _fit_shape() -> void:
 	var margin: MarginContainer = $Margin
 	if Kit.landscape():
@@ -87,7 +86,7 @@ func _fit_shape() -> void:
 
 ## A tab tapped: Racoon says its name (the tabs have no words), then its items show.
 func _on_tab(slot: String) -> void:
-	_speak(Wardrobe.SLOT_NAMES[slot], "en")
+	_speak(Wardrobe.slot_name(slot, GameState.buddy_id()), "en")
 	_show_slot(slot)
 
 
@@ -140,7 +139,7 @@ func _card(id: String) -> Control:
 	preview.outfit = {item.slot: id}
 	preview.custom_minimum_size = Vector2(0, 150)
 	preview.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	preview.still = true   # a screen of cards: each drawn once (D-024)
+	preview.still = true   # a screen full of cards: draw each once
 	v.add_child(preview)
 	var title := Label.new()
 	title.text = item.name
@@ -173,7 +172,7 @@ func _price_row(id: String) -> Control:
 		l.text = "Yours"
 		l.add_theme_color_override("font_color", Palette.readable(Palette.BAY_DEEP))
 	elif Wardrobe.is_earned_item(id):
-		# D-026: earned, not sold
+		# earned, not sold
 		var deep: Color = Wardrobe.tier_of(id).deep
 		row.add_child(Icons.rect("lock", 22, deep))
 		l.text = "Earn it"
@@ -209,7 +208,7 @@ func _select(id: String) -> void:
 	%ItemName.text = Wardrobe.ITEMS[id].name   # its tier is the stars on its card
 	var w := GameState.wardrobe
 	if not w.owns(id) and Wardrobe.is_earned_item(id):
-		# D-026: how to earn it, and how far along the child is
+		# How to earn it, and how far along the child is.
 		var need: int = Wardrobe.ITEMS[id].earn[1]
 		var have := mini(int(GameState.earn_progress().get(Wardrobe.ITEMS[id].earn[0], 0)), need)
 		%ItemName.text = "%s\n%s: %d of %d" % [Wardrobe.ITEMS[id].name, Wardrobe.earn_text(id), have, need]
@@ -235,7 +234,7 @@ func _select(id: String) -> void:
 		button.face_color = Palette.BLUE
 	else:
 		button.text = "BUY  %d" % Wardrobe.ITEMS[id].price
-		button.full_color = true   # the gold paper coin (D-027)
+		button.full_color = true   # the gold paper coin
 		button.icon_name = "coin"
 		var can := int(GameState.wallet.coins) >= int(Wardrobe.ITEMS[id].price)
 		button.face_color = Palette.ORANGE if can else Palette.PAPER_DEEP.darkened(0.2)
@@ -272,8 +271,8 @@ func _on_action() -> void:
 	_select(id)
 
 
-## Reads a line aloud, for children who can't read it yet.
-## Says it in the buddy's language (D-033); "en" for the tabs' English names.
+## Reads a line aloud, for kids who can't read yet.
+## Uses the buddy's language; "en" for the tabs' English names.
 func _speak(text: String, language: String = "") -> void:
 	var speech := get_node_or_null("/root/Speech")
 	if speech:
@@ -284,6 +283,6 @@ func _update_coins() -> void:
 	%Coins.text = str(GameState.wallet.coins)
 
 
-## The Closet opens from the hub (Shop, Closet tab), so Back goes home (D-015).
+## The Closet opens from the hub, so Back goes home.
 func _back() -> void:
 	GameState.go_home()

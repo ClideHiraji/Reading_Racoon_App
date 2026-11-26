@@ -1,8 +1,8 @@
 class_name PaperConfetti
 extends Control
-## Pale cut-paper bits scattered on a page's paper (D-028): leaves, stars, dots, little rings and
-## banig zigzags, in light tints of the game's colours. They sit behind everything, so cards cover
-## most of them and they only show in the gaps. Drawn once; nothing moves, so it costs nothing per frame.
+## Pale cut-paper bits scattered on a page: leaves, stars, dots, little rings and banig zigzags,
+## in light tints of the game's colours. They sit behind everything, so they only show in the gaps.
+## Drawn once; nothing moves, so it costs nothing per frame.
 
 const TINTS := [Palette.YELLOW, Palette.ORANGE, Palette.LEAF, Palette.BLUE, Palette.PLUM_LIGHT, Palette.TEAL]
 const CELL := 150.0

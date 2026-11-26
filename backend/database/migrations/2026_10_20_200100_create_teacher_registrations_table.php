@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Teacher self-registration waits for an admin's decision (FR-08).
-     * A teacher can sign in only while their registration is approved.
+     * A teacher's sign-up waits for an admin's decision.
+     * A teacher can sign in only while their sign-up is approved.
      */
     public function up(): void
     {

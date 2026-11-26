@@ -1,12 +1,11 @@
 class_name HubSections
 extends RefCounted
-## Every place the home hub can open (D-015, wireframe "Home hub" and "Play picker").
-## kind decides which time rule applies (AccessPolicy):
-## - adventure: lessons and tests, the school schedule (decide)
-## - free: Practice, Library, Watch & Listen, the daily free-play timer (free_play)
-## - collection: Closet, Stickers, Word Book, Today, open whenever the hub is (hub)
-## scene "" = not built yet: the hub opens the "Racoon is still building it" page.
-## All sections are built now (D-017); keep the page for new ones.
+## Every place the home hub can open.
+## `kind` picks the time rule in AccessPolicy:
+## - adventure: lessons and tests, school schedule
+## - free: Practice, Library, Watch & Listen, daily free-play timer
+## - collection: Closet, Stickers, Word Book, Today, open whenever the hub is
+## scene "" = not built yet, so the hub shows the "still building it" page.
 
 const ALL := {
 	"adventure": {"name": "Adventure", "icon": "waves", "color": Palette.YELLOW, "kind": "adventure",
@@ -31,7 +30,7 @@ const ALL := {
 static func get_info(id: String) -> Dictionary:
 	var info: Dictionary = ALL.get(id, {})
 	if id == "closet":
-		# the buddy's own Closet (D-033): "Roco's Closet", "Closet ni Rina"
+		# The Closet uses the buddy's name: "Roco's Closet", "Closet ni Rina".
 		var tree := Engine.get_main_loop() as SceneTree
 		var gs: Node = tree.root.get_node_or_null("GameState") if tree else null
 		if gs:

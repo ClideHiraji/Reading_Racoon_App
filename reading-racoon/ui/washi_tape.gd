@@ -1,7 +1,7 @@
 class_name WashiTape
 extends Control
-## A strip of see-through paper tape (D-028), like the tape that holds a picture in a scrapbook:
-## torn zigzag ends and two thin stripes, as banig mats have. Place it over a card's corner.
+## A strip of see-through paper tape, like the tape holding a picture in a scrapbook:
+## torn zigzag ends and two thin stripes. Place it over a card's corner.
 
 @export var color := Palette.YELLOW:
 	set(v):

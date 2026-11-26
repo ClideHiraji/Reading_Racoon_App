@@ -1,16 +1,16 @@
 @tool
 class_name WindScarf
 extends Node2D
-## A diamond scarf's long ends, blowing in the wind behind Racoon (D-031):
-##   - ribbon:  the Starlight ribbon, two pink ribbon tails with little stars and notched ends
-##   - comet:   the Comet scarf, a long red hero tail with a gold lightning stripe, a forked end and sparks
-##   - rainbow: the Rainbow scarf, rainbow tails
-## Drawn in code, in his ink style, in his body's units (his drawing is 400 x 400). Every point along a
-## tail goes round a small circle, a little later than the point before it, so waves run down the
-## tail and its tip flicks ("moving circles"). The ribbon also twists, showing its darker back. The
-## wind comes in gusts, and a bright shimmer runs along it now and then (its diamond shine).
-## The puppet places it each frame (place()): the spot behind his neck where it leaves him. It's
-## drawn behind him, or in front when he's turned away. On the Closet's still cards it's drawn once.
+## A diamond scarf's long ends, blowing in the wind behind Racoon:
+##   - ribbon:  Starlight ribbon, two pink tails with little stars and notched ends
+##   - comet:   Comet scarf, a long red tail with a gold lightning stripe, a forked end and sparks
+##   - rainbow: Rainbow scarf, rainbow tails
+## Drawn in code in his ink style, in his body's units (400 x 400). Each point along a tail
+## goes round a small circle a little later than the one before, so waves run down the tail
+## and the tip flicks. The ribbon also twists to show its darker back. The wind comes in
+## gusts, with a bright shimmer now and then.
+## The puppet calls place() each frame with the spot behind his neck. It's drawn behind him,
+## or in front when he's turned away. On the Closet's still cards it's drawn once.
 
 const INK := Color("3b2d3a")
 ## Each style's tails are [length, width, how far below the wind's line, phase]; the first is the long one.

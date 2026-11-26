@@ -15,7 +15,7 @@ const TOL := 3.0
 const COLORS := {"SPILL": Color.RED, "CUT": Color(1.0, 0.55, 0.0), "OFFSCREEN": Color.RED,
 		"NOTCH": Color.RED, "OVERLAP": Color.MAGENTA}
 const LESSON_ITEMS := ["pa1-01", "ph1-01", "vo3-07", "ph1-04", "pa2-09", "ph3-01", "ph2-09",
-		"lc3-01", "lc5-07", "lc3-04"]
+		"lc3-01", "lc5-07", "lc3-04", "pa1-02", "vo2-07"]   # the last two: Rhyme Pop and Word Catch (D-043)
 const MONDAY_MORNING := {"year": 2026, "month": 10, "day": 19, "weekday": 1, "hour": 7, "minute": 45, "second": 0}
 const TUESDAY_EVENING := {"year": 2026, "month": 10, "day": 20, "weekday": 2, "hour": 18, "minute": 0, "second": 0}
 
@@ -82,6 +82,11 @@ func _run() -> void:
 
 	await _open("res://scenes/hub/hub.tscn")
 	await _audit("home")
+	SettingsCard.open(current_scene)
+	await _audit("settings")
+	for n in current_scene.get_tree().get_nodes_in_group("back_cancel"):
+		n.pressed.emit()
+	await _frames(2)
 	Kit.reward(current_scene, _gs.talk("reward_sticker_time"),
 			{"coins": 13, "stickers": ["speaker", "star"], "goals_done": true}, func(): pass)
 	await _audit("reward_card")
@@ -187,7 +192,7 @@ func _lesson(id: String) -> void:
 			break
 	lesson._task.answered.emit(wrong, 800)
 	await _audit(id + "_try_again")
-	if item.task_type == "tap_choice" and is_instance_valid(lesson._task):
+	if item.task_type == "tap_choice" and is_instance_valid(lesson._task):   # its variants too
 		lesson._task.answered.emit(wrong, 800)
 		await _audit(id + "_answer")
 	if id == LESSON_ITEMS[0]:

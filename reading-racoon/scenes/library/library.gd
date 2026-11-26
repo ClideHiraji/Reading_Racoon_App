@@ -1,9 +1,8 @@
 extends Control
-## The Library (D-017, wireframe "Library"): picture books in English, Filipino
-## and Bisaya, easiest first. Only books bundled with the app or picked by the
-## teacher (no open internet, RA 10173); teacher-picked books say so on the cover.
-## Each language has one color, shown as a dot on its chip and a soft tag on the
-## cover; green is kept for right answers (D-022).
+## The Library: picture books in English, Filipino and Bisaya, easiest first.
+## Only books that ship with the app or come from the teacher (no internet);
+## teacher books say so on the cover.
+## Each language has one colour (dot on its chip, tag on the cover). Green is kept for right answers.
 
 const LANG_COLORS := {"en": Palette.BAY_DEEP, "fil": Palette.ORANGE, "bis": Palette.TEAL}
 
@@ -22,7 +21,7 @@ func _ready() -> void:
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	_grid = GridContainer.new()
-	_grid.columns = 3 if Kit.landscape() else 2   # D-023
+	_grid.columns = 3 if Kit.landscape() else 2
 	_grid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_grid.add_theme_constant_override("h_separation", 18)
 	_grid.add_theme_constant_override("v_separation", 18)
@@ -52,8 +51,7 @@ func _pick_lang(lang: String) -> void:
 	_build()
 
 
-## A book cover: its setting drawn in paper on top, then the title and a soft
-## language tag (D-022).
+## A book cover: its setting in paper on top, then the title and a language tag.
 func _cover(b: Dictionary) -> Control:
 	var lang := Collection.lang_of(str(b.language))
 	var btn := ChunkyButton.new()
@@ -80,7 +78,7 @@ func _cover(b: Dictionary) -> Control:
 	var pages: Array = b.get("pages", [])
 	var photo: Texture2D = MediaLibrary.page_texture(pages[0]) if not pages.is_empty() else null
 	if photo:
-		# A teacher book's first page picture is its cover (D-020).
+		# A teacher book's first page picture is its cover.
 		var r := TextureRect.new()
 		r.texture = photo
 		r.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
@@ -106,8 +104,8 @@ func _cover(b: Dictionary) -> Control:
 	pad.add_child(text)
 	v.add_child(pad)
 	var t := Kit.label(b.title, 28, Palette.INK, true)
-	# A title on more lines makes the card that much taller (at its narrowest, 320 px less the
-	# padding), or the language tag falls out of its bottom.
+	# A longer title makes the card taller (at its narrowest, 320 px minus padding),
+	# or the language tag falls out of the bottom.
 	var font := ThemeDB.get_project_theme().get_font(&"font", &"TitleLabel")
 	btn.custom_minimum_size.y += maxf(0.0, font.get_multiline_string_size(str(b.title),
 			HORIZONTAL_ALIGNMENT_LEFT, 320.0 - 36.0, 28).y - font.get_height(28))

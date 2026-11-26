@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Role gate for API routes (FR-01), e.g. ->middleware('role:student').
+ * Role check for API routes, e.g. ->middleware('role:student').
  * Runs after auth:sanctum.
  */
 class EnsureUserHasRole

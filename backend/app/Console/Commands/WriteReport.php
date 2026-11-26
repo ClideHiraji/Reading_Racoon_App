@@ -8,9 +8,8 @@ use App\Support\LlmClient;
 use Illuminate\Console\Command;
 
 /**
- * Writes the Gemini teacher report now, without the queue (D-018): to check
- * the LLM settings in .env, or to produce reports for the teachers' rating
- * (MLDLC Stage 4). Each call is in ai_logs like any other.
+ * Writes the Gemini teacher report now, without the queue: to test the LLM settings in .env,
+ * or to make reports for the teachers to rate. Each call is in ai_logs like any other.
  */
 class WriteReport extends Command
 {

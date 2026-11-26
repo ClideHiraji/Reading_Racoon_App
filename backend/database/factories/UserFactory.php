@@ -59,7 +59,7 @@ class UserFactory extends Factory
     }
 
     /**
-     * A teacher with a registration in the given state (FR-08).
+     * A teacher with a sign-up in the given state.
      */
     public function registered(RegistrationStatus $status = RegistrationStatus::Approved): static
     {

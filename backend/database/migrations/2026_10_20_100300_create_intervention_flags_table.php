@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Teacher alerts (FR-17): a failed Heart Recovery (rescue_partial), the
-     * recovery limit (rescue_limit), or low P(L) after 5+ attempts (low_mastery).
+     * Teacher alerts: a failed rescue (rescue_partial), the rescue limit (rescue_limit),
+     * or low P(L) after 5+ tries (low_mastery).
      */
     public function up(): void
     {

@@ -8,10 +8,9 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Teacher-picked Library books and Watch & Listen videos (game D-017,
-     * D-019), assigned to sections and sent to the game by
-     * GET /api/content/manifest. Files (videos, page pictures) live on the
-     * private disk under random names: no student data, no public URL (RA 10173).
+     * Teacher-picked Library books and Watch & Listen videos, given to sections and sent to
+     * the game by GET /api/content/manifest. Files (videos, page pictures) live on the private
+     * disk under random names: no student data, no public URL (RA 10173).
      */
     public function up(): void
     {

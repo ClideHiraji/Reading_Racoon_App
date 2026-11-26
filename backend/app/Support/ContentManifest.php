@@ -8,10 +8,9 @@ use App\Models\Section;
 use Illuminate\Support\Collection;
 
 /**
- * What a section's tablets download (D-019, game D-017): the published books
- * and videos its teacher assigned, in exactly the shapes of the game's
- * content/library.json ("books") and content/watch.json ("items"), so the
- * game can save them as user://content/library.json and watch.json.
+ * What a section's tablets download: the published books and videos its teacher assigned,
+ * shaped exactly like the game's content/library.json ("books") and content/watch.json ("items"),
+ * so the game can save them as user://content/library.json and watch.json.
  */
 final class ContentManifest
 {
@@ -120,8 +119,8 @@ final class ContentManifest
     }
 
     /**
-     * jsonb stores object keys in its own order; send questions in the order of
-     * the game's JSON: {prompt, choices [{id, label, picture?}], answer}.
+     * jsonb keeps object keys in its own order, so put questions back in the game's order:
+     * {prompt, choices [{id, label, picture?}], answer}.
      *
      * @param  array<string, mixed>  $q
      * @return array<string, mixed>

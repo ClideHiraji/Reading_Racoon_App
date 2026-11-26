@@ -26,8 +26,8 @@ return Application::configure(basePath: dirname(__DIR__))
         api: __DIR__.'/../routes/api.php',
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
-        // The hidden admin portal exists only under the secret ADMIN_PATH from
-        // .env, and not at all while it is unset or too short (D-013).
+        // The hidden admin portal exists only under the secret ADMIN_PATH from .env,
+        // and not at all while it's unset or too short.
         then: function () {
             if ($path = AdminPortal::path()) {
                 Route::prefix($path)->middleware('admin')->name('admin.')->group(base_path('routes/admin.php'));
@@ -35,16 +35,16 @@ return Application::configure(basePath: dirname(__DIR__))
         },
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        // The tunnel connector on this laptop (cloudflared or tailscaled) is the
-        // only proxy trusted to say who the client is and that it used https
-        // (config/trustedproxy.php, D-036). Without it every school shares one
-        // rate-limit bucket (127.0.0.1) and the admin IP allowlist can't work.
+        // The tunnel program on this laptop (cloudflared or tailscaled) is the only proxy trusted
+        // to say who the client is and that it used https (config/trustedproxy.php).
+        // Without it every school shares one rate-limit bucket (127.0.0.1) and the admin IP
+        // allowlist can't work.
         $middleware->trustProxies(headers: Request::HEADER_X_FORWARDED_FOR
             | Request::HEADER_X_FORWARDED_HOST
             | Request::HEADER_X_FORWARDED_PORT
             | Request::HEADER_X_FORWARDED_PROTO);
 
-        // CSP, HSTS and friends on every response (NFR-04, D-036).
+        // CSP, HSTS and other safety headers on every response.
         $middleware->append(SecurityHeaders::class);
 
         $middleware->alias([
@@ -85,7 +85,7 @@ return Application::configure(basePath: dirname(__DIR__))
             fn (Request $request) => $request->is('api/*') || $request->expectsJson()
         );
 
-        // Server errors appear in the admin portal's system log as anomalies (FR-08).
+        // Server errors show in the admin portal's system log as anomalies.
         $exceptions->report(function (Throwable $e) {
             // A mistyped artisan command (missing argument, unknown option or
             // command) is someone at the keyboard, not a server fault: it stays

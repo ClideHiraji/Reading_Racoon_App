@@ -1,4 +1,4 @@
-{{-- Shared by the report page and its PDF (FR-05, FR-18). Plain tables only: dompdf has no flexbox or JS. --}}
+{{-- Shared by the report page and its PDF. Plain tables only: dompdf has no flexbox or JS. --}}
 <h2>Summary</h2>
 {{-- The writer only ever sees the student code (RA 10173); the teacher reads the name. --}}
 @foreach ($report->paragraphs as $paragraph)

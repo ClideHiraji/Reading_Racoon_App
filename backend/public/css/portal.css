@@ -1,8 +1,8 @@
 /*
- * Teacher dashboard and admin portal (FR-06, FR-08, FR-16, FR-17, FR-22, NFR-02).
- * One static, cacheable file from this host: no build step, and the admin
- * portal still loads nothing from other hosts (D-013). Paper palette from
- * D-009 / D-016; text and controls meet WCAG AA (contrast checked by script).
+ * Teacher dashboard and admin portal styles.
+ * One static, cacheable file from this host: no build step, and the admin portal
+ * still loads nothing from other hosts. Paper palette like the game; text and
+ * controls meet WCAG AA (contrast checked by script).
  */
 
 /* ---------- Tokens ---------- */
@@ -29,7 +29,7 @@
     --help: #d9902a;      --help-bg: #fcefd6;      --help-ink: #85590f;
     --track: #ebe4d6;
 
-    /* Flag severity (FR-17): red, orange, amber. */
+    /* Flag severity: red, orange, amber. */
     --red: #c8423b;       --red-bg: #fbe1df;       --red-ink: #8e2a24;
     --orange: #e76f51;    --orange-bg: #fde7dd;    --orange-ink: #9a3f22;
     --amber: #e9a23b;     --amber-bg: #fcefd6;     --amber-ink: #85590f;
@@ -96,7 +96,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible { outline-offs
 .nav .account.is-apart { margin-left: var(--s3); }
 .nav-toggle { display: none; }
 
-/* Admin: a dark bar marks the different area (D-013). */
+/* Admin: a dark bar marks the different area. */
 .admin .topbar { background: var(--ink); border-bottom: 0; }
 .admin .topbar .brand, .admin .topbar .nav a, .admin .topbar .nav button { color: #fff; }
 .admin .topbar .nav a:hover, .admin .topbar .nav button:hover { background: rgba(255, 255, 255, .12); }
@@ -442,7 +442,7 @@ pre.json { background: var(--paper-2); padding: .5rem; border-radius: var(--radi
 .tabs a[aria-current="page"] { background: var(--ink); color: #fff; border-color: var(--ink); }
 .code-card { font-family: var(--mono); font-size: 1.6rem; font-weight: 800; letter-spacing: .12em; background: #fff; border: 2px dashed var(--brand); border-radius: 10px; padding: .6rem 1rem; display: inline-block; }
 
-/* ---------- Login cards (FR-16, D-036) ---------- */
+/* ---------- Login cards ---------- */
 .login-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr)); gap: 12px; }
 .login-card { border: 2px dashed #9aa3a8; border-radius: 12px; padding: 14px 16px; background: #fff; break-inside: avoid; page-break-inside: avoid; }
 .login-card-head { display: flex; align-items: center; gap: 8px; font-size: .8rem; color: var(--muted); }
@@ -519,8 +519,8 @@ pre.json { background: var(--paper-2); padding: .5rem; border-radius: var(--radi
 
 /* Screens only: a printed class page keeps every skill column. */
 @media screen and (max-width: 760px), screen and (max-width: 960px) and (max-height: 520px) {
-    /* Learners (D-039): one compact card per child. Name and activity, a one-line skill
-       summary, then Report and any missing consent. The full detail is on the learner page. */
+    /* Learners: one compact card per child. Name and activity, a one-line skill
+    summary, then Report and any missing consent. The full detail is on the learner page. */
     table.roster.table-cards > tbody > tr { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: var(--s3); padding: var(--s2) var(--s3) var(--s1); }
     table.roster.table-cards > tbody > tr.is-hidden { display: none; }
     table.roster.table-cards > tbody > tr > td { padding: 0; min-height: 0; }
@@ -574,7 +574,7 @@ pre.json { background: var(--paper-2); padding: .5rem; border-radius: var(--radi
     .flag { grid-template-columns: 10rem 1fr 6.75rem; }
     main { padding: 0 !important; max-width: none !important; }
     .panel { box-shadow: none; border-color: #ccc; break-inside: avoid; }
-    /* A page showing login cards prints only the cards (FR-16). */
+    /* A page showing login cards prints only the cards. */
     body.printing-cards main > :not(#login-cards), main:has(> #login-cards) > :not(#login-cards) { display: none !important; }
     #login-cards { border: 0 !important; padding: 0 !important; margin: 0 !important; box-shadow: none !important; }
     .login-cards { grid-template-columns: 1fr 1fr; gap: 6mm; }

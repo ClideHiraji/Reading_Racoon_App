@@ -1,9 +1,9 @@
 extends Control
-## Sign in once with the student's login code from the teacher (FR-01, D-010).
-## A big on-screen keypad holds only the letters and numbers a code can have
-## (no 0/O/1/I/L to mix up), so there's no phone keyboard and no settings to fill
-## in: the server address is built into the app. After this the app opens
-## straight to play, offline too, and saving to the server is automatic.
+## Sign in once with the login code from the teacher.
+## The big on-screen keypad has only the letters and numbers a code can have
+## (no 0/O/1/I/L to mix up), so there's no phone keyboard and nothing to set up:
+## the server address is built in. After this the app opens straight to play, offline
+## too, and saving to the server is automatic.
 
 const ANDIKA := preload("res://assets/fonts/Andika-Bold.ttf")
 
@@ -43,7 +43,7 @@ func _ready() -> void:
 	%Raccoon.set_mood("happy")
 	var hello := "Hi! Type the code on your card."
 	if GameState.student_name() != "":
-		hello = "Welcome back, %s! Type your code again." % GameState.student_name()
+		hello = "Welcome back, reader! Type your code again."   # no name, because the line is recorded
 	%Bubble.say(hello)
 	Speech.say(hello, "en")
 
@@ -75,16 +75,16 @@ func _key(ch: String) -> ChunkyButton:
 	b.card_style = true
 	b.lift = 6
 	b.radius = 20
-	b.custom_minimum_size = Vector2(_key_px, _key_px)   # 100 px keys, 90 on a laptop (D-022, D-023)
+	b.custom_minimum_size = Vector2(_key_px, _key_px)   # 100 px keys, 90 on a laptop
 	b.add_theme_font_override("font", ANDIKA)
 	b.add_theme_font_size_override("font_size", 48)
 	b.pressed.connect(_type.bind(ch))
 	return b
 
 
-## Laptops (D-023): Racoon, his bubble and LET'S GO in a column on the left,
-## the code and eight columns of keys on the right, so it all fits the shorter
-## screen. Both shapes keep clear of a notch.
+## Laptop layout: Racoon, his bubble and LET'S GO in a column on the left, the code and
+## eight columns of keys on the right, so it all fits the shorter screen.
+## Both layouts keep clear of a notch.
 func _fit_shape() -> void:
 	var margin: MarginContainer = $Margin
 	if Kit.landscape():
@@ -111,7 +111,7 @@ func _fit_shape() -> void:
 		%Raccoon.reparent(side, false)
 		%GoButton.reparent(side, false)
 		%SkipButton.reparent(side, false)
-		# Its long debug-only line wraps: on one line it widened the column past the screen's edges.
+		# Let the long debug-only line wrap: on one line it pushed the column past the screen.
 		%SkipButton.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		top.queue_free()
 		spacer.queue_free()
@@ -124,8 +124,8 @@ func _fit_shape() -> void:
 	Kit.fit_safe(margin)
 
 
-## On a laptop the child can type the code on the keyboard too: letters and
-## numbers, Backspace, and Enter for LET'S GO (D-023).
+## On a laptop the child can type the code on the keyboard too: letters and numbers,
+## Backspace, and Enter for LET'S GO.
 func _unhandled_key_input(event: InputEvent) -> void:
 	var key := event as InputEventKey
 	if key == null or not key.pressed or key.echo:
@@ -177,8 +177,8 @@ func _submit() -> void:
 	%GoButton.text = "LET'S GO!"
 	if err == "":
 		%Raccoon.set_mood("celebrate")
-		%Bubble.say("Hi, %s!" % GameState.student_name())
-		Speech.say("Hi, %s!" % GameState.student_name(), "en")
+		%Bubble.say("Hi, reader!")
+		Speech.say("Hi, reader!", "en")
 		await get_tree().create_timer(1.0).timeout
 		_continue()
 		return
@@ -188,11 +188,11 @@ func _submit() -> void:
 	_refresh()
 
 
-## After signing in: the home hub (the pre-test waits on the Adventure map, D-021).
+## After signing in: the home hub (the pre-test waits on the Adventure map).
 func _continue() -> void:
 	if not GameState.guard_hub():
 		return
-	# a new student picks a buddy and a language first (D-033)
+	# a new student picks a buddy and a language first
 	get_tree().change_scene_to_file(GameState.HUB_SCENE if GameState.buddy_chosen() else GameState.BUDDY_SCENE)
 
 

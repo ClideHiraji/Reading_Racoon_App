@@ -1,8 +1,8 @@
 class_name LoginCode
 extends RefCounted
-## Student login codes as the backend issues them (backend/app/Support/LoginCode.php):
-## 8 characters from an alphabet without 0/O/1/I/L, shown as "K7PM-3QXA".
-## Case, spaces and dashes don't matter (FR-01, D-010).
+## Student login codes, same rules as backend/app/Support/LoginCode.php.
+## 8 characters with no 0/O/1/I/L, shown as "K7PM-3QXA".
+## Case, spaces and dashes don't matter.
 
 const ALPHABET := "ABCDEFGHJKMNPQRSTUVWXYZ23456789"
 const LENGTH := 8

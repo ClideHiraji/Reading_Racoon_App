@@ -15,11 +15,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 /**
- * Roster management (FR-16): add learners with a generated login code, give a
- * learner a new code, record parental consent, remove a learner. Login codes
- * are shown once and only their hash is stored (open issue 9, D-036): right
- * after adding learners or making a new code, the class page shows them as
- * printable cut-out cards, and never again.
+ * The class list: add learners with a new login code, give a learner a new code, record
+ * parental consent, remove a learner. Login codes are shown once and only their hash is kept:
+ * right after adding learners or making a new code, the class page shows them as printable
+ * cut-out cards, and never again.
  */
 class RosterController extends Controller
 {
@@ -79,7 +78,7 @@ class RosterController extends Controller
         ])->save();
         AuditLog::record($request->user(), $given ? 'student.consent_recorded' : 'student.consent_cleared', ['student', $student->code]);
 
-        // Recording is one tap on the class page, so it comes with an Undo (D-037).
+        // Recording is one tap on the class page, so it comes with an Undo.
         return $given
             ? back()->with('status', "Parental consent recorded for {$student->displayName()}.")->with('undo_consent', $student->id)
             : back()->with('status', "Consent record cleared for {$student->displayName()}.");

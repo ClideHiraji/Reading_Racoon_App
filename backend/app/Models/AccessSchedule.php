@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * A section's play windows (FR-12, docs/knowledge/06-game-design.md). Times are
- * wall-clock times in the school's time zone (reading_racoon.access.timezone).
- * A section without a row uses config reading_racoon.access.defaults.
+ * A section's play windows. Times are clock times in the school's time zone
+ * (reading_racoon.access.timezone). A section without a row uses
+ * reading_racoon.access.defaults.
  */
 class AccessSchedule extends Model
 {

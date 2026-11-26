@@ -100,9 +100,9 @@ return [
             // Columns are timestamptz. Eloquent writes times without an offset, so the
             // session must read them as UTC (the app timezone), whatever the server's default.
             'timezone' => 'UTC',
-            // Every wait has a limit (D-036): a stuck query, a lock held by a
-            // crashed request or an unreachable database frees the PHP worker
-            // with an error instead of hanging it until the tunnel times out.
+            // Every wait has a limit: a stuck query, a lock held by a crashed request or a database
+            // that doesn't answer frees the PHP worker with an error instead of hanging it until the
+            // tunnel times out.
             'application_name' => 'reading-racoon',
             'server_options' => [
                 'statement_timeout' => (int) (env('DB_STATEMENT_TIMEOUT_MS') ?: 30000),

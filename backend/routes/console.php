@@ -4,9 +4,9 @@ use App\Models\SystemLog;
 use App\Support\Ops;
 use Illuminate\Support\Facades\Schedule;
 
-// Scheduled maintenance for the home server (D-036, docs/deploy/home-server.md).
-// Windows runs `php artisan schedule:work` as a startup task; every job below
-// also tolerates a missed night (the laptop was off) and simply runs the next.
+// Scheduled upkeep for the home server (see docs/deploy/home-server.md).
+// Windows runs `php artisan schedule:work` as a startup task. Every job below is fine
+// with a missed night (laptop off) and just runs the next one.
 
 // Proves the scheduler is alive (`app:preflight`, GET /api/health).
 Schedule::call(fn () => Ops::beat('scheduler'))->everyMinute()->name('scheduler-heartbeat');

@@ -8,7 +8,11 @@ Capstone thesis project (Caraga State University, BSIT, due Nov 2026): a Godot 4
 
 **Game engine is decided: Godot 4.7 + GDScript** (the thesis says Unity; see open issue 19). Use the Godot MCP tools to create scenes, run the project and read debug output. Prefer editing `.tscn` text directly when a tool can't set a property (e.g., Vector2). Project root: `reading-racoon/` (portrait 720×1280).
 
-Reference requirement IDs (`FR-xx`, `NFR-xx`) from `docs/knowledge/02-requirements.md` in commits and code comments.
+Requirement IDs (`FR-xx`, `NFR-xx` from `docs/knowledge/02-requirements.md`) go in commits and the `brain/` notes, not in code.
+
+Code comments (game and backend) are short and plain, like a junior developer's notes: what this part does and a hint for debugging it by hand. No `D-0xx`/`FR-xx`/`NFR-xx`/issue IDs, dates or chat history.
+
+Edit the main folder directly, not a worktree or side branch.
 
 ## Project brain (Obsidian + Graphify)
 

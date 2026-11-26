@@ -11,10 +11,9 @@ use Symfony\Component\Process\Process;
 use Throwable;
 
 /**
- * `php artisan app:preflight`: checks that this machine is safe to put on the
- * internet and is keeping itself healthy (NFR-02, NFR-04, D-036). Run it after
- * every change to .env and before every school day of the evaluation.
- * FAIL lines must be fixed; the exit code is 1 while any remain.
+ * `php artisan app:preflight`: checks that this machine is safe to put on the internet and
+ * is keeping itself healthy. Run it after every .env change and before every school day
+ * of the evaluation. FAIL lines must be fixed; the exit code is 1 while any remain.
  */
 class Preflight extends Command
 {
@@ -46,7 +45,7 @@ class Preflight extends Command
             'Queue: '.config('queue.default'), 'QUEUE_CONNECTION is sync: replays and reports run inside requests', fail: false);
         $this->check(AdminPortal::path() !== null, 'Admin portal is on (secret path set)', 'Admin portal is off (ADMIN_PATH unset or shorter than '.config('admin.min_path_length').')', fail: false);
         // Apache runs PHP in threads on Windows; reading .env on every request
-        // there lost the database password under load (load test 2026-11-19).
+        // there lost the database password under load.
         $this->check($this->laravel->configurationIsCached() || ! $prod, 'Configuration is cached',
             'Configuration is not cached: run php artisan config:cache (and again after every .env change)');
         $this->check($this->laravel->routesAreCached() || ! $prod, 'Routes are cached', 'Routes are not cached: php artisan route:cache', fail: false);

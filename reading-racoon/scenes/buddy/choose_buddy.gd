@@ -1,9 +1,9 @@
 extends Control
-## Choose your buddy (D-033): Roco, the boy raccoon, or Rina, the girl, and the language the buddy
-## talks in: English, Filipino or Bisaya. It shows the first time a student plays, and again from
-## the profile chip on Home. Lessons keep their own language (MATATAG bridge, FR-03); this changes
-## only what the buddy says and the menus he or she reads out.
-## Tapping a buddy or a language says a sample in that voice and language, before anything is saved.
+## Choose your buddy: Roco the boy raccoon or Rina the girl, and the language the buddy
+## talks in: English, Filipino or Bisaya. Shows the first time a student plays, and again
+## from the profile chip on Home. Lessons keep their own language; this only changes
+## what the buddy says and the menus.
+## Tapping a buddy or a language plays a sample in that voice and language, before anything is saved.
 
 const BUDDIES := ["roco", "rina"]
 
@@ -31,7 +31,7 @@ func _ready() -> void:
 
 
 func _exit_tree() -> void:
-	GameState.use_buddy_voice()   # the previews lent the voice; give the student's back
+	GameState.use_buddy_voice()   # the previews borrowed the voice; give the student's back
 
 
 func _build() -> void:
@@ -43,7 +43,7 @@ func _build() -> void:
 	col.add_child(top)
 	if _returning:
 		var home := Kit.home_button()
-		home.add_to_group("back_button")   # Android Back and Escape (D-023)
+		home.add_to_group("back_button")   # Android Back and Escape
 		home.tooltip_text = "Home"
 		home.pressed.connect(GameState.go_home)
 		top.add_child(home)
@@ -52,7 +52,7 @@ func _build() -> void:
 	_title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_title.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	top.add_child(_title)
-	_title.add_child(Squiggle.new())   # a crayon line under the title (D-028)
+	_title.add_child(Squiggle.new())   # a crayon line under the title
 	if _returning:
 		var balance := Control.new()   # keeps the title in the middle
 		balance.custom_minimum_size = Vector2(96, 0)
@@ -77,10 +77,10 @@ func _build() -> void:
 	_go.custom_minimum_size = Vector2(420, 120)
 	_go.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	_go.pressed.connect(_done)
-	# from Home, a quiet line on whether the stars have reached school (the profile chip said it before)
+	# From Home, a quiet line on whether the stars have reached school.
 	var saved: Control = _saved_line() if _returning else Control.new()
 	if wide:
-		# laptops (D-023): the buddies on the left; what they say, the languages and Let's go on the right
+		# Laptop layout: the buddies on the left; what they say, the languages and Let's go on the right.
 		var body := HBoxContainer.new()
 		body.size_flags_vertical = Control.SIZE_EXPAND_FILL
 		body.add_theme_constant_override("separation", 40)

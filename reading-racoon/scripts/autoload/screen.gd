@@ -1,16 +1,13 @@
 extends Node
-## The device's shape, its safe area and the Back key (autoload "Screen", D-023).
-## - Shape: a landscape window (the school laptops) draws the game on a 1280×720
-##   canvas instead of 720×1280, so it is bigger on a wide screen, and each
-##   screen lays itself out side by side when `landscape` is true. Phones stay
-##   portrait. Windows builds open full screen.
-## - Safe area: insets() gives the notch, rounded corners and home indicator in
-##   canvas units, so top and bottom bars stay clear of them (iPhone, Android).
-## - Back: Android's Back button or gesture and Escape on a laptop do what the
-##   screen's own ✕ or Home button does, closing an open card first. Only Home
-##   and the start screens let Back leave the game, as Android expects.
-## - Mouse: every button shows the pointing hand, so a child on a laptop can
-##   tell what can be clicked.
+## The device's shape, safe area and Back key (autoload "Screen").
+## - Shape: a landscape window (school laptops) draws the game on a 1280×720 canvas
+##   instead of 720×1280, and screens lay out side by side when `landscape` is true.
+##   Phones stay portrait. Laptops open full screen unless Settings turned it off.
+## - Safe area: insets() gives the notch, rounded corners and home bar in canvas units,
+##   so top and bottom bars stay clear of them.
+## - Back: Android's Back and Escape on a laptop do what the screen's ✕ or Home button does,
+##   closing an open card first. Only Home and the start screens let Back leave the game.
+## - Mouse: every button shows the pointing hand, so a child on a laptop sees what's clickable.
 
 signal shape_changed
 
@@ -27,17 +24,16 @@ func _ready() -> void:
 		if a.begins_with("--safe-insets="):
 			var parts := a.trim_prefix("--safe-insets=").split(",")
 			_debug_insets = {"top": float(parts[0]), "bottom": float(parts[1]) if parts.size() > 1 else 0.0}
-	if OS.has_feature("windows") and not OS.has_feature("editor"):
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	SettingsCard.apply_saved(get_tree())   # volumes; full screen on a laptop unless turned off
 	get_tree().root.size_changed.connect(_fit)
 	get_tree().node_added.connect(_on_node_added)
 	_fit()
-	if DevMenu.allowed():   # issue 30: DELETE BEFORE THE FINAL RELEASE
+	if DevMenu.allowed():   # Dev menu: DELETE BEFORE THE FINAL RELEASE
 		print("Developer menu is on (debug build): F12, or 5 quick taps in the top-right corner. "
 				+ "Delete it before the final release (issue 30).")
 
 
-## The developer menu's way in (issue 30, debug builds only). DELETE BEFORE THE FINAL RELEASE.
+## Opens the dev menu (debug builds only). DELETE BEFORE THE FINAL RELEASE.
 func _input(event: InputEvent) -> void:
 	DevMenu.handle_input(event, get_tree())
 
@@ -57,11 +53,11 @@ func _on_node_added(node: Node) -> void:
 		var list := _scroll_of(node)
 		if list:
 			# A drag that starts on a card must still scroll its list: the card lets the touch
-			# through to the list, which cancels the card's press once the finger moves (NFR-02).
+			# through to the list, which cancels the card's press once the finger moves.
 			var b := node as BaseButton
 			b.mouse_filter = Control.MOUSE_FILTER_PASS
-			# A tap the card takes never reaches the list, which then thinks a finger is still down
-			# and would scroll with the next mouse move; setting its scroll ends that drag.
+			# A tap the card takes never reaches the list, so the list thinks a finger is still down
+			# and scrolls on the next mouse move. Setting its scroll ends that drag.
 			b.pressed.connect(func(): if is_instance_valid(list): list.scroll_vertical = list.scroll_vertical)
 
 
@@ -74,8 +70,8 @@ static func _scroll_of(node: Node) -> ScrollContainer:
 	return null
 
 
-## How much of each edge the notch, rounded corners and home indicator cover,
-## in canvas units (all zero on a laptop).
+## How much of each edge the notch, rounded corners and home bar cover, in canvas units
+## (all zero on a laptop).
 func insets() -> Dictionary:
 	if not _debug_insets.is_empty():
 		return {"top": _debug_insets.top, "bottom": _debug_insets.bottom, "left": 0.0, "right": 0.0}
@@ -110,8 +106,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
 ## Back, on any screen: an open card's own way out first (group "back_cancel"),
 ## then the screen's go_back() or its ✕ / Home button (group "back_button").
-## With neither (Home, the start screen), Back leaves the game. A second Back within
-## BACK_REST_MS does nothing, so a quick double press can't go back twice.
+## With neither (Home, the start screen), Back leaves the game.
+## A second Back within BACK_REST_MS does nothing, so a double press can't go back twice.
 func back() -> void:
 	var now := Time.get_ticks_msec()
 	if now - _last_back < BACK_REST_MS:

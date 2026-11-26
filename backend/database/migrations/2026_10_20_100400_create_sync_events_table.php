@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Raw log of the gameplay events the client queues offline and uploads to
-     * POST /api/sync (FR-11, docs/knowledge/03-architecture.md "Offline and sync").
+     * Raw log of the game events the device queues offline and uploads to POST /api/sync
+     * (see docs/knowledge/03-architecture.md).
      */
     public function up(): void
     {

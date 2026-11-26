@@ -1,10 +1,10 @@
 class_name Icons
 extends RefCounted
-## Vector icons and pictures. No emoji (D-009).
-## - Glyphs: white SVG silhouettes in res://assets/icons (game-icons.net, CC BY 3.0, see
-##   CREDITS.md), tinted in Godot for buttons, badges, tabs and the path.
-## - Pictures: full-colour drawings in res://assets/pictures (D-027), drawn in their own colours
-##   for the words, stickers, Home tiles and practice games. Made by tools/icon-art.
+## Vector icons and pictures. No emoji.
+## - Glyphs: white SVG shapes in res://assets/icons (game-icons.net, CC BY 3.0, see CREDITS.md),
+##   tinted in Godot for buttons, badges, tabs and the path.
+## - Pictures: full-colour drawings in res://assets/pictures, shown in their own colours
+##   for words, stickers, Home tiles and practice games. Made by tools/icon-art.
 
 const DIR := "res://assets/icons/%s.svg"
 const PICTURE_DIR := "res://assets/pictures/%s.svg"
@@ -52,20 +52,20 @@ static func picture_color(name: String) -> Color:
 	return PICTURE_COLORS.get(name, Palette.INK)
 
 
-## True when `name` has a full-colour picture (D-027).
+## True when `name` has a full-colour picture.
 static func has_picture(name: String) -> bool:
 	return name != "" and ResourceLoader.exists(PICTURE_DIR % name)
 
 
-## The full-colour picture (D-027), or null when there is none.
+## The full-colour picture, or null when there is none.
 static func picture_tex(name: String) -> Texture2D:
 	if not _pictures.has(name):
 		_pictures[name] = load(PICTURE_DIR % name) if has_picture(name) else null
 	return _pictures[name]
 
 
-## A picture as a TextureRect in its own colours, never tinted (D-027). Without a full-colour
-## picture it's the silhouette, tinted `fallback` (or the picture's paper color when that's clear).
+## A picture as a TextureRect in its own colours, never tinted. Without a full-colour picture
+## it's the glyph, tinted `fallback` (or the picture's paper colour when that's clear).
 static func picture_rect(name: String, px: float, fallback := Color(0, 0, 0, 0)) -> TextureRect:
 	var full := picture_tex(name)
 	if full == null:

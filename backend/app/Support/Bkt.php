@@ -3,9 +3,9 @@
 namespace App\Support;
 
 /**
- * Bayesian Knowledge Tracing update equations (FR-03). Server twin of the
- * client's reading-racoon/scripts/core/bkt.gd; both use 64-bit floats, so the
- * same answers give the same numbers. Source: docs/knowledge/05-bkt-engine.md.
+ * Bayesian Knowledge Tracing math (docs/knowledge/05-bkt-engine.md).
+ * Must match the game's reading-racoon/scripts/core/bkt.gd. Both use 64-bit floats,
+ * so the same answers give the same numbers.
  */
 final class Bkt
 {
@@ -29,8 +29,8 @@ final class Bkt
     }
 
     /**
-     * Guess rate for one item. Choice-style items use 1 / number of choices
-     * (D-003 rule 7). Always keeps 1 - S > G.
+     * Guess rate for one item. Choice items use 1 / number of choices.
+     * Always keeps 1 - S > G, or the math breaks.
      */
     public static function guessFor(float $baseG, float $s, int $numChoices): float
     {

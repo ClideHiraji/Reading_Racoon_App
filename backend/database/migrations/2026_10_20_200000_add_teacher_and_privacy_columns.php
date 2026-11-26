@@ -9,13 +9,12 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Columns for the teacher dashboard and admin portal (FR-06, FR-08, FR-16, NFR-04):
-     * section ownership, a pseudonymous student code for exports and LLM prompts,
-     * the parental consent record, and admin TOTP 2FA.
+     * Columns for the teacher dashboard and admin portal: section owner, a pseudonymous
+     * student code for exports and LLM prompts, the parental consent record, and admin TOTP.
      */
     public function up(): void
     {
-        // The teacher who owns the section; policies let teachers see only their own (FR-06).
+        // The teacher who owns the section; policies let teachers see only their own.
         Schema::table('sections', function (Blueprint $table) {
             $table->foreignId('teacher_id')->nullable()->after('id')->constrained('users')->nullOnDelete();
         });

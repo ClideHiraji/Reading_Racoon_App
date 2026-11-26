@@ -1,16 +1,14 @@
 extends Control
-## One lesson (D-007 layout, D-009 storybook look): close, progress bar and hearts
-## on top, the prompt on a paper card, the task in the middle, and the raccoon
-## standing on the world's paper-cut landscape. The rules live in LessonSession
-## (scripts/core); this only shows them.
-## FR-13 hearts and Racoon's Rescue, FR-14 hints, FR-20 read-aloud.
-## D-021: a wrong first try greys out that choice and Racoon gives the question's
-## hint (HintText); a wrong second try shows the answer and why on a paper sheet.
+## One lesson: close, progress bar and hearts on top, the prompt on a paper card,
+## the task in the middle, and the raccoon on the world's paper-cut landscape.
+## The rules live in LessonSession (scripts/core); this only shows them.
+## A wrong first try greys out that choice and Racoon gives a hint (HintText).
+## A wrong second try shows the answer and why on a paper sheet.
 ## No CONTINUE taps: Racoon says a short line and the lesson moves on by itself.
 ## Stopping halfway keeps nothing.
-## D-024: Racoon acts out the lesson's moments (FR-14): he greets you, reads the question
-## along with you, thinks over a hint, points at the answer, cheers a level up, and nudges
-## after a long quiet spell. He stays calm while you read.
+## Racoon acts out the lesson: he greets you, reads the question with you, thinks over a hint,
+## points at the answer, cheers a level up, and nudges after a long quiet spell.
+## He stays calm while you read.
 
 ## One scene per task_type in content/levels*.json.
 const TASKS := {
@@ -18,20 +16,23 @@ const TASKS := {
 	"drag_letter": preload("res://scenes/tasks/drag_letter_task.tscn"),
 	"order_tiles": preload("res://scenes/tasks/order_tiles_task.tscn"),
 	"spin_words": preload("res://scenes/tasks/spin_words_task.tscn"),
+	# Practice games as lesson tasks: a tap_choice item's "variant" picks the look.
+	"rhyme_pop": preload("res://scenes/tasks/rhyme_pop_task.tscn"),
+	"word_catch": preload("res://scenes/tasks/word_catch_task.tscn"),
 }
 const RESCUE_PAPER := Color("dcebf0")
-## How long each kind of feedback stays before the lesson moves on (seconds; it
-## also waits for Racoon to finish talking).
+## How long each kind of feedback stays before the lesson moves on (seconds).
+## It also waits for Racoon to finish talking.
 const PAUSE_TEST := 0.7
 const PAUSE_RIGHT := 1.1
 const PAUSE_BIG := 2.0
 const PAUSE_SPEECH_CAP := 8.0
 const HEART_PX := 46.0
 const HEART_W := HEART_PX * 0.81   # the drawn heart's width in its slot
-const SIDE_W := 300.0   # Racoon's column on a laptop (D-023)
-const NUDGE_AFTER := 20.0   # seconds on one question before Racoon points at it (D-024)
+const SIDE_W := 300.0   # Racoon's column on a laptop
+const NUDGE_AFTER := 20.0   # seconds on one question before Racoon points at it
 
-## A LessonSession, or an AssessmentSession for the pre/post-test (same interface).
+## A LessonSession, or an AssessmentSession for the pre/post-test (same functions).
 var session: RefCounted
 var _testing := false
 var _item := {}
@@ -52,8 +53,8 @@ var _task_id := 0         # a new question, or an answer, cancels Racoon's waiti
 
 func _ready() -> void:
 	session = GameState.new_session()
-	# Work the hearts and the lesson-complete star out while the lesson runs, so
-	# they play smoothly the first time on slow phones (D-022).
+	# Get the hearts and the lesson-complete star ready while the lesson runs,
+	# so they play smoothly the first time on slow phones.
 	AnimatedHeart.warm()
 	AnimatedStar.warm()
 	_fit_shape()
@@ -68,7 +69,7 @@ func _ready() -> void:
 	_update_hearts(HeartSystem.MAX_HEARTS)
 	_testing = session is AssessmentSession
 	if _testing:
-		# Reading Adventure (FR-02/FR-10): no hearts, no right/wrong, just do your best.
+		# Reading Adventure test: no hearts, no right/wrong, just do your best.
 		%Hearts.hide()
 		_say(GameState.talk("lesson_test_hello"), "happy", "greet")
 	else:
@@ -76,10 +77,9 @@ func _ready() -> void:
 	_next()
 
 
-## Laptops (D-023): Racoon and his bubble stand in a column on the left with the
-## prompt and the task beside them, and the answer sheet covers only the task's
-## side so Racoon stays in view. Phones keep the portrait stack. Both keep clear
-## of a notch.
+## Laptop layout: Racoon and his bubble in a column on the left, the prompt and task beside
+## them. The answer sheet covers only the task's side so Racoon stays in view.
+## Phones keep the portrait stack. Both keep clear of a notch.
 func _fit_shape() -> void:
 	var margin: MarginContainer = $Margin
 	if Kit.landscape():
@@ -122,7 +122,7 @@ func _fit_shape() -> void:
 
 
 func _next() -> void:
-	Speech.new_question()   # what he was saying about the last one stops here (D-032)
+	Speech.new_question()   # stop what he was saying about the last question
 	sheet.hide()
 	_item = session.next_item()
 	if _item.is_empty():
@@ -135,7 +135,7 @@ func _next() -> void:
 	if not _testing and not session.in_rescue():
 		_update_hearts(session.hearts.hearts)
 	_update_progress()
-	%SpeakButton.visible = Speech.available(_lang())
+	%SpeakButton.visible = Speech.has_line(_item.get("tts_text", _item.get("prompt", "")), _lang())
 	%StoryButton.visible = _item.has("passage")
 	var pid: String = _item.get("passage", "")
 	if pid != "" and pid != _shown_passage:
@@ -147,7 +147,7 @@ func _next() -> void:
 func _start_task() -> void:
 	if _task:
 		_task.queue_free()
-	_task = TASKS.get(_item.task_type, TASKS.tap_choice).instantiate()
+	_task = TASKS.get(str(_item.get("variant", "")), TASKS.get(_item.task_type, TASKS.tap_choice)).instantiate()
 	%TaskHolder.add_child(_task)
 	_task.setup(_item)
 	_task.answered.connect(_on_answered)
@@ -169,10 +169,10 @@ func _show_story(pid: String) -> void:
 	_task = page
 	%TaskHolder.add_child(page)
 	%StoryButton.visible = false
-	%Prompt.text = p.get("title", "Story")   # the page reads itself aloud (D-022)
+	%Prompt.text = p.get("title", "Story")   # the page reads itself aloud
 
 
-## The story's done: its reading stops (D-032) and its question starts.
+## The story is done: its reading stops and its question starts.
 func _after_story() -> void:
 	Speech.new_question()
 	_start_task()
@@ -195,7 +195,7 @@ func _lang() -> String:
 func _on_answered(answer: String, ms: int) -> void:
 	var was_rescue: bool = session.in_rescue()
 	_task_id += 1
-	# Nothing is saved until the lesson ends (D-021): GameState.finish_lesson().
+	# Nothing is saved until the lesson ends (GameState.finish_lesson()).
 	_outcome = session.submit(answer, ms)
 	var right := str(_outcome.answer)
 	if _outcome.get("neutral", false):
@@ -244,8 +244,8 @@ func _on_answered(answer: String, ms: int) -> void:
 	_advance_after(pause)
 
 
-## A wrong first try: no answer yet. The choice greys out, a heart goes, and
-## Racoon gives this question's hint so the child can work it out (D-021, FR-14).
+## A wrong first try: no answer yet. The choice greys out, a heart goes, and Racoon
+## gives this question's hint so the child can work it out.
 func _try_again(answer: String) -> void:
 	Sfx.play("wrong")
 	_update_hearts(_outcome.hearts)
@@ -258,9 +258,9 @@ func _try_again(answer: String) -> void:
 		_start_task()
 
 
-## Moves on by itself after `seconds` and after Racoon stops talking (D-021).
-## It waits while a card (the stop dialog, a story) is open. Calling
-## _on_continue() first, as the tests do, cancels it.
+## Moves on by itself after `seconds` and after Racoon stops talking.
+## Waits while a card (the stop dialog, a story) is open.
+## Calling _on_continue() first, as the tests do, cancels it.
 func _advance_after(seconds: float) -> void:
 	_waiting = true
 	_wait_id += 1
@@ -293,7 +293,7 @@ func _on_continue() -> void:
 			_next()
 
 
-# --- Racoon's Rescue (Heart Recovery, D-004) ---------------------------------------
+# --- Racoon's Rescue ------------------------------------------------------------------
 
 func _start_rescue_look() -> void:
 	sheet.hide()
@@ -317,9 +317,8 @@ func _update_rescue_label() -> void:
 
 # --- Answer sheet, hearts, progress -----------------------------------------------------
 
-## A heart slot the size of the old heart icon, with a heart from the team's
-## animations drawn in its middle: animated when it changes, a still end frame
-## otherwise, so every heart in the row has the same shape (D-022).
+## A heart slot the size of the old heart icon, with an animated heart in the middle:
+## it animates when it changes and shows a still end frame otherwise, so all hearts match.
 func _heart_slot(heart: AnimatedHeart, slot_name: String) -> Control:
 	var slot := Control.new()
 	slot.custom_minimum_size = Vector2(HEART_PX, HEART_PX)
@@ -366,10 +365,9 @@ func _choice_label(id: String) -> String:
 	return id
 
 
-## A heart that comes back (a right answer, or the end of Racoon's Rescue) fills
-## in with the Regain Heart animation; a heart that is lost (a wrong try) cracks
-## and falls away with Broken Heart, the rightmost first (FR-13, D-021). The rest
-## are those animations' still end frames, full or empty, so they all match.
+## A heart that comes back (a right answer, or the end of the rescue) fills in with the
+## Regain Heart animation. A lost heart (a wrong try) cracks and falls with Broken Heart,
+## rightmost first. The rest show those animations' still end frames, full or empty.
 func _update_hearts(count: int) -> void:
 	var box: HBoxContainer = %Hearts
 	for c in box.get_children():
@@ -392,8 +390,8 @@ func _update_progress() -> void:
 	create_tween().tween_property(%Progress, "value", session.progress(), 0.3)
 
 
-## Racoon says a line: a mood, or one of his lesson moments (D-024) with a spot on screen to
-## look or point at, and his mouth moves while the bubble shows it.
+## Racoon says a line: a mood, or one of his lesson moments with a spot on screen to look
+## or point at. His mouth moves while the bubble shows it.
 func _say(text: String, mood: String, moment := "", spot := Vector2.INF) -> void:
 	if moment != "":
 		raccoon.mood = mood
@@ -404,8 +402,8 @@ func _say(text: String, mood: String, moment := "", spot := Vector2.INF) -> void
 	bubble.say(text)
 
 
-## Racoon reads the question along with you: his eyes follow the words (D-024, calm, no
-## words of his own). He waits for a move he's in the middle of, like his hello.
+## Racoon reads the question with you: his eyes follow the words (calm, no words of his own).
+## He first finishes a move he's in the middle of, like his hello.
 func _read_prompt(id: int) -> void:
 	await get_tree().process_frame   # the label has its new size
 	var waited := 0.0
@@ -423,7 +421,7 @@ func _read_prompt(id: int) -> void:
 	raccoon.read_along(Vector2(r.position.x, y), Vector2(r.position.x + w, y), label.text.split(" ", false).size())
 
 
-## A long quiet spell on one question: Racoon points at it, once, without a word (D-024).
+## A long quiet spell on one question: Racoon points at it once, without a word.
 func _nudge_later(id: int) -> void:
 	await get_tree().create_timer(NUDGE_AFTER).timeout
 	if is_inside_tree() and id == _task_id and not %Overlay.visible and not sheet.visible and not raccoon.busy:
@@ -441,8 +439,8 @@ func _answer_spot(right: String) -> Vector2:
 
 # --- Leaving -------------------------------------------------------------------------
 
-## Stopping halfway keeps nothing (D-021): the session's copy of the model and its
-## events are simply dropped, and the lesson or test starts over next time.
+## Stopping halfway keeps nothing: the session's copy of the model and its events
+## are dropped, and the lesson or test starts over next time.
 func _on_close() -> void:
 	var what := "this Reading Adventure" if _testing else "this lesson"
 	_open_overlay("raccoon", Palette.NIPA, "Stop now?",
@@ -486,8 +484,8 @@ func _open_overlay(icon: String, icon_bg: Color, title: String, text: String, pr
 			.set_ease(Tween.EASE_OUT)
 
 
-## Android Back or Escape (D-023): an open card takes its main answer (OK, or
-## KEEP PLAYING on "Stop now?"); otherwise Back asks before stopping, like ✕.
+## Android Back or Escape: an open card takes its main answer (OK, or KEEP PLAYING
+## on "Stop now?"); otherwise Back asks before stopping, like ✕.
 func go_back() -> void:
 	if %Overlay.visible:
 		_close_overlay(_overlay_primary)

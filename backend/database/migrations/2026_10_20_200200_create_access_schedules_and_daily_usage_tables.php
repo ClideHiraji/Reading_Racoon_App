@@ -8,10 +8,8 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Time-restricted access (FR-12, docs/knowledge/06-game-design.md): one
-     * schedule per section, and the minutes each student played per day.
-     * Times are wall-clock times in the school's time zone
-     * (config reading_racoon.access.timezone).
+     * Play-time limits: one schedule per section, and the minutes each student played per day.
+     * Times are clock times in the school's time zone (reading_racoon.access.timezone).
      */
     public function up(): void
     {
@@ -23,9 +21,8 @@ return new class extends Migration
             $table->time('after_school_end');
             $table->smallInteger('daily_minutes')->default(30);
             $table->boolean('weekends_open')->default(false);
-            // Game D-015: Practice, Library and Watch & Listen share this many
-            // minutes a day outside the class window; the game sleeps outside
-            // day_start..day_end.
+            // Practice, Library and Watch & Listen share this many minutes a day outside the class
+            // window; the game sleeps outside day_start..day_end.
             $table->smallInteger('free_play_minutes')->default(45);
             $table->time('day_start')->default('06:00');
             $table->time('day_end')->default('21:00');

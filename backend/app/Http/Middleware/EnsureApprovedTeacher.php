@@ -8,9 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Teacher web pages (FR-06, FR-08): the signed-in user must be a teacher whose
- * registration is (still) approved. An admin who revokes a teacher ends their
- * access on the next request. Runs after `auth`.
+ * Teacher web pages: the signed-in user must be a teacher whose sign-up is (still) approved.
+ * If an admin revokes a teacher, their access ends on the next request. Runs after `auth`.
  */
 class EnsureApprovedTeacher
 {

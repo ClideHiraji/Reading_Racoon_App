@@ -1,10 +1,9 @@
 extends Control
-## The learning path (D-007, D-009): one storybook "page" per world, with a
-## paper-cut scene of a Butuan place, skill bars, then a winding trail of lesson
-## nodes, a treasure chest and a trophy. BKT decides when a world is cleared and
-## the next one unlocks (FR-04); this screen only shows it.
+## The learning path: one storybook "page" per world, with a paper-cut scene of a Butuan place,
+## skill bars, then a winding trail of lessons, a treasure chest and a trophy.
+## BKT decides when a world is cleared and the next one opens; this screen only shows it.
 
-## On a laptop Racoon stands in a column this wide beside the map (D-023).
+## On a laptop Racoon stands in a column this wide beside the map.
 const SIDE_W := 300.0
 
 @onready var scroll: ScrollContainer = %Scroll
@@ -18,14 +17,14 @@ var _side_guide := false   # Racoon stands beside the map, not on the trail
 
 
 func _ready() -> void:
-	if not GameState.guard():   # FR-12: Adventure's hours; otherwise back to the hub
+	if not GameState.guard():   # Adventure's hours; otherwise back to the hub
 		return
-	# Only when run from the editor: a debug APK on a class tablet must not let a
-	# child wipe their progress with one tap (D-022).
+	# Only when run from the editor: a debug build on a class tablet must not let a child
+	# wipe their progress with one tap.
 	%Reset.visible = OS.has_feature("editor")
 	%Reset.pressed.connect(_on_reset)
-	%HomeButton.pressed.connect(GameState.go_home)   # D-015: the hub holds the Closet
-	%HomeButton.add_to_group("back_button")   # Android Back and Escape (D-023)
+	%HomeButton.pressed.connect(GameState.go_home)   # the hub holds the Closet
+	%HomeButton.add_to_group("back_button")   # Android Back and Escape
 	_fit_shape()
 	GameState.wallet_changed.connect(_update_top_bar)
 	_update_top_bar()
@@ -46,8 +45,8 @@ func _ready() -> void:
 	_say(GameState.line("chest" if chest_waiting else "path_hello"), "happy")
 
 
-## The top bar clears a notch; on a laptop the map moves right and Racoon stands
-## on his mat in the column on the left, talking from there (D-023).
+## The top bar clears a notch. On a laptop the map moves right and Racoon stands on his mat
+## in the column on the left, talking from there.
 func _fit_shape() -> void:
 	var safe := Kit.insets()
 	var bar: StyleBoxFlat = $TopBar.get_theme_stylebox("panel").duplicate()
@@ -113,7 +112,7 @@ func _add_world(level: int) -> void:
 	var color: Color = info.color if unlocked else Palette.PAPER_DEEP.darkened(0.15)
 	content.add_child(_margin(_banner(level, info, has_content, unlocked), 24, 0))
 	var trail := WorldTrail.new()
-	# Before the pre-test every lesson node stays locked; the START is on its card (D-021).
+	# Before the pre-test every lesson stays locked; the START is on the test card.
 	var nodes_open := unlocked and not GameState.needs_pretest()
 	trail.setup(GameState.path.layout(level, nodes_open, cleared), color, info.scene)
 	trail.node_pressed.connect(_on_node_pressed.bind(level))
@@ -193,13 +192,13 @@ func _banner(level: int, info: Dictionary, has_content: bool, unlocked: bool) ->
 	if not unlocked:
 		head.add_child(Icons.rect("lock", 46, Palette.INK_SOFT))
 	body.add_child(head)
-	# Skill bars are for teachers (their dashboard has them): a slim banner here (D-022).
+	# Skill bars are for teachers (their dashboard has them), so the banner stays slim.
 	return card
 
 
 ## The tests sit at the top of the map and start only when the child taps START:
-## the "Reading Adventure" pre-test before any lesson (FR-02, D-021), and "Big
-## Reading Day", the post-test, once the teacher opens it (FR-10).
+## the "Reading Adventure" pre-test before any lesson, and "Big Reading Day",
+## the post-test, once the teacher opens it.
 func _test_card(kind: String) -> Control:
 	var pre := kind == "pre"
 	var card := PanelContainer.new()
@@ -220,7 +219,7 @@ func _test_card(kind: String) -> Control:
 			else "Show your teacher how much you've grown.", 24, Palette.INK))
 	head.add_child(titles)
 	v.add_child(head)
-	# What's coming, in pictures, and no hearts (D-022, the A3 card on the map).
+	# What's coming, in pictures, and no hearts.
 	var kinds := HBoxContainer.new()
 	kinds.add_theme_constant_override("separation", 12)
 	for k in [["ear", "Sounds", Palette.TEAL], ["pencil", "Letters", Palette.BAY_DEEP],
@@ -326,7 +325,7 @@ func _update_top_bar() -> void:
 	%WorldLevel.text = "LEVEL %d" % top
 	var d := GameState.access_decision()
 	if d.status == "after_school":
-		# After-school play has a daily cap with a visible countdown (FR-12).
+		# After-school play has a daily limit with a countdown.
 		%WorldLevel.text += "  ·  %d MIN LEFT" % d.minutes_left
 	%Coins.text = str(GameState.wallet.coins)
 	%Xp.text = str(GameState.wallet.xp)
@@ -351,7 +350,7 @@ func _paper_box(col: Color, r: int, lift: int) -> PaperBox:
 
 
 func _flat(col: Color, r: int) -> PaperBox:
-	var sb := PaperBox.new()   # cut from paper (D-028)
+	var sb := PaperBox.new()   # cut from paper
 	sb.bg_color = col
 	sb.set_corner_radius_all(r)
 	sb.anti_aliasing = true

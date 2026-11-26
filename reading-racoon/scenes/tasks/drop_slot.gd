@@ -1,11 +1,16 @@
 class_name DropSlot
 extends Control
-## An empty place for a letter, syllable, word or story event: a dashed paper
-## outline that fills with a paper tile. Accepts a dragged LetterTile.
+## An empty place for a letter, syllable, word or story event: a dashed paper outline
+## that fills with a paper tile. Takes a dragged LetterTile, also one dropped near it
+## (LetterTile.REACH).
 
 signal dropped(letter: String)
 
 const ANDIKA := preload("res://assets/fonts/Andika-Bold.ttf")
+const GROUP := &"drop_slot"
+
+## False while the task waits on an answer: a dragged tile then goes back.
+var accepting := true
 
 var _label: Label
 var _color := Palette.MANGO_DEEP
@@ -15,6 +20,7 @@ var _hint := "?"
 
 
 func _init() -> void:
+	add_to_group(GROUP)
 	custom_minimum_size = Vector2(124, 140)
 	_label = Label.new()
 	_label.theme_type_variation = &"ReadWord"
@@ -81,7 +87,7 @@ func _draw() -> void:
 
 
 func _can_drop_data(_at: Vector2, data: Variant) -> bool:
-	return data is Dictionary and data.has("letter")
+	return accepting and data is Dictionary and data.has("letter")
 
 
 func _drop_data(_at: Vector2, data: Variant) -> void:

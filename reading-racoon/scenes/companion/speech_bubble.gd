@@ -1,14 +1,12 @@
 class_name SpeechBubble
 extends PanelContainer
-## The raccoon's speech bubble: a paper card with a little tail pointing at the
-## speaker (D-009). Lines pop in; keep them short (companion guardrails,
-## docs/knowledge/06-game-design.md).
+## The raccoon's speech bubble: a paper card with a tail pointing at the speaker.
+## Lines pop in; keep them short.
 ##
-## Its point always points at Racoon (D-024): at his head, from whichever edge of the bubble faces
-## him, on every screen. The screen can name him (`speaker`); otherwise the bubble finds the
-## nearest Racoon on the screen. When he walks about (his own moves on Home, the start screen and
-## the Closet) the bubble goes with him, kept inside its box (the nearest parent that clips, else
-## the screen).
+## The tail always points at Racoon's head, from the bubble edge that faces him.
+## The screen can set him (`speaker`); otherwise the bubble finds the nearest Racoon.
+## When he walks about (Home, the start screen, the Closet) the bubble goes with him,
+## kept inside its box (the nearest parent that clips, else the screen).
 
 ## Where the tail points from when there's no Racoon on the screen: "left", "down" or "up".
 @export_enum("left", "down", "up") var tail := "left"

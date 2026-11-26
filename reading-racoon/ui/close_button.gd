@@ -1,7 +1,7 @@
 class_name CloseButton
 extends BaseButton
-## A drawn close mark in a soft paper circle (no emoji or font glyph, D-009).
-## The tap area is 96 px (NFR-02, D-022); the circle drawn inside is smaller.
+## A drawn close mark in a soft paper circle (no emoji or font glyph).
+## The tap area is 96 px; the circle drawn inside is smaller.
 
 
 func _init() -> void:

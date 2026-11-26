@@ -22,10 +22,20 @@ func _frames(n: int = 3) -> void:
 		await process_frame
 
 
+## The open card's way out (Screen.back's "back_cancel"), or null when no card is open.
+func _top_cancel() -> BaseButton:
+	var found: BaseButton = null
+	for n in get_nodes_in_group("back_cancel"):
+		if n is BaseButton and n.is_visible_in_tree() and current_scene.is_ancestor_of(n):
+			found = n
+	return found
+
+
 func _run() -> void:
 	await _frames()
 	var gs := root.get_node("GameState")
 	gs.reset_progress()
+	gs.access.schedule = {}   # open at any hour: the default school day closes Adventure after 5 PM
 	change_scene_to_file("res://scenes/path/learning_path.tscn")
 	await _frames(5)
 	check(current_scene.name == "LearningPath", "path opens")
@@ -255,6 +265,8 @@ func _run() -> void:
 	await _frames(5)
 	var shop := current_scene
 	check(shop.name == "Shop", "shop opens from the hub's Closet tab")
+	var paws_tab: Control = shop.get_node("%Tabs").get_children().filter(func(t): return t.get_meta("slot") == "paws")[0]
+	check(paws_tab.tooltip_text == Wardrobe.slot_name("paws", gs.buddy_id()), "the paws tab is named for the buddy")
 	shop._show_slot("hat")
 	check(gs.wardrobe.owns("cap"), "the Closet gives the River cap a finished lesson earned (D-026)")
 	shop._select("salakot")
@@ -306,7 +318,7 @@ func _run() -> void:
 	gs.open_section("practice")
 	await _frames(5)
 	check(current_scene.name == "Practice", "Practice opens from the hub")
-	check(current_scene._list.get_child_count() == PracticePool.GAMES.size(), "six game cards")
+	check(current_scene._list.get_child_count() == PracticePool.GAMES.size(), "a card per game")
 
 	gs.practice_game = "memory_match"
 	gs.practice_words = []
@@ -391,6 +403,26 @@ func _run() -> void:
 	gs.open_section("watch")
 	await _frames(5)
 	check(current_scene.name == "Watch" and current_scene._list.get_child_count() >= 6, "Watch & Listen lists songs")
+	# Every chip's cards, and the "Nothing here yet" message, fill their grid column.
+	# The empty Videos message was once 1 px wide, one letter per line: an
+	# autowrapped label in a grid cell asks for no width (NFR-02). Bundled videos
+	# are set aside first, so the empty message is always what Videos shows here.
+	var wl := current_scene
+	var all_media: Array = gs.media.watch
+	gs.media.watch = all_media.filter(func(m): return m.kind != "video")
+	for chip_name in ["Videos", "Songs", "Stories", "All"]:
+		var chip: Button = wl._chips.get_children().filter(func(b): return b.text == chip_name)[0]
+		chip.pressed.emit()
+		await _frames(5)
+		var cells: Array = wl._list.get_children()
+		var sep: int = wl._list.get_theme_constant("h_separation")
+		var col_w: float = (wl._list.size.x - sep * (wl._list.columns - 1)) / wl._list.columns
+		check(not cells.is_empty() and cells.all(func(c): return c.size.x >= col_w - 1.0),
+				"Watch & Listen's %s chip: every card and message fills its column" % chip_name)
+		if chip_name == "Videos":
+			check(cells.size() == 1 and cells[0] is Label and cells[0].size.x >= wl._list.size.x - 1.0
+					and cells[0].get_line_count() <= 2, "no videos yet: one readable message across the list")
+	gs.media.watch = all_media
 	gs.open_media = "abc-chant"
 	change_scene_to_file("res://scenes/watch/player.tscn")
 	await _frames(6)
@@ -405,6 +437,70 @@ func _run() -> void:
 	check(gs.collection.is_finished("abc-chant") and gs.collection.count("watch") == 1, "the song is finished")
 	check(gs.collection.goals_left(gs.today()) == 0 and gs.collection.count("goals") == 1,
 			"a story, a game and a song: all of today's goals and a goals sticker")
+
+	# A teacher video keeps its own shape on the stage, with bands on two sides. It
+	# was once stretched to the stage, squeezing a 16:9 clip by about 12% on a phone
+	# (D-017). tests/fixtures/wide_clip.ogv: 1 s of 320x180 Ogg Theora.
+	gs.media.watch.append({"id": "tv-shape01", "kind": "video", "title": "Wide clip", "language": "en",
+			"minutes": 1, "file": "res://tests/fixtures/wide_clip.ogv", "teacher": true,
+			"check": {"prompt": "Which one is a bee?", "answer": "bee",
+					"choices": [{"id": "bee", "label": "bee", "picture": "bee"}, {"id": "cat", "label": "cat", "picture": "cat"}]}})
+	gs.open_media = "tv-shape01"
+	change_scene_to_file("res://scenes/watch/player.tscn")
+	await _frames(8)
+	var vp := current_scene
+	var shown: Vector2 = vp._video.size
+	var stage: Vector2 = vp._stage.size
+	check(vp._video.is_playing() and absf(shown.aspect() - 16.0 / 9.0) < 0.02,
+			"a teacher video keeps its 16:9 shape (shown %s on a %s stage)" % [shown, stage])
+	check(shown.x <= stage.x + 0.5 and shown.y <= stage.y + 0.5 and maxf(shown.x / stage.x, shown.y / stage.y) > 0.9,
+			"and fits the stage, filling it one way")
+	# Full screen: the corner button opens the video over the whole player, and it
+	# plays on (on a phone the screen also turns sideways, which a laptop can't test).
+	# Pause works there, Back closes it, and the video ending closes it before the
+	# quick check. The video is paused between steps, so the 1 s clip can't end early.
+	var fs_btns := vp.find_children("*", "Button", true, false) \
+			.filter(func(b): return b.tooltip_text == "Full screen")
+	check(fs_btns.size() == 1, "a teacher video has a full-screen button")
+	if fs_btns.size() == 1:
+		fs_btns[0].pressed.emit()
+		await _frames(3)
+		var full: Control = vp.get_node_or_null("FullScreen")
+		check(full != null and full.get_global_rect().is_equal_approx(vp.get_viewport_rect())
+				and vp._video.is_playing() and not vp._video.paused, "full screen covers the screen and the video plays on")
+		var fs_pause: Array = full.find_children("*", "Button", true, false) \
+				.filter(func(b): return b.tooltip_text == "Pause") if full else []
+		var pics: Array = full.find_children("*", "TextureRect", true, false) \
+				.filter(func(t): return t.texture == vp._video.get_video_texture()) if full else []
+		check(pics.size() == 1 and pics[0].stretch_mode == TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+				and pics[0].get_global_rect().is_equal_approx(full.get_global_rect()),
+				"it shows the video as big as the screen allows, in its own shape")
+		check(fs_pause.size() == 1, "full screen has its own Pause")
+		if fs_pause.size() == 1:
+			fs_pause[0].pressed.emit()
+			check(vp._video.paused and fs_pause[0].tooltip_text == "Play", "Pause works in full screen")
+		var screen := root.get_node("Screen")
+		screen._last_back = -100000
+		screen.back()
+		await _frames(3)
+		check(current_scene == vp and vp.get_node_or_null("FullScreen") == null, "Back closes full screen, still in the player")
+		fs_btns[0].pressed.emit()
+		await _frames(3)
+		full = vp.get_node_or_null("FullScreen")
+		var fs_play: Array = full.find_children("*", "Button", true, false) \
+				.filter(func(b): return b.tooltip_text == "Play") if full else []
+		if fs_play.size() == 1:
+			fs_play[0].pressed.emit()
+		check(full != null and not vp._video.paused, "full screen opens again, and Play goes on")
+		for i in 40:
+			if vp.get_node_or_null("FullScreen") == null:
+				break
+			await create_timer(0.1).timeout
+		check(vp.get_node_or_null("FullScreen") == null and vp.find_children("*", "Button", true, false)
+				.any(func(b): return b.tooltip_text == "bee"), "the video's end closes full screen for the quick check")
+	vp._back()
+	await _frames(5)
+	gs.media.watch.pop_back()
 
 	gs.open_section("stickers")
 	await _frames(5)
@@ -473,17 +569,23 @@ func _run() -> void:
 	await _frames(5)
 	check(gs.buddy.who == "rina" and gs.buddy.lang == "bis", "Let's go saves Rina and Bisaya")
 	check(gs.talk("closet_title") == "Closet ni Rina", "the menus follow the buddy and language")
-	check(is_equal_approx(root.get_node("Speech").pitch, 1.4) and root.get_node("Speech").girl_voice, "Rina's higher voice")
+	change_scene_to_file("res://scenes/shop/shop.tscn")
+	await _frames(5)
+	var rina_paws: Control = current_scene.get_node("%Tabs").get_children().filter(func(t): return t.get_meta("slot") == "paws")[0]
+	check(rina_paws.tooltip_text == "In her paws", "Rina's Closet says what she holds is in her paws")
+	change_scene_to_file(gs.HUB_SCENE)   # back where Let's go left it, for the checks below
+	await _frames(5)
+	check(root.get_node("Speech").buddy == "rina", "Rina's own voice")
 	check(not gs.line("rescue_start").contains("{buddy}"), "a buddy line names the buddy")
 	check(gs.line("hint_phonics") in gs.lines.hint_phonics, "hints stay in the lesson's language")
-	check(gs.talk("hub_hi_name", ["Ana"]).contains("Ana"), "a menu line fills its slot")
+	check(gs.talk("path_soon", ["Mango Grove"]).contains("Mango Grove"), "a menu line fills its slot")
 	check(gs.talk("no_such_line") == "no_such_line", "an unknown menu line shows its key")
 	check(gs.talk_as("choose_hi", "en", "roco") == "Hi! I'm Roco!", "the chooser previews any buddy")
 	gs.buddy = {}
 	gs.load_profile()
 	check(gs.buddy.who == "rina" and gs.buddy.lang == "bis", "the buddy and language come back with the profile")
 	gs.set_buddy(str(had_buddy.get("who", "roco")), str(had_buddy.get("lang", "en")))
-	check(is_equal_approx(root.get_node("Speech").pitch, 1.1) or gs.buddy_id() == "rina", "the voice follows the buddy back")
+	check(root.get_node("Speech").buddy == gs.buddy_id(), "the voice follows the buddy back")
 
 	# After a wrong answer the green and orange cards keep their pictures' own colours (D-027):
 	# tinting them for the card's new face made black silhouettes.
@@ -507,6 +609,148 @@ func _run() -> void:
 	check(not pictures.is_empty() and pictures.all(func(t): return t.self_modulate == Color.WHITE),
 			"answer pictures keep their colours after a wrong answer (%s)" % pick.get("id", "none"))
 	tap.free()
+	# Recorded voices only (D-035, D-041): a recorded line plays from its clips; a line with any sentence
+	# not recorded in the buddy's voice and language stays silent, and no device voice ever speaks.
+	var voice = root.get_node("Speech")
+	var had: Dictionary = gs.buddy.duplicate()
+	gs.set_buddy("roco", "en")
+	check(voice.buddy == "roco" and not voice.recorded("Great job!", "en").is_empty(), "Roco's 'Great job!' is recorded")
+	check(voice.recorded("Great job! Zebras eat purple clouds.", "en").is_empty(), "a line with an unrecorded sentence isn't")
+	check(voice.recorded("Great job!", "fil").is_empty(), "the clip belongs to its language")
+	voice.say("Great job!")
+	check(voice.speaking(), "a recorded line plays")
+	voice.say("Zebras eat purple clouds.")
+	check(not voice.speaking(), "an unrecorded line is silent and stops the line before it")
+	check(not voice.say_tracked("Zebras eat purple clouds.", "en"), "an unrecorded read-along paces itself")
+	voice.say("Great job!")
+	voice.cut()
+	check(not voice.speaking(), "cut stops a recorded line at once")
+	check(not ProjectSettings.get_setting("audio/general/text_to_speech", false), "the device voice is off")
+	gs.set_buddy("rina", "en")
+	check(voice.buddy == "rina", "the recorded voice follows the buddy")
+	gs.set_buddy(str(had.get("who", "roco")), str(had.get("lang", "en")))
+
+	# A new day's card shows once (D-026): coming back to Home doesn't bring the same card back.
+	gs.access.schedule = {}
+	gs.new_day_items = [Wardrobe.ITEMS.keys()[0]]
+	change_scene_to_file(gs.HUB_SCENE)
+	await create_timer(2.2).timeout
+	var day_ok := _top_cancel()
+	check(day_ok != null, "the new day's card shows")
+	if day_ok:
+		day_ok.pressed.emit()
+	change_scene_to_file(gs.HUB_SCENE)
+	await create_timer(2.2).timeout
+	check(_top_cancel() == null, "and not again on the next visit to Home")
+
+	# Settings (D-042): the gear opens the card, with the volumes, sign out and (on a laptop) close; Back
+	# closes it. Its chips aren't pressed here: they'd save to this laptop's own settings file.
+	current_scene.get_node("%SettingsButton").pressed.emit()
+	await _frames(3)
+	var done := _top_cancel()
+	check(done != null and done.text == "Done", "the gear opens Settings")
+	var texts: Array = current_scene.find_children("*", "Button", true, false).map(func(b): return b.text)
+	check(texts.has("Loud") and texts.has("Off") and texts.has("Sign out") and texts.has("Close game")
+			and texts.has("Buddy and language"), "Settings has the volumes, buddy, sign out and close")
+	check(texts.has("High") and texts.has("Low") and texts.has("30") and texts.has("60"), "and graphics and frame rate")
+	SettingsCard.graphics(self, "low")
+	check(root.content_scale_mode == Window.CONTENT_SCALE_MODE_VIEWPORT and not Smooth.enabled,
+			"Low graphics draws at the base size, without smoothed edges")
+	SettingsCard.graphics(self, "high")
+	check(root.content_scale_mode == Window.CONTENT_SCALE_MODE_CANVAS_ITEMS and Smooth.enabled, "High draws sharp")
+	root.get_node("Screen").back()
+	await _frames(3)
+	check(_top_cancel() == null, "Back closes Settings")
+
+	# Practice games as lesson tasks (D-043): items with a variant play as Rhyme Pop and Word Catch and
+	# answer like any card.
+	for v in ["rhyme_pop", "word_catch"]:
+		var it: Dictionary = gs.bank.items.filter(func(i): return str(i.get("variant", "")) == v)[0]
+		var task: Node = load("res://scenes/tasks/%s_task.tscn" % v).instantiate()
+		root.add_child(task)
+		task.setup(it)
+		await _frames()
+		check(task._cards.size() == it.choices.size(), "%s shows every answer" % v)
+		var got := []
+		task.answered.connect(func(a, _ms): got.append(a))
+		task._cards[str(it.answer)].pressed.emit()
+		check(got == [str(it.answer)], "%s answers with the card tapped" % v)
+		task.show_result(str(it.answer), str(it.answer))
+		task.free()
+
+	# Drag (the user's play-test, 2026-11-26): a letter let go on or near the gap drops in, and leaves the tray.
+	var dl_item: Dictionary = gs.bank.items.filter(func(i): return i.task_type == "drag_letter")[0]
+	var dl: Node = load("res://scenes/tasks/drag_letter_task.tscn").instantiate()
+	root.add_child(dl)
+	dl.setup(dl_item)
+	await _frames(3)
+	var tile: LetterTile = dl._tiles[str(dl_item.answer)]
+	var gap: Rect2 = dl._slot.get_global_rect()
+	check(tile._slot_near(gap.get_center()) == dl._slot, "a letter let go on the gap drops in")
+	check(tile._slot_near(Vector2(gap.end.x + 40, gap.get_center().y)) == dl._slot, "and one let go just beside it")
+	check(tile._slot_near(gap.end + Vector2(300, 300)) == null, "but not one let go far away")
+	var got_l := []
+	dl.answered.connect(func(a, _ms): got_l.append(a))
+	dl._slot.dropped.emit(str(dl_item.answer))
+	check(got_l == [str(dl_item.answer)] and tile.modulate.a == 0.0, "the letter dropped answers and leaves the tray")
+	dl.free()
+
+	# The word wheel turns like a real one: a fling spins it on, it slows down, clicks onto a letter and
+	# answers with the letter at the pointer.
+	var sw_item: Dictionary = gs.bank.items.filter(func(i): return i.task_type == "spin_words")[0]
+	var sw: Node = load("res://scenes/tasks/spin_words_task.tscn").instantiate()
+	root.add_child(sw)
+	sw.setup(sw_item)
+	await create_timer(1.3).timeout   # the wheel's opening turn
+	var wheel: SpinWheel = sw._wheel
+	var got_w := []
+	sw.answered.connect(func(a, _ms): got_w.append(a))
+	var mid := wheel.size / 2
+	var ring := wheel._radius() * 0.7
+	var press := InputEventMouseButton.new()
+	press.button_index = MOUSE_BUTTON_LEFT
+	press.pressed = true
+	press.position = mid + Vector2(ring, 0)
+	wheel._gui_input(press)
+	for k in range(1, 7):
+		var move := InputEventMouseMotion.new()
+		move.button_mask = MOUSE_BUTTON_MASK_LEFT
+		move.position = mid + Vector2(cos(k * 0.25), sin(k * 0.25)) * ring
+		wheel._gui_input(move)
+		await create_timer(0.016).timeout
+	var up: InputEventMouseButton = press.duplicate()
+	up.pressed = false
+	wheel._gui_input(up)
+	check(wheel._spin > SpinWheel.FLING, "a fling spins the wheel on (%.1f rad/s)" % wheel._spin)
+	await create_timer(5.0).timeout
+	check(wheel._spin == 0.0 and got_w.size() == 1, "it slows down, stops on a letter and answers")
+	check(got_w.size() == 1 and got_w[0] == str(sw_item.choices[wheel.at_pointer()].id), "with the letter at the pointer")
+	sw.free()
+
+	# The opening (D-044): a test run skips it, so add one over the start screen on purpose.
+	change_scene_to_file("res://scenes/main.tscn")
+	await _frames(5)
+	check(current_scene.name == "Main" and current_scene.get_children().filter(func(c): return c is Intro).is_empty(),
+			"a test run opens the start screen without the opening")
+	var intro := Intro.new()
+	var lifted := [false]
+	intro.finished.connect(func(): lifted[0] = true)
+	current_scene.add_child(intro)
+	await create_timer(1.2).timeout
+	check(is_instance_valid(intro) and not lifted[0], "the opening is still playing after 1.2 s")
+	await create_timer(Intro.LIFT_AT + Intro.LIFT_TIME + 0.5 - 1.2).timeout
+	check(lifted[0] and not is_instance_valid(intro), "the opening lifts away by itself")
+	intro = Intro.new()
+	lifted[0] = false
+	intro.finished.connect(func(): lifted[0] = true)
+	current_scene.add_child(intro)
+	await create_timer(0.6).timeout
+	var skip_tap := InputEventMouseButton.new()
+	skip_tap.button_index = MOUSE_BUTTON_LEFT
+	skip_tap.pressed = true
+	intro._on_input(skip_tap)
+	await create_timer(Intro.LIFT_TIME + 0.3).timeout
+	check(lifted[0] and not is_instance_valid(intro), "a tap skips the opening")
 
 	# The developer menu (issue 30, debug builds only; DELETE BEFORE THE FINAL RELEASE with it).
 	if DevMenu.allowed():

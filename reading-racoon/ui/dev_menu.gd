@@ -1,13 +1,13 @@
 class_name DevMenu
 extends CanvasLayer
-## Developer menu (issue 30): jump to any screen, add coins, unlock worlds, fill the collections,
+## Developer menu: jump to any screen, add coins, unlock worlds, fill the collections,
 ## move the clock and show the frame rate, to explore the game quickly.
 ##
 ## Debug builds only (the editor and debug exports): a release export never shows it.
 ## Open or close it with F12, or tap the top-right corner of the screen 5 times quickly.
 ##
-## DELETE BEFORE THE FINAL RELEASE (issue 30 in docs/knowledge/10-open-issues.md): this file, its
-## two lines in scripts/autoload/screen.gd, and its check at the end of tests/ui_smoke.gd.
+## DELETE BEFORE THE FINAL RELEASE: this file, its two lines in scripts/autoload/screen.gd,
+## and its check at the end of tests/ui_smoke.gd.
 
 const ENABLED := true      # the master switch: false hides it in debug builds too
 const TAPS := 5

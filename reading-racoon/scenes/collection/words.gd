@@ -1,9 +1,7 @@
 extends Control
-## My Word Book (D-017, wireframe "My Word Book"): every word the child learns in
-## Adventure, games and books lands here with its picture. Tap a word to hear it;
-## "Practice my words" plays Memory Match with the child's own words.
-## Picture-and-word cards with a small speaker, language chips with color dots
-## like the Library (D-022).
+## My Word Book: every word the child learns in lessons, games and books, with its picture.
+## Tap a word to hear it; "Practice my words" plays Memory Match with these words.
+## Language chips have colour dots like the Library.
 
 const LANG_COLORS := {"en": Palette.BAY_DEEP, "fil": Palette.ORANGE, "bis": Palette.TEAL}
 
@@ -25,7 +23,7 @@ func _ready() -> void:
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	_grid = GridContainer.new()
-	_grid.columns = 3 if Kit.landscape() else 2   # D-023
+	_grid.columns = 3 if Kit.landscape() else 2
 	_grid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_grid.add_theme_constant_override("h_separation", 16)
 	_grid.add_theme_constant_override("v_separation", 16)
@@ -88,7 +86,7 @@ func _card(word: String, info: Dictionary) -> Control:
 	var w := Kit.word_label(word, 56 if word.length() <= 4 else (46 if word.length() <= 6 else 36))
 	w.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	h.add_child(w)
-	# A small speaker in the corner says "tap to hear it" (D-022).
+	# A small speaker in the corner says "tap to hear it".
 	var speaker := Icons.rect("speaker", 34, Palette.BAY_DEEP)
 	b.add_child(speaker)
 	b.resized.connect(func(): speaker.position = Vector2(b.size.x - 50, 16))

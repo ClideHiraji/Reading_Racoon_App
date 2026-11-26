@@ -1,10 +1,8 @@
 class_name Smooth
-## Filled shapes with soft edges (D-022). Godot fills polygons and circles with
-## hard, stair-stepped edges, which show on low-resolution screens. Each opaque
-## fill here also gets a thin anti-aliased outline in its own color, so its edge
-## is smoothed while the shape grows by less than a pixel. Translucent fills
-## (shadows, glows, highlights) are left as they are: an outline would double
-## their color along the rim.
+## Filled shapes with soft edges. Godot fills polygons and circles with hard, stair-step
+## edges that show on low-res screens. Each solid fill here also gets a thin smooth outline
+## in its own colour, so its edge looks smooth (the shape grows by less than a pixel).
+## See-through fills (shadows, glows) are left alone: an outline would double their colour.
 
 ## The outline's width in the shape's own units; pass 1 / scale when drawing
 ## under a scaled transform, so it stays about one pixel wide.

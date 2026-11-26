@@ -1,10 +1,9 @@
 class_name Collection
 extends RefCounted
-## What the child collects outside the lessons (D-017): stickers for the Sticker
-## Album, words for My Word Book, the days they played, today's three goals and
-## which books and songs they finished. Pure data, saved in the profile and
-## unit-tested; GameState queues the sync events. Stickers are a personal
-## collection: no ranking, and nothing is ever taken away (D-007).
+## What the child collects outside lessons: stickers, words for My Word Book,
+## days played, today's three goals, and finished books and songs.
+## Only data here, saved in the profile; GameState queues the sync events.
+## Stickers are personal: no ranking, and nothing is ever taken away.
 
 ## How a sticker in each group is earned (shown in the album).
 const GROUPS := {
@@ -79,8 +78,8 @@ var goals := {"date": "", "done": []}
 var daily := {}
 ## Book or song id -> date first finished.
 var finished := {}
-## Counts the Closet's earned items need that nothing else keeps (D-026): "games" (Practice
-## games finished) and "goal_days" (days all of today's goals were done).
+## Counts the Closet's earned items need: "games" (Practice games finished)
+## and "goal_days" (days all of today's goals were done).
 var counts := {}
 
 
@@ -117,8 +116,7 @@ func earn(group: String, date: String) -> String:
 	return ""
 
 
-## At most one sticker of this group a day (games, adventure), so the album
-## lasts all term.
+## At most one sticker of this group a day (games, adventure), so the album lasts all term.
 func earn_once_a_day(group: String, date: String) -> String:
 	if daily.get(group, "") == date:
 		return ""
@@ -218,8 +216,7 @@ func goals_left(date: String) -> int:
 	return GOALS.size() - goals_done(date).size()
 
 
-## Marks a goal done today. Returns {new: this goal just got done, all: every goal
-## just got done}.
+## Marks a goal done today. Returns {new: this goal just got done, all: every goal is done}.
 func complete_goal(goal: String, date: String) -> Dictionary:
 	if goals.date != date:
 		goals = {"date": date, "done": []}

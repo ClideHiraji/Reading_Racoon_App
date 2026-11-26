@@ -1,11 +1,9 @@
 class_name HeartSystem
 extends RefCounted
-## Hearts and the Heart Recovery ("Racoon's Rescue") trigger. FR-13, D-004
-## (docs/knowledge/06-game-design.md), counting changed by D-021.
-##
-## Every wrong try costs a heart and every right answer gives one back, up to
-## three. At zero hearts recovery starts; recovery can run at most twice per
-## session, and a third trigger ends the session kindly.
+## Hearts and "Racoon's Rescue".
+## A wrong try costs a heart, a right answer gives one back (max 3).
+## At zero hearts the rescue starts. It can run twice per session;
+## a third time ends the session kindly.
 
 const MAX_HEARTS := 3
 const MAX_RECOVERIES := 2
@@ -30,8 +28,8 @@ func on_answer(correct: bool) -> Result:
 	return Result.RECOVERY
 
 
-## After the 3 recovery items. Returns true for a full (3/3) recovery.
-## Either way the session continues with full hearts (D-004).
+## Called after the 3 rescue items. Returns true if all 3 were right.
+## Either way the session goes on with full hearts.
 func finish_recovery(correct_count: int) -> bool:
 	hearts = MAX_HEARTS
 	return correct_count >= RECOVERY_ITEMS

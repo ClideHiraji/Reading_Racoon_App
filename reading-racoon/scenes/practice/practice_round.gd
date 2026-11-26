@@ -1,8 +1,7 @@
 extends Control
-## Spin the Words, Syllable Train and Story Shuffle (D-017): five rounds with the
-## same task screens as the lessons, but just for fun. No hearts, no BKT; a
-## right answer glows green, an "almost" shows the answer, and the next round
-## comes by itself. Round dots in the header (D-022).
+## Spin the Words, Syllable Train and Story Shuffle: five rounds with the lesson task
+## screens, just for fun. No hearts, no BKT. A right answer glows green, a wrong one
+## shows the answer, and the next round comes by itself. Round dots in the header.
 
 const ROUNDS := 5
 const TASKS := {
@@ -34,8 +33,7 @@ func _ready() -> void:
 	_game = PracticePool.game(GameState.practice_game)
 	var column := Kit.page(self)
 	_dots = Kit.game_header(column, str(_game.get("name", "Practice")), _back).dots
-	# On a laptop Racoon stands in a column beside the prompt and the task, as in
-	# a lesson (D-023).
+	# On a laptop Racoon stands in a column beside the prompt and the task, like in a lesson.
 	var wide := Kit.landscape()
 	var main: Control = column
 	var side: Control = column
@@ -73,7 +71,7 @@ func _ready() -> void:
 	_prompt.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	row.add_child(_prompt)
 	main.add_child(prompt_card)
-	_holder = FitBox.new()   # a big task shrinks to fit instead of falling off (D-023)
+	_holder = FitBox.new()   # a big task shrinks to fit instead of falling off
 	_holder.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	main.add_child(_holder)
 	_raccoon = Raccoon.new()
@@ -124,7 +122,7 @@ func _next() -> void:
 		_task = page
 		_holder.add_child(page)
 		var p := GameState.bank.passage(pid)
-		_prompt.text = str(p.get("title", "Story"))   # the page reads itself aloud (D-022)
+		_prompt.text = str(p.get("title", "Story"))   # the page reads itself aloud
 		return
 	_start()
 
@@ -138,7 +136,7 @@ func _start() -> void:
 	_task.setup(item)
 	_task.answered.connect(_on_answered)
 	_prompt.text = item.prompt
-	Speech.new_question()   # (D-032)
+	Speech.new_question()
 	_speak()
 
 

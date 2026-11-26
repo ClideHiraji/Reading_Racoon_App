@@ -3,7 +3,7 @@
 namespace App\Enums;
 
 /**
- * The three roles of FR-01. The role gates every API route.
+ * The three user roles. The role guards every API route.
  */
 enum UserRole: string
 {

@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\DB;
 use Throwable;
 
 /**
- * Health signals for running the server on one laptop (NFR-02, D-036): is the
- * database up, is the queue worker keeping up, is the scheduler alive, when did
- * the last backup finish. Used by GET /api/health and `php artisan app:preflight`.
+ * Health checks for running the server on one laptop: is the database up, is the queue
+ * worker keeping up, is the scheduler alive, when did the last backup finish.
+ * Used by GET /api/health and `php artisan app:preflight`.
  */
 final class Ops
 {

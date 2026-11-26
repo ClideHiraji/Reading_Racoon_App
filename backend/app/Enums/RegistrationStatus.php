@@ -3,7 +3,7 @@
 namespace App\Enums;
 
 /**
- * A teacher's self-registration waits for an admin's decision (FR-08).
+ * A teacher's sign-up waits for an admin's decision.
  */
 enum RegistrationStatus: string
 {

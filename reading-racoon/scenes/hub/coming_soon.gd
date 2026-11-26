@@ -1,11 +1,11 @@
 extends Control
-## A hub section that isn't built yet (D-015): Racoon says he's still making it,
-## and the Home button goes back. GameState.soon_section names the section.
+## A hub section that isn't built yet: Racoon says he's still making it, and Home goes back.
+## GameState.soon_section names the section.
 
 
 func _ready() -> void:
 	%HomeButton.pressed.connect(GameState.go_home)
-	%HomeButton.add_to_group("back_button")   # Android Back and Escape (D-023)
+	%HomeButton.add_to_group("back_button")   # Android Back and Escape
 	var safe := Kit.insets()
 	%HomeButton.position += Vector2(safe.left, safe.top)
 	if Kit.landscape():
@@ -30,8 +30,8 @@ func _ready() -> void:
 	Speech.say(text)
 
 
-## Laptops (D-023): the section's name on the left, Racoon and his bubble on
-## the right above the village, like the lock screen.
+## Laptop layout: the section's name on the left, Racoon and his bubble on the right
+## above the village, like the lock screen.
 func _fit_landscape() -> void:
 	var center: VBoxContainer = $Center
 	var right := VBoxContainer.new()

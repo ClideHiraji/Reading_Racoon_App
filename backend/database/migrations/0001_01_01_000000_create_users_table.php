@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Auth root for all three roles (FR-01). Teachers and admins will sign in
-        // with email + password; students use a login code for now (open issue 9).
+        // One table for all three roles. Teachers and admins sign in with email + password;
+        // students use a login code for now.
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->enum('role', ['student', 'teacher', 'admin']);

@@ -18,9 +18,8 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 /**
- * Teacher sign-in with email and password (FR-01). Only teachers whose
- * registration an admin approved get in (FR-08). Admin accounts can't sign in
- * here: they get the same "wrong credentials" answer as anyone else (D-013).
+ * Teacher sign-in with email and password. Only teachers an admin approved get in.
+ * Admin accounts can't sign in here: they get the same "wrong credentials" answer as anyone.
  */
 class LoginController extends Controller
 {

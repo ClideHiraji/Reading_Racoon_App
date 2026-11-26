@@ -689,12 +689,29 @@ func test_hub_and_free_play_access() -> void:
 
 # --- Shop (FR-07) ----------------------------------------------------------------------------
 
+## D-044: the opening plays once per launch, and never in a test or debug run.
+func test_intro_plays_once() -> void:
+	var had := Intro.played
+	Intro.played = false
+	check(Intro.should_play({}), "the opening plays when the game starts")
+	check(not Intro.should_play({"no-intro": ""}) and not Intro.should_play({"profile": "smoke"}),
+			"test and debug runs skip the opening")
+	Intro.played = true
+	check(not Intro.should_play({}), "the opening plays once per launch")
+	check(Intro.LIFT_AT + Intro.LIFT_TIME < 3.5, "the opening is short: under 3.5 s")
+	Intro.played = had
+
+
 func test_wardrobe() -> void:
 	var w := Wardrobe.new()
 	check(w.owns("scarf_teal") and not w.is_worn("scarf_teal"), "owns the river scarf but starts without it (D-024)")
 	check(w.owns("open_book") and w.equipped.is_empty(), "owns the open book; wears nothing at first")
 	check(w.wear("open_book") and w.equipped.get("paws", "") == "open_book", "the book goes in his paws")
 	w.take_off("paws")
+	check(Wardrobe.slot_name("paws", "roco") == "In his paws" and Wardrobe.slot_name("paws", "rina") == "In her paws",
+			"the paws tab follows the buddy (D-033)")
+	check(Wardrobe.slot_name("hat", "rina") == "Hats" and Wardrobe.slot_name("pet", "roco") == "Pets",
+			"the other tabs are the same for both buddies")
 	var wallet := {"coins": 10, "xp": 0}
 	check(w.buy("party_hat", wallet) == "poor" and wallet.coins == 10, "can't buy without coins")
 	wallet.coins = 100
@@ -1107,7 +1124,12 @@ func test_practice_pool() -> void:
 		check(Icons.exists(w.picture), "practice word %s has a picture" % w.word)
 	check(PracticePool.rhymes(b, 1).size() >= 2, "level 1 has rhyme rounds")
 	check(PracticePool.unlocked("rhyme_pop", b, 1), "Rhyme Pop opens at level 1")
-	check(PracticePool.unlocked("memory_match", b, 1), "Memory Match opens at level 1")
+	check(PracticePool.game("memory_match").is_empty(), "Memory Match isn't a Practice game (D-043)")
+	for g in PracticePool.GAMES:
+		var met := b.items.filter(func(it): return str(it.get("variant", "")) == g.id 				or (g.has("task") and it.task_type == g.task and str(it.get("variant", "")) == g.variant))
+		check(not met.is_empty(), "%s is in the adventure too (D-043)" % g.name)
+		var first: int = met.reduce(func(lo, it): return mini(lo, int(it.level)), 99)
+		check(PracticePool.unlocked(g.id, b, first), "%s opens in Practice by the world it's in (%d)" % [g.name, first])
 	check(not PracticePool.unlocked("word_catch", b, 1), "Word Catch waits for level 2")
 	check(PracticePool.lock_text("word_catch", b, 1) == "Finish Level 1", "Word Catch says what opens it")
 	check(PracticePool.unlocked("word_catch", b, 2), "Word Catch opens at level 2")
@@ -1367,6 +1389,19 @@ func test_buddy_lines_cover_every_state() -> void:
 			if state == "note" or str(state).begins_with("hint_"):
 				continue
 			check(d.has(state) and d[state] is Array and not d[state].is_empty(), "%s has '%s'" % [path, state])
+
+
+## D-035: recorded clips are named as the voice lab names them, and a known line has its clip.
+func test_recorded_voice_clips() -> void:
+	var speech = load("res://scripts/autoload/speech.gd")
+	check(speech.clip_key("roco", "en", "A heart came back!") == "07fff55d98f1723e", "clip names match the voice lab's")
+	check(ResourceLoader.exists("res://assets/voice/07fff55d98f1723e.mp3"), "Roco's 'A heart came back!' is recorded")
+	var bad := 0
+	for f in DirAccess.get_files_at("res://assets/voice"):
+		var key := f.get_basename()
+		if f.ends_with(".mp3") and not (key.length() == 16 and key.is_valid_hex_number()):
+			bad += 1
+	check(bad == 0, "every clip is named by its key")
 
 
 ## Rina's inner ears are pink; Roco's keep the drawing's own color.

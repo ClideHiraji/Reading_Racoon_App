@@ -12,9 +12,8 @@ use Illuminate\Validation\Validator;
 use Illuminate\View\View;
 
 /**
- * Schedule editor for a section (FR-12): class window, after-school window,
- * daily after-school minutes and the weekend toggle. The game reads it from
- * GET /api/access/student/status.
+ * Schedule editor for a section: class window, after-school window, daily after-school
+ * minutes and the weekend switch. The game reads it from GET /api/access/student/status.
  */
 class ScheduleController extends Controller
 {

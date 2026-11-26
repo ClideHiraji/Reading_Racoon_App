@@ -1,14 +1,13 @@
 @tool
 class_name PaperBox
 extends StyleBox
-## A box cut from paper (D-028). It takes the same settings as StyleBoxFlat (colour, corners, a crisp
-## shadow, a border or a lighter top lip, expand margins), but its edge is cut by hand: the corners a
-## little uneven and the sides gently wavy, so cards, buttons and discs look like the game's paper
-## (D-009) instead of machine-made rectangles. Circles and pills (every corner fully round) stay
-## perfectly round. Children prefer soft, curved shapes.
-## Big boxes can be stitched round the inside, like the path's nodes.
+## A box cut from paper. It takes the same settings as StyleBoxFlat (colour, corners, a crisp
+## shadow, a border or a lighter top lip, expand margins), but its edge looks hand-cut: corners a
+## little uneven and sides gently wavy, so cards, buttons and discs look like paper instead of
+## perfect rectangles. Circles and pills (every corner fully round) stay perfectly round.
+## Big boxes can be stitched round the inside, like the path's stops.
 ##
-## Each box keeps its own cut (its `cut`), and a shape is worked out once per size, so drawing is cheap.
+## Each box keeps its own cut (`cut`), and a shape is worked out once per size, so drawing is cheap.
 
 @export var bg_color := Color(0.6, 0.6, 0.6):
 	set(v):

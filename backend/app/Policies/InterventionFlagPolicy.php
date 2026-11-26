@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
 /**
- * Only the learner's own teacher resolves an intervention flag (FR-17).
+ * Only the learner's own teacher can resolve their flag.
  */
 class InterventionFlagPolicy
 {

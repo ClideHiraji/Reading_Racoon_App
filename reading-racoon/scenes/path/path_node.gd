@@ -1,11 +1,9 @@
 class_name PathNode
 extends BaseButton
-## One stop on the learning path (D-007, D-009): a paper disc with a stitched
-## ring and an SVG icon, lifted on a shadow; it presses flat when tapped. The
-## current node pulses under a paper "START" tag.
-## The node is drawn once onto a layer that the bob moves, and its glow onto a
-## layer that the pulse grows and brightens, so a pulsing node isn't redrawn
-## every frame (that cost about 0.3 ms per frame per node on a laptop).
+## One stop on the learning path: a paper disc with a stitched ring and an SVG icon,
+## lifted on a shadow; it presses flat when tapped. The current stop pulses under a "START" tag.
+## The disc is drawn once onto a layer that the bob moves, and its glow onto a layer
+## that the pulse grows, so a pulsing stop isn't redrawn every frame (that was slow).
 
 const LIFT := 9.0
 const SIZE := Vector2(220, 210)
@@ -151,7 +149,7 @@ func _draw_art() -> void:
 		_art.draw_arc(c + Vector2(0, sink), r - 1, 0, TAU, 48, Palette.MANGO, 3.0, true)
 	var stitch := Color(1, 1, 1, 0.45) if state not in ["locked", "bonus", "open"] \
 			else Color(Palette.INK_SOFT, 0.25)
-	# the 18 dashes in one draw call (as 18 arcs they were most of a path node's drawing; NFR-01)
+	# all 18 dashes in one draw call (18 separate arcs were slow)
 	_art.draw_set_transform(c + Vector2(0, sink))
 	_art.draw_multiline(_stitch_ring(r - 11), stitch, 3.0, true)
 	_art.draw_set_transform_matrix(Transform2D.IDENTITY)

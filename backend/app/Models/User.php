@@ -14,8 +14,8 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
- * Auth root for students, teachers and admins (FR-01). `role` and
- * `login_code_hash` are not mass assignable; set them with forceFill.
+ * The account for students, teachers and admins. `role` and `login_code_hash` are not
+ * mass assignable; set them with forceFill.
  */
 class User extends Authenticatable
 {
@@ -57,7 +57,7 @@ class User extends Authenticatable
             'role' => UserRole::class,
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            // Admin TOTP secret, encrypted at rest with APP_KEY (FR-08, NFR-04).
+            // Admin TOTP secret, encrypted in the database with APP_KEY.
             'two_factor_secret' => 'encrypted',
             'two_factor_last_step' => 'integer',
             'last_login_at' => 'datetime',
@@ -73,7 +73,7 @@ class User extends Authenticatable
     }
 
     /**
-     * A teacher's self-registration (FR-08).
+     * A teacher's sign-up.
      *
      * @return HasOne<TeacherRegistration, $this>
      */
@@ -83,7 +83,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Sections this teacher owns (FR-06).
+     * Sections this teacher owns.
      *
      * @return HasMany<Section, $this>
      */
@@ -97,7 +97,7 @@ class User extends Authenticatable
         return $this->role === $role;
     }
 
-    /** A teacher whose registration an admin approved; only they may sign in (FR-08). */
+    /** A teacher an admin approved; only they may sign in. */
     public function isApprovedTeacher(): bool
     {
         // Asked fresh every time: an admin may have revoked the teacher since the model was loaded.

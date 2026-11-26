@@ -12,10 +12,9 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
- * GET /api/access/student/status (FR-12, docs/knowledge/06-game-design.md):
- * the section's schedule and today's decision. The game calls it at login and
- * at every screen transition, shows the raccoon lock screen when play isn't
- * allowed, and caches `schedule` + `server_time` for offline play (open issue 10).
+ * GET /api/access/student/status: the section's schedule and today's decision.
+ * The game calls it at login and on every screen change, shows the raccoon lock screen
+ * when play isn't allowed, and saves `schedule` + `server_time` for offline play.
  * Every decision is written to the system log.
  */
 class AccessStatusController extends Controller

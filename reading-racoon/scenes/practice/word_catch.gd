@@ -1,9 +1,7 @@
 extends Control
-## Word Catch (D-017): word leaves drift down; Racoon says a word and the child
-## catches it. Missed leaves float back up to the top, so nobody loses. Opens
-## after Level 1 (wireframe), with words from the child's unlocked worlds.
-## Big word cards that fall slowly, a big Hear the word button and round dots
-## (D-022).
+## Word Catch: word leaves drift down; Racoon says a word and the child catches it.
+## Missed leaves float back up to the top, so nobody loses.
+## Opens after Level 1, with words from the child's unlocked worlds.
 
 const ROUNDS := 6
 const LEAVES := 4
@@ -67,7 +65,7 @@ func _next() -> void:
 func _say_round() -> void:
 	if _round < _targets.size():
 		var t: Dictionary = _targets[_round]
-		Speech.say("Catch the word: %s!" % t.word, t.get("lang", "en"))
+		Speech.say(t.word, t.get("lang", "en"))   # just the word, so its own recording plays
 
 
 func _add_leaf(w: Dictionary, i: int, n: int, right: bool) -> void:

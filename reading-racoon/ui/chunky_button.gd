@@ -1,12 +1,10 @@
 @tool
 class_name ChunkyButton
 extends Button
-## Paper-cut button (D-009): a flat paper face lifted on a crisp shadow that
-## presses down when tapped. Uses Button's built-in icon for the SVG icons, except
-## when there is text too: then the icon is drawn right beside the text, and the
-## two sit centered together, as on the redesign canvas (D-022).
-## NFR-02: keep custom_minimum_size >= 96 px (48 dp); `slop` keeps a small face
-## easy to hit.
+## Paper-cut button: a flat paper face lifted on a crisp shadow that presses down when tapped.
+## Uses Button's own icon for the SVG icons, except when there's text too: then the icon is
+## drawn right beside the text, and both sit centred together.
+## Keep custom_minimum_size >= 96 px; `slop` keeps a small face easy to hit.
 
 @export var face_color := Palette.LEAF:
 	set(v):
@@ -25,7 +23,7 @@ extends Button
 	set(v):
 		radius = v
 		_restyle()
-## Name of an SVG in res://assets/icons (no emoji, D-009).
+## Name of an SVG in res://assets/icons (no emoji).
 @export var icon_name := "":
 	set(v):
 		icon_name = v
@@ -35,7 +33,7 @@ extends Button
 		_place_icon()
 		if was != _picture:
 			_restyle()
-## Draw the icon as its full-colour picture when it has one, in its own colours (D-027).
+## Draw the icon as its full-colour picture when it has one, in its own colours.
 @export var full_color := false:
 	set(v):
 		full_color = v
@@ -52,17 +50,17 @@ extends Button
 		pad = v
 		_restyle()
 ## The face is drawn this many px smaller at the top and bottom than the button,
-## so a slim chip still has a 96 px tap area (NFR-02, D-022).
+## so a slim chip still has a 96 px tap area.
 @export var slop := 0:
 	set(v):
 		slop = v
 		_restyle()
-## Sewn round the inside, like a felt patch (D-028): for the special big pieces only.
+## Sewn round the inside, like a felt patch: only for the special big pieces.
 @export var stitched := false:
 	set(v):
 		stitched = v
 		_restyle()
-## A small turn, like a patch pinned on at an angle (D-028).
+## A small turn, like a patch pinned on at an angle.
 @export var tilt := 0.0:
 	set(v):
 		tilt = v
@@ -73,16 +71,16 @@ extends Button
 		icon_tint = v
 		_restyle()
 
-## Taps that come too quickly do nothing (NFR-01): a second tap on the same button within
-## SAME_BUTTON_MS, or a tap on any button within ANY_BUTTON_MS of another. A quick double tap can't
-## open a screen twice, buy twice or start two things at once. (Touches reach a button as mouse
-## presses, so only those are counted.)
+## Taps that come too fast do nothing: a second tap on the same button within SAME_BUTTON_MS,
+## or a tap on any button within ANY_BUTTON_MS of another. So a quick double tap can't open a
+## screen twice, buy twice or start two things at once.
+## (Touches reach a button as mouse presses, so only those are counted.)
 const SAME_BUTTON_MS := 450
 const ANY_BUTTON_MS := 200
 static var _last_any_press := -100000
 var _last_press := -100000
 var _glyph: Texture2D
-var _cut := randi() % 100000   # this button's hand-cut shape, the same in every state (D-028)
+var _cut := randi() % 100000   # this button's hand-cut shape, the same in every state
 var _picture := false      # true while the icon is a full-colour picture (never tinted)
 var _beside := false   # true while the icon is drawn by hand beside the text
 var _built := false        # _ready has built the look; until then a change only waits for it
@@ -133,9 +131,8 @@ func _icon_size() -> float:
 
 
 ## A property changed: the look is rebuilt once, at the end of the frame, however many properties
-## change before then; before the button is on screen, _ready builds it once. (Each rebuild sets
-## about 17 theme overrides; doing it for every property cost ~5 ms per new button and stalled
-## every screen as it opened. NFR-01)
+## change before then. Before the button is on screen, _ready builds it once.
+## (Each rebuild sets about 17 theme overrides; doing it for every property made screens slow to open.)
 func _restyle() -> void:
 	if not _built or _style_queued:
 		return
@@ -159,11 +156,11 @@ func _apply_style() -> void:
 	_style_queued = false
 	begin_bulk_theme_override()
 	var face := Palette.CARD if card_style else face_color
-	# Dark ink on colored paper (D-016); cream only on faces too dark for ink.
+	# Dark ink on coloured paper; cream only on faces too dark for ink.
 	var ink := Palette.INK if card_style else Palette.text_on(face_color)
 	add_theme_stylebox_override("normal", _box(face, lift, 0))
-	# Under a laptop's mouse the face lifts 2 px and brightens, so a child sees
-	# what they're about to press (D-023). Phones have no hover.
+	# Under a laptop's mouse the face lifts 2 px and brightens, so a child sees what
+	# they're about to press. Phones have no hover.
 	if OS.has_feature("pc"):
 		add_theme_stylebox_override("hover", _box(face.lightened(0.07), lift + 2, -2))
 	else:
@@ -177,7 +174,7 @@ func _apply_style() -> void:
 		add_theme_color_override(c, ink)
 	var tint := icon_tint if icon_tint.a > 0.0 else ink
 	if _picture:
-		tint = Color.WHITE   # a full-colour picture keeps its own colours (D-027)
+		tint = Color.WHITE   # a full-colour picture keeps its own colours
 	for c in ["icon_normal_color", "icon_hover_color", "icon_pressed_color",
 			"icon_hover_pressed_color", "icon_focus_color", "icon_disabled_color"]:
 		add_theme_color_override(c, tint)
@@ -188,7 +185,7 @@ func _apply_style() -> void:
 ## `sink` moves the whole face down (top expand margin in, bottom out) and the
 ## shadow shrinks to `shadow` px, so the paper looks pressed onto the page.
 func _box(face: Color, shadow: int, sink: int) -> PaperBox:
-	var sb := PaperBox.new()   # cut from paper (D-028); every state keeps the same cut
+	var sb := PaperBox.new()   # cut from paper; every state keeps the same cut
 	sb.cut = _cut
 	sb.stitch = stitched
 	sb.bg_color = face
@@ -197,7 +194,7 @@ func _box(face: Color, shadow: int, sink: int) -> PaperBox:
 	sb.shadow_offset = Vector2(0, shadow)
 	sb.shadow_size = 1
 	if card_style:
-		# A faint neutral ring, not a tinted border: the shadow gives the depth (D-022).
+		# A faint neutral ring, not a coloured border: the shadow gives the depth.
 		sb.border_color = Color(0, 0, 0, 0.06)
 		sb.set_border_width_all(1)
 	else:

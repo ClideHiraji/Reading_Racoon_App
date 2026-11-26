@@ -1,20 +1,19 @@
 @tool
 class_name RacoonPuppet
 extends Node2D
-## Racoon as a Godot scene (D-024; FR-14): scenes/companion/racoon_puppet.tscn. One node per part of
-## the user's drawing (tools/racoon-art/parts/racoon_C_inkscape.svg), each showing that part's
-## rectangle of one sheet, assets/racoon/racoon_atlas.svg, and an AnimationPlayer with one animation
-## per move.
+## Racoon as a Godot scene: scenes/companion/racoon_puppet.tscn. One node per part of the drawing
+## (tools/racoon-art/parts/racoon_C_inkscape.svg), each showing its rectangle of one sheet,
+## assets/racoon/racoon_atlas.svg, plus an AnimationPlayer with one animation per move.
 ##
-## The animations key this node's pose properties below (turn, hop, raise_right, eyes, ...). This
-## script turns a pose into where each part goes, as if he were in 3D: face parts slide round his
-## round head, an ear turning toward you comes in front of it, the arms swing round the shoulder and
-## stay joined to the body, the tail curls, and the parts swap in front of or behind each other as
-## he turns. It also adds what isn't keyframed: breathing, blinking, the ears' springs, his eyes
-## following your pointer, and his mouth moving while he talks.
+## The animations key the pose properties below (turn, hop, raise_right, eyes, ...). This script
+## turns a pose into where each part goes, as if he were 3D: face parts slide round his head,
+## an ear turning toward you comes in front of it, arms swing round the shoulder and stay joined,
+## the tail curls, and parts swap in front of or behind each other as he turns.
+## It also adds what isn't keyframed: breathing, blinking, ear springs, eyes following your pointer,
+## and his mouth moving while he talks.
 ##
-## The rig's measurements (shoulders, arm lengths, head size, the tail's centre line, colours) come
-## from assets/racoon/racoon_rig.json, written by tools/racoon-art/motion-demo/build_racoon.py.
+## The rig's measurements (shoulders, arm lengths, head size, tail line, colours) come from
+## assets/racoon/racoon_rig.json, written by tools/racoon-art/motion-demo/build_racoon.py.
 ## Drawing units: the drawing's 400 x 400 page, feet near y = 386.
 
 const RIG_PATH := "res://assets/racoon/racoon_rig.json"
@@ -86,8 +85,8 @@ static var _grids := {}              # head, head_line -> their fine meshes roun
 	set(v):
 		stroll = v
 		_setp("strollX", v)
-## How much of `stroll` he really moves (roam) and of `hop` he really rises (rise), 0 to 1. Raccoon sets
-## them so a move stays inside the box he stands in; not keyed.
+## How much of `stroll` he really moves (roam) and of `hop` he really rises (rise), 0 to 1.
+## Raccoon sets them so a move stays inside his box; not keyed.
 @export_range(0.0, 1.0) var roam := 1.0
 @export_range(0.0, 1.0) var rise := 1.0
 ## Swings the tail behind a turn, in degrees.
@@ -210,7 +209,7 @@ static var _grids := {}              # head, head_line -> their fine meshes roun
 		_setp("pointBlend", v)
 
 @export_group("Closet")
-## The open book in his paws (0 to 1; FR-07).
+## The open book in his paws (0 to 1).
 @export var book_shown := 0.0:
 	set(v):
 		book_shown = v
@@ -231,7 +230,7 @@ static var _grids := {}              # head, head_line -> their fine meshes roun
 		scarf_item = v
 		_wear.scarf = v
 		_queue_update()
-## Rina, the girl buddy (D-033): the same raccoon, with eyelashes, rosier cheeks, pink inner ears and a
+## Rina, the girl buddy: the same raccoon with eyelashes, rosier cheeks, pink inner ears and a
 ## bow on her head (hidden under a hat), so every Closet item still fits her.
 @export var girl := false:
 	set(v):
@@ -240,8 +239,8 @@ static var _grids := {}              # head, head_line -> their fine meshes roun
 
 # --- set by the game (not keyframed) ---------------------------------------------------------------
 
-## What he wears, {slot: item id} (scripts/core/wardrobe.gd): hat, eyes (glasses), neck, top (clothes),
-## paws. A pet (D-029) is the Raccoon's: it floats beside his head, in this puppet.
+## What he wears, {slot: item id} (scripts/core/wardrobe.gd): hat, eyes (glasses), neck, top, paws.
+## A pet belongs to the Raccoon node: it floats beside his head, inside this puppet.
 ## Each item is its texture on its slot's Closet sheet (assets/racoon/closet/hats.svg...).
 var outfit := {}:
 	set(v):
@@ -309,11 +308,11 @@ var _mouth_n: Node2D
 var _head_items: Node2D
 var _glasses: Polygon2D
 var _hat: Polygon2D
-var _wind: WindScarf          # a diamond scarf's long ends, in the wind (D-031)
-var _halo: Halo               # the Star halo behind his head (D-031)
-var _bow_n: Node2D            # Rina's bow (D-033)
+var _wind: WindScarf          # a diamond scarf's long ends, in the wind
+var _halo: Halo               # the Star halo behind his head
+var _bow_n: Node2D            # Rina's bow
 
-## Rina's colors (D-033): her cheeks, the tint on her inner ears, and her bow.
+## Rina's colours: her cheeks, the tint on her inner ears, and her bow.
 const GIRL_BLUSH := "#ff6f93"
 const GIRL_EAR := Color(1.0, 0.72, 0.84)
 const BOW := "#ff5c8f"
@@ -377,8 +376,8 @@ static func _load_rig() -> void:
 
 
 ## The sheet a part is on, imported at twice the drawing's size: Racoon himself on
-## assets/racoon/racoon_atlas.svg, his Closet items on one sheet per slot, assets/racoon/closet/
-## (hats.svg, neck.svg...; D-026). Null for a part the rig doesn't have.
+## assets/racoon/racoon_atlas.svg, his Closet items on one sheet per slot in assets/racoon/closet/
+## (hats.svg, neck.svg...). Null for a part the rig doesn't have.
 static func _t(tex_name: String) -> Texture2D:
 	var t: Dictionary = _rig.get("textures", {}).get(tex_name, {})
 	if t.is_empty():
@@ -501,7 +500,7 @@ func _ensure_nodes() -> void:
 			n.draw.connect(d[1])
 
 
-## The middle of his head now, in his drawing's units: where a pet floats beside (D-029).
+## The middle of his head now, in drawing units: a pet floats beside it.
 func head_point() -> Vector2:
 	if _body == null or _head == null:
 		return _hc()
@@ -553,14 +552,13 @@ func _set_grid(node: Polygon2D, tex_name: String) -> void:
 	_set_mesh(node, tex_name, _grids[tex_name])
 
 
-## A Closet item wrapped round an upright axis (D-026): each point of its drawing sits on a round
+## A Closet item wrapped round an upright axis: each point of its drawing sits on a round
 ## cross-section as wide as the item is at that height (its profile, from the build), turned by `yaw`
 ## and tipped with his head (`cp`, `sp`). `depth` < 1 makes the cross-section an oval (his body).
-## The front faces you at rest; `back_tex` (or, when it's the same texture, the front mirrored) is
-## the far side. Shaded darker toward the edges; what's behind him fades out.
+## The front faces you at rest; `back_tex` (or the front mirrored, if it's the same texture) is the
+## far side. Darker toward the edges; what's behind him fades out.
 ## With `views` (hats): a flat drawing can't show a hat's side, so the front turns half as far as he
-## does (its gems and dots slide and it narrows, but its edges never reach the middle), and between
-## 84 and 96 degrees it swaps (a quick crossfade) to the back drawing, which turns the same way.
+## does, and between 84 and 96 degrees it crossfades to the back drawing, which turns the same way.
 func _wrap_mesh(front_tex: String, back_tex: String, axis: float, pivot_y: float, yaw: float, cp: float,
 		sp: float, depth: float, cols: int, rows: int, views := false) -> Dictionary:
 	var pts := PackedVector2Array()
@@ -860,7 +858,7 @@ func _apply() -> void:
 func _order_body() -> void:
 	var f := _f
 	var order: Array = []
-	# a halo and a windblown scarf (D-031) are behind everything, unless he's turned away
+	# a halo and a windblown scarf are behind everything, unless he is turned away
 	var wind_front: bool = _wind.visible and f.get("wind", {}).get("front", false)
 	var halo_front: bool = _halo.visible and f.halo.front
 	if not halo_front:
@@ -976,13 +974,13 @@ func _draw_blush() -> void:
 				Smooth.polygon(_blush_n, _ellipse(b.c, b.rx, b.ry, 24), _col(_rig.colors.blush, b.a))
 
 
-## Her inner ears' color (D-033): a pink tint for Rina, white (the drawing's own) for Roco.
+## Her inner ears' colour: pink for Rina, white (the drawing's own) for Roco.
 func _ear_tint(a: float) -> Color:
 	return Color(GIRL_EAR.r, GIRL_EAR.g, GIRL_EAR.b, a) if girl else Color(1, 1, 1, a)
 
 
-## Rina's lashes on an open eye (D-033): three short strokes from the top of the eye toward its outer
-## side, in the eye's light color so they show on her dark mask. `s` is -1 for the eye on your left.
+## Rina's lashes on an open eye: three short strokes from the top of the eye toward its outer side,
+## in the eye's light colour so they show on her dark mask. `s` is -1 for the eye on your left.
 func _draw_lashes(ci: CanvasItem, e: Dictionary, r: float, s: float, color: Color) -> void:
 	for k in 3:
 		var a := deg_to_rad(28.0 + 26.0 * k)
@@ -1003,8 +1001,8 @@ func _lash(ci: CanvasItem, base: Vector2, dir: Vector2, length: float, width: fl
 	Smooth.polygon(ci, pts, color)
 
 
-## Rina's bow (D-033): on the top of her head by her left ear, turning round with her head; hidden
-## under a hat (not a halo), and as it goes behind her head.
+## Rina's bow: on top of her head by her left ear, turning with her head.
+## Hidden under a hat (not a halo), and as it goes behind her head.
 func _draw_bow() -> void:
 	var hat := str(outfit.get("hat", ""))
 	if not girl or _f.is_empty() or (hat != "" and not Halo.has_kind(hat)):
@@ -1071,7 +1069,7 @@ func _draw_nose() -> void:
 	Smooth.polygon(_nose_n, _ellipse(_f.nose.c + Vector2(sh[0] * ch, sh[1]), maxf(1.2, sh[2] * absf(ch)), sry, 16), _col(colors.noseShine, colors.noseShineOp))
 
 
-# --- the rig (the canvas motion demo's, ported; D-024) ---------------------------------------------
+# --- the rig (ported from the canvas motion demo) ----------------------------------------------------
 
 static func _art() -> Dictionary:
 	return _c_art
@@ -1315,8 +1313,8 @@ func _arm(j: int, a: float, T: Vector2, lift: float, cb: float, sb: float, ps: f
 	var n0 := Vector2(-e0.y, e0.x)
 	var s0 := Vector2(_ax() + A.S[0], A.S[1])
 	# Where it's drawn: an arm reaching for something counts as in front of him (he faces what he
-	# points at). Over his head (pointing up, a paw pump, a paw at his chin) it goes in front of
-	# the head until the paw has cleared it, so a paw never slips behind his face (D-024).
+	# points at). Over his head (pointing up, a paw pump, a paw at his chin) it stays in front of
+	# the head until the paw has cleared it, so a paw never slips behind his face.
 	var zf := lerpf(z, maxf(z, ARM_Z + 12.0), minf(1.0, a * 2.0)) if a > 0.001 else z
 	var raised := a > 0.02 and S.y - P.y > 14.0
 	var over_head := false
@@ -1389,9 +1387,9 @@ static func _body_inner() -> PackedVector2Array:
 	return _body_in
 
 
-## The line round an arm wherever it pokes out of his body (D-024): along the sleeve's edge, just
-## inside it like the drawn outline, and cut where it goes into the body, so it runs on into the
-## body's own outline. The arm always looks joined at the shoulder, however it swings.
+## The line round an arm wherever it pokes out of his body: along the sleeve's edge, just inside
+## it like the drawn outline, and cut where it goes into the body, so it runs on into the body's
+## own outline. The arm always looks joined at the shoulder, however it swings.
 static func _rim(sleeve: PackedVector2Array, w: float, body: PackedVector2Array) -> Array:
 	if sleeve.size() < 3 or w <= 0.0:
 		return []
@@ -1615,7 +1613,7 @@ func _rig_frame() -> Dictionary:
 		var bw: float = BK.x1 - BK.x0
 		var L := Vector2(el.x, el.y).lerp(arm_l.pc, k)
 		var Rt := Vector2(er.x, er.y).lerp(arm_r.pc, k)
-		# The item is stiff (D-030): it never stretches between his paws.
+		# The item is stiff: it never stretches between his paws.
 		#   - Held in both paws, it keeps its width, round the middle between them.
 		#   - When his paws move apart or together, or one goes much higher than the other (an arm
 		#     waves, points, lifts, a paw at his chin), it rides in one paw instead, by its near edge:
@@ -1721,8 +1719,8 @@ func _rig_frame() -> Dictionary:
 	f.mouth = {"mode": mo, "a": _sstep(0.12, 0.4, ch), "ch": ch, "shh": shh, "cp": cp, "sp": sp}
 	f.th = th
 	f.items = {"cb": cb, "sb": sb, "bsx": bsx, "ch": ch, "shh": shh, "cp": cp, "sp": sp}
-	# D-031: where a windblown scarf leaves his neck (behind it, on your left) and where a halo floats:
-	# behind his head, far enough back that side-on it stands clear of the back of his head (D-032).
+	# Where a windblown scarf leaves his neck (behind it, on your left) and where a halo floats:
+	# behind his head, far enough back that side-on it stands clear of the back of his head.
 	# Each comes in front of him when he's turned away.
 	var NK = art.get("scarf")
 	if NK != null:
@@ -1770,7 +1768,7 @@ func _draw_mouth(ci: CanvasItem) -> void:
 			Smooth.polygon(ci, _ellipse(_on_muzzle(mx, my + 6.44, m.ch, m.shh, m.cp, m.sp), maxf(0.5, 4.6 * aw), 5.5, 18), dark)
 
 
-# --- the other Closet items (D-026, FR-07): textures from the Closet's sheet, fitted to his head,
+# --- the other Closet items: textures from the Closet's sheet, fitted to his head,
 # neck and chest, each with its tier's shine (closet_item.gdshader) ------------------------------
 
 func _has_tex(tex_name: String) -> bool:
@@ -1837,15 +1835,15 @@ func _apply_items(f: Dictionary) -> void:
 	if _neck_item.visible:
 		_set_wrap(_neck_item, neck, _wrap_mesh(neck, "", _ax(), 0.0, atan2(it.sb, it.cb), 1.0, 0.0, DEPTH, 11, 7))
 		_item_material(_neck_item, neck, neck)
-	# a top or a dress (D-029) is cut to his body: its drawing lies on his body's place and moves with
-	# it, clipped to the body's fill like his belly, so its sides follow his outline however he moves
+	# a top or a dress is cut to his body: its drawing lies on his body and moves with it,
+	# clipped to the body's fill like his belly, so its sides follow his outline however he moves
 	var top: String = outfit.get("top", "")
 	_top.visible = top != "" and _has_tex(top)
 	if _top.visible:
 		_set_quad_tex(_top, top)
 		_clothes_material(top)
 		_top.transform = f.bodyXf
-	# D-031: a diamond scarf's long ends blowing in the wind, and a halo: both drawn in code
+	# a diamond scarf's long ends blowing in the wind, and a halo: both drawn in code
 	var wind_style := Wardrobe.wind_of(neck) if not f.scarf.is_empty() and f.has("wind") else ""
 	_wind.visible = WindScarf.has_style(wind_style)
 	if _wind.visible:
@@ -1857,7 +1855,7 @@ func _apply_items(f: Dictionary) -> void:
 		_halo.place(f.halo.at, f.halo.turn)
 
 
-## A top's material (D-029): clipped to his body's fill (racoon_clothes.gdshader), with its tier's shine.
+## A top's material: clipped to his body's fill (racoon_clothes.gdshader), with its tier's shine.
 func _clothes_material(item_id: String) -> void:
 	var mat := _top.material as ShaderMaterial
 	if mat == null or mat.shader == null or mat.shader.resource_path != CLOTHES_SHADER:

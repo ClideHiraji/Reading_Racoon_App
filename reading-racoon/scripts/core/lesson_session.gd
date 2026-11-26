@@ -1,15 +1,14 @@
 class_name LessonSession
 extends RefCounted
-## One lesson (8 items) on map level `level`: picks items, scores answers, runs
-## BKT, hearts and Racoon's Rescue, and reports outcomes for the UI to show.
-## No UI code here, so the whole loop is unit-tested.
-## FR-03, FR-04, FR-13, FR-14, FR-15; loop from docs/knowledge/06-game-design.md.
+## One lesson (8 items) on map level `level`: picks items, scores answers, runs BKT,
+## hearts and Racoon's Rescue, and tells the UI what to show.
+## No UI code here, so the whole loop can be tested.
 ##
-## D-021: each question has two tries. Only the first try is BKT evidence. A wrong
-## first try brings Racoon's hint (HintText, FR-14) and the same question again; a
-## wrong second try shows the answer and why. Every wrong try costs a heart and
-## every right answer gives one back (HeartSystem). The session works on a copy of
-## the model, so a lesson stopped halfway leaves no trace.
+## Each question has two tries. Only the first try counts for BKT.
+## A wrong first try: Racoon gives a hint and asks again.
+## A wrong second try: show the answer and why.
+## Every wrong try costs a heart, every right answer gives one back.
+## The lesson works on a copy of the model, so quitting halfway changes nothing.
 
 const LESSON_LENGTH := 8
 const MAX_TRIES := 2
@@ -39,8 +38,8 @@ var sticky_skill := ""           # after a wrong answer, stay on the same skill
 var story := ""                  # passage id of the story being read
 var level_up := false
 var ended_early := false
-var flags: Array = []            # intervention flags for the teacher (FR-17)
-var events: Array = []           # drained by GameState into the sync queue (FR-11)
+var flags: Array = []            # warnings for the teacher
+var events: Array = []           # GameState moves these into the sync queue
 
 var rescue := {}                 # {skill, level, from_level, has_lower, answered, correct}
 var _response := {}              # the current item's queued response payload (try 2)
@@ -97,7 +96,7 @@ func next_item() -> Dictionary:
 
 ## Scores one try at the current item. Returns what the UI needs:
 ## correct, answer, hint (show Racoon's hint and try again), hearts, mood,
-## level_up, mastered_now, try, and `next`: "retry" (same item, D-021) |
+## level_up, mastered_now, try, and `next`: "retry" (same item again) |
 ## "continue" | "rescue_start" | "rescue_end" | "done" | "end_session".
 func submit(answer, ms: int = 0) -> Dictionary:
 	var item := current
@@ -107,8 +106,8 @@ func submit(answer, ms: int = 0) -> Dictionary:
 	if tries == 1:
 		rec = _first_try(item, str(answer), correct, ms)
 	else:
-		# The second try is practice, not BKT evidence: it rides on the first
-		# try's response event for the teacher (D-021).
+		# The second try is practice, not BKT evidence: it's added to the first
+		# try's response event for the teacher.
 		_response.retry_answer = str(answer)
 		_response.retry_correct = correct
 		_response.retry_ms = ms
@@ -131,15 +130,15 @@ func submit(answer, ms: int = 0) -> Dictionary:
 	return out
 
 
-## BKT update and the queued response for an item's first try (FR-03).
+## BKT update and the queued response for an item's first try.
 func _first_try(item: Dictionary, answer: String, correct: bool, ms: int) -> Dictionary:
 	var skill: String = item.sub_skill
 	var item_level: int = item.level
 	var choices := QuestionBank.num_choices(item)
 	var rec := model.record(skill, item_level, correct, choices)
-	# num_choices lets the server replay BKT with the same guess rate (D-003 rule 7).
-	# low_pl: P(L) < 0.30 after a wrong answer, the thesis's hint trigger (D-003 rule 6),
-	# kept for the study; the hint itself now follows every wrong first try.
+	# num_choices lets the server replay BKT with the same guess rate.
+	# low_pl: p < 0.30 after a wrong answer (the thesis's hint rule), kept for the study;
+	# the hint itself now shows after every wrong first try.
 	_response = {"item_id": item.id, "skill": skill, "level": item_level, "answer": answer,
 			"correct": correct, "response_ms": ms, "rescue": in_rescue(), "num_choices": choices,
 			"low_pl": rec.hint}
@@ -210,7 +209,7 @@ func _submit_rescue(correct: bool, out: Dictionary) -> void:
 	out.next = "rescue_end"
 	mode = Mode.NORMAL
 	if not full:
-		# Partial recovery = "drop one tier" (D-004).
+		# Partial rescue = drop one level.
 		var demoted := -1
 		if rescue.has_lower and model.demote(rescue.skill, rescue.level):
 			demoted = rescue.level
@@ -221,8 +220,8 @@ func _submit_rescue(correct: bool, out: Dictionary) -> void:
 		out.next = "done"
 
 
-## Totals for the lesson-complete screen (FR-15). `correct` counts first tries;
-## a second-try answer earns half (accuracy and XP, D-021).
+## Totals for the lesson-complete screen. `correct` counts first tries;
+## a second-try answer counts half (accuracy and XP).
 func summary() -> Dictionary:
 	var correct := 0
 	var second_try := 0

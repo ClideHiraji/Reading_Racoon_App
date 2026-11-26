@@ -1,11 +1,8 @@
 class_name ScenePreloader
 extends Node
-## Loads the game's screens in the background, one at a time, after the start screen is up (NFR-01).
-## The first visit to a screen used to load its scene, scripts and pictures on the spot: 70-530 ms
-## of frozen game on a laptop the first time a child opened Home, the Closet, Practice or a game,
-## and several times that on a 2 GB phone. Loaded on a worker thread while the child is still on
-## the start screen, they're ready when tapped (change_scene_to_file then finds them loaded).
-## It waits while a lesson or test is on screen, so nothing competes with it.
+## Loads the game's screens in the background, one at a time, after the start screen is up.
+## Without this, the first visit to a screen froze the game while it loaded (worse on cheap phones).
+## Waits while a lesson or test is on screen, so it doesn't slow it down.
 
 ## Most likely next first.
 const SCENES := [
@@ -33,7 +30,7 @@ const SCENES := [
 
 var _todo: Array = []
 var _loading := ""
-var _held := {}            # path -> the loaded scene, kept so it stays in the cache
+var _held := {}            # path -> loaded scene, kept so it stays in the cache
 
 
 func start() -> void:

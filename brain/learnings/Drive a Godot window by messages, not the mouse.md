@@ -19,6 +19,8 @@ Watch out:
 - **Moving targets** (Rhyme Pop's balloons): find them by colour in the same script and click at once; a human-paced screenshot-then-click misses.
 - **Timing:** time between tool calls includes the tester's own thinking. Measure speeds with a timed burst of screenshots in one script, never across calls. A read-along looked "5× too fast" until a burst showed the right 0.55 s a word.
 - **Small screenshots mislead:** check details (eyelashes, thin borders) at full size before calling a bug.
+- **Drag and drop can't be posted.** Godot reads the held button from the real mouse, so every posted `WM_MOUSEMOVE` arrives with `button_mask` 0 and a drag never starts (taps and touch-scroll still work). Instead, run a `-s` script in the window that sends the finger with `Input.parse_input_event` (button and motion events with `button_mask` set) and saves frames with `root.get_texture().get_image()`. Window pixels for a control: `root.get_final_transform() * (ctrl.get_global_transform_with_canvas() * local)`.
+- **Godot's mouse position is the system cursor** (`get_global_mouse_position`, `Viewport.get_mouse_position`), not the last injected event. Code that asks "where did the finger let go?" should track it itself: `LetterTile` follows its drag preview, which Godot moves with every pointer event (2026-11-26).
 
 The helper scripts used (`win.py`, `monkey.py`) were scratch files; a monkey test of 3,200 random clicks, Back presses and double-taps ran this way in about 15 minutes.
 

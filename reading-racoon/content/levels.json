@@ -2,7 +2,7 @@
 	"version": 1.0,
 	"note": "PLACEHOLDER CONTENT in English. Levels 1-2 should be in the Mother Tongue (open issue 15). Every item needs review by the Grade 1 teachers before the study (docs/knowledge/07-curriculum-content.md).",
 	"task_types": {
-		"tap_choice": "Show an optional picture/word, then 2-4 cards (picture and/or label). Tap one.",
+		"tap_choice": "Show an optional picture/word, then 2-4 cards (picture and/or label). Tap one. variant rhyme_pop shows the cards as balloons, word_catch as word cards that drift down, the looks of the Practice games (D-043).",
 		"drag_letter": "Show a picture and a word with one gap ('_' in pattern). Drag the right letter tile into the gap (or tap it)."
 	},
 	"items": [
@@ -44,6 +44,7 @@
 			"competency": "RL1PA-I-3",
 			"language": "en-placeholder",
 			"task_type": "tap_choice",
+			"variant": "rhyme_pop",
 			"prompt": "Which one rhymes with bee?",
 			"tts_text": "Which one rhymes with bee?",
 			"picture": "bee",
@@ -106,6 +107,7 @@
 			"competency": "RL1PA-I-3",
 			"language": "en-placeholder",
 			"task_type": "tap_choice",
+			"variant": "rhyme_pop",
 			"prompt": "Which one rhymes with box?",
 			"tts_text": "Which one rhymes with box?",
 			"picture": "box",
@@ -1072,6 +1074,7 @@
 			"competency": "RL1PWS-I-5",
 			"language": "en-placeholder",
 			"task_type": "tap_choice",
+			"variant": "word_catch",
 			"prompt": "Which word says pig?",
 			"tts_text": "Which word says pig?",
 			"choices": [
@@ -1124,6 +1127,7 @@
 			"competency": "RL1PWS-I-4",
 			"language": "en-placeholder",
 			"task_type": "tap_choice",
+			"variant": "word_catch",
 			"prompt": "Which word says map?",
 			"tts_text": "Which word says map?",
 			"choices": [
@@ -1464,6 +1468,7 @@
 			"competency": "RL1VWK-I-3",
 			"language": "en-placeholder",
 			"task_type": "tap_choice",
+			"variant": "word_catch",
 			"prompt": "Tap the word the.",
 			"tts_text": "Tap the word, the.",
 			"choices": [

@@ -67,7 +67,7 @@ func _next() -> void:
 func _say_round() -> void:
 	if _round < _targets.size():
 		var t: Dictionary = _targets[_round]
-		Speech.say("Catch the word: %s!" % t.word, t.get("lang", "en"))
+		Speech.say(t.word, t.get("lang", "en"))   # the word alone: its recording (D-041)
 
 
 func _add_leaf(w: Dictionary, i: int, n: int, right: bool) -> void:

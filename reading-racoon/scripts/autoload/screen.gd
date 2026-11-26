@@ -3,7 +3,7 @@ extends Node
 ## - Shape: a landscape window (the school laptops) draws the game on a 1280×720
 ##   canvas instead of 720×1280, so it is bigger on a wide screen, and each
 ##   screen lays itself out side by side when `landscape` is true. Phones stay
-##   portrait. Windows builds open full screen.
+##   portrait. Laptop builds open full screen unless Settings turned it off (D-042).
 ## - Safe area: insets() gives the notch, rounded corners and home indicator in
 ##   canvas units, so top and bottom bars stay clear of them (iPhone, Android).
 ## - Back: Android's Back button or gesture and Escape on a laptop do what the
@@ -27,8 +27,7 @@ func _ready() -> void:
 		if a.begins_with("--safe-insets="):
 			var parts := a.trim_prefix("--safe-insets=").split(",")
 			_debug_insets = {"top": float(parts[0]), "bottom": float(parts[1]) if parts.size() > 1 else 0.0}
-	if OS.has_feature("windows") and not OS.has_feature("editor"):
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	SettingsCard.apply_saved(get_tree())   # volumes; full screen on a laptop unless turned off (D-042)
 	get_tree().root.size_changed.connect(_fit)
 	get_tree().node_added.connect(_on_node_added)
 	_fit()

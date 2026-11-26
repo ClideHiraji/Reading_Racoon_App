@@ -195,9 +195,11 @@ Status key: 🔴 blocks coding · 🟡 decide during build · 📝 manuscript-on
   - The batch cutter now aligns by sentence length (it had shifted clips in a Filipino batch). All earlier clips were checked again.
 - **Done (2026-11-20):** all 1,465 sentences are recorded and in the game (12.0 MB).
   - Rina's last 16 lines went in 4 generations. Each batch set the new lines among lines she already had, read again only to steady the cuts.
+- **Recorded voices only (2026-11-26, [D-041](../../brain/decisions/D-041%20Recorded%20voices%20only.md)):** the user had the device voice removed: it was often a woman's for Roco and talked over the recordings. A line now plays only in the buddy's own recorded voice and language, and an unrecorded line is silent (its words still show).
 - **Still open:**
+  - **Record lessons, tests, books and videos:** 937 sentences per buddy (1,874 clips), already in the voice lab's `manifest.json` (kinds `content` and `word`). Until then they're silent, and Word Catch can't be played.
   - A teacher's check of the Filipino and Bisaya lines (issue 35). They're recorded now, so a changed line has to be recorded again.
-  - Lines with a clock time stay with the system voice.
+  - Lines with a clock time are silent ("opens at 3:00 PM").
 
 ### 35. A girl buddy, and a choice of language ✅ DECIDED (2026-11-18)
 - The user asked for both genders for students to choose from, a girl version of the companion for girl students, and a choice of language.
@@ -358,3 +360,14 @@ Status key: 🔴 blocks coding · 🟡 decide during build · 📝 manuscript-on
 - **Third pass, phones (2026-11-25):** [D-039](../../brain/decisions/D-039%20Dashboard%20on%20a%20phone.md) after a phone-only critique (24/40): compact learner cards, Mark resolved / Close all / consent in place with Undo, an admin Menu button, layouts that hold at 360 px and in landscape, 44 px targets and 16 px fields.
 - **Still to do:** teachers try it in orientation, including on their own phones; a help page, glossary, printable consent letter and first-day guide beyond the checklist; teacher password reset, renaming sections and moving learners; acknowledging admin anomalies; a Filipino interface; the PDF stays A4 (confirm the paper schools use).
 - **Manuscript to update:** the teacher dashboard figures and the description of intervention flags (plain labels, grouped by learner, "looks better" hint); the admin portal overview.
+
+### 42. Settings ✅ DECIDED (2026-11-26)
+- The user asked for volume, resolution or graphics, and a quick sign-out or exit on a PC.
+- **Decision:** [D-042](../../brain/decisions/D-042%20Settings%20card.md). A gear on Home opens Settings: Voice and Sounds volume (four chips each), Graphics High/Low (Low draws at the base size and scales up), Frame rate 60/30, Buddy and language, Full screen (laptops), Sign out (two taps, never while answers wait to upload), Close game (two taps, laptops). Saved for the device in `user://settings.cfg`.
+- **Not built:** a music slider (no music yet; it comes with the later sound work).
+- **Manuscript to update:** the screen list and the use-case diagram (a settings screen; sign out from Home).
+
+### 43. Practice games come from the adventure ✅ DECIDED (2026-11-26)
+- The user wanted every Practice game to be one the child has met in a level.
+- **Decision:** [D-043](../../brain/decisions/D-043%20Practice%20games%20come%20from%20the%20adventure.md). Rhyme Pop is a lesson task in World 1 and Word Catch in World 2 (a `variant` on tap-choice items, scored as before). Memory Match left Practice (it tests memory, not reading) and stays in My Word Book.
+- **Manuscript to update:** the Practice section's game list (five games) and the task types in Adventure.

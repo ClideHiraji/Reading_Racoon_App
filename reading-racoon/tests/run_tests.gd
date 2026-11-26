@@ -1111,7 +1111,12 @@ func test_practice_pool() -> void:
 		check(Icons.exists(w.picture), "practice word %s has a picture" % w.word)
 	check(PracticePool.rhymes(b, 1).size() >= 2, "level 1 has rhyme rounds")
 	check(PracticePool.unlocked("rhyme_pop", b, 1), "Rhyme Pop opens at level 1")
-	check(PracticePool.unlocked("memory_match", b, 1), "Memory Match opens at level 1")
+	check(PracticePool.game("memory_match").is_empty(), "Memory Match isn't a Practice game (D-043)")
+	for g in PracticePool.GAMES:
+		var met := b.items.filter(func(it): return str(it.get("variant", "")) == g.id 				or (g.has("task") and it.task_type == g.task and str(it.get("variant", "")) == g.variant))
+		check(not met.is_empty(), "%s is in the adventure too (D-043)" % g.name)
+		var first: int = met.reduce(func(lo, it): return mini(lo, int(it.level)), 99)
+		check(PracticePool.unlocked(g.id, b, first), "%s opens in Practice by the world it's in (%d)" % [g.name, first])
 	check(not PracticePool.unlocked("word_catch", b, 1), "Word Catch waits for level 2")
 	check(PracticePool.lock_text("word_catch", b, 1) == "Finish Level 1", "Word Catch says what opens it")
 	check(PracticePool.unlocked("word_catch", b, 2), "Word Catch opens at level 2")

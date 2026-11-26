@@ -14,7 +14,7 @@ files renamed, and the four "badges" icons cropped.
 | chest_open | skoll/open-treasure-chest | Skoll |
 | heart_plus | zeromancer/heart-plus | Zeromancer |
 | star, heart, bolt, mountain | badges/star, heart, bolt, mountain | game-icons.net "badges" set |
-| play, pause, dot, arrow_left, arrow_right, glasses, scarf, full_screen, full_screen_exit | drawn for this project: rounded play and pause signs, a plain dot, two arrows, glasses, a scarf, and corner marks to open and close full screen | Reading Racoon team |
+| play, pause, dot, arrow_left, arrow_right, glasses, scarf, full_screen, full_screen_exit, gear | drawn for this project: rounded play and pause signs, a plain dot, two arrows, glasses, a scarf, corner marks to open and close full screen, and a gear for Settings | Reading Racoon team |
 
 The earned star, Regain Heart and Broken Heart animations were provided by the team as Lottie files (`Star.lottie`, `Regain Heart.lottie`, `Broken Heart.lottie`); their JSON is in `assets/anim/lottie/` and the game plays it live with `ui/lottie_player.gd` (D-022), the hearts in the lesson hearts' colors. `regain_heart.json` is adjusted to match the team's `Regain Heart.mp4`: normal speed, 3.25 s, and a grey empty heart (with Broken Heart's outline, so the two meet) instead of the black outline. The still hearts in a lesson are these animations' end frames. The animated SVG exports (`Animated - Star.svg`, `Regain Heart.svg`, `Broken Heart.svg`) are kept as references in `tools/team-animations/`, outside the game. Confirm their source and license before release.
 

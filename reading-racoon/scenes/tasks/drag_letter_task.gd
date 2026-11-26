@@ -44,13 +44,18 @@ func _answer(letter: String) -> void:
 	if _locked:
 		return
 	_locked = true
+	_slot.accepting = false
 	_slot.show_letter(letter)
+	_tiles[letter].modulate.a = 0.0   # the letter moved into the gap (tapped or dragged)
 	answered.emit(letter, Time.get_ticks_msec() - _started)
 
 
 ## Second try (D-021): the gap empties and the letter tried fades out.
 func try_again(chosen: String) -> void:
 	_slot.clear()
+	_slot.accepting = true
+	for l in _tiles:
+		_tiles[l].modulate.a = 1.0
 	if _tiles.has(chosen):
 		var tile: ChunkyButton = _tiles[chosen]
 		tile.disabled = true
@@ -62,9 +67,11 @@ func try_again(chosen: String) -> void:
 func show_result(chosen: String, answer: String) -> void:
 	_slot.show_letter(answer)
 	_slot.set_color(Palette.RIGHT)   # always show the right word in green
+	_slot.accepting = false
 	for l in _tiles:
 		var tile: ChunkyButton = _tiles[l]
 		tile.disabled = true
+		tile.modulate.a = 1.0
 		if l == answer:
 			tile.face_color = Palette.RIGHT
 		elif l == chosen:

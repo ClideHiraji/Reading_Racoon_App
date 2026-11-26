@@ -2,8 +2,9 @@ extends VBoxContainer
 ## Put-it-in-order task: build a word from syllable tiles (Phonological Awareness,
 ## Phonics), build a sentence from word tiles (Fluency: left-to-right reading,
 ## RL1BPK-I-3), or put story events in order (Literal Comprehension, RL1CAT-I-2b).
-## Tap a tile to place it in the next empty slot; tap a placed tile to take it
-## back. The answer is the tile keys joined with "|", sent once every slot is full.
+## Tap a tile to place it in the next empty slot, or drag it to any slot (one
+## already filled gives its tile back); tap a placed tile to take it back. The
+## answer is the tile keys joined with "|", sent once every slot is full.
 
 signal answered(answer: String, ms: int)
 
@@ -82,7 +83,8 @@ func _tile_text(t) -> String:
 
 
 func _tile_button(t) -> ChunkyButton:
-	var b := ChunkyButton.new()
+	var b := LetterTile.new()
+	b.letter = QuestionBank.tile_key(t)
 	b.face_color = Palette.BLUE if _variant != "sequence" else Palette.CARD
 	b.card_style = _variant == "sequence"
 	b.lift = 8
@@ -113,6 +115,7 @@ func _slot(i: int) -> Control:
 	s.mouse_filter = Control.MOUSE_FILTER_STOP
 	s.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND   # D-023
 	s.gui_input.connect(_on_slot_input.bind(i))
+	s.dropped.connect(_on_drop.bind(i))
 	match _variant:
 		"syllables":
 			s.custom_minimum_size = Vector2(150, 120)
@@ -128,13 +131,29 @@ func _on_tile(key: String) -> void:
 	if _locked:
 		return
 	var i := _placed.find("")
-	if i < 0:
+	if i >= 0:
+		_place(i, key)
+
+
+## A tile dragged to slot `i`; a tile already there goes back to the tray.
+func _on_drop(key: String, i: int) -> void:
+	if _locked:
+		_tiles[key].modulate.a = 1.0
 		return
+	if _placed[i] != "":
+		_tiles[_placed[i]].visible = true
+	_place(i, key)
+
+
+func _place(i: int, key: String) -> void:
 	_placed[i] = key
 	_tiles[key].visible = false
+	_tiles[key].modulate.a = 1.0   # a dragged tile hid itself while in the finger
 	_slots[i].show_tile(_tiles[key].text, _variant)
 	if _placed.find("") < 0:
 		_locked = true
+		for s in _slots:
+			s.accepting = false
 		await get_tree().create_timer(0.35).timeout
 		answered.emit("|".join(_placed), Time.get_ticks_msec() - _started)
 
@@ -153,8 +172,10 @@ func try_again(_chosen: String) -> void:
 	for i in _slots.size():
 		_placed[i] = ""
 		_slots[i].clear()
+		_slots[i].accepting = true
 	for b in _tiles.values():
 		b.visible = true
+		b.modulate.a = 1.0
 	_started = Time.get_ticks_msec()
 	_locked = false
 

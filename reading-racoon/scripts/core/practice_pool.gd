@@ -3,13 +3,14 @@ extends RefCounted
 ## Practice games (D-017): just for fun, no hearts and no tests. They reuse
 ## Adventure's content from the worlds the child has unlocked (words with
 ## pictures, rhymes, word wheels, syllables and stories) and never change BKT;
-## the teacher sees them as "practice" events.
+## the teacher sees them as "practice" events. Every one is also a lesson task in
+## Adventure (D-043), so the child meets it there first: Rhyme Pop in World 1,
+## Word Catch in World 2. Memory Match left Practice (it tests memory, not
+## reading); My Word Book still plays it with the child's own words.
 
 const GAMES := [
 	{"id": "rhyme_pop", "name": "Rhyme Pop", "line": "Pop the balloons that rhyme", "skill": "Sounds",
 		"icon": "bee", "scene": "res://scenes/practice/rhyme_pop.tscn"},
-	{"id": "memory_match", "name": "Memory Match", "line": "Match words to pictures", "skill": "Words",
-		"icon": "cat", "scene": "res://scenes/practice/memory_match.tscn"},
 	{"id": "spin_words", "name": "Spin the Words", "line": "Spin to make new words", "skill": "Letters",
 		"icon": "repeat", "scene": "res://scenes/practice/practice_round.tscn",
 		"task": "spin_words", "variant": ""},
@@ -50,8 +51,8 @@ static func picture_words(bank: QuestionBank, max_level: int) -> Array:
 	return out
 
 
-## Rhyme rounds from the "rhymes with" items: [{word, picture, rhyme, others}],
-## where rhyme and others are {word, picture}.
+## Rhyme rounds from the "rhymes with" items: [{word, picture, rhyme, others, say}],
+## where rhyme and others are {word, picture}, and `say` is the item's own spoken question (recorded with it).
 static func rhymes(bank: QuestionBank, max_level: int) -> Array:
 	var out := []
 	for it in items(bank, max_level):
@@ -67,7 +68,7 @@ static func rhymes(bank: QuestionBank, max_level: int) -> Array:
 				others.append(w)
 		if not right.is_empty():
 			out.append({"word": str(it.word), "picture": str(it.get("picture", "")), "rhyme": right,
-					"others": others})
+					"others": others, "say": str(it.get("tts_text", it.prompt))})
 	return out
 
 
@@ -86,7 +87,7 @@ static func unlocked(id: String, bank: QuestionBank, max_level: int) -> bool:
 	match id:
 		"rhyme_pop":
 			return rhymes(bank, max_level).size() >= 2
-		"memory_match", "word_catch":
+		"word_catch":
 			return picture_words(bank, max_level).size() >= 4
 	return task_items(bank, max_level, g.task, g.variant).size() >= 2
 

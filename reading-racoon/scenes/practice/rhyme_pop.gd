@@ -90,7 +90,7 @@ func _next() -> void:
 func _say_round() -> void:
 	var r: Dictionary = _rounds[_round] if _round < _rounds.size() else {}
 	if not r.is_empty():
-		Speech.say("Pop the balloon that rhymes with %s!" % r.word, "en")
+		Speech.say(str(r.say), "en")   # the lesson's own question, so it's the same recording (D-041)
 
 
 func _add_balloon(o: Dictionary, i: int, n: int, right: bool) -> void:
@@ -122,8 +122,7 @@ func _tap(b: Balloon, o: Dictionary, right: bool) -> void:
 	_results.append("almost" if _missed else "right")
 	Kit.show_rounds(_dots, _rounds.size(), _results)
 	Sfx.play("pop")
-	var r: Dictionary = _rounds[_round]
-	Speech.say("%s and %s. They rhyme!" % [r.word, o.word], "en")
+	Speech.say(o.word, "en")
 	GameState.learn_words([{"word": o.word, "picture": o.picture, "lang": "en"}], "game")
 	for other in _balloons:
 		if other != b:

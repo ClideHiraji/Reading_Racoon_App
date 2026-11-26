@@ -58,6 +58,9 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 - [[D-038 Dashboard trust fixes]]
 - [[D-039 Dashboard on a phone]]
 - [[D-040 Full screen for teacher videos]]
+- [[D-041 Recorded voices only]]
+- [[D-042 Settings card]]
+- [[D-043 Practice games come from the adventure]]
 
 ## Still open (from [[10-open-issues]])
 - 🔴 **Before the final release: delete the developer menu** (issue 30). It's debug-build-only, but it must go: `reading-racoon/ui/dev_menu.gd` (and its `.uid`), its lines in `scripts/autoload/screen.gd`, and its check at the end of `tests/ui_smoke.gd`.
@@ -82,7 +85,7 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 - [[2026-11-20]]: the teacher dashboard and admin portal critiqued (20/40) and redesigned (D-037): needs-help first grouped by child, plain states with P(L) on demand, the class on the reading map, a filterable learner list, risky actions on the learner page with confirmations, server-drawn charts (no Chart.js or CDN), WCAG AA contrast and focus, phone layouts; 184 tests pass.
 
 - [[2026-11-24]]: a second critique of the dashboard (23/40) listed about 60 gaps from wording to whole flows; then the trust fixes (D-038): Slipping, two help groups with Close all, last-synced times, branded error pages, busy-locked forms, working map links, accessibility and print; 188 tests pass.
-- [[2026-11-26]]: a full bug hunt of the game, then a layout audit at 7 screen sizes (new `tests/layout_audit.gd`) that found a laptop crash in FitBox, the touch-scroll bug (buttons block drag-scroll) and about 12 layout bugs, all fixed the same day with tests: headless tests clean (5,161 checks, smoke, all 126 scripts load), then play-tests on the phone (adb) and the laptop (window messages) and a 3,200-action monkey test with no errors or leaks. Found: the committed project cannot export for Android (ETC2), answer pictures turn into black silhouettes on result cards, Practice tiles overflow on laptops, a tripled Closet title line; the laptop has no Filipino or Bisaya voice.
+- [[2026-11-26]]: the recorded-voice branch merged into main's line, then device TTS removed (D-041), Settings (D-042), Practice games in the adventure (D-043), the new-day card shown once, drag that lifts the tile out, and a real spinning word wheel. Before that: a full bug hunt of the game, then a layout audit at 7 screen sizes (new `tests/layout_audit.gd`) that found a laptop crash in FitBox, the touch-scroll bug (buttons block drag-scroll) and about 12 layout bugs, all fixed the same day with tests: headless tests clean (5,161 checks, smoke, all 126 scripts load), then play-tests on the phone (adb) and the laptop (window messages) and a 3,200-action monkey test with no errors or leaks. Found: the committed project cannot export for Android (ETC2), answer pictures turn into black silhouettes on result cards, Practice tiles overflow on laptops, a tripled Closet title line; the laptop has no Filipino or Bisaya voice.
 
 - [[2026-11-25]]: a phone critique of the dashboard (24/40); then the phone fixes (D-039): compact learner cards (the class page went from 17 to 9 screens), Mark resolved, Close all and consent in place with Undo, an admin Menu button, landscape and 360 px layouts, 44 px targets and 16 px fields; 190 tests pass.
 - [[2026-11-19]]: recorded buddy voices (D-035): Gemini's Zeno and Cleo for Roco and Rina, in a lively style, on the AI Studio free tier, with "reader" in place of names; the batch cutter now aligns by sentence length; Rina's Closet tab says "In her paws"; the Watch & Listen videos fixed (D-040).

@@ -1,0 +1,7 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/tasks/word_catch_task.gd" id="1_catch"]
+
+[node name="WordCatchTask" type="BoxContainer"]
+size_flags_vertical = 3
+script = ExtResource("1_catch")

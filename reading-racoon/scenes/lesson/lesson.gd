@@ -18,6 +18,9 @@ const TASKS := {
 	"drag_letter": preload("res://scenes/tasks/drag_letter_task.tscn"),
 	"order_tiles": preload("res://scenes/tasks/order_tiles_task.tscn"),
 	"spin_words": preload("res://scenes/tasks/spin_words_task.tscn"),
+	# Practice games as lesson tasks (D-043): a tap_choice item's "variant" picks their look.
+	"rhyme_pop": preload("res://scenes/tasks/rhyme_pop_task.tscn"),
+	"word_catch": preload("res://scenes/tasks/word_catch_task.tscn"),
 }
 const RESCUE_PAPER := Color("dcebf0")
 ## How long each kind of feedback stays before the lesson moves on (seconds; it
@@ -135,7 +138,7 @@ func _next() -> void:
 	if not _testing and not session.in_rescue():
 		_update_hearts(session.hearts.hearts)
 	_update_progress()
-	%SpeakButton.visible = Speech.available(_lang())
+	%SpeakButton.visible = Speech.has_line(_item.get("tts_text", _item.get("prompt", "")), _lang())
 	%StoryButton.visible = _item.has("passage")
 	var pid: String = _item.get("passage", "")
 	if pid != "" and pid != _shown_passage:
@@ -147,7 +150,7 @@ func _next() -> void:
 func _start_task() -> void:
 	if _task:
 		_task.queue_free()
-	_task = TASKS.get(_item.task_type, TASKS.tap_choice).instantiate()
+	_task = TASKS.get(str(_item.get("variant", "")), TASKS.get(_item.task_type, TASKS.tap_choice)).instantiate()
 	%TaskHolder.add_child(_task)
 	_task.setup(_item)
 	_task.answered.connect(_on_answered)

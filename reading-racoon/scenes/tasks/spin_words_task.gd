@@ -1,7 +1,8 @@
 extends VBoxContainer
 ## "Spin the Words" (Phonics, word families): a picture, a paper wheel of first
-## sounds and a fixed word ending. Tapping a sound turns it to the pointer and
-## builds the word, which answers (no Check step, D-007).
+## sounds and a fixed word ending. Spin the wheel (or tap a sound) and the sound
+## that stops at the pointer builds the word, which answers (no Check step, D-007).
+## While it turns, the word shows each sound passing the pointer: cat, hat, mat...
 
 signal answered(answer: String, ms: int)
 
@@ -23,6 +24,7 @@ func setup(item: Dictionary) -> void:
 		%Stage.add_child(card)
 	_wheel = SpinWheel.new()
 	_wheel.picked.connect(_on_picked)
+	_wheel.turning.connect(_on_turning)
 	var row: HBoxContainer = %Row
 	row.add_child(_wheel)
 	row.add_child(_pointer())
@@ -64,6 +66,14 @@ func _word_piece(text: String, color: Color) -> Label:
 	l.add_theme_color_override("font_color", color)
 	card.add_child(l)
 	return l
+
+
+## The sound passing the pointer, in a soft color until the wheel stops (-1: none yet).
+func _on_turning(i: int) -> void:
+	if _locked:
+		return
+	_onset.text = "?" if i < 0 else str(_item.choices[i].get("label", _item.choices[i].id))
+	_onset.add_theme_color_override("font_color", Color(Palette.MANGO_DEEP, 0.45 if i < 0 else 0.75))
 
 
 func _on_picked(i: int) -> void:

@@ -65,11 +65,13 @@ func _ready() -> void:
 		_greet()
 	# The first visit of a day earns a days sticker (D-017).
 	var day := GameState.new_day()
-	if day != "" or not GameState.new_day_items.is_empty():
+	var items: Array = GameState.new_day_items
+	if day != "" or not items.is_empty():
 		await get_tree().create_timer(1.6).timeout
 		if is_inside_tree():
+			GameState.new_day_items = []   # shown once: coming back to Home mustn't show the card again
 			Kit.reward(self, GameState.talk("reward_new_day"), {"coins": 0, "stickers": [day] if day != "" else [],
-					"items": GameState.new_day_items}, _refresh)
+					"items": items}, _refresh)
 
 
 func _greet() -> void:
@@ -257,6 +259,30 @@ func _build() -> void:
 	var pill := Kit.coin_pill(self)
 	_coins = pill.get_meta("label")
 	top.add_child(pill)
+	# Settings (D-042): on a laptop the gear ends the top bar, in the corner; on a phone the bar is full,
+	# so it sits just under the coins.
+	var gear := ChunkyButton.new()
+	gear.name = "SettingsButton"
+	gear.unique_name_in_owner = true
+	gear.card_style = true
+	gear.lift = 5
+	gear.radius = 48
+	gear.icon_name = "gear"
+	gear.icon_px = 52
+	gear.expand_icon = true
+	gear.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	gear.tooltip_text = "Settings"
+	gear.pressed.connect(func(): SettingsCard.open(self))
+	if wide:
+		gear.custom_minimum_size = Vector2(96, 96)
+		top.add_child(gear)
+	else:
+		gear.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
+		gear.offset_right = top.offset_right
+		gear.offset_left = top.offset_right - 96
+		gear.offset_top = top.offset_bottom + 14
+		gear.offset_bottom = gear.offset_top + 96
+		add_child(gear)
 
 	# The three places to go.
 	var row := HBoxContainer.new()

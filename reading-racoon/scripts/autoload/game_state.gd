@@ -14,9 +14,9 @@ const LINES_PATH := "res://content/companion_lines.json"
 const LINES_BY_LANG := {"fil": "res://content/companion_lines.fil.json", "bis": "res://content/companion_lines.bis.json"}
 ## What the buddy says on the menus, in each talk language (D-033).
 const TALK_PATH := "res://content/talk.json"
-## The two buddies a student picks between (D-033): the boy Roco and the girl Rina. Rina's voice is
-## higher; both wear the same Closet items.
-const BUDDIES := {"roco": {"name": "Roco", "pitch": 1.1}, "rina": {"name": "Rina", "pitch": 1.4}}
+## The two buddies a student picks between (D-033): the boy Roco and the girl Rina, each with a recorded
+## voice of their own (D-035); both wear the same Closet items.
+const BUDDIES := {"roco": {"name": "Roco"}, "rina": {"name": "Rina"}}
 ## The languages the buddy can talk in (D-033). Lessons keep their own (MATATAG bridge).
 const TALK_LANGS := {"en": "English", "fil": "Filipino", "bis": "Bisaya"}
 
@@ -807,16 +807,14 @@ func set_buddy(who: String, lang: String) -> void:
 	buddy_changed.emit()
 
 
-## The voice follows the buddy: Rina speaks higher. `who` lends another buddy's voice for a moment
-## (the buddy chooser's previews); empty is the student's own.
+## The voice follows the buddy: Roco's or Rina's recordings (D-035). `who` lends another buddy's voice for
+## a moment (the buddy chooser's previews); empty is the student's own.
 func use_buddy_voice(who: String = "") -> void:
 	if not is_inside_tree():
 		return   # a unit test's own GameState
 	var id := who if BUDDIES.has(who) else buddy_id()
 	var speech := get_node_or_null("/root/Speech")
 	if speech:
-		speech.pitch = float(BUDDIES[id].pitch)
-		speech.girl_voice = id == "rina"
 		speech.buddy = id   # whose recorded clips play (D-035)
 
 

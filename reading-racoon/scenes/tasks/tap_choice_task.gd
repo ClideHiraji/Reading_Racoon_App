@@ -52,6 +52,7 @@ func setup(item: Dictionary) -> void:
 	if Kit.landscape() and %Stage.visible:
 		vertical = false
 		add_theme_constant_override("separation", 48)
+		%Choices.size_flags_vertical = Control.SIZE_SHRINK_CENTER   # level with the picture, not its top
 
 
 func _card_content(c: Dictionary, has_pictures: bool) -> Control:

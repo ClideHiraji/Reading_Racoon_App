@@ -4,6 +4,9 @@ extends Node
 
 const RATE := 22050
 
+## How loud the sounds are, 0-100 (Settings, D-042); 0 plays none.
+var volume := 80
+
 var _streams := {}
 var _players: Array[AudioStreamPlayer] = []
 
@@ -24,11 +27,12 @@ func _ready() -> void:
 
 
 func play(sound: String) -> void:
-	if not _streams.has(sound):
+	if not _streams.has(sound) or volume <= 0:
 		return
 	for p in _players:
 		if not p.playing:
 			p.stream = _streams[sound]
+			p.volume_db = linear_to_db(volume / 80.0)   # 80, the old loudness, is 0 dB
 			p.play()
 			return
 

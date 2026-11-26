@@ -1,14 +1,17 @@
 class_name Balloon
 extends Button
-## A paper balloon with a picture and a word, for Rhyme Pop (D-017). Drawn in
-## Godot (no image files); a flat Button so a tap anywhere on it counts.
+## A paper balloon with a picture and a word, for Rhyme Pop in Practice and in lessons (D-017, D-043).
+## Drawn in Godot (no image files); a flat Button so a tap anywhere on it counts.
 
 var color := Palette.BLUE:
 	set(v):
 		color = v
+		if _label:   # a new face (right or wrong) keeps its word readable
+			_label.add_theme_color_override("font_color", Palette.text_on(color))
 		queue_redraw()
 var word := ""
 var picture := ""
+var _label: Label
 
 
 func _ready() -> void:
@@ -25,9 +28,9 @@ func _ready() -> void:
 		var r := Icons.picture_rect(picture, 80, Palette.text_on(color))
 		r.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 		v.add_child(r)
-	var l := Kit.word_label(word, 34)
-	l.add_theme_color_override("font_color", Palette.text_on(color))
-	v.add_child(l)
+	_label = Kit.word_label(word, 34)
+	_label.add_theme_color_override("font_color", Palette.text_on(color))
+	v.add_child(_label)
 
 
 func _draw() -> void:

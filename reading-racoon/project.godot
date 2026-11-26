@@ -18,10 +18,6 @@ config/features=PackedStringArray("4.7", "GL Compatibility")
 boot_splash/bg_color=Color(1, 0.964706, 0.878431, 1)
 config/icon="res://icon.svg"
 
-[audio]
-
-general/text_to_speech=true
-
 [autoload]
 
 GameState="*res://scripts/autoload/game_state.gd"

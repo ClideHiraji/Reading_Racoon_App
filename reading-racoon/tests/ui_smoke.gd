@@ -22,10 +22,20 @@ func _frames(n: int = 3) -> void:
 		await process_frame
 
 
+## The open card's way out (Screen.back's "back_cancel"), or null when no card is open.
+func _top_cancel() -> BaseButton:
+	var found: BaseButton = null
+	for n in get_nodes_in_group("back_cancel"):
+		if n is BaseButton and n.is_visible_in_tree() and current_scene.is_ancestor_of(n):
+			found = n
+	return found
+
+
 func _run() -> void:
 	await _frames()
 	var gs := root.get_node("GameState")
 	gs.reset_progress()
+	gs.access.schedule = {}   # open at any hour: the default school day closes Adventure after 5 PM
 	change_scene_to_file("res://scenes/path/learning_path.tscn")
 	await _frames(5)
 	check(current_scene.name == "LearningPath", "path opens")
@@ -308,7 +318,7 @@ func _run() -> void:
 	gs.open_section("practice")
 	await _frames(5)
 	check(current_scene.name == "Practice", "Practice opens from the hub")
-	check(current_scene._list.get_child_count() == PracticePool.GAMES.size(), "six game cards")
+	check(current_scene._list.get_child_count() == PracticePool.GAMES.size(), "a card per game")
 
 	gs.practice_game = "memory_match"
 	gs.practice_words = []
@@ -565,7 +575,7 @@ func _run() -> void:
 	check(rina_paws.tooltip_text == "In her paws", "Rina's Closet says what she holds is in her paws")
 	change_scene_to_file(gs.HUB_SCENE)   # back where Let's go left it, for the checks below
 	await _frames(5)
-	check(is_equal_approx(root.get_node("Speech").pitch, 1.4) and root.get_node("Speech").girl_voice, "Rina's higher voice")
+	check(root.get_node("Speech").buddy == "rina", "Rina's own voice")
 	check(not gs.line("rescue_start").contains("{buddy}"), "a buddy line names the buddy")
 	check(gs.line("hint_phonics") in gs.lines.hint_phonics, "hints stay in the lesson's language")
 	check(gs.talk("path_soon", ["Mango Grove"]).contains("Mango Grove"), "a menu line fills its slot")
@@ -575,7 +585,7 @@ func _run() -> void:
 	gs.load_profile()
 	check(gs.buddy.who == "rina" and gs.buddy.lang == "bis", "the buddy and language come back with the profile")
 	gs.set_buddy(str(had_buddy.get("who", "roco")), str(had_buddy.get("lang", "en")))
-	check(is_equal_approx(root.get_node("Speech").pitch, 1.1) or gs.buddy_id() == "rina", "the voice follows the buddy back")
+	check(root.get_node("Speech").buddy == gs.buddy_id(), "the voice follows the buddy back")
 
 	# After a wrong answer the green and orange cards keep their pictures' own colours (D-027):
 	# tinting them for the card's new face made black silhouettes.
@@ -599,8 +609,8 @@ func _run() -> void:
 	check(not pictures.is_empty() and pictures.all(func(t): return t.self_modulate == Color.WHITE),
 			"answer pictures keep their colours after a wrong answer (%s)" % pick.get("id", "none"))
 	tap.free()
-	# Recorded voices (D-035): a recorded line plays from its clips; a line with any sentence not recorded
-	# is read by the system voice instead, so one line never mixes two voices.
+	# Recorded voices only (D-035, D-041): a recorded line plays from its clips; a line with any sentence
+	# not recorded in the buddy's voice and language stays silent, and no device voice ever speaks.
 	var voice = root.get_node("Speech")
 	var had: Dictionary = gs.buddy.duplicate()
 	gs.set_buddy("roco", "en")
@@ -609,11 +619,113 @@ func _run() -> void:
 	check(voice.recorded("Great job!", "fil").is_empty(), "the clip belongs to its language")
 	voice.say("Great job!")
 	check(voice.speaking(), "a recorded line plays")
+	voice.say("Zebras eat purple clouds.")
+	check(not voice.speaking(), "an unrecorded line is silent and stops the line before it")
+	check(not voice.say_tracked("Zebras eat purple clouds.", "en"), "an unrecorded read-along paces itself")
+	voice.say("Great job!")
 	voice.cut()
 	check(not voice.speaking(), "cut stops a recorded line at once")
+	check(not ProjectSettings.get_setting("audio/general/text_to_speech", false), "the device voice is off")
 	gs.set_buddy("rina", "en")
 	check(voice.buddy == "rina", "the recorded voice follows the buddy")
 	gs.set_buddy(str(had.get("who", "roco")), str(had.get("lang", "en")))
+
+	# A new day's card shows once (D-026): coming back to Home doesn't bring the same card back.
+	gs.access.schedule = {}
+	gs.new_day_items = [Wardrobe.ITEMS.keys()[0]]
+	change_scene_to_file(gs.HUB_SCENE)
+	await create_timer(2.2).timeout
+	var day_ok := _top_cancel()
+	check(day_ok != null, "the new day's card shows")
+	if day_ok:
+		day_ok.pressed.emit()
+	change_scene_to_file(gs.HUB_SCENE)
+	await create_timer(2.2).timeout
+	check(_top_cancel() == null, "and not again on the next visit to Home")
+
+	# Settings (D-042): the gear opens the card, with the volumes, sign out and (on a laptop) close; Back
+	# closes it. Its chips aren't pressed here: they'd save to this laptop's own settings file.
+	current_scene.get_node("%SettingsButton").pressed.emit()
+	await _frames(3)
+	var done := _top_cancel()
+	check(done != null and done.text == "Done", "the gear opens Settings")
+	var texts: Array = current_scene.find_children("*", "Button", true, false).map(func(b): return b.text)
+	check(texts.has("Loud") and texts.has("Off") and texts.has("Sign out") and texts.has("Close game")
+			and texts.has("Buddy and language"), "Settings has the volumes, buddy, sign out and close")
+	check(texts.has("High") and texts.has("Low") and texts.has("30") and texts.has("60"), "and graphics and frame rate")
+	SettingsCard.graphics(self, "low")
+	check(root.content_scale_mode == Window.CONTENT_SCALE_MODE_VIEWPORT and not Smooth.enabled,
+			"Low graphics draws at the base size, without smoothed edges")
+	SettingsCard.graphics(self, "high")
+	check(root.content_scale_mode == Window.CONTENT_SCALE_MODE_CANVAS_ITEMS and Smooth.enabled, "High draws sharp")
+	root.get_node("Screen").back()
+	await _frames(3)
+	check(_top_cancel() == null, "Back closes Settings")
+
+	# Practice games as lesson tasks (D-043): items with a variant play as Rhyme Pop and Word Catch and
+	# answer like any card.
+	for v in ["rhyme_pop", "word_catch"]:
+		var it: Dictionary = gs.bank.items.filter(func(i): return str(i.get("variant", "")) == v)[0]
+		var task: Node = load("res://scenes/tasks/%s_task.tscn" % v).instantiate()
+		root.add_child(task)
+		task.setup(it)
+		await _frames()
+		check(task._cards.size() == it.choices.size(), "%s shows every answer" % v)
+		var got := []
+		task.answered.connect(func(a, _ms): got.append(a))
+		task._cards[str(it.answer)].pressed.emit()
+		check(got == [str(it.answer)], "%s answers with the card tapped" % v)
+		task.show_result(str(it.answer), str(it.answer))
+		task.free()
+
+	# Drag (the user's play-test, 2026-11-26): a letter let go on or near the gap drops in, and leaves the tray.
+	var dl_item: Dictionary = gs.bank.items.filter(func(i): return i.task_type == "drag_letter")[0]
+	var dl: Node = load("res://scenes/tasks/drag_letter_task.tscn").instantiate()
+	root.add_child(dl)
+	dl.setup(dl_item)
+	await _frames(3)
+	var tile: LetterTile = dl._tiles[str(dl_item.answer)]
+	var gap: Rect2 = dl._slot.get_global_rect()
+	check(tile._slot_near(gap.get_center()) == dl._slot, "a letter let go on the gap drops in")
+	check(tile._slot_near(Vector2(gap.end.x + 40, gap.get_center().y)) == dl._slot, "and one let go just beside it")
+	check(tile._slot_near(gap.end + Vector2(300, 300)) == null, "but not one let go far away")
+	var got_l := []
+	dl.answered.connect(func(a, _ms): got_l.append(a))
+	dl._slot.dropped.emit(str(dl_item.answer))
+	check(got_l == [str(dl_item.answer)] and tile.modulate.a == 0.0, "the letter dropped answers and leaves the tray")
+	dl.free()
+
+	# The word wheel turns like a real one: a fling spins it on, it slows down, clicks onto a letter and
+	# answers with the letter at the pointer.
+	var sw_item: Dictionary = gs.bank.items.filter(func(i): return i.task_type == "spin_words")[0]
+	var sw: Node = load("res://scenes/tasks/spin_words_task.tscn").instantiate()
+	root.add_child(sw)
+	sw.setup(sw_item)
+	await create_timer(1.3).timeout   # the wheel's opening turn
+	var wheel: SpinWheel = sw._wheel
+	var got_w := []
+	sw.answered.connect(func(a, _ms): got_w.append(a))
+	var mid := wheel.size / 2
+	var ring := wheel._radius() * 0.7
+	var press := InputEventMouseButton.new()
+	press.button_index = MOUSE_BUTTON_LEFT
+	press.pressed = true
+	press.position = mid + Vector2(ring, 0)
+	wheel._gui_input(press)
+	for k in range(1, 7):
+		var move := InputEventMouseMotion.new()
+		move.button_mask = MOUSE_BUTTON_MASK_LEFT
+		move.position = mid + Vector2(cos(k * 0.25), sin(k * 0.25)) * ring
+		wheel._gui_input(move)
+		await create_timer(0.016).timeout
+	var up: InputEventMouseButton = press.duplicate()
+	up.pressed = false
+	wheel._gui_input(up)
+	check(wheel._spin > SpinWheel.FLING, "a fling spins the wheel on (%.1f rad/s)" % wheel._spin)
+	await create_timer(5.0).timeout
+	check(wheel._spin == 0.0 and got_w.size() == 1, "it slows down, stops on a letter and answers")
+	check(got_w.size() == 1 and got_w[0] == str(sw_item.choices[wheel.at_pointer()].id), "with the letter at the pointer")
+	sw.free()
 
 	# The developer menu (issue 30, debug builds only; DELETE BEFORE THE FINAL RELEASE with it).
 	if DevMenu.allowed():

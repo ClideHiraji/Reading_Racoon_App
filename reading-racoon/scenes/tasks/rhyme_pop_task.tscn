@@ -1,0 +1,7 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/tasks/rhyme_pop_task.gd" id="1_pop"]
+
+[node name="RhymePopTask" type="BoxContainer"]
+size_flags_vertical = 3
+script = ExtResource("1_pop")

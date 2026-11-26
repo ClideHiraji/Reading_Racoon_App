@@ -106,7 +106,7 @@ func _ready() -> void:
 	_next_btn.pressed.connect(_turn.bind(1))
 	_controls.add_child(_next_btn)
 
-	_reading = Speech.available(_lang)
+	_reading = Speech.has_line(str(_pages()[0].get("text", "")) if not _pages().is_empty() else "", _lang)
 	_show_page()
 
 

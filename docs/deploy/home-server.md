@@ -25,7 +25,7 @@ Tablet (Godot) ─https─▶ Cloudflare edge ◀═ outbound tunnel ═ cloudfl
 
 | Piece | Why |
 |---|---|
-| **Cloudflare Tunnel** (recommended) | Outbound only, so it works behind CGNAT (common on PH home internet) with no router changes; free; TLS certificates handled; hides the home IP; DDoS protection. Needs a domain on Cloudflare DNS (about US$10 a year). Limits on the free plan: 100 MB per upload, 100 s per request. |
+| **Cloudflare Tunnel** (recommended) | Outbound only, so it works behind CGNAT (common on PH home internet) with no router changes; free; TLS certificates handled; hides the home IP; DDoS protection. Needs a domain on Cloudflare DNS: ours is `readingracoon.me`, free for the first year from the GitHub Student Developer Pack (Namecheap). **Renew it before it lapses**, or every tablet loses the server. Limits on the free plan: 100 MB per upload, 100 s per request, no published bandwidth cap. Cloudflare's terms ask non-Enterprise sites to serve video and large files through paid products (Stream, R2), so keep teacher videos few and short. |
 | Tailscale Funnel (no-domain fallback) | Free stable `https://<laptop>.<tailnet>.ts.net` address, also outbound only. In beta, with an unpublished bandwidth cap and no WAF or rate limiting, so the app's own limits do all the work. |
 | Port forwarding + dynamic DNS | Not used: often impossible behind CGNAT, exposes the home IP, and you'd run your own certificates. |
 | **Apache** (XAMPP / Apache Lounge) | Serves many requests at once. `php artisan serve` handles one at a time on Windows (`PHP_CLI_SERVER_WORKERS` is not supported there) and dropped connections in our tests. |
@@ -87,22 +87,26 @@ powershell -ExecutionPolicy Bypass -File backend\ops\windows\install-tasks.ps1
 It registers `ReadingRacoon-Queue` and `ReadingRacoon-Scheduler`: they start at boot as SYSTEM and restart after any crash (`run-forever.ps1`, logs in `storage/logs/queue-work-*.log`, `schedule-work-*.log`).
 
 ### 6. The tunnel (Cloudflare)
-1. Add the domain to Cloudflare (free plan) and switch its name servers.
-2. Install `cloudflared` (winget install Cloudflare.cloudflared), then:
-   ```bat
-   cloudflared tunnel login
-   cloudflared tunnel create reading-racoon
-   cloudflared tunnel route dns reading-racoon racoon.example.org
-   ```
-3. Copy `backend/ops/windows/cloudflared-config.example.yml` to `C:\Windows\System32\config\systemprofile\.cloudflared\config.yml`, with the tunnel id and credentials file, then `cloudflared service install`.
-4. In the Cloudflare dashboard:
-   - SSL/TLS → Edge Certificates: **Always Use HTTPS** on, minimum TLS 1.2.
-   - Security → Bots: **Bot Fight Mode off**, and a WAF custom rule *skip* (Browser Integrity Check, Security Level) for `starts_with(http.request.uri.path, "/api/")`. The game is not a browser; without this Cloudflare may answer it with a challenge page instead of JSON.
-   - Security → WAF → Rate limiting rule (one is free): `/api/auth/login`, 100 requests per 10 s per IP → block 10 s. Laravel limits too; this stops floods before they reach the laptop.
-   - Never turn on "Under Attack" mode for this hostname (it blocks the game).
-5. Set `APP_URL=https://racoon.example.org` and `TRUSTED_PROXIES=127.0.0.1,::1`, then `php artisan config:cache`.
+This is how `readingracoon.me` was set up (2026-11-26): a tunnel managed from the Cloudflare dashboard, so the laptop needs no config file.
 
-**Fallback without a domain:** install Tailscale, sign in, then `tailscale funnel --bg 8090`. The address is `https://<laptop>.<tailnet>.ts.net`. Use it as `APP_URL`.
+1. **Domain:** add it to Cloudflare (free plan), then at the registrar (Namecheap → Domain List → Manage → Nameservers → Custom DNS) enter Cloudflare's two name servers. You can do the next steps while they take effect (minutes to 48 hours).
+2. **Old DNS records:** in Cloudflare → DNS → Records, delete what you don't use. A Student Pack domain comes pointed at GitHub Pages (`A` records `185.199.108.153` to `185.199.111.153`). Cloudflare copies them in, and the site then shows GitHub's 404 page instead of the server.
+3. **Install `cloudflared`:** the Windows `.msi` from Cloudflare's downloads, or `winget install Cloudflare.cloudflared`. The `.msi` installs quietly, with no window.
+4. **Create the tunnel:** Zero Trust → Networks → Tunnels → Create a tunnel → Cloudflared, name `reading-racoon`. Copy its Windows install command (`cloudflared.exe service install <token>`) and run it in an **Administrator Command Prompt**. In PowerShell, a command that starts with a quoted path needs `& ` in front, or it fails with "Unexpected token 'service'". The token is the tunnel's password: never paste it into chats, notes or the repo. The tunnel shows **Healthy** once the service connects.
+5. **Route the domain:** in the tunnel, Published application routes → Add: subdomain empty, domain `readingracoon.me`, path empty, service **HTTP**, URL `127.0.0.1:8090` (the Apache site from step 3). No HTTP Host header override: Laravel builds its links from `APP_URL`.
+6. In `services.msc` → Cloudflared → Recovery, set all three failures to "Restart the Service".
+7. **Dashboard security** (check each rule's expression preview before you deploy it):
+   - SSL/TLS → Edge Certificates: **Always Use HTTPS** on, minimum TLS 1.2.
+   - Security → Bots: **Bot Fight Mode off**.
+   - Security → WAF → **Custom rules**: action *Skip* (Browser Integrity Check, Security Level, Bot Fight Mode) when URI Path **starts with** `/api/`. The preview must read `starts_with(http.request.uri.path, "/api/")`, not `eq`. The game is not a browser; without this Cloudflare may answer it with a challenge page instead of JSON.
+   - Security → WAF → **Rate limiting rules** (one is free; not a custom rule): URI Path equals `/api/auth/login`, 100 requests per 10 s per IP, then Block for 10 s. The preview must show a rate limit. A *custom* rule with Block on that path refuses every sign-in. Laravel limits too; this stops floods before they reach the laptop.
+   - Never turn on "Under Attack" mode for this hostname (it blocks the game).
+8. Set `APP_URL=https://readingracoon.me` and `TRUSTED_PROXIES=127.0.0.1,::1`, then `php artisan config:cache`.
+9. **Check from outside:** on a phone using mobile data, open `https://readingracoon.me/api/health`. It should show `"status":"ok"`.
+
+`backend/ops/windows/cloudflared-config.example.yml` is for the other way (a tunnel made with `cloudflared tunnel login` / `create` / `route dns`). It isn't needed with the dashboard.
+
+**Fallback without a domain:** install Tailscale, sign in, then `tailscale funnel --bg 8090`. The address is `https://<laptop>.<tailnet>.ts.net`. Use it as `APP_URL`. To stop it, run `tailscale serve reset`: turning Funnel off alone can leave it running. `tailscale serve status` should then say "No serve config".
 
 ### 7. The laptop itself
 - Power (plugged in): never sleep, never hibernate, lid close does nothing: `powercfg /change standby-timeout-ac 0`, `powercfg /change hibernate-timeout-ac 0`, and Control Panel → Power Options → "Choose what closing the lid does" → Do nothing.
@@ -113,17 +117,21 @@ It registers `ReadingRacoon-Queue` and `ReadingRacoon-Scheduler`: they start at 
 - Exclude `backend\storage` and the PostgreSQL data folder from real-time antivirus scanning only if the antivirus slows writes noticeably.
 
 ### 8. Monitoring
-Add a free uptime monitor (UptimeRobot or Healthchecks.io) on `https://racoon.example.org/api/health`, every 5 minutes, alerting your phone:
+Add a free uptime monitor (UptimeRobot or Healthchecks.io) on `https://readingracoon.me/api/health`, every 5 minutes, alerting your phone:
 - **503 / no answer:** the database, Apache, the tunnel, the internet or the laptop is down.
 - **200 with `"status":"degraded"`:** the API works, but the queue worker or scheduler stopped (the dashboard gets stale, backups stop). Set a keyword alert on `"status":"ok"`.
 
 ### 9. The game build
-The server address is the project setting `reading_racoon/server_url`. Add a release override so exported builds use the tunnel and debug runs keep the local server:
+The server address is the project setting `reading_racoon/server_url`. `project.godot` has a release override, so exported release builds use the tunnel and debug runs (the editor, debug APKs) keep the local server:
 ```ini
 [reading_racoon]
 server_url="http://127.0.0.1:8000"
-server_url.release="https://racoon.example.org"
+server_url.release="https://readingracoon.me"
 ```
+The game reads it with `ProjectSettings.get_setting_with_override` (`sync.gd`): plain `get_setting` ignores `.release` overrides.
+
+To point a built game at another server without rebuilding it, put an `override.cfg` next to the `.exe` with `server_url.release="https://…"` under `[reading_racoon]`. A plain `server_url` line there is ignored by builds that carry the release override. (The 2026-11-26 Windows beta was built before the override existed, so its plain `server_url` line works.) Android builds can't take an `override.cfg`; rebuild them instead.
+
 Release builds refuse any `http://` address except `127.0.0.1`/`localhost` (`SyncProtocol.is_allowed_server`). Android needs the `INTERNET` and `ACCESS_NETWORK_STATE` permissions in the export preset.
 
 ## Every school day of the evaluation

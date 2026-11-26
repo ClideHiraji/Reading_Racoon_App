@@ -51,6 +51,7 @@ theme/custom="res://ui/theme.tres"
 [reading_racoon]
 
 server_url="http://127.0.0.1:8000"
+server_url.release="https://readingracoon.me"
 
 [rendering]
 

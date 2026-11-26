@@ -12,18 +12,16 @@ use Illuminate\Foundation\Queue\Queueable;
 use Throwable;
 
 /**
- * Replays one learner's synced events into the official state (FR-03, FR-11,
- * D-011), off the request path (D-036).
+ * Replays one learner's synced events into the official state, outside the request.
  *
- * POST /api/sync acknowledges events as soon as they are stored, then queues
- * this job a few seconds later. While one is waiting, further syncs from the
- * same learner don't queue another (unique until processing), so a device
- * uploading a 5,000-event backlog in 50 batches costs one replay instead of
- * 50. Once the job starts, the lock is released: a sync that lands during the
- * replay queues the next one, so no stored event is ever left unreplayed.
+ * POST /api/sync acknowledges events as soon as they're stored, then queues this job a few
+ * seconds later. While one is waiting, more syncs from the same learner don't queue another
+ * (unique until processing), so a device uploading 5,000 events in 50 batches costs one replay,
+ * not 50. Once the job starts, the lock is released: a sync during the replay queues the next
+ * one, so no stored event is ever left out.
  *
- * A failure is retried with backoff and never touches the device's queue,
- * which only waits for the acknowledgement.
+ * A failure is retried with a wait and never touches the device's queue, which only waits
+ * for the acknowledgement.
  */
 final class ReplayStudent implements ShouldBeUniqueUntilProcessing, ShouldQueue
 {
@@ -50,10 +48,9 @@ final class ReplayStudent implements ShouldBeUniqueUntilProcessing, ShouldQueue
     }
 
     /**
-     * Queues a replay for after the sync burst; never throws into the sync
-     * request. If the queue worker has stopped (a job has waited longer than
-     * Ops::QUEUE_LAG_LIMIT), the replay runs right here instead, so the
-     * official state never goes stale just because the worker is down.
+     * Queues a replay for after the sync burst; never throws into the sync request.
+     * If the queue worker has stopped (a job has waited longer than Ops::QUEUE_LAG_LIMIT),
+     * the replay runs right here instead, so the official state never goes stale.
      */
     public static function after(Student $student): void
     {

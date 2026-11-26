@@ -1,8 +1,8 @@
 @tool
 class_name Sunburst
 extends Control
-## Slowly turning paper rays behind a celebration (D-009). The rays are drawn
-## once onto a layer that turns, so they aren't redrawn every frame.
+## Slowly turning paper rays behind a celebration. The rays are drawn once onto a
+## layer that turns, so they aren't redrawn every frame.
 
 @export var color := Color(Palette.MANGO, 0.22)
 @export var rays := 16

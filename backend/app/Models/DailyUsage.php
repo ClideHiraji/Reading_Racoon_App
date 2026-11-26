@@ -6,9 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * After-school minutes a student played on one local date (FR-12): the daily
- * cap counts these. Projection of the synced "usage" events, rebuilt by
- * App\Actions\ReplayStudentEvents.
+ * After-school minutes a student played on one local date; the daily cap counts these.
+ * Built from the synced "usage" events by App\Actions\ReplayStudentEvents.
  */
 class DailyUsage extends Model
 {

@@ -14,9 +14,9 @@ use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
- * Research data export as CSV (FR-08, RQ1, docs/knowledge/09-evaluation-deployment.md):
- * pre/post-test scores and BKT history, identified by student code only and
- * limited to learners whose parental consent is on file (RA 10173, D-013).
+ * Research data export as CSV (see docs/knowledge/09-evaluation-deployment.md):
+ * pre/post-test scores and BKT history, by student code only, and only for learners
+ * whose parental consent is on file (RA 10173).
  */
 class ExportController extends Controller
 {

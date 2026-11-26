@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * A teacher alert (FR-17). The id is the UUID of the client's "flag" sync
- * event when the device raised it.
+ * A teacher alert. When the device raised it, the id is the UUID of the game's
+ * "flag" sync event.
  */
 class InterventionFlag extends Model
 {

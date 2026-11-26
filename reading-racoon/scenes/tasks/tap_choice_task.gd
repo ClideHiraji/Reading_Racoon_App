@@ -1,7 +1,7 @@
 extends BoxContainer
 ## Tap-one-card task: rhyme, picture-word match, letter sounds, syllable claps.
-## Answers on tap, no "Check" step (D-007). 2-4 big paper cards (NFR-02) with
-## tinted SVG pictures and Andika letters (D-009).
+## A tap answers right away (no Check button). 2-4 big paper cards with
+## tinted SVG pictures and Andika letters.
 
 signal answered(answer: String, ms: int)
 
@@ -41,14 +41,14 @@ func setup(item: Dictionary) -> void:
 		card.custom_minimum_size = Vector2(card_w, 250 if has_pictures else 180)
 		if long:
 			var base := 110.0 if not has_pictures else 130.0
-			if Kit.landscape():   # NFR-02's 96 px still holds (D-023)
+			if Kit.landscape():   # cards stay at least 96 px tall
 				base = 96.0 if not has_pictures else 110.0
 			card.custom_minimum_size = Vector2(ROW_W, _row_height(c, base))
 		card.pressed.connect(_on_card.bind(str(c.id)))
 		card.add_child(_row_content(c) if long else _card_content(c, has_pictures))
 		grid.add_child(card)
 		_cards[str(c.id)] = card
-	# On a laptop the picture stands beside the choices (D-023).
+	# On a laptop the picture stands beside the choices.
 	if Kit.landscape() and %Stage.visible:
 		vertical = false
 		add_theme_constant_override("separation", 48)
@@ -92,8 +92,8 @@ static func _text_w(text: String, px: int) -> float:
 	return ThemeDB.get_project_theme().get_font(&"font", &"ReadLabel").get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, px).x
 
 
-## A row card tall enough for its words on as many lines as they take at the row's narrowest
-## (a three-line story answer overflowed a one-line card).
+## A row card tall enough for its words on as many lines as they need at the row's
+## narrowest (a three-line story answer used to overflow a one-line card).
 static func _row_height(c: Dictionary, base: float) -> float:
 	var font := ThemeDB.get_project_theme().get_font(&"font", &"ReadLabel")
 	var width := ROW_W - 46.0 - (90.0 if c.has("picture") else 0.0)   # the row's margins and picture
@@ -136,8 +136,7 @@ func _on_card(id: String) -> void:
 	answered.emit(id, Time.get_ticks_msec() - _started)
 
 
-## Second try (D-021): the wrong card fades, gets an orange "almost" edge
-## (D-022) and can't be tapped again.
+## Second try: the wrong card fades, gets an orange "almost" edge and can't be tapped again.
 func try_again(chosen: String) -> void:
 	if _cards.has(chosen):
 		var card: ChunkyButton = _cards[chosen]
@@ -170,8 +169,8 @@ func show_result(chosen: String, answer: String) -> void:
 		t.tween_property(c, "scale", Vector2.ONE, 0.15)
 
 
-## Recolors the card's glyph and words so they read on its new face (D-016). A full-colour
-## picture is drawn untinted (D-027) and keeps its colours; tinting it made a black silhouette.
+## Recolours the card's icon and words so they read on its new colour. A full-colour
+## picture stays untinted; tinting it made a black shape.
 func _ink(node: Node, col: Color) -> void:
 	for child in node.get_children():
 		if child is TextureRect and child.self_modulate != Color.WHITE:

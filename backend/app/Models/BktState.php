@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * BKT state of one (sub-skill, level) for one student: 14 per student (D-003).
- * FR-03, FR-04.
+ * BKT state of one (sub-skill, level) for one student: 14 per student.
  */
 class BktState extends Model
 {

@@ -5,9 +5,9 @@ namespace App\Support;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Pseudonymous student code, e.g. "RR-7K2M9Q", used instead of names in
- * research exports, logs and (later) Gemini prompts (RA 10173, NFR-04).
- * It is not a credential: the login code is separate and stored hashed.
+ * Pseudonymous student code, e.g. "RR-7K2M9Q", used instead of names in research
+ * exports, logs and Gemini prompts (RA 10173).
+ * It is not a password: the login code is separate and stored hashed.
  */
 final class StudentCode
 {

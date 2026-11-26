@@ -1,7 +1,7 @@
 extends VBoxContainer
-## "Spin the Words" (Phonics, word families): a picture, a paper wheel of first
-## sounds and a fixed word ending. Spin the wheel (or tap a sound) and the sound
-## that stops at the pointer builds the word, which answers (no Check step, D-007).
+## "Spin the Words" (Phonics, word families): a picture, a paper wheel of first sounds
+## and a fixed word ending. Spin the wheel (or tap a sound); the sound that stops at the
+## pointer builds the word and answers right away (no Check button).
 ## While it turns, the word shows each sound passing the pointer: cat, hat, mat...
 
 signal answered(answer: String, ms: int)
@@ -89,7 +89,7 @@ func _on_picked(i: int) -> void:
 	answered.emit(str(c.id), Time.get_ticks_msec() - _started)
 
 
-## Second try (D-021): the sound tried is greyed out and the wheel turns again.
+## Second try: the sound already tried is greyed out and the wheel turns again.
 func try_again(chosen: String) -> void:
 	for i in _item.choices.size():
 		if str(_item.choices[i].id) == chosen:

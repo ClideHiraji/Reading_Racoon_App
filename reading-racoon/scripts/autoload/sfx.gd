@@ -1,10 +1,10 @@
 extends Node
-## Small synthesized sound effects (autoload "Sfx"), so no audio files are needed yet.
-## Wrong answers get a soft low "boop", never a buzzer (D-007). FR-20 (SFX part).
+## Small sound effects made in code (autoload "Sfx"), so no audio files needed.
+## A wrong answer gets a soft low "boop", never a buzzer.
 
 const RATE := 22050
 
-## How loud the sounds are, 0-100 (Settings, D-042); 0 plays none.
+## Sound volume 0-100 from Settings. 0 = silent.
 var volume := 80
 
 var _streams := {}
@@ -37,7 +37,7 @@ func play(sound: String) -> void:
 			return
 
 
-## Notes played one after another, each with a quick attack and a soft decay.
+## Plays notes one after another, each with a quick start and a soft fade.
 func _tone(freqs: Array, note_len: float, volume: float) -> AudioStreamWAV:
 	var n := int(RATE * note_len)
 	var data := PackedByteArray()

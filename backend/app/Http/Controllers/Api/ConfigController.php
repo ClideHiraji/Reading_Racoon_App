@@ -6,9 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 
 /**
- * GET /api/config: remote config the game caches on the device (FR-19),
- * replacing Firebase Remote Config (D-001). Public: it holds no secrets and
- * the client may need it before a student signs in.
+ * GET /api/config: settings the game saves on the device.
+ * Public: it holds no secrets, and the game may need it before a student signs in.
  */
 class ConfigController extends Controller
 {
@@ -18,9 +17,9 @@ class ConfigController extends Controller
 
         return response()->json([
             'content_version' => config('reading_racoon.content_version'),
-            // The game shows the post-test only while this is true (FR-10).
+            // The game shows the post-test only while this is true.
             'post_test_open' => config('reading_racoon.post_test_open'),
-            // Lets the client measure its clock offset (open issue 10).
+            // Lets the game work out how far its clock is off.
             'server_time' => now()->utc()->toIso8601ZuluString(),
             'bkt' => [
                 'version' => $bkt['version'],

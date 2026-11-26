@@ -1,9 +1,9 @@
 extends Control
-## Start screen: the raccoon waves from the riverbank, one big button plays. The first time it
-## opens, the opening (Intro, D-044) plays over it and lifts away.
-## No reading needed: the button is read aloud too (D-007, D-009).
-## First time on a device: the login screen (FR-01, D-010). After that it greets
-## the child ("reader": a recorded line can't say a name) and opens the home hub (the pre-test first, FR-02, D-015).
+## Start screen: the raccoon waves from the riverbank and one big button plays.
+## The first time, the opening (Intro) plays over it and lifts away.
+## No reading needed: the button is read aloud too.
+## First time on a device: the login screen. After that it greets the child ("reader",
+## since a recorded line can't say a name) and opens the home hub.
 
 var _confirm_switch := false
 
@@ -14,12 +14,12 @@ func _ready() -> void:
 	%PlayButton.pressed.connect(_on_play)
 	%SwitchButton.pressed.connect(_on_switch)
 	%Raccoon.set_mood("happy")
-	%Raccoon.lively = true   # moves of his own while the start screen waits (D-024)
+	%Raccoon.lively = true   # he moves on his own while the start screen waits
 	%Bubble.speaker = %Raccoon   # his bubble walks with him and points at him
-	# For grown-ups, in the corner and out of the child's way (D-022).
+	# For grown-ups, in the corner and out of the child's way.
 	%SwitchButton.visible = GameState.signed_in()
-	# The opening plays over the start screen the first time it opens (D-044); Racoon greets the
-	# child once its sheet has lifted, not over it.
+	# The opening plays over the start screen the first time. Racoon greets the child
+	# once it has lifted, not over it.
 	if Intro.should_play(GameState._args):
 		var intro := Intro.new()
 		intro.finished.connect(_greet)
@@ -35,8 +35,8 @@ func _greet() -> void:
 		%Bubble.say(GameState.talk("start_hi"))
 
 
-## Laptops (D-023): the name and LET'S READ! on the left, Racoon and his bubble
-## on the right above the riverbank. Both shapes keep clear of a notch.
+## Laptop layout: the name and LET'S READ! on the left, Racoon and his bubble on the
+## right above the riverbank. Both layouts keep clear of a notch.
 func _fit_shape() -> void:
 	var margin: MarginContainer = $Margin
 	if Kit.landscape():
@@ -76,14 +76,13 @@ func _fit_shape() -> void:
 
 func _on_play() -> void:
 	Speech.say(GameState.talk("start_play"))
-	if not GameState.guard_hub():   # FR-12: the game sleeps at night
+	if not GameState.guard_hub():   # the game sleeps at night
 		return
 	if not GameState.signed_in():
 		get_tree().change_scene_to_file("res://scenes/login/login.tscn")
 		return
-	# Always the home hub; the Reading Adventure (pre-test, FR-02) waits on the
-	# Adventure map until the child starts it (D-021). A student who hasn't picked a buddy and a
-	# language yet does that first (D-033).
+	# Always the home hub; the pre-test waits on the Adventure map until the child starts it.
+	# A student who hasn't picked a buddy and language yet does that first.
 	get_tree().change_scene_to_file(GameState.HUB_SCENE if GameState.buddy_chosen() else GameState.BUDDY_SCENE)
 
 

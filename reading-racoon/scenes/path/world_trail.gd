@@ -1,8 +1,7 @@
 class_name WorldTrail
 extends Control
-## The winding trail of one world (D-007, D-009): PathNodes placed on an S-curve,
-## joined by dotted footsteps, with faded paper cut-outs from that world's scenery
-## along the edges.
+## One world's winding trail: PathNodes on an S-curve, joined by dotted footsteps,
+## with faded paper cut-outs of that world's scenery along the edges.
 
 signal node_pressed(n: Dictionary, node: PathNode)
 

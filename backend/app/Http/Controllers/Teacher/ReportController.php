@@ -15,9 +15,8 @@ use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * A learner's diagnostic report (FR-05) and its PDF export (FR-18). The text
- * comes from App\Reports\DiagnosticReportWriter: the stored Gemini paragraphs
- * for the current numbers, else the numbers-only template (D-012, D-018).
+ * A learner's report and its PDF. The text comes from App\Reports\DiagnosticReportWriter:
+ * the saved Gemini paragraphs for the current numbers, else the numbers-only template.
  */
 class ReportController extends Controller
 {

@@ -7,13 +7,12 @@ use App\Support\Ops;
 use Illuminate\Http\JsonResponse;
 
 /**
- * GET /api/health: for an outside uptime monitor (NFR-02, D-036,
- * docs/deploy/home-server.md). 200 while the database answers; 503 when it
- * doesn't, so the monitor alerts. `degraded` means the API works but the
- * queue worker or the scheduler has stopped (the teacher dashboard then goes
- * stale and backups stop). Public, so it says nothing more than that.
+ * GET /api/health: for an outside uptime monitor (see docs/deploy/home-server.md).
+ * 200 while the database answers; 503 when it doesn't, so the monitor alerts.
+ * `degraded` means the API works but the queue worker or the scheduler has stopped
+ * (the teacher dashboard then goes stale and backups stop). Public, so it says nothing more.
  *
- * Laravel's own /up only proves PHP runs; this also proves the data path.
+ * Laravel's own /up only proves PHP runs; this also proves the database answers.
  */
 class HealthController extends Controller
 {

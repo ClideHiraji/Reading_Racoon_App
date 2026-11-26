@@ -1,10 +1,10 @@
 @tool
 class_name PaperScenery
 extends Control
-## Layered paper-cut landscapes for the five Butuan worlds (D-009), drawn with
-## Godot's 2D drawing API. Each layer casts a soft shadow on the one behind it.
-## Scenes: river (Agusan River), grove (Mango Grove), village (Bahay Kubo
-## Village), bay (Balangay Bay), mountain (Mount Mayapay), home (start screen).
+## Layered paper-cut landscapes for the five Butuan worlds, drawn with Godot's 2D drawing.
+## Each layer casts a soft shadow on the one behind it.
+## Scenes: river (Agusan River), grove (Mango Grove), village (Bahay Kubo Village),
+## bay (Balangay Bay), mountain (Mount Mayapay), home (start screen).
 
 @export_enum("river", "grove", "village", "bay", "mountain", "home") var scene := "river":
 	set(v):
@@ -209,7 +209,7 @@ func _peaks(base: float, height: float, col: Color, count: int) -> void:
 		Smooth.polygon(self, cap, col.lightened(0.25))
 
 
-## A pale sun: strong yellow is kept for Adventure and PLAY (D-022).
+## A pale sun: strong yellow is kept for Adventure and PLAY.
 func _sun(at: Vector2, r: float) -> void:
 	Smooth.circle(self, at, r * 1.45, _c(Palette.MANGO.lightened(0.82)))
 	Smooth.circle(self, at, r, _c(Palette.MANGO.lightened(0.62)))

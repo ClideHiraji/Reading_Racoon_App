@@ -6,16 +6,16 @@ use App\Support\SkillCatalog;
 use UnexpectedValueException;
 
 /**
- * Checks Gemini's report text against the facts it was given before anyone
- * sees it (FR-05, D-018, docs/knowledge/08-ai-integration.md "Validate output"):
+ * Checks Gemini's report text against the facts it was given, before anyone sees it
+ * (see docs/knowledge/08-ai-integration.md):
  *
- * - two plain paragraphs, not too short or long, no list or heading formatting;
+ * - two plain paragraphs, not too short or long, no lists or headings;
  * - no learner code other than this learner's;
- * - every number in the text appears in the JSON (or is a BKT threshold), so
- *   the AI can't invent or miscalculate a score;
+ * - every number in the text is in the JSON (or is a BKT threshold), so the AI
+ *   can't make up or miscount a score;
  * - every sub-skill in needs_support is named.
  *
- * A reply that fails is logged as invalid and retried; the template is the fallback.
+ * A reply that fails is logged as invalid and tried again; the template is the fallback.
  */
 final class AiReportCheck
 {

@@ -3,7 +3,7 @@
 namespace App\Enums;
 
 /**
- * Today's access decision for a student (FR-12, docs/knowledge/06-game-design.md).
+ * Today's play decision for a student.
  */
 enum AccessStatus: string
 {
@@ -17,7 +17,7 @@ enum AccessStatus: string
     case DailyLimit = 'daily_limit';
     // A weekend the teacher hasn't opened: "Game is sleeping".
     case WeekendLock = 'weekend_lock';
-    // Night, outside day_start..day_end: everything sleeps (game D-015).
+    // Night, outside day_start..day_end: everything sleeps.
     case Sleeping = 'sleeping';
 
     public function canPlay(): bool

@@ -1,11 +1,10 @@
 extends Control
-## The Watch & Listen player (D-017, wireframe "Video player"). Songs, chants and
-## read-alongs play line by line: the scene and pictures on the stage, the words
-## lighting up as Racoon sings them. Teacher videos (Ogg Theora, downloaded on
-## Wi-Fi) play in the same frame. Then a quick check with two pictures, and no
-## autoplay of anything else. The stage sits on the words card, and the controls
-## are listening blue: a round Again and a big Pause (D-022). A teacher video can
-## also go full screen, and a phone turns sideways for it.
+## The Watch & Listen player. Songs, chants and read-alongs play line by line: the scene and
+## pictures on the stage, the words lighting up as Racoon sings them.
+## Teacher videos (Ogg Theora, downloaded on Wi-Fi) play in the same frame.
+## Then a quick check with two pictures, and nothing else plays by itself.
+## Controls are blue: a round Again and a big Pause. A teacher video can also go full screen,
+## and a phone turns sideways for it.
 
 ## How long full screen's buttons stay after a tap while the video plays.
 const FULL_CONTROLS_FOR := 3.0
@@ -41,7 +40,7 @@ func _ready() -> void:
 	_lang = str(_item.get("language", "en"))
 	var column := Kit.page(self)
 	Kit.header(column, str(_item.get("title", "Watch")), _back, true)
-	# On a laptop the stage stands beside the words card (D-023).
+	# On a laptop the stage stands beside the words card.
 	var wide := Kit.landscape()
 	var sheet := BoxContainer.new()
 	sheet.vertical = not wide
@@ -214,9 +213,9 @@ func _setup_video() -> void:
 	_video.stream = stream
 	_video.expand = true
 	_video.finished.connect(_end)
-	# `expand` alone stretched the clip to the stage (a 16:9 clip lost about 12% of
-	# its width on a phone). The box keeps the clip's own shape, centred, with sky
-	# bands on two sides. Theora knows the frame size from the file's header.
+	# `expand` alone stretched the clip to fill the stage (a 16:9 clip lost width on a phone).
+	# The box keeps the clip's own shape, centred, with sky bands on two sides.
+	# Theora knows the frame size from the file's header.
 	var box := AspectRatioContainer.new()
 	box.stretch_mode = AspectRatioContainer.STRETCH_FIT
 	box.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -246,7 +245,7 @@ func _process(_delta: float) -> void:
 			_bar.value = _video.stream_position / length
 
 
-## A round white button with a blue glyph, like Again (D-022). 96 px or more (NFR-02).
+## A round white button with a blue icon, like Again. At least 96 px.
 func _round_button(icon: String, tip: String, px: int, on_press: Callable) -> ChunkyButton:
 	var b := ChunkyButton.new()
 	b.card_style = true
@@ -274,9 +273,9 @@ func _on_stage_input(event: InputEvent) -> void:
 
 # --- Full screen (teacher videos) --------------------------------------------------------
 
-## The same video picture over the whole player, in its own shape on dark ink, so
-## playback never stops or starts again. A phone turns sideways for it. A tap shows
-## a big Pause and the close button; while the video plays they fade after a while.
+## The same video over the whole player, in its own shape on dark ink, so playback never stops
+## or restarts. A phone turns sideways for it. A tap shows a big Pause and the close button;
+## while the video plays they fade after a while.
 func _open_full_screen() -> void:
 	if _full or not _video:
 		return
@@ -418,7 +417,7 @@ func _end() -> void:
 		buttons[str(c.id)] = b
 	for id in buttons:
 		buttons[id].pressed.connect(_check.bind(id, str(check.answer), buttons, v))
-	Speech.new_question()   # (D-032)
+	Speech.new_question()
 	Speech.say(str(check.prompt), _lang)
 
 

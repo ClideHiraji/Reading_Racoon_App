@@ -1,8 +1,7 @@
 extends Control
-## Practice games (D-017, wireframe "Practice games"): play to sharpen your mind,
-## no hearts and no tests. A game opens once its skill shows up on the child's
-## path; locked cards say what opens them. Two columns of picture cards, open
-## games first, each with a soft skill tag (D-022).
+## Practice games: just for fun, no hearts and no tests.
+## A game opens once its skill shows up on the child's path; locked cards say what opens them.
+## Two columns of picture cards, open games first, each with a skill tag.
 
 const SKILL_COLORS := {"Sounds": Palette.TEAL, "Letters": Palette.BAY_DEEP, "Words": Palette.NIPA,
 		"Stories": Palette.CORAL_DEEP}
@@ -30,7 +29,7 @@ func _ready() -> void:
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	_list = GridContainer.new()
-	_list.columns = 3 if Kit.landscape() else 2   # all six games on one laptop screen (D-023)
+	_list.columns = 3 if Kit.landscape() else 2   # all six games on one laptop screen
 	_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_list.add_theme_constant_override("h_separation", 18)
 	_list.add_theme_constant_override("v_separation", 18)
@@ -38,8 +37,8 @@ func _ready() -> void:
 	column.add_child(scroll)
 	var level := GameState.model.highest_unlocked
 	var games: Array = PracticePool.GAMES.duplicate()
-	# Whether each game is open, worked out once: each check searches the question bank, and the
-	# sort asked it twice per comparison (~50 ms each time Practice opened; NFR-01).
+	# Work out once whether each game is open: each check searches the question bank,
+	# and the sort used to ask twice per comparison, which made Practice slow to open.
 	var open := {}
 	for g in games:
 		open[g.id] = PracticePool.unlocked(g.id, GameState.bank, level)
@@ -56,15 +55,15 @@ func _card(g: Dictionary, open: bool) -> Control:
 	b.card_style = true
 	b.radius = 28
 	var wide := Kit.landscape()
-	# On a laptop: disc, name and tag (about 200 px) inside the stitches, which sit 12 px in (D-028).
+	# On a laptop: disc, name and tag (about 200 px) inside the stitches, which sit 12 px in.
 	b.custom_minimum_size = Vector2(0, 224 if wide else 286)
 	b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	b.tooltip_text = g.name
 	b.pressed.connect(_open.bind(g, open))
 	if open:
-		b.stitched = true   # an open game's card is sewn round, like a felt patch (D-028)
+		b.stitched = true   # an open game's card is sewn round, like a felt patch
 	if not open:
-		# A locked card lies flat on the page (D-022).
+		# A locked card lies flat on the page.
 		b.card_style = false
 		b.face_color = LOCKED
 		b.lift = 0

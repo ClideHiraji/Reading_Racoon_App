@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * One BKT state per (student, sub-skill, level): 14 per student (D-003,
-     * docs/knowledge/05-bkt-engine.md). FR-03, FR-04.
+     * One BKT state per (student, sub-skill, level): 14 per student
+     * (see docs/knowledge/05-bkt-engine.md).
      */
     public function up(): void
     {
@@ -23,7 +23,7 @@ return new class extends Migration
             $table->double('p_mastery');
             $table->integer('attempts')->default(0);
             $table->timestampTz('mastered_at')->nullable();
-            // Un-mastered by a failed Heart Recovery and waiting to be shown again (D-004).
+            // Lost mastery in a failed rescue and waiting to be practiced again.
             $table->boolean('review')->default(false);
             $table->timestampsTz();
 

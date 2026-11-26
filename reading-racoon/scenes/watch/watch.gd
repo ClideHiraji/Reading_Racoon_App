@@ -1,9 +1,7 @@
 extends Control
-## Watch & Listen (D-017, wireframe "Watch & Listen"): songs and chants to sing
-## with Racoon, read-alongs of Library books, and videos the teacher picked.
-## No ads and no open internet (RA 10173): videos play only once downloaded.
-## Each kind has its own icon and color on the chips and rows; yellow stays with
-## Adventure (D-022).
+## Watch & Listen: songs and chants with Racoon, read-alongs of Library books,
+## and videos the teacher picked. No ads, no internet: videos play only once downloaded.
+## Each kind has its own icon and colour. Yellow is kept for Adventure.
 
 const KIND_ICONS := {"song": "speaker", "read_along": "book", "video": "play"}
 const KIND_COLORS := {"song": Palette.BLUE, "read_along": Palette.ORANGE, "video": Palette.TEAL}
@@ -58,11 +56,11 @@ func _build() -> void:
 		cells.append(empty)
 	for m in items:
 		cells.append(_row(m))
-	# Two cards to a row on a laptop (D-023); the message alone gets the whole width.
+	# Two cards to a row on a laptop; the message alone gets the whole width.
 	_list.columns = 2 if Kit.landscape() and not items.is_empty() else 1
-	# A grid column is only as wide as its cells ask, and an autowrapped label asks
-	# for 1 px: the empty Videos message came out one letter per line until every
-	# cell, the message too, was set to fill its column (NFR-02).
+	# A grid column is only as wide as its cells ask, and a wrapping label asks for 1 px.
+	# The empty Videos message showed one letter per line until every cell, the message
+	# too, was set to fill its column.
 	for c in cells:
 		c.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		_list.add_child(c)

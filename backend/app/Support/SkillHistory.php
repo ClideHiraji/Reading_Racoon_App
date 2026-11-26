@@ -3,10 +3,9 @@
 namespace App\Support;
 
 /**
- * Geometry for the learner page's small multiples (FR-06, D-037): one SVG line
- * per sub-skill of P(L) after each of its answers, with the level changes
- * and the 0.95 mastery line. Drawn on the server, so it needs no script, no
- * CDN and works offline and in print; the skill-level table is its twin.
+ * Lines for the learner page's small charts: one SVG line per sub-skill of P(L) after each
+ * answer, with level changes and the 0.95 mastery line. Drawn on the server, so it needs no
+ * script, works offline and prints. The skill-level table shows the same data.
  */
 final class SkillHistory
 {

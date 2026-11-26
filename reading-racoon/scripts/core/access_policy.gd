@@ -1,20 +1,16 @@
 class_name AccessPolicy
 extends RefCounted
-## Time-restricted access (FR-12, 06-game-design.md "Time-restricted access").
-## Only Adventure (lessons and the pre/post-test) follows the school schedule (D-015).
-## decide() mirrors the server's backend/app/Support/AccessDecider.php (D-014):
-## - before `day_start` or from `day_end` on an open day: the game is sleeping
+## When the child may play. Only Adventure (lessons, pre/post-test) follows the school schedule.
+## decide() must match the server's backend/app/Support/AccessDecider.php:
+## - before `day_start` or after `day_end`: the game is sleeping
 ## - weekends: off unless the teacher opens them, then `daily_minutes` all day
-## - class session (teacher-set window): everything allowed
-## - after school (teacher-set window): play up to `daily_minutes` (30) per day
+## - class session (teacher's window): everything allowed
+## - after school (teacher's window): up to `daily_minutes` (30) a day
 ## - any other weekday time: locked ("Come back during Reading time")
 ## The hub and its free sections stay open from `day_start` to `day_end` (hub()).
-## Practice, Library and Watch & Listen share a daily free-play timer outside the
-## class window (free_play()).
-## The server decides when online (GET /api/access/student/status); offline the
-## device uses the cached schedule and the school's clock (school_clock()),
-## corrected by the last known server time offset (03-architecture.md "Offline
-## and sync", open issue 10).
+## Practice, Library and Watch & Listen share a daily free-play timer outside class (free_play()).
+## Online, the server decides (GET /api/access/student/status). Offline, the game uses
+## the saved schedule and the school's clock (school_clock()), fixed by the last server time.
 ## No schedule yet (never synced) = open, so the app works before setup.
 
 const DEFAULTS := {
@@ -30,7 +26,7 @@ const SCHOOL_TZ := {"Asia/Manila": 480}
 
 
 ## Adventure (lessons, tests).
-## `now`: Time.get_datetime_dict_from_system()-style dict (weekday 0 = Sunday).
+## `now`: a dict like Time.get_datetime_dict_from_system() (weekday 0 = Sunday).
 ## Returns {status, minutes_left, message_key}. Status is one of:
 ## allowed, after_school, class_lock, daily_limit, weekend_lock, sleeping.
 static func decide(schedule: Dictionary, now: Dictionary, minutes_used: float) -> Dictionary:
@@ -60,7 +56,7 @@ static func _capped(left: float, until_end: int) -> Dictionary:
 	return {"status": "after_school", "minutes_left": ceili(minf(left, until_end)), "message_key": ""}
 
 
-## The hub, Closet, Stickers and Word Book: open all day, asleep at night (D-015).
+## The hub, Closet, Stickers and Word Book: open all day, asleep at night.
 ## Status: allowed or sleeping.
 static func hub(schedule: Dictionary, now: Dictionary) -> Dictionary:
 	if schedule.is_empty() or not _night(_merged(schedule), now):
@@ -68,8 +64,8 @@ static func hub(schedule: Dictionary, now: Dictionary) -> Dictionary:
 	return {"status": "sleeping", "minutes_left": 0, "message_key": "locked_sleep"}
 
 
-## Practice, Library and Watch & Listen (D-015): open whenever the hub is. Free
-## during the class window; at other times they share `free_play_minutes` a day.
+## Practice, Library and Watch & Listen: open whenever the hub is. Free during class;
+## other times they share `free_play_minutes` a day.
 ## Status: allowed, free_play (timer running), free_limit or sleeping.
 static func free_play(schedule: Dictionary, now: Dictionary, minutes_used: float) -> Dictionary:
 	if schedule.is_empty():
@@ -87,9 +83,8 @@ static func free_play(schedule: Dictionary, now: Dictionary, minutes_used: float
 	return {"status": "free_play", "minutes_left": ceili(left), "message_key": ""}
 
 
-## When Adventure opens next, as "07:30" (a later window today, else tomorrow's
-## first one), for "Adventure opens at 7:30 AM". "" = no schedule. Same windows
-## as the server's AccessDecider::nextOpening().
+## When Adventure opens next, as "07:30" (a later window today, else tomorrow's first),
+## for "Adventure opens at 7:30 AM". "" = no schedule. Same as AccessDecider::nextOpening().
 static func adventure_opens(schedule: Dictionary, now: Dictionary, minutes_used: float) -> String:
 	if schedule.is_empty():
 		return ""
@@ -131,9 +126,9 @@ static func counts_minutes(decision: Dictionary) -> bool:
 	return decision.status in ["after_school", "free_play"]
 
 
-## The school's wall clock at `unix` (UTC seconds), as a datetime dict: the server
-## decides in the school's zone, so a tablet set to the wrong zone can't shift the
-## windows. No schedule yet = the device's own zone (`device_bias`, minutes).
+## The school's clock at `unix` (UTC seconds), as a datetime dict. Uses the school's
+## time zone, so a tablet set to the wrong zone can't shift the windows.
+## No schedule yet = the device's own zone (`device_bias`, minutes).
 static func school_clock(unix: float, schedule: Dictionary, device_bias: int) -> Dictionary:
 	var bias := device_bias
 	if not schedule.is_empty():

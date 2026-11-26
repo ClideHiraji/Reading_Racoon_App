@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * Highest unlocked map level and the per-world path state (D-003, D-007).
+ * Highest unlocked map level and the path state per world.
  */
 class PathProgress extends Model
 {

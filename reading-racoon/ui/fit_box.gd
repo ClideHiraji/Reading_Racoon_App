@@ -1,14 +1,13 @@
 class_name FitBox
 extends Container
-## Holds a lesson task at full size, or scaled down just enough to fit when the
-## task needs more room than the box has, as on the shorter laptop screen
-## (D-023). It never scales up, and it asks for no room itself, so a big task
-## can't push the rest of the screen off the edge.
+## Holds a lesson task at full size, or shrunk just enough to fit when the task needs more
+## room than the box has (like on a shorter laptop screen). It never scales up and asks for no
+## room itself, so a big task can't push the rest of the screen off the edge.
 ##
-## A task with wrapped words is shorter when it is wider, so a smaller scale can let a bigger one
-## fit, which makes it narrow and tall again: the two scales took turns forever in one frame and
-## crashed the game on laptops (NFR-01). So when a child grows back and then has to shrink again,
-## that size becomes its ceiling while the box keeps its size.
+## A task with wrapped words gets shorter when it's wider, so shrinking it can make it fit at
+## a bigger size, which makes it tall again: the two sizes swapped forever in one frame and
+## crashed the game on laptops. So once a task grows back and has to shrink again, that size
+## becomes its limit while the box keeps its size.
 
 const EPS := 0.001   # scales are stored as float32: compare with room to spare
 

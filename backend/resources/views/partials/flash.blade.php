@@ -1,7 +1,7 @@
 @if (session('status'))
     <div class="alert alert-ok" role="status">
         <p>{{ session('status') }}</p>
-        {{-- Undo for "Mark resolved" (one or many) and for recording consent (FR-17, D-037). --}}
+        {{-- Undo for "Mark resolved" (one or many) and for recording consent. --}}
         @if (($undo = session('undo_flag')) && Route::has('teacher.flags.reopen'))
             <form method="POST" action="{{ route('teacher.flags.reopen', $undo) }}">
                 @csrf

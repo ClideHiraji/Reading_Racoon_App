@@ -8,16 +8,16 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * The Gemini teacher report (FR-05, FR-21, D-018).
+     * The Gemini teacher report.
      *
-     * - ai_logs: every LLM call, failed ones too: task, prompt version, model,
-     *   the JSON injected into the prompt (student code and scores, never a
-     *   name), the reply, why it was refused, latency and tokens (MLDLC Stage 6).
-     * - ai_reports: the AI-written paragraphs for one exact set of facts
-     *   (facts_hash). paragraphs is null when every attempt failed and the
-     *   template was used, so the same facts are not sent again.
+     * - ai_logs: every LLM call, failed ones too: task, prompt version, model, the JSON sent in
+     *   the prompt (student code and scores, never a name), the reply, why it was refused,
+     *   time taken and tokens.
+     * - ai_reports: the AI-written paragraphs for one exact set of facts (facts_hash).
+     *   paragraphs is null when every try failed and the template was used, so the same facts
+     *   aren't sent again.
      *
-     * Both cascade with the student: removing a learner deletes all their data (RA 10173).
+     * Both are deleted with the student: removing a learner deletes all their data (RA 10173).
      */
     public function up(): void
     {

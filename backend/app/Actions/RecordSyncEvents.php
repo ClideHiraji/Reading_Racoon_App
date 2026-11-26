@@ -11,13 +11,11 @@ use Illuminate\Support\Str;
 use stdClass;
 
 /**
- * Stores a batch of queued client events idempotently (FR-11,
- * docs/knowledge/03-architecture.md "Offline and sync", D-008).
+ * Stores a batch of queued game events, safely repeatable (docs/knowledge/03-architecture.md).
  *
  * - Each event is checked on its own, so one bad event never blocks the queue.
- * - Inserts use ON CONFLICT DO NOTHING on the client UUID: a retried batch
- *   (or the same event twice in one batch) is stored once and acknowledged
- *   again. The first copy wins.
+ * - Inserts use ON CONFLICT DO NOTHING on the event UUID: a retried batch (or the same
+ *   event twice in one batch) is stored once and acknowledged again. The first copy wins.
  * - An id already stored for another student is rejected as `id_conflict`
  *   instead of being acknowledged for the wrong learner.
  */
@@ -114,8 +112,8 @@ final class RecordSyncEvents
             return ['event' => ['Each event must be a JSON object.']];
         }
 
-        // Checked by hand, not with a Validator per event: that cost 1.3 ms an
-        // event, a third of a 100-event sync's time (measured 2026-11-19, D-036).
+        // Checked by hand, not with a Validator per event: that was slow
+        // (about a third of a 100-event sync's time).
         $errors = [];
         $id = $event['id'] ?? null;
         if (! is_string($id) || ! Str::isUuid($id)) {

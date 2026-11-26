@@ -9,9 +9,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 /**
- * A teacher-picked Library book or Watch & Listen video (game D-017, D-019).
- * `body` holds the same shapes as the game's content JSON: words, pages and
- * questions for a book; the optional check question for a video.
+ * A teacher-picked Library book or Watch & Listen video. `body` holds the same shapes as
+ * the game's content JSON: words, pages and questions for a book; the optional check
+ * question for a video.
  */
 class ContentItem extends Model
 {

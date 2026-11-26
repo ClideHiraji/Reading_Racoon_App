@@ -1,11 +1,11 @@
 class_name SettingsCard
-## Settings (D-042), from the gear on Home: how loud the voice and the sounds are, graphics and frame rate,
-## the buddy and language, full screen on a laptop, and signing out or closing the game. Sound and display
-## settings are the device's, saved in user://settings.cfg; the buddy and language stay in the student's
-## profile.
+## Settings, from the gear on Home: voice and sound volume, graphics and frame rate,
+## the buddy and language, full screen on a laptop, and signing out or closing the game.
+## Sound and display settings belong to the device (user://settings.cfg);
+## the buddy and language stay in the student's profile.
 
 const PATH := "user://settings.cfg"
-## Volume steps (0-100), big chips rather than a thin slider for small fingers (NFR-02).
+## Volume steps (0-100): big chips instead of a thin slider, for small fingers.
 const LEVELS := [[0, "Off"], [40, "Soft"], [80, "Medium"], [100, "Loud"]]   # 80: the loudness before Settings
 ## High draws at the screen's own resolution with smoothed edges; Low draws the game at its base size
 ## (720 x 1280, or 1280 x 720 on a laptop) and scales the picture up: lighter for slow laptops and phones.
@@ -50,7 +50,7 @@ static func open(root: Control) -> void:
 	col.add_child(Kit.label("Settings", 40, Palette.INK, true))
 	var left := col
 	var right := col
-	if Kit.landscape():   # a laptop's screen is short: the chips beside the buttons (D-023)
+	if Kit.landscape():   # a laptop's screen is short: the chips go beside the buttons
 		var two := HBoxContainer.new()
 		two.add_theme_constant_override("separation", 40)
 		col.add_child(two)

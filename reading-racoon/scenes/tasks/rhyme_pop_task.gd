@@ -1,8 +1,7 @@
 extends BoxContainer
-## Rhyme Pop as a lesson task (D-043): a rhyme question whose answers ride on balloons, the look of
-## Practice's Rhyme Pop, so the child knows that game when they meet it there. The balloons only bob in
-## place, so speed never decides the answer; a tap answers (D-007). Content: a tap_choice item with
-## "variant": "rhyme_pop".
+## Rhyme Pop as a lesson task: the answers ride on balloons, like Practice's Rhyme Pop.
+## The balloons only bob in place, so speed never matters; a tap answers.
+## Content: a tap_choice item with "variant": "rhyme_pop".
 
 signal answered(answer: String, ms: int)
 
@@ -16,7 +15,7 @@ var _locked := false
 
 func setup(item: Dictionary) -> void:
 	_started = Time.get_ticks_msec()
-	vertical = not Kit.landscape()   # on a laptop the word stands beside the balloons (D-023)
+	vertical = not Kit.landscape()   # on a laptop the word stands beside the balloons
 	alignment = BoxContainer.ALIGNMENT_CENTER
 	add_theme_constant_override("separation", 48 if Kit.landscape() else 24)
 	var stage := CenterContainer.new()
@@ -54,7 +53,7 @@ func _on_pop(id: String) -> void:
 	answered.emit(id, Time.get_ticks_msec() - _started)
 
 
-## Second try (D-021): the balloon tried goes soft and can't be popped again.
+## Second try: the balloon already tried goes soft and can't be popped again.
 func try_again(chosen: String) -> void:
 	if _cards.has(chosen):
 		var b: Balloon = _cards[chosen]

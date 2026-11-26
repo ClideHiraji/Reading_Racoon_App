@@ -5,20 +5,20 @@
 | Reading Racoon settings
 |--------------------------------------------------------------------------
 |
-| Served to the game by GET /api/config (FR-19) so thresholds can change
-| without a new APK. The BKT values mirror the client's SkillCatalog and
-| StudentModel (reading-racoon/scripts/core/) and docs/knowledge/05-bkt-engine.md.
+| Sent to the game by GET /api/config, so thresholds can change without a new APK.
+| The BKT values must match the game's SkillCatalog and StudentModel
+| (reading-racoon/scripts/core/) and docs/knowledge/05-bkt-engine.md.
 |
 */
 
 return [
 
-    // Version of the game content package. The client re-downloads its
-    // content when this is newer than its cached copy (FR-11).
+    // Version of the game content package. The game downloads its content again
+    // when this is newer than its saved copy.
     'content_version' => (int) env('CONTENT_VERSION', 1),
 
-    // The game offers the post-test (FR-10) only while this is true. Turn it on
-    // at the end of the evaluation period.
+    // The game offers the post-test only while this is true.
+    // Turn it on at the end of the evaluation period.
     'post_test_open' => (bool) env('POST_TEST_OPEN', false),
 
     'bkt' => [
@@ -26,18 +26,18 @@ return [
         // (the versioned bkt_parameters table replaces this file later).
         'version' => 1,
 
-        // A skill-level is mastered at P(L) >= 0.95 with >= 5 attempts (FR-04, D-003).
+        // A skill level is mastered at P(L) >= 0.95 with >= 5 tries.
         'mastery_p' => 0.95,
         'mastery_min_attempts' => 5,
 
-        // Raccoon hint only after a wrong answer that leaves P(L) below this (FR-14, D-003).
+        // Racoon's hint only after a wrong answer that leaves P(L) below this.
         'hint_p' => 0.30,
 
-        // A failed Heart Recovery caps the lower skill-level's P(L) here (D-004).
+        // A failed rescue caps the lower skill level's P(L) here.
         'demote_cap' => 0.70,
 
-        // Level range per sub-skill (thesis Table 3.7, 14 states in total) and
-        // P(L0) prior, P(T) learn, P(G) guess, P(S) slip (thesis Table 3.5). FR-03, FR-09.
+        // Level range per sub-skill (14 states in total) and P(L0) start, P(T) learn,
+        // P(G) guess, P(S) slip, from the thesis tables.
         'skills' => [
             'phonological_awareness' => ['levels' => [1, 2], 'l0' => 0.20, 't' => 0.15, 'g' => 0.20, 's' => 0.10],
             'phonics' => ['levels' => [1, 3], 'l0' => 0.25, 't' => 0.18, 'g' => 0.20, 's' => 0.10],
@@ -55,18 +55,17 @@ return [
         'max_payload_bytes' => 8192,
 
         // A device clock this far ahead of the server is logged as an anomaly
-        // (someone may be moving the clock to get round the schedule, open issue 10).
+        // (someone may be moving the clock to get round the schedule).
         'clock_ahead_minutes' => 5,
 
-        // The server replay (D-011) runs in a queued job this many seconds after
-        // a sync, not inside the request (D-036): a device uploading a backlog in
-        // many batches costs one replay, and a replay error never blocks the
-        // acknowledgement the device needs to empty its queue.
+        // The server replay runs in a queued job this many seconds after a sync, not inside the
+        // request: a device uploading a backlog in many batches costs one replay, and a replay
+        // error never blocks the acknowledgement the device needs to empty its queue.
         'replay_delay_seconds' => (int) env('SYNC_REPLAY_DELAY_SECONDS', 5),
     ],
 
-    // Rewards the server recomputes when it replays lesson_end and chest events
-    // (FR-07, FR-15). Mirror LessonSession and PathProgress in the client.
+    // Rewards the server works out again when it replays lesson_end and chest events.
+    // Must match LessonSession and PathProgress in the game.
     'rewards' => [
         'xp_per_correct' => 10,
         'coins_per_star' => 5,
@@ -75,7 +74,7 @@ return [
         'lessons_per_world' => 5,
     ],
 
-    // Raccoon shop (FR-07), mirroring reading-racoon/scripts/core/wardrobe.gd:
+    // Raccoon shop, must match reading-racoon/scripts/core/wardrobe.gd:
     // id => slot and price. Starter items are owned and worn from the start.
     'shop' => [
         'starter' => ['scarf_teal'],
@@ -99,8 +98,8 @@ return [
         ],
     ],
 
-    // Map levels: world name (D-009), level name and the ARAL band teachers see
-    // (docs/knowledge/05-bkt-engine.md, replaces thesis Table 3.6).
+    // Map levels: world name, level name and the ARAL band teachers see
+    // (see docs/knowledge/05-bkt-engine.md).
     'levels' => [
         1 => ['world' => 'Agusan River', 'name' => 'Foundational', 'band' => 'ARAL Basic'],
         2 => ['world' => 'Mango Grove', 'name' => 'Emerging', 'band' => 'ARAL Basic / Plus'],
@@ -109,13 +108,13 @@ return [
         5 => ['world' => 'Mount Mayapay', 'name' => 'Proficient', 'band' => 'Grade-Level Proficient'],
     ],
 
-    // Teacher-picked Library books and Watch & Listen videos (game D-017,
-    // D-019). The game shows them as "From your teacher". Only openly licensed
-    // material; files are private and reached only through the API.
+    // Teacher-picked Library books and Watch & Listen videos. The game shows them as
+    // "From your teacher". Only openly licensed material; files are private and reached
+    // only through the API.
     'content' => [
         'languages' => ['en' => 'English', 'fil' => 'Filipino', 'bis' => 'Bisaya'],
         'levels' => ['easy', 'medium', 'hard'],
-        // Paper-cut scenes the game can draw (D-009).
+        // Paper-cut scenes the game can draw.
         'scenes' => ['river', 'grove', 'village', 'bay', 'mountain', 'home'],
         'licences' => ['CC BY 4.0', 'CC BY-SA 4.0', 'CC BY-NC 4.0', 'CC BY-NC-SA 4.0', 'CC BY 3.0', 'CC0 1.0', 'Public domain'],
         // Picture names the game has icons for (reading-racoon/assets/icons).
@@ -131,7 +130,7 @@ return [
         'disk' => 'local',
     ],
 
-    // The Gemini teacher report (FR-05, D-018, docs/knowledge/08-ai-integration.md).
+    // The Gemini teacher report (see docs/knowledge/08-ai-integration.md).
     // Only for learners with parental consent on file, and only while services.llm is set.
     'ai_report' => [
         // Thesis prompt design (MLDLC Stage 3): temperature 0.3, ~250 tokens of text.
@@ -148,7 +147,7 @@ return [
         'delay_minutes' => (int) env('LLM_REPORT_DELAY_MINUTES', 10),
     ],
 
-    // Teacher-facing sub-skill names (MATATAG competency areas, FR-09).
+    // Sub-skill names teachers see (MATATAG competency areas).
     'skill_labels' => [
         'phonological_awareness' => 'Phonological Awareness',
         'phonics' => 'Phonics',
@@ -157,8 +156,7 @@ return [
         'literal_comprehension' => 'Literal Comprehension',
     ],
 
-    // Time-restricted access (FR-12, docs/knowledge/06-game-design.md). A section
-    // without its own schedule uses these defaults.
+    // Play-time limits. A section without its own schedule uses these defaults.
     'access' => [
         'timezone' => env('SCHOOL_TIMEZONE', 'Asia/Manila'),
         'defaults' => [
@@ -168,15 +166,15 @@ return [
             'after_school_end' => '17:00',
             'daily_minutes' => 30,
             'weekends_open' => false,
-            // Game D-015: free-play minutes for Practice, Library and Watch &
-            // Listen outside the class window, and the hours the game is awake.
+            // Free-play minutes for Practice, Library and Watch & Listen outside the class window,
+            // and the hours the game is awake.
             'free_play_minutes' => 45,
             'day_start' => '06:00',
             'day_end' => '21:00',
         ],
     ],
 
-    // Internet hosting from the home laptop (NFR-04, D-036, docs/deploy/home-server.md).
+    // Internet hosting from the home laptop (see docs/deploy/home-server.md).
     'security' => [
         // Strict-Transport-Security max-age on https responses (180 days).
         'hsts_seconds' => (int) (env('HSTS_SECONDS') ?: 15552000),
@@ -185,9 +183,8 @@ return [
         'login_code_key' => env('LOGIN_CODE_KEY', ''),
     ],
 
-    // How long rows stay in the admin system log (FR-08). Anomalies and
-    // warnings are kept longer than routine info lines (access checks).
-    // The audit log (FR-22) is never pruned.
+    // How long rows stay in the admin system log. Anomalies and warnings are kept longer
+    // than routine info lines (access checks). The audit log is never pruned.
     'logs' => [
         'system_info_days' => (int) (env('SYSTEM_LOG_INFO_DAYS') ?: 90),
         'system_anomaly_days' => (int) (env('SYSTEM_LOG_ANOMALY_DAYS') ?: 365),
@@ -202,7 +199,7 @@ return [
         // How many dumps to keep in each folder.
         'keep' => (int) env('BACKUP_KEEP') ?: 14,
         // pg_dump / pg_restore, by full path if they aren't on PATH, e.g.
-        // C:\Program Files\PostgreSQL8in\pg_dump.exe
+        // C:\Program Files\PostgreSQL\18\bin\pg_dump.exe
         'pg_dump' => env('BACKUP_PG_DUMP') ?: 'pg_dump',
         'pg_restore' => env('BACKUP_PG_RESTORE') ?: 'pg_restore',
         'timeout_seconds' => 900,

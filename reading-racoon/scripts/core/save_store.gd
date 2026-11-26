@@ -1,12 +1,11 @@
 class_name SaveStore
 extends RefCounted
-## Offline-first local storage (FR-11, docs/knowledge/03-architecture.md "Offline and sync").
+## Offline-first local storage (see docs/knowledge/03-architecture.md).
 ## - profile JSON: BKT states, path progress, wallet, flags, outfit, tests.
-## - event queue (JSON Lines): every gameplay event with a client UUID and device
-##   time, kept until the Laravel `/api/sync` endpoint acknowledges it (D-008).
-## The Sync autoload reads and trims the queue on a worker thread while the game
-## keeps appending, so every queue operation holds `_lock`. Reading the head and
-## trimming never JSON-parse the whole file (cheap on 2 GB phones, NFR-01).
+## - event queue (one JSON per line): every game event with a UUID and device time,
+##   kept until the server's /api/sync accepts it.
+## Sync reads and trims the queue on a thread while the game keeps adding to it,
+## so every queue function holds `_lock`. Reading and trimming never parse the whole file.
 
 var profile_path := "user://profile.json"
 var queue_path := "user://event_queue.jsonl"
@@ -56,10 +55,9 @@ func queue_event(type: String, payload: Dictionary) -> String:
 	return id if ok else ""
 
 
-## A burst of events (a lesson's answers, its words, a sticker and a goal) is written in one go:
-## between hold() and release() they wait in memory, then release() appends them all with a single
-## file write. Opening the queue file once per event cost about 9 ms each on a Windows laptop,
-## a quarter of a second at the end of every lesson (NFR-01). Holds can nest.
+## Saves a burst of events (a lesson's answers, words, a sticker, a goal) in one go:
+## between hold() and release() they wait in memory, then release() writes them all at once.
+## Opening the file once per event made the end of every lesson lag. Holds can nest.
 func hold() -> void:
 	_lock.lock()
 	_held += 1
@@ -83,9 +81,8 @@ func _write_pending() -> bool:
 	if f == null:
 		return false
 	f.seek_end()
-	# A crash mid-append can leave the last line without its newline. Start a
-	# fresh line, or the next event would be glued onto the broken one and lost
-	# with it (D-036).
+	# A crash while adding can leave the last line without its newline.
+	# Start a fresh line, or the next event gets stuck to the broken one and is lost.
 	var length := f.get_length()
 	if length > 0:
 		f.seek(length - 1)
@@ -131,12 +128,11 @@ func queue_size() -> int:
 	return n
 
 
-## Removes events the server acknowledged or rejected (D-008). Rejected ones are
-## kept in a side file for debugging. Everything else stays queued, in order.
-## The trimmed queue is written to a temp file and then moved over the old one,
-## so a crash or power cut mid-write can never empty the queue (D-036): at
-## worst the old queue survives and already-acknowledged events are sent again,
-## which the server acknowledges without storing twice.
+## Removes events the server accepted or rejected. Rejected ones are kept in a side
+## file for debugging. Everything else stays queued, in order.
+## Writes the new queue to a temp file, then moves it over the old one, so a crash
+## can never empty the queue. At worst, accepted events are sent again; the server
+## accepts them without saving them twice.
 func remove_events(ids: Array, rejected: Array = []) -> void:
 	if ids.is_empty() and rejected.is_empty():
 		return
@@ -154,7 +150,7 @@ func remove_events(ids: Array, rejected: Array = []) -> void:
 			if line.is_empty():
 				continue
 			if not line.ends_with("}"):
-				broken.append(line)   # cut off by a crash mid-append; unreadable
+				broken.append(line)   # cut off by a crash while adding; unreadable
 			elif not drop.has(_line_id(line)):
 				kept.append(line)
 		var tmp := queue_path + ".tmp"
@@ -208,17 +204,16 @@ static func write_json(path: String, data: Dictionary) -> bool:
 	return replace_file(tmp, path)
 
 
-## Moves `tmp` over `path` so there is never a moment with neither file (D-036).
-## Where the platform won't rename over an existing file, the old one becomes
-## <path>.bak until the new one is in place; recover() brings it back after a
-## crash between the two moves.
+## Moves `tmp` over `path` so there's never a moment with neither file.
+## Where the system won't rename over a file, the old one becomes <path>.bak until
+## the new one is in place; recover() brings it back after a crash in between.
 static func replace_file(tmp: String, path: String) -> bool:
-	# On Windows an antivirus or the search indexer can hold a file that was just
-	# written for a moment; a short retry rides that out.
+	# On Windows, antivirus or the search indexer can hold a new file for a moment;
+	# a short retry gets past that.
 	for _attempt in 3:
 		if DirAccess.rename_absolute(tmp, path) == OK:
 			return true
-		# Only wait off the main thread (a frame must never stall, NFR-01);
+		# Only wait off the main thread (never freeze a frame);
 		# the main thread goes straight to the .bak route below.
 		if FileAccess.file_exists(path) or OS.get_thread_caller_id() == OS.get_main_thread_id():
 			break
@@ -248,7 +243,7 @@ static func read_json(path: String) -> Dictionary:
 	return data if typeof(data) == TYPE_DICTIONARY else {}
 
 
-## Random (version 4) UUID, used as the idempotency key for sync.
+## Random (version 4) UUID, so the server can tell if it already has an event.
 static func uuid_v4() -> String:
 	var b := Crypto.new().generate_random_bytes(16)
 	b[6] = (b[6] & 0x0f) | 0x40

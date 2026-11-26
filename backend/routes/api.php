@@ -11,16 +11,16 @@ use Illuminate\Support\Facades\Route;
 
 // API surface: docs/knowledge/03-architecture.md. Contract: backend/README.md.
 
-Route::post('/auth/login', LoginController::class)->middleware('throttle:login');   // FR-01
-Route::get('/config', ConfigController::class)->middleware('throttle:api');         // FR-19
-Route::get('/health', HealthController::class)->middleware('throttle:api');         // NFR-02, D-036
+Route::post('/auth/login', LoginController::class)->middleware('throttle:login');
+Route::get('/config', ConfigController::class)->middleware('throttle:api');
+Route::get('/health', HealthController::class)->middleware('throttle:api');
 
 Route::middleware(['auth:sanctum', 'role:student'])->group(function () {
-    Route::post('/sync', SyncController::class)->middleware('throttle:sync');        // FR-11
+    Route::post('/sync', SyncController::class)->middleware('throttle:sync');
     Route::middleware('throttle:api')->group(function () {
-        Route::get('/student/me', StudentMeController::class);                       // FR-03, FR-07
-        Route::get('/access/student/status', AccessStatusController::class);         // FR-12
-        Route::get('/content/manifest', [ContentController::class, 'manifest']);      // D-019
-        Route::get('/content/files/{file}', [ContentController::class, 'file'])->whereUuid('file'); // D-019
+        Route::get('/student/me', StudentMeController::class);
+        Route::get('/access/student/status', AccessStatusController::class);
+        Route::get('/content/manifest', [ContentController::class, 'manifest']);
+        Route::get('/content/files/{file}', [ContentController::class, 'file'])->whereUuid('file');
     });
 });

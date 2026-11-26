@@ -22,7 +22,7 @@
         @if ($allClear)
             <div class="empty"><div><p class="big">All clear.</p><p class="muted small">No registrations waiting, no anomalies, errors or failed sign-ins in the last 7 days, and every privacy check passes.</p></div></div>
         @else
-            {{-- Most severe first: a failing security check, then decisions, then events (D-037). --}}
+            {{-- Most serious first: a failing security check, then decisions, then events. --}}
             <ul class="attention">
                 @if ($failing->isNotEmpty())
                     <li class="is-red"><a href="{{ route('admin.privacy') }}"><span class="n">{{ $failing->count() }}</span><span>Security {{ Str::plural('check', $failing->count()) }} not met: {{ $failing->pluck(0)->join(', ') }}</span><span class="go">View</span></a></li>

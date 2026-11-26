@@ -1,11 +1,11 @@
 class_name Intro
 extends CanvasLayer
-## The opening (D-044): instead of Godot's logo, the game opens on a sheet of paper where a sunburst
-## turns, Racoon pops up and waves, and "Reading Racoon" drops in letter by letter over a crayon
-## squiggle. Then the sheet lifts away like a page, hand-cut bottom edge and all (D-028), and shows
-## the start screen that was ready underneath. About 3.3 s; a tap or key skips straight to the lift.
+## The opening: instead of Godot's logo, the game opens on a sheet of paper where a sunburst turns,
+## Racoon pops up and waves, and "Reading Racoon" drops in letter by letter over a crayon squiggle.
+## Then the sheet lifts away like a page and shows the start screen that was ready underneath.
+## About 3.3 s; a tap or key skips straight to the lift.
 ## Once per launch: the start screen adds it the first time it opens (scenes/main.gd).
-## Text is large and nothing needs reading (NFR-02); the start screen speaks after it, not over it.
+## Nothing needs reading; the start screen speaks after it, not over it.
 
 signal finished
 
@@ -242,7 +242,7 @@ static func _boot_color() -> Color:
 	return ProjectSettings.get_setting("application/boot_splash/bg_color", Palette.CREAM)
 
 
-## The crayon squiggle under "Racoon" (like Squiggle, D-028), drawn in from left to right.
+## The crayon squiggle under "Racoon" (like Squiggle), drawn in from left to right.
 class _Underline:
 	extends Control
 	var width := 0.0:
@@ -268,7 +268,7 @@ class _Underline:
 			draw_polyline(pts, Palette.YELLOW, 6.0, true)
 
 
-## The sheet's hand-cut bottom edge and its soft shadow, seen as the sheet lifts (D-028).
+## The sheet's hand-cut bottom edge and its soft shadow, seen as the sheet lifts.
 class _Edge:
 	extends Control
 

@@ -1,9 +1,8 @@
 extends Control
-## Lesson-complete screen (FR-15): stars, the coins earned, one stamp per answer,
-## paper confetti and a celebrating raccoon in a sunburst. A Level Up shows the
-## "New world unlocked!" card next (D-007, D-009). D-022: earned stars are the
-## gold animated star; XP and the accuracy % stay in the data and the teacher's
-## dashboard but aren't shown to the child; confetti falls behind Racoon's bubble.
+## Lesson-complete screen: stars, coins earned, one stamp per answer, paper confetti
+## and a celebrating raccoon in a sunburst. A Level Up shows "New world unlocked!" next.
+## Earned stars are the gold animated star. XP and accuracy % are kept for the teacher
+## but not shown to the child. Confetti falls behind Racoon's bubble.
 
 
 var _sum := {}
@@ -11,7 +10,7 @@ var _sum := {}
 
 func _ready() -> void:
 	_sum = GameState.last_summary
-	move_child(%Confetti, %Burst.get_index() + 1)   # behind the bubble and cards (D-022)
+	move_child(%Confetti, %Burst.get_index() + 1)   # behind the bubble and cards
 	%ContinueButton.pressed.connect(_on_continue)
 	%GoButton.pressed.connect(_to_path)
 	%Unlock.hide()
@@ -35,7 +34,7 @@ func _ready() -> void:
 	Speech.say(line)
 	if not early:
 		_confetti()
-	# D-017: a sticker (once a day) and today's goal, shown after the stars.
+	# A sticker (once a day) and today's goal, shown after the stars.
 	var rewards: Dictionary = _sum.get("rewards", {})
 	if not rewards.get("stickers", []).is_empty() or rewards.get("goals_done", false) \
 			or not rewards.get("items", []).is_empty():
@@ -44,9 +43,8 @@ func _ready() -> void:
 			Kit.reward(self, GameState.talk("reward_sticker_time"), rewards, func(): pass)
 
 
-## Laptops (D-023): Racoon and his bubble on the left, the title, stars and
-## CONTINUE on the right, so nothing falls off the shorter screen. Both shapes
-## keep clear of a notch.
+## Laptop layout: Racoon and his bubble on the left, the title, stars and CONTINUE on the
+## right, so nothing falls off the shorter screen. Both layouts keep clear of a notch.
 func _fit_shape() -> void:
 	var margin: MarginContainer = $Margin
 	if Kit.landscape():
@@ -81,14 +79,14 @@ func _fit_shape() -> void:
 	Kit.fit_safe(margin)
 
 
-## Android Back or Escape (D-023) does what CONTINUE does.
+## Android Back or Escape does what CONTINUE does.
 func go_back() -> void:
 	_on_continue()
 
 
-## End of the Reading Adventure (pre/post-test), D-021: one bar per reading skill
-## with "Great!" (BKT replay reaches mastery, as in placement) or "Practice",
-## where the path starts, the coins earned, then GO HOME to the hub (D-015).
+## End of the Reading Adventure (pre/post-test): one bar per reading skill with "Great!"
+## (replaying its answers through BKT reaches mastery, as in placement) or "Practice",
+## where the path starts, the coins earned, then GO HOME.
 func _show_test_done() -> void:
 	var pre: bool = _sum.kind == "pre"
 	%Title.text = "Adventure complete!" if pre else "Big Reading Day done!"
@@ -167,7 +165,7 @@ func _skill_row(skill: String, score: Dictionary, strong: bool, before: Dictiona
 	bar.add_theme_stylebox_override("fill", Kit.box(color, 12))
 	mid.add_child(bar)
 	row.add_child(mid)
-	# A colored word, not a pill: it isn't a button (D-022).
+	# A coloured word, not a pill, because it isn't a button.
 	var word := Kit.label("Great!" if strong else "Practice", 26,
 			Palette.readable(Palette.deep(color)), true)
 	word.autowrap_mode = TextServer.AUTOWRAP_OFF
@@ -194,7 +192,7 @@ func _test_footer(pre: bool) -> HBoxContainer:
 		var gap := Control.new()
 		gap.custom_minimum_size = Vector2(14, 0)
 		row.add_child(gap)
-	row.add_child(Icons.picture_rect("coin", 40))   # a gold paper coin (D-027)
+	row.add_child(Icons.picture_rect("coin", 40))   # a gold paper coin
 	var coins := Kit.label("+%d" % _sum.coins, 26, Palette.INK, true)
 	coins.autowrap_mode = TextServer.AUTOWRAP_OFF
 	row.add_child(coins)
@@ -236,7 +234,7 @@ func _stat(title: String, icon: String, value: String, color: Color) -> void:
 	var row := HBoxContainer.new()
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
 	row.add_theme_constant_override("separation", 8)
-	row.add_child(Icons.picture_rect(icon, 44, Palette.readable(Palette.deep(color))))   # D-027
+	row.add_child(Icons.picture_rect(icon, 44, Palette.readable(Palette.deep(color))))
 	var val := Label.new()
 	val.text = value
 	val.theme_type_variation = &"TitleLabel"
@@ -248,8 +246,8 @@ func _stat(title: String, icon: String, value: String, color: Color) -> void:
 	%Stats.add_child(card)
 
 
-## One round stamp per answer: green with a check (first try), yellow with a
-## check (second try, D-021), or a hollow mango ring (missed or skipped).
+## One round stamp per answer: green with a check (first try), yellow with a check
+## (second try), or a hollow mango ring (missed or skipped).
 func _build_answers() -> void:
 	for r in _sum.results:
 		var stamp := PanelContainer.new()
@@ -271,8 +269,8 @@ func _build_answers() -> void:
 		%Answers.add_child(stamp)
 
 
-## Three stars, the middle one bigger and raised. Earned ones are the gold
-## animated star, popping in one after another (D-022); the rest stay flat.
+## Three stars, the middle one bigger and raised. Earned ones are the gold animated star,
+## popping in one after another; the rest stay flat.
 func _animate_stars(count: int) -> void:
 	for i in 3:
 		var px := 150.0 if i == 1 else 112.0
@@ -321,7 +319,7 @@ func _on_continue() -> void:
 	_to_path()
 
 
-## After a lesson: back to the path. After the pre/post-test: the home hub (D-015).
+## After a lesson: back to the path. After the pre/post-test: the home hub.
 func _to_path() -> void:
 	Speech.stop()
 	if _sum.get("kind", "") in ["pre", "post"]:

@@ -1,11 +1,10 @@
 class_name SpinWheel
 extends Control
-## A paper word wheel for "Spin the Words" (teacher Delgado's idea, 01-project-overview):
-## first sounds or syllables around the rim; the one at the pointer (right side)
-## joins the word ending. It turns like a real one (the user's play-test, 2026-11-26):
-## drag it round, or fling it and it spins on, slows down and clicks into place on a
-## letter; the letters turn with the wheel and stand upright at the pointer. Tapping a
-## letter still turns it to the pointer.
+## A paper word wheel for "Spin the Words": first sounds or syllables round the rim, and the
+## one at the pointer (right side) joins the word ending.
+## It turns like a real wheel: drag it round, or fling it and it spins on, slows down and
+## clicks onto a letter. The letters turn with the wheel and stand upright at the pointer.
+## Tapping a letter still turns it to the pointer.
 
 ## A letter came to rest at the pointer, or was tapped: the child's answer.
 signal picked(index: int)
@@ -27,7 +26,7 @@ var angle := 0.0:
 		_at_pointer_changed()
 		queue_redraw()
 var locked := false
-var greyed: Array = []             # segments tried already (second try, D-021)
+var greyed: Array = []             # segments already tried (second try)
 
 var _tween: Tween
 var _pressed := false
@@ -40,9 +39,9 @@ var _shown := -2
 
 
 func _init() -> void:
-	custom_minimum_size = Vector2(380, 380)   # D-022: bigger, with a spin arrow in the middle
+	custom_minimum_size = Vector2(380, 380)   # big, with a spin arrow in the middle
 	mouse_filter = Control.MOUSE_FILTER_STOP
-	mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND   # a slice is tapped (D-023)
+	mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND   # a slice can be tapped
 	set_process(false)
 
 
@@ -146,7 +145,7 @@ func _let_go() -> void:
 
 
 func _process(delta: float) -> void:
-	if _spin == 0.0:   # Godot turns processing on at ready; only a fling needs it
+	if _spin == 0.0:   # Godot turns _process on at ready; only a fling needs it
 		set_process(false)
 		return
 	angle += _spin * delta
@@ -225,7 +224,7 @@ func _draw() -> void:
 		var face: Color = Palette.PAPER_DEEP if greyed.has(i) else COLORS[i % COLORS.size()]
 		draw_colored_polygon(pts, face)
 		# Smooth only the outer rim: the wedges' shared edges stay crisp, so no
-		# blended seam shows between two colors (D-022).
+		# blended seam shows between two colours.
 		if Smooth.enabled:
 			draw_arc(c, r, a0, a0 + TAU / n, 13, face, Smooth.EDGE, true)
 		# The letter turns with its wedge: upright when it reaches the pointer on the right.
@@ -242,7 +241,7 @@ func _draw() -> void:
 		draw_arc(c, r - 8, a, a + TAU / 72.0, 3, Color(1, 1, 1, 0.5), 3.0, true)
 	Smooth.circle(self, c + Vector2(0, 4), r * 0.22, Palette.SHADOW)
 	Smooth.circle(self, c, r * 0.22, Palette.CARD)
-	# A curved arrow says "spin me" (D-022).
+	# A curved arrow says "spin me".
 	var spin := Icons.tex("repeat")
 	if spin:
 		var px := r * 0.3

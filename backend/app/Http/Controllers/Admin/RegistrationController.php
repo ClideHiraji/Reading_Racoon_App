@@ -12,8 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 /**
- * Approve or deny teacher registrations (FR-08). Denying an approved teacher
- * revokes access: their next request signs them out.
+ * Approve or deny teacher sign-ups. Denying an approved teacher removes their access:
+ * their next request signs them out.
  */
 class RegistrationController extends Controller
 {

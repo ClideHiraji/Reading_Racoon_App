@@ -1,14 +1,12 @@
 class_name HintText
 extends RefCounted
-## What Racoon says after a wrong first try (a hint that points the way, not the
-## answer) and the explanation shown with the answer after a wrong second try
-## (D-021, FR-14). An item's own "hint" / "explain" in the content JSON wins
-## (story questions have them); otherwise they are built from the item's data by
-## its pattern, in the item's language. Placeholder wording for teacher review,
-## like the items themselves (issue 15).
+## What Racoon says after a wrong try: a hint first (points the way, not the answer),
+## then the answer with an explanation after a second wrong try.
+## An item's own "hint" / "explain" in the JSON wins; otherwise they are built
+## from the item's data, in the item's language.
 
 const VOWELS := "aeiou"
-## A word for each letter sound, for "b says /b/, like ball" (English items).
+## An example word for each letter, for "b says /b/, like ball".
 const EXAMPLES := {
 	"a": "apple", "b": "ball", "c": "cat", "d": "dog", "e": "egg", "f": "fish", "g": "goat",
 	"h": "hat", "i": "insect", "j": "jam", "k": "kite", "l": "lion", "m": "moon", "n": "nest",
@@ -146,7 +144,7 @@ static func explain(item: Dictionary) -> String:
 	return ("Ang sagot ay %s." if fil else "The answer is %s.") % answer
 
 
-## The answer as the child sees it: a choice's label, else its picture name.
+## The answer as the child sees it: the choice's label, else its picture name.
 static func answer_label(item: Dictionary) -> String:
 	for c in item.get("choices", []):
 		if str(c.id) == str(item.answer):
@@ -162,7 +160,7 @@ static func rime(word: String) -> String:
 	return word
 
 
-## First letter upper case only ("her brother Carlo" stays as it is after it).
+## Upper-cases only the first letter; the rest stays as it is.
 static func cap(text: String) -> String:
 	return text.left(1).to_upper() + text.substr(1)
 
@@ -175,7 +173,7 @@ static func _keys(item: Dictionary) -> Array:
 	return Array(str(item.answer).split("|"))
 
 
-## The tiles' texts in the right order.
+## The tile texts in the right order.
 static func _ordered_texts(item: Dictionary) -> Array:
 	var texts := {}
 	for t in item.get("tiles", []):

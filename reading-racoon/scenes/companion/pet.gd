@@ -1,14 +1,14 @@
 class_name Pet
 extends Node2D
-## A little pet that floats beside Racoon's head (D-029): a maya bird, a butterfly, a bee, an alitaptap
-## (firefly), a little dragon or a star sprite. Drawn in code, in his ink style: its wings flap, it
-## bobs, and it keeps to one side of his head, now and then flying over to the other.
+## A little pet that floats beside Racoon's head: a maya bird, a butterfly, a bee, an alitaptap
+## (firefly), a little dragon or a star sprite. Drawn in code in his ink style: it flaps, bobs,
+## and keeps to one side of his head, sometimes flying over to the other.
 ## It plays with him:
 ##   - when he's tapped, it does a happy loop with little hearts (cheer)
 ##   - when he dances, celebrates or jumps, it circles his head (orbit)
-##   - now and then it lands on his head for a rest, and when he's sleepy it sleeps there
-## It lives inside his puppet, in his drawing's units (his drawing is 400 x 400), so it grows and
-## shrinks with him. On the Closet's still cards it's drawn once and doesn't move.
+##   - sometimes it rests on his head, and when he's sleepy it sleeps there
+## It lives inside his puppet, in his drawing's units (400 x 400), so it grows and shrinks
+## with him. On the Closet's still cards it's drawn once and doesn't move.
 
 const INK := Color("3b2d3a")
 const KINDS := ["pet_maya", "pet_butterfly", "pet_bee", "pet_firefly", "pet_dragon", "pet_star"]

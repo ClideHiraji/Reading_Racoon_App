@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * A teacher's self-registration, approved or denied by an admin (FR-08).
+ * A teacher's sign-up, approved or denied by an admin.
  */
 class TeacherRegistration extends Model
 {

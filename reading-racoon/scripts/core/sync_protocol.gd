@@ -1,14 +1,14 @@
 class_name SyncProtocol
 extends RefCounted
-## The client side of the offline sync contract (FR-11, D-008, backend/README.md):
-## queue order, batches of at most max_batch, drop acknowledged and rejected ids,
-## keep everything else for a retry, never drop anything on a 422.
-## Pure functions so they're unit-tested; the HTTP lives in the Sync autoload.
+## The game's side of offline sync (see backend/README.md).
+## Sends the oldest events in batches of up to max_batch, removes the ones the
+## server accepted or rejected, and keeps the rest for a retry (never drops on a 422).
+## Only logic here so it can be tested; the HTTP lives in the Sync autoload.
 
 const DEFAULT_MAX_BATCH := 500
 
 
-## The next request body: the oldest `max_batch` queued events.
+## The next request body: the oldest `max_batch` events in the queue.
 static func batch(queue: Array, max_batch: int = DEFAULT_MAX_BATCH) -> Dictionary:
 	var events := []
 	for ev in queue.slice(0, maxi(max_batch, 1)):
@@ -18,18 +18,17 @@ static func batch(queue: Array, max_batch: int = DEFAULT_MAX_BATCH) -> Dictionar
 
 
 ## What to remove from the queue after a reply: {"ack": [...ids], "rejected": [...]}.
-## Anything else (network error, 401, 422, 5xx) removes nothing.
+## Anything else (no network, 401, 422, 5xx) removes nothing.
 static func handle_reply(code: int, body: Variant) -> Dictionary:
 	if code != 200 or typeof(body) != TYPE_DICTIONARY:
 		return {"ack": [], "rejected": []}
 	return {"ack": body.get("acknowledged", []), "rejected": body.get("rejected", [])}
 
 
-## Seconds to wait after `failures` failed rounds in a row (D-036): doubling from
-## `base` up to `cap`, with "equal jitter" (half fixed, half random) so a
-## classroom of tablets doesn't retry in lockstep when the server comes back.
-## A server that asked for longer (Retry-After on 429/503) gets its wish, up to
-## an hour. `r` is a random number in [0, 1).
+## Seconds to wait after `failures` failed tries in a row: doubles from `base` up to `cap`.
+## Half of it is random, so a whole class of tablets doesn't retry at the same moment.
+## If the server asked for longer (Retry-After on 429/503), wait that long, up to an hour.
+## `r` is a random number in [0, 1).
 static func backoff(failures: int, server_wait: float, r: float,
 		base := 30.0, cap := 600.0) -> float:
 	var ceiling := minf(base * pow(2.0, maxi(failures, 1) - 1), cap)
@@ -37,7 +36,7 @@ static func backoff(failures: int, server_wait: float, r: float,
 	return minf(maxf(wait, server_wait), 3600.0)
 
 
-## The Retry-After header's seconds (0 if absent or a date: then backoff decides).
+## Seconds from the Retry-After header (0 if missing or a date; then backoff decides).
 static func retry_after(headers: PackedStringArray) -> float:
 	for h in headers:
 		if h.to_lower().begins_with("retry-after:"):
@@ -46,9 +45,9 @@ static func retry_after(headers: PackedStringArray) -> float:
 	return 0.0
 
 
-## Release builds talk to the server only over https (D-036): the token and the
-## children's answers cross school Wi-Fi and the internet, and Android refuses
-## plain http anyway. Loopback stays allowed for a server on the same machine.
+## Release builds only talk to the server over https: the token and the kids' answers
+## travel over school Wi-Fi, and Android blocks plain http anyway.
+## Localhost is still allowed for a server on the same machine.
 static func is_allowed_server(url: String, debug_build: bool) -> bool:
 	if url.is_empty():
 		return false
@@ -58,8 +57,8 @@ static func is_allowed_server(url: String, debug_build: bool) -> bool:
 	return url.begins_with("http://") and host in ["127.0.0.1", "localhost"]
 
 
-## A 206 reply's Content-Range must start exactly where the downloaded part
-## ends, or appending it would corrupt the file (D-036).
+## A 206 reply's Content-Range must start right where our downloaded part ends,
+## or adding it would break the file.
 static func range_starts_at(headers: PackedStringArray, offset: int) -> bool:
 	for h in headers:
 		if h.to_lower().begins_with("content-range:"):
@@ -81,8 +80,8 @@ static func clock_offset(server_time: String, device_unix: float) -> int:
 	return int(Time.get_unix_time_from_datetime_string(s) - device_unix)
 
 
-## BKT parameters from GET /api/config (FR-19 remote config), in the shape of
-## SkillCatalog.PARAMS. Unknown or incomplete skills keep the built-in values.
+## BKT numbers from GET /api/config, shaped like SkillCatalog.PARAMS.
+## Unknown or incomplete skills keep the built-in numbers.
 static func params_from_config(cfg: Dictionary) -> Dictionary:
 	var out := SkillCatalog.PARAMS.duplicate(true)
 	var skills: Dictionary = cfg.get("bkt", {}).get("skills", {})

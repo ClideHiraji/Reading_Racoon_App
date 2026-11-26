@@ -1,10 +1,9 @@
 class_name LottieBake
 extends Resource
-## Every half-frame of a Lottie animation, worked out ahead of time by
-## tools/lottie-bake (D-022). LottiePlayer uses it instead of the .json when it
-## sits next to it, so playing skips reading, preparing and building the
-## animation at runtime (the star: about 460 ms of work on a laptop, more on a
-## phone). The draw commands are the same ones the player builds itself.
+## Every half-frame of a Lottie animation, worked out ahead of time by tools/lottie-bake.
+## LottiePlayer uses it instead of the .json when it sits next to it, so it skips reading
+## and building the animation at runtime (for the star that was about 0.5 s on a laptop).
+## The draw commands are the same ones the player builds itself.
 
 ## The .json it was baked from, and that file's SHA-256: a test fails when the
 ## .json changes and the bake is stale.

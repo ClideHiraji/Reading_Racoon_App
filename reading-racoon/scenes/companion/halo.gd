@@ -1,11 +1,11 @@
 @tool
 class_name Halo
 extends Node2D
-## A halo floating behind Racoon's head (D-031): the Star halo, a diamond item in the Closet's hats.
-## Drawn in code, in his ink style: a golden ring with four little gems and a ring of beads inside it,
-## a star on top, three small stars travelling round it, and a soft glow that breathes. It bobs
-## gently and turns with his head: a full ring when he faces you, a thin one side-on, and in front of
-## his head when he's turned away. On the Closet's still cards it's drawn once.
+## A halo floating behind Racoon's head: the Star halo, a diamond hat in the Closet.
+## Drawn in code in his ink style: a golden ring with four gems and a ring of beads, a star on top,
+## three small stars going round it, and a soft glow that breathes.
+## It bobs and turns with his head: a full ring when he faces you, a thin one side-on,
+## and in front of his head when he's turned away. On the Closet's still cards it's drawn once.
 
 const KINDS := ["star_halo"]
 const INK := Color("3b2d3a")

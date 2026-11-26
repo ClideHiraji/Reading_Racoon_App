@@ -6,10 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * One LLM call (FR-21, MLDLC Stage 6): what was injected into the prompt, the
- * reply, and whether it was used. `status` is ok (used), invalid (failed the
- * checks against the facts), blocked (empty or safety-filtered) or error
- * (HTTP error or timeout). Read by the admin portal's AI log.
+ * One LLM call: what was sent in the prompt, the reply, and whether it was used.
+ * `status` is ok (used), invalid (failed the checks against the facts), blocked (empty or
+ * safety-filtered) or error (HTTP error or timeout). Shown in the admin portal's AI log.
  */
 class AiLog extends Model
 {

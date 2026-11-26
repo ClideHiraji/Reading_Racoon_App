@@ -8,16 +8,15 @@ use Illuminate\Support\Facades\Vite;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Browser hardening headers on every response (NFR-04, D-036), for the teacher
- * dashboard, the admin portal and the API once the server is on the internet.
+ * Browser safety headers on every response (teacher dashboard, admin portal and API).
  *
- * - A Content-Security-Policy with a per-request nonce: only scripts from this
- *   site and inline blocks that carry the nonce may run. Charts are drawn on
- *   the server (D-037), so no page loads a script from another host.
- * - HSTS only on https requests (the tunnel's X-Forwarded-Proto, see
- *   config/trustedproxy.php), so plain-http local development keeps working.
- * - A header a route already set (the admin portal's stricter no-referrer,
- *   for one) is never overwritten.
+ * - A Content-Security-Policy with a per-request nonce: only scripts from this site and
+ *   inline blocks with the nonce may run. Charts are drawn on the server, so no page loads
+ *   a script from another host.
+ * - HSTS only on https requests (the tunnel's X-Forwarded-Proto, see config/trustedproxy.php),
+ *   so plain-http local development keeps working.
+ * - A header a route already set (like the admin portal's stricter no-referrer) is never
+ *   overwritten.
  */
 class SecurityHeaders
 {

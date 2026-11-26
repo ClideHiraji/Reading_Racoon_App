@@ -12,8 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 
 /**
- * System, audit and AI-call logs with filters and anomaly highlighting
- * (FR-08, FR-21, FR-22).
+ * System, audit and AI-call logs, with filters and anomalies highlighted.
  */
 class LogController extends Controller
 {
@@ -54,7 +53,7 @@ class LogController extends Controller
                 ->latest('id')->paginate(50)->withQueryString();
             $events = AuditLog::distinct()->orderBy('action')->pluck('action');
         } elseif ($kind === 'ai') {
-            // Every LLM call with its input and reply (FR-21); failed calls are the anomalies.
+            // Every LLM call with its input and reply; failed calls are the anomalies.
             $logs = $range(AiLog::query()->with('student:id,code'))
                 ->when($filters['event'] ?? null, fn ($q, $e) => $q->where('task', $e))
                 ->when($filters['status'] ?? null, fn ($q, $s) => $q->where('status', $s))

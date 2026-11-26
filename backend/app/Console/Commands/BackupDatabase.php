@@ -11,14 +11,13 @@ use Symfony\Component\Process\Process;
 use Throwable;
 
 /**
- * Nightly backup of the home server (NFR-02, D-036, docs/deploy/home-server.md):
+ * Nightly backup of the home server (see docs/deploy/home-server.md):
  *
  * 1. pg_dump in custom format to `<name>.dump.part`;
- * 2. pg_restore --list must read it back and find the sync_events data,
- *    and only then is it renamed to `.dump` (a half-written dump never looks
- *    like a good one);
- * 3. copied to BACKUP_COPY_TO (another drive or a synced cloud folder) with
- *    the teachers' uploaded books and videos;
+ * 2. pg_restore --list must read it back and find the sync_events data, and only then
+ *    is it renamed to `.dump` (so a half-written dump never looks like a good one);
+ * 3. copied to BACKUP_COPY_TO (another drive or a synced cloud folder) with the
+ *    teachers' uploaded books and videos;
  * 4. only the newest BACKUP_KEEP dumps are kept in each folder.
  *
  * The password goes to pg_dump in its environment, never on the command line.
@@ -107,7 +106,7 @@ class BackupDatabase extends Command
         return $process->getOutput();
     }
 
-    /** Teachers' books and videos (D-019), copied once each (their names never change). */
+    /** Teachers' books and videos, copied once each (their names never change). */
     private function copyContent(string $target): void
     {
         $source = storage_path('app/private/content');

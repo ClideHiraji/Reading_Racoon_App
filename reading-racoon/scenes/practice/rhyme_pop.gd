@@ -1,8 +1,7 @@
 extends Control
-## Rhyme Pop (D-017): balloons float up; pop the one that rhymes with the word
-## on the card. A wrong balloon just wobbles and says its word, no penalty.
-## Rounds come from Adventure's rhyme items in the child's unlocked worlds.
-## The word card holds its own round speaker; dots show the rounds (D-022).
+## Rhyme Pop: balloons float up; pop the one that rhymes with the word on the card.
+## A wrong balloon just wobbles and says its word, no penalty.
+## Rounds come from the rhyme items in the child's unlocked worlds.
 
 const ROUNDS := 4
 const COLORS := [Palette.BLUE, Palette.ORANGE, Palette.YELLOW, Palette.LEAF]
@@ -90,7 +89,7 @@ func _next() -> void:
 func _say_round() -> void:
 	var r: Dictionary = _rounds[_round] if _round < _rounds.size() else {}
 	if not r.is_empty():
-		Speech.say(str(r.say), "en")   # the lesson's own question, so it's the same recording (D-041)
+		Speech.say(str(r.say), "en")   # the lesson's own question, so the same recording plays
 
 
 func _add_balloon(o: Dictionary, i: int, n: int, right: bool) -> void:

@@ -15,9 +15,9 @@ use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
- * Library & Videos (D-019, game D-017): a teacher adds openly licensed books
- * and Ogg videos, assigns them to their sections and publishes them. Tablets
- * download them from GET /api/content/manifest at their next sync.
+ * Library & Videos: a teacher adds openly licensed books and Ogg videos, gives them to their
+ * sections and publishes them. Tablets download them from GET /api/content/manifest at
+ * their next sync.
  */
 class ContentController extends Controller
 {

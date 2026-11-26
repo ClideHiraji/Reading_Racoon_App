@@ -7,9 +7,8 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Raccoon customisations a student bought, and which are equipped (FR-07).
-     * Projection of the synced "purchase" and "outfit" events. Item ids come from
-     * the game's shop catalogue (config reading_racoon.shop).
+     * Raccoon items a student bought, and which are worn. Built from the synced "purchase"
+     * and "outfit" events. Item ids come from the shop list (reading_racoon.shop).
      */
     public function up(): void
     {

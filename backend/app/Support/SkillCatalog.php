@@ -3,9 +3,8 @@
 namespace App\Support;
 
 /**
- * The five MATATAG sub-skills (FR-09), their level ranges and BKT parameters,
- * read from config/reading_racoon.php. Server twin of the client's
- * reading-racoon/scripts/core/skill_catalog.gd.
+ * The five MATATAG sub-skills, their level ranges and BKT numbers, from config/reading_racoon.php.
+ * Must match the game's reading-racoon/scripts/core/skill_catalog.gd.
  */
 final class SkillCatalog
 {
@@ -26,7 +25,7 @@ final class SkillCatalog
     }
 
     /**
-     * Every (sub-skill, level) pair a student has a BKT state for: 14 (D-003).
+     * Every (sub-skill, level) pair a student has a BKT state for: 14 in total.
      *
      * @return list<array{skill: string, level: int}>
      */
@@ -83,7 +82,7 @@ final class SkillCatalog
     }
 
     /**
-     * World name, level name and ARAL band of a map level (D-003, D-009).
+     * World name, level name and ARAL band of a map level.
      *
      * @return array{world: string, name: string, band: string}
      */

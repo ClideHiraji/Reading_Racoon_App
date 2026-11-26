@@ -12,9 +12,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Highest unlocked map level (the ARAL band comes from it, D-003) and the
-        // client's per-world path state, {"1": {"done": 2, "chest": false, "bonus": []}}
-        // (PathProgress.to_dict, D-007). jsonb because the path layout is UI detail.
+        // Highest unlocked map level (the ARAL band comes from it) and the game's path state per
+        // world, {"1": {"done": 2, "chest": false, "bonus": []}} (PathProgress.to_dict).
+        // jsonb because the path layout is a UI detail.
         Schema::create('path_progress', function (Blueprint $table) {
             $table->foreignId('student_id')->primary()->constrained()->cascadeOnDelete();
             $table->smallInteger('highest_unlocked')->default(1);
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->timestampsTz();
         });
 
-        // XP and coin balance (FR-07, FR-15). The shop's purchase ledger comes later.
+        // XP and coin balance.
         Schema::create('student_wallets', function (Blueprint $table) {
             $table->foreignId('student_id')->primary()->constrained()->cascadeOnDelete();
             $table->integer('xp')->default(0);

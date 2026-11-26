@@ -1,12 +1,10 @@
 class_name PracticePool
 extends RefCounted
-## Practice games (D-017): just for fun, no hearts and no tests. They reuse
-## Adventure's content from the worlds the child has unlocked (words with
-## pictures, rhymes, word wheels, syllables and stories) and never change BKT;
-## the teacher sees them as "practice" events. Every one is also a lesson task in
-## Adventure (D-043), so the child meets it there first: Rhyme Pop in World 1,
-## Word Catch in World 2. Memory Match left Practice (it tests memory, not
-## reading); My Word Book still plays it with the child's own words.
+## Practice games: just for fun, no hearts, no tests, no BKT changes.
+## They reuse content from the worlds the child has unlocked.
+## The teacher sees them as "practice" events.
+## Each game is also a lesson task, so the child meets it there first:
+## Rhyme Pop in World 1, Word Catch in World 2.
 
 const GAMES := [
 	{"id": "rhyme_pop", "name": "Rhyme Pop", "line": "Pop the balloons that rhyme", "skill": "Sounds",
@@ -33,12 +31,12 @@ static func game(id: String) -> Dictionary:
 	return {}
 
 
-## Items from unlocked levels (normal and easy ones alike).
+## Items from unlocked levels (normal and easy).
 static func items(bank: QuestionBank, max_level: int) -> Array:
 	return bank.items.filter(func(it): return int(it.level) <= max_level)
 
 
-## Words that come with a picture, one per word: [{word, picture, lang}].
+## Words with a picture, one per word: [{word, picture, lang}].
 static func picture_words(bank: QuestionBank, max_level: int) -> Array:
 	var seen := {}
 	var out := []
@@ -51,8 +49,8 @@ static func picture_words(bank: QuestionBank, max_level: int) -> Array:
 	return out
 
 
-## Rhyme rounds from the "rhymes with" items: [{word, picture, rhyme, others, say}],
-## where rhyme and others are {word, picture}, and `say` is the item's own spoken question (recorded with it).
+## Rhyme rounds from the "rhymes with" items: [{word, picture, rhyme, others, say}].
+## rhyme and others are {word, picture}; `say` is the item's recorded question.
 static func rhymes(bank: QuestionBank, max_level: int) -> Array:
 	var out := []
 	for it in items(bank, max_level):
@@ -72,14 +70,13 @@ static func rhymes(bank: QuestionBank, max_level: int) -> Array:
 	return out
 
 
-## Task items for the games that reuse lesson tasks (word wheel, syllables, story order).
+## Items for games that reuse lesson tasks (word wheel, syllables, story order).
 static func task_items(bank: QuestionBank, max_level: int, task: String, variant: String) -> Array:
 	return items(bank, max_level).filter(func(it):
 		return it.task_type == task and str(it.get("variant", "")) == variant)
 
 
-## Open when the child's worlds have enough content for a round (and the game's
-## level is reached).
+## Open when the unlocked worlds have enough content for a round and the game's level is reached.
 static func unlocked(id: String, bank: QuestionBank, max_level: int) -> bool:
 	var g := game(id)
 	if g.is_empty() or max_level < int(g.get("min_level", 1)):
@@ -104,7 +101,7 @@ static func lock_text(id: String, bank: QuestionBank, max_level: int) -> String:
 	return "Coming soon"
 
 
-## `n` items picked at random without repeats.
+## `n` random items, no repeats.
 static func pick(list: Array, n: int, rng: RandomNumberGenerator) -> Array:
 	var pool := list.duplicate()
 	var out := []

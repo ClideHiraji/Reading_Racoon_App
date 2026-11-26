@@ -7,8 +7,7 @@ use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
 /**
- * A teacher sees and manages only the learners in their own sections
- * (FR-06, FR-16, NFR-04). Others answer 404.
+ * A teacher sees and manages only the learners in their own sections. Others get 404.
  */
 class StudentPolicy
 {

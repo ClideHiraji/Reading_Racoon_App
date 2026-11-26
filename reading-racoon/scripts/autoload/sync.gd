@@ -1,21 +1,15 @@
 extends Node
-## Automatic sync with the Laravel API (autoload "Sync"), FR-11 and FR-19, D-010.
-## Nobody configures or starts it: the server address is built into the app
-## (project setting reading_racoon/server_url) and sync runs on its own:
-## - soon after start-up, after every lesson or test, when the app comes back to
-##   the front, and every couple of minutes;
-## - when there is no internet it waits longer each time (30 s, 1, 2, 4... up to
-##   10 min) and tries again, so it costs nothing while offline;
-## - never while a lesson is on screen, and the queue reading, JSON building and
-##   queue trimming run on a worker thread, with HTTP on its own thread, so play
-##   never stutters (NFR-01, 2 GB phones).
-## Calls: POST /api/auth/login (the login screen), GET /api/config, GET
-## /api/access/student/status, POST /api/sync (SyncProtocol, D-008), and for
-## teacher-picked books and videos GET /api/content/manifest and
-## /api/content/files/{id} (D-020, server D-019): only on Wi-Fi, never during a
-## lesson, in resumable 4 MB Range requests, every file checked against its
-## SHA-256 before it's used. Release builds talk https only, and failures back
-## off with jitter and honour Retry-After (D-036).
+## Syncs with the Laravel API on its own (autoload "Sync").
+## The server address is built in (project setting reading_racoon/server_url). It syncs:
+## - soon after start-up, after every lesson or test, when the app comes back, and every few minutes;
+## - offline, it waits longer each time (30 s, 1, 2, 4... up to 10 min) before trying again;
+## - never while a lesson is on screen. Queue work runs on a worker thread and HTTP on
+##   its own thread, so play never stutters.
+## Calls: POST /api/auth/login (login screen), GET /api/config, GET /api/access/student/status,
+## POST /api/sync, and for teacher books and videos GET /api/content/manifest and
+## /api/content/files/{id}. Downloads only on Wi-Fi, never during a lesson, in 4 MB pieces
+## that can resume, and every file is checked against its SHA-256 before use.
+## Release builds use https only. Failures wait longer each time and respect Retry-After.
 
 signal status_changed(text: String)
 signal synced(remaining: int)
@@ -26,11 +20,11 @@ const FIRST_DELAY := 4.0
 const MIN_BACKOFF := 30.0
 const MAX_BACKOFF := 600.0
 const BATCH := 100           # small batches: short requests on slow school Wi-Fi
-## Teacher content (D-020): look for changes every 15 minutes, first after 20 s.
+## Teacher content: check for changes every 15 minutes, first after 20 s.
 const CONTENT_INTERVAL := 900.0
 const CONTENT_FIRST := 20.0
-## Teacher videos come in 4 MB Range requests, so a dropped connection costs one
-## chunk, never the whole file (D-036). A chunk stuck this long (s) is retried later.
+## Teacher videos come in 4 MB pieces, so a dropped connection loses one piece,
+## never the whole file. A piece stuck this long (s) is tried again later.
 const CHUNK := 4 * 1024 * 1024
 const CHUNK_TIMEOUT := 120.0
 
@@ -76,8 +70,8 @@ func request_soon() -> void:
 	_wait = minf(_wait, 2.0)
 
 
-## The server's base URL, or "" when there is none or it isn't allowed: release
-## builds only talk https (SyncProtocol.is_allowed_server, D-036).
+## The server's base URL, or "" if there is none or it isn't allowed
+## (release builds use https only, see SyncProtocol.is_allowed_server).
 func server() -> String:
 	# get_setting ignores feature overrides, so it would never see server_url.release.
 	var url := str(ProjectSettings.get_setting_with_override(SERVER_SETTING)) if ProjectSettings.has_setting(SERVER_SETTING) else ""
@@ -160,7 +154,7 @@ func _upload(max_batch: int) -> void:
 		var reply := SyncProtocol.handle_reply(res.code, res.body)
 		if reply.ack.is_empty() and reply.rejected.is_empty():
 			# No answer, a busy server (429/503 with Retry-After) or an error:
-			# nothing leaves the queue; wait and try again (D-036).
+			# nothing leaves the queue; wait and try again.
 			_offline(SyncProtocol.retry_after(res.headers))
 			return
 		await _on_worker(func():
@@ -173,13 +167,13 @@ func _upload(max_batch: int) -> void:
 	_wait = 5.0
 
 
-# --- Teacher-picked books and videos (D-020, server D-019) --------------------------
+# --- Teacher books and videos -----------------------------------------------------
 
-## Fetches the manifest only when it changed (ETag), saves the books and videos as
-## user://content/library.json and watch.json, deletes the files of removed items,
-## then downloads what's missing one file at a time. Each file lands as
-## <name>.part, is checked against its SHA-256 on a worker thread and only then
-## moved into place, so the Library and Watch never see half a file.
+## Gets the manifest only when it changed (ETag), saves the books and videos to
+## user://content/library.json and watch.json, deletes files of removed items,
+## then downloads what's missing one file at a time. Each file lands as <name>.part,
+## is checked against its SHA-256 on a worker thread, and only then moved into place,
+## so the Library and Watch never see half a file.
 func sync_content() -> void:
 	if _content_busy or server() == "" or not GameState.signed_in():
 		return
@@ -222,10 +216,9 @@ func sync_content() -> void:
 	_content_busy = false
 
 
-## One file to <local>.part in CHUNK-sized Range requests, checked against its
-## SHA-256, then moved into place (D-036). A dropped connection, a lesson
-## starting or the app closing costs at most one chunk: the part stays and the
-## next round carries on from its size. True once the file is saved.
+## Downloads one file to <local>.part in CHUNK-sized Range requests, checks its SHA-256,
+## then moves it into place. If the connection drops, a lesson starts or the app closes,
+## the part stays and the next round continues from its size. True once saved.
 func _download(f: Dictionary) -> bool:
 	var part: String = f.local + ".part"
 	var size := int(f.get("size", 0))
@@ -293,12 +286,10 @@ static func _append(path: String, bytes: PackedByteArray, fresh: bool) -> bool:
 	return ok
 
 
-
-
-## Big downloads only on Wi-Fi (D-020). On Android that means any network the
-## phone doesn't count as metered (export needs ACCESS_NETWORK_STATE); if the phone
-## can't tell, assume mobile data and wait. Desktop and editor: always true.
-## Debug builds can pretend with --metered.
+## Big downloads only on Wi-Fi. On Android that means a network the phone doesn't
+## count as metered (export needs ACCESS_NETWORK_STATE); if the phone can't tell,
+## assume mobile data and wait. Desktop and editor: always true.
+## Debug builds can fake it with --metered.
 func unmetered() -> bool:
 	if OS.is_debug_build() and GameState._args.has("metered"):
 		return false
@@ -325,7 +316,7 @@ func _offline(retry_after := 0.0) -> void:
 
 func _done(text: String, remaining: int) -> void:
 	_failures = 0
-	_wait = INTERVAL * randf_range(0.8, 1.2)   # spread a classroom's syncs (D-036)
+	_wait = INTERVAL * randf_range(0.8, 1.2)   # spread out a classroom's syncs
 	busy = false
 	_set_status(text)
 	if remaining >= 0:
@@ -355,8 +346,8 @@ func _request(path: String, method: int, data: String, auth: bool,
 		headers.append("Authorization: Bearer %s" % GameState.device.get("token", ""))
 	headers.append_array(extra)
 	var res := await _http(path, method, data, headers, 20.0, 0)
-	# Wi-Fi that drops a connection mid-reply: a read is safe to repeat at once
-	# (D-036). Uploads aren't repeated here; the sync loop's backoff handles them.
+	# Wi-Fi that drops mid-reply: a read is safe to repeat at once.
+	# Uploads aren't repeated here; the sync loop's wait handles them.
 	if method == HTTPClient.METHOD_GET and res.result in [HTTPRequest.RESULT_CONNECTION_ERROR,
 			HTTPRequest.RESULT_NO_RESPONSE]:
 		await get_tree().create_timer(1.5, true).timeout
@@ -366,9 +357,8 @@ func _request(path: String, method: int, data: String, auth: bool,
 	return res
 
 
-## One HTTP exchange: {code, result, headers, body: PackedByteArray}; code 0 =
-## no connection or timed out (`result` says which, HTTPRequest.Result). TLS
-## certificates are checked (HTTPRequest's default).
+## One HTTP call: {code, result, headers, body: PackedByteArray}.
+## code 0 = no connection or timed out (`result` says which). TLS certificates are checked.
 func _http(path: String, method: int, data: String, headers: PackedStringArray,
 		timeout: float, body_limit: int) -> Dictionary:
 	var http := HTTPRequest.new()

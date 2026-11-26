@@ -1,11 +1,10 @@
 class_name PathProgress
 extends RefCounted
-## Where the learner is on the Duolingo-style learning path (D-007).
-##
-## Each world (map level) has 5 lesson nodes, a treasure chest after node 2 and a
-## trophy. BKT is the real gate (FR-04): when Level Up fires early, the trophy opens
-## and unplayed nodes become optional bonus nodes. If all 5 are done without
-## mastery, the last node turns into a repeatable practice node.
+## Where the child is on the learning path.
+## Each world has 5 lessons, a chest after lesson 2 and a trophy.
+## BKT decides: if the child levels up early, the trophy opens and the rest
+## become optional bonus lessons. If all 5 are done without mastery,
+## the last one turns into a practice lesson that can repeat.
 
 const LESSONS_PER_WORLD := 5
 const CHEST_AFTER := 2
@@ -22,8 +21,8 @@ func world(level: int) -> Dictionary:
 	return worlds[k]
 
 
-## A lesson started from `node` (0-based) finished. `as_bonus` = the node was an
-## optional bonus node when the lesson started (world already cleared).
+## A lesson finished. `node` is 0-based. `as_bonus` = it was a bonus lesson
+## when it started (world already cleared).
 func complete_lesson(level: int, node: int, as_bonus: bool = false) -> void:
 	var w := world(level)
 	if as_bonus:
@@ -45,12 +44,12 @@ func open_chest(level: int) -> bool:
 	return true
 
 
-## Path layout for one world, top to bottom. Each entry:
-## {kind: "lesson"|"chest"|"trophy", node: int, state: String}
+## Path layout for one world, top to bottom: {kind, node, state}.
+## kind: lesson, chest or trophy.
 ## Lesson states: done, current, practice, bonus, bonus_done, locked.
 ## Chest: ready, open, locked. Trophy: won, locked.
-## `cleared` = BKT says every skill at this level is mastered.
-## `unlocked` = the world is reachable (highest unlocked map level >= level).
+## `cleared` = every skill at this level is mastered.
+## `unlocked` = the child can reach this world.
 func layout(level: int, unlocked: bool, cleared: bool) -> Array:
 	var w := world(level)
 	var out := []

@@ -1,5 +1,5 @@
-{{-- Shown once (FR-16, D-036): only a scrambled copy of each code is kept. Must
-     stay a direct child of <main> so printing shows only the cards. --}}
+{{-- Shown once: only a scrambled copy of each code is kept. Must stay a direct child of <main>
+so printing shows only the cards. --}}
 @if ($cards = session('login_cards'))
     @php($sectionName = $sectionName ?? '')
     <section id="login-cards" class="panel is-accent" aria-labelledby="cards-title" data-guard-unload>

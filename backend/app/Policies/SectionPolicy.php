@@ -7,8 +7,8 @@ use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
 /**
- * Teachers see and manage only their own sections (FR-06, FR-16, NFR-04).
- * Another teacher's section answers 404, so its existence isn't revealed.
+ * Teachers see and manage only their own sections.
+ * Another teacher's section gets 404, so nobody learns it exists.
  */
 class SectionPolicy
 {

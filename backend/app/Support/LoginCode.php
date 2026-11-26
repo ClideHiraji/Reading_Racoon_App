@@ -3,11 +3,10 @@
 namespace App\Support;
 
 /**
- * Temporary student login code, e.g. "K7PM-3QXA" (open issue 9: the real
- * login method for 6-year-olds is still undecided). FR-01, NFR-04.
+ * Student login code, e.g. "K7PM-3QXA". Same rules as the game's scripts/core/login_code.gd.
  *
- * Codes are random, shown once when a student is enrolled, and stored only as
- * a SHA-256 hash, like Sanctum tokens. Input ignores case, spaces and dashes.
+ * Codes are random, shown once when a student is enrolled, and stored only as a hash.
+ * Input ignores case, spaces and dashes.
  */
 final class LoginCode
 {
@@ -41,10 +40,9 @@ final class LoginCode
     }
 
     /**
-     * What users.login_code_hash stores: an HMAC-SHA256 keyed with a server
-     * secret (D-036). There are only 31^8 codes, so a plain SHA-256 from a
-     * leaked database or backup could be reversed for every child in minutes
-     * on one graphics card; without the key the hashes are useless.
+     * What users.login_code_hash stores: an HMAC-SHA256 keyed with a server secret.
+     * There are only 31^8 codes, so a plain SHA-256 from a leaked database could be
+     * cracked for every child in minutes. Without the key the hashes are useless.
      */
     public static function hash(string $input): string
     {
@@ -52,8 +50,8 @@ final class LoginCode
     }
 
     /**
-     * The unkeyed SHA-256 used before D-036. Only for finding a not-yet-upgraded
-     * account at sign-in (App\Http\Controllers\Api\LoginController).
+     * The old unkeyed SHA-256. Only for finding an account that wasn't upgraded yet,
+     * at sign-in (App\Http\Controllers\Api\LoginController).
      */
     public static function legacyHash(string $input): string
     {

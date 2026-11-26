@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * One gameplay event uploaded by the client (FR-11). `uuid` is the client's
- * event id (its idempotency key); `id` is the server's arrival order.
+ * One game event uploaded by the device. `uuid` is the game's event id (so a repeat
+ * isn't stored twice); `id` is the server's arrival order.
  * Rows are written in bulk by App\Actions\RecordSyncEvents.
  */
 class SyncEvent extends Model

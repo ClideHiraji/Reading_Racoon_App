@@ -1,8 +1,8 @@
 class_name ReadAlong
 extends HFlowContainer
-## The words of a book page or song line that light up as Racoon reads them
-## (D-017, FR-20). Tap a word to hear it again. With no voice for the language
-## the words light up at a steady pace, so the page still works.
+## The words of a book page or song line, lighting up as Racoon reads them.
+## Tap a word to hear it again. With no voice for the language, the words light up
+## at a steady pace, so the page still works.
 
 signal done
 signal word_tapped(word: String)

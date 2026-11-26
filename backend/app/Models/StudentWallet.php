@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * XP and coin balance (FR-07, FR-15).
+ * XP and coin balance.
  */
 class StudentWallet extends Model
 {

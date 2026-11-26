@@ -1,12 +1,11 @@
 class_name Palette
 extends RefCounted
-## Colors (D-016): the thesis palette of light blue, cream, sunny yellow and
-## orange for everything the child taps and reads on, with leaf green for "right"
-## and nature. The five Butuan worlds keep their own accents (river teal, mango
-## leaf, nipa thatch, bay blue, mountain plum; SkillCatalog.WORLDS) for scenery
-## and world badges. Use these, never raw colors.
+## Colours: light blue, cream, sunny yellow and orange for everything the child taps and reads,
+## with leaf green for "right" and nature. The five Butuan worlds keep their own accents
+## (river teal, mango leaf, nipa thatch, bay blue, mountain plum; SkillCatalog.WORLDS)
+## for scenery and world badges. Use these, never raw colours.
 
-# --- Core palette (D-016) ---
+# --- Core palette ---
 const BLUE := Color("74a6cb")
 const CREAM := Color("fefde0")
 const YELLOW := Color("ffc918")
@@ -41,7 +40,7 @@ const PLUM_DEEP := Color("684c7a")
 const PLUM_LIGHT := Color("b9a2c8")
 const SAND := Color("ecd3a3")
 
-## Feedback: green for right, warm orange (never red) for "almost" (D-007).
+## Feedback: green for right, warm orange (never red) for "almost".
 const RIGHT := LEAF
 const ALMOST := ORANGE
 
@@ -54,8 +53,8 @@ static func pale(c: Color, amount: float = 0.72) -> Color:
 	return c.lerp(PAPER, amount)
 
 
-## Text and icon color for something drawn on `bg` (D-016): the dark ink
-## whenever it is readable (WCAG 4.5:1), else whichever of ink or cream reads better.
+## Text and icon colour for something drawn on `bg`: dark ink whenever it's readable
+## (WCAG 4.5:1), else whichever of ink or cream reads better.
 static func text_on(bg: Color) -> Color:
 	var on_ink := contrast(bg, INK)
 	if on_ink >= 4.5:
@@ -63,8 +62,8 @@ static func text_on(bg: Color) -> Color:
 	return INK if on_ink >= contrast(bg, CARD) else CARD
 
 
-## `c` darkened just enough to read as text on `bg` (WCAG 4.5:1), keeping its hue:
-## colored numbers and titles stay colored but never faint (D-016).
+## `c` darkened just enough to read as text on `bg` (WCAG 4.5:1), keeping its hue,
+## so coloured numbers and titles stay coloured but never faint.
 static func readable(c: Color, bg: Color = CARD) -> Color:
 	var out := c
 	for i in 20:

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {{-- D-013: never indexed, never sends the secret path in a Referer, loads nothing from other hosts. --}}
+    {{-- Never indexed, never sends the secret path in a Referer, loads nothing from other hosts. --}}
     <meta name="robots" content="noindex, nofollow, noarchive">
     <meta name="referrer" content="no-referrer">
     <meta name="theme-color" content="#2b2a33">
@@ -17,7 +17,7 @@
         <span class="brand"><span class="brand-mark" aria-hidden="true">RR</span> Console</span>
         @auth('admin')
             {{-- Counts come from App\Providers\AppServiceProvider (a view composer). On phones the
-                 links fold behind Menu (D-039); without JavaScript they stay visible and wrap. --}}
+            links fold behind Menu; without JavaScript they stay visible and wrap. --}}
             @php($alerts = ($navCounts['pending'] ?? 0) + ($navCounts['anomalies'] ?? 0))
             <button class="btn btn-secondary nav-toggle" type="button" aria-expanded="false" aria-controls="admin-nav" data-nav-toggle hidden>
                 Menu @if ($alerts > 0)<span class="nav-count">{{ $alerts }}<span class="sr-only"> need attention</span></span>@endif

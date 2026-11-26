@@ -1,7 +1,7 @@
 extends Control
-## Today (D-017): three small goals (read a story, play a game, finish a lesson
-## or a song), with a Go button for each, and the days played this week. All
-## three earn a goals sticker and 10 coins. A missed day is never lost (D-007).
+## Today: three small goals (read a story, play a game, finish a lesson or a song),
+## each with a Go button, and the days played this week.
+## All three earn a goals sticker and 10 coins. A missed day is never held against the child.
 
 const DAY_NAMES := ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 
@@ -11,7 +11,7 @@ func _ready() -> void:
 		return
 	var column := Kit.page(self, "home", 300)
 	Kit.header(column, "Today", GameState.go_home)
-	# On a laptop Racoon and the week stand beside today's goals (D-023).
+	# On a laptop Racoon and the week stand beside today's goals.
 	var side: Control = column
 	var main: Control = column
 	if Kit.landscape():
@@ -64,12 +64,11 @@ func _ready() -> void:
 	Speech.say(say)
 
 
-## A goal: its picture, its words, and a Go button; a done goal earns the gold
-## star instead (D-022).
+## A goal: its picture, its words and a Go button. A done goal shows a gold star instead.
 func _goal_row(g: Dictionary, done: bool) -> Control:
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 16)
-	row.custom_minimum_size = Vector2(0, 96 if Kit.landscape() else 112)   # D-023
+	row.custom_minimum_size = Vector2(0, 96 if Kit.landscape() else 112)
 	row.add_child(Kit.disc(g.icon, Palette.YELLOW, 84))
 	var t := Kit.label(g.text, 30, Palette.INK, true)
 	t.size_flags_horizontal = Control.SIZE_EXPAND_FILL

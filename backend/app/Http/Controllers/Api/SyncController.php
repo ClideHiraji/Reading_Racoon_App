@@ -13,15 +13,15 @@ use Illuminate\Http\JsonResponse;
 use Throwable;
 
 /**
- * POST /api/sync: batch upload of the client's offline event queue (FR-11).
+ * POST /api/sync: uploads a batch of the game's offline event queue.
  *
- * The client removes every id in `acknowledged` (stored now or earlier) and
- * every id in `rejected` (will never be accepted; keep a local copy for
- * debugging) from its queue. Anything else stays queued and is retried.
+ * The game removes every id in `acknowledged` (stored now or earlier) and every id in
+ * `rejected` (will never be accepted; it keeps a local copy for debugging) from its queue.
+ * Anything else stays queued and is sent again.
  *
- * After storing, a queued job (App\Jobs\ReplayStudent, a few seconds later)
- * replays the student's events through BKT and updates the official state
- * (D-011, D-036); the client reads it from /api/student/me.
+ * After storing, a queued job (App\Jobs\ReplayStudent, a few seconds later) replays the
+ * student's events through BKT and updates the official state; the game reads it from
+ * /api/student/me.
  */
 class SyncController extends Controller
 {
@@ -30,20 +30,19 @@ class SyncController extends Controller
         $student = $request->user()->student;
         abort_if($student === null, 403);
 
-        // The acknowledgement depends on one thing only: the events are
-        // committed to sync_events (D-008). Everything after this is
-        // best-effort and must never turn a stored batch into an error the
-        // device would retry forever (D-036).
+        // The acknowledgement depends on one thing only: the events are saved in sync_events.
+        // Everything after this is best-effort and must never turn a saved batch into an error
+        // the device would retry forever.
         $events = $request->validated('events');
         $result = $record->handle($student, $events);
 
         if ($result['acknowledged'] !== []) {
-            // Server BKT replay (D-011), debounced in a queued job.
+            // Server BKT replay, in a queued job.
             ReplayStudent::after($student);
         }
         try {
             if ($result['stored'] !== []) {
-                // The Gemini teacher report, a few minutes later (D-018).
+                // The Gemini teacher report, a few minutes later.
                 WriteAiReport::queueFor($student, afterSync: true);
             }
             $this->logNewEvents($student->code, $result['stored'], $request->user()->id);
@@ -60,9 +59,8 @@ class SyncController extends Controller
     }
 
     /**
-     * Events meant for the admin logs, written once when first stored (FR-08, FR-12):
-     * lock screens the device showed while offline, and device clocks that
-     * jumped backwards (open issue 10).
+     * Events for the admin logs, written once when first stored: lock screens the device
+     * showed while offline, and device clocks that jumped backwards.
      *
      * @param  list<array{uuid: string, type: string, payload: string}>  $stored
      */
@@ -83,8 +81,8 @@ class SyncController extends Controller
     }
 
     /**
-     * System log entries for the admin portal (FR-08): rejected events, UUIDs
-     * owned by another student, and device clocks running ahead of the server.
+     * System log entries for the admin portal: rejected events, UUIDs owned by another student,
+     * and device clocks running ahead of the server.
      *
      * @param  array<int, mixed>  $events
      * @param  list<array{reason: string}>  $rejected

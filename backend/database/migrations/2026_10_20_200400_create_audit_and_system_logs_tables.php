@@ -8,14 +8,13 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Logs for the admin portal (FR-08, FR-22, NFR-04).
+     * Logs for the admin portal.
      *
-     * - audit_logs: every admin and teacher action. Append-only: a trigger
-     *   refuses UPDATE and DELETE, so no one can quietly rewrite history.
-     *   actor_id has no foreign key for the same reason (deleting a user must
-     *   not touch their audit trail).
-     * - system_logs: what the system saw (sign-ins, failed sign-ins, access
-     *   decisions, sync problems, server errors), with an anomaly flag.
+     * - audit_logs: every admin and teacher action. Append-only: a trigger refuses UPDATE and
+     *   DELETE, so nobody can quietly rewrite history. actor_id has no foreign key for the
+     *   same reason (deleting a user must not touch their audit trail).
+     * - system_logs: what the system saw (sign-ins, failed sign-ins, access decisions,
+     *   sync problems, server errors), with an anomaly flag.
      */
     public function up(): void
     {

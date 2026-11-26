@@ -1,6 +1,6 @@
-{{-- One skill-level's open flags (FR-17, D-037): every reason as a badge, one
-     "Mark resolved" for all of them. $g is a row of SectionStats::bySkill(),
-     $name the learner's display name, $anchor where to land after resolving. --}}
+{{-- One skill level's open flags: every reason as a badge, one "Mark resolved" for all of them.
+$g is a row of SectionStats::bySkill(), $name the learner's display name, $anchor where to
+land after resolving. --}}
 @php($what = ($g['skill'] ?? 'Flag').($g['level'] ? ' L'.$g['level'] : ''))
 <li @class(['flag', 'is-better' => $g['better']]) data-inline-scope>
     <span class="row" style="gap: .3rem;">

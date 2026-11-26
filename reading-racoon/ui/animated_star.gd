@@ -1,11 +1,10 @@
 class_name AnimatedStar
 extends LottiePlayer
-## The gold star that pops in, bursts into sparkles and settles, for stars a
-## child earns (lesson stars, today's goals, a good day): the team's Star.lottie
-## played live by LottiePlayer, so it is sharp at any size and needs no frames
-## (D-022). Plays once and holds the star. The star settles at about half its
-## box (47%), so make the box twice the size the star should end up. Flat icon
-## stars stay for small UI marks (tabs, empty slots, map nodes).
+## The gold star that pops in, bursts into sparkles and settles, for stars a child earns
+## (lesson stars, today's goals, a good day): the team's Star.lottie played live by LottiePlayer,
+## so it's sharp at any size. Plays once and holds the star.
+## The star settles at about half its box (47%), so make the box twice the star's final size.
+## Flat icon stars stay for small marks (tabs, empty slots, map nodes).
 
 const FILE := "res://assets/anim/lottie/star.json"
 

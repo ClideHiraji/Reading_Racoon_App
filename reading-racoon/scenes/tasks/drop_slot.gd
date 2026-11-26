@@ -1,8 +1,8 @@
 class_name DropSlot
 extends Control
-## An empty place for a letter, syllable, word or story event: a dashed paper
-## outline that fills with a paper tile. Accepts a dragged LetterTile, also one let go
-## near it (LetterTile.REACH).
+## An empty place for a letter, syllable, word or story event: a dashed paper outline
+## that fills with a paper tile. Takes a dragged LetterTile, also one dropped near it
+## (LetterTile.REACH).
 
 signal dropped(letter: String)
 

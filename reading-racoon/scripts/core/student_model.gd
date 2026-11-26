@@ -1,17 +1,16 @@
 class_name StudentModel
 extends RefCounted
-## One learner's BKT state per (sub-skill, level), 14 in total, plus the highest
-## unlocked map level. Implements the progression model of D-003
-## (docs/knowledge/05-bkt-engine.md): FR-03, FR-04, FR-14.
+## One child's BKT state per (sub-skill, level), 14 in total, plus the highest
+## unlocked map level. Rules in docs/knowledge/05-bkt-engine.md.
 
 const MASTERY_P := 0.95
 const MASTERY_MIN_ATTEMPTS := 5
 const HINT_P := 0.30
-## Partial Heart Recovery caps the lower skill-level at this value (D-004).
+## A partial rescue caps the lower skill level at this value.
 const DEMOTE_CAP := 0.70
 
 ## "skill:level" -> {p, attempts, mastered, review}
-## p is P(L) for the next opportunity; review = demoted by a failed Heart Recovery.
+## p = chance they know it next time. review = lost mastery in a failed rescue.
 var states := {}
 var highest_unlocked := 1
 var params := SkillCatalog.PARAMS
@@ -41,8 +40,8 @@ func state(skill: String, level: int) -> Dictionary:
 	return states[key(skill, level)]
 
 
-## Applies one answer (Figure 3.17): posterior, mastery check, transition.
-## `num_choices` > 1 marks a choice-style item (guess = 1 / choices).
+## Applies one answer: update, mastery check, then the learning step.
+## `num_choices` > 1 marks a choice item (guess = 1 / choices).
 func record(skill: String, level: int, correct: bool, num_choices: int = 0) -> Dictionary:
 	var st := state(skill, level)
 	var prm: Dictionary = params[skill]
@@ -69,12 +68,12 @@ func record(skill: String, level: int, correct: bool, num_choices: int = 0) -> D
 		"attempts": st.attempts,
 		"mastered_now": mastered_now,
 		"level_up": level_up,
-		# Hints only after a wrong answer (D-003 rule 6).
+		# Hints only after a wrong answer.
 		"hint": not correct and post < HINT_P,
 	}
 
 
-## Every sub-skill active at `level` is mastered there (Level Up rule, D-003 rule 4).
+## True when every active sub-skill at `level` is mastered (the Level Up rule).
 func is_level_complete(level: int) -> bool:
 	for skill in SkillCatalog.active_skills(level):
 		if not state(skill, level).mastered:
@@ -82,9 +81,9 @@ func is_level_complete(level: int) -> bool:
 	return true
 
 
-## Which (skill, level) the next question at map level `level` should practise.
-## Skills under review are served from the level below until re-mastered (D-004);
-## otherwise the unmastered active skill with the lowest P(L) (D-003 rule 5).
+## Which (skill, level) the next question at map level `level` should practice.
+## Skills under review come from the level below until mastered again;
+## otherwise the unmastered skill with the lowest p.
 func pick_target(level: int, rng: RandomNumberGenerator = null) -> Dictionary:
 	var best := {}
 	var best_score := INF
@@ -99,14 +98,14 @@ func pick_target(level: int, rng: RandomNumberGenerator = null) -> Dictionary:
 			best_score = score
 			best = target
 	if best.is_empty():
-		# Everything mastered here: occasional review of any active skill.
+		# Everything mastered here: sometimes review any active skill.
 		var skills := SkillCatalog.active_skills(level)
 		var i := rng.randi_range(0, skills.size() - 1) if rng else 0
 		best = {"skill": skills[i], "level": level}
 	return best
 
 
-## The level a skill is practised at while playing map level `level`.
+## The level a skill is practiced at while playing map level `level`.
 func target_for(skill: String, level: int) -> Dictionary:
 	var lower := level - 1
 	if has_state(skill, lower) and state(skill, lower).review:
@@ -114,13 +113,11 @@ func target_for(skill: String, level: int) -> Dictionary:
 	return {"skill": skill, "level": level}
 
 
-## Pre-test placement (05-bkt-engine.md "Pre-test -> BKT initialization", FR-02):
-## replay each sub-skill's answers on its lowest-level state from P(L0), mark it
-## mastered when the final posterior reaches 0.95 (no minimum attempts for
-## placement), then start at the lowest map level that still has an unmastered
-## active skill. Uses the Table 3.5 guess rates, not 1/choices: with 3-choice
-## guessing, 3 correct answers top out near 0.90 and nobody could ever be placed
-## (D-003 update, 2026-10-20). Returns the starting map level.
+## Pre-test placement: replay each sub-skill's answers from P(L0) and mark it mastered
+## when the final value reaches 0.95 (no minimum tries here). Start at the lowest
+## map level that still has an unmastered skill. Returns that level.
+## Uses the table guess rates, not 1/choices: with 3-choice guessing, 3 right
+## answers only reach about 0.90 and nobody could ever be placed.
 func place(results: Array) -> int:
 	reset()
 	var by_skill := answers_by_skill(results)
@@ -138,7 +135,7 @@ func place(results: Array) -> int:
 	return highest_unlocked
 
 
-## Test answers grouped by sub-skill: {skill: [true, false, ...]} in the order given.
+## Test answers grouped by sub-skill: {skill: [true, false, ...]} in order.
 static func answers_by_skill(results: Array) -> Dictionary:
 	var by_skill := {}
 	for r in results:
@@ -148,9 +145,8 @@ static func answers_by_skill(results: Array) -> Dictionary:
 	return by_skill
 
 
-## BKT replay of one sub-skill's test answers from P(L0) with the table guess rate:
-## {p, posterior, mastered}. Placement uses it, and the test results screen calls a
-## sub-skill "passed" when it would be placed as mastered (D-021).
+## Replays one sub-skill's test answers from P(L0) with the table guess rate:
+## {p, posterior, mastered}. Used by placement and by the test results screen ("passed").
 static func replay(prm: Dictionary, answers: Array) -> Dictionary:
 	var p: float = prm.l0
 	var post := p
@@ -160,8 +156,8 @@ static func replay(prm: Dictionary, answers: Array) -> Dictionary:
 	return {"p": p, "posterior": post, "mastered": post >= MASTERY_P}
 
 
-## A separate model with the same states and parameters. Lessons and tests work on
-## a copy; only a finished one is copied back (D-021).
+## A separate model with the same states and numbers. Lessons and tests work on a copy;
+## only a finished one is copied back.
 func copy() -> StudentModel:
 	var m := StudentModel.new()
 	m.params = params
@@ -169,7 +165,7 @@ func copy() -> StudentModel:
 	return m
 
 
-## Failed Heart Recovery: the skill-level loses mastery and must be shown again (D-004).
+## Failed rescue: the skill level loses mastery and must be practiced again.
 func demote(skill: String, level: int) -> bool:
 	if not has_state(skill, level):
 		return false
@@ -181,7 +177,7 @@ func demote(skill: String, level: int) -> bool:
 	return true
 
 
-## Display-only progress 0..1 per active skill, for the rings on the path banner.
+## Progress 0..1 per active skill, only for the rings on the path banner.
 func skill_progress(level: int) -> Array:
 	var out := []
 	for skill in SkillCatalog.active_skills(level):

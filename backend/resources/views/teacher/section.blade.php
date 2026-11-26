@@ -43,7 +43,7 @@
         <a class="btn" href="#add-learners" data-open="add-learners">Add learners</a>
     </div>
 </div>
-{{-- data-sync: after an in-place action, portal.js copies these parts from the fresh page (D-039). --}}
+{{-- data-sync: after an in-place action, portal.js copies these parts from the fresh page. --}}
 <ul class="summary" aria-label="Class summary" style="margin: var(--s2) 0 0;" data-sync="summary">
     <li><span class="n">{{ $count }}</span> {{ Str::plural('learner', $count) }}</li>
     @if ($count > 0)
@@ -55,7 +55,7 @@
     @endif
 </ul>
 @if ($count > 0)
-    {{-- How fresh the numbers are, from the server's own clock (D-037). --}}
+    {{-- How fresh the numbers are, by the server's own clock. --}}
     <p class="freshness" style="margin-bottom: var(--s5);" data-sync="freshness">
         @if ($lastSync) Tablets last synced @include('partials.when', ['at' => $lastSync]). @else No tablet has synced yet. @endif
         Page updated {{ now()->setTimezone($tz)->format('g:i A') }}.
@@ -73,7 +73,7 @@
     </ul>
 </nav>
 
-{{-- 1. Who needs help today (FR-17): one row per child, most urgent first; then the flags that look better, to check and close. --}}
+{{-- 1. Who needs help today: one row per child, most urgent first; then the flags that look better, to check and close. --}}
 <section id="needs-help" class="panel" aria-labelledby="needs-title">
     <div class="panel-head">
         <div>
@@ -235,7 +235,7 @@
 </section>
 @endif
 
-{{-- 3. Learners: filter, sort, open one (FR-06, FR-16). --}}
+{{-- 3. Learners: filter, sort, open one. --}}
 <section id="learners" class="panel" aria-labelledby="roster-title">
     <div class="panel-head">
         <div>
@@ -381,7 +381,7 @@
                                 </div>
                             @endif
                         </td>
-                        {{-- Phones (D-039): the skill columns fold into these lines; last, so hiding it on wide screens moves no column. --}}
+                        {{-- Phones: the skill columns fold into these lines. Last, so hiding it on wide screens moves no column. --}}
                         <td data-label="" class="phone-sum">
                             <p>L{{ $level }} {{ SkillCatalog::level($level)['world'] }} · {{ count($byState['got'] ?? []) }} got it @if (isset($byState['prac'])) · {{ count($byState['prac']) }} practising @endif @if (isset($byState['new'])) · {{ count($byState['new']) }} not started @endif</p>
                             @foreach (['help' => 'Needs help', 'slip' => 'Slipping'] as $key => $label)

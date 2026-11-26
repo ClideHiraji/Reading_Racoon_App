@@ -8,9 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
 
 /**
- * A video or book-page picture on the private disk, named by its UUID
- * (D-019). The game downloads it through GET /api/content/files/{id} and
- * checks `sha256`.
+ * A video or book-page picture on the private disk, named by its UUID.
+ * The game downloads it through GET /api/content/files/{id} and checks `sha256`.
  */
 class ContentFile extends Model
 {

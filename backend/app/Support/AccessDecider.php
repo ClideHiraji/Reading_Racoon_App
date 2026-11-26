@@ -7,16 +7,15 @@ use App\Models\AccessSchedule;
 use Carbon\CarbonImmutable;
 
 /**
- * Today's access decision for a student (FR-12, docs/knowledge/06-game-design.md
- * "Time-restricted access"), evaluated in the school's time zone.
+ * Today's play decision for a student, in the school's time zone.
+ * Must match the game's reading-racoon/scripts/core/access_policy.gd.
  *
  * - Weekday class window: allowed (everything), counting down to the end of class.
- * - Weekday after-school window: play within the daily cap (after_school),
- *   or daily_limit once the cap is used.
+ * - Weekday after-school window: play up to the daily cap (after_school),
+ *   then daily_limit once it's used.
  * - Any other weekday time: class_lock.
- * - Weekend: weekend_lock, unless the teacher opened weekends; then the same
- *   daily cap applies all day.
- * - Night (before day_start or from day_end, game D-015): sleeping.
+ * - Weekend: weekend_lock, unless the teacher opened weekends; then the daily cap applies all day.
+ * - Night (before day_start or from day_end): sleeping.
  * Minutes played in the class window never count toward the cap.
  */
 final class AccessDecider

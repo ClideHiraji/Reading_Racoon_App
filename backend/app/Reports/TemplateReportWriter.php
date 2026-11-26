@@ -5,15 +5,14 @@ namespace App\Reports;
 use Carbon\CarbonImmutable;
 
 /**
- * Diagnostic summary built only from the numbers (FR-05, FR-18). Its lists
- * (strengths, needs, activities) are always shown; its two paragraphs are
- * replaced by Gemini's once a checked AI version exists, and stay as the
- * fallback when the LLM is off, fails or its output doesn't validate (D-018).
- * Every sentence quotes the facts, so it can't invent anything.
+ * A report built only from the numbers. Its lists (strengths, needs, activities) always show.
+ * Its two paragraphs are replaced by Gemini's once a checked AI version exists, and stay as
+ * the fallback when the LLM is off, fails or its output doesn't pass the check.
+ * Every sentence quotes the facts, so it can't make anything up.
  */
 final class TemplateReportWriter implements DiagnosticReportWriter
 {
-    /** Classroom follow-up per sub-skill (MATATAG competency areas, FR-09). */
+    /** Classroom follow-up per sub-skill (MATATAG competency areas). */
     public const INTERVENTIONS = [
         'phonological_awareness' => 'Sound games in a small group: clap the syllables of names, find rhyming pairs, say the first sound of picture words.',
         'phonics' => 'Daily letter-sound practice with picture cards; build simple words with letter tiles using word families (-at, -ock).',
@@ -55,9 +54,8 @@ final class TemplateReportWriter implements DiagnosticReportWriter
     }
 
     /**
-     * Which unlocked sub-skills are strengths and which need support, from the
-     * numbers alone. The Gemini prompt is given the same split (D-018), so the
-     * AI paragraphs and the lists under them agree.
+     * Which unlocked sub-skills are strengths and which need support, from the numbers alone.
+     * The Gemini prompt gets the same split, so the AI paragraphs and the lists under them agree.
      *
      * @param  array<string, mixed>  $facts
      * @return array{strengths: list<string>, needs: list<string>} sub-skill keys in catalogue order
@@ -72,7 +70,7 @@ final class TemplateReportWriter implements DiagnosticReportWriter
                 continue;
             }
             $isStrong = $s['mastered_levels'] !== [] || ($s['p'] !== null && $s['p'] >= 0.7 && ($s['recent_accuracy'] ?? 0) >= 80);
-            // An open flag on a level the child has since mastered isn't a need now (D-037).
+            // An open flag on a level the child has mastered since isn't a need now.
             $isNeed = $s['review']
                 || (in_array($skill, $flagged, true) && ! $s['current_mastered'])
                 || (! $s['current_mastered'] && $s['p'] !== null && $s['p'] < 0.3 && $s['attempts'] >= 5)

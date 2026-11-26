@@ -1,11 +1,10 @@
 class_name AssessmentSession
 extends RefCounted
-## Pre-test (FR-02) and post-test (FR-10): the 20 blueprint items in a fixed order,
-## played like a lesson (the "Reading Adventure") but with no hearts, no hints and
-## neutral feedback, so the scores measure the child, not the help. Raw scores are
-## kept per sub-skill for the study (RQ1, RQ4, RQ5). The pre-test also places the
-## child on the path (StudentModel.place, 05-bkt-engine.md).
-## Same interface as LessonSession so the lesson screen can run both.
+## Pre-test and post-test: 20 fixed items in a fixed order.
+## Plays like a lesson but with no hearts, no hints and neutral feedback,
+## so the score shows what the child knows. Scores are kept per sub-skill.
+## The pre-test also places the child on the path (StudentModel.place).
+## Same functions as LessonSession, so the lesson screen can run both.
 
 const FILES := {"pre": "res://content/pretest.json", "post": "res://content/posttest.json"}
 const COMPLETE_COINS := 30
@@ -17,8 +16,8 @@ const BLUEPRINT := {
 var kind := "pre"
 var model: StudentModel
 var bank: QuestionBank
-var level := 1                    # only used for the lesson screen's scenery
-var hearts := HeartSystem.new()   # unused; keeps the LessonSession interface
+var level := 1                    # only used for the lesson's scenery
+var hearts := HeartSystem.new()   # unused, only here to match LessonSession
 var rescue := {}
 var flags: Array = []
 var ended_early := false
@@ -54,8 +53,8 @@ func next_item() -> Dictionary:
 	return current
 
 
-## Scores without telling the child right or wrong (`neutral`), and without
-## touching BKT: the pre-test feeds BKT once, through place(), at the end.
+## Scores the answer without saying right or wrong, and without touching BKT.
+## The pre-test feeds BKT once at the end, through place().
 func submit(answer, ms: int = 0) -> Dictionary:
 	var item := current
 	var correct := str(answer) == str(item.answer)
@@ -82,8 +81,8 @@ func _finish() -> void:
 			"correct": _correct(), "total": results.size()}})
 
 
-## Per sub-skill, for the results screen (D-021): passed when the BKT replay of
-## its answers reaches mastery, the same rule the pre-test placement uses.
+## Per sub-skill, for the results screen: passed when replaying its answers
+## through BKT reaches mastery (same rule as the pre-test placement).
 func passed() -> Dictionary:
 	var out := {}
 	var by_skill := StudentModel.answers_by_skill(results)

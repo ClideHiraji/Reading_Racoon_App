@@ -1,7 +1,7 @@
 extends VBoxContainer
-## Drag-the-missing-letter task (Phonics). Dragging a tile into the gap answers;
-## tapping a tile works too, for small hands that find dragging hard (D-007).
-## Letters are paper tiles in Andika, the font made for beginning readers (D-009).
+## Drag the missing letter (Phonics). Dropping a tile in the gap answers.
+## Tapping a tile works too, for small hands that find dragging hard.
+## Letters are paper tiles in Andika, a font made for beginning readers.
 
 signal answered(answer: String, ms: int)
 
@@ -50,7 +50,7 @@ func _answer(letter: String) -> void:
 	answered.emit(letter, Time.get_ticks_msec() - _started)
 
 
-## Second try (D-021): the gap empties and the letter tried fades out.
+## Second try: the gap empties and the letter tried fades out.
 func try_again(chosen: String) -> void:
 	_slot.clear()
 	_slot.accepting = true

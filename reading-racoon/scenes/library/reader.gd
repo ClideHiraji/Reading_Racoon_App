@@ -1,9 +1,7 @@
 extends Control
-## The story reader (D-017, wireframe "Story reader"): one page at a time with
-## the setting drawn in paper and its pictures. "Read to me" reads the page aloud
-## and lights each word (FR-20); tap any word to hear it again. After the last
-## page: two easy questions, the book's credit, a sticker and the words.
-## Big words, page dots, round Back/Next arrows and a big blue Read to me (D-022).
+## The story reader: one page at a time with its setting in paper and its pictures.
+## "Read to me" reads the page aloud and lights each word; tap any word to hear it again.
+## After the last page: two easy questions, the book's credit, a sticker and the words.
 
 var _book := {}
 var _lang := "en"
@@ -38,7 +36,7 @@ func _ready() -> void:
 	card.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	card.clip_children = CanvasItem.CLIP_CHILDREN_AND_DRAW
 	_column.add_child(card)
-	# On a laptop the page's picture stands beside its words (D-023).
+	# On a laptop the page's picture stands beside its words.
 	var wide := Kit.landscape()
 	_body = BoxContainer.new()
 	_body.vertical = not wide
@@ -51,7 +49,7 @@ func _ready() -> void:
 	_scene = PaperScenery.new()
 	_scene.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_art.add_child(_scene)
-	# A teacher book's own page picture, once downloaded (D-020).
+	# A teacher book's own page picture, once downloaded.
 	_photo = TextureRect.new()
 	_photo.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	_photo.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
@@ -254,7 +252,7 @@ func _ask(qs: Array, i: int) -> void:
 		buttons[str(c.id)] = b
 	for id in buttons:
 		buttons[id].pressed.connect(_answer.bind(qs, i, id, buttons))
-	Speech.new_question()   # (D-032)
+	Speech.new_question()
 	Speech.say(str(q.prompt), _lang)
 
 

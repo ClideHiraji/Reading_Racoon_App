@@ -1,8 +1,8 @@
 extends BoxContainer
-## Word Catch as a lesson task (D-043): the answers are word cards that drift down like leaves, the look
-## of Practice's Word Catch, so the child knows that game when they meet it there. Racoon says the word
-## (the prompt) and the child catches its card. The cards settle and wait, so speed never decides the
-## answer; a tap answers, even mid-fall (D-007). Content: a tap_choice item with "variant": "word_catch".
+## Word Catch as a lesson task: answer cards drift down like leaves, like Practice's Word Catch.
+## Racoon says the word and the child catches its card. Cards settle and wait, so speed
+## never matters; a tap answers, even mid-fall.
+## Content: a tap_choice item with "variant": "word_catch".
 
 signal answered(answer: String, ms: int)
 
@@ -68,7 +68,7 @@ func _on_catch(id: String) -> void:
 	answered.emit(id, Time.get_ticks_msec() - _started)
 
 
-## Second try (D-021): the card tried fades and can't be caught again.
+## Second try: the card already tried fades and can't be caught again.
 func try_again(chosen: String) -> void:
 	if _cards.has(chosen):
 		var b: ChunkyButton = _cards[chosen]

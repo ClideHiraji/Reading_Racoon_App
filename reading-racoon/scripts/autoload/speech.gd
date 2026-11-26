@@ -1,18 +1,17 @@
 extends Node
-## Reads prompts, stories and Racoon's lines aloud (autoload "Speech"): audio-first design for learners who
-## can't read instructions yet (D-007, FR-20).
+## Reads prompts, stories and Racoon's lines aloud (autoload "Speech"), for kids who can't read yet.
 ##
-## Recorded voices only (D-035, D-041): the student's buddy, Roco (Gemini's Zeno) or Rina (Cleo), in the
-## line's language. One MP3 per sentence in assets/voice/, named clip_key(buddy, language, sentence). A line
-## plays when every sentence of it is recorded in that voice and language. Otherwise it stays silent (its
-## words still show), so no other voice ever speaks: no other buddy, no other language and no device
-## text-to-speech (the user's choice, 2026-11-26: the device voice was often a woman's for Roco, and it
-## talked over the recordings).
+## Recorded voices only: the child's buddy, Roco or Rina, in the line's language.
+## One MP3 per sentence in assets/voice/, named clip_key(buddy, language, sentence).
+## A line plays only when every sentence is recorded in that voice and language.
+## Otherwise it stays silent (the words still show). No other voice ever fills in:
+## no other buddy, no other language, no device text-to-speech.
+## If a line is silent, its mp3 is missing in assets/voice.
 ##
-## A new line replaces the one playing. Leaving a screen stops the voice at once (the user's choice,
-## 2026-11-17), and so does a new question (new_question(); D-032).
+## A new line replaces the one playing. Leaving a screen or a new question (new_question())
+## stops the voice at once.
 
-## Read-along (D-017): the word being spoken now, as its index in the text's words.
+## Read-along: the word being spoken now, as its index in the text's words.
 signal word_reached(index: int)
 ## The read-along text has been read to the end (or was stopped).
 signal finished
@@ -20,15 +19,15 @@ signal finished
 const VOICE_DIR := "res://assets/voice/"
 const CLIP_GAP := 0.15        # seconds between two recorded sentences of a line
 
-## The voice's loudness, 0-100 (Settings; the tests turn it down).
+## Voice volume 0-100 (Settings; the tests turn it down).
 var volume := 80
-## Whose recorded voice plays: set by GameState.use_buddy_voice() (D-033, D-035).
+## Whose voice plays. Set by GameState.use_buddy_voice().
 var buddy := "roco"
 
 var _player: AudioStreamPlayer
 var _clips: Array = []        # the sentences still to play: [{stream, from, to}]
 var _now := {}                # the sentence playing
-var _run := 0                 # bumps on every new line or cut, so a late timer can't play an old one
+var _run := 0                 # goes up on every new line or cut, so a late timer can't play an old one
 var _tracked := false         # the line is a read-along (say_tracked)
 var _starts := PackedInt32Array()
 var _lit := -1
@@ -44,7 +43,7 @@ func _ready() -> void:
 	_player.name = "RecordedVoice"
 	add_child(_player)
 	_player.finished.connect(_clip_done)
-	# GameState loads first: take its student's buddy voice now (D-033)
+	# GameState loads first, so take its student's buddy voice now.
 	var gs := get_node_or_null("/root/GameState")
 	if gs and gs.has_method("use_buddy_voice"):
 		gs.use_buddy_voice()
@@ -59,7 +58,7 @@ static func base_lang(language: String) -> String:
 	return "en"
 
 
-## The buddy's talk language (D-033): what an unnamed language means.
+## The buddy's talk language: used when no language is given.
 func _talk_lang() -> String:
 	var gs := get_node_or_null("/root/GameState")
 	return gs.talk_language() if gs else "en"
@@ -70,8 +69,8 @@ func has_line(text: String, language: String = "") -> bool:
 	return not recorded(text, base_lang(language if language != "" else _talk_lang())).is_empty()
 
 
-## Says `text`. No language: the buddy's talk language (his or her lines and the menus, D-033);
-## lesson content always names its own.
+## Says `text`. No language = the buddy's talk language (buddy lines and menus).
+## Lesson content always gives its own language.
 func say(text: String, language: String = "") -> void:
 	if text.is_empty():
 		return
@@ -79,8 +78,8 @@ func say(text: String, language: String = "") -> void:
 	_play(_clips_for(text, base_lang(language if language != "" else _talk_lang())))
 
 
-## Reads `text` and reports each word as it is spoken (word_reached), then `finished`. False when the
-## text isn't recorded: the caller then paces the words itself, silently.
+## Reads `text` and sends word_reached for each word, then `finished`.
+## Returns false when the text isn't recorded; the caller then shows the words silently.
 func say_tracked(text: String, language: String = "en") -> bool:
 	if text.is_empty():
 		return false
@@ -107,7 +106,7 @@ static func word_starts(text: String) -> PackedInt32Array:
 	return out
 
 
-## Racoon is still talking (the lesson waits before moving on, D-021).
+## True while Racoon is still talking (the lesson waits before moving on).
 func speaking() -> bool:
 	return _player != null and (_player.playing or not _clips.is_empty())
 
@@ -116,8 +115,7 @@ func stop() -> void:
 	_stop_line(true)
 
 
-## A new question is about to show (in a lesson, Practice, a book's or a video's questions): whatever
-## Racoon is still saying stops at once (D-032).
+## A new question is about to show: whatever Racoon is still saying stops at once.
 func new_question() -> void:
 	if speaking():
 		cut()
@@ -128,15 +126,15 @@ func cut() -> void:
 	_stop_line(true)
 
 
-# --- Recorded voices (D-035) ------------------------------------------------------------------------
+# --- Recorded voices ---------------------------------------------------------------------------------
 
-## A recorded sentence's file name: the same key the voice lab's manifest.py gives it.
+## A sentence's file name. Must match the key the voice lab's manifest.py makes.
 static func clip_key(who: String, lang: String, sentence: String) -> String:
 	return ("%s|%s|%s" % [who, lang, sentence]).sha1_text().left(16)
 
 
-## The recorded clips for every sentence of `text` in the buddy's voice, or [] if any sentence has none
-## (then the whole line stays silent, so one line never mixes a voice with silence).
+## Clips for every sentence of `text` in the buddy's voice, or [] if any is missing
+## (then the whole line stays silent, so a line never mixes voice and silence).
 func recorded(text: String, lang: String) -> Array:
 	return _clips_for(text, lang).map(func(c): return c.path)
 
@@ -176,7 +174,7 @@ func _next_clip() -> void:
 	_player.play()
 
 
-## A sentence ended: a short breath, then the next one (unless the line was cut meanwhile).
+## A sentence ended: a short breath, then the next one (unless the line was cut).
 func _clip_done() -> void:
 	if _clips.is_empty():
 		_now = {}
@@ -213,8 +211,8 @@ func _left_screen() -> void:
 		cut()
 
 
-## Read-along: lights the word under the voice, spreading each sentence's words over its clip by their
-## place in the sentence (the recordings carry no word timings).
+## Read-along: lights up the word being spoken. Spreads each sentence's words over its clip
+## by their place in the sentence (the recordings have no word timings).
 func _process(_delta: float) -> void:
 	if _spoken_in != null and (not is_instance_valid(_spoken_in) or _spoken_in != get_tree().current_scene):
 		_left_screen()

@@ -12,9 +12,8 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 /**
- * The teacher's sections and the class dashboard (FR-06, FR-17): mastery per
- * sub-skill, ARAL band counts from the highest unlocked map level, open
- * intervention flags and the roster.
+ * The teacher's sections and the class dashboard: mastery per sub-skill, ARAL band counts
+ * from the highest unlocked map level, open flags and the class list.
  */
 class SectionController extends Controller
 {
@@ -25,7 +24,7 @@ class SectionController extends Controller
             return redirect()->route('teacher.sections.show', $sections->first());
         }
 
-        // The same counts as each class page, so the numbers always agree (D-037).
+        // The same counts as each class page, so the numbers always agree.
         $summaries = $sections->mapWithKeys(function (Section $section) {
             $stats = SectionStats::for($section);
 

@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 /**
- * Creates or updates a Library book or a video from App\Support\ContentForm
- * output (D-019). Files go to the private disk as "content/<uuid>.<ext>",
- * with their size and SHA-256 recorded for the game's download check.
+ * Creates or updates a Library book or a video from App\Support\ContentForm's output.
+ * Files go to the private disk as "content/<uuid>.<ext>", with their size and SHA-256
+ * saved for the game's download check.
  */
 final class SaveContentItem
 {

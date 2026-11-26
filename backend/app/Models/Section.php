@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
- * A Grade 1 class section (FR-16), owned by one teacher (FR-06).
+ * A Grade 1 class section, owned by one teacher.
  */
 class Section extends Model
 {
@@ -37,7 +37,7 @@ class Section extends Model
     }
 
     /**
-     * Play windows (FR-12). May be missing: use AccessSchedule::forSection().
+     * Play windows. May be missing: use AccessSchedule::forSection().
      *
      * @return HasOne<AccessSchedule, $this>
      */
@@ -47,7 +47,7 @@ class Section extends Model
     }
 
     /**
-     * Library books and videos assigned to this section (D-019).
+     * Library books and videos given to this section.
      *
      * @return BelongsToMany<ContentItem, $this>
      */

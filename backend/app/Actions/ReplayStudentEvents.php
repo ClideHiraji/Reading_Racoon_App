@@ -8,19 +8,15 @@ use Illuminate\Support\Facades\DB;
 use stdClass;
 
 /**
- * Server-side BKT authority (FR-03, FR-11, D-008, D-011): replays every stored
- * event of one student through App\Support\StudentReplay and writes the result
- * over the projections: bkt_states, path_progress, student_wallets,
- * intervention_flags, student_items and daily_usage. The server wins on
- * conflict; the client adopts it from GET /api/student/me.
+ * The server's own BKT: replays every stored event of one student through
+ * App\Support\StudentReplay and writes the result over bkt_states, path_progress,
+ * student_wallets, intervention_flags, student_items and daily_usage.
+ * The server wins on conflict; the game takes it from GET /api/student/me.
  *
- * A full replay (not incremental) keeps it simple and lets new BKT parameters
- * be applied to old answers. It costs about 43 µs per stored event (measured
- * 2026-11-19: 1,500 events 76 ms, 10,000 events 0.43 s; `usage` events arrive
- * once a minute of play), so it runs in a debounced queued job,
- * App\Jobs\ReplayStudent, never inside POST /api/sync (D-036). Reading the
- * events is cheap next to that: 1-7 ms per 1,000-event page at 300,000 rows
- * with the existing indexes (EXPLAIN ANALYZE, same day).
+ * A full replay (not step by step) keeps it simple and lets new BKT numbers apply to old
+ * answers. It costs about 43 µs per event (1,500 events take 76 ms, 10,000 take 0.43 s),
+ * so it runs in a queued job (App\Jobs\ReplayStudent), never inside POST /api/sync.
+ * Reading the events is cheap next to that.
  */
 final class ReplayStudentEvents
 {

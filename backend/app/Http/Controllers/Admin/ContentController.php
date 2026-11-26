@@ -12,8 +12,8 @@ use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
- * Every teacher's Library books and videos, for review (D-019): the admin can
- * open the files and unpublish anything unsuitable or not openly licensed.
+ * Every teacher's Library books and videos, for review: the admin can open the files and
+ * unpublish anything unsuitable or not openly licensed.
  */
 class ContentController extends Controller
 {

@@ -1,9 +1,9 @@
 @tool
 class_name PlayButton
 extends Button
-## The hub's big PLAY button (D-015): a slanted gold paper card, like a game
-## lobby's main button. Lifted on a shadow, it sinks when pressed and glows
-## softly to say "start here". Put the labels in a child named "Content".
+## The hub's big PLAY button: a slanted gold paper card, like a game lobby's main button.
+## Lifted on a shadow, it sinks when pressed and glows softly to say "start here".
+## Put the labels in a child named "Content".
 ## A flat Button with no text: all of its look is drawn here.
 
 @export var face_color := Palette.MANGO:

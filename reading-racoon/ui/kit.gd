@@ -1,10 +1,9 @@
 class_name Kit
 extends RefCounted
-## Shared builders for the hub's sections (D-017), in the paper-cut look (D-009)
-## and the thesis colors (D-016): the paper page, a header with Home or Close and
-## coins, filter chips, labels, discs, an overlay card and the reward card.
-## Autoloads are looked up through the scene tree (/root/...), so tests that load
-## this class before the autoloads exist still compile.
+## Shared builders for the hub's sections, in the paper-cut look: the paper page, a header
+## with Home or Close and coins, filter chips, labels, discs, an overlay card and the reward card.
+## Autoloads are looked up through the scene tree (/root/...), so tests that load this class
+## before the autoloads exist still compile.
 
 const PAPER_SHADER := preload("res://ui/paper.gdshader")
 const ANDIKA := preload("res://assets/fonts/Andika-Bold.ttf")
@@ -19,12 +18,12 @@ static func page(root: Control, scene: String = "", scene_height: float = 0.0) -
 	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	root.add_child(bg)
-	# pale cut-paper bits on the paper, a different scatter on each page (D-028)
+	# pale cut-paper bits on the paper, a different scatter on each page
 	var bits := PaperConfetti.new()
 	bits.pattern = absi(str(root.name).hash()) % 97
 	bits.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	root.add_child(bits)
-	if landscape():   # the scenery keeps its share of the shorter laptop screen (D-023)
+	if landscape():   # the scenery keeps its share of the shorter laptop screen
 		scene_height *= 0.66
 	if scene != "":
 		var s := PaperScenery.new()
@@ -49,14 +48,14 @@ static func page(root: Control, scene: String = "", scene_height: float = 0.0) -
 	return v
 
 
-## True on a landscape screen (the school laptops), where screens lay out side
-## by side on a 1280×720 canvas (D-023).
+## True on a landscape screen (school laptops), where screens lay out side by side
+## on a 1280×720 canvas.
 static func landscape() -> bool:
 	var screen := _screen()
 	return screen != null and screen.landscape
 
 
-## The notch, rounded corners and home indicator, in canvas units (D-023).
+## The notch, rounded corners and home bar, in canvas units.
 static func insets() -> Dictionary:
 	var screen := _screen()
 	if screen == null:
@@ -78,8 +77,8 @@ static func _screen() -> Node:
 	return tree.root.get_node_or_null("Screen") if tree else null
 
 
-## Top row (D-022): Home on a section, or Close on an activity (it asks first),
-## the title and coins. Both buttons are 96 px (NFR-02). Returns {row, back, coins}.
+## Top row: Home on a section, or Close on an activity (it asks first), the title and coins.
+## Both buttons are 96 px. Returns {row, back, coins}.
 static func header(column: Control, title: String, on_back: Callable, close := false,
 		coins := true) -> Dictionary:
 	var row := HBoxContainer.new()
@@ -90,7 +89,7 @@ static func header(column: Control, title: String, on_back: Callable, close := f
 		back = CloseButton.new()
 	else:
 		back = home_button()
-	back.add_to_group("back_button")   # Android Back and Escape press it (D-023)
+	back.add_to_group("back_button")   # Android Back and Escape press it
 	back.tooltip_text = "Back" if close else "Home"
 	back.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	back.pressed.connect(on_back)
@@ -99,10 +98,10 @@ static func header(column: Control, title: String, on_back: Callable, close := f
 	t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	t.autowrap_mode = TextServer.AUTOWRAP_OFF
 	t.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-	# A long title gets a little smaller before it is ever cut short (D-022).
+	# A long title gets a little smaller before it's ever cut short.
 	t.resized.connect(func(): fit_font(t, [40, 36, 32, 28]))
 	row.add_child(t)
-	t.add_child(Squiggle.new())   # a crayon line under the title (D-028)
+	t.add_child(Squiggle.new())   # a crayon line under the title
 	if not coins:
 		return {"row": row, "back": back, "coins": null}
 	var pill := coin_pill(column)
@@ -110,9 +109,8 @@ static func header(column: Control, title: String, on_back: Callable, close := f
 	return {"row": row, "back": back, "coins": pill.get_meta("label")}
 
 
-## A game's top row (D-022): Close, the name and one dot per round in place of
-## the coins (the reward card shows those). Fill the dots with show_rounds().
-## Returns {row, back, dots}.
+## A game's top row: Close, the name, and one dot per round instead of the coins
+## (the reward card shows those). Fill the dots with show_rounds(). Returns {row, back, dots}.
 static func game_header(column: Control, title: String, on_back: Callable) -> Dictionary:
 	var head := header(column, title, on_back, true, false)
 	var row: HBoxContainer = head.row
@@ -124,7 +122,7 @@ static func game_header(column: Control, title: String, on_back: Callable) -> Di
 
 
 ## Round dots: `results` holds "right" or "almost" for each round played so far
-## (green only for a right answer, D-022); the round being played has a blue ring.
+## (green only for a right answer). The round being played has a blue ring.
 static func show_rounds(dots: HBoxContainer, total: int, results: Array) -> void:
 	for c in dots.get_children():
 		dots.remove_child(c)
@@ -144,7 +142,7 @@ static func show_rounds(dots: HBoxContainer, total: int, results: Array) -> void
 		dots.add_child(d)
 
 
-## The round Home button every section starts with (D-022).
+## The round Home button every section starts with.
 static func home_button() -> ChunkyButton:
 	var b := ChunkyButton.new()
 	b.card_style = true
@@ -167,7 +165,7 @@ static func coin_pill(anchor: Node) -> PanelContainer:
 	var h := HBoxContainer.new()
 	h.add_theme_constant_override("separation", 8)
 	pill.add_child(h)
-	h.add_child(Icons.picture_rect("coin", 44))   # a gold paper coin (D-027)
+	h.add_child(Icons.picture_rect("coin", 44))   # a gold paper coin
 	var gs := anchor.get_node_or_null("/root/GameState")
 	var coins := label(str(gs.wallet.coins) if gs else "0", 30, Palette.INK, true)
 	coins.autowrap_mode = TextServer.AUTOWRAP_OFF
@@ -177,8 +175,8 @@ static func coin_pill(anchor: Node) -> PanelContainer:
 
 
 ## A row of filter chips; the picked one is blue. on_pick(id) is called on tap.
-## Options are [id, label] or [id, label, icon]. Racoon reads the chip's name
-## aloud, since a child may not read it yet (D-022).
+## Options are [id, label] or [id, label, icon]. Racoon reads the chip's name aloud,
+## since a child may not read it yet.
 static func chips(options: Array, selected: String, on_pick: Callable) -> HFlowContainer:
 	var flow := HFlowContainer.new()
 	flow.add_theme_constant_override("h_separation", 12)
@@ -193,18 +191,18 @@ static func chips(options: Array, selected: String, on_pick: Callable) -> HFlowC
 		b.pad = 18
 		b.add_theme_constant_override("h_separation", 8)
 		if o.size() > 2:
-			# [value, label, icon, tint]: a language chip shows its color dot (D-022).
+			# [value, label, icon, tint]: a language chip shows its colour dot.
 			b.icon_name = o[2]
 			b.icon_px = 22 if o[2] == "dot" else 34
 			b.icon_tint = o[3] if o.size() > 3 else (Palette.INK if o[0] == selected else Palette.BAY_DEEP)
 		b.add_theme_font_size_override("font_size", 26)
-		# A 72 px chip with a 96 px tap area (NFR-02, D-022).
+		# A 72 px chip with a 96 px tap area.
 		b.slop = 12
 		b.custom_minimum_size = Vector2(0, 96)
 		b.pressed.connect(func():
 			var speech := flow.get_node_or_null("/root/Speech")
 			if speech:
-				speech.say(o[1], "en")   # the chips' names are English (D-033)
+				speech.say(o[1], "en")   # the chips' names are in English
 			on_pick.call(o[0]))
 		flow.add_child(b)
 	return flow
@@ -221,8 +219,8 @@ static func fit_font(l: Label, sizes: Array) -> void:
 	l.add_theme_font_size_override("font_size", sizes[-1])
 
 
-## Breaks a two-line label where its lines come out even, so no word sits
-## alone on the second line (text-wrap: balance, D-022). Call it on `resized`.
+## Breaks a two-line label where its lines come out even, so no word sits alone on
+## the second line. Call it on `resized`.
 static func balance(l: Label) -> void:
 	var full: String = l.get_meta("full_text", l.text)
 	l.set_meta("full_text", full)
@@ -246,8 +244,8 @@ static func balance(l: Label) -> void:
 	l.text = best
 
 
-## A faint inset edge for a photo, so a light picture doesn't melt into the
-## card: pure black at 10%, never a palette color (D-022). Corners match the photo.
+## A faint edge inside a photo, so a light picture doesn't melt into the card:
+## black at 10%, never a palette colour. Corners match the photo.
 static func photo_edge(top_r: int, bottom_r: int) -> Panel:
 	var sb := StyleBoxFlat.new()
 	sb.draw_center = false
@@ -264,8 +262,8 @@ static func photo_edge(top_r: int, bottom_r: int) -> Panel:
 	return p
 
 
-## A small side-to-side "not now" shake. A tap in the middle of one starts again
-## from the resting spot, so quick taps never leave the node off-center (D-022).
+## A small side-to-side "not now" shake. A tap during one starts again from the resting spot,
+## so quick taps never leave the node off-centre.
 static func shake(node: Control, amount: float = 12.0) -> void:
 	if node.has_meta("shake_tween") and node.get_meta("shake_tween").is_valid():
 		node.get_meta("shake_tween").kill()
@@ -279,8 +277,8 @@ static func shake(node: Control, amount: float = 12.0) -> void:
 	node.set_meta("shake_tween", t)
 
 
-## A quick grow-and-settle for a tapped thing; a new tap restarts it instead of
-## stacking a second animation on the same scale (D-022).
+## A quick grow-and-settle for a tapped thing. A new tap restarts it instead of stacking
+## a second animation on the same scale.
 static func pop(node: Control, to: float = 1.12) -> void:
 	if node.has_meta("pop_tween") and node.get_meta("pop_tween").is_valid():
 		node.get_meta("pop_tween").kill()
@@ -291,7 +289,7 @@ static func pop(node: Control, to: float = 1.12) -> void:
 	node.set_meta("pop_tween", t)
 
 
-## A buddy line from content/talk.json in the student's language (D-033); English before GameState exists.
+## A buddy line from content/talk.json in the student's language; English before GameState exists.
 static func _talk(key: String, args: Array = []) -> String:
 	var tree := Engine.get_main_loop() as SceneTree
 	var gs: Node = tree.root.get_node_or_null("GameState") if tree else null
@@ -319,7 +317,7 @@ static func word_label(text: String, fs: int = 40) -> Label:
 
 
 static func box(col: Color, r: int, lift: int = 0, pad := Vector4.ZERO) -> PaperBox:
-	var sb := PaperBox.new()   # cut from paper, not a machine-made rectangle (D-028)
+	var sb := PaperBox.new()   # cut from paper, not a perfect rectangle
 	sb.bg_color = col
 	sb.set_corner_radius_all(r)
 	sb.anti_aliasing = true
@@ -338,7 +336,7 @@ static func box(col: Color, r: int, lift: int = 0, pad := Vector4.ZERO) -> Paper
 static func card(pad: float = 20, col: Color = Palette.CARD) -> PanelContainer:
 	var p := PanelContainer.new()
 	var sb := box(col, 26, 6, Vector4(pad, pad, pad, pad))
-	sb.stitch = true   # sewn round the inside, like the path's nodes (D-028)
+	sb.stitch = true   # sewn round the inside, like the path's stops
 	p.add_theme_stylebox_override("panel", sb)
 	return p
 
@@ -358,8 +356,8 @@ static func disc(icon: String, color: Color, px: float) -> PanelContainer:
 	return p
 
 
-## A picture in its own colours on a pale square of its paper color (like the lesson picture
-## cards, D-027). Inside a card, `corner` is the card's corner minus its padding (D-022).
+## A picture in its own colours on a pale square of its paper colour (like the lesson picture cards).
+## Inside a card, `corner` is the card's corner minus its padding.
 static func picture(icon: String, px: float, corner: int = 18) -> PanelContainer:
 	var col := Icons.picture_color(icon)
 	var p := PanelContainer.new()
@@ -373,8 +371,8 @@ static func picture(icon: String, px: float, corner: int = 18) -> PanelContainer
 	return p
 
 
-## A big paper button in a palette color with dark text. Main buttons are
-## orange and 120 px tall; green only answers "right" (D-022).
+## A big paper button in a palette colour with dark text. Main buttons are orange and
+## 120 px tall; green only means "right".
 static func button(text: String, color: Color, icon: String = "", h: float = 120) -> ChunkyButton:
 	var b := ChunkyButton.new()
 	b.text = text
@@ -404,7 +402,7 @@ static func overlay(root: Control) -> VBoxContainer:
 	v.alignment = BoxContainer.ALIGNMENT_CENTER
 	c.add_child(v)
 	v.set_meta("overlay", dim)
-	# Grow from the card's own center once it is laid out (D-022).
+	# Grow from the card's own centre once it's laid out.
 	c.resized.connect(func(): c.pivot_offset = c.size / 2)
 	c.scale = Vector2(0.9, 0.9)
 	c.create_tween().tween_property(c, "scale", Vector2.ONE, 0.22).set_trans(Tween.TRANS_BACK) \
@@ -412,8 +410,8 @@ static func overlay(root: Control) -> VBoxContainer:
 	return v
 
 
-## A sticker as it sits in the album: its picture in full colour on a paper disc ringed in its
-## group's color (D-027).
+## A sticker as it sits in the album: its full-colour picture on a paper disc ringed in
+## its group's colour.
 static func sticker(id: String, px: float) -> PanelContainer:
 	if not Icons.has_picture(id):
 		return disc(id if Icons.exists(id) else "star", Collection.color_of(id), px)
@@ -433,7 +431,7 @@ static func sticker(id: String, px: float) -> PanelContainer:
 	return p
 
 
-## A Closet item's tier as a divider: a line, 1 to 5 stars, a line, in the tier's colour (D-026).
+## A Closet item's tier as a divider: a line, 1 to 5 stars, a line, in the tier's colour.
 ## No words: the number of stars says the tier (and the colour says it again).
 static func tier_badge(tier_id: String, px: float = 20) -> MarginContainer:
 	var tier: Dictionary = Wardrobe.TIERS.get(tier_id, Wardrobe.TIERS.copper)
@@ -516,7 +514,7 @@ static func reward(root: Control, title: String, result: Dictionary, on_done: Ca
 		v.add_child(row)
 	var items: Array = result.get("items", [])
 	if not items.is_empty():
-		# D-026: an earned Closet item, on Racoon, with its tier
+		# An earned Closet item, on Racoon, with its tier.
 		var row := HBoxContainer.new()
 		row.alignment = BoxContainer.ALIGNMENT_CENTER
 		row.add_theme_constant_override("separation", 18)
@@ -540,7 +538,7 @@ static func reward(root: Control, title: String, result: Dictionary, on_done: Ca
 		v.add_child(s)
 		said += " " + _talk("reward_got", [Wardrobe.ITEMS[items[0]].name])
 	var ok := button("OK!", Palette.ORANGE)
-	ok.add_to_group("back_cancel")   # Back closes the card (D-023)
+	ok.add_to_group("back_cancel")   # Back closes the card
 	ok.pressed.connect(func():
 		v.get_meta("overlay").queue_free()
 		on_done.call())

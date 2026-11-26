@@ -8,9 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * What the system saw: sign-ins, failed sign-ins, access decisions, sync
- * problems, server errors (FR-08 "retrieve system logs for anomaly monitoring").
- * `anomaly` marks rows the admin portal highlights.
+ * What the system saw: sign-ins, failed sign-ins, access decisions, sync problems,
+ * server errors. `anomaly` marks rows the admin portal highlights.
  */
 class SystemLog extends Model
 {
@@ -53,8 +52,8 @@ class SystemLog extends Model
     }
 
     /**
-     * A failed sign-in. Becomes an anomaly when the same IP failed
-     * BURST_COUNT times within BURST_MINUTES (brute force, FR-08).
+     * A failed sign-in. Becomes an anomaly when the same IP failed BURST_COUNT times
+     * within BURST_MINUTES (someone guessing).
      *
      * @param  array<string, mixed>  $context
      */
@@ -71,9 +70,9 @@ class SystemLog extends Model
     }
 
     /**
-     * Retention (D-036, data minimisation under RA 10173): routine info rows go
-     * after `system_info_days`, everything after `system_anomaly_days`. Run
-     * nightly by `model:prune` (routes/console.php). The audit log is kept.
+     * Clean-up (keep only what's needed, RA 10173): routine info rows go after
+     * `system_info_days`, everything after `system_anomaly_days`. Run nightly by
+     * `model:prune` (routes/console.php). The audit log is kept.
      *
      * @return Builder<SystemLog>
      */

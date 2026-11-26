@@ -1,10 +1,9 @@
 class_name MediaLibrary
 extends RefCounted
-## Books for the Library and songs, read-alongs and videos for Watch & Listen
-## (D-017). Children never browse the open internet (RA 10173): everything here
-## is bundled with the app or picked by the teacher or admin. Teacher-picked
-## items arrive as the same JSON shape in user://content/ (and videos as Ogg
-## Theora files the app can play); they show as "From your teacher".
+## Books for the Library, and songs, read-alongs and videos for Watch & Listen.
+## Kids never browse the internet: everything ships with the app or is picked by the teacher.
+## Teacher items come as the same JSON in user://content/ (videos as Ogg Theora)
+## and show as "From your teacher".
 
 const BOOKS_FILE := "res://content/library.json"
 const WATCH_FILE := "res://content/watch.json"
@@ -59,7 +58,7 @@ func watch_in(kind: String) -> Array:
 	return watch.filter(func(m): return kind == "" or m.kind == kind)
 
 
-## The lines Watch & Listen plays: a song's lines, or a read-along's book pages.
+## The lines Watch & Listen plays: a song's lines, or a read-along's pages.
 func lines_of(item: Dictionary) -> Array:
 	if item.get("kind", "") == "read_along":
 		var b := book(str(item.get("book", "")))
@@ -67,13 +66,13 @@ func lines_of(item: Dictionary) -> Array:
 	return item.get("lines", [])
 
 
-## Videos play only once their file is on the tablet (downloaded on Wi-Fi).
+## A video plays only once its file is downloaded to the tablet.
 static func video_ready(item: Dictionary) -> bool:
 	return item.get("kind", "") != "video" or FileAccess.file_exists(str(item.get("file", "")))
 
 
-## A downloaded page picture (teacher books, D-020) as a texture, or null when the
-## page has none or it isn't on the tablet yet (the page then shows its paper scene).
+## A downloaded page picture as a texture, or null if there is none yet
+## (the page then shows its paper scene).
 static func page_texture(page: Dictionary) -> Texture2D:
 	var path := str(page.get("image", ""))
 	if not ContentPlan.safe_local(path) or not FileAccess.file_exists(path):

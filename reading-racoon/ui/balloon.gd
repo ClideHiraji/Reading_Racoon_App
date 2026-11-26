@@ -1,6 +1,6 @@
 class_name Balloon
 extends Button
-## A paper balloon with a picture and a word, for Rhyme Pop in Practice and in lessons (D-017, D-043).
+## A paper balloon with a picture and a word, for Rhyme Pop in Practice and in lessons.
 ## Drawn in Godot (no image files); a flat Button so a tap anywhere on it counts.
 
 var color := Palette.BLUE:

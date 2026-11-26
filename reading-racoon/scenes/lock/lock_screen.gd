@@ -1,13 +1,9 @@
 extends Control
-## Friendly lock screen for time-restricted access (FR-12, 06-game-design.md):
-## "The game is sleeping" at night. In the day only Adventure locks and the hub
-## explains it (D-015), so this screen is for night time.
-## It never closes the app, and "Check again" re-asks the schedule.
+## Friendly lock screen: "The game is sleeping" at night.
+## In the day only Adventure locks, and the hub explains that, so this screen is for night.
+## It never closes the app, and "Check again" asks for the schedule again.
 
-## Each lock's title and line: keys in content/talk.json, in the buddy's language (D-033).
-## Each lock's title and line: keys in content/talk.json, in the buddy's language (D-033).
-## Each lock's title and line: keys in content/talk.json, in the buddy's language (D-033).
-## Each lock's title and line: keys in content/talk.json, in the buddy's language (D-033).
+## Each lock's title and line: keys in content/talk.json, in the buddy's language.
 const TEXTS := {
 	"class_lock": ["lock_class_title", "lock_class", "book"],
 	"daily_limit": ["lock_limit_title", "lock_limit", "star"],
@@ -26,10 +22,10 @@ func _ready() -> void:
 	_show(d if not AccessPolicy.is_open(d) else GameState.access_decision())
 
 
-## Night uses the plum night colors, and the moon on a pale disc; a good day
-## (daily limit) gets the gold star; Check again is a quiet button at night (D-022).
-## Laptops (D-023): the message and CHECK AGAIN on the left, Racoon on the right
-## above the village. Both shapes keep clear of a notch.
+## Night uses the plum colours and the moon on a pale disc; a used-up day gets the gold star;
+## Check again is a quiet button at night.
+## Laptop layout: the message and CHECK AGAIN on the left, Racoon on the right above the village.
+## Both layouts keep clear of a notch.
 func _fit_shape() -> void:
 	var margin: MarginContainer = $Margin
 	if Kit.landscape():

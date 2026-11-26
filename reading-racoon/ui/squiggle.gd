@@ -1,7 +1,7 @@
 class_name Squiggle
 extends Control
-## A hand-drawn wavy line under a title (D-028), as long as the title's text, like a child's
-## crayon underline. Add it as a child of the Label it underlines.
+## A hand-drawn wavy line under a title, as long as its text, like a child's crayon underline.
+## Add it as a child of the Label it underlines.
 
 @export var color := Palette.YELLOW:
 	set(v):

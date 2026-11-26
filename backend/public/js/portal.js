@@ -1,8 +1,8 @@
 /*
- * Small progressive enhancements for the teacher dashboard and admin portal.
- * Every page works without this file; it adds confirmations, busy states,
- * in-place actions with Undo, printing, the sign-out warning, the learner-list
- * filters, the phone menu and the sticky in-page navigation (CSP: 'self', D-037, D-039).
+ * Small extras for the teacher dashboard and admin portal. Every page works without
+ * this file; it adds confirmations, busy states, in-place actions with Undo, printing,
+ * the sign-out warning, the learner-list filters, the phone menu and the sticky in-page
+ * navigation (CSP: 'self' only).
  */
 (function () {
     'use strict';
@@ -149,11 +149,11 @@
         $$('form[data-busy="1"]').forEach(clearBusy);
     });
 
-    // ---- In-place actions (D-039): Mark resolved, Close all and Record consent change only
-    // their own row, with the confirmation and Undo right there, so the teacher keeps her place.
+    // ---- In-place actions: Mark resolved, Close all and Record consent change only their own
+    // row, with the confirmation and Undo right there, so the teacher keeps their place.
     // The server stays the source of truth: the page it redirects to is fetched, its message is
-    // shown in place and its counts are copied in ([data-sync]). If anything fails, the form posts
-    // the normal way; these actions are safe to repeat.
+    // shown in place and its counts are copied in ([data-sync]). If anything fails, the form
+    // posts the normal way; these actions are safe to repeat.
     var saved = canInline ? new WeakMap() : null;
     var live = null;
 
@@ -407,7 +407,7 @@
         $$('input[type=time]').forEach(function (input) { input.addEventListener('input', redraw); });
     }
 
-    // ---- Phones: the admin links fold behind Menu (D-039).
+    // ---- Phones: the admin links fold behind Menu.
     var toggle = document.querySelector('[data-nav-toggle]');
     var folded = toggle && document.getElementById(toggle.getAttribute('aria-controls'));
     if (folded) {
@@ -430,7 +430,7 @@
     var first = document.querySelector('[data-autofocus]');
     if (first && window.matchMedia && window.matchMedia('(pointer: fine)').matches) first.focus();
 
-    // ---- Learner list: search, show and sort without a page load (FR-06).
+    // ---- Learner list: search, show and sort without a page load.
     var roster = document.querySelector('table[data-roster]');
     if (!roster) return;
     var body = roster.tBodies[0];

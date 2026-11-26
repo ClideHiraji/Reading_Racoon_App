@@ -16,9 +16,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 /**
- * Data-privacy audit under RA 10173, the Data Privacy Act of 2012 (FR-22, NFR-04):
- * consent coverage, what personal data is stored, who accessed learner data,
- * retention candidates and security settings. Each check is ok, warn or fail.
+ * Data-privacy audit under RA 10173, the Data Privacy Act of 2012: consent coverage, what
+ * personal data is stored, who opened learner data, what could be deleted, and security
+ * settings. Each check is ok, warn or fail.
  */
 class PrivacyController extends Controller
 {

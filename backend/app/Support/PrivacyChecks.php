@@ -10,9 +10,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 /**
- * The RA 10173 privacy and security checks (FR-22, NFR-04), each ok, warn or
- * fail. The privacy audit lists them; the admin overview raises any that
- * aren't ok, worst first.
+ * The RA 10173 privacy and security checks, each ok, warn or fail.
+ * The privacy page lists them; the admin overview shows any that aren't ok, worst first.
  */
 final class PrivacyChecks
 {

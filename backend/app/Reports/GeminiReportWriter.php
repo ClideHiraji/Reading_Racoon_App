@@ -12,14 +12,13 @@ use Illuminate\Support\Sleep;
 use UnexpectedValueException;
 
 /**
- * The Gemini teacher report (FR-05, FR-21, D-018): the template's lists with
- * two AI-written paragraphs. Each call is logged in ai_logs; a reply is used
- * only if it passes AiReportCheck. After `attempts` failed calls (or one that
- * can't succeed on retry, such as a bad key) the template's own paragraphs
- * are used and the fallback goes to the system log.
+ * The Gemini teacher report: the template's lists with two AI-written paragraphs.
+ * Each call is logged in ai_logs; a reply is used only if it passes AiReportCheck.
+ * After `attempts` failed calls (or one that can't work on retry, like a bad key)
+ * the template's own paragraphs are used and the fallback goes to the system log.
  *
- * Called by App\Jobs\WriteAiReport, never during a page view: a report takes
- * a few seconds and up to three calls.
+ * Called by App\Jobs\WriteAiReport, never during a page view: a report takes a few
+ * seconds and up to three calls.
  */
 final class GeminiReportWriter implements DiagnosticReportWriter
 {

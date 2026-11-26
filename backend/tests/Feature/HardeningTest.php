@@ -44,7 +44,8 @@ class HardeningTest extends TestCase
 
     public function test_each_school_behind_the_tunnel_gets_its_own_login_limit(): void
     {
-        for ($i = 0; $i < 60; $i++) {
+        // Two classes (~64 children) and their typos fit in one school's minute.
+        for ($i = 0; $i < 300; $i++) {
             $this->viaTunnel('198.51.100.7')->postJson('/api/auth/login', ['login_code' => 'ABCD-2345'])->assertUnprocessable();
         }
         $this->viaTunnel('198.51.100.7')->postJson('/api/auth/login', ['login_code' => 'ABCD-2345'])->assertTooManyRequests();

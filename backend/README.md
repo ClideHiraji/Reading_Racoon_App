@@ -140,7 +140,7 @@ All bodies are JSON. Errors are JSON too, even without an `Accept: application/j
 
 ### `POST /api/auth/login` (FR-01)
 
-**Temporary student login by code** until open issue 9 picks the real method. Codes look like `K7PM-3QXA`: 8 characters without 0/O/1/I/L; case, spaces and dashes are ignored. Limit: 60 attempts per minute per IP (a whole class shares the school's address).
+**Temporary student login by code** until open issue 9 picks the real method. Codes look like `K7PM-3QXA`: 8 characters without 0/O/1/I/L; case, spaces and dashes are ignored. Limit: 300 attempts per minute per IP (every class at a school shares its address).
 
 ```json
 {"login_code": "K7PM-3QXA", "device_name": "Tablet 3"}

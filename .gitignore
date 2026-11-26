@@ -11,6 +11,7 @@ google-services.json
 # --- Build outputs and IDE files ---
 # The old Unity folder patterns ([Ll]ibrary/, [Tt]emp/, [Bb]uild/, [Ll]ogs/...)
 # were removed: they matched at any depth and hid reading-racoon/scenes/library/.
+/builds/
 *.csproj
 *.unityproj
 *.sln

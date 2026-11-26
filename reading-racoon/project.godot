@@ -12,11 +12,13 @@ config_version=5
 
 config/name="Reading Racoon"
 config/description="Game-based adaptive reading comprehension assessment for Grade 1 learners."
-run/main_scene="res://scenes/main.tscn"
+run/main_scene="uid://cyty4ch5ag866"
 config/quit_on_go_back=false
 config/features=PackedStringArray("4.7", "GL Compatibility")
+run/low_processor_mode=true
 boot_splash/bg_color=Color(1, 0.964706, 0.878431, 1)
-config/icon="res://icon.svg"
+boot_splash/show_image=false
+config/icon="res://assets/brand/app_icon.svg"
 
 [audio]
 
@@ -58,4 +60,5 @@ textures/canvas_textures/default_texture_filter=2
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true
 environment/defaults/default_clear_color=Color(1, 0.964706, 0.878431, 1)

@@ -576,6 +576,19 @@ func test_hub_and_free_play_access() -> void:
 
 # --- Shop (FR-07) ----------------------------------------------------------------------------
 
+## D-037: the opening plays once per launch, and never in a test or debug run.
+func test_intro_plays_once() -> void:
+	var had := Intro.played
+	Intro.played = false
+	check(Intro.should_play({}), "the opening plays when the game starts")
+	check(not Intro.should_play({"no-intro": ""}) and not Intro.should_play({"profile": "smoke"}),
+			"test and debug runs skip the opening")
+	Intro.played = true
+	check(not Intro.should_play({}), "the opening plays once per launch")
+	check(Intro.LIFT_AT + Intro.LIFT_TIME < 3.5, "the opening is short: under 3.5 s")
+	Intro.played = had
+
+
 func test_wardrobe() -> void:
 	var w := Wardrobe.new()
 	check(w.owns("scarf_teal") and not w.is_worn("scarf_teal"), "owns the river scarf but starts without it (D-024)")

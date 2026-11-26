@@ -49,6 +49,7 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 - [[D-033 Buddies Roco and Rina and talk language]]
 - [[D-035 Recorded buddy voices]]
 - [[D-036 Full screen for teacher videos]]
+- [[D-037 Animated opening and app icon]]
 
 ## Still open (from [[10-open-issues]])
 - 🔴 **Before the final release: delete the developer menu** (issue 30). It's debug-build-only, but it must go: `reading-racoon/ui/dev_menu.gd` (and its `.uid`), its lines in `scripts/autoload/screen.gd`, and its check at the end of `tests/ui_smoke.gd`.

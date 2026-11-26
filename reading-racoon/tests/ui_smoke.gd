@@ -593,6 +593,31 @@ func _run() -> void:
 	check(voice.buddy == "rina", "the recorded voice follows the buddy")
 	gs.set_buddy(str(had.get("who", "roco")), str(had.get("lang", "en")))
 
+	# The opening (D-037): a test run skips it, so add one over the start screen on purpose.
+	change_scene_to_file("res://scenes/main.tscn")
+	await _frames(5)
+	check(current_scene.name == "Main" and current_scene.get_children().filter(func(c): return c is Intro).is_empty(),
+			"a test run opens the start screen without the opening")
+	var intro := Intro.new()
+	var lifted := [false]
+	intro.finished.connect(func(): lifted[0] = true)
+	current_scene.add_child(intro)
+	await create_timer(1.2).timeout
+	check(is_instance_valid(intro) and not lifted[0], "the opening is still playing after 1.2 s")
+	await create_timer(Intro.LIFT_AT + Intro.LIFT_TIME + 0.5 - 1.2).timeout
+	check(lifted[0] and not is_instance_valid(intro), "the opening lifts away by itself")
+	intro = Intro.new()
+	lifted[0] = false
+	intro.finished.connect(func(): lifted[0] = true)
+	current_scene.add_child(intro)
+	await create_timer(0.6).timeout
+	var tap := InputEventMouseButton.new()
+	tap.button_index = MOUSE_BUTTON_LEFT
+	tap.pressed = true
+	intro._on_input(tap)
+	await create_timer(Intro.LIFT_TIME + 0.3).timeout
+	check(lifted[0] and not is_instance_valid(intro), "a tap skips the opening")
+
 	# The developer menu (issue 30, debug builds only; DELETE BEFORE THE FINAL RELEASE with it).
 	if DevMenu.allowed():
 		DevMenu.toggle(self)

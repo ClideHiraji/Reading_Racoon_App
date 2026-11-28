@@ -1,0 +1,3381 @@
+{
+	"note": "DRAFT for teacher review. 112 more items so each skill at each level has 20 (10 easier, 10 harder). Not in the game yet.",
+	"items": [
+		{
+			"id": "pa1-b13",
+			"sub_skill": "phonological_awareness",
+			"level": 1,
+			"competency": "RL1PA-I-3",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Asa ang katugma sa baboy?",
+			"tts_text": "Asa ang katugma sa baboy?",
+			"picture": "pig",
+			"word": "baboy",
+			"choices": [
+				{
+					"id": "tree",
+					"label": "kahoy",
+					"picture": "tree"
+				},
+				{
+					"id": "cat",
+					"label": "iring",
+					"picture": "cat"
+				},
+				{
+					"id": "moon",
+					"label": "bulan",
+					"picture": "moon"
+				}
+			],
+			"answer": "tree",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "pa1-b14",
+			"sub_skill": "phonological_awareness",
+			"level": 1,
+			"competency": "RL1PA-I-3",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Asa ang katugma sa tasa?",
+			"tts_text": "Asa ang katugma sa tasa?",
+			"picture": "cup",
+			"word": "tasa",
+			"variant": "rhyme_pop",
+			"choices": [
+				{
+					"id": "dog",
+					"label": "iro",
+					"picture": "dog"
+				},
+				{
+					"id": "table",
+					"label": "lamesa",
+					"picture": "table"
+				},
+				{
+					"id": "hat",
+					"label": "kalo",
+					"picture": "hat"
+				}
+			],
+			"answer": "table",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "pa1-b15",
+			"sub_skill": "phonological_awareness",
+			"level": 1,
+			"competency": "RL1PA-I-3",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Asa ang katugma sa mangga?",
+			"tts_text": "Asa ang katugma sa mangga?",
+			"picture": "mango",
+			"word": "mangga",
+			"choices": [
+				{
+					"id": "banana",
+					"label": "saging",
+					"picture": "banana"
+				},
+				{
+					"id": "ball",
+					"label": "bola",
+					"picture": "ball"
+				},
+				{
+					"id": "mouse",
+					"label": "ilaga",
+					"picture": "mouse"
+				},
+				{
+					"id": "sun",
+					"label": "adlaw",
+					"picture": "sun"
+				}
+			],
+			"answer": "mouse",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "pa1-b16",
+			"sub_skill": "phonological_awareness",
+			"level": 1,
+			"competency": "RL1PA-I-3",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Asa ang katugma sa balay?",
+			"tts_text": "Asa ang katugma sa balay?",
+			"picture": "house",
+			"word": "balay",
+			"choices": [
+				{
+					"id": "book",
+					"label": "libro",
+					"picture": "book"
+				},
+				{
+					"id": "goat",
+					"label": "kanding",
+					"picture": "goat"
+				},
+				{
+					"id": "fish",
+					"label": "isda",
+					"picture": "fish"
+				},
+				{
+					"id": "bread",
+					"label": "tinapay",
+					"picture": "bread"
+				}
+			],
+			"answer": "bread",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "pa1-b17",
+			"sub_skill": "phonological_awareness",
+			"level": 1,
+			"competency": "RL1PA-I-5",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Asa ang nagsugod sa /s/?",
+			"tts_text": "Asa ang nagsugod sa tingog sss, sama sa sabon?",
+			"choices": [
+				{
+					"id": "shoes",
+					"label": "sapatos",
+					"picture": "shoes"
+				},
+				{
+					"id": "table",
+					"label": "lamesa",
+					"picture": "table"
+				},
+				{
+					"id": "dog",
+					"label": "iro",
+					"picture": "dog"
+				}
+			],
+			"answer": "shoes",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "pa1-b18",
+			"sub_skill": "phonological_awareness",
+			"level": 1,
+			"competency": "RL1PA-I-5",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Asa ang nagsugod sa /m/?",
+			"tts_text": "Asa ang nagsugod sa tingog mmm, sama sa mata?",
+			"choices": [
+				{
+					"id": "tree",
+					"label": "kahoy",
+					"picture": "tree"
+				},
+				{
+					"id": "corn",
+					"label": "mais",
+					"picture": "corn"
+				},
+				{
+					"id": "dog",
+					"label": "iro",
+					"picture": "dog"
+				}
+			],
+			"answer": "corn",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "pa1-b19",
+			"sub_skill": "phonological_awareness",
+			"level": 1,
+			"competency": "RL1PA-I-5",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Asa ang nagsugod sa /u/?",
+			"tts_text": "Asa ang nagsugod sa tingog u, sama sa ulo?",
+			"choices": [
+				{
+					"id": "bear",
+					"label": "oso",
+					"picture": "bear"
+				},
+				{
+					"id": "sun",
+					"label": "adlaw",
+					"picture": "sun"
+				},
+				{
+					"id": "monkey",
+					"label": "unggoy",
+					"picture": "monkey"
+				}
+			],
+			"answer": "monkey",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "pa1-b20",
+			"sub_skill": "phonological_awareness",
+			"level": 1,
+			"competency": "RL1PA-I-5",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Asa ang nagsugod sa /b/?",
+			"tts_text": "Asa ang nagsugod sa tingog b, sama sa bata?",
+			"choices": [
+				{
+					"id": "pear",
+					"label": "peras",
+					"picture": "pear"
+				},
+				{
+					"id": "corn",
+					"label": "mais",
+					"picture": "corn"
+				},
+				{
+					"id": "pig",
+					"label": "baboy",
+					"picture": "pig"
+				}
+			],
+			"answer": "pig",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "ph1-b13",
+			"sub_skill": "phonics",
+			"level": 1,
+			"competency": "RL1PWS-II-1",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Unsang letra ang naay tingog /b/?",
+			"tts_text": "Unsang letra ang naay tingog b?",
+			"choices": [
+				{
+					"id": "m",
+					"label": "m"
+				},
+				{
+					"id": "b",
+					"label": "b"
+				},
+				{
+					"id": "s",
+					"label": "s"
+				}
+			],
+			"answer": "b",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "ph1-b14",
+			"sub_skill": "phonics",
+			"level": 1,
+			"competency": "RL1PWS-II-2",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pindota ang letra s.",
+			"tts_text": "Pindota ang letra s.",
+			"choices": [
+				{
+					"id": "s",
+					"label": "s"
+				},
+				{
+					"id": "m",
+					"label": "m"
+				},
+				{
+					"id": "o",
+					"label": "o"
+				}
+			],
+			"answer": "s",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "ph1-b15",
+			"sub_skill": "phonics",
+			"level": 1,
+			"competency": "RL1PWS-II-3",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Ang mais nagsugod sa unsang letra?",
+			"tts_text": "Mais. Ang mais nagsugod sa unsang letra?",
+			"picture": "corn",
+			"choices": [
+				{
+					"id": "s",
+					"label": "s"
+				},
+				{
+					"id": "b",
+					"label": "b"
+				},
+				{
+					"id": "m",
+					"label": "m"
+				}
+			],
+			"answer": "m",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "ph1-b16",
+			"sub_skill": "phonics",
+			"level": 1,
+			"competency": "RL1PWS-II-3",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Ang baboy nagsugod sa unsang letra?",
+			"tts_text": "Baboy. Ang baboy nagsugod sa unsang letra?",
+			"picture": "pig",
+			"choices": [
+				{
+					"id": "b",
+					"label": "b"
+				},
+				{
+					"id": "a",
+					"label": "a"
+				},
+				{
+					"id": "s",
+					"label": "s"
+				}
+			],
+			"answer": "b",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "ph1-b17",
+			"sub_skill": "phonics",
+			"level": 1,
+			"competency": "RL1PWS-II-2",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pindota ang letra u.",
+			"tts_text": "Pindota ang letra u.",
+			"choices": [
+				{
+					"id": "o",
+					"label": "o"
+				},
+				{
+					"id": "a",
+					"label": "a"
+				},
+				{
+					"id": "u",
+					"label": "u"
+				}
+			],
+			"answer": "u",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "ph1-b18",
+			"sub_skill": "phonics",
+			"level": 1,
+			"competency": "RL1PWS-II-3",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Ang unggoy nagsugod sa unsang letra?",
+			"tts_text": "Unggoy. Ang unggoy nagsugod sa unsang letra?",
+			"picture": "monkey",
+			"choices": [
+				{
+					"id": "o",
+					"label": "o"
+				},
+				{
+					"id": "u",
+					"label": "u"
+				},
+				{
+					"id": "i",
+					"label": "i"
+				}
+			],
+			"answer": "u",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "ph1-b19",
+			"sub_skill": "phonics",
+			"level": 1,
+			"competency": "RL1PWS-II-3",
+			"language": "bis-placeholder",
+			"task_type": "drag_letter",
+			"prompt": "Himoa ang pulong mais.",
+			"tts_text": "Mais. Ibalhin ang kulang nga letra aron mahimo ang mais.",
+			"picture": "corn",
+			"pattern": [
+				"m",
+				"_",
+				"i",
+				"s"
+			],
+			"choices": [
+				{
+					"id": "o",
+					"label": "o"
+				},
+				{
+					"id": "u",
+					"label": "u"
+				},
+				{
+					"id": "a",
+					"label": "a"
+				}
+			],
+			"answer": "a",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "ph1-b20",
+			"sub_skill": "phonics",
+			"level": 1,
+			"competency": "RL1PWS-II-3",
+			"language": "bis-placeholder",
+			"task_type": "drag_letter",
+			"prompt": "Himoa ang pulong baso.",
+			"tts_text": "Baso. Ibalhin ang kulang nga letra aron mahimo ang baso.",
+			"picture": "glass",
+			"pattern": [
+				"b",
+				"a",
+				"s",
+				"_"
+			],
+			"choices": [
+				{
+					"id": "u",
+					"label": "u"
+				},
+				{
+					"id": "o",
+					"label": "o"
+				},
+				{
+					"id": "a",
+					"label": "a"
+				}
+			],
+			"answer": "o",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "pa2-b13",
+			"sub_skill": "phonological_awareness",
+			"level": 2,
+			"competency": "RL1PA-I-2",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pila ka pantig ang lubi?",
+			"tts_text": "Pakpak uban nako. Lu. Bi. Pila ka pakpak?",
+			"picture": "coconut",
+			"word": "lubi",
+			"hint": "Pakpak uban nako: lu, bi. Ihapa ang matag pakpak.",
+			"explain": "Lu-bi adunay 2 ka pakpak.",
+			"choices": [
+				{
+					"id": "1",
+					"label": "1",
+					"picture": "hand",
+					"repeat": 1
+				},
+				{
+					"id": "2",
+					"label": "2",
+					"picture": "hand",
+					"repeat": 2
+				},
+				{
+					"id": "3",
+					"label": "3",
+					"picture": "hand",
+					"repeat": 3
+				}
+			],
+			"answer": "2",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "pa2-b14",
+			"sub_skill": "phonological_awareness",
+			"level": 2,
+			"competency": "RL1PA-I-2",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pila ka pantig ang mais?",
+			"tts_text": "Pakpak uban nako. Ma. Is. Pila ka pakpak?",
+			"picture": "corn",
+			"word": "mais",
+			"hint": "Pakpak uban nako: ma, is. Ihapa ang matag pakpak.",
+			"explain": "Ma-is adunay 2 ka pakpak.",
+			"choices": [
+				{
+					"id": "1",
+					"label": "1",
+					"picture": "hand",
+					"repeat": 1
+				},
+				{
+					"id": "2",
+					"label": "2",
+					"picture": "hand",
+					"repeat": 2
+				},
+				{
+					"id": "3",
+					"label": "3",
+					"picture": "hand",
+					"repeat": 3
+				}
+			],
+			"answer": "2",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "pa2-b15",
+			"sub_skill": "phonological_awareness",
+			"level": 2,
+			"competency": "RL1PA-I-2",
+			"language": "bis-placeholder",
+			"task_type": "order_tiles",
+			"prompt": "Buhata ang pulong baboy.",
+			"tts_text": "Ba. Boy. Pindota ang mga pantig aron mahimo ang baboy.",
+			"picture": "pig",
+			"variant": "syllables",
+			"tiles": [
+				"ba",
+				"boy"
+			],
+			"answer": "ba|boy",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "pa2-b16",
+			"sub_skill": "phonological_awareness",
+			"level": 2,
+			"competency": "RL1PA-I-4",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Asa ang katugma sa dahon?",
+			"tts_text": "Asa ang katugma sa dahon?",
+			"picture": "leaf",
+			"word": "dahon",
+			"choices": [
+				{
+					"id": "dog",
+					"label": "iro",
+					"picture": "dog"
+				},
+				{
+					"id": "box",
+					"label": "kahon",
+					"picture": "box"
+				},
+				{
+					"id": "corn",
+					"label": "mais",
+					"picture": "corn"
+				},
+				{
+					"id": "ball",
+					"label": "bola",
+					"picture": "ball"
+				}
+			],
+			"answer": "box",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "pa2-b17",
+			"sub_skill": "phonological_awareness",
+			"level": 2,
+			"competency": "RL1PA-I-2",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pila ka pantig ang lamesa?",
+			"tts_text": "Pakpak uban nako. La. Me. Sa. Pila ka pakpak?",
+			"picture": "table",
+			"word": "lamesa",
+			"hint": "Pakpak uban nako: la, me, sa. Ihapa ang matag pakpak.",
+			"explain": "La-me-sa adunay 3 ka pakpak.",
+			"choices": [
+				{
+					"id": "1",
+					"label": "1",
+					"picture": "hand",
+					"repeat": 1
+				},
+				{
+					"id": "2",
+					"label": "2",
+					"picture": "hand",
+					"repeat": 2
+				},
+				{
+					"id": "3",
+					"label": "3",
+					"picture": "hand",
+					"repeat": 3
+				}
+			],
+			"answer": "3",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "pa2-b18",
+			"sub_skill": "phonological_awareness",
+			"level": 2,
+			"competency": "RL1PA-I-2",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pila ka pantig ang tinapay?",
+			"tts_text": "Pakpak uban nako. Ti. Na. Pay. Pila ka pakpak?",
+			"picture": "bread",
+			"word": "tinapay",
+			"hint": "Pakpak uban nako: ti, na, pay. Ihapa ang matag pakpak.",
+			"explain": "Ti-na-pay adunay 3 ka pakpak.",
+			"choices": [
+				{
+					"id": "1",
+					"label": "1",
+					"picture": "hand",
+					"repeat": 1
+				},
+				{
+					"id": "2",
+					"label": "2",
+					"picture": "hand",
+					"repeat": 2
+				},
+				{
+					"id": "3",
+					"label": "3",
+					"picture": "hand",
+					"repeat": 3
+				}
+			],
+			"answer": "3",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "pa2-b19",
+			"sub_skill": "phonological_awareness",
+			"level": 2,
+			"competency": "RL1PA-I-2",
+			"language": "bis-placeholder",
+			"task_type": "order_tiles",
+			"prompt": "Buhata ang pulong sapatos.",
+			"tts_text": "Sa. Pa. Tos. Pindota ang mga pantig aron mahimo ang sapatos.",
+			"picture": "shoes",
+			"variant": "syllables",
+			"tiles": [
+				"sa",
+				"pa",
+				"tos"
+			],
+			"answer": "sa|pa|tos",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "pa2-b20",
+			"sub_skill": "phonological_awareness",
+			"level": 2,
+			"competency": "RL1PA-I-4",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Asa ang katugma sa baso?",
+			"tts_text": "Asa ang katugma sa baso?",
+			"picture": "glass",
+			"word": "baso",
+			"choices": [
+				{
+					"id": "book",
+					"label": "libro",
+					"picture": "book"
+				},
+				{
+					"id": "hat",
+					"label": "kalo",
+					"picture": "hat"
+				},
+				{
+					"id": "bear",
+					"label": "oso",
+					"picture": "bear"
+				},
+				{
+					"id": "dog",
+					"label": "iro",
+					"picture": "dog"
+				}
+			],
+			"answer": "bear",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "ph2-b13",
+			"sub_skill": "phonics",
+			"level": 2,
+			"competency": "RL1PWS-II-4",
+			"language": "bis-placeholder",
+			"task_type": "spin_words",
+			"prompt": "Tuyoka aron mahimo ang lubi.",
+			"tts_text": "Lubi. Tuyoka ang ligid aron mahimo ang pulong lubi.",
+			"picture": "coconut",
+			"rime": "bi",
+			"choices": [
+				{
+					"id": "la",
+					"label": "la"
+				},
+				{
+					"id": "li",
+					"label": "li"
+				},
+				{
+					"id": "lu",
+					"label": "lu"
+				},
+				{
+					"id": "lo",
+					"label": "lo"
+				}
+			],
+			"answer": "lu",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "ph2-b14",
+			"sub_skill": "phonics",
+			"level": 2,
+			"competency": "RL1PWS-II-5",
+			"language": "bis-placeholder",
+			"task_type": "drag_letter",
+			"prompt": "Himoa ang pulong tasa.",
+			"tts_text": "Tasa. Ibalhin ang kulang nga letra aron mahimo ang tasa.",
+			"picture": "cup",
+			"pattern": [
+				"_",
+				"a",
+				"s",
+				"a"
+			],
+			"choices": [
+				{
+					"id": "k",
+					"label": "k"
+				},
+				{
+					"id": "t",
+					"label": "t"
+				},
+				{
+					"id": "p",
+					"label": "p"
+				}
+			],
+			"answer": "t",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "ph2-b15",
+			"sub_skill": "phonics",
+			"level": 2,
+			"competency": "RL1PWS-II-5",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Asa ang pulong mais?",
+			"tts_text": "Pangitaa ang pulong mais.",
+			"variant": "word_catch",
+			"choices": [
+				{
+					"id": "mata",
+					"label": "mata"
+				},
+				{
+					"id": "mais",
+					"label": "mais"
+				},
+				{
+					"id": "lubi",
+					"label": "lubi"
+				}
+			],
+			"answer": "mais",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "ph2-b16",
+			"sub_skill": "phonics",
+			"level": 2,
+			"competency": "RL1PWS-II-4",
+			"language": "bis-placeholder",
+			"task_type": "spin_words",
+			"prompt": "Tuyoka aron mahimo ang kahoy.",
+			"tts_text": "Kahoy. Tuyoka ang ligid aron mahimo ang pulong kahoy.",
+			"picture": "tree",
+			"rime": "hoy",
+			"choices": [
+				{
+					"id": "ki",
+					"label": "ki"
+				},
+				{
+					"id": "ku",
+					"label": "ku"
+				},
+				{
+					"id": "ka",
+					"label": "ka"
+				},
+				{
+					"id": "ko",
+					"label": "ko"
+				}
+			],
+			"answer": "ka",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "ph2-b17",
+			"sub_skill": "phonics",
+			"level": 2,
+			"competency": "RL1PWS-II-5",
+			"language": "bis-placeholder",
+			"task_type": "drag_letter",
+			"prompt": "Himoa ang pulong lubi.",
+			"tts_text": "Lubi. Ibalhin ang kulang nga letra aron mahimo ang lubi.",
+			"picture": "coconut",
+			"pattern": [
+				"l",
+				"_",
+				"b",
+				"i"
+			],
+			"choices": [
+				{
+					"id": "o",
+					"label": "o"
+				},
+				{
+					"id": "a",
+					"label": "a"
+				},
+				{
+					"id": "u",
+					"label": "u"
+				}
+			],
+			"answer": "u",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "ph2-b18",
+			"sub_skill": "phonics",
+			"level": 2,
+			"competency": "RL1PWS-II-5",
+			"language": "bis-placeholder",
+			"task_type": "drag_letter",
+			"prompt": "Himoa ang pulong tubig.",
+			"tts_text": "Tubig. Ibalhin ang kulang nga letra aron mahimo ang tubig.",
+			"picture": "water",
+			"pattern": [
+				"t",
+				"u",
+				"b",
+				"_",
+				"g"
+			],
+			"choices": [
+				{
+					"id": "e",
+					"label": "e"
+				},
+				{
+					"id": "a",
+					"label": "a"
+				},
+				{
+					"id": "i",
+					"label": "i"
+				}
+			],
+			"answer": "i",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "ph2-b19",
+			"sub_skill": "phonics",
+			"level": 2,
+			"competency": "RL1PWS-II-5",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Asa ang pulong tasa?",
+			"tts_text": "Pangitaa ang pulong tasa.",
+			"variant": "word_catch",
+			"choices": [
+				{
+					"id": "sata",
+					"label": "sata"
+				},
+				{
+					"id": "tasa",
+					"label": "tasa"
+				},
+				{
+					"id": "taas",
+					"label": "taas"
+				}
+			],
+			"answer": "tasa",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "ph2-b20",
+			"sub_skill": "phonics",
+			"level": 2,
+			"competency": "RL1PWS-II-5",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Asa ang pulong kabaw?",
+			"tts_text": "Pangitaa ang pulong kabaw.",
+			"choices": [
+				{
+					"id": "kawab",
+					"label": "kawab"
+				},
+				{
+					"id": "baka",
+					"label": "baka"
+				},
+				{
+					"id": "kabaw",
+					"label": "kabaw"
+				}
+			],
+			"answer": "kabaw",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "vo2-b13",
+			"sub_skill": "vocabulary",
+			"level": 2,
+			"competency": "RL1VWK-II-1",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pindota ang lamesa.",
+			"tts_text": "Pindota ang lamesa.",
+			"choices": [
+				{
+					"id": "table",
+					"label": "lamesa",
+					"picture": "table"
+				},
+				{
+					"id": "chair",
+					"label": "lingkoranan",
+					"picture": "chair"
+				},
+				{
+					"id": "blackboard",
+					"label": "pisara",
+					"picture": "blackboard"
+				}
+			],
+			"answer": "table",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "vo2-b14",
+			"sub_skill": "vocabulary",
+			"level": 2,
+			"competency": "RL1VWK-II-1",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pindota ang lingkoranan.",
+			"tts_text": "Pindota ang lingkoranan.",
+			"choices": [
+				{
+					"id": "book",
+					"label": "libro",
+					"picture": "book"
+				},
+				{
+					"id": "ball",
+					"label": "bola",
+					"picture": "ball"
+				},
+				{
+					"id": "chair",
+					"label": "lingkoranan",
+					"picture": "chair"
+				}
+			],
+			"answer": "chair",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "vo2-b15",
+			"sub_skill": "vocabulary",
+			"level": 2,
+			"competency": "RL1VWK-II-1",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pindota ang pisara.",
+			"tts_text": "Pindota ang pisara.",
+			"choices": [
+				{
+					"id": "blackboard",
+					"label": "pisara",
+					"picture": "blackboard"
+				},
+				{
+					"id": "book",
+					"label": "libro",
+					"picture": "book"
+				},
+				{
+					"id": "ball",
+					"label": "bola",
+					"picture": "ball"
+				}
+			],
+			"answer": "blackboard",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "vo2-b16",
+			"sub_skill": "vocabulary",
+			"level": 2,
+			"competency": "RL1VWK-II-1",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pindota ang titser.",
+			"tts_text": "Pindota ang titser.",
+			"choices": [
+				{
+					"id": "doctor",
+					"label": "doktor",
+					"picture": "doctor"
+				},
+				{
+					"id": "teacher",
+					"label": "titser",
+					"picture": "teacher"
+				},
+				{
+					"id": "farmer",
+					"label": "mag-uuma",
+					"picture": "farmer"
+				}
+			],
+			"answer": "teacher",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "vo2-b17",
+			"sub_skill": "vocabulary",
+			"level": 2,
+			"competency": "RL1VWK-II-2a",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Basaha ang pulong. Pindota ang hulagway.",
+			"tts_text": "Basaha ang pulong. Pindota ang hulagway.",
+			"word": "lamesa",
+			"choices": [
+				{
+					"id": "chair",
+					"picture": "chair"
+				},
+				{
+					"id": "table",
+					"picture": "table"
+				},
+				{
+					"id": "bag",
+					"picture": "bag"
+				}
+			],
+			"answer": "table",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "vo2-b18",
+			"sub_skill": "vocabulary",
+			"level": 2,
+			"competency": "RL1VWK-II-2b",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Asa ang taas?",
+			"tts_text": "Asa ang taas?",
+			"hint": "Tan-awa pag-ayo. Asa ang labing taas?",
+			"explain": "Ang kahoy ang taas.",
+			"choices": [
+				{
+					"id": "flower",
+					"label": "bulak",
+					"picture": "flower"
+				},
+				{
+					"id": "grass",
+					"label": "sagbot",
+					"picture": "grass"
+				},
+				{
+					"id": "tree",
+					"label": "kahoy",
+					"picture": "tree"
+				}
+			],
+			"answer": "tree",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "vo2-b19",
+			"sub_skill": "vocabulary",
+			"level": 2,
+			"competency": "RL1VWK-II-3",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pindota ang pulong ug.",
+			"tts_text": "Pindota ang pulong ug.",
+			"variant": "word_catch",
+			"choices": [
+				{
+					"id": "ang",
+					"label": "ang"
+				},
+				{
+					"id": "ug",
+					"label": "ug"
+				},
+				{
+					"id": "sa",
+					"label": "sa"
+				},
+				{
+					"id": "ni",
+					"label": "ni"
+				}
+			],
+			"answer": "ug",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "vo2-b20",
+			"sub_skill": "vocabulary",
+			"level": 2,
+			"competency": "RL1VWK-II-3",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pindota ang pulong kini.",
+			"tts_text": "Pindota ang pulong kini.",
+			"choices": [
+				{
+					"id": "kana",
+					"label": "kana"
+				},
+				{
+					"id": "ani",
+					"label": "ani"
+				},
+				{
+					"id": "kini",
+					"label": "kini"
+				}
+			],
+			"answer": "kini",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "ph3-13",
+			"sub_skill": "phonics",
+			"level": 3,
+			"competency": "RL1PWS-II-5",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"prompt": "Buuin ang salitang mais.",
+			"tts_text": "Ma. Is. Pindutin ang mga pantig para mabuo ang mais.",
+			"picture": "corn",
+			"variant": "syllables",
+			"tiles": [
+				"ma",
+				"is"
+			],
+			"answer": "ma|is",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "ph3-14",
+			"sub_skill": "phonics",
+			"level": 3,
+			"competency": "RL1PWS-II-5",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"prompt": "Buuin ang salitang baso.",
+			"tts_text": "Ba. So. Pindutin ang mga pantig para mabuo ang baso.",
+			"picture": "glass",
+			"variant": "syllables",
+			"tiles": [
+				"ba",
+				"so"
+			],
+			"answer": "ba|so",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "ph3-15",
+			"sub_skill": "phonics",
+			"level": 3,
+			"competency": "RL1PWS-II-4",
+			"language": "fil-placeholder",
+			"task_type": "spin_words",
+			"prompt": "Paikutin para mabuo ang baka.",
+			"tts_text": "Baka. Paikutin ang gulong para mabuo ang baka.",
+			"picture": "cow",
+			"rime": "ka",
+			"choices": [
+				{
+					"id": "bi",
+					"label": "bi"
+				},
+				{
+					"id": "ba",
+					"label": "ba"
+				},
+				{
+					"id": "bo",
+					"label": "bo"
+				},
+				{
+					"id": "bu",
+					"label": "bu"
+				}
+			],
+			"answer": "ba",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "ph3-16",
+			"sub_skill": "phonics",
+			"level": 3,
+			"competency": "RL1PWS-II-5",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"prompt": "Buuin ang salitang pakwan.",
+			"tts_text": "Pak. Wan. Pindutin ang mga pantig para mabuo ang pakwan.",
+			"picture": "watermelon",
+			"variant": "syllables",
+			"tiles": [
+				"pak",
+				"wan"
+			],
+			"answer": "pak|wan",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "ph3-17",
+			"sub_skill": "phonics",
+			"level": 3,
+			"competency": "RL1PWS-II-5",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"prompt": "Buuin ang salitang kalabaw.",
+			"tts_text": "Ka. La. Baw. Pindutin ang mga pantig para mabuo ang kalabaw.",
+			"picture": "carabao",
+			"variant": "syllables",
+			"tiles": [
+				"ka",
+				"la",
+				"baw"
+			],
+			"answer": "ka|la|baw",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "ph3-18",
+			"sub_skill": "phonics",
+			"level": 3,
+			"competency": "RL1PWS-II-5",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"prompt": "Buuin ang salitang kamatis.",
+			"tts_text": "Ka. Ma. Tis. Pindutin ang mga pantig para mabuo ang kamatis.",
+			"picture": "tomato",
+			"variant": "syllables",
+			"tiles": [
+				"ka",
+				"ma",
+				"tis"
+			],
+			"answer": "ka|ma|tis",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "ph3-19",
+			"sub_skill": "phonics",
+			"level": 3,
+			"competency": "RL1PWS-II-5",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"prompt": "Buuin ang salitang eroplano.",
+			"tts_text": "E. Ro. Pla. No. Pindutin ang mga pantig para mabuo ang eroplano.",
+			"picture": "airplane",
+			"variant": "syllables",
+			"tiles": [
+				"e",
+				"ro",
+				"pla",
+				"no"
+			],
+			"answer": "e|ro|pla|no",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "ph3-20",
+			"sub_skill": "phonics",
+			"level": 3,
+			"competency": "RL1PWS-II-4",
+			"language": "fil-placeholder",
+			"task_type": "spin_words",
+			"prompt": "Paikutin para mabuo ang lobo.",
+			"tts_text": "Lobo. Paikutin ang gulong para mabuo ang lobo.",
+			"picture": "balloon",
+			"rime": "bo",
+			"choices": [
+				{
+					"id": "la",
+					"label": "la"
+				},
+				{
+					"id": "li",
+					"label": "li"
+				},
+				{
+					"id": "lo",
+					"label": "lo"
+				},
+				{
+					"id": "lu",
+					"label": "lu"
+				}
+			],
+			"answer": "lo",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "vo3-13",
+			"sub_skill": "vocabulary",
+			"level": 3,
+			"competency": "RL1VWK-II-1",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pindutin ang pisara.",
+			"tts_text": "Pindutin ang pisara.",
+			"choices": [
+				{
+					"id": "chair",
+					"label": "upuan",
+					"picture": "chair"
+				},
+				{
+					"id": "blackboard",
+					"label": "pisara",
+					"picture": "blackboard"
+				},
+				{
+					"id": "ball",
+					"label": "bola",
+					"picture": "ball"
+				}
+			],
+			"answer": "blackboard",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "vo3-14",
+			"sub_skill": "vocabulary",
+			"level": 3,
+			"competency": "RL1VWK-II-1",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pindutin ang upuan.",
+			"tts_text": "Pindutin ang upuan.",
+			"choices": [
+				{
+					"id": "chair",
+					"label": "upuan",
+					"picture": "chair"
+				},
+				{
+					"id": "book",
+					"label": "aklat",
+					"picture": "book"
+				},
+				{
+					"id": "pencil",
+					"label": "lapis",
+					"picture": "pencil"
+				}
+			],
+			"answer": "chair",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "vo3-15",
+			"sub_skill": "vocabulary",
+			"level": 3,
+			"competency": "RL1VWK-II-1",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pindutin ang guro.",
+			"tts_text": "Pindutin ang guro.",
+			"choices": [
+				{
+					"id": "farmer",
+					"label": "magsasaka",
+					"picture": "farmer"
+				},
+				{
+					"id": "doctor",
+					"label": "doktor",
+					"picture": "doctor"
+				},
+				{
+					"id": "teacher",
+					"label": "guro",
+					"picture": "teacher"
+				}
+			],
+			"answer": "teacher",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "vo3-16",
+			"sub_skill": "vocabulary",
+			"level": 3,
+			"competency": "RL1VWK-II-2b",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Alin ang mainit?",
+			"tts_text": "Alin ang mainit?",
+			"choices": [
+				{
+					"id": "ice",
+					"label": "yelo",
+					"picture": "ice"
+				},
+				{
+					"id": "sun",
+					"label": "araw",
+					"picture": "sun"
+				},
+				{
+					"id": "cloud",
+					"label": "ulap",
+					"picture": "cloud"
+				}
+			],
+			"answer": "sun",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "vo3-17",
+			"sub_skill": "vocabulary",
+			"level": 3,
+			"competency": "RL1VWK-II-2a",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Basahin ang salita. Pindutin ang larawan.",
+			"tts_text": "Basahin ang salita. Pindutin ang larawan.",
+			"word": "kuwaderno",
+			"choices": [
+				{
+					"id": "book",
+					"picture": "book"
+				},
+				{
+					"id": "notebook",
+					"picture": "notebook"
+				},
+				{
+					"id": "pencil",
+					"picture": "pencil"
+				}
+			],
+			"answer": "notebook",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "vo3-18",
+			"sub_skill": "vocabulary",
+			"level": 3,
+			"competency": "RL1VWK-II-2a",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Basahin ang salita. Pindutin ang larawan.",
+			"tts_text": "Basahin ang salita. Pindutin ang larawan.",
+			"word": "pisara",
+			"choices": [
+				{
+					"id": "chair",
+					"picture": "chair"
+				},
+				{
+					"id": "table",
+					"picture": "table"
+				},
+				{
+					"id": "blackboard",
+					"picture": "blackboard"
+				}
+			],
+			"answer": "blackboard",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "vo3-19",
+			"sub_skill": "vocabulary",
+			"level": 3,
+			"competency": "RL1VWK-II-2b",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Alin ang malamig?",
+			"tts_text": "Alin ang malamig?",
+			"choices": [
+				{
+					"id": "fire",
+					"label": "apoy",
+					"picture": "fire"
+				},
+				{
+					"id": "ice",
+					"label": "yelo",
+					"picture": "ice"
+				},
+				{
+					"id": "sun",
+					"label": "araw",
+					"picture": "sun"
+				}
+			],
+			"answer": "ice",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "vo3-20",
+			"sub_skill": "vocabulary",
+			"level": 3,
+			"competency": "RL1VWK-II-3",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pindutin ang salitang ay.",
+			"tts_text": "Pindutin ang salitang ay.",
+			"variant": "word_catch",
+			"choices": [
+				{
+					"id": "at",
+					"label": "at"
+				},
+				{
+					"id": "ang",
+					"label": "ang"
+				},
+				{
+					"id": "ay",
+					"label": "ay"
+				},
+				{
+					"id": "sa",
+					"label": "sa"
+				}
+			],
+			"answer": "ay",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "fl3-13",
+			"sub_skill": "fluency",
+			"level": 3,
+			"competency": "RL1BPK-II-3",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"prompt": "Ayusin ang mga salita.",
+			"tts_text": "Ito ay upuan. Ayusin ang mga salita.",
+			"variant": "sentence",
+			"tiles": [
+				"Ito",
+				"ay",
+				"upuan."
+			],
+			"picture": "chair",
+			"answer": "Ito|ay|upuan.",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "fl3-14",
+			"sub_skill": "fluency",
+			"level": 3,
+			"competency": "RL1BPK-II-3",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"prompt": "Ayusin ang mga salita.",
+			"tts_text": "Malaki ang kalabaw. Ayusin ang mga salita.",
+			"variant": "sentence",
+			"tiles": [
+				"Malaki",
+				"ang",
+				"kalabaw."
+			],
+			"picture": "carabao",
+			"answer": "Malaki|ang|kalabaw.",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "fl3-15",
+			"sub_skill": "fluency",
+			"level": 3,
+			"competency": "RL1PWS-II-5",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Ano ang kulang?",
+			"tts_text": "Ang ano ay matamis? Piliin ang tamang salita.",
+			"sentence": "Ang ___ ay matamis.",
+			"picture": "mango",
+			"choices": [
+				{
+					"id": "mangga",
+					"label": "mangga"
+				},
+				{
+					"id": "bato",
+					"label": "bato"
+				},
+				{
+					"id": "ulap",
+					"label": "ulap"
+				}
+			],
+			"answer": "mangga",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "fl3-16",
+			"sub_skill": "fluency",
+			"level": 3,
+			"competency": "RL1PWS-II-5",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Ano ang kulang?",
+			"tts_text": "Lumilipad ang ano? Piliin ang tamang salita.",
+			"sentence": "Lumilipad ang ___.",
+			"picture": "butterfly",
+			"choices": [
+				{
+					"id": "kalabaw",
+					"label": "kalabaw"
+				},
+				{
+					"id": "paruparo",
+					"label": "paruparo"
+				},
+				{
+					"id": "upuan",
+					"label": "upuan"
+				}
+			],
+			"answer": "paruparo",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "fl3-17",
+			"sub_skill": "fluency",
+			"level": 3,
+			"competency": "RL1BPK-II-3",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"prompt": "Ayusin ang mga salita.",
+			"tts_text": "Masaya ang mga bata. Ayusin ang mga salita.",
+			"variant": "sentence",
+			"tiles": [
+				"Masaya",
+				"ang",
+				"mga",
+				"bata."
+			],
+			"answer": "Masaya|ang|mga|bata.",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "fl3-18",
+			"sub_skill": "fluency",
+			"level": 3,
+			"competency": "RL1BPK-II-3",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"prompt": "Ayusin ang mga salita.",
+			"tts_text": "Malinis ang aming silid. Ayusin ang mga salita.",
+			"variant": "sentence",
+			"tiles": [
+				"Malinis",
+				"ang",
+				"aming",
+				"silid."
+			],
+			"answer": "Malinis|ang|aming|silid.",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "fl3-19",
+			"sub_skill": "fluency",
+			"level": 3,
+			"competency": "RL1PWS-II-5",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Ano ang kulang?",
+			"tts_text": "Nagbabasa ako ng ano? Piliin ang tamang salita.",
+			"sentence": "Nagbabasa ako ng ___.",
+			"choices": [
+				{
+					"id": "bato",
+					"label": "bato"
+				},
+				{
+					"id": "aklat",
+					"label": "aklat"
+				},
+				{
+					"id": "ulan",
+					"label": "ulan"
+				}
+			],
+			"answer": "aklat",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "fl3-20",
+			"sub_skill": "fluency",
+			"level": 3,
+			"competency": "RL1PWS-II-5",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Ano ang kulang?",
+			"tts_text": "Ang guro ay nasa saan? Piliin ang tamang salita.",
+			"sentence": "Ang guro ay nasa ___.",
+			"choices": [
+				{
+					"id": "ilog",
+					"label": "ilog"
+				},
+				{
+					"id": "puno",
+					"label": "puno"
+				},
+				{
+					"id": "paaralan",
+					"label": "paaralan"
+				}
+			],
+			"answer": "paaralan",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "lc3-13",
+			"sub_skill": "literal_comprehension",
+			"level": 3,
+			"competency": "RL1CAT-II-1a",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Sino ang guro?",
+			"tts_text": "Sino ang guro?",
+			"passage": "p3-paaralan",
+			"choices": [
+				{
+					"id": "lea",
+					"label": "Si Lea"
+				},
+				{
+					"id": "ana",
+					"label": "Si Titser Ana"
+				},
+				{
+					"id": "rey",
+					"label": "Si Rey"
+				}
+			],
+			"answer": "ana",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "lc3-14",
+			"sub_skill": "literal_comprehension",
+			"level": 3,
+			"competency": "RL1CAT-II-1a",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Ano ang dala ni Lea?",
+			"tts_text": "Ano ang dala ni Lea?",
+			"passage": "p3-paaralan",
+			"choices": [
+				{
+					"id": "lapis",
+					"label": "bagong lapis at kuwaderno"
+				},
+				{
+					"id": "lobo",
+					"label": "lobo at bola"
+				},
+				{
+					"id": "payong",
+					"label": "payong at bag"
+				}
+			],
+			"answer": "lapis",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "lc3-15",
+			"sub_skill": "literal_comprehension",
+			"level": 3,
+			"competency": "RL1CAT-II-1a",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Ano ang ibinigay ni Lea kay Rey?",
+			"tts_text": "Ano ang ibinigay ni Lea kay Rey?",
+			"passage": "p3-paaralan",
+			"choices": [
+				{
+					"id": "lapis",
+					"label": "lapis"
+				},
+				{
+					"id": "kuwaderno",
+					"label": "kuwaderno"
+				},
+				{
+					"id": "krayola",
+					"label": "krayola"
+				}
+			],
+			"answer": "krayola",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "lc3-16",
+			"sub_skill": "literal_comprehension",
+			"level": 3,
+			"competency": "RL1CAT-II-1b",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"prompt": "Ayusin ang kuwento.",
+			"tts_text": "Ano ang unang nangyari? Ayusin ang kuwento.",
+			"passage": "p3-paaralan",
+			"variant": "sequence",
+			"tiles": [
+				{
+					"id": "a",
+					"text": "Bumati si Titser Ana.",
+					"picture": "teacher"
+				},
+				{
+					"id": "b",
+					"text": "Umupo si Lea sa tabi ni Rey.",
+					"picture": "chair"
+				},
+				{
+					"id": "c",
+					"text": "Masaya si Lea pag-uwi.",
+					"picture": "star"
+				}
+			],
+			"answer": "a|b|c",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "lc3-17",
+			"sub_skill": "literal_comprehension",
+			"level": 3,
+			"competency": "RL1CAT-II-1a",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Ano ang pangalan ng kalabaw?",
+			"tts_text": "Ano ang pangalan ng kalabaw?",
+			"passage": "p3-kalabaw",
+			"choices": [
+				{
+					"id": "kalog",
+					"label": "Kalog"
+				},
+				{
+					"id": "nilo",
+					"label": "Nilo"
+				},
+				{
+					"id": "bantay",
+					"label": "Bantay"
+				}
+			],
+			"answer": "kalog",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "lc3-18",
+			"sub_skill": "literal_comprehension",
+			"level": 3,
+			"competency": "RL1CAT-II-1a",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Saan tumutulong si Kalog?",
+			"tts_text": "Saan tumutulong si Kalog?",
+			"passage": "p3-kalabaw",
+			"choices": [
+				{
+					"id": "paaralan",
+					"label": "sa paaralan"
+				},
+				{
+					"id": "bukid",
+					"label": "sa bukid"
+				},
+				{
+					"id": "ilog",
+					"label": "sa ilog"
+				}
+			],
+			"answer": "bukid",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "lc3-19",
+			"sub_skill": "literal_comprehension",
+			"level": 3,
+			"competency": "RL1CAT-II-1a",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Kailan naliligo si Kalog?",
+			"tts_text": "Kailan naliligo si Kalog?",
+			"passage": "p3-kalabaw",
+			"choices": [
+				{
+					"id": "umaga",
+					"label": "sa umaga"
+				},
+				{
+					"id": "gabi",
+					"label": "sa gabi"
+				},
+				{
+					"id": "tanghali",
+					"label": "sa tanghali"
+				}
+			],
+			"answer": "tanghali",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "lc3-20",
+			"sub_skill": "literal_comprehension",
+			"level": 3,
+			"competency": "RL1CAT-II-1c",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Ano ang nararamdaman ni Nilo kay Kalog?",
+			"tts_text": "Ano ang nararamdaman ni Nilo kay Kalog?",
+			"passage": "p3-kalabaw",
+			"choices": [
+				{
+					"id": "takot",
+					"label": "Takot siya kay Kalog."
+				},
+				{
+					"id": "mahal",
+					"label": "Mahal niya si Kalog."
+				},
+				{
+					"id": "galit",
+					"label": "Galit siya kay Kalog."
+				}
+			],
+			"answer": "mahal",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "vo4-13",
+			"sub_skill": "vocabulary",
+			"level": 4,
+			"competency": "RL1VWK-II-4",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Alin ang may limang bituin?",
+			"tts_text": "Alin ang may limang bituin?",
+			"hint": "Bilangin ang bituin sa bawat larawan.",
+			"explain": "Isa, dalawa, tatlo, apat, lima. Limang bituin!",
+			"choices": [
+				{
+					"id": "3",
+					"picture": "star",
+					"repeat": 3
+				},
+				{
+					"id": "5",
+					"picture": "star",
+					"repeat": 5
+				},
+				{
+					"id": "4",
+					"picture": "star",
+					"repeat": 4
+				}
+			],
+			"answer": "5",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "vo4-14",
+			"sub_skill": "vocabulary",
+			"level": 4,
+			"competency": "RL1VWK-II-4",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Bago kumain, ano ang dapat mong gawin?",
+			"tts_text": "Bago kumain, ano ang dapat mong gawin?",
+			"hint": "Ano ang ginagawa natin para malinis ang kamay?",
+			"explain": "Bago kumain, maghugas ng kamay.",
+			"choices": [
+				{
+					"id": "hugas",
+					"label": "Maghugas ng kamay."
+				},
+				{
+					"id": "tulog",
+					"label": "Matulog."
+				},
+				{
+					"id": "laro",
+					"label": "Maglaro sa labas."
+				}
+			],
+			"answer": "hugas",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "vo4-15",
+			"sub_skill": "vocabulary",
+			"level": 4,
+			"competency": "RL1VWK-II-4",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Alin ang hayop?",
+			"tts_text": "Alin ang hayop?",
+			"hint": "Ang hayop ay buhay at gumagalaw.",
+			"explain": "Ang kalabaw ay hayop.",
+			"choices": [
+				{
+					"id": "chair",
+					"label": "upuan",
+					"picture": "chair"
+				},
+				{
+					"id": "carabao",
+					"label": "kalabaw",
+					"picture": "carabao"
+				},
+				{
+					"id": "ball",
+					"label": "bola",
+					"picture": "ball"
+				}
+			],
+			"answer": "carabao",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "vo4-16",
+			"sub_skill": "vocabulary",
+			"level": 4,
+			"competency": "RL1VWK-II-4",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "May basura sa sahig ng silid. Ano ang gagawin mo?",
+			"tts_text": "May basura sa sahig ng silid. Ano ang gagawin mo?",
+			"hint": "Ano ang ginagawa ng batang malinis?",
+			"explain": "Pinupulot natin ang basura at itinatapon sa basurahan.",
+			"choices": [
+				{
+					"id": "iwan",
+					"label": "Iwanan ito."
+				},
+				{
+					"id": "pulot",
+					"label": "Pulutin at itapon sa basurahan."
+				},
+				{
+					"id": "sipa",
+					"label": "Sipain ito."
+				}
+			],
+			"answer": "pulot",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "vo4-17",
+			"sub_skill": "vocabulary",
+			"level": 4,
+			"competency": "RL1VWK-II-4",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Alin ang pinakamarami?",
+			"tts_text": "Alin ang may pinakamaraming mansanas?",
+			"hint": "Bilangin ang mansanas sa bawat larawan.",
+			"explain": "Lima ang pinakamarami.",
+			"choices": [
+				{
+					"id": "2",
+					"picture": "apple",
+					"repeat": 2
+				},
+				{
+					"id": "3",
+					"picture": "apple",
+					"repeat": 3
+				},
+				{
+					"id": "5",
+					"picture": "apple",
+					"repeat": 5
+				}
+			],
+			"answer": "5",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "vo4-18",
+			"sub_skill": "vocabulary",
+			"level": 4,
+			"competency": "RL1VWK-II-2b",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Ano ang ibig sabihin ng malinis?",
+			"tts_text": "Ano ang ibig sabihin ng malinis?",
+			"hint": "Ang malinis na kamay ay walang dumi.",
+			"explain": "Ang malinis ay walang dumi.",
+			"choices": [
+				{
+					"id": "dumi",
+					"label": "maraming dumi"
+				},
+				{
+					"id": "walang",
+					"label": "walang dumi"
+				},
+				{
+					"id": "basa",
+					"label": "basang-basa"
+				}
+			],
+			"answer": "walang",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "vo4-19",
+			"sub_skill": "vocabulary",
+			"level": 4,
+			"competency": "RL1VWK-II-2b",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Alin ang salitang naglalarawan?",
+			"tts_text": "Alin ang salitang naglalarawan?",
+			"hint": "Ang salitang naglalarawan ay nagsasabi kung ano ang tao o bagay.",
+			"explain": "Ang matangkad ay naglalarawan.",
+			"choices": [
+				{
+					"id": "guro",
+					"label": "guro"
+				},
+				{
+					"id": "naglakad",
+					"label": "naglakad"
+				},
+				{
+					"id": "matangkad",
+					"label": "matangkad"
+				}
+			],
+			"answer": "matangkad",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "vo4-20",
+			"sub_skill": "vocabulary",
+			"level": 4,
+			"competency": "RL1VWK-II-4",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Alin ang hindi hayop?",
+			"tts_text": "Alin ang hindi hayop?",
+			"hint": "Alin ang hindi buhay at hindi gumagalaw?",
+			"explain": "Ang upuan ay hindi hayop.",
+			"choices": [
+				{
+					"id": "carabao",
+					"label": "kalabaw",
+					"picture": "carabao"
+				},
+				{
+					"id": "cat",
+					"label": "pusa",
+					"picture": "cat"
+				},
+				{
+					"id": "chair",
+					"label": "upuan",
+					"picture": "chair"
+				}
+			],
+			"answer": "chair",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "fl4-13",
+			"sub_skill": "fluency",
+			"level": 4,
+			"competency": "RL1BPK-II-3",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"prompt": "Ayusin ang mga salita.",
+			"tts_text": "Naglilinis kami ng aming silid. Ayusin ang mga salita.",
+			"variant": "sentence",
+			"tiles": [
+				"Naglilinis",
+				"kami",
+				"ng",
+				"aming",
+				"silid."
+			],
+			"answer": "Naglilinis|kami|ng|aming|silid.",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "fl4-14",
+			"sub_skill": "fluency",
+			"level": 4,
+			"competency": "RL1BPK-II-3",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"prompt": "Ayusin ang mga salita.",
+			"tts_text": "Nagtanim si Lolo ng mais. Ayusin ang mga salita.",
+			"variant": "sentence",
+			"tiles": [
+				"Nagtanim",
+				"si",
+				"Lolo",
+				"ng",
+				"mais."
+			],
+			"picture": "corn",
+			"answer": "Nagtanim|si|Lolo|ng|mais.",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "fl4-15",
+			"sub_skill": "fluency",
+			"level": 4,
+			"competency": "RL1PWS-II-5",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Ano ang kulang?",
+			"tts_text": "Ang ano ay tumutulong sa bukid? Piliin ang tamang salita.",
+			"sentence": "Ang ___ ay tumutulong sa bukid.",
+			"picture": "carabao",
+			"choices": [
+				{
+					"id": "paruparo",
+					"label": "paruparo"
+				},
+				{
+					"id": "kalabaw",
+					"label": "kalabaw"
+				},
+				{
+					"id": "lobo",
+					"label": "lobo"
+				}
+			],
+			"answer": "kalabaw",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "fl4-16",
+			"sub_skill": "fluency",
+			"level": 4,
+			"competency": "RL1PWS-II-5",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Ano ang kulang?",
+			"tts_text": "Gumamit ako ng ano dahil umuulan? Piliin ang tamang salita.",
+			"sentence": "Gumamit ako ng ___ dahil umuulan.",
+			"picture": "umbrella",
+			"choices": [
+				{
+					"id": "payong",
+					"label": "payong"
+				},
+				{
+					"id": "kutsara",
+					"label": "kutsara"
+				},
+				{
+					"id": "lapis",
+					"label": "lapis"
+				}
+			],
+			"answer": "payong",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "fl4-17",
+			"sub_skill": "fluency",
+			"level": 4,
+			"competency": "RL1BPK-II-3",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"prompt": "Ayusin ang mga salita.",
+			"tts_text": "Pumila ang mga bata sa labas. Ayusin ang mga salita.",
+			"variant": "sentence",
+			"tiles": [
+				"Pumila",
+				"ang",
+				"mga",
+				"bata",
+				"sa",
+				"labas."
+			],
+			"answer": "Pumila|ang|mga|bata|sa|labas.",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "fl4-18",
+			"sub_skill": "fluency",
+			"level": 4,
+			"competency": "RL1BPK-II-3",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"prompt": "Ayusin ang mga salita.",
+			"tts_text": "Binasa ni Titser ang isang kuwento. Ayusin ang mga salita.",
+			"variant": "sentence",
+			"tiles": [
+				"Binasa",
+				"ni",
+				"Titser",
+				"ang",
+				"isang",
+				"kuwento."
+			],
+			"answer": "Binasa|ni|Titser|ang|isang|kuwento.",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "fl4-19",
+			"sub_skill": "fluency",
+			"level": 4,
+			"competency": "RL1PWS-II-5",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Ano ang kulang?",
+			"tts_text": "Maaga akong ano para pumasok sa paaralan? Piliin ang tamang salita.",
+			"sentence": "Maaga akong ___ para pumasok sa paaralan.",
+			"choices": [
+				{
+					"id": "natulog",
+					"label": "natulog"
+				},
+				{
+					"id": "gumising",
+					"label": "gumising"
+				},
+				{
+					"id": "umiyak",
+					"label": "umiyak"
+				}
+			],
+			"answer": "gumising",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "fl4-20",
+			"sub_skill": "fluency",
+			"level": 4,
+			"competency": "RL1PWS-II-5",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Ano ang kulang?",
+			"tts_text": "Itinapon ko ang balat ng saging sa saan? Piliin ang tamang salita.",
+			"sentence": "Itinapon ko ang balat ng saging sa ___.",
+			"choices": [
+				{
+					"id": "kama",
+					"label": "kama"
+				},
+				{
+					"id": "bintana",
+					"label": "bintana"
+				},
+				{
+					"id": "basurahan",
+					"label": "basurahan"
+				}
+			],
+			"answer": "basurahan",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "lc4-13",
+			"sub_skill": "literal_comprehension",
+			"level": 4,
+			"competency": "RL1CAT-II-1a",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Ano ang nawawala kay Rosa?",
+			"tts_text": "Ano ang nawawala kay Rosa?",
+			"passage": "p4-lapis",
+			"hint": "Basahin ang unang pangungusap.",
+			"explain": "Hindi makita ni Rosa ang kanyang lapis.",
+			"choices": [
+				{
+					"id": "lapis",
+					"label": "ang lapis niya"
+				},
+				{
+					"id": "bag",
+					"label": "ang bag niya"
+				},
+				{
+					"id": "kuwaderno",
+					"label": "ang kuwaderno niya"
+				}
+			],
+			"answer": "lapis",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "lc4-14",
+			"sub_skill": "literal_comprehension",
+			"level": 4,
+			"competency": "RL1CAT-II-1a",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Sino ang nagpahiram ng lapis?",
+			"tts_text": "Sino ang nagpahiram ng lapis?",
+			"passage": "p4-lapis",
+			"hint": "Sino ang lumapit kay Rosa?",
+			"explain": "Si Ben ang nagpahiram ng lapis.",
+			"choices": [
+				{
+					"id": "titser",
+					"label": "Si Titser"
+				},
+				{
+					"id": "ben",
+					"label": "Si Ben"
+				},
+				{
+					"id": "nanay",
+					"label": "Si Nanay"
+				}
+			],
+			"answer": "ben",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "lc4-15",
+			"sub_skill": "literal_comprehension",
+			"level": 4,
+			"competency": "RL1CAT-II-1a",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Saan nakita ni Rosa ang lapis niya?",
+			"tts_text": "Saan nakita ni Rosa ang lapis niya?",
+			"passage": "p4-lapis",
+			"hint": "Ano ang nangyari pagkatapos ng klase?",
+			"explain": "Nakita niya ang lapis sa loob ng kanyang kuwaderno.",
+			"choices": [
+				{
+					"id": "upuan",
+					"label": "sa ilalim ng upuan"
+				},
+				{
+					"id": "bag",
+					"label": "sa loob ng bag"
+				},
+				{
+					"id": "kuwaderno",
+					"label": "sa loob ng kuwaderno"
+				}
+			],
+			"answer": "kuwaderno",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "lc4-16",
+			"sub_skill": "literal_comprehension",
+			"level": 4,
+			"competency": "RL1CAT-II-1f",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Bakit malungkot si Rosa?",
+			"tts_text": "Bakit malungkot si Rosa?",
+			"passage": "p4-lapis",
+			"hint": "Ano ang mangyayari sa klase nila?",
+			"explain": "Malungkot siya dahil may pagsusulit at wala siyang lapis.",
+			"choices": [
+				{
+					"id": "pagsusulit",
+					"label": "May pagsusulit at wala siyang lapis."
+				},
+				{
+					"id": "ulan",
+					"label": "Umuulan sa labas."
+				},
+				{
+					"id": "baon",
+					"label": "Wala siyang baon."
+				}
+			],
+			"answer": "pagsusulit",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "lc4-17",
+			"sub_skill": "literal_comprehension",
+			"level": 4,
+			"competency": "RL1CAT-II-2a",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Kailan dapat maghugas ng kamay?",
+			"tts_text": "Kailan dapat maghugas ng kamay?",
+			"passage": "p4-hugas",
+			"hint": "Basahin ang ikatlong pangungusap.",
+			"explain": "Maghugas ng kamay bago kumain.",
+			"choices": [
+				{
+					"id": "tulog",
+					"label": "habang natutulog"
+				},
+				{
+					"id": "kumain",
+					"label": "bago kumain"
+				},
+				{
+					"id": "laro",
+					"label": "habang naglalaro"
+				}
+			],
+			"answer": "kumain",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "lc4-18",
+			"sub_skill": "literal_comprehension",
+			"level": 4,
+			"competency": "RL1CAT-II-2a",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Ano ang ginagamit sa paghuhugas ng kamay?",
+			"tts_text": "Ano ang ginagamit sa paghuhugas ng kamay?",
+			"passage": "p4-hugas",
+			"hint": "Ano ang sinabi ng teksto na gamitin?",
+			"explain": "Gumamit ng sabon at malinis na tubig.",
+			"choices": [
+				{
+					"id": "sabon",
+					"label": "sabon at malinis na tubig"
+				},
+				{
+					"id": "papel",
+					"label": "papel at lapis"
+				},
+				{
+					"id": "buhangin",
+					"label": "buhangin"
+				}
+			],
+			"answer": "sabon",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "lc4-19",
+			"sub_skill": "literal_comprehension",
+			"level": 4,
+			"competency": "RL1CAT-II-2a",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Ano ang pampatuyo ng kamay?",
+			"tts_text": "Ano ang pampatuyo ng kamay?",
+			"passage": "p4-hugas",
+			"hint": "Basahin ang huling bahagi ng teksto.",
+			"explain": "Patuyuin ang kamay gamit ang malinis na tuwalya.",
+			"choices": [
+				{
+					"id": "damit",
+					"label": "damit"
+				},
+				{
+					"id": "tuwalya",
+					"label": "malinis na tuwalya"
+				},
+				{
+					"id": "kurtina",
+					"label": "kurtina"
+				}
+			],
+			"answer": "tuwalya",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "lc4-20",
+			"sub_skill": "literal_comprehension",
+			"level": 4,
+			"competency": "RL1CAT-II-2b",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Bakit mahalaga ang paghuhugas ng kamay?",
+			"tts_text": "Bakit mahalaga ang paghuhugas ng kamay?",
+			"passage": "p4-hugas",
+			"hint": "Ano ang dala ng maruming kamay?",
+			"explain": "Naghuhugas tayo ng kamay para hindi magkasakit.",
+			"choices": [
+				{
+					"id": "damit",
+					"label": "Para bumango ang damit."
+				},
+				{
+					"id": "sakit",
+					"label": "Para hindi magkasakit."
+				},
+				{
+					"id": "buhok",
+					"label": "Para gumanda ang buhok."
+				}
+			],
+			"answer": "sakit",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "fl5-13",
+			"sub_skill": "fluency",
+			"level": 5,
+			"competency": "RL1BPK-II-3",
+			"language": "en-placeholder",
+			"task_type": "order_tiles",
+			"prompt": "Put the words in order.",
+			"tts_text": "The girl waters the flowers. Put the words in order.",
+			"variant": "sentence",
+			"tiles": [
+				"The",
+				"girl",
+				"waters",
+				"the",
+				"flowers."
+			],
+			"picture": "flower",
+			"answer": "The|girl|waters|the|flowers.",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "fl5-14",
+			"sub_skill": "fluency",
+			"level": 5,
+			"competency": "RL1BPK-II-3",
+			"language": "en-placeholder",
+			"task_type": "order_tiles",
+			"prompt": "Put the words in order.",
+			"tts_text": "We wash our hands before lunch. Put the words in order.",
+			"variant": "sentence",
+			"tiles": [
+				"We",
+				"wash",
+				"our",
+				"hands",
+				"before",
+				"lunch."
+			],
+			"picture": "hand",
+			"answer": "We|wash|our|hands|before|lunch.",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "fl5-15",
+			"sub_skill": "fluency",
+			"level": 5,
+			"competency": "RL1PWS-II-5",
+			"language": "en-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Which word fits?",
+			"tts_text": "I use an what when it rains? Pick the word that fits.",
+			"sentence": "I use an ___ when it rains.",
+			"picture": "umbrella",
+			"choices": [
+				{
+					"id": "umbrella",
+					"label": "umbrella"
+				},
+				{
+					"id": "apple",
+					"label": "apple"
+				},
+				{
+					"id": "egg",
+					"label": "egg"
+				}
+			],
+			"answer": "umbrella",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "fl5-16",
+			"sub_skill": "fluency",
+			"level": 5,
+			"competency": "RL1PWS-II-5",
+			"language": "en-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Which word fits?",
+			"tts_text": "The what pulls the plow on the farm? Pick the word that fits.",
+			"sentence": "The ___ pulls the plow on the farm.",
+			"picture": "carabao",
+			"choices": [
+				{
+					"id": "butterfly",
+					"label": "butterfly"
+				},
+				{
+					"id": "carabao",
+					"label": "carabao"
+				},
+				{
+					"id": "cat",
+					"label": "cat"
+				}
+			],
+			"answer": "carabao",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "fl5-17",
+			"sub_skill": "fluency",
+			"level": 5,
+			"competency": "RL1BPK-II-3",
+			"language": "en-placeholder",
+			"task_type": "order_tiles",
+			"prompt": "Put the words in order.",
+			"tts_text": "My friends and I play tag after class. Put the words in order.",
+			"variant": "sentence",
+			"tiles": [
+				"My",
+				"friends",
+				"and",
+				"I",
+				"play",
+				"tag",
+				"after",
+				"class."
+			],
+			"answer": "My|friends|and|I|play|tag|after|class.",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "fl5-18",
+			"sub_skill": "fluency",
+			"level": 5,
+			"competency": "RL1BPK-II-3",
+			"language": "en-placeholder",
+			"task_type": "order_tiles",
+			"prompt": "Put the words in order.",
+			"tts_text": "Teacher Ana writes the date on the board. Put the words in order.",
+			"variant": "sentence",
+			"tiles": [
+				"Teacher",
+				"Ana",
+				"writes",
+				"the",
+				"date",
+				"on",
+				"the",
+				"board."
+			],
+			"answer": "Teacher|Ana|writes|the|date|on|the|board.",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "fl5-19",
+			"sub_skill": "fluency",
+			"level": 5,
+			"competency": "RL1PWS-II-5",
+			"language": "en-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Which word fits?",
+			"tts_text": "Please throw your trash in the what? Pick the word that fits.",
+			"sentence": "Please throw your trash in the ___.",
+			"choices": [
+				{
+					"id": "bed",
+					"label": "bed"
+				},
+				{
+					"id": "trash can",
+					"label": "trash can"
+				},
+				{
+					"id": "bag",
+					"label": "bag"
+				}
+			],
+			"answer": "trash can",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "fl5-20",
+			"sub_skill": "fluency",
+			"level": 5,
+			"competency": "RL1PWS-II-5",
+			"language": "en-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Which word fits?",
+			"tts_text": "The sky turns dark before it what? Pick the word that fits.",
+			"sentence": "The sky turns dark before it ___.",
+			"choices": [
+				{
+					"id": "sings",
+					"label": "sings"
+				},
+				{
+					"id": "jumps",
+					"label": "jumps"
+				},
+				{
+					"id": "rains",
+					"label": "rains"
+				}
+			],
+			"answer": "rains",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "lc5-13",
+			"sub_skill": "literal_comprehension",
+			"level": 5,
+			"competency": "RL1CAT-II-1a",
+			"language": "en-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Who went with Ana to the market?",
+			"tts_text": "Who went with Ana to the market?",
+			"passage": "p5-market",
+			"hint": "Look at the first sentence.",
+			"explain": "The story says: Ana went to the market with her father.",
+			"choices": [
+				{
+					"id": "father",
+					"label": "her father"
+				},
+				{
+					"id": "mother",
+					"label": "her mother"
+				},
+				{
+					"id": "teacher",
+					"label": "her teacher"
+				}
+			],
+			"answer": "father",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "lc5-14",
+			"sub_skill": "literal_comprehension",
+			"level": 5,
+			"competency": "RL1CAT-II-1a",
+			"language": "en-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "What did Father buy a kilo of?",
+			"tts_text": "What did Father buy a kilo of?",
+			"passage": "p5-market",
+			"hint": "They were bright red.",
+			"explain": "Father bought a kilo of tomatoes.",
+			"choices": [
+				{
+					"id": "oranges",
+					"label": "oranges"
+				},
+				{
+					"id": "tomatoes",
+					"label": "tomatoes"
+				},
+				{
+					"id": "mangoes",
+					"label": "mangoes"
+				}
+			],
+			"answer": "tomatoes",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "lc5-15",
+			"sub_skill": "literal_comprehension",
+			"level": 5,
+			"competency": "RL1CAT-II-1f",
+			"language": "en-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Why did the woman give Ana an orange?",
+			"tts_text": "Why did the woman give Ana an orange?",
+			"passage": "p5-market",
+			"hint": "What did Ana do when the oranges rolled away?",
+			"explain": "Ana helped her, so the woman thanked her with an orange.",
+			"choices": [
+				{
+					"id": "hungry",
+					"label": "Ana was hungry."
+				},
+				{
+					"id": "paid",
+					"label": "Ana paid for it."
+				},
+				{
+					"id": "helped",
+					"label": "Ana helped her pick up the oranges."
+				}
+			],
+			"answer": "helped",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "lc5-16",
+			"sub_skill": "literal_comprehension",
+			"level": 5,
+			"competency": "RL1CAT-II-1d",
+			"language": "en-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "What will Ana probably do next Saturday?",
+			"tts_text": "What will Ana probably do next Saturday?",
+			"passage": "p5-market",
+			"hint": "Read what Ana said at the end.",
+			"explain": "Ana said: I want to go again next Saturday.",
+			"choices": [
+				{
+					"id": "market",
+					"label": "Go to the market again."
+				},
+				{
+					"id": "bed",
+					"label": "Stay in bed all day."
+				},
+				{
+					"id": "beach",
+					"label": "Go to the beach."
+				}
+			],
+			"answer": "market",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "lc5-17",
+			"sub_skill": "literal_comprehension",
+			"level": 5,
+			"competency": "RL1CAT-II-1a",
+			"language": "en-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Who played the music?",
+			"tts_text": "Who played the music?",
+			"passage": "p5-program",
+			"hint": "Who helped the class every afternoon?",
+			"explain": "Teacher Joy played the music.",
+			"choices": [
+				{
+					"id": "mara",
+					"label": "Mara"
+				},
+				{
+					"id": "joy",
+					"label": "Teacher Joy"
+				},
+				{
+					"id": "leo",
+					"label": "Leo"
+				}
+			],
+			"answer": "joy",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "lc5-18",
+			"sub_skill": "literal_comprehension",
+			"level": 5,
+			"competency": "RL1CAT-II-1a",
+			"language": "en-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "What colors were the costumes?",
+			"tts_text": "What colors were the costumes?",
+			"passage": "p5-program",
+			"hint": "Read about the day of the program.",
+			"explain": "The class wore red and yellow costumes.",
+			"choices": [
+				{
+					"id": "red",
+					"label": "red and yellow"
+				},
+				{
+					"id": "blue",
+					"label": "blue and white"
+				},
+				{
+					"id": "green",
+					"label": "green and pink"
+				}
+			],
+			"answer": "red",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "lc5-19",
+			"sub_skill": "literal_comprehension",
+			"level": 5,
+			"competency": "RL1CAT-II-1c",
+			"language": "en-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "How did Leo feel when he forgot the step?",
+			"tts_text": "How did Leo feel when he forgot the step?",
+			"passage": "p5-program",
+			"hint": "Read what happened when Leo forgot the third step.",
+			"explain": "Leo felt worried.",
+			"choices": [
+				{
+					"id": "proud",
+					"label": "proud"
+				},
+				{
+					"id": "sleepy",
+					"label": "sleepy"
+				},
+				{
+					"id": "worried",
+					"label": "worried"
+				}
+			],
+			"answer": "worried",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "lc5-20",
+			"sub_skill": "literal_comprehension",
+			"level": 5,
+			"competency": "RL1CAT-II-1b",
+			"language": "en-placeholder",
+			"task_type": "order_tiles",
+			"prompt": "Put the story in order.",
+			"tts_text": "What happened first? Put the story in order.",
+			"passage": "p5-program",
+			"variant": "sequence",
+			"tiles": [
+				{
+					"id": "a",
+					"text": "Leo forgot the third step."
+				},
+				{
+					"id": "b",
+					"text": "Mara helped Leo practice."
+				},
+				{
+					"id": "c",
+					"text": "The audience clapped loudly.",
+					"picture": "hand"
+				}
+			],
+			"answer": "a|b|c",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		}
+	],
+	"passages": {
+		"p3-paaralan": {
+			"level": 3,
+			"language": "fil-placeholder",
+			"scene": "village",
+			"title": "Unang Araw sa Paaralan",
+			"text": "Unang araw ni Lea sa paaralan. Dala niya ang bagong lapis at kuwaderno. Bumati si Titser Ana, \"Magandang umaga!\" Umupo si Lea sa tabi ni Rey. Nagbahagi si Lea ng krayola kay Rey. Masaya si Lea pag-uwi."
+		},
+		"p3-kalabaw": {
+			"level": 3,
+			"language": "fil-placeholder",
+			"scene": "village",
+			"title": "Ang Kalabaw ni Tatay",
+			"text": "May kalabaw si Tatay. Ang pangalan nito ay Kalog. Tuwing umaga, tumutulong si Kalog sa bukid. Sa tanghali, naliligo ito sa putikan. Gustong-gusto ni Kalog ang damo. Mahal ni Nilo si Kalog."
+		},
+		"p4-lapis": {
+			"level": 4,
+			"language": "fil-placeholder",
+			"scene": "village",
+			"title": "Ang Nawawalang Lapis",
+			"text": "Isang umaga, hindi makita ni Rosa ang kanyang lapis. Hinanap niya ito sa kanyang bag at sa ilalim ng upuan. Malungkot siya dahil may pagsusulit sila. Lumapit si Ben at sinabing, \"Hiramin mo muna ang lapis ko.\" Natuwa si Rosa at nagpasalamat. Pagkatapos ng klase, nakita ni Rosa ang lapis niya sa loob ng kanyang kuwaderno. Ibinalik niya ang lapis ni Ben at binigyan pa niya ito ng kendi."
+		},
+		"p4-hugas": {
+			"level": 4,
+			"language": "fil-placeholder",
+			"scene": "home",
+			"title": "Ang Paghuhugas ng Kamay",
+			"text": "Mahalaga ang paghuhugas ng kamay. Ang maruming kamay ay may mikrobyo na nagdudulot ng sakit. Maghugas ng kamay bago kumain at pagkatapos gumamit ng banyo. Gumamit ng sabon at malinis na tubig. Kuskusin ang mga kamay habang nagbibilang hanggang dalawampu. Banlawan at patuyuin gamit ang malinis na tuwalya. Sa ganitong paraan, malusog at ligtas tayo."
+		},
+		"p5-market": {
+			"level": 5,
+			"language": "en-placeholder",
+			"scene": "village",
+			"title": "Saturday at the Market",
+			"text": "On Saturday, Ana went to the market with her father. The market was busy and loud. They bought fish, rice and green vegetables. Ana saw a stall full of bright red tomatoes, so Father bought a kilo. On the way out, Ana saw an old woman drop her bag of oranges. The oranges rolled everywhere! Ana quickly helped her pick them up. The woman smiled and gave Ana one sweet orange. At home, Ana told Mother about the busy market and the kind woman. \"I want to go again next Saturday,\" she said."
+		},
+		"p5-program": {
+			"level": 5,
+			"language": "en-placeholder",
+			"scene": "village",
+			"title": "The School Program",
+			"text": "The Grade 1 class practiced a dance for the school program. Every afternoon, Teacher Joy played the music, and the children practiced the steps. Leo always forgot the third step. He felt worried. His friend Mara said, \"Watch my feet, and count with me.\" They practiced together every day. On the day of the program, the class wore red and yellow costumes. When the music started, Leo counted softly and did every step right. The audience clapped loudly. Leo smiled and hugged Mara."
+		}
+	}
+}

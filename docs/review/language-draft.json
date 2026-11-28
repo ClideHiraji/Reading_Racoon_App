@@ -1,0 +1,2789 @@
+{
+	"note": "DRAFT (D-045) for teacher review. Not in the game yet. Bisaya Levels 1-2 replace the English Level 1-2 items; the test items replace the English ones with the same ids.",
+	"bisaya_levels_1_2": [
+		{
+			"id": "pa1-b01",
+			"sub_skill": "phonological_awareness",
+			"level": 1,
+			"competency": "RL1PA-I-3",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Asa ang katugma sa iring?",
+			"tts_text": "Asa ang katugma sa iring?",
+			"picture": "cat",
+			"word": "iring",
+			"choices": [
+				{
+					"id": "banana",
+					"label": "saging",
+					"picture": "banana"
+				},
+				{
+					"id": "dog",
+					"label": "iro",
+					"picture": "dog"
+				},
+				{
+					"id": "sun",
+					"label": "adlaw",
+					"picture": "sun"
+				}
+			],
+			"answer": "banana",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "pa1-b02",
+			"sub_skill": "phonological_awareness",
+			"level": 1,
+			"competency": "RL1PA-I-3",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Asa ang katugma sa kahon?",
+			"tts_text": "Asa ang katugma sa kahon?",
+			"picture": "box",
+			"word": "kahon",
+			"variant": "rhyme_pop",
+			"choices": [
+				{
+					"id": "fish",
+					"label": "isda",
+					"picture": "fish"
+				},
+				{
+					"id": "star",
+					"label": "bituon",
+					"picture": "star"
+				},
+				{
+					"id": "hen",
+					"label": "manok",
+					"picture": "hen"
+				}
+			],
+			"answer": "star",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "pa1-b03",
+			"sub_skill": "phonological_awareness",
+			"level": 1,
+			"competency": "RL1PA-I-3",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Asa ang katugma sa ubas?",
+			"tts_text": "Asa ang katugma sa ubas?",
+			"picture": "grapes",
+			"word": "ubas",
+			"choices": [
+				{
+					"id": "frog",
+					"label": "baki",
+					"picture": "frog"
+				},
+				{
+					"id": "hat",
+					"label": "kalo",
+					"picture": "hat"
+				},
+				{
+					"id": "pear",
+					"label": "peras",
+					"picture": "pear"
+				}
+			],
+			"answer": "pear",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "pa1-b04",
+			"sub_skill": "phonological_awareness",
+			"level": 1,
+			"competency": "RL1PA-I-3",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Asa ang katugma sa bulan?",
+			"tts_text": "Asa ang katugma sa bulan?",
+			"picture": "moon",
+			"word": "bulan",
+			"choices": [
+				{
+					"id": "dog",
+					"label": "iro",
+					"picture": "dog"
+				},
+				{
+					"id": "boat",
+					"label": "sakayan",
+					"picture": "boat"
+				},
+				{
+					"id": "box",
+					"label": "kahon",
+					"picture": "box"
+				},
+				{
+					"id": "ball",
+					"label": "bola",
+					"picture": "ball"
+				}
+			],
+			"answer": "boat",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "pa1-b05",
+			"sub_skill": "phonological_awareness",
+			"level": 1,
+			"competency": "RL1PA-I-3",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Asa ang katugma sa kanding?",
+			"tts_text": "Asa ang katugma sa kanding?",
+			"picture": "goat",
+			"word": "kanding",
+			"variant": "rhyme_pop",
+			"choices": [
+				{
+					"id": "ball",
+					"label": "bola",
+					"picture": "ball"
+				},
+				{
+					"id": "fish",
+					"label": "isda",
+					"picture": "fish"
+				},
+				{
+					"id": "scissors",
+					"label": "gunting",
+					"picture": "scissors"
+				},
+				{
+					"id": "sun",
+					"label": "adlaw",
+					"picture": "sun"
+				}
+			],
+			"answer": "scissors",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "pa1-b06",
+			"sub_skill": "phonological_awareness",
+			"level": 1,
+			"competency": "RL1PA-I-3",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Asa ang katugma sa iro?",
+			"tts_text": "Asa ang katugma sa iro?",
+			"picture": "dog",
+			"word": "iro",
+			"choices": [
+				{
+					"id": "hen",
+					"label": "manok",
+					"picture": "hen"
+				},
+				{
+					"id": "grapes",
+					"label": "ubas",
+					"picture": "grapes"
+				},
+				{
+					"id": "book",
+					"label": "libro",
+					"picture": "book"
+				},
+				{
+					"id": "moon",
+					"label": "bulan",
+					"picture": "moon"
+				}
+			],
+			"answer": "book",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "pa1-b07",
+			"sub_skill": "phonological_awareness",
+			"level": 1,
+			"competency": "RL1PA-I-5",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Asa ang nagsugod sa /m/?",
+			"tts_text": "Asa ang nagsugod sa tingog mmm, sama sa mama?",
+			"choices": [
+				{
+					"id": "hen",
+					"label": "manok",
+					"picture": "hen"
+				},
+				{
+					"id": "dog",
+					"label": "iro",
+					"picture": "dog"
+				},
+				{
+					"id": "sun",
+					"label": "adlaw",
+					"picture": "sun"
+				}
+			],
+			"answer": "hen",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "pa1-b08",
+			"sub_skill": "phonological_awareness",
+			"level": 1,
+			"competency": "RL1PA-I-5",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Asa ang nagsugod sa /s/?",
+			"tts_text": "Asa ang nagsugod sa tingog sss, sama sa sapatos?",
+			"choices": [
+				{
+					"id": "hat",
+					"label": "kalo",
+					"picture": "hat"
+				},
+				{
+					"id": "banana",
+					"label": "saging",
+					"picture": "banana"
+				},
+				{
+					"id": "ball",
+					"label": "bola",
+					"picture": "ball"
+				}
+			],
+			"answer": "banana",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "pa1-b09",
+			"sub_skill": "phonological_awareness",
+			"level": 1,
+			"competency": "RL1PA-I-5",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Asa ang nagsugod sa /a/?",
+			"tts_text": "Asa ang nagsugod sa tingog a, sama sa amahan?",
+			"choices": [
+				{
+					"id": "fish",
+					"label": "isda",
+					"picture": "fish"
+				},
+				{
+					"id": "bear",
+					"label": "oso",
+					"picture": "bear"
+				},
+				{
+					"id": "sun",
+					"label": "adlaw",
+					"picture": "sun"
+				}
+			],
+			"answer": "sun",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "pa1-b10",
+			"sub_skill": "phonological_awareness",
+			"level": 1,
+			"competency": "RL1PA-I-5",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Asa ang nagsugod sa /b/?",
+			"tts_text": "Asa ang nagsugod sa tingog b, sama sa baboy?",
+			"choices": [
+				{
+					"id": "pear",
+					"label": "peras",
+					"picture": "pear"
+				},
+				{
+					"id": "frog",
+					"label": "baki",
+					"picture": "frog"
+				},
+				{
+					"id": "hen",
+					"label": "manok",
+					"picture": "hen"
+				}
+			],
+			"answer": "frog",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "pa1-b11",
+			"sub_skill": "phonological_awareness",
+			"level": 1,
+			"competency": "RL1PA-I-5",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Asa ang nagsugod sa /i/?",
+			"tts_text": "Asa ang nagsugod sa tingog i, sama sa ilong?",
+			"choices": [
+				{
+					"id": "grapes",
+					"label": "ubas",
+					"picture": "grapes"
+				},
+				{
+					"id": "bear",
+					"label": "oso",
+					"picture": "bear"
+				},
+				{
+					"id": "fish",
+					"label": "isda",
+					"picture": "fish"
+				}
+			],
+			"answer": "fish",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "pa1-b12",
+			"sub_skill": "phonological_awareness",
+			"level": 1,
+			"competency": "RL1PA-I-5",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Asa ang nagsugod sa /o/?",
+			"tts_text": "Asa ang nagsugod sa tingog o, sama sa okra?",
+			"choices": [
+				{
+					"id": "bear",
+					"label": "oso",
+					"picture": "bear"
+				},
+				{
+					"id": "grapes",
+					"label": "ubas",
+					"picture": "grapes"
+				},
+				{
+					"id": "fish",
+					"label": "isda",
+					"picture": "fish"
+				}
+			],
+			"answer": "bear",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "pa1-br1",
+			"sub_skill": "phonological_awareness",
+			"level": 1,
+			"competency": "RL1PA-I-3",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Asa ang katugma sa iring?",
+			"tts_text": "Asa ang katugma sa iring?",
+			"picture": "cat",
+			"word": "iring",
+			"choices": [
+				{
+					"id": "banana",
+					"label": "saging",
+					"picture": "banana"
+				},
+				{
+					"id": "dog",
+					"label": "iro",
+					"picture": "dog"
+				}
+			],
+			"answer": "banana",
+			"recovery": true,
+			"tier": 0,
+			"new": true
+		},
+		{
+			"id": "pa1-br2",
+			"sub_skill": "phonological_awareness",
+			"level": 1,
+			"competency": "RL1PA-I-5",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Asa ang nagsugod sa /m/?",
+			"tts_text": "Asa ang nagsugod sa tingog mmm, sama sa mama?",
+			"choices": [
+				{
+					"id": "hen",
+					"label": "manok",
+					"picture": "hen"
+				},
+				{
+					"id": "fish",
+					"label": "isda",
+					"picture": "fish"
+				}
+			],
+			"answer": "hen",
+			"recovery": true,
+			"tier": 0,
+			"new": true
+		},
+		{
+			"id": "pa1-br3",
+			"sub_skill": "phonological_awareness",
+			"level": 1,
+			"competency": "RL1PA-I-5",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Asa ang nagsugod sa /s/?",
+			"tts_text": "Asa ang nagsugod sa tingog sss, sama sa sapatos?",
+			"choices": [
+				{
+					"id": "ball",
+					"label": "bola",
+					"picture": "ball"
+				},
+				{
+					"id": "banana",
+					"label": "saging",
+					"picture": "banana"
+				}
+			],
+			"answer": "banana",
+			"recovery": true,
+			"tier": 0,
+			"new": true
+		},
+		{
+			"id": "ph1-b01",
+			"sub_skill": "phonics",
+			"level": 1,
+			"competency": "RL1PWS-II-1",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Unsang letra ang naay tingog /m/?",
+			"tts_text": "Unsang letra ang naay tingog mmm?",
+			"choices": [
+				{
+					"id": "m",
+					"label": "m"
+				},
+				{
+					"id": "s",
+					"label": "s"
+				},
+				{
+					"id": "a",
+					"label": "a"
+				}
+			],
+			"answer": "m",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "ph1-b02",
+			"sub_skill": "phonics",
+			"level": 1,
+			"competency": "RL1PWS-II-1",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Unsang letra ang naay tingog /s/?",
+			"tts_text": "Unsang letra ang naay tingog sss?",
+			"choices": [
+				{
+					"id": "s",
+					"label": "s"
+				},
+				{
+					"id": "m",
+					"label": "m"
+				},
+				{
+					"id": "b",
+					"label": "b"
+				}
+			],
+			"answer": "s",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "ph1-b03",
+			"sub_skill": "phonics",
+			"level": 1,
+			"competency": "RL1PWS-II-2",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pindota ang letra a.",
+			"tts_text": "Pindota ang letra a.",
+			"choices": [
+				{
+					"id": "o",
+					"label": "o"
+				},
+				{
+					"id": "a",
+					"label": "a"
+				},
+				{
+					"id": "u",
+					"label": "u"
+				}
+			],
+			"answer": "a",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "ph1-b04",
+			"sub_skill": "phonics",
+			"level": 1,
+			"competency": "RL1PWS-II-3",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Ang manok nagsugod sa unsang letra?",
+			"tts_text": "Manok. Ang manok nagsugod sa unsang letra?",
+			"picture": "hen",
+			"choices": [
+				{
+					"id": "m",
+					"label": "m"
+				},
+				{
+					"id": "s",
+					"label": "s"
+				},
+				{
+					"id": "b",
+					"label": "b"
+				}
+			],
+			"answer": "m",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "ph1-b05",
+			"sub_skill": "phonics",
+			"level": 1,
+			"competency": "RL1PWS-II-3",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Ang saging nagsugod sa unsang letra?",
+			"tts_text": "Saging. Ang saging nagsugod sa unsang letra?",
+			"picture": "banana",
+			"choices": [
+				{
+					"id": "a",
+					"label": "a"
+				},
+				{
+					"id": "s",
+					"label": "s"
+				},
+				{
+					"id": "m",
+					"label": "m"
+				}
+			],
+			"answer": "s",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "ph1-b06",
+			"sub_skill": "phonics",
+			"level": 1,
+			"competency": "RL1PWS-II-3",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Ang isda nagsugod sa unsang letra?",
+			"tts_text": "Isda. Ang isda nagsugod sa unsang letra?",
+			"picture": "fish",
+			"choices": [
+				{
+					"id": "i",
+					"label": "i"
+				},
+				{
+					"id": "o",
+					"label": "o"
+				},
+				{
+					"id": "a",
+					"label": "a"
+				}
+			],
+			"answer": "i",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "ph1-b07",
+			"sub_skill": "phonics",
+			"level": 1,
+			"competency": "RL1PWS-II-2",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pindota ang letra b.",
+			"tts_text": "Pindota ang letra b.",
+			"choices": [
+				{
+					"id": "d",
+					"label": "d"
+				},
+				{
+					"id": "b",
+					"label": "b"
+				},
+				{
+					"id": "p",
+					"label": "p"
+				}
+			],
+			"answer": "b",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "ph1-b08",
+			"sub_skill": "phonics",
+			"level": 1,
+			"competency": "RL1PWS-II-3",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Ang oso nagsugod sa unsang letra?",
+			"tts_text": "Oso. Ang oso nagsugod sa unsang letra?",
+			"picture": "bear",
+			"choices": [
+				{
+					"id": "u",
+					"label": "u"
+				},
+				{
+					"id": "a",
+					"label": "a"
+				},
+				{
+					"id": "o",
+					"label": "o"
+				}
+			],
+			"answer": "o",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "ph1-b09",
+			"sub_skill": "phonics",
+			"level": 1,
+			"competency": "RL1PWS-II-3",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Ang ubas nagsugod sa unsang letra?",
+			"tts_text": "Ubas. Ang ubas nagsugod sa unsang letra?",
+			"picture": "grapes",
+			"choices": [
+				{
+					"id": "o",
+					"label": "o"
+				},
+				{
+					"id": "u",
+					"label": "u"
+				},
+				{
+					"id": "i",
+					"label": "i"
+				}
+			],
+			"answer": "u",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "ph1-b10",
+			"sub_skill": "phonics",
+			"level": 1,
+			"competency": "RL1PWS-II-3",
+			"language": "bis-placeholder",
+			"task_type": "drag_letter",
+			"prompt": "Himoa ang pulong kalo.",
+			"tts_text": "Kalo. Ibalhin ang kulang nga letra aron mahimo ang kalo.",
+			"picture": "hat",
+			"pattern": [
+				"k",
+				"_",
+				"l",
+				"o"
+			],
+			"choices": [
+				{
+					"id": "o",
+					"label": "o"
+				},
+				{
+					"id": "a",
+					"label": "a"
+				},
+				{
+					"id": "u",
+					"label": "u"
+				}
+			],
+			"answer": "a",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "ph1-b11",
+			"sub_skill": "phonics",
+			"level": 1,
+			"competency": "RL1PWS-II-3",
+			"language": "bis-placeholder",
+			"task_type": "drag_letter",
+			"prompt": "Himoa ang pulong saging.",
+			"tts_text": "Saging. Ibalhin ang kulang nga letra aron mahimo ang saging.",
+			"picture": "banana",
+			"pattern": [
+				"s",
+				"a",
+				"g",
+				"_",
+				"n",
+				"g"
+			],
+			"choices": [
+				{
+					"id": "a",
+					"label": "a"
+				},
+				{
+					"id": "u",
+					"label": "u"
+				},
+				{
+					"id": "i",
+					"label": "i"
+				}
+			],
+			"answer": "i",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "ph1-b12",
+			"sub_skill": "phonics",
+			"level": 1,
+			"competency": "RL1PWS-II-3",
+			"language": "bis-placeholder",
+			"task_type": "drag_letter",
+			"prompt": "Himoa ang pulong oso.",
+			"tts_text": "Oso. Ibalhin ang kulang nga letra aron mahimo ang oso.",
+			"picture": "bear",
+			"pattern": [
+				"o",
+				"s",
+				"_"
+			],
+			"choices": [
+				{
+					"id": "a",
+					"label": "a"
+				},
+				{
+					"id": "o",
+					"label": "o"
+				},
+				{
+					"id": "u",
+					"label": "u"
+				}
+			],
+			"answer": "o",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "ph1-br1",
+			"sub_skill": "phonics",
+			"level": 1,
+			"competency": "RL1PWS-II-1",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Unsang letra ang naay tingog /m/?",
+			"tts_text": "Unsang letra ang naay tingog mmm?",
+			"choices": [
+				{
+					"id": "m",
+					"label": "m"
+				},
+				{
+					"id": "s",
+					"label": "s"
+				}
+			],
+			"answer": "m",
+			"recovery": true,
+			"tier": 0,
+			"new": true
+		},
+		{
+			"id": "ph1-br2",
+			"sub_skill": "phonics",
+			"level": 1,
+			"competency": "RL1PWS-II-3",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Ang manok nagsugod sa unsang letra?",
+			"tts_text": "Manok. Ang manok nagsugod sa unsang letra?",
+			"picture": "hen",
+			"choices": [
+				{
+					"id": "b",
+					"label": "b"
+				},
+				{
+					"id": "m",
+					"label": "m"
+				}
+			],
+			"answer": "m",
+			"recovery": true,
+			"tier": 0,
+			"new": true
+		},
+		{
+			"id": "ph1-br3",
+			"sub_skill": "phonics",
+			"level": 1,
+			"competency": "RL1PWS-II-2",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pindota ang letra a.",
+			"tts_text": "Pindota ang letra a.",
+			"choices": [
+				{
+					"id": "a",
+					"label": "a"
+				},
+				{
+					"id": "o",
+					"label": "o"
+				}
+			],
+			"answer": "a",
+			"recovery": true,
+			"tier": 0,
+			"new": true
+		},
+		{
+			"id": "pa2-b01",
+			"sub_skill": "phonological_awareness",
+			"level": 2,
+			"competency": "RL1PA-I-2",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pila ka pantig ang iro?",
+			"tts_text": "Pakpak uban nako. I. Ro. Pila ka pakpak?",
+			"picture": "dog",
+			"word": "iro",
+			"hint": "Pakpak uban nako: i, ro. Ihapa ang matag pakpak.",
+			"explain": "I-ro adunay 2 ka pakpak.",
+			"choices": [
+				{
+					"id": "1",
+					"label": "1",
+					"picture": "hand",
+					"repeat": 1
+				},
+				{
+					"id": "2",
+					"label": "2",
+					"picture": "hand",
+					"repeat": 2
+				},
+				{
+					"id": "3",
+					"label": "3",
+					"picture": "hand",
+					"repeat": 3
+				}
+			],
+			"answer": "2",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "pa2-b02",
+			"sub_skill": "phonological_awareness",
+			"level": 2,
+			"competency": "RL1PA-I-2",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pila ka pantig ang isda?",
+			"tts_text": "Pakpak uban nako. Is. Da. Pila ka pakpak?",
+			"picture": "fish",
+			"word": "isda",
+			"hint": "Pakpak uban nako: is, da. Ihapa ang matag pakpak.",
+			"explain": "Is-da adunay 2 ka pakpak.",
+			"choices": [
+				{
+					"id": "1",
+					"label": "1",
+					"picture": "hand",
+					"repeat": 1
+				},
+				{
+					"id": "2",
+					"label": "2",
+					"picture": "hand",
+					"repeat": 2
+				},
+				{
+					"id": "3",
+					"label": "3",
+					"picture": "hand",
+					"repeat": 3
+				}
+			],
+			"answer": "2",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "pa2-b03",
+			"sub_skill": "phonological_awareness",
+			"level": 2,
+			"competency": "RL1PA-I-2",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pila ka pantig ang bola?",
+			"tts_text": "Pakpak uban nako. Bo. La. Pila ka pakpak?",
+			"picture": "ball",
+			"word": "bola",
+			"hint": "Pakpak uban nako: bo, la. Ihapa ang matag pakpak.",
+			"explain": "Bo-la adunay 2 ka pakpak.",
+			"choices": [
+				{
+					"id": "1",
+					"label": "1",
+					"picture": "hand",
+					"repeat": 1
+				},
+				{
+					"id": "2",
+					"label": "2",
+					"picture": "hand",
+					"repeat": 2
+				},
+				{
+					"id": "3",
+					"label": "3",
+					"picture": "hand",
+					"repeat": 3
+				}
+			],
+			"answer": "2",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "pa2-b04",
+			"sub_skill": "phonological_awareness",
+			"level": 2,
+			"competency": "RL1PA-I-2",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pila ka pantig ang mansanas?",
+			"tts_text": "Pakpak uban nako. Man. Sa. Nas. Pila ka pakpak?",
+			"picture": "apple",
+			"word": "mansanas",
+			"hint": "Pakpak uban nako: man, sa, nas. Ihapa ang matag pakpak.",
+			"explain": "Man-sa-nas adunay 3 ka pakpak.",
+			"choices": [
+				{
+					"id": "1",
+					"label": "1",
+					"picture": "hand",
+					"repeat": 1
+				},
+				{
+					"id": "2",
+					"label": "2",
+					"picture": "hand",
+					"repeat": 2
+				},
+				{
+					"id": "3",
+					"label": "3",
+					"picture": "hand",
+					"repeat": 3
+				}
+			],
+			"answer": "3",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "pa2-b05",
+			"sub_skill": "phonological_awareness",
+			"level": 2,
+			"competency": "RL1PA-I-2",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pila ka pantig ang elepante?",
+			"tts_text": "Pakpak uban nako. E. Le. Pan. Te. Pila ka pakpak?",
+			"picture": "elephant",
+			"word": "elepante",
+			"hint": "Pakpak uban nako: e, le, pan, te. Ihapa ang matag pakpak.",
+			"explain": "E-le-pan-te adunay 4 ka pakpak.",
+			"choices": [
+				{
+					"id": "2",
+					"label": "2",
+					"picture": "hand",
+					"repeat": 2
+				},
+				{
+					"id": "3",
+					"label": "3",
+					"picture": "hand",
+					"repeat": 3
+				},
+				{
+					"id": "4",
+					"label": "4",
+					"picture": "hand",
+					"repeat": 4
+				}
+			],
+			"answer": "4",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "pa2-b06",
+			"sub_skill": "phonological_awareness",
+			"level": 2,
+			"competency": "RL1PA-I-2",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pila ka pantig ang alibangbang?",
+			"tts_text": "Pakpak uban nako. A. Li. Bang. Bang. Pila ka pakpak?",
+			"picture": "butterfly",
+			"word": "alibangbang",
+			"hint": "Pakpak uban nako: a, li, bang, bang. Ihapa ang matag pakpak.",
+			"explain": "A-li-bang-bang adunay 4 ka pakpak.",
+			"choices": [
+				{
+					"id": "2",
+					"label": "2",
+					"picture": "hand",
+					"repeat": 2
+				},
+				{
+					"id": "3",
+					"label": "3",
+					"picture": "hand",
+					"repeat": 3
+				},
+				{
+					"id": "4",
+					"label": "4",
+					"picture": "hand",
+					"repeat": 4
+				}
+			],
+			"answer": "4",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "pa2-b07",
+			"sub_skill": "phonological_awareness",
+			"level": 2,
+			"competency": "RL1PA-I-2",
+			"language": "bis-placeholder",
+			"task_type": "order_tiles",
+			"prompt": "Buhata ang pulong baki.",
+			"tts_text": "Ba. Ki. Pindota ang mga pantig aron mahimo ang baki.",
+			"picture": "frog",
+			"variant": "syllables",
+			"tiles": [
+				"ba",
+				"ki"
+			],
+			"answer": "ba|ki",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "pa2-b08",
+			"sub_skill": "phonological_awareness",
+			"level": 2,
+			"competency": "RL1PA-I-2",
+			"language": "bis-placeholder",
+			"task_type": "order_tiles",
+			"prompt": "Buhata ang pulong kanding.",
+			"tts_text": "Kan. Ding. Pindota ang mga pantig aron mahimo ang kanding.",
+			"picture": "goat",
+			"variant": "syllables",
+			"tiles": [
+				"kan",
+				"ding"
+			],
+			"answer": "kan|ding",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "pa2-b09",
+			"sub_skill": "phonological_awareness",
+			"level": 2,
+			"competency": "RL1PA-I-2",
+			"language": "bis-placeholder",
+			"task_type": "order_tiles",
+			"prompt": "Buhata ang pulong ilaga.",
+			"tts_text": "I. La. Ga. Pindota ang mga pantig aron mahimo ang ilaga.",
+			"picture": "mouse",
+			"variant": "syllables",
+			"tiles": [
+				"i",
+				"la",
+				"ga"
+			],
+			"answer": "i|la|ga",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "pa2-b10",
+			"sub_skill": "phonological_awareness",
+			"level": 2,
+			"competency": "RL1PA-I-4",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Asa ang katugma sa bituon?",
+			"tts_text": "Asa ang katugma sa bituon?",
+			"picture": "star",
+			"word": "bituon",
+			"choices": [
+				{
+					"id": "box",
+					"label": "kahon",
+					"picture": "box"
+				},
+				{
+					"id": "fish",
+					"label": "isda",
+					"picture": "fish"
+				},
+				{
+					"id": "hen",
+					"label": "manok",
+					"picture": "hen"
+				},
+				{
+					"id": "ball",
+					"label": "bola",
+					"picture": "ball"
+				}
+			],
+			"answer": "box",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "pa2-b11",
+			"sub_skill": "phonological_awareness",
+			"level": 2,
+			"competency": "RL1PA-I-4",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Asa ang katugma sa peras?",
+			"tts_text": "Asa ang katugma sa peras?",
+			"picture": "pear",
+			"word": "peras",
+			"choices": [
+				{
+					"id": "dog",
+					"label": "iro",
+					"picture": "dog"
+				},
+				{
+					"id": "grapes",
+					"label": "ubas",
+					"picture": "grapes"
+				},
+				{
+					"id": "hat",
+					"label": "kalo",
+					"picture": "hat"
+				},
+				{
+					"id": "frog",
+					"label": "baki",
+					"picture": "frog"
+				}
+			],
+			"answer": "grapes",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "pa2-b12",
+			"sub_skill": "phonological_awareness",
+			"level": 2,
+			"competency": "RL1PA-I-4",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Asa ang katugma sa sakayan?",
+			"tts_text": "Asa ang katugma sa sakayan?",
+			"picture": "boat",
+			"word": "sakayan",
+			"choices": [
+				{
+					"id": "banana",
+					"label": "saging",
+					"picture": "banana"
+				},
+				{
+					"id": "bear",
+					"label": "oso",
+					"picture": "bear"
+				},
+				{
+					"id": "moon",
+					"label": "bulan",
+					"picture": "moon"
+				},
+				{
+					"id": "book",
+					"label": "libro",
+					"picture": "book"
+				}
+			],
+			"answer": "moon",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "ph2-b01",
+			"sub_skill": "phonics",
+			"level": 2,
+			"competency": "RL1PWS-II-4",
+			"language": "bis-placeholder",
+			"task_type": "spin_words",
+			"prompt": "Tuyoka aron mahimo ang iro.",
+			"tts_text": "Iro. Tuyoka ang ligid aron mahimo ang pulong iro.",
+			"picture": "dog",
+			"rime": "ro",
+			"choices": [
+				{
+					"id": "a",
+					"label": "a"
+				},
+				{
+					"id": "i",
+					"label": "i"
+				},
+				{
+					"id": "u",
+					"label": "u"
+				},
+				{
+					"id": "o",
+					"label": "o"
+				}
+			],
+			"answer": "i",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "ph2-b02",
+			"sub_skill": "phonics",
+			"level": 2,
+			"competency": "RL1PWS-II-4",
+			"language": "bis-placeholder",
+			"task_type": "spin_words",
+			"prompt": "Tuyoka aron mahimo ang bola.",
+			"tts_text": "Bola. Tuyoka ang ligid aron mahimo ang pulong bola.",
+			"picture": "ball",
+			"rime": "la",
+			"choices": [
+				{
+					"id": "ba",
+					"label": "ba"
+				},
+				{
+					"id": "bi",
+					"label": "bi"
+				},
+				{
+					"id": "bo",
+					"label": "bo"
+				},
+				{
+					"id": "bu",
+					"label": "bu"
+				}
+			],
+			"answer": "bo",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "ph2-b03",
+			"sub_skill": "phonics",
+			"level": 2,
+			"competency": "RL1PWS-II-4",
+			"language": "bis-placeholder",
+			"task_type": "spin_words",
+			"prompt": "Tuyoka aron mahimo ang kalo.",
+			"tts_text": "Kalo. Tuyoka ang ligid aron mahimo ang pulong kalo.",
+			"picture": "hat",
+			"rime": "lo",
+			"choices": [
+				{
+					"id": "ki",
+					"label": "ki"
+				},
+				{
+					"id": "ka",
+					"label": "ka"
+				},
+				{
+					"id": "ko",
+					"label": "ko"
+				},
+				{
+					"id": "ku",
+					"label": "ku"
+				}
+			],
+			"answer": "ka",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "ph2-b04",
+			"sub_skill": "phonics",
+			"level": 2,
+			"competency": "RL1PWS-II-4",
+			"language": "bis-placeholder",
+			"task_type": "spin_words",
+			"prompt": "Tuyoka aron mahimo ang baki.",
+			"tts_text": "Baki. Tuyoka ang ligid aron mahimo ang pulong baki.",
+			"picture": "frog",
+			"rime": "ki",
+			"choices": [
+				{
+					"id": "bi",
+					"label": "bi"
+				},
+				{
+					"id": "bo",
+					"label": "bo"
+				},
+				{
+					"id": "ba",
+					"label": "ba"
+				},
+				{
+					"id": "bu",
+					"label": "bu"
+				}
+			],
+			"answer": "ba",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "ph2-b05",
+			"sub_skill": "phonics",
+			"level": 2,
+			"competency": "RL1PWS-II-5",
+			"language": "bis-placeholder",
+			"task_type": "drag_letter",
+			"prompt": "Himoa ang pulong manok.",
+			"tts_text": "Manok. Ibalhin ang kulang nga letra aron mahimo ang manok.",
+			"picture": "hen",
+			"pattern": [
+				"_",
+				"a",
+				"n",
+				"o",
+				"k"
+			],
+			"choices": [
+				{
+					"id": "s",
+					"label": "s"
+				},
+				{
+					"id": "m",
+					"label": "m"
+				},
+				{
+					"id": "b",
+					"label": "b"
+				}
+			],
+			"answer": "m",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "ph2-b06",
+			"sub_skill": "phonics",
+			"level": 2,
+			"competency": "RL1PWS-II-5",
+			"language": "bis-placeholder",
+			"task_type": "drag_letter",
+			"prompt": "Himoa ang pulong lapis.",
+			"tts_text": "Lapis. Ibalhin ang kulang nga letra aron mahimo ang lapis.",
+			"picture": "pencil",
+			"pattern": [
+				"_",
+				"a",
+				"p",
+				"i",
+				"s"
+			],
+			"choices": [
+				{
+					"id": "l",
+					"label": "l"
+				},
+				{
+					"id": "k",
+					"label": "k"
+				},
+				{
+					"id": "t",
+					"label": "t"
+				}
+			],
+			"answer": "l",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "ph2-b07",
+			"sub_skill": "phonics",
+			"level": 2,
+			"competency": "RL1PWS-II-5",
+			"language": "bis-placeholder",
+			"task_type": "drag_letter",
+			"prompt": "Himoa ang pulong kahon.",
+			"tts_text": "Kahon. Ibalhin ang kulang nga letra aron mahimo ang kahon.",
+			"picture": "box",
+			"pattern": [
+				"k",
+				"a",
+				"h",
+				"_",
+				"n"
+			],
+			"choices": [
+				{
+					"id": "u",
+					"label": "u"
+				},
+				{
+					"id": "a",
+					"label": "a"
+				},
+				{
+					"id": "o",
+					"label": "o"
+				}
+			],
+			"answer": "o",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "ph2-b08",
+			"sub_skill": "phonics",
+			"level": 2,
+			"competency": "RL1PWS-II-5",
+			"language": "bis-placeholder",
+			"task_type": "drag_letter",
+			"prompt": "Himoa ang pulong bitin.",
+			"tts_text": "Bitin. Ibalhin ang kulang nga letra aron mahimo ang bitin.",
+			"picture": "snake",
+			"pattern": [
+				"b",
+				"_",
+				"t",
+				"i",
+				"n"
+			],
+			"choices": [
+				{
+					"id": "e",
+					"label": "e"
+				},
+				{
+					"id": "a",
+					"label": "a"
+				},
+				{
+					"id": "i",
+					"label": "i"
+				}
+			],
+			"answer": "i",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "ph2-b09",
+			"sub_skill": "phonics",
+			"level": 2,
+			"competency": "RL1PWS-II-5",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Asa ang pulong isda?",
+			"tts_text": "Pangitaa ang pulong isda.",
+			"variant": "word_catch",
+			"choices": [
+				{
+					"id": "iro",
+					"label": "iro"
+				},
+				{
+					"id": "isda",
+					"label": "isda"
+				},
+				{
+					"id": "ilaga",
+					"label": "ilaga"
+				}
+			],
+			"answer": "isda",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "ph2-b10",
+			"sub_skill": "phonics",
+			"level": 2,
+			"competency": "RL1PWS-II-5",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Asa ang pulong baki?",
+			"tts_text": "Pangitaa ang pulong baki.",
+			"variant": "word_catch",
+			"choices": [
+				{
+					"id": "bata",
+					"label": "bata"
+				},
+				{
+					"id": "bako",
+					"label": "bako"
+				},
+				{
+					"id": "baki",
+					"label": "baki"
+				}
+			],
+			"answer": "baki",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "ph2-b11",
+			"sub_skill": "phonics",
+			"level": 2,
+			"competency": "RL1PWS-II-5",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Asa ang pulong kalo?",
+			"tts_text": "Pangitaa ang pulong kalo.",
+			"choices": [
+				{
+					"id": "kalo",
+					"label": "kalo"
+				},
+				{
+					"id": "lako",
+					"label": "lako"
+				},
+				{
+					"id": "kato",
+					"label": "kato"
+				}
+			],
+			"answer": "kalo",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "ph2-b12",
+			"sub_skill": "phonics",
+			"level": 2,
+			"competency": "RL1PWS-II-4",
+			"language": "bis-placeholder",
+			"task_type": "spin_words",
+			"prompt": "Tuyoka aron mahimo ang manok.",
+			"tts_text": "Manok. Tuyoka ang ligid aron mahimo ang pulong manok.",
+			"picture": "hen",
+			"rime": "nok",
+			"choices": [
+				{
+					"id": "mi",
+					"label": "mi"
+				},
+				{
+					"id": "mu",
+					"label": "mu"
+				},
+				{
+					"id": "ma",
+					"label": "ma"
+				},
+				{
+					"id": "mo",
+					"label": "mo"
+				}
+			],
+			"answer": "ma",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "vo2-b01",
+			"sub_skill": "vocabulary",
+			"level": 2,
+			"competency": "RL1VWK-II-1",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pindota ang libro.",
+			"tts_text": "Pindota ang libro.",
+			"choices": [
+				{
+					"id": "book",
+					"label": "libro",
+					"picture": "book"
+				},
+				{
+					"id": "pencil",
+					"label": "lapis",
+					"picture": "pencil"
+				},
+				{
+					"id": "ball",
+					"label": "bola",
+					"picture": "ball"
+				}
+			],
+			"answer": "book",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "vo2-b02",
+			"sub_skill": "vocabulary",
+			"level": 2,
+			"competency": "RL1VWK-II-1",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pindota ang lapis.",
+			"tts_text": "Pindota ang lapis.",
+			"choices": [
+				{
+					"id": "book",
+					"label": "libro",
+					"picture": "book"
+				},
+				{
+					"id": "scissors",
+					"label": "gunting",
+					"picture": "scissors"
+				},
+				{
+					"id": "pencil",
+					"label": "lapis",
+					"picture": "pencil"
+				}
+			],
+			"answer": "pencil",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "vo2-b03",
+			"sub_skill": "vocabulary",
+			"level": 2,
+			"competency": "RL1VWK-II-1",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pindota ang sticker.",
+			"tts_text": "Pindota ang sticker.",
+			"choices": [
+				{
+					"id": "pencil",
+					"label": "lapis",
+					"picture": "pencil"
+				},
+				{
+					"id": "sticker",
+					"label": "sticker",
+					"picture": "sticker"
+				},
+				{
+					"id": "book",
+					"label": "libro",
+					"picture": "book"
+				}
+			],
+			"answer": "sticker",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "vo2-b04",
+			"sub_skill": "vocabulary",
+			"level": 2,
+			"competency": "RL1VWK-II-1",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pindota ang bus.",
+			"tts_text": "Pindota ang bus nga mosakay ta paingon sa eskwelahan.",
+			"choices": [
+				{
+					"id": "car",
+					"label": "awto",
+					"picture": "car"
+				},
+				{
+					"id": "bus",
+					"label": "bus",
+					"picture": "bus"
+				},
+				{
+					"id": "boat",
+					"label": "sakayan",
+					"picture": "boat"
+				}
+			],
+			"answer": "bus",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "vo2-b05",
+			"sub_skill": "vocabulary",
+			"level": 2,
+			"competency": "RL1VWK-II-1",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pindota ang bituon.",
+			"tts_text": "Gihatagan ka ni Titser og bituon. Pindota ang bituon.",
+			"choices": [
+				{
+					"id": "moon",
+					"label": "bulan",
+					"picture": "moon"
+				},
+				{
+					"id": "sun",
+					"label": "adlaw",
+					"picture": "sun"
+				},
+				{
+					"id": "star",
+					"label": "bituon",
+					"picture": "star"
+				}
+			],
+			"answer": "star",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "vo2-b06",
+			"sub_skill": "vocabulary",
+			"level": 2,
+			"competency": "RL1VWK-II-2a",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Basaha ang pulong. Pindota ang hulagway.",
+			"tts_text": "Basaha ang pulong. Pindota ang hulagway.",
+			"word": "iring",
+			"choices": [
+				{
+					"id": "cat",
+					"picture": "cat"
+				},
+				{
+					"id": "dog",
+					"picture": "dog"
+				},
+				{
+					"id": "bear",
+					"picture": "bear"
+				}
+			],
+			"answer": "cat",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "vo2-b07",
+			"sub_skill": "vocabulary",
+			"level": 2,
+			"competency": "RL1VWK-II-2a",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Basaha ang pulong. Pindota ang hulagway.",
+			"tts_text": "Basaha ang pulong. Pindota ang hulagway.",
+			"word": "saging",
+			"choices": [
+				{
+					"id": "apple",
+					"picture": "apple"
+				},
+				{
+					"id": "banana",
+					"picture": "banana"
+				},
+				{
+					"id": "grapes",
+					"picture": "grapes"
+				}
+			],
+			"answer": "banana",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "vo2-b08",
+			"sub_skill": "vocabulary",
+			"level": 2,
+			"competency": "RL1VWK-II-2b",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Asa ang dako?",
+			"tts_text": "Asa ang dako?",
+			"hint": "Tan-awa pag-ayo. Asa ang labing dako?",
+			"explain": "Ang elepante ang dako.",
+			"choices": [
+				{
+					"id": "ant",
+					"label": "hulmigas",
+					"picture": "ant"
+				},
+				{
+					"id": "elephant",
+					"label": "elepante",
+					"picture": "elephant"
+				},
+				{
+					"id": "mouse",
+					"label": "ilaga",
+					"picture": "mouse"
+				}
+			],
+			"answer": "elephant",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "vo2-b09",
+			"sub_skill": "vocabulary",
+			"level": 2,
+			"competency": "RL1VWK-II-2b",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Asa ang gamay?",
+			"tts_text": "Asa ang gamay?",
+			"hint": "Tan-awa pag-ayo. Asa ang labing gamay?",
+			"explain": "Ang hulmigas ang gamay.",
+			"choices": [
+				{
+					"id": "bear",
+					"label": "oso",
+					"picture": "bear"
+				},
+				{
+					"id": "elephant",
+					"label": "elepante",
+					"picture": "elephant"
+				},
+				{
+					"id": "ant",
+					"label": "hulmigas",
+					"picture": "ant"
+				}
+			],
+			"answer": "ant",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "vo2-b10",
+			"sub_skill": "vocabulary",
+			"level": 2,
+			"competency": "RL1VWK-II-3",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pindota ang pulong ang.",
+			"tts_text": "Pindota ang pulong ang.",
+			"variant": "word_catch",
+			"choices": [
+				{
+					"id": "ug",
+					"label": "ug"
+				},
+				{
+					"id": "ang",
+					"label": "ang"
+				},
+				{
+					"id": "sa",
+					"label": "sa"
+				},
+				{
+					"id": "si",
+					"label": "si"
+				}
+			],
+			"answer": "ang",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "vo2-b11",
+			"sub_skill": "vocabulary",
+			"level": 2,
+			"competency": "RL1VWK-II-3",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pindota ang pulong si.",
+			"tts_text": "Pindota ang pulong si.",
+			"choices": [
+				{
+					"id": "si",
+					"label": "si"
+				},
+				{
+					"id": "sa",
+					"label": "sa"
+				},
+				{
+					"id": "mga",
+					"label": "mga"
+				}
+			],
+			"answer": "si",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "vo2-b12",
+			"sub_skill": "vocabulary",
+			"level": 2,
+			"competency": "RL1VWK-II-3",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pindota ang pulong mga.",
+			"tts_text": "Pindota ang pulong mga.",
+			"choices": [
+				{
+					"id": "ang",
+					"label": "ang"
+				},
+				{
+					"id": "ug",
+					"label": "ug"
+				},
+				{
+					"id": "mga",
+					"label": "mga"
+				}
+			],
+			"answer": "mga",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "vo2-br1",
+			"sub_skill": "vocabulary",
+			"level": 2,
+			"competency": "RL1VWK-II-1",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pindota ang libro.",
+			"tts_text": "Pindota ang libro.",
+			"choices": [
+				{
+					"id": "book",
+					"label": "libro",
+					"picture": "book"
+				},
+				{
+					"id": "dog",
+					"label": "iro",
+					"picture": "dog"
+				}
+			],
+			"answer": "book",
+			"recovery": true,
+			"tier": 0,
+			"new": true
+		},
+		{
+			"id": "vo2-br2",
+			"sub_skill": "vocabulary",
+			"level": 2,
+			"competency": "RL1VWK-II-3",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pindota ang pulong ang.",
+			"tts_text": "Pindota ang pulong ang.",
+			"choices": [
+				{
+					"id": "ang",
+					"label": "ang"
+				},
+				{
+					"id": "ug",
+					"label": "ug"
+				}
+			],
+			"answer": "ang",
+			"recovery": true,
+			"tier": 0,
+			"new": true
+		},
+		{
+			"id": "vo2-br3",
+			"sub_skill": "vocabulary",
+			"level": 2,
+			"competency": "RL1VWK-II-2a",
+			"language": "bis-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Basaha ang pulong. Pindota ang hulagway.",
+			"tts_text": "Basaha ang pulong. Pindota ang hulagway.",
+			"word": "iring",
+			"choices": [
+				{
+					"id": "cat",
+					"picture": "cat"
+				},
+				{
+					"id": "car",
+					"picture": "car"
+				}
+			],
+			"answer": "cat",
+			"recovery": true,
+			"tier": 0,
+			"new": true
+		}
+	],
+	"tests_filipino": {
+		"pre": [
+			{
+				"id": "pre-pa1",
+				"sub_skill": "phonological_awareness",
+				"level": 1,
+				"competency": "RL1PA-I-3",
+				"language": "fil-placeholder",
+				"task_type": "tap_choice",
+				"prompt": "Alin ang katugma ng puso?",
+				"tts_text": "Alin ang katugma ng puso?",
+				"picture": "heart",
+				"word": "puso",
+				"choices": [
+					{
+						"id": "dog",
+						"label": "aso",
+						"picture": "dog"
+					},
+					{
+						"id": "fish",
+						"label": "isda",
+						"picture": "fish"
+					},
+					{
+						"id": "bird",
+						"label": "ibon",
+						"picture": "bird"
+					}
+				],
+				"answer": "dog"
+			},
+			{
+				"id": "pre-pa2",
+				"sub_skill": "phonological_awareness",
+				"level": 1,
+				"competency": "RL1PA-I-5",
+				"language": "fil-placeholder",
+				"task_type": "tap_choice",
+				"prompt": "Alin ang nagsisimula sa /b/?",
+				"tts_text": "Alin ang nagsisimula sa tunog b, gaya ng baso?",
+				"choices": [
+					{
+						"id": "fish",
+						"label": "isda",
+						"picture": "fish"
+					},
+					{
+						"id": "ball",
+						"label": "bola",
+						"picture": "ball"
+					},
+					{
+						"id": "dog",
+						"label": "aso",
+						"picture": "dog"
+					}
+				],
+				"answer": "ball"
+			},
+			{
+				"id": "pre-pa3",
+				"sub_skill": "phonological_awareness",
+				"level": 2,
+				"competency": "RL1PA-I-2",
+				"language": "fil-placeholder",
+				"task_type": "tap_choice",
+				"prompt": "Ilang pantig ang palaka?",
+				"tts_text": "Pumalakpak kasama ko. Pa. La. Ka. Ilang palakpak?",
+				"picture": "frog",
+				"word": "palaka",
+				"choices": [
+					{
+						"id": "1",
+						"label": "1",
+						"picture": "hand",
+						"repeat": 1
+					},
+					{
+						"id": "2",
+						"label": "2",
+						"picture": "hand",
+						"repeat": 2
+					},
+					{
+						"id": "3",
+						"label": "3",
+						"picture": "hand",
+						"repeat": 3
+					}
+				],
+				"answer": "3"
+			},
+			{
+				"id": "pre-ph1",
+				"sub_skill": "phonics",
+				"level": 1,
+				"competency": "RL1PWS-II-1",
+				"language": "fil-placeholder",
+				"task_type": "tap_choice",
+				"prompt": "Aling titik ang may tunog na /t/?",
+				"tts_text": "Aling titik ang may tunog na t, gaya ng tatay?",
+				"choices": [
+					{
+						"id": "p",
+						"label": "p"
+					},
+					{
+						"id": "d",
+						"label": "d"
+					},
+					{
+						"id": "t",
+						"label": "t"
+					}
+				],
+				"answer": "t"
+			},
+			{
+				"id": "pre-ph2",
+				"sub_skill": "phonics",
+				"level": 2,
+				"competency": "RL1PWS-II-5",
+				"language": "fil-placeholder",
+				"task_type": "drag_letter",
+				"prompt": "Buuin ang salitang bahay.",
+				"tts_text": "Bahay. Ilipat ang kulang na titik para mabuo ang bahay.",
+				"picture": "house",
+				"pattern": [
+					"b",
+					"_",
+					"h",
+					"a",
+					"y"
+				],
+				"choices": [
+					{
+						"id": "o",
+						"label": "o"
+					},
+					{
+						"id": "a",
+						"label": "a"
+					},
+					{
+						"id": "u",
+						"label": "u"
+					}
+				],
+				"answer": "a"
+			},
+			{
+				"id": "pre-vo1",
+				"sub_skill": "vocabulary",
+				"level": 2,
+				"competency": "RL1VWK-II-1",
+				"language": "fil-placeholder",
+				"task_type": "tap_choice",
+				"prompt": "Pindutin ang bag.",
+				"tts_text": "Pindutin ang bag.",
+				"choices": [
+					{
+						"id": "book",
+						"picture": "book"
+					},
+					{
+						"id": "ball",
+						"picture": "ball"
+					},
+					{
+						"id": "bag",
+						"picture": "bag"
+					}
+				],
+				"answer": "bag"
+			},
+			{
+				"id": "pre-fl3",
+				"sub_skill": "fluency",
+				"level": 5,
+				"competency": "RL1BPK-II-3",
+				"language": "fil-placeholder",
+				"task_type": "order_tiles",
+				"prompt": "Ayusin ang mga salita.",
+				"tts_text": "Natutulog ang aso sa ilalim ng mesa. Ayusin ang mga salita.",
+				"picture": "dog",
+				"variant": "sentence",
+				"tiles": [
+					"Natutulog",
+					"ang",
+					"aso",
+					"sa",
+					"ilalim",
+					"ng",
+					"mesa."
+				],
+				"answer": "Natutulog|ang|aso|sa|ilalim|ng|mesa."
+			},
+			{
+				"id": "pre-lc5",
+				"sub_skill": "literal_comprehension",
+				"level": 5,
+				"competency": "RL1CAT-II-1a",
+				"language": "fil-placeholder",
+				"task_type": "tap_choice",
+				"prompt": "Kailan nangingisda si Lolo Ben?",
+				"tts_text": "Kailan nangingisda si Lolo Ben?",
+				"passage": "pre-fishing",
+				"choices": [
+					{
+						"id": "monday",
+						"label": "tuwing Lunes"
+					},
+					{
+						"id": "sunday",
+						"label": "tuwing Linggo"
+					},
+					{
+						"id": "night",
+						"label": "tuwing gabi"
+					}
+				],
+				"answer": "sunday"
+			},
+			{
+				"id": "pre-lc6",
+				"sub_skill": "literal_comprehension",
+				"level": 5,
+				"competency": "RL1CAT-II-1a",
+				"language": "fil-placeholder",
+				"task_type": "tap_choice",
+				"prompt": "Ilang isda ang nahuli nila?",
+				"tts_text": "Ilang isda ang nahuli nila?",
+				"passage": "pre-fishing",
+				"choices": [
+					{
+						"id": "two",
+						"label": "dalawa"
+					},
+					{
+						"id": "ten",
+						"label": "sampu"
+					},
+					{
+						"id": "five",
+						"label": "lima"
+					}
+				],
+				"answer": "five"
+			},
+			{
+				"id": "pre-lc7",
+				"sub_skill": "literal_comprehension",
+				"level": 5,
+				"competency": "RL1CAT-II-1f",
+				"language": "fil-placeholder",
+				"task_type": "tap_choice",
+				"prompt": "Bakit kailangan ni Lolo ang tulong ni Paolo?",
+				"tts_text": "Bakit kailangan ni Lolo ang tulong ni Paolo?",
+				"passage": "pre-fishing",
+				"choices": [
+					{
+						"id": "heavy",
+						"label": "Mabigat ang lambat dahil sa isda."
+					},
+					{
+						"id": "sink",
+						"label": "Lumulubog ang bangka."
+					},
+					{
+						"id": "sleepy",
+						"label": "Inaantok si Lolo."
+					}
+				],
+				"answer": "heavy"
+			},
+			{
+				"id": "pre-lc8",
+				"sub_skill": "literal_comprehension",
+				"level": 5,
+				"competency": "RL1CAT-II-1c",
+				"language": "fil-placeholder",
+				"task_type": "tap_choice",
+				"prompt": "Ano ang naramdaman ni Aling Rosa?",
+				"tts_text": "Ano ang naramdaman ni Aling Rosa?",
+				"passage": "pre-fishing",
+				"choices": [
+					{
+						"id": "angry",
+						"label": "galit"
+					},
+					{
+						"id": "happy",
+						"label": "masaya at nagpapasalamat"
+					},
+					{
+						"id": "sad",
+						"label": "malungkot"
+					}
+				],
+				"answer": "happy"
+			}
+		],
+		"post": [
+			{
+				"id": "post-pa1",
+				"sub_skill": "phonological_awareness",
+				"level": 1,
+				"competency": "RL1PA-I-3",
+				"language": "fil-placeholder",
+				"task_type": "tap_choice",
+				"prompt": "Alin ang katugma ng ibon?",
+				"tts_text": "Alin ang katugma ng ibon?",
+				"picture": "bird",
+				"word": "ibon",
+				"choices": [
+					{
+						"id": "hen",
+						"label": "manok",
+						"picture": "hen"
+					},
+					{
+						"id": "box",
+						"label": "kahon",
+						"picture": "box"
+					},
+					{
+						"id": "ball",
+						"label": "bola",
+						"picture": "ball"
+					}
+				],
+				"answer": "box"
+			},
+			{
+				"id": "post-pa2",
+				"sub_skill": "phonological_awareness",
+				"level": 1,
+				"competency": "RL1PA-I-5",
+				"language": "fil-placeholder",
+				"task_type": "tap_choice",
+				"prompt": "Alin ang nagsisimula sa /k/?",
+				"tts_text": "Alin ang nagsisimula sa tunog k, gaya ng kama?",
+				"choices": [
+					{
+						"id": "rabbit",
+						"label": "kuneho",
+						"picture": "rabbit"
+					},
+					{
+						"id": "fish",
+						"label": "isda",
+						"picture": "fish"
+					},
+					{
+						"id": "dog",
+						"label": "aso",
+						"picture": "dog"
+					}
+				],
+				"answer": "rabbit"
+			},
+			{
+				"id": "post-pa3",
+				"sub_skill": "phonological_awareness",
+				"level": 2,
+				"competency": "RL1PA-I-2",
+				"language": "fil-placeholder",
+				"task_type": "tap_choice",
+				"prompt": "Ilang pantig ang bubuyog?",
+				"tts_text": "Pumalakpak kasama ko. Bu. Bu. Yog. Ilang palakpak?",
+				"picture": "bee",
+				"word": "bubuyog",
+				"choices": [
+					{
+						"id": "1",
+						"label": "1",
+						"picture": "hand",
+						"repeat": 1
+					},
+					{
+						"id": "2",
+						"label": "2",
+						"picture": "hand",
+						"repeat": 2
+					},
+					{
+						"id": "3",
+						"label": "3",
+						"picture": "hand",
+						"repeat": 3
+					}
+				],
+				"answer": "3"
+			},
+			{
+				"id": "post-ph1",
+				"sub_skill": "phonics",
+				"level": 1,
+				"competency": "RL1PWS-II-1",
+				"language": "fil-placeholder",
+				"task_type": "tap_choice",
+				"prompt": "Aling titik ang may tunog na /l/?",
+				"tts_text": "Aling titik ang may tunog na l, gaya ng lola?",
+				"choices": [
+					{
+						"id": "n",
+						"label": "n"
+					},
+					{
+						"id": "l",
+						"label": "l"
+					},
+					{
+						"id": "t",
+						"label": "t"
+					}
+				],
+				"answer": "l"
+			},
+			{
+				"id": "post-ph2",
+				"sub_skill": "phonics",
+				"level": 2,
+				"competency": "RL1PWS-II-5",
+				"language": "fil-placeholder",
+				"task_type": "drag_letter",
+				"prompt": "Buuin ang salitang pusa.",
+				"tts_text": "Pusa. Ilipat ang kulang na titik para mabuo ang pusa.",
+				"picture": "cat",
+				"pattern": [
+					"p",
+					"_",
+					"s",
+					"a"
+				],
+				"choices": [
+					{
+						"id": "a",
+						"label": "a"
+					},
+					{
+						"id": "o",
+						"label": "o"
+					},
+					{
+						"id": "u",
+						"label": "u"
+					}
+				],
+				"answer": "u"
+			},
+			{
+				"id": "post-vo1",
+				"sub_skill": "vocabulary",
+				"level": 2,
+				"competency": "RL1VWK-II-1",
+				"language": "fil-placeholder",
+				"task_type": "tap_choice",
+				"prompt": "Pindutin ang gunting.",
+				"tts_text": "Pindutin ang gunting.",
+				"choices": [
+					{
+						"id": "pencil",
+						"picture": "pencil"
+					},
+					{
+						"id": "scissors",
+						"picture": "scissors"
+					},
+					{
+						"id": "bag",
+						"picture": "bag"
+					}
+				],
+				"answer": "scissors"
+			},
+			{
+				"id": "post-fl3",
+				"sub_skill": "fluency",
+				"level": 5,
+				"competency": "RL1BPK-II-3",
+				"language": "fil-placeholder",
+				"task_type": "order_tiles",
+				"prompt": "Ayusin ang mga salita.",
+				"tts_text": "Umiinom ang pusa ng mainit na gatas. Ayusin ang mga salita.",
+				"picture": "cat",
+				"variant": "sentence",
+				"tiles": [
+					"Umiinom",
+					"ang",
+					"pusa",
+					"ng",
+					"mainit",
+					"na",
+					"gatas."
+				],
+				"answer": "Umiinom|ang|pusa|ng|mainit|na|gatas."
+			},
+			{
+				"id": "post-lc5",
+				"sub_skill": "literal_comprehension",
+				"level": 5,
+				"competency": "RL1CAT-II-1a",
+				"language": "fil-placeholder",
+				"task_type": "tap_choice",
+				"prompt": "Saan ang hardin?",
+				"tts_text": "Saan ang hardin?",
+				"passage": "post-garden",
+				"choices": [
+					{
+						"id": "school",
+						"label": "sa likod ng paaralan"
+					},
+					{
+						"id": "river",
+						"label": "malapit sa ilog"
+					},
+					{
+						"id": "house",
+						"label": "sa loob ng bahay"
+					}
+				],
+				"answer": "school"
+			},
+			{
+				"id": "post-lc6",
+				"sub_skill": "literal_comprehension",
+				"level": 5,
+				"competency": "RL1CAT-II-1a",
+				"language": "fil-placeholder",
+				"task_type": "tap_choice",
+				"prompt": "Kailan dinidiligan ni Kim ang halaman niya?",
+				"tts_text": "Kailan dinidiligan ni Kim ang halaman niya?",
+				"passage": "post-garden",
+				"choices": [
+					{
+						"id": "night",
+						"label": "tuwing gabi"
+					},
+					{
+						"id": "morning",
+						"label": "tuwing umaga"
+					},
+					{
+						"id": "month",
+						"label": "isang beses sa isang buwan"
+					}
+				],
+				"answer": "morning"
+			},
+			{
+				"id": "post-lc7",
+				"sub_skill": "literal_comprehension",
+				"level": 5,
+				"competency": "RL1CAT-II-1f",
+				"language": "fil-placeholder",
+				"task_type": "tap_choice",
+				"prompt": "Bakit napatalon si Kim?",
+				"tts_text": "Bakit napatalon si Kim?",
+				"passage": "post-garden",
+				"choices": [
+					{
+						"id": "leaf",
+						"label": "Nakita niya ang maliit na dahon."
+					},
+					{
+						"id": "snake",
+						"label": "May nakita siyang ahas."
+					},
+					{
+						"id": "late",
+						"label": "Nahuli siya sa klase."
+					}
+				],
+				"answer": "leaf"
+			},
+			{
+				"id": "post-lc8",
+				"sub_skill": "literal_comprehension",
+				"level": 5,
+				"competency": "RL1CAT-II-1d",
+				"language": "fil-placeholder",
+				"task_type": "tap_choice",
+				"prompt": "Ano ang malamang gagawin ng klase sa susunod na buwan?",
+				"tts_text": "Ano ang malamang gagawin ng klase sa susunod na buwan?",
+				"passage": "post-garden",
+				"choices": [
+					{
+						"id": "stop",
+						"label": "Titigil sa paghahalaman."
+					},
+					{
+						"id": "plant",
+						"label": "Magtatanim muli."
+					},
+					{
+						"id": "close",
+						"label": "Isasara ang paaralan."
+					}
+				],
+				"answer": "plant"
+			}
+		]
+	},
+	"test_passages": {
+		"pre-fishing": {
+			"level": 5,
+			"language": "fil-placeholder",
+			"scene": "river",
+			"title": "Ang Pangingisda ni Lolo",
+			"text": "Tuwing Linggo, nangingisda si Lolo Ben sa Ilog Agusan. Maaga siyang gumigising at nagdadala ng kanin, isang bote ng tubig, at lambat. Sumasama sa kanya ang apo niyang si Paolo. Umuupo si Paolo sa unahan ng maliit na bangka. Tahimik at payapa ang ilog. Pagkalipas ng isang oras, naramdaman ni Lolo ang malakas na hila sa lambat. Tinulungan siya ni Paolo na hilahin ito. Nakahuli sila ng limang malalaking isda! Pauwi, binigyan nila ng dalawang isda ang kapitbahay nilang si Aling Rosa. Nagpasalamat siya nang may malaking ngiti."
+		},
+		"post-garden": {
+			"level": 5,
+			"language": "fil-placeholder",
+			"scene": "grove",
+			"title": "Ang Hardin ng Paaralan",
+			"text": "Nagtanim ng hardin ang klase ni Titser Liza sa likod ng paaralan. Bawat bata ay may isang maliit na paso. Nagtanim si Kim ng buto ng okra. Dinidiligan niya ito tuwing umaga bago magklase. Pagkalipas ng isang linggo, may lumabas na maliit na berdeng dahon. Napatalon si Kim at tinawag ang mga kaibigan niya para makita ito. Lalong tumaas ang mga halaman. Sa katapusan ng buwan, pinitas ng klase ang okra at niluto nila ito kasama si Titser Liza. Gusto ng lahat na magtanim muli sa susunod na buwan."
+		}
+	}
+}

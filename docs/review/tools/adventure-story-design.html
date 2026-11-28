@@ -1,0 +1,310 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Adventure story design</title>
+<style>
+@page { size: A4; margin: 16mm 14mm; }
+body { font: 10.5pt/1.45 "Segoe UI", Arial, sans-serif; color: #222; }
+h1 { font-size: 21pt; margin: 0 0 2px; color: #7a3e12; }
+h2 { font-size: 14.5pt; color: #7a3e12; border-bottom: 2px solid #f0b54a; padding-bottom: 2px; margin: 22px 0 8px; break-after: avoid; }
+h3 { font-size: 11.5pt; margin: 14px 0 4px; break-after: avoid; }
+.sub { color: #666; margin-bottom: 10px; }
+table { border-collapse: collapse; width: 100%; margin: 6px 0 10px; font-size: 9.5pt; break-inside: auto; }
+th, td { border: 1px solid #ccc; padding: 4px 6px; vertical-align: top; text-align: left; }
+th { background: #fbecd0; }
+tr { break-inside: avoid; }
+.box { border: 1px solid #e3c48a; background: #fff8ea; border-radius: 6px; padding: 8px 10px; margin: 8px 0; break-inside: avoid; }
+.warn { border: 1px solid #d9826b; background: #fff0eb; border-radius: 6px; padding: 8px 10px; margin: 8px 0; break-inside: avoid; }
+.pb { break-before: page; }
+.small { font-size: 9pt; color: #555; }
+.chip { display: inline-block; font-size: 8pt; font-weight: bold; padding: 0 6px; border-radius: 8px; color: #fff; }
+.now { background: #2a8a3a; } .v2 { background: #2b5fb5; } .new { background: #b5482b; }
+ul { margin: 4px 0 8px; padding-left: 20px; } li { margin: 2px 0; }
+blockquote { margin: 4px 0 4px 10px; padding-left: 8px; border-left: 3px solid #f0b54a; }
+/* flow */
+.flow { display: flex; flex-direction: column; align-items: center; gap: 0; margin: 8px 0; }
+.row { display: flex; gap: 10px; align-items: stretch; justify-content: center; width: 100%; break-inside: avoid; }
+.n { border: 2px solid #c98a2b; background: #fff4dc; border-radius: 8px; padding: 5px 9px; text-align: center; font-size: 9.5pt; width: 300px; }
+.n b { display: block; font-size: 10pt; }
+.n.vid { border-color: #8e6aa0; background: #f4ecfa; }
+.n.test { border-color: #2b5fb5; background: #eaf2ff; }
+.n.side { width: 210px; border-style: dashed; }
+.n.end { border-color: #2a8a3a; background: #e9f7ea; }
+.ar { text-align: center; color: #c98a2b; font-size: 14pt; line-height: 1.1; }
+.legend span { display: inline-block; padding: 1px 7px; border-radius: 5px; margin-right: 6px; font-size: 8.5pt; border: 2px solid; }
+</style></head><body>
+
+<h1>Reading Racoon: the way home</h1>
+<div class="sub">Game review, story design and gameplay flow &middot; draft for the team &middot; 28 November 2026 &middot; nothing here is built yet unless marked <span class="chip now">IN GAME</span></div>
+
+<div class="box"><b>What's in this pack</b>
+<ol>
+<li>What is in the game now: screens, game styles, pictures</li>
+<li>Game styles: existing, coming in the v2 draft, and 15 new recommendations from research</li>
+<li>The story: "Pauli na ta!" (Let's go home!), worlds, guardians, lines, charms</li>
+<li>The Adventure opening animation (storyboard)</li>
+<li>The gameplay flow, from opening the app to arriving home</li>
+<li>Videos, fun without addiction, and the two problems to decide</li>
+<li>Before switching accounts (checklist) and sources</li>
+</ol>
+<span class="chip now">IN GAME</span> already in the app &nbsp; <span class="chip v2">V2 DRAFT</span> in the teacher review pack, not in the game yet &nbsp; <span class="chip new">NEW IDEA</span> proposed today</div>
+
+<h2>1. What is in the game now</h2>
+<h3>Screens</h3>
+<table>
+<tr><th>Screen</th><th>What it does</th></tr>
+<tr><td>Logo opening</td><td>3.3 s: sunburst, Racoon waves, "Reading Racoon" drops in, the page lifts away. Plays each time the app starts; a tap skips it.</td></tr>
+<tr><td>Login</td><td>The child enters a login code.</td></tr>
+<tr><td>Choose your buddy</td><td>Roco or Rina.</td></tr>
+<tr><td>Lock screen</td><td>Outside class time, at sleep time, or when the day's minutes are used up.</td></tr>
+<tr><td>Hub</td><td>8 sections: Adventure, Practice, Library, Watch &amp; Listen, Racoon's Closet, Sticker Album, My Word Book, Today.</td></tr>
+<tr><td>Adventure</td><td>The path map of 5 worlds: Agusan River, Mango Grove, Bahay Kubo Village, Balangay Bay, Mount Mayapay. Each world has 5 lessons, a chest after lesson 2, and a trophy. <b>No story or animation when it opens</b>; the buddy only gives a hint ("Show Roco what you can do first").</td></tr>
+<tr><td>Lesson / Lesson complete</td><td>8 questions per lesson, hearts, hints, rescue questions, coins.</td></tr>
+<tr><td>Pre-test / Post-test</td><td>20 items and 2 stories each.</td></tr>
+<tr><td>Practice</td><td>Memory Match, Rhyme Pop, Word Catch.</td></tr>
+<tr><td>Library</td><td>8 storybooks (3 English, 3 Filipino, 2 Bisaya), each with 2 questions.</td></tr>
+<tr><td>Watch &amp; Listen</td><td>4 songs and chants, 3 read-alongs.</td></tr>
+<tr><td>Racoon's Closet</td><td>Shop of 52 items in 5 groups: hats, glasses, neck, tops, paws (pets included).</td></tr>
+<tr><td>Sticker Album, My Word Book, Today</td><td>Collections and today's progress.</td></tr>
+</table>
+<p class="small">Behind the screens: BKT student model, placement, path progress, coins and wardrobe, 1,465 recorded buddy voice clips (no lesson or test questions recorded yet), menu lines in English, Filipino and Bisaya (77 each), offline saving and sync, access rules. Teacher portal (sections, roster, student pages, schedule, content, Gemini AI report as PDF) and admin portal (2-step login, dashboard, teacher approvals, content, logs, privacy, export).</p>
+
+<h3>Adventure content now</h3>
+<table>
+<tr><th>File</th><th>Items</th><th>Skills</th></tr>
+<tr><td>Levels 1&ndash;2</td><td>55</td><td>Sounds (phonological awareness), phonics, vocabulary</td></tr>
+<tr><td>Level 3</td><td>43 (3 stories)</td><td>Phonics, vocabulary, fluency, comprehension</td></tr>
+<tr><td>Level 4</td><td>28 (3 stories)</td><td>Vocabulary, fluency, comprehension</td></tr>
+<tr><td>Level 5</td><td>19 (2 stories)</td><td>Fluency, comprehension</td></tr>
+</table>
+<p class="small">145 adventure items, mostly English. The v2 review pack (docs/review/content-review-pack-v2.pdf) has 295 items in Bisaya, Filipino and English, waiting for teacher approval.</p>
+
+<h3>Pictures (65) and icons (46)</h3>
+<table>
+<tr><th>Group</th><th>Pictures</th></tr>
+<tr><td>Animals</td><td>ant, bear, bee, bird, butterfly, cat, dog, elephant, fish, fox, frog, goat, hen, mouse, rabbit, raccoon, snake</td></tr>
+<tr><td>Food</td><td>apple, banana, cake, grapes, pear, palm</td></tr>
+<tr><td>Home and school</td><td>bag, ball, book, box, glasses, hat, pencil, scarf, scissors, shirt, gift</td></tr>
+<tr><td>Vehicles</td><td>boat, bus, car</td></tr>
+<tr><td>Places and nature</td><td>house, hut (bahay kubo), tree, mountain, waves, sun, moon, night, cloud, star, bolt (lightning)</td></tr>
+<tr><td>Body</td><td>ear, hand</td></tr>
+<tr><td>Game pictures</td><td>coin, coins, chest, chest_open, crown, trophy, heart, sticker, sparkles, speaker, repeat, lock, bulb, stories, wordbook</td></tr>
+<tr><td>Button icons only</td><td>arrows, check, dot, play, pause, gear, talk, full screen and exit, heart_plus (the other icons are small copies of pictures)</td></tr>
+</table>
+<p class="small">The v2 items need 31 more pictures (kalabasa, baboy, pato, oso, lobo and others, plus the story scenes). The list is in the v2 pack under "Pictures to draw".</p>
+
+<h2 class="pb">2. Game styles</h2>
+<h3>Already in the game and coming in v2</h3>
+<table>
+<tr><th>Style</th><th>How it plays</th><th>Status</th></tr>
+<tr><td>Tap the answer</td><td>Pick 1 of 2&ndash;4 picture or word cards</td><td><span class="chip now">IN GAME</span></td></tr>
+<tr><td>Drag the letter</td><td>Drag the missing letter into the word</td><td><span class="chip now">IN GAME</span></td></tr>
+<tr><td>Put in order</td><td>Syllables into a word, words into a sentence, story events in order</td><td><span class="chip now">IN GAME</span></td></tr>
+<tr><td>Spin the wheel</td><td>Spin 4 starting sounds to make the word with the ending</td><td><span class="chip now">IN GAME</span></td></tr>
+<tr><td>Rhyme Pop</td><td>Pop the bubbles that rhyme (lesson and Practice)</td><td><span class="chip now">IN GAME</span></td></tr>
+<tr><td>Word Catch</td><td>Catch the right falling words (lesson and Practice)</td><td><span class="chip now">IN GAME</span></td></tr>
+<tr><td>Memory Match</td><td>Flip cards to find pairs (Practice)</td><td><span class="chip now">IN GAME</span></td></tr>
+<tr><td>Combination lock</td><td>Spin two rings of 8 syllables to make the word (hard spin)</td><td><span class="chip v2">V2 DRAFT</span></td></tr>
+<tr><td>Speaker cards</td><td>Tap the speaker to hear a sound or word, then choose the picture</td><td><span class="chip v2">V2 DRAFT</span></td></tr>
+<tr><td>Counting cards</td><td>The same picture shown several times to count</td><td><span class="chip v2">V2 DRAFT</span></td></tr>
+</table>
+
+<h3>15 new recommendations <span class="chip new">NEW IDEA</span></h3>
+<div class="box"><b>What the research says:</b> the fun has to come from the reading itself. A review of 309 phonics apps found only about 27% support reading; the weak ones work like games or flashcards where the fun has nothing to do with reading. Rewards help, but too many make children read for the prize.</div>
+<table>
+<tr><th>#</th><th>Style</th><th>How it plays</th><th>Skill</th><th>Effort</th></tr>
+<tr><td>1</td><td><b>Feed the buddy</b></td><td>Hear a word, drag the matching picture-food into the buddy's mouth; the buddy chews and reacts</td><td>Sounds, words</td><td>Easy</td></tr>
+<tr><td>2</td><td><b>Sound baskets</b></td><td>Sort falling pictures into the /m/ or /s/ basket by first sound</td><td>Sounds</td><td>Easy</td></tr>
+<tr><td>3</td><td><b>Syllable train</b></td><td>Link syllable cars ("ba" + "ka"); the train leaves only when the word is right. Fits ARAL's syllable step</td><td>Phonics</td><td>Medium</td></tr>
+<tr><td>4</td><td><b>Sound boxes</b></td><td>Hear "baka", drop one stone per syllable or sound (Elkonin boxes)</td><td>Sounds</td><td>Easy</td></tr>
+<tr><td>5</td><td><b>Magic wand swap</b></td><td>Change one letter and the picture transforms (bata &rarr; baka)</td><td>Phonics, harder tier</td><td>Medium</td></tr>
+<tr><td>6</td><td><b>Piko (hopscotch)</b></td><td>Hop onto the tile with the syllable you hear (Laro ng Lahi)</td><td>Phonics</td><td>Medium</td></tr>
+<tr><td>7</td><td><b>Hidden picture hunt</b></td><td>Busy scene; hear "Asa ang baka?" and find it</td><td>Vocabulary</td><td>Easy&ndash;medium</td></tr>
+<tr><td>8</td><td><b>Bingo</b></td><td>The buddy calls a word, the child marks it; 3 in a row wins</td><td>Vocabulary</td><td>Medium</td></tr>
+<tr><td>9</td><td><b>Fishing</b></td><td>Fish carry words; catch the one you hear (new look for Word Catch)</td><td>Words</td><td>Easy</td></tr>
+<tr><td>10</td><td><b>Word search, picture crossword</b></td><td>For the Advanced section's English track</td><td>Vocabulary</td><td>Medium</td></tr>
+<tr><td>11</td><td><b>Read it, make it happen</b></td><td>Read "Ang pusa sa ilalim sa lamesa", drag the cat under the table</td><td>Comprehension</td><td>Medium</td></tr>
+<tr><td>12</td><td><b>What happens next?</b></td><td>The story stops; pick the next picture, then it continues</td><td>Comprehension</td><td>Easy</td></tr>
+<tr><td>13</td><td><b>Story detective</b></td><td>A short mystery ("Who took the pencil?"); each clue is a sentence</td><td>Comprehension</td><td>Medium&ndash;hard</td></tr>
+<tr><td>14</td><td><b>Echo reading</b></td><td>Racoon reads, the child records and plays back. No speech recognition, works offline and in Bisaya</td><td>Fluency</td><td>Easy&ndash;medium</td></tr>
+<tr><td>15</td><td><b>Grow a garden or pet</b></td><td>Reading earns water; a plant or pet grows. Keep it light</td><td>Motivation</td><td>Medium</td></tr>
+</table>
+<p><b>Top 5 picks:</b> Feed the buddy (1), Sound boxes (4), Syllable train (3), Read it, make it happen (11), Echo reading (14).<br>
+<b>Not for now:</b> automatic read-aloud checking (no offline Bisaya speech model), and any new style before the Dec 1&ndash;3 pilot.</p>
+<p class="small">Every style is a general type of game, not a copy of a specific existing game. Sources are mostly app roundups and small studies.</p>
+
+<h2 class="pb">3. The story: "Pauli na ta!" (Let's go home!)</h2>
+<div class="box">A storm carries Roco's (or Rina's) little bangka away from home, a bahay kubo at the foot of <b>Mount Mayapay</b>. The buddy wakes up far down the Agusan River. To get home, the child helps the buddy travel back up the map through the 5 worlds the game already has. Each world is one level, its 5 quests are the stops on the path, and each world has a <b>light guardian</b> who helps the buddy go on. A shadow of the next guardian shows on the map, so children wonder who comes next.</div>
+
+<table>
+<tr><th>Level</th><th>World (already in game)</th><th>Skill</th><th>Language</th><th>Guardian</th><th>Light</th><th>Catchphrase</th></tr>
+<tr><td>1</td><td>Agusan River</td><td>Sounds, rhymes</td><td>Bisaya</td><td><b>Kidlap</b>, a firefly</td><td>Green</td><td>"Kidlap-kidlap!"</td></tr>
+<tr><td>2</td><td>Mango Grove</td><td>Letters, phonics</td><td>Bisaya</td><td><b>Silip</b>, a tarsier</td><td>Purple</td><td>"Silip-silip!"</td></tr>
+<tr><td>3</td><td>Bahay Kubo Village</td><td>Syllables, words</td><td>Filipino</td><td><b>Baw</b>, a carabao</td><td>Orange</td><td>"Mooo-ha!"</td></tr>
+<tr><td>4</td><td>Balangay Bay</td><td>Comprehension</td><td>Filipino</td><td><b>Pawi</b>, a sea turtle</td><td>Blue</td><td>"Plup-plup!"</td></tr>
+<tr><td>5</td><td>Mount Mayapay</td><td>Reading smoothly</td><td>English</td><td><b>Haribon</b>, a Philippine eagle</td><td>Gold</td><td>"Whoosh!"</td></tr>
+</table>
+
+<h3>Guardian lines (drafts, a teacher must check)</h3>
+<table>
+<tr><th>Guardian</th><th>Finished the world</th><th>Skipped the world (mastered)</th></tr>
+<tr><td><b>Kidlap</b><br>Bisaya</td><td>"Kidlap-kidlap! Nadungog nimo ang tanang tingog sa suba! Ania ang akong suga para nimo!"<br><span class="small">You heard every sound of the river! Here's my light for you!</span></td>
+<td>"Kidlap-kidlap! Kabalo na ka sa mga tingog! Kupot sa akong suga, dad-on tika sa sunod nga dapit!"<br><span class="small">You already know the sounds! Hold my light, I'll take you to the next place!</span></td></tr>
+<tr><td><b>Silip</b><br>Bisaya</td><td>"Silip-silip! Nabasa nimo ang mga letra sa kamanggahan! Ania ang akong bitoon para nimo."<br><span class="small">You read the letters of the mango grove! Here's my star for you.</span></td>
+<td>"Silip-silip! Kabalo na ka sa mga letra! Kupot sa ako, molukso ta!"<br><span class="small">You already know the letters! Hold on to me, we're jumping!</span></td></tr>
+<tr><td><b>Baw</b><br>Filipino</td><td>"Mooo-ha! Nabuo mo ang lahat ng pantig sa aming baryo! Dalhin mo ang aking parol."<br><span class="small">You built every syllable in our village! Take my lantern.</span></td>
+<td>"Mooo-ha! Alam mo na ang mga pantig! Sakay ka sa likod ko!"<br><span class="small">You already know syllables! Ride on my back!</span></td></tr>
+<tr><td><b>Pawi</b><br>Filipino</td><td>"Plup-plup! Naintindihan mo ang mga kuwento ng look! Sakay ka sa aking likod."<br><span class="small">You understood the stories of the bay! Climb on my back.</span></td>
+<td>"Plup-plup! Magaling kang umunawa! Lalangoy tayo papunta sa bundok!"<br><span class="small">You understand so well! We'll swim to the mountain!</span></td></tr>
+<tr><td><b>Haribon</b><br>English</td><td>"Whoosh! You read like the wind! Climb on, I'll fly you home!"</td><td>"Whoosh! You already read so well! Let's fly home!"</td></tr>
+</table>
+
+<h3>The buddy's light charms</h3>
+<table>
+<tr><th>Guardian</th><th>Charm (small change on the buddy, shown everywhere)</th></tr>
+<tr><td>Kidlap</td><td>A glowing firefly on the tail tip</td></tr>
+<tr><td>Silip</td><td>A purple star on the ear</td></tr>
+<tr><td>Baw</td><td>A small orange parol badge</td></tr>
+<tr><td>Pawi</td><td>A blue shell necklace</td></tr>
+<tr><td>Haribon</td><td>A golden feather</td></tr>
+</table>
+<ul>
+<li><b>Skipping a world still gives its charm.</b> Strong readers shouldn't lose a reward for being good.</li>
+<li>Charms can't be bought in the Closet, so they always show how far the child has come.</li>
+</ul>
+
+<h3>How the new game styles fit the worlds</h3>
+<table>
+<tr><th>World</th><th>Game styles</th></tr>
+<tr><td>Agusan River (sounds)</td><td>Sound baskets, Sound boxes, Feed the buddy, Rhyme Pop, Fishing</td></tr>
+<tr><td>Mango Grove (letters)</td><td>Magic wand swap, Drag the letter, Spin wheel, Hidden picture hunt</td></tr>
+<tr><td>Bahay Kubo Village (syllables, words)</td><td>Syllable train, Combination lock, Piko, Bingo</td></tr>
+<tr><td>Balangay Bay (stories)</td><td>Read it, make it happen; What happens next?; Story detective</td></tr>
+<tr><td>Mount Mayapay (smooth reading, English)</td><td>Echo reading, Word search and crossword (Advanced section)</td></tr>
+</table>
+
+<h2 class="pb">4. The Adventure opening (storyboard)</h2>
+<p>Plays <b>once</b>, the first time the child opens Adventure, before the pre-test. About 25 seconds, Bisaya, with a skip button. Later visits open the map normally with a "watch again" button. The logo opening stays as it is.</p>
+<table>
+<tr><th>#</th><th>Shot</th><th>What we see</th><th>What is said</th></tr>
+<tr><td>1</td><td>Home (5 s)</td><td>A sunny kubo below Mount Mayapay. Nanay waves from the window. The buddy plays in a little bangka at the dock.</td><td>"Ako si Roco! Ganahan kaayo ko sa among balay."<br><span class="small">I'm Roco! I love our house.</span></td></tr>
+<tr><td>2</td><td>Clouds (4 s)</td><td>The sky turns grey, wind blows, leaves fly.</td><td>Nanay: "Roco, sulod na! Moabot ang ulan!"<br><span class="small">Come in! The rain is coming!</span></td></tr>
+<tr><td>3</td><td>Storm (5 s)</td><td>Rain pours, the rope snaps, the bangka drifts down the Agusan River with the buddy holding on.</td><td>"Waaah! Nanay!"</td></tr>
+<tr><td>4</td><td>Waking up (5 s)</td><td>Morning on a strange riverbank. The bangka is stuck in the roots.</td><td>"Asa man ko? Layo na kaayo ang among balay..."<br><span class="small">Where am I? Home is so far away...</span></td></tr>
+<tr><td>5</td><td>Kidlap appears (4 s)</td><td>A small green light floats closer.</td><td>"Kidlap-kidlap! Ayaw kabalaka. Tabangan ta ka makapauli!"<br><span class="small">Don't worry. I'll help you get home!</span></td></tr>
+<tr><td>6</td><td>The map (3 s)</td><td>The camera pans up the dark path to Mount Mayapay, home at the top. Fades into the real path screen.</td><td>"Tabangi ko, ha? Pauli na ta!"<br><span class="small">Will you help me? Let's go home!</span></td></tr>
+</table>
+<ul>
+<li><b>Keep the storm gentle:</b> wind, rain and drifting, nobody hurt or crying hard. Children should feel "I want to help", not fear.</li>
+<li><b>Nanay</b> gives a reason to care, and she appears again in the homecoming video.</li>
+<li><b>Roco and Rina need two versions.</b> Show the buddy small or from behind in wide shots; only the close-ups (shots 1, 4, 6) need both.</li>
+</ul>
+
+<h3>Homecoming video (end of Mount Mayapay)</h3>
+<p>Haribon lands at the kubo. Nanay runs out and hugs the buddy, who now wears all 5 charms. The 5 guardians' lights circle the house. Buddy: "Salamat sa imong tabang! Nakauli na ko!" (Thank you for your help! I'm home!)</p>
+
+<h2 class="pb">5. Gameplay flow</h2>
+<div class="legend"><span style="border-color:#c98a2b;background:#fff4dc">game screen</span><span style="border-color:#8e6aa0;background:#f4ecfa">video</span><span style="border-color:#2b5fb5;background:#eaf2ff">test</span><span style="border-color:#c98a2b;border-style:dashed">branch</span><span style="border-color:#2a8a3a;background:#e9f7ea">end</span></div>
+
+<div class="flow">
+<div class="row"><div class="n"><b>Open the app</b>Logo opening (3.3 s) &rarr; login code &rarr; choose Roco or Rina</div></div>
+<div class="ar">&darr;</div>
+<div class="row"><div class="n"><b>Hub</b>The child taps Adventure</div></div>
+<div class="ar">&darr;</div>
+<div class="row"><div class="n vid"><b>Adventure opening (first time only)</b>The storm carries the buddy away; Kidlap offers help</div></div>
+<div class="ar">&darr;</div>
+<div class="row"><div class="n test"><b>Pre-test: "light up the map"</b>20 items, Filipino, no help, no hints</div></div>
+<div class="ar">&darr;</div>
+<div class="row">
+ <div class="n"><b>Placement</b>The pre-test sets where the child starts</div>
+ <div class="n side"><b>Already strong?</b>Guardian skip video + charm, then the next world. The skip is recorded.</div>
+</div>
+<div class="ar">&darr;</div>
+<div class="row"><div class="n"><b>World (level 1&ndash;5)</b>5 quests on the path; chest after quest 2</div></div>
+<div class="ar">&darr;</div>
+<div class="row">
+ <div class="n"><b>Quest = 8 questions</b>Game styles of that world</div>
+ <div class="n side"><b>Wrong answer</b>Hint &rarr; easier question (tier 1) or a 2-choice rescue. The BKT model updates.</div>
+</div>
+<div class="row">
+ <div class="n side"><b>Doing well</b>Harder questions (tier 2) when P(L) &ge; 0.70</div>
+ <div class="n side"><b>Mastered the world early</b>The guardian comes early: skip video + charm</div>
+</div>
+<div class="ar">&darr;</div>
+<div class="row"><div class="n vid"><b>World finished</b>Guardian video + "finished" line; the buddy gets the charm; the map lights up the next world</div></div>
+<div class="ar">&darr; repeat for the next world</div>
+<div class="row"><div class="n vid"><b>Mount Mayapay finished</b>Haribon flies the buddy home &rarr; homecoming video</div></div>
+<div class="ar">&darr;</div>
+<div class="row"><div class="n test"><b>Post-test</b>20 items, Filipino, at the bottom of the path</div></div>
+<div class="ar">&darr;</div>
+<div class="row"><div class="n end"><b>Home</b>The teacher sees the results and the AI report</div></div>
+</div>
+
+<div class="row" style="margin-top:10px">
+ <div class="n side"><b>Day 3 of the pilot</b>A "letter from home" (sulat gikan sa balay) opens the post-test wherever the child is on the map</div>
+ <div class="n side"><b>Daily minutes used up</b>The buddy: "Magpahuway ta diri karong gabii" (we'll rest here tonight) &rarr; lock screen</div>
+</div>
+
+<h2 class="pb">6. Making the videos</h2>
+<ul>
+<li><b>Godot doesn't play MP4.</b> It plays Ogg Theora (<code>.ogv</code>). Make the animations as MP4 in any tool, then convert with one free ffmpeg command. The Watch player already plays <code>.ogv</code>.</li>
+<li><b>7 new videos:</b> the Adventure opening, one per guardian (5), and the homecoming.</li>
+<li><b>Finish and skip share each guardian's video;</b> only the voice line changes. That halves the work.</li>
+<li>Guardian videos 5&ndash;8 s, about 1&ndash;2 MB; opening about 3&ndash;5 MB, at 720&times;1280. Skip button after the first view.</li>
+<li>The voice lines are recorded MP3s, like the buddy's lines now.</li>
+</ul>
+
+<h2>7. Fun without addiction</h2>
+<table>
+<tr><th>Use these</th><th>Avoid these</th></tr>
+<tr><td><ul><li>A clear goal: getting home</li><li>A map that lights up</li><li>Curiosity about the next guardian</li><li>Praise for skill (mastery skip)</li><li>A buddy the child cares about</li><li>Charms that show progress</li></ul></td>
+<td><ul><li>Losing a streak</li><li>Random prize boxes</li><li>Countdown timers</li><li>"Come back or you'll miss out" prompts</li><li>Ending a session on a cliffhanger</li><li>Rewards bigger than the reading</li></ul></td></tr>
+</table>
+<p>The class schedule, sleep lock and daily minutes already in the game stop long play. When time runs out, the day ends calmly.</p>
+
+<h2>8. Two problems to decide</h2>
+<div class="warn"><b>1. The post-test can't wait for "home" in a 3-day pilot.</b> Most children won't finish 5 worlds by Thursday. The post-test must open on Day 3 for everyone, as the "letter from home". The homecoming stays at the end of Mount Mayapay.</div>
+<div class="warn"><b>2. Timing.</b> The pilot starts Tuesday, Dec 1. Building the story, videos and new styles before then isn't realistic, and changing the game during the pilot makes the Chapter 4 data harder to defend. Recommended: run the pilot on the current game, and build this for the defense version or a later round.</div>
+
+<h2>9. Before switching accounts</h2>
+<ul>
+<li><b>Commit and push the review work:</b> docs/review/ (packs, drafts, scripts, this pack), D-045, the 2026-11-27 devlog, the open-issues change.</li>
+<li><b>Never commit:</b> reading-racoon/project.godot (private server address), reading-racoon/export_presets.cfg (may hold signing details), the .claude/ folder.</li>
+<li>Six content files from other sessions are uncommitted too (closet, companion lines, levels_5, library, talk, watch): decide separately.</li>
+<li>In the new account, start with: "Read brain/devlog/2026-11-27.md, especially the Handoff section, then continue." Reconnect claude.ai connectors such as Graphify.</li>
+<li>Keep the transcript export zip (42 MB) in Downloads, not in git.</li>
+</ul>
+
+<h2>10. Still open from earlier</h2>
+<ul>
+<li>Two language tracks: English track for the Advanced section, Bridge track (v2) for the Regular section. Waiting for your yes.</li>
+<li>Teacher approval of the v2 items, then: placement fix, tier picking, speaker button, combination lock, recordings, 31 pictures.</li>
+<li>Item-level export for KR-20.</li>
+<li>Remove the DevMenu before the final release.</li>
+</ul>
+
+<h2>Sources</h2>
+<ul class="small">
+<li>Kalulu tablet phonics RCT: tandfonline.com/doi/full/10.1080/00220973.2023.2173129</li>
+<li>Personalized game-based reading app (Sage, 2025): journals.sagepub.com/doi/10.1177/00472395251337095</li>
+<li>Reading apps research summary: bookbotkids.com/updates/edtech/reading-apps-for-kids/</li>
+<li>Do reading apps work?: wonsterwords.com/resources/do-reading-apps-work</li>
+<li>Best phonics apps 2026: teachyourkidtoread.org/blog/best-phonics-apps-for-kids-in-2026-10-tested-picks-that-actually-work</li>
+<li>7 best phonics apps: leadinliteracy.com/the-7-best-phonics-apps/</li>
+<li>Phonics &amp; Stuff games: phonicsandstuff.com/games</li>
+<li>ASR reading tutor, first grade (Springer): link.springer.com/article/10.1007/s10758-025-09860-8</li>
+<li>Game-based literacy RCT (PeerJ): peerj.com/articles/15499/</li>
+<li>Rainbow Dot Board Game, Grade 1 Filipino (DepEd E-Saliksik): e-saliksik.deped.gov.ph</li>
+<li>Titik at Tunog: tagalogphonics.app</li>
+<li>Abakada app: play.google.com/store/apps/details?id=com.lesra.abakada</li>
+<li>Traditional Filipino games + letter activities: ejournals.ph/article.php?id=26708</li>
+<li>Teaching literacy through play, Filipino teachers: files.eric.ed.gov/fulltext/ED598281.pdf</li>
+<li>Elkonin boxes: readingrockets.org/classroom/classroom-strategies/elkonin-boxes; understood.org</li>
+<li>Virtual pet gamification for reading (ICCE): library.apsce.net/index.php/ICCE/article/view/6074</li>
+<li>My-Pet learner companions: researchgate.net/publication/220049884</li>
+<li>LLM story reading, reward caution: arxiv.org/pdf/2503.00590</li>
+<li>Story sequence game: toytheater.com/story-sequence/</li>
+<li>Reading game ideas: readbrightly.com/23-fun-reading-games-for-kids/; weareteachers.com/phonics-activities/</li>
+</ul>
+
+<h3>Reviewer</h3>
+<p>Name: ______________________ &nbsp; Date: __________ &nbsp; Signature: ______________________</p>
+</body></html>

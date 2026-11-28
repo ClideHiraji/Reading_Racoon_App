@@ -108,11 +108,13 @@ Status key: 🔴 blocks coding · 🟡 decide during build · 📝 manuscript-on
 - RQ3 asks about **functionality, usability, reliability, curriculum alignment**, but the instrument only measures PU/PEOU. Consider an ISO/IEC 25010-based instrument for the IT experts.
 - The Reviewing phase uses 4.00–4.49 = "Agree", but Table 3.12 uses 3.50–4.49. Align the two.
 
-### 15. Language policy 🟡
+### 15. Language policy ✅ DECIDED (2026-11-27)
 - L1–2 are in "Mother Tongue" (Bisaya/Butuanon in Butuan), yet future work suggests "adding Bisaya passages", so it's unclear which Mother Tongue L1–2 actually use. Re-check against current DepEd language policy.
 - **Interim (2026-10-20):** the first game slice uses **English placeholder** items (`reading-racoon/content/levels.json`, `"language": "en-placeholder"`). Replace them once the language is decided and teachers review the content.
 - **Levels 3-5 (2026-10-20):** placeholder content follows the bridge: **Filipino** for levels 3-4 and **English** for level 5, with 8 Butuan stories (60 / 100 / 130-word caps), plus 20-item pre- and post-tests in the thesis blueprint. All of it needs teacher review.
 - **The buddy's language (2026-11-18, D-033):** the student can make the buddy and the spoken menus talk in English, Filipino or Bisaya. That choice doesn't touch the lessons: items, hints and reading words keep this policy's language. The Filipino and Bisaya lines are a draft for a teacher to check (issue 35).
+
+- **Decision (2026-11-27):** [D-045](../../brain/decisions/D-045%20Lesson%20language%20follows%20MATATAG.md). Levels 1-2 in Bisaya, Levels 3-4 in Filipino, the pre- and post-test fully in Filipino, Level 5 English as an adventure extension only. Draft items are in docs/review for teacher review before they go into the game.
 
 ### 16. Latency claim 📝
 - §3.4.2.2 says difficulty uses accuracy **and latency**, but BKT only uses correctness. Either define how latency is used or remove it.

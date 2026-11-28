@@ -1,0 +1,1228 @@
+{
+	"note": "DRAFT for teacher review. Not in the game yet. Tier 1 = easier, tier 2 = harder.",
+	"reasons": {
+		"phonological_awareness": "Tier 1: common rhyme or a long first sound (s, m). Tier 2: stop sounds, more choices, more syllables.",
+		"phonics": "Tier 1: first sound or letter. Tier 2: middle or last sound, look-alike letters (b, d, p), near-miss words (pig, pin, big).",
+		"vocabulary": "Tier 1: listen and tap a picture. Tier 2: read the word yourself, describing words, sight words among look-alikes.",
+		"fluency": "Tier 1: fewer words, or a picture that helps. Tier 2: more words, or no picture.",
+		"literal_comprehension": "Tier 1: who, what, where stated in one sentence. Tier 2: when, how many, why, feelings, order of events, predicting."
+	},
+	"tiers": {
+		"pa1-01": 1,
+		"pa1-02": 1,
+		"pa1-04": 1,
+		"pa1-07": 1,
+		"pa1-08": 1,
+		"ph1-01": 1,
+		"ph1-03": 1,
+		"ph1-06": 1,
+		"ph1-08": 1,
+		"pa2-02": 1,
+		"pa2-03": 1,
+		"pa2-05": 1,
+		"pa2-06": 1,
+		"pa2-10": 1,
+		"ph2-01": 1,
+		"ph2-05": 1,
+		"ph2-07": 1,
+		"ph2-09": 1,
+		"ph2-11": 1,
+		"vo2-01": 1,
+		"vo2-02": 1,
+		"vo2-03": 1,
+		"ph3-01": 1,
+		"ph3-02": 1,
+		"ph3-03": 1,
+		"ph3-04": 1,
+		"ph3-07": 1,
+		"vo3-01": 1,
+		"vo3-02": 1,
+		"vo3-05": 1,
+		"vo3-08": 1,
+		"fl3-04": 1,
+		"fl3-05": 1,
+		"fl3-06": 1,
+		"fl3-08": 1,
+		"lc3-01": 1,
+		"lc3-02": 1,
+		"lc3-05": 1,
+		"lc3-06": 1,
+		"lc3-09": 1,
+		"lc3-10": 1,
+		"vo4-02": 1,
+		"vo4-03": 1,
+		"vo4-05": 1,
+		"vo4-06": 1,
+		"fl4-01": 1,
+		"fl4-02": 1,
+		"fl4-03": 1,
+		"fl4-06": 1,
+		"fl4-07": 1,
+		"lc4-01": 1,
+		"lc4-02": 1,
+		"lc4-05": 1,
+		"lc4-09": 1,
+		"lc4-10": 1,
+		"fl5-01": 1,
+		"fl5-02": 1,
+		"fl5-05": 1,
+		"fl5-08": 1,
+		"lc5-01": 1,
+		"lc5-02": 1,
+		"lc5-07": 1,
+		"lc5-08": 1,
+		"lc5-09": 1,
+		"pa1-03": 2,
+		"pa1-05": 2,
+		"pa1-06": 2,
+		"ph1-02": 2,
+		"ph1-04": 2,
+		"ph1-05": 2,
+		"ph1-07": 2,
+		"pa2-01": 2,
+		"pa2-04": 2,
+		"pa2-07": 2,
+		"pa2-08": 2,
+		"pa2-09": 2,
+		"pa2-11": 2,
+		"ph2-02": 2,
+		"ph2-03": 2,
+		"ph2-04": 2,
+		"ph2-06": 2,
+		"ph2-08": 2,
+		"ph2-10": 2,
+		"vo2-04": 2,
+		"vo2-05": 2,
+		"vo2-06": 2,
+		"vo2-07": 2,
+		"vo2-08": 2,
+		"ph3-05": 2,
+		"ph3-06": 2,
+		"ph3-08": 2,
+		"ph3-09": 2,
+		"vo3-03": 2,
+		"vo3-04": 2,
+		"vo3-06": 2,
+		"vo3-07": 2,
+		"fl3-01": 2,
+		"fl3-02": 2,
+		"fl3-03": 2,
+		"fl3-07": 2,
+		"lc3-03": 2,
+		"lc3-04": 2,
+		"lc3-07": 2,
+		"lc3-08": 2,
+		"lc3-11": 2,
+		"lc3-12": 2,
+		"vo4-01": 2,
+		"vo4-04": 2,
+		"vo4-07": 2,
+		"vo4-08": 2,
+		"fl4-04": 2,
+		"fl4-05": 2,
+		"fl4-08": 2,
+		"lc4-03": 2,
+		"lc4-04": 2,
+		"lc4-06": 2,
+		"lc4-07": 2,
+		"lc4-08": 2,
+		"lc4-11": 2,
+		"lc4-12": 2,
+		"fl5-03": 2,
+		"fl5-04": 2,
+		"fl5-06": 2,
+		"fl5-07": 2,
+		"lc5-03": 2,
+		"lc5-04": 2,
+		"lc5-05": 2,
+		"lc5-06": 2,
+		"lc5-10": 2,
+		"lc5-11": 2
+	},
+	"new_items": [
+		{
+			"id": "pa1-09",
+			"sub_skill": "phonological_awareness",
+			"level": 1,
+			"competency": "RL1PA-I-3",
+			"language": "en-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Which one rhymes with hat?",
+			"tts_text": "Which one rhymes with hat?",
+			"picture": "hat",
+			"word": "hat",
+			"choices": [
+				{
+					"id": "cat",
+					"label": "cat",
+					"picture": "cat"
+				},
+				{
+					"id": "bus",
+					"label": "bus",
+					"picture": "bus"
+				},
+				{
+					"id": "moon",
+					"label": "moon",
+					"picture": "moon"
+				}
+			],
+			"answer": "cat",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "pa1-10",
+			"sub_skill": "phonological_awareness",
+			"level": 1,
+			"competency": "RL1PA-I-3",
+			"language": "en-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Which one rhymes with frog?",
+			"tts_text": "Which one rhymes with frog?",
+			"picture": "frog",
+			"word": "frog",
+			"choices": [
+				{
+					"id": "fish",
+					"label": "fish",
+					"picture": "fish"
+				},
+				{
+					"id": "dog",
+					"label": "dog",
+					"picture": "dog"
+				},
+				{
+					"id": "ball",
+					"label": "ball",
+					"picture": "ball"
+				},
+				{
+					"id": "cake",
+					"label": "cake",
+					"picture": "cake"
+				}
+			],
+			"answer": "dog",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "pa1-11",
+			"sub_skill": "phonological_awareness",
+			"level": 1,
+			"competency": "RL1PA-I-5",
+			"language": "en-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Which one starts with /p/?",
+			"tts_text": "Which one starts with the sound p, like pop?",
+			"choices": [
+				{
+					"id": "bear",
+					"label": "bear",
+					"picture": "bear"
+				},
+				{
+					"id": "pear",
+					"label": "pear",
+					"picture": "pear"
+				},
+				{
+					"id": "hen",
+					"label": "hen",
+					"picture": "hen"
+				}
+			],
+			"answer": "pear",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "pa1-12",
+			"sub_skill": "phonological_awareness",
+			"level": 1,
+			"competency": "RL1PA-I-5",
+			"language": "en-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Which one starts with /d/?",
+			"tts_text": "Which one starts with the sound d, like drum?",
+			"choices": [
+				{
+					"id": "bag",
+					"label": "bag",
+					"picture": "bag"
+				},
+				{
+					"id": "goat",
+					"label": "goat",
+					"picture": "goat"
+				},
+				{
+					"id": "dog",
+					"label": "dog",
+					"picture": "dog"
+				}
+			],
+			"answer": "dog",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "ph1-09",
+			"sub_skill": "phonics",
+			"level": 1,
+			"competency": "RL1PWS-II-1",
+			"language": "en-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Which letter says /s/?",
+			"tts_text": "Which letter says sss, like a snake?",
+			"choices": [
+				{
+					"id": "s",
+					"label": "s"
+				},
+				{
+					"id": "b",
+					"label": "b"
+				},
+				{
+					"id": "h",
+					"label": "h"
+				}
+			],
+			"answer": "s",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "ph1-10",
+			"sub_skill": "phonics",
+			"level": 1,
+			"competency": "RL1PWS-II-3",
+			"language": "en-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Moon starts with which letter?",
+			"tts_text": "Moon. Moon starts with which letter?",
+			"picture": "moon",
+			"choices": [
+				{
+					"id": "m",
+					"label": "m"
+				},
+				{
+					"id": "t",
+					"label": "t"
+				},
+				{
+					"id": "b",
+					"label": "b"
+				}
+			],
+			"answer": "m",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "ph1-11",
+			"sub_skill": "phonics",
+			"level": 1,
+			"competency": "RL1PWS-II-3",
+			"language": "en-placeholder",
+			"task_type": "drag_letter",
+			"prompt": "Make the word box.",
+			"tts_text": "Box. Drag the missing letter to make box.",
+			"picture": "box",
+			"pattern": [
+				"b",
+				"_",
+				"x"
+			],
+			"choices": [
+				{
+					"id": "a",
+					"label": "a"
+				},
+				{
+					"id": "o",
+					"label": "o"
+				},
+				{
+					"id": "i",
+					"label": "i"
+				}
+			],
+			"answer": "o",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "ph1-12",
+			"sub_skill": "phonics",
+			"level": 1,
+			"competency": "RL1PWS-II-2",
+			"language": "en-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Tap the letter d.",
+			"tts_text": "Tap the letter d.",
+			"choices": [
+				{
+					"id": "b",
+					"label": "b"
+				},
+				{
+					"id": "d",
+					"label": "d"
+				},
+				{
+					"id": "p",
+					"label": "p"
+				}
+			],
+			"answer": "d",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "pa2-12",
+			"sub_skill": "phonological_awareness",
+			"level": 2,
+			"competency": "RL1PA-I-2",
+			"language": "en-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "How many claps in apple?",
+			"tts_text": "Clap it with me. Ap. Ple. How many claps?",
+			"picture": "apple",
+			"word": "apple",
+			"hint": "Clap it with me: ap, ple. Count each clap.",
+			"explain": "Ap-ple has 2 claps.",
+			"choices": [
+				{
+					"id": "1",
+					"label": "1",
+					"picture": "hand",
+					"repeat": 1
+				},
+				{
+					"id": "2",
+					"label": "2",
+					"picture": "hand",
+					"repeat": 2
+				},
+				{
+					"id": "3",
+					"label": "3",
+					"picture": "hand",
+					"repeat": 3
+				}
+			],
+			"answer": "2",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "ph2-12",
+			"sub_skill": "phonics",
+			"level": 2,
+			"competency": "RL1PWS-II-4",
+			"language": "en-placeholder",
+			"task_type": "spin_words",
+			"prompt": "Spin to make cat.",
+			"tts_text": "Cat. Spin the wheel to make the word cat.",
+			"picture": "cat",
+			"rime": "at",
+			"choices": [
+				{
+					"id": "s",
+					"label": "s"
+				},
+				{
+					"id": "c",
+					"label": "c"
+				},
+				{
+					"id": "p",
+					"label": "p"
+				},
+				{
+					"id": "r",
+					"label": "r"
+				}
+			],
+			"answer": "c",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "vo2-09",
+			"sub_skill": "vocabulary",
+			"level": 2,
+			"competency": "RL1VWK-II-1",
+			"language": "en-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Tap the bus.",
+			"tts_text": "Tap the bus. The bus takes us to school.",
+			"choices": [
+				{
+					"id": "car",
+					"label": "car",
+					"picture": "car"
+				},
+				{
+					"id": "bus",
+					"label": "bus",
+					"picture": "bus"
+				},
+				{
+					"id": "boat",
+					"label": "boat",
+					"picture": "boat"
+				}
+			],
+			"answer": "bus",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "vo2-10",
+			"sub_skill": "vocabulary",
+			"level": 2,
+			"competency": "RL1VWK-II-1",
+			"language": "en-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Tap the sticker.",
+			"tts_text": "Tap the sticker.",
+			"choices": [
+				{
+					"id": "sticker",
+					"label": "sticker",
+					"picture": "sticker"
+				},
+				{
+					"id": "pencil",
+					"label": "pencil",
+					"picture": "pencil"
+				},
+				{
+					"id": "book",
+					"label": "book",
+					"picture": "book"
+				}
+			],
+			"answer": "sticker",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "vo2-11",
+			"sub_skill": "vocabulary",
+			"level": 2,
+			"competency": "RL1VWK-II-1",
+			"language": "en-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Tap the star.",
+			"tts_text": "Teacher gives you a star. Tap the star.",
+			"choices": [
+				{
+					"id": "moon",
+					"label": "moon",
+					"picture": "moon"
+				},
+				{
+					"id": "sun",
+					"label": "sun",
+					"picture": "sun"
+				},
+				{
+					"id": "star",
+					"label": "star",
+					"picture": "star"
+				}
+			],
+			"answer": "star",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "vo2-12",
+			"sub_skill": "vocabulary",
+			"level": 2,
+			"competency": "RL1VWK-II-3",
+			"language": "en-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Tap the word is.",
+			"tts_text": "Tap the word is.",
+			"variant": "word_catch",
+			"choices": [
+				{
+					"id": "it",
+					"label": "it"
+				},
+				{
+					"id": "is",
+					"label": "is"
+				},
+				{
+					"id": "in",
+					"label": "in"
+				}
+			],
+			"answer": "is",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "ph3-10",
+			"sub_skill": "phonics",
+			"level": 3,
+			"competency": "RL1PWS-II-5",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"prompt": "Buuin ang salitang lapis.",
+			"tts_text": "La. Pis. Pindutin ang mga pantig para mabuo ang lapis.",
+			"picture": "pencil",
+			"variant": "syllables",
+			"tiles": [
+				"la",
+				"pis"
+			],
+			"answer": "la|pis",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "ph3-11",
+			"sub_skill": "phonics",
+			"level": 3,
+			"competency": "RL1PWS-II-5",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"prompt": "Buuin ang salitang bituin.",
+			"tts_text": "Bi. Tu. In. Pindutin ang mga pantig para mabuo ang bituin.",
+			"picture": "star",
+			"variant": "syllables",
+			"tiles": [
+				"bi",
+				"tu",
+				"in"
+			],
+			"answer": "bi|tu|in",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "ph3-12",
+			"sub_skill": "phonics",
+			"level": 3,
+			"competency": "RL1PWS-II-5",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"prompt": "Buuin ang salitang paruparo.",
+			"tts_text": "Pa. Ru. Pa. Ro. Pindutin ang mga pantig para mabuo ang paruparo.",
+			"picture": "butterfly",
+			"variant": "syllables",
+			"tiles": [
+				"pa",
+				"ru",
+				"pa",
+				"ro"
+			],
+			"answer": "pa|ru|pa|ro",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "vo3-09",
+			"sub_skill": "vocabulary",
+			"level": 3,
+			"competency": "RL1VWK-II-1",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pindutin ang lapis.",
+			"tts_text": "Pindutin ang lapis.",
+			"choices": [
+				{
+					"id": "pencil",
+					"label": "pencil",
+					"picture": "pencil"
+				},
+				{
+					"id": "book",
+					"label": "book",
+					"picture": "book"
+				},
+				{
+					"id": "bag",
+					"label": "bag",
+					"picture": "bag"
+				}
+			],
+			"answer": "pencil",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "vo3-10",
+			"sub_skill": "vocabulary",
+			"level": 3,
+			"competency": "RL1VWK-II-1",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pindutin ang aklat.",
+			"tts_text": "Pindutin ang aklat.",
+			"choices": [
+				{
+					"id": "bag",
+					"label": "bag",
+					"picture": "bag"
+				},
+				{
+					"id": "book",
+					"label": "book",
+					"picture": "book"
+				},
+				{
+					"id": "scissors",
+					"label": "scissors",
+					"picture": "scissors"
+				}
+			],
+			"answer": "book",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "vo3-11",
+			"sub_skill": "vocabulary",
+			"level": 3,
+			"competency": "RL1VWK-II-2a",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Basahin ang salita. Pindutin ang larawan.",
+			"tts_text": "Basahin ang salita. Pindutin ang larawan.",
+			"word": "gunting",
+			"choices": [
+				{
+					"id": "pencil",
+					"picture": "pencil"
+				},
+				{
+					"id": "scissors",
+					"picture": "scissors"
+				},
+				{
+					"id": "book",
+					"picture": "book"
+				}
+			],
+			"answer": "scissors",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "vo3-12",
+			"sub_skill": "vocabulary",
+			"level": 3,
+			"competency": "RL1VWK-II-3",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Pindutin ang salitang si.",
+			"tts_text": "Pindutin ang salitang si.",
+			"choices": [
+				{
+					"id": "sa",
+					"label": "sa"
+				},
+				{
+					"id": "si",
+					"label": "si"
+				},
+				{
+					"id": "ay",
+					"label": "ay"
+				},
+				{
+					"id": "ang",
+					"label": "ang"
+				}
+			],
+			"answer": "si",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "fl3-09",
+			"sub_skill": "fluency",
+			"level": 3,
+			"competency": "RL1BPK-II-3",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"prompt": "Ayusin ang mga salita.",
+			"tts_text": "May aklat ako. Ayusin ang mga salita.",
+			"picture": "book",
+			"variant": "sentence",
+			"tiles": [
+				"May",
+				"aklat",
+				"ako."
+			],
+			"answer": "May|aklat|ako.",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "fl3-10",
+			"sub_skill": "fluency",
+			"level": 3,
+			"competency": "RL1BPK-II-3",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"prompt": "Ayusin ang mga salita.",
+			"tts_text": "Ito ay lapis. Ayusin ang mga salita.",
+			"picture": "pencil",
+			"variant": "sentence",
+			"tiles": [
+				"Ito",
+				"ay",
+				"lapis."
+			],
+			"answer": "Ito|ay|lapis.",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "fl3-11",
+			"sub_skill": "fluency",
+			"level": 3,
+			"competency": "RL1BPK-II-3",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"prompt": "Ayusin ang mga salita.",
+			"tts_text": "Masaya kami sa paaralan. Ayusin ang mga salita.",
+			"variant": "sentence",
+			"tiles": [
+				"Masaya",
+				"kami",
+				"sa",
+				"paaralan."
+			],
+			"answer": "Masaya|kami|sa|paaralan.",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "fl3-12",
+			"sub_skill": "fluency",
+			"level": 3,
+			"competency": "RL1PWS-II-5",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Ano ang kulang?",
+			"tts_text": "Sumakay kami sa ano papuntang paaralan? Piliin ang tamang salita.",
+			"sentence": "Sumakay kami sa ___ papuntang paaralan.",
+			"choices": [
+				{
+					"id": "puno",
+					"label": "puno"
+				},
+				{
+					"id": "bus",
+					"label": "bus"
+				},
+				{
+					"id": "aso",
+					"label": "aso"
+				}
+			],
+			"answer": "bus",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "vo4-09",
+			"sub_skill": "vocabulary",
+			"level": 4,
+			"competency": "RL1VWK-II-4",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Nahulog ang lapis ng kaklase mo. Ano ang gagawin mo?",
+			"tts_text": "Nahulog ang lapis ng kaklase mo. Ano ang gagawin mo?",
+			"hint": "Ano ang ginagawa ng mabuting kaklase?",
+			"explain": "Pinupulot natin ito at ibinibigay sa kanya.",
+			"choices": [
+				{
+					"id": "pulot",
+					"label": "Pulutin at ibigay sa kanya."
+				},
+				{
+					"id": "tawa",
+					"label": "Tawanan siya."
+				},
+				{
+					"id": "tago",
+					"label": "Itago ang lapis."
+				}
+			],
+			"answer": "pulot",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "vo4-10",
+			"sub_skill": "vocabulary",
+			"level": 4,
+			"competency": "RL1VWK-II-4",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Alin ang bilog?",
+			"tts_text": "Alin ang hugis bilog?",
+			"hint": "Ang bilog ay walang kanto.",
+			"explain": "Ang bola ay bilog.",
+			"choices": [
+				{
+					"id": "book",
+					"label": "book",
+					"picture": "book"
+				},
+				{
+					"id": "ball",
+					"label": "ball",
+					"picture": "ball"
+				},
+				{
+					"id": "box",
+					"label": "box",
+					"picture": "box"
+				}
+			],
+			"answer": "ball",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "vo4-11",
+			"sub_skill": "vocabulary",
+			"level": 4,
+			"competency": "RL1VWK-II-2b",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Alin ang salitang naglalarawan?",
+			"tts_text": "Alin ang salitang naglalarawan?",
+			"hint": "Ang salitang naglalarawan ay nagsasabi kung ano ang isang tao o bagay.",
+			"explain": "Ang masipag ay naglalarawan sa isang tao.",
+			"choices": [
+				{
+					"id": "paaralan",
+					"label": "paaralan"
+				},
+				{
+					"id": "masipag",
+					"label": "masipag"
+				},
+				{
+					"id": "sumulat",
+					"label": "sumulat"
+				}
+			],
+			"answer": "masipag",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "vo4-12",
+			"sub_skill": "vocabulary",
+			"level": 4,
+			"competency": "RL1VWK-II-2b",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Ano ang ibig sabihin ng masipag?",
+			"tts_text": "Ano ang ibig sabihin ng masipag?",
+			"hint": "Ang batang masipag ay laging tumutulong at gumagawa.",
+			"explain": "Ang masipag ay laging gumagawa nang mabuti.",
+			"choices": [
+				{
+					"id": "trabaho",
+					"label": "laging gumagawa nang mabuti"
+				},
+				{
+					"id": "tulog",
+					"label": "laging natutulog"
+				},
+				{
+					"id": "iyak",
+					"label": "laging umiiyak"
+				}
+			],
+			"answer": "trabaho",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "fl4-09",
+			"sub_skill": "fluency",
+			"level": 4,
+			"competency": "RL1BPK-II-3",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"prompt": "Ayusin ang mga salita.",
+			"tts_text": "Nagbabasa ang bata ng aklat. Ayusin ang mga salita.",
+			"picture": "book",
+			"variant": "sentence",
+			"tiles": [
+				"Nagbabasa",
+				"ang",
+				"bata",
+				"ng",
+				"aklat."
+			],
+			"answer": "Nagbabasa|ang|bata|ng|aklat.",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "fl4-10",
+			"sub_skill": "fluency",
+			"level": 4,
+			"competency": "RL1BPK-II-3",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"prompt": "Ayusin ang mga salita.",
+			"tts_text": "Sumulat si Ana sa kanyang kuwaderno. Ayusin ang mga salita.",
+			"variant": "sentence",
+			"tiles": [
+				"Sumulat",
+				"si",
+				"Ana",
+				"sa",
+				"kanyang",
+				"kuwaderno."
+			],
+			"answer": "Sumulat|si|Ana|sa|kanyang|kuwaderno.",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "fl4-11",
+			"sub_skill": "fluency",
+			"level": 4,
+			"competency": "RL1BPK-II-3",
+			"language": "fil-placeholder",
+			"task_type": "order_tiles",
+			"prompt": "Ayusin ang mga salita.",
+			"tts_text": "Tumunog ang kampana sa paaralan kanina. Ayusin ang mga salita.",
+			"variant": "sentence",
+			"tiles": [
+				"Tumunog",
+				"ang",
+				"kampana",
+				"sa",
+				"paaralan",
+				"kanina."
+			],
+			"answer": "Tumunog|ang|kampana|sa|paaralan|kanina.",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "fl4-12",
+			"sub_skill": "fluency",
+			"level": 4,
+			"competency": "RL1PWS-II-5",
+			"language": "fil-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Ano ang kulang?",
+			"tts_text": "Nagsusulat ako gamit ang ano? Piliin ang tamang salita.",
+			"sentence": "Nagsusulat ako gamit ang ___.",
+			"choices": [
+				{
+					"id": "kutsara",
+					"label": "kutsara"
+				},
+				{
+					"id": "payong",
+					"label": "payong"
+				},
+				{
+					"id": "lapis",
+					"label": "lapis"
+				}
+			],
+			"answer": "lapis",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "fl5-09",
+			"sub_skill": "fluency",
+			"level": 5,
+			"competency": "RL1BPK-II-3",
+			"language": "en-placeholder",
+			"task_type": "order_tiles",
+			"prompt": "Put the words in order.",
+			"tts_text": "The bus takes us to school. Put the words in order.",
+			"picture": "bus",
+			"variant": "sentence",
+			"tiles": [
+				"The",
+				"bus",
+				"takes",
+				"us",
+				"to",
+				"school."
+			],
+			"answer": "The|bus|takes|us|to|school.",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "fl5-10",
+			"sub_skill": "fluency",
+			"level": 5,
+			"competency": "RL1PWS-II-5",
+			"language": "en-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Which word fits?",
+			"tts_text": "I read a what in class? Pick the word that fits.",
+			"sentence": "I read a ___ in class.",
+			"choices": [
+				{
+					"id": "book",
+					"label": "book"
+				},
+				{
+					"id": "cloud",
+					"label": "cloud"
+				},
+				{
+					"id": "fish",
+					"label": "fish"
+				}
+			],
+			"answer": "book",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		},
+		{
+			"id": "fl5-11",
+			"sub_skill": "fluency",
+			"level": 5,
+			"competency": "RL1BPK-II-3",
+			"language": "en-placeholder",
+			"task_type": "order_tiles",
+			"prompt": "Put the words in order.",
+			"tts_text": "Our teacher reads us a story every day. Put the words in order.",
+			"picture": "book",
+			"variant": "sentence",
+			"tiles": [
+				"Our",
+				"teacher",
+				"reads",
+				"us",
+				"a",
+				"story",
+				"every",
+				"day."
+			],
+			"answer": "Our|teacher|reads|us|a|story|every|day.",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "fl5-12",
+			"sub_skill": "fluency",
+			"level": 5,
+			"competency": "RL1PWS-II-5",
+			"language": "en-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "Which word fits?",
+			"tts_text": "We line up when the what rings? Pick the word that fits.",
+			"sentence": "We line up when the ___ rings.",
+			"choices": [
+				{
+					"id": "frog",
+					"label": "frog"
+				},
+				{
+					"id": "tree",
+					"label": "tree"
+				},
+				{
+					"id": "bell",
+					"label": "bell"
+				}
+			],
+			"answer": "bell",
+			"recovery": false,
+			"tier": 2,
+			"new": true
+		},
+		{
+			"id": "lc5-12",
+			"sub_skill": "literal_comprehension",
+			"level": 5,
+			"competency": "RL1CAT-II-1a",
+			"language": "en-placeholder",
+			"task_type": "tap_choice",
+			"prompt": "What did Mia make the boat from?",
+			"tts_text": "What did Mia make the boat from?",
+			"passage": "p5-boat",
+			"hint": "Look at the first sentence of the story.",
+			"explain": "The story says: Mia made a paper boat from an old notebook page.",
+			"choices": [
+				{
+					"id": "page",
+					"label": "an old notebook page"
+				},
+				{
+					"id": "leaf",
+					"label": "a banana leaf"
+				},
+				{
+					"id": "wood",
+					"label": "a piece of wood"
+				}
+			],
+			"answer": "page",
+			"recovery": false,
+			"tier": 1,
+			"new": true
+		}
+	]
+}

@@ -307,6 +307,13 @@ final class StudentReplay
      */
     private function placement(array $p, CarbonImmutable $time): void
     {
+        // Only the first pre-test places the child. A second one (a laptop that didn't have
+        // this child's save yet) must not wipe the lessons played since.
+        if ($this->placedLevel !== null) {
+            $this->preAnswers = [];
+
+            return;
+        }
         if ($this->preAnswers === []) {
             $start = self::int($p['start_level'] ?? null);
             if ($start !== null && $start >= 1 && $start <= SkillCatalog::MAX_LEVEL) {

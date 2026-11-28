@@ -305,6 +305,23 @@ class StudentReplayTest extends TestCase
         $this->assertNotNull($replay->assessedAt['pre']);
     }
 
+    public function test_a_second_pre_test_does_not_wipe_the_lessons_played_since(): void
+    {
+        $pre = fn (bool $correct) => ['response', ['skill' => 'phonics', 'level' => 1, 'correct' => $correct,
+            'num_choices' => 3, 'assessment' => 'pre']];
+        $replay = $this->replay([
+            $pre(false), $pre(false), ['placement', ['start_level' => 1]],
+            ...$this->correct('phonics', 1, 5),
+            // Day 2 on another laptop that had no save for this child: the pre-test again.
+            $pre(false), $pre(false), $pre(false), ['placement', ['start_level' => 1]],
+        ]);
+
+        $this->assertTrue($replay->states['phonics:1']['mastered'], 'day 1 lessons still count');
+        $this->assertSame(7, $replay->states['phonics:1']['attempts']);
+        $this->assertSame(1, $replay->placedLevel);
+        $this->assertSame(5, $replay->responses);
+    }
+
     public function test_placement_without_pre_test_answers_falls_back_to_the_start_level(): void
     {
         $replay = $this->replay([['placement', ['start_level' => 3]]]);

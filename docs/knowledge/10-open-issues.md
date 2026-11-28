@@ -358,6 +358,7 @@ Status key: 🔴 blocks coding · 🟡 decide during build · 📝 manuscript-on
   - Bring a pocket Wi-Fi or hotspot (sign-in and Switch student need the server), a USB mouse and kid-size headphones per laptop.
   - About a quarter of the class period per child per day; log minutes played and settle the pilot length with the adviser.
   - Still open: how the 30 are picked, whether home play on phones stays, testing the Windows build on one of the 4 laptops.
+- **Progress follows the child (2026-11-28):** [D-050](../../brain/decisions/D-050%20Save%20file%20copy%20on%20the%20server.md). The game keeps a copy of each child's save file on the server and a laptop takes the newer copy at sign-in, so a child can switch laptops; the server ignores a second pre-test placement. Needs `php artisan migrate` on the server and a new Windows build on the 4 laptops.
 
 
 ### 38. Holidays and the post-test switch 🟡

@@ -74,7 +74,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->redirectUsersTo(fn () => route('teacher.home'));
 
         // Synced payloads are research data: store them exactly as the device sent them.
-        $isSync = fn (Request $request) => $request->is('api/sync');
+        $isSync = fn (Request $request) => $request->is('api/sync', 'api/student/profile');
         $middleware->trimStrings(except: [$isSync]);
         $middleware->convertEmptyStringsToNull(except: [$isSync]);
     })

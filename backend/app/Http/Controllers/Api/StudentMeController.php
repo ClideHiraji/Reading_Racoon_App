@@ -52,6 +52,10 @@ class StudentMeController extends Controller
                 'equipped' => $item->equipped,
             ]),
             'equipped' => (object) $equipped->all(),
+            // The game's last uploaded save file (null if none yet): a laptop that doesn't have
+            // this child's newest save takes it, so the child continues where they left off.
+            'profile' => $student->profile === null ? null : json_decode($student->profile),
+            'profile_saved_at' => StudentProfileController::time($student->profile_saved_at),
             'bkt_version' => config('reading_racoon.bkt.version'),
             'server_time' => now()->utc()->toIso8601ZuluString(),
         ]);

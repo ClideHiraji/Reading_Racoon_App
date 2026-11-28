@@ -9,6 +9,8 @@ extends RefCounted
 
 var profile_path := "user://profile.json"
 var queue_path := "user://event_queue.jsonl"
+## What the server last got or gave of the profile: {hash, saved_at} (see GameState.profile_uploaded()).
+var server_copy_path := "user://profile_server.json"
 
 var _lock := Mutex.new()
 var _held := 0                  # hold() depth: events wait in _pending until release()
@@ -19,6 +21,7 @@ func _init(profile_name: String = "") -> void:
 	if profile_name != "":
 		profile_path = "user://profile_%s.json" % profile_name
 		queue_path = "user://event_queue_%s.jsonl" % profile_name
+		server_copy_path = "user://profile_%s_server.json" % profile_name
 	# A crash in the middle of replace_file() can leave only the .bak copy.
 	recover(profile_path)
 	recover(queue_path)
@@ -186,7 +189,7 @@ static func _line_id(line: String) -> String:
 func wipe() -> void:
 	_lock.lock()
 	_pending.clear()
-	for p in [profile_path, queue_path, queue_path.get_basename() + "_rejected.jsonl"]:
+	for p in [profile_path, queue_path, queue_path.get_basename() + "_rejected.jsonl", server_copy_path]:
 		if FileAccess.file_exists(p):
 			DirAccess.remove_absolute(p)
 	_lock.unlock()

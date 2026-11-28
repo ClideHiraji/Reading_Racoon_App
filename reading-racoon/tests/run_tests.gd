@@ -495,6 +495,28 @@ func test_queue_removal() -> void:
 	store.wipe()
 
 
+## Another laptop takes the server's save-file copy only when it's newer and nothing waits here.
+func test_server_profile_copy() -> void:
+	var older := "2026-12-01T00:30:12.123456Z"
+	var newer := "2026-12-02T00:05:00.000001Z"
+	check(SyncProtocol.take_server_profile(older, "", 0), "a laptop that never had this child takes the copy")
+	check(SyncProtocol.take_server_profile(newer, older, 0), "a newer copy from another laptop wins")
+	check(not SyncProtocol.take_server_profile(older, older, 0), "the same copy: keep this laptop's save")
+	check(not SyncProtocol.take_server_profile(older, newer, 0), "an older copy never replaces a newer save")
+	check(not SyncProtocol.take_server_profile(newer, older, 3), "answers waiting here: keep this laptop's save")
+	check(not SyncProtocol.take_server_profile("", "", 0), "no copy on the server yet")
+
+	var store := SaveStore.new("unit_test")
+	store.wipe()
+	check(store.server_copy_path == "user://profile_unit_test_server.json", "the copy record sits next to the profile")
+	var copy := {"version": 1, "wallet": {"xp": 40, "coins": 15}, "assessments": {"pre": {"correct": 12, "total": 20}}}
+	check(store.save_profile(copy), "the server's copy is written as this laptop's save")
+	var back := store.load_profile()
+	check(int(back.wallet.coins) == 15 and back.assessments.has("pre"), "coins and the pre-test come back")
+	store.wipe()
+	check(not FileAccess.file_exists(store.server_copy_path), "wipe removes the copy record too")
+
+
 # --- Lossless queue and retries over the internet (D-036) ------------------------------------
 
 ## A crash between the two moves of SaveStore.replace_file() leaves only the

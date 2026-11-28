@@ -201,9 +201,11 @@ func sign_in(token: String, child_name: String, student_id: int) -> void:
 
 
 ## "Switch student": only when everything is saved to the server, so nothing is lost.
-## Returns false (and changes nothing) while answers are still waiting.
+## Returns false (and changes nothing) while answers or the save-file copy are still waiting:
+## the next laptop this child uses downloads that copy.
 func sign_out() -> bool:
-	if store.queue_size() > 0:
+	if store.queue_size() > 0 or not profile_uploaded():
+
 		return false
 	device = {}
 	DirAccess.remove_absolute(_device_path())
@@ -211,6 +213,22 @@ func sign_out() -> bool:
 		store = SaveStore.new(_profile_name())
 		load_profile()
 	return true
+
+
+## True when the server has this exact save file (or there's none yet).
+## To check by hand: compare profile_s<id>_server.json's hash with the profile's sha256.
+func profile_uploaded() -> bool:
+	if not FileAccess.file_exists(store.profile_path):
+		return true
+	var text := FileAccess.get_file_as_string(store.profile_path)
+	return str(SaveStore.read_json(store.server_copy_path).get("hash", "")) == text.sha256_text()
+
+
+## The server now holds the save file as it was when `text` was read (Sync after
+## PUT /api/student/profile, or after taking the server's copy at sign-in).
+func mark_profile_uploaded(text: String, saved_at: String, at_store: SaveStore = null) -> void:
+	var s := at_store if at_store else store
+	SaveStore.write_json(s.server_copy_path, {"hash": text.sha256_text(), "saved_at": saved_at})
 
 
 ## The server no longer accepts the token (401): ask for the code again, but keep the

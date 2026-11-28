@@ -546,6 +546,9 @@ func _run() -> void:
 	check(not gs.sign_out(), "can't switch student with unsent answers")
 	check(gs.signed_in(), "still signed in")
 	gs.store.wipe()
+	gs.save_profile()
+	check(not gs.sign_out(), "can't switch student before the save-file copy is on the server")
+	gs.mark_profile_uploaded(FileAccess.get_file_as_string(gs.store.profile_path), "2026-12-01T00:00:00.000000Z")
 	check(gs.sign_out() and not gs.signed_in(), "switches once everything is saved")
 
 	# Lock screen loads (FR-12).

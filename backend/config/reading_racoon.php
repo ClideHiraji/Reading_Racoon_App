@@ -54,6 +54,9 @@ return [
         // Largest JSON payload accepted for one event. Real payloads are under 300 bytes.
         'max_payload_bytes' => 8192,
 
+        // Largest save-file copy accepted (PUT /api/student/profile). A real one is 3-10 KB.
+        'max_profile_bytes' => 262144,
+
         // A device clock this far ahead of the server is logged as an anomaly
         // (someone may be moving the clock to get round the schedule).
         'clock_ahead_minutes' => 5,

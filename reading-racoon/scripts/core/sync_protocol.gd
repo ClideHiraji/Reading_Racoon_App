@@ -66,6 +66,14 @@ static func range_starts_at(headers: PackedStringArray, offset: int) -> bool:
 	return false
 
 
+## At sign-in: take the server's copy of the child's save file instead of this laptop's?
+## Yes when the server's copy is newer than the last copy this laptop sent or took, and
+## no answers are still waiting here (those would be newer). Both times are the server's
+## "2026-12-01T00:30:12.123456Z" text, which sorts like time. "" = none.
+static func take_server_profile(server_saved_at: String, local_saved_at: String, waiting: int) -> bool:
+	return server_saved_at != "" and waiting == 0 and server_saved_at > local_saved_at
+
+
 ## Seconds the server clock is ahead of this device (for the play-time limits).
 static func clock_offset(server_time: String, device_unix: float) -> int:
 	if server_time.is_empty():

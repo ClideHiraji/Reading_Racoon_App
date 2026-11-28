@@ -96,8 +96,11 @@ func login(code: String) -> String:
 			JSON.stringify({"login_code": LoginCode.format(code), "device_name": OS.get_model_name()}),
 			false)
 	if res.code == 200 and typeof(res.body) == TYPE_DICTIONARY and res.body.has("token"):
-		GameState.sign_in(str(res.body.token), str(res.body.get("user", {}).get("name", "")),
-				int(res.body.get("student", {}).get("id", 0)))
+		var student_id := int(res.body.get("student", {}).get("id", 0))
+		var problem := await _take_server_profile(str(res.body.token), student_id)
+		if problem != "":
+			return problem
+		GameState.sign_in(str(res.body.token), str(res.body.get("user", {}).get("name", "")), student_id)
 		request_soon()
 		return ""
 	if res.code == 422:
@@ -105,6 +108,48 @@ func login(code: String) -> String:
 	if res.code == 429:
 		return "Too many tries. Wait a minute, then try again."
 	return "No internet right now. Connect to Wi-Fi and try again."
+
+
+## Before signing in: if the server has a newer copy of this child's save file than this
+## laptop (they played on another laptop), it becomes this laptop's save, so they continue
+## where they left off. Returns "" to go on, or a message when this laptop has no save
+## for the child and the copy can't be read (so they never restart from zero by mistake).
+func _take_server_profile(token: String, student_id: int) -> String:
+	if GameState._args.has("profile") or student_id <= 0:
+		return ""   # debug and test runs keep their own profile file
+	var local := SaveStore.new("s%d" % student_id)
+	var res := await _request("/api/student/me", HTTPClient.METHOD_GET, "", false,
+			PackedStringArray(["Authorization: Bearer %s" % token]))
+	if res.code != 200 or typeof(res.body) != TYPE_DICTIONARY:
+		if FileAccess.file_exists(local.profile_path):
+			return ""   # play on with this laptop's save; it uploads as usual
+		return "Couldn't load your progress. Check the internet and try again."
+	var copy = res.body.get("profile")
+	var at = res.body.get("profile_saved_at")
+	var saved_at: String = at if typeof(at) == TYPE_STRING else ""
+	var mine := str(SaveStore.read_json(local.server_copy_path).get("saved_at", ""))
+	if typeof(copy) == TYPE_DICTIONARY and SyncProtocol.take_server_profile(saved_at, mine, local.queue_size()):
+		if not local.save_profile(copy):
+			return "Couldn't save your progress on this laptop. Tell your teacher."
+		GameState.mark_profile_uploaded(FileAccess.get_file_as_string(local.profile_path), saved_at, local)
+	return ""
+
+
+## Sends the save file's copy when the server's is out of date. Runs after the answers,
+## so the server's copy is never ahead of its answers. Returns the HTTP code (200 = done).
+func _upload_profile() -> int:
+	if GameState.profile_uploaded():
+		return 200
+	var store: SaveStore = GameState.store
+	var text := FileAccess.get_file_as_string(store.profile_path)
+	var profile = JSON.parse_string(text)
+	if typeof(profile) != TYPE_DICTIONARY:
+		return 200   # nothing readable to send; the next save writes a good file
+	var res := await _request("/api/student/profile", HTTPClient.METHOD_PUT,
+			JSON.stringify({"profile": profile}), true)
+	if res.code == 200 and typeof(res.body) == TYPE_DICTIONARY:
+		GameState.mark_profile_uploaded(text, str(res.body.get("saved_at", "")), store)
+	return res.code
 
 
 ## One round: config, schedule, then the queue in small batches.
@@ -144,7 +189,14 @@ func _upload(max_batch: int) -> void:
 			var events := store.read_head(max_batch)
 			return {"count": events.size(), "body": JSON.stringify(SyncProtocol.batch(events, max_batch))})
 		if prepared.count == 0:
-			_done("All saved", 0)
+			var code := await _upload_profile()
+			if code == 401:
+				GameState.forget_token()   # keeps the child's progress and queue
+				_done("Please sign in again", -1)
+			elif code != 200:
+				_offline()
+			else:
+				_done("All saved", 0)
 			return
 		var res := await _request("/api/sync", HTTPClient.METHOD_POST, prepared.body, true)
 		if res.code == 401:

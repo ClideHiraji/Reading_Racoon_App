@@ -250,9 +250,17 @@ Student token only. The official state after the server's replay. `model` has ex
   "items": [{"item_id": "scarf_teal", "slot": "neck", "equipped": true}],
   "equipped": {"neck": "scarf_teal"},
   "bkt_version": 1,
+  "profile": {"version": 1, "wallet": {"xp": 120, "coins": 35}, "assessments": {"pre": {}}, "...": {}},
+  "profile_saved_at": "2026-12-01T00:30:12.123456Z",
   "server_time": "2026-10-20T04:35:00Z"
 }
 ```
+
+`profile` is the game's last uploaded save file for this child (`null` before the first upload), with `profile_saved_at` from the database clock (UTC, microseconds, so the text sorts like time). At sign-in the game calls this endpoint and takes `profile` as the laptop's save when it is newer than the last copy that laptop sent or took and no answers are waiting there (`SyncProtocol.take_server_profile`). A laptop that has no save for the child and can't reach this endpoint doesn't sign in, so a child never restarts from zero by mistake ([D-050](../brain/decisions/D-050%20Save%20file%20copy%20on%20the%20server.md)).
+
+### `PUT /api/student/profile`
+
+Student token only. Body `{"profile": {...}}`: the whole save file (`user://profile_s<id>.json`), stored as is in `students.profile` (strings are not trimmed; at most 256 KB, no `\u0000`; 422 otherwise). Returns `{"saved_at": "2026-12-01T00:30:12.123456Z"}`. The game sends it at the end of a sync round once the queue is empty, and only when the file changed since the last copy (`user://profile_s<id>_server.json` keeps its hash). Switch student waits for it. It's only a copy: dashboards, reports and exports still come from the synced events.
 
 ### `GET /api/access/student/status` (FR-12)
 

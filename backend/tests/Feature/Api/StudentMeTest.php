@@ -81,11 +81,45 @@ class StudentMeTest extends TestCase
             ->assertJsonPath('path.worlds.1.chest', true);
     }
 
+    public function test_a_save_file_uploaded_on_one_laptop_comes_back_on_another(): void
+    {
+        Sanctum::actingAs($this->student->user);
+        $this->getJson('/api/student/me')->assertJsonPath('profile', null)->assertJsonPath('profile_saved_at', null);
+
+        $profile = ['version' => 1, 'wallet' => ['xp' => 40, 'coins' => 15], 'buddy' => ['who' => '', 'lang' => 'bis'],
+            'assessments' => ['pre' => ['correct' => 12, 'total' => 20]], 'collection' => ['stickers' => ['fish' => '2026-12-01'], 'days' => []]];
+        $saved = $this->putJson('/api/student/profile', ['profile' => $profile])->assertOk()->json('saved_at');
+
+        // Another laptop: a fresh sign-in, not the user object cached by the first request.
+        Sanctum::actingAs($this->student->user->fresh());
+        $me = $this->getJson('/api/student/me')->assertOk();
+        $this->assertSame($saved, $me->json('profile_saved_at'));
+        // As sent (jsonb keeps its own key order): empty strings and empty lists aren't rewritten.
+        $this->assertEquals($profile, $me->json('profile'));
+        $this->assertStringContainsString('"who":""', $me->getContent());
+
+        $later = $this->putJson('/api/student/profile', ['profile' => ['version' => 1]])->assertOk()->json('saved_at');
+        $this->assertGreaterThan($saved, $later, 'a newer copy sorts after an older one as text');
+    }
+
+    public function test_a_bad_save_file_is_refused(): void
+    {
+        Sanctum::actingAs($this->student->user);
+
+        $this->putJson('/api/student/profile', ['profile' => [1, 2, 3]])->assertStatus(422);
+        $this->putJson('/api/student/profile', ['profile' => 'text'])->assertStatus(422);
+        $this->putJson('/api/student/profile', ['profile' => ['note' => "a\u{0}b"]])->assertStatus(422);
+        $this->putJson('/api/student/profile', ['profile' => ['big' => str_repeat('x', 300_000)]])->assertStatus(422);
+        $this->assertNull($this->student->fresh()->profile);
+    }
+
     public function test_only_students_can_read_it(): void
     {
         $this->getJson('/api/student/me')->assertUnauthorized();
+        $this->putJson('/api/student/profile', ['profile' => ['version' => 1]])->assertUnauthorized();
 
         Sanctum::actingAs(User::factory()->create());
         $this->getJson('/api/student/me')->assertForbidden();
+        $this->putJson('/api/student/profile', ['profile' => ['version' => 1]])->assertForbidden();
     }
 }

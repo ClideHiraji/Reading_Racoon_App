@@ -18,7 +18,7 @@ Status key: 🔴 blocks coding · 🟡 decide during build · 📝 manuscript-on
   - We need hosting for PHP + PostgreSQL with HTTPS, reachable from school Wi-Fi. Many cheap shared PHP hosts are MySQL-only.
   - **Hosting for now (2026-11-25, the user's choice):** the user's laptop.
     - `C:\ReadingRacoon\backend` (branch `main`) runs on XAMPP Apache port 8090 and PostgreSQL 18, both Windows services that start on their own.
-    - It's public through Tailscale Funnel at `https://<laptop>.<tailnet>.ts.net`, the address built into the game. The real address is set only in the local `project.godot` and kept out of git.
+    - It's public at `https://readingracoon.me` through a Cloudflare Tunnel (D-036), the address built into the game. Tailscale Funnel, used before the domain, was removed on 2026-11-28.
     - It works only while the laptop is on, awake and online.
   - **Later option:** Azure for Students (GitHub Student Pack: $100 plus free services) with a free `.me` or `.tech` domain, in the Singapore region.
     - Not Heroku: teacher uploads live on the server's disk (`storage/app/private/content`), and Heroku's disk is wiped daily.
@@ -123,7 +123,7 @@ Status key: 🔴 blocks coding · 🟡 decide during build · 📝 manuscript-on
 - MATATAG fluency means speed, accuracy and expression when reading aloud. The game's proxy tasks don't measure oral fluency. State this as a limitation (or add speech capture as future work).
 
 ### 18. Minor manuscript items 📝
-- "sample is small (n = 62)": 62 is fine for a paired t-test, so reword the justification.
+- "sample is small (n = 62)": 62 is fine for a paired t-test, so reword the justification. **Now n = 30, 15 per section (D-046):** check normality per section and use Wilcoxon signed-rank if it fails.
 - A stray "2" before "Therefore" in §2.3.2. The Butler 2023 vs Buckley 2021 citation spelling ("Buckey") should be checked.
 - Several references (e.g., Abejuela 2023, Kumar 2026, Davis & Granić 2024) should be checked to make sure they exist exactly as cited.
 - Some references are unrelated to the topic (prenatal care, antenatal depression, nutrition). Remove the ones that are never cited.
@@ -334,7 +334,7 @@ Status key: 🔴 blocks coding · 🟡 decide during build · 📝 manuscript-on
   - Worst frames are now 15–63 ms where they were 109–237 ms.
 - **Still open:** a real 2 GB phone hasn't been measured; Library and Watch are render-heavy on phones; shader warm-up.
 
-### 25. Devices: shared laptops with a mouse, and parents' phones 🟡 MOSTLY RESOLVED (2026-10-24)
+### 25. Devices: 4 team laptops for both sections ✅ DECIDED (2026-11-28, D-046; was shared laptops and parents' phones)
 - The thesis lists Android 8 / iOS 13 phones and the build so far targets a portrait Android phone. The user confirmed how the two classes will actually play:
   - **Advanced section** (Teacher Delgado, 36 learners): at school on **3 shared Windows laptops with a mouse**, about 12 children per laptop.
   - **Regular section** (Teacher Estremos, 26 learners): on **their parents' phones, Android and iPhone**.
@@ -354,6 +354,10 @@ Status key: 🔴 blocks coding · 🟡 decide during build · 📝 manuscript-on
   - Whether the Windows laptops have Filipino and Bisaya text-to-speech voices. **Checked 2026-11-26 on the team's HP laptop (Windows 10): only English voices (Microsoft David, Zira), so Filipino and Bisaya books highlight their words silently and the buddy's Filipino lines aren't spoken.** The school laptops still need checking. The Infinix phone (Android 15, Google TTS) spoke Filipino.
   - Where and when the regular section plays.
   - Reduce Motion on iOS.
+- **Decision (2026-11-28, the adviser's instruction):** [D-046](../../brain/decisions/D-046%20Four%20team%20laptops%20and%2030%20learners.md). Both sections play at school on **4 Windows laptops the team provides** (parents and teachers don't want phones in class), and the study takes **30 learners, 15 per section**, instead of 62. This replaces the split above.
+  - Bring a pocket Wi-Fi or hotspot (sign-in and Switch student need the server), a USB mouse and kid-size headphones per laptop.
+  - About a quarter of the class period per child per day; log minutes played and settle the pilot length with the adviser.
+  - Still open: how the 30 are picked, whether home play on phones stays, testing the Windows build on one of the 4 laptops.
 
 
 ### 38. Holidays and the post-test switch 🟡

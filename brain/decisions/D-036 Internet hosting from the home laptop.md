@@ -9,7 +9,7 @@ tags: [decision, backend, hosting, security, reliability, sync]
 
 # D-036 Internet hosting from the home laptop
 
-**Decision:** The Laravel server runs on the developer's Windows laptop at home and is reached from schools over the internet at one fixed https address: **Cloudflare Tunnel** (outbound only, own domain) → **Apache** on `127.0.0.1:8080` → Laravel → PostgreSQL on loopback, with a queue worker and scheduler kept alive as startup tasks. Tailscale Funnel is the no-domain fallback. Never `php artisan serve`. Runbook: `docs/deploy/home-server.md`.
+**Decision:** The Laravel server runs on the developer's Windows laptop at home and is reached from schools over the internet at one fixed https address: **Cloudflare Tunnel** (outbound only, own domain) → **Apache** on `127.0.0.1:8080` → Laravel → PostgreSQL on loopback, with a queue worker and scheduler kept alive as startup tasks. The domain is `readingracoon.me`; Tailscale Funnel, used before the domain, was removed on 2026-11-28 and is no longer a fallback. Never `php artisan serve`. Runbook: `docs/deploy/home-server.md`.
 
 **What changed to make that safe and lossless**
 - *Delivery:* an event leaves the device only after the server has committed it; the server stores each event once by UUID. The device queue is rewritten atomically (temp + rename, `.bak` recovery), a half-written line can't swallow the next event, and CR line ends are not damage.

@@ -62,6 +62,8 @@ Every decision, with status and whether it's saved to Graphify: ![[Decisions.bas
 - [[D-042 Settings card]]
 - [[D-043 Practice games come from the adventure]]
 - [[D-044 Animated opening and app icon]]
+- [[D-045 Lesson language follows MATATAG]]
+- [[D-046 Four team laptops and 30 learners]]
 
 ## Still open (from [[10-open-issues]])
 - 🔴 **Before the final release: delete the developer menu** (issue 30). It's debug-build-only, but it must go: `reading-racoon/ui/dev_menu.gd` (and its `.uid`), its lines in `scripts/autoload/screen.gd`, and its check at the end of `tests/ui_smoke.gd`.

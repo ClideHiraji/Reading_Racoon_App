@@ -26,7 +26,6 @@ Tablet (Godot) ─https─▶ Cloudflare edge ◀═ outbound tunnel ═ cloudfl
 | Piece | Why |
 |---|---|
 | **Cloudflare Tunnel** (recommended) | Outbound only, so it works behind CGNAT (common on PH home internet) with no router changes; free; TLS certificates handled; hides the home IP; DDoS protection. Needs a domain on Cloudflare DNS: ours is `readingracoon.me`, free for the first year from the GitHub Student Developer Pack (Namecheap). **Renew it before it lapses**, or every tablet loses the server. Limits on the free plan: 100 MB per upload, 100 s per request, no published bandwidth cap. Cloudflare's terms ask non-Enterprise sites to serve video and large files through paid products (Stream, R2), so keep teacher videos few and short. |
-| Tailscale Funnel (no-domain fallback) | Free stable `https://<laptop>.<tailnet>.ts.net` address, also outbound only. In beta, with an unpublished bandwidth cap and no WAF or rate limiting, so the app's own limits do all the work. |
 | Port forwarding + dynamic DNS | Not used: often impossible behind CGNAT, exposes the home IP, and you'd run your own certificates. |
 | **Apache** (XAMPP / Apache Lounge) | Serves many requests at once. `php artisan serve` handles one at a time on Windows (`PHP_CLI_SERVER_WORKERS` is not supported there) and dropped connections in our tests. |
 | Queue worker + scheduler | The BKT replay and Gemini reports run in the background; backups and pruning run nightly. |
@@ -104,10 +103,6 @@ This is how `readingracoon.me` was set up (2026-11-26): a tunnel managed from th
 8. Set `APP_URL=https://readingracoon.me` and `TRUSTED_PROXIES=127.0.0.1,::1`, then `php artisan config:cache`.
 9. **Check from outside:** on a phone using mobile data, open `https://readingracoon.me/api/health`. It should show `"status":"ok"`.
 
-`backend/ops/windows/cloudflared-config.example.yml` is for the other way (a tunnel made with `cloudflared tunnel login` / `create` / `route dns`). It isn't needed with the dashboard.
-
-**Fallback without a domain:** install Tailscale, sign in, then `tailscale funnel --bg 8090`. The address is `https://<laptop>.<tailnet>.ts.net`. Use it as `APP_URL`. To stop it, run `tailscale serve reset`: turning Funnel off alone can leave it running. `tailscale serve status` should then say "No serve config".
-
 ### 7. The laptop itself
 - Power (plugged in): never sleep, never hibernate, lid close does nothing: `powercfg /change standby-timeout-ac 0`, `powercfg /change hibernate-timeout-ac 0`, and Control Panel → Power Options → "Choose what closing the lid does" → Do nothing.
 - Its battery is the UPS: a power cut doesn't stop it. Keep it plugged in and charged.
@@ -164,6 +159,8 @@ set PGPASSWORD=...
 Then set `DB_DATABASE=reading_racoon_restored`, `php artisan config:cache`, and copy the `content` folder from the backup to `backend/storage/app/private/content`. Do a restore drill once before the evaluation starts and once in the middle; a backup that has never been restored isn't a backup.
 
 ## Updating the server
+`C:\ReadingRacoon` holds only `backend` (since 2026-11-28: `git sparse-checkout set --cone backend`), so `git pull` skips the game and the notes. To get every folder back: `git sparse-checkout disable`.
+
 ```bat
 php artisan down --retry=60
 git pull

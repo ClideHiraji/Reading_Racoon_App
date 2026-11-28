@@ -35,7 +35,7 @@ return Application::configure(basePath: dirname(__DIR__))
         },
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        // The tunnel program on this laptop (cloudflared or tailscaled) is the only proxy trusted
+        // The tunnel program on this laptop (cloudflared) is the only proxy trusted
         // to say who the client is and that it used https (config/trustedproxy.php).
         // Without it every school shares one rate-limit bucket (127.0.0.1) and the admin IP
         // allowlist can't work.

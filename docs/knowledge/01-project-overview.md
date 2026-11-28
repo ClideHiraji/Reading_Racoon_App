@@ -7,6 +7,7 @@ A Godot 4 mobile game (the thesis says Unity; switched 2026-10-17, see open issu
 - **School:** Ampayon Elementary School, Butuan City, Agusan del Norte, Philippines.
 - **Teachers / content reviewers:** Teacher Irish Delgado (Advanced section, 36 students, all functional readers) and Teacher Estremos (Regular section, 26 students, ~16 functional readers, 3 ARAL Basic).
 - **Participants:** 62 Grade 1 learners (~52 functional readers). Written parental consent required; data anonymized with student ID codes.
+  - **Changed 2026-11-28 (D-046, adviser):** the study takes **30 learners, 15 per section**, playing at school on **4 laptops the team provides** (no phones in class).
 - **Evaluators (TAM survey):** 2 Grade 1 teachers + 3 IT professionals (N = 5).
 
 ## Problem

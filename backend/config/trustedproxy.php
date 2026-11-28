@@ -6,7 +6,7 @@
 |--------------------------------------------------------------------------
 |
 | On the home server, the internet reaches Laravel through a tunnel connector
-| (cloudflared or tailscaled) running on the same laptop, so every request
+| (cloudflared) running on the same laptop, so every request
 | arrives from 127.0.0.1. Only the proxies listed here may set
 | X-Forwarded-For/-Proto/-Host/-Port; Laravel then sees the real client IP
 | (for the rate limits and the admin IP allowlist) and the real https scheme.
